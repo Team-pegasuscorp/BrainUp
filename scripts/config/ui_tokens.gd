@@ -121,10 +121,10 @@ const TAB_ICON_PATHS: Array[String] = [
 
 const PROFILE_CARD_RADIUS: int = 16
 ## Dark competitive profile surface (BrainUp mock).
-const PROFILE_PAGE_BG := Color(0.043, 0.055, 0.118, 1)       # #0B0E1E
-const PROFILE_CARD_BG := Color(0.086, 0.106, 0.200, 1)         # #161B33
-const PROFILE_CARD_BG_RAISED := Color(0.110, 0.125, 0.235, 1)  # #1C203C
-const PROFILE_CARD_BORDER := Color(1, 1, 1, 0.07)
+const PROFILE_PAGE_BG := Color(0.043, 0.043, 0.118, 1)       # #0B0B1E
+const PROFILE_CARD_BG := Color(0.102, 0.102, 0.180, 1)         # #1A1A2E
+const PROFILE_CARD_BG_RAISED := Color(0.125, 0.125, 0.210, 1)  # #202036
+const PROFILE_CARD_BORDER := Color(1, 1, 1, 0.08)
 const PROFILE_TEXT := Color(1, 1, 1, 1)
 const PROFILE_TEXT_MUTED := Color(0.62, 0.66, 0.78, 1)
 const PROFILE_TITLE_CAPS := Color(0.55, 0.58, 0.70, 1)
@@ -132,9 +132,16 @@ const PROFILE_STAT_ACCENT := ACCENT_PROFILE
 const PROFILE_MASTERY_BAR_BG := Color(1, 1, 1, 0.08)
 const PROFILE_MASTERY_BAR_FILL := ACCENT_XP
 const PROFILE_BADGE_LOCKED := Color(0.55, 0.58, 0.66, 0.4)
-const PROFILE_AVATAR_DISPLAY: float = 88.0
+const PROFILE_AVATAR_DISPLAY: float = 72.0
 const PROFILE_AVATAR_RING := Color(1.0, 0.604, 0.0, 1)         # orange ring from mock
 const PROFILE_AVATAR_SIZE: int = 256
+## Mosaic dashboard tiles (bento).
+const DASH_GUTTER: int = 8
+const DASH_TILE_RADIUS: int = 14
+const DASH_TILE_PAD: int = 10
+const DASH_STAT_HEIGHT: float = 78.0
+const DASH_CATEGORY_HEIGHT: float = 118.0
+const DASH_HERO_HEIGHT: float = 220.0
 const DEFAULT_PLAYER_NAME: String = "Player"
 const MAX_PLAYER_NAME_LENGTH: int = 24
 

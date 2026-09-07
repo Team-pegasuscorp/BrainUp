@@ -153,20 +153,45 @@ static func category_tile_selected(accent: Color) -> StyleBoxFlat:
 
 
 static func profile_card(accent: Color = Color(0, 0, 0, 0), raised: bool = false) -> StyleBoxFlat:
+	## Mock-style navy tile: soft border + colored outer glow when accented.
 	var style := StyleBoxFlat.new()
 	style.bg_color = UiTokens.PROFILE_CARD_BG_RAISED if raised else UiTokens.PROFILE_CARD_BG
 	style.set_border_width_all(1)
-	style.border_color = UiTokens.PROFILE_CARD_BORDER
 	style.set_corner_radius_all(UiTokens.PROFILE_CARD_RADIUS)
-	style.shadow_color = Color(0, 0, 0, 0.28)
-	style.shadow_size = 10 if raised else 6
-	style.shadow_offset = Vector2(0, 3)
+	style.shadow_offset = Vector2(0, 4)
 	style.content_margin_left = 0
 	style.content_margin_top = 0
 	style.content_margin_right = 0
 	style.content_margin_bottom = 0
 	if accent.a > 0.02:
-		style.shadow_color = Color(accent.r, accent.g, accent.b, 0.18)
+		style.border_color = Color(accent.r, accent.g, accent.b, 0.28 if raised else 0.18)
+		style.shadow_color = Color(accent.r, accent.g, accent.b, 0.22 if raised else 0.14)
+		style.shadow_size = 14 if raised else 10
+	else:
+		style.border_color = UiTokens.PROFILE_CARD_BORDER
+		style.shadow_color = Color(0, 0, 0, 0.30)
+		style.shadow_size = 10 if raised else 6
+	return style
+
+
+static func dash_tile(accent: Color = Color(0, 0, 0, 0), raised: bool = false) -> StyleBoxFlat:
+	## Compact mosaic tile: raised navy fill + accent rim for peripheral coding.
+	var style := StyleBoxFlat.new()
+	style.bg_color = UiTokens.PROFILE_CARD_BG_RAISED if raised else UiTokens.PROFILE_CARD_BG
+	style.set_corner_radius_all(UiTokens.DASH_TILE_RADIUS)
+	style.set_border_width_all(2)
+	if accent.a > 0.02:
+		style.border_color = Color(accent.r, accent.g, accent.b, 0.45)
+		style.shadow_color = Color(accent.r, accent.g, accent.b, 0.14)
+	else:
+		style.border_color = UiTokens.PROFILE_CARD_BORDER
+		style.shadow_color = Color(0, 0, 0, 0.22)
+	style.shadow_size = 8
+	style.shadow_offset = Vector2(0, 2)
+	style.content_margin_left = 0
+	style.content_margin_top = 0
+	style.content_margin_right = 0
+	style.content_margin_bottom = 0
 	return style
 
 

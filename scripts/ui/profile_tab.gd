@@ -3,6 +3,9 @@ extends Control
 
 const ProfileSnapshot = preload("res://scripts/profile/profile_snapshot.gd")
 const ProfileDonutScript = preload("res://scripts/ui/profile_donut.gd")
+const CircularAvatarScript = preload("res://scripts/ui/circular_avatar.gd")
+const CountryFlags = preload("res://scripts/profile/country_flags.gd")
+const UiFonts = preload("res://scripts/config/ui_fonts.gd")
 const UiTokens = preload("res://scripts/config/ui_tokens.gd")
 const UiStyle = preload("res://scripts/config/ui_style.gd")
 const PressScaleUtil = preload("res://scripts/ui/press_scale.gd")
@@ -104,12 +107,11 @@ func _rebuild_sections() -> void:
 	sections.add_theme_constant_override("separation", 12)
 	sections.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
-	## Mobile-first: one clean vertical stack (no overlapping 2-col grid).
+	## Mobile stack matching the competitive mock tiles.
 	sections.add_child(_build_hero())
 	sections.add_child(_build_stats_strip())
 	sections.add_child(_build_categories_tile())
-	sections.add_child(_build_best_subject_tile())
-	sections.add_child(_build_win_distribution_tile())
+	sections.add_child(_build_insight_row())
 	sections.add_child(_build_history_tile())
 	sections.add_child(_build_badges_tile())
 	sections.add_child(_build_world_rank_tile())
@@ -129,157 +131,303 @@ func _track_tween(tween: Tween) -> Tween:
 
 
 func _build_hero() -> PanelContainer:
+	## Mock layout: avatar | identity+XP | divider | league column (~1/4 width).
 	var panel := _tile(UiTokens.ACCENT_PROFILE, true)
-	var margin := _pad(14, 14)
+	panel.custom_minimum_size.y = UiTokens.DASH_HERO_HEIGHT
+	var margin := _pad(16, 16)
 	panel.add_child(margin)
 
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 12)
+	row.add_theme_constant_override("separation", 14)
+	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	margin.add_child(row)
 
-	## Avatar
-	var avatar_frame := PanelContainer.new()
-	avatar_frame.custom_minimum_size = Vector2(UiTokens.PROFILE_AVATAR_DISPLAY, UiTokens.PROFILE_AVATAR_DISPLAY)
-	var frame_style := StyleBoxFlat.new()
-	frame_style.bg_color = UiTokens.PROFILE_CARD_BG_RAISED
-	frame_style.set_corner_radius_all(int(UiTokens.PROFILE_AVATAR_DISPLAY * 0.5))
-	frame_style.set_border_width_all(3)
-	frame_style.border_color = UiTokens.PROFILE_AVATAR_RING
-	frame_style.shadow_size = 16
-	frame_style.shadow_color = Color(UiTokens.ACCENT_PROFILE.r, UiTokens.ACCENT_PROFILE.g, UiTokens.ACCENT_PROFILE.b, 0.4)
-	frame_style.content_margin_left = 5
-	frame_style.content_margin_top = 5
-	frame_style.content_margin_right = 5
-	frame_style.content_margin_bottom = 5
-	avatar_frame.add_theme_stylebox_override("panel", frame_style)
-	row.add_child(avatar_frame)
+	## Avatar — nearly full hero height, circular.
+	var avatar_wrap := Control.new()
+	avatar_wrap.custom_minimum_size = Vector2(148, 148)
+	avatar_wrap.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	row.add_child(avatar_wrap)
+
+	var avatar := CircularAvatarScript.new()
+	avatar.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	avatar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	## Mock gradient ring: violet → magenta → orange + glow.
+	avatar.ring_color = UiTokens.ACCENT_PROFILE
+	avatar.ring_color_mid = UiTokens.ACCENT_SOCIAL
+	avatar.ring_color_secondary = UiTokens.PROFILE_AVATAR_RING
+	avatar.ring_width = 3.5
+	avatar.ring_gap = 2.5
+	avatar.fill_color = UiTokens.PROFILE_CARD_BG_RAISED
+	## Presence pill: green only when the user is connected (social-ready).
+	if bool(_profile_data.get("is_online", false)):
+		avatar.set_presence(CircularAvatarScript.Presence.ONLINE)
+	else:
+		avatar.set_presence(CircularAvatarScript.Presence.HIDDEN)
+	avatar.set_avatar(_profile_data.get("avatar_texture") as Texture2D)
+	avatar_wrap.add_child(avatar)
 
 	var avatar_btn := Button.new()
 	avatar_btn.flat = true
 	avatar_btn.focus_mode = Control.FOCUS_NONE
 	avatar_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	avatar_btn.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	var empty := StyleBoxEmpty.new()
+	for state in ["normal", "hover", "pressed", "focus"]:
+		avatar_btn.add_theme_stylebox_override(state, empty)
 	avatar_btn.pressed.connect(_open_edit_profile)
-	avatar_frame.add_child(avatar_btn)
+	avatar_btn.mouse_entered.connect(_on_avatar_hover.bind(avatar, true))
+	avatar_btn.mouse_exited.connect(_on_avatar_hover.bind(avatar, false))
+	avatar_btn.button_down.connect(_on_avatar_hover.bind(avatar, true))
+	avatar_btn.button_up.connect(_on_avatar_hover.bind(avatar, false))
+	avatar_wrap.add_child(avatar_btn)
+	PressScaleUtil.wire(avatar_btn, self)
 
-	var avatar := TextureRect.new()
-	avatar.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	avatar.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	avatar.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-	avatar.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	avatar.texture = _profile_data.get("avatar_texture")
-	avatar_btn.add_child(avatar)
-
-	## Identity + XP
+	## Identity + level / XP (center ~55%).
 	var info := VBoxContainer.new()
 	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	info.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	info.add_theme_constant_override("separation", 6)
 	row.add_child(info)
 
 	var name_row := HBoxContainer.new()
-	name_row.add_theme_constant_override("separation", 6)
+	name_row.add_theme_constant_override("separation", 8)
 	info.add_child(name_row)
 
 	var name_label := Label.new()
 	name_label.text = str(_profile_data.get("player_name", UiTokens.DEFAULT_PLAYER_NAME))
-	name_label.add_theme_font_size_override("font_size", 22)
+	name_label.add_theme_font_size_override("font_size", 34)
 	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	name_row.add_child(name_label)
 
-	var verified := Label.new()
-	verified.text = "✓"
-	verified.add_theme_font_size_override("font_size", 16)
-	verified.add_theme_color_override("font_color", Color(0.36, 0.75, 1.0, 1))
-	name_row.add_child(verified)
+	## Shown only when the account email has been verified.
+	if bool(_profile_data.get("email_verified", false)):
+		var verified := Label.new()
+		verified.text = "☑"
+		verified.tooltip_text = tr("UI_PROFILE_EMAIL_VERIFIED")
+		verified.add_theme_font_size_override("font_size", 20)
+		verified.add_theme_color_override("font_color", Color(0.36, 0.75, 1.0, 1))
+		name_row.add_child(verified)
+
+	var country_row := HBoxContainer.new()
+	country_row.add_theme_constant_override("separation", 6)
+	info.add_child(country_row)
+
+	var country_name := str(_profile_data.get("country", "France"))
+	var flag := str(_profile_data.get("country_flag", ""))
+	if flag.is_empty():
+		flag = CountryFlags.emoji_for(country_name)
+
+	## Separate label so the flag uses a CBDT emoji font (Godot can't render Windows COLR emoji).
+	var flag_label := Label.new()
+	flag_label.text = flag
+	flag_label.add_theme_font_size_override("font_size", 26)
+	var emoji_font := UiFonts.emoji_font()
+	if emoji_font != null:
+		flag_label.add_theme_font_override("font", emoji_font)
+	else:
+		flag_label.add_theme_font_override("font", UiFonts.text_with_emoji())
+	country_row.add_child(flag_label)
 
 	var country := Label.new()
-	country.text = "🇫🇷  %s" % str(_profile_data.get("country", "France"))
-	country.add_theme_font_size_override("font_size", 12)
+	country.text = country_name
+	country.add_theme_font_size_override("font_size", 19)
 	country.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
-	info.add_child(country)
+	country_row.add_child(country)
 
-	var level_row := HBoxContainer.new()
-	level_row.add_theme_constant_override("separation", 8)
-	info.add_child(level_row)
+	var spacer := Control.new()
+	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	spacer.custom_minimum_size.y = 6
+	info.add_child(spacer)
 
-	var star := Label.new()
-	star.text = "★"
-	star.add_theme_font_size_override("font_size", 18)
-	star.add_theme_color_override("font_color", UiTokens.ACCENT_PROFILE)
-	level_row.add_child(star)
+	var bottom := HBoxContainer.new()
+	bottom.add_theme_constant_override("separation", 14)
+	bottom.size_flags_vertical = Control.SIZE_SHRINK_END
+	bottom.alignment = BoxContainer.ALIGNMENT_CENTER
+	info.add_child(bottom)
 
-	var level := Label.new()
-	level.text = tr("UI_PLAYER_LEVEL").format({"level": _profile_data.get("level", 1)}).to_upper()
-	level.add_theme_font_size_override("font_size", 13)
-	level.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-	level_row.add_child(level)
+	## Level column: caption + number (number centered under "NIVEAU")
+	var level_col := VBoxContainer.new()
+	level_col.add_theme_constant_override("separation", 0)
+	level_col.alignment = BoxContainer.ALIGNMENT_CENTER
+	level_col.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	var level_wrap := MarginContainer.new()
+	level_wrap.add_theme_constant_override("margin_left", 5)
+	level_wrap.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	level_wrap.add_child(level_col)
+	bottom.add_child(level_wrap)
+
+	var level_caption := Label.new()
+	level_caption.text = tr("UI_PROFILE_LEVEL_CAPTION").to_upper()
+	level_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	level_caption.add_theme_font_size_override("font_size", 12)
+	level_caption.add_theme_color_override("font_color", UiTokens.PROFILE_TITLE_CAPS)
+	level_col.add_child(level_caption)
+
+	var level_num := Label.new()
+	level_num.text = str(_profile_data.get("level", 1))
+	level_num.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	level_num.add_theme_font_size_override("font_size", 34)
+	level_num.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	## Lift the level number a few pixels under the caption.
+	var level_num_wrap := MarginContainer.new()
+	level_num_wrap.add_theme_constant_override("margin_top", -6)
+	level_num_wrap.add_child(level_num)
+	level_col.add_child(level_num_wrap)
+
+	## Keep XP block slightly nudged right of the level column.
+	var xp_nudge := Control.new()
+	xp_nudge.custom_minimum_size.x = 10
+	xp_nudge.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	bottom.add_child(xp_nudge)
+
+	## XP column: label, bar, next level — centered with level block.
+	var xp_col := VBoxContainer.new()
+	xp_col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	xp_col.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	xp_col.add_theme_constant_override("separation", 5)
+	xp_col.alignment = BoxContainer.ALIGNMENT_CENTER
+	bottom.add_child(xp_col)
+
+	var xp_line := HBoxContainer.new()
+	xp_line.add_theme_constant_override("separation", 6)
+	var xp_line_wrap := MarginContainer.new()
+	xp_line_wrap.add_theme_constant_override("margin_top", -5)
+	xp_line_wrap.add_child(xp_line)
+	xp_col.add_child(xp_line_wrap)
+
+	var xp_tag := Label.new()
+	xp_tag.text = tr("UI_PROFILE_XP_LABEL")
+	xp_tag.add_theme_font_size_override("font_size", 14)
+	xp_tag.add_theme_color_override("font_color", UiTokens.ACCENT_PROFILE)
+	xp_line.add_child(xp_tag)
+
+	var xp_values := Label.new()
+	xp_values.text = "%s / %s" % [
+		_format_int(int(_profile_data.get("xp", 0))),
+		_format_int(int(_profile_data.get("xp_to_next", 100))),
+	]
+	xp_values.add_theme_font_size_override("font_size", 14)
+	xp_values.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	xp_line.add_child(xp_values)
 
 	_xp_bar = ProgressBar.new()
-	_xp_bar.custom_minimum_size.y = 10
+	## Shorter bar (length), keep a readable thickness.
+	_xp_bar.custom_minimum_size = Vector2(148, 12)
+	_xp_bar.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	_xp_bar.max_value = 1.0
 	_xp_bar.value = 0.0
 	_xp_bar.show_percentage = false
 	_xp_bar.add_theme_stylebox_override("background", UiStyle.profile_progress_bg())
-	_xp_bar.add_theme_stylebox_override("fill", UiStyle.progress_fill(UiTokens.ACCENT_PROFILE))
-	info.add_child(_xp_bar)
-
-	var xp_line := Label.new()
-	xp_line.text = "XP %s / %s" % [
-		_format_int(int(_profile_data.get("xp", 0))),
-		_format_int(int(_profile_data.get("xp_to_next", 100))),
-	]
-	xp_line.add_theme_font_size_override("font_size", 11)
-	xp_line.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
-	info.add_child(xp_line)
+	var xp_fill := UiStyle.progress_fill(Color(0.85, 0.28, 0.78, 1))
+	xp_fill.set_corner_radius_all(8)
+	_xp_bar.add_theme_stylebox_override("fill", xp_fill)
+	xp_col.add_child(_xp_bar)
 
 	var next_xp := Label.new()
-	next_xp.text = tr("UI_PROFILE_XP_TO_NEXT").format({"xp": _format_int(int(_profile_data.get("xp_remaining", 0)))})
-	next_xp.add_theme_font_size_override("font_size", 11)
-	next_xp.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
-	info.add_child(next_xp)
+	next_xp.text = tr("UI_PROFILE_NEXT_LEVEL").format({
+		"xp": _format_int(int(_profile_data.get("xp_remaining", 0))),
+	})
+	next_xp.add_theme_font_size_override("font_size", 12)
+	next_xp.add_theme_color_override("font_color", UiTokens.PROFILE_TITLE_CAPS)
+	xp_col.add_child(next_xp)
 
-	## League diamond card
+	## Divider + league column (~1/4 width), no nested card.
+	var divider := ColorRect.new()
+	divider.custom_minimum_size = Vector2(1, 0)
+	divider.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	divider.color = Color(1, 1, 1, 0.10)
+	row.add_child(divider)
+
 	var ranking: Dictionary = _profile_data.get("ranking", {})
-	var league := _tile(UiTokens.ACCENT_PROFILE, true)
-	league.custom_minimum_size = Vector2(108, 0)
-	row.add_child(league)
-	var league_pad := _pad(10, 12)
-	league.add_child(league_pad)
 	var league_col := VBoxContainer.new()
 	league_col.alignment = BoxContainer.ALIGNMENT_CENTER
-	league_col.add_theme_constant_override("separation", 4)
-	league_pad.add_child(league_col)
-
-	var diamond := Label.new()
-	diamond.text = "💎"
-	diamond.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	diamond.add_theme_font_size_override("font_size", 34)
-	league_col.add_child(diamond)
+	league_col.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	league_col.custom_minimum_size.x = 150
+	league_col.add_theme_constant_override("separation", 12)
+	row.add_child(league_col)
 
 	var league_title := Label.new()
-	league_title.text = tr("UI_PROFILE_LEAGUE").to_upper()
+	league_title.text = (
+		tr("UI_PROFILE_LEAGUE") + " " + tr(str(ranking.get("league_key", "UI_LEAGUE_BRONZE")))
+	).to_upper()
 	league_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	league_title.add_theme_font_size_override("font_size", 9)
-	league_title.add_theme_color_override("font_color", UiTokens.PROFILE_TITLE_CAPS)
+	league_title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	league_title.add_theme_font_size_override("font_size", 16)
+	league_title.add_theme_color_override("font_color", UiTokens.ACCENT_PROFILE)
 	league_col.add_child(league_title)
 
-	var league_name := Label.new()
-	league_name.text = tr(str(ranking.get("league_key", "UI_RANK_ROOKIE"))).to_upper()
-	league_name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	league_name.add_theme_font_size_override("font_size", 11)
-	league_name.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-	league_col.add_child(league_name)
+	## Icon follows trophy league tier (not a fixed diamond).
+	var league_icon := Label.new()
+	league_icon.text = str(ranking.get("league_icon", "🥉"))
+	league_icon.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	league_icon.add_theme_font_size_override("font_size", 64)
+	var league_emoji_font := UiFonts.emoji_font()
+	if league_emoji_font != null:
+		league_icon.add_theme_font_override("font", league_emoji_font)
+	league_col.add_child(league_icon)
 
 	var points := Label.new()
-	points.text = "🏆 %s" % _format_int(int(ranking.get("points", 0)))
+	points.text = "🏆  %s" % _format_int(int(ranking.get("points", 0)))
 	points.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	points.add_theme_font_size_override("font_size", 13)
-	points.add_theme_color_override("font_color", UiTokens.ACCENT_LEADERBOARD)
+	points.add_theme_font_size_override("font_size", 22)
+	points.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	league_col.add_child(points)
 
 	_animated_nodes.append(panel)
+	call_deferred(
+		"_fit_hero_mock_proportions",
+		panel, avatar_wrap, avatar, league_col, league_icon, league_title, points
+	)
 	call_deferred("_animate_xp_bar")
 	return panel
+
+
+func _on_avatar_hover(avatar: Control, show_overlay: bool) -> void:
+	if not is_instance_valid(avatar) or not (avatar is CircularAvatarScript):
+		return
+	var circ := avatar as CircularAvatarScript
+	var target := 1.0 if show_overlay else 0.0
+	var tween := _track_tween(create_tween())
+	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween.tween_method(circ.set_overlay_alpha, circ.overlay_alpha, target, 0.2)
+
+
+func _fit_hero_mock_proportions(
+	hero: Control,
+	avatar_wrap: Control,
+	avatar: Control,
+	league_col: Control,
+	league_icon: Label,
+	league_title: Label = null,
+	points: Label = null
+) -> void:
+	if not is_instance_valid(hero):
+		return
+	await get_tree().process_frame
+	if not is_instance_valid(hero):
+		return
+	var h := hero.size.y
+	var w := hero.size.x
+	if h <= 1.0 or w <= 1.0:
+		return
+	## Avatar ≈ full inner height; league column wider for larger right-side info.
+	var avatar_side := clampf(h - 32.0, 128.0, 196.0)
+	var league_w := clampf(w * 0.34, 140.0, 190.0)
+	if is_instance_valid(avatar_wrap):
+		avatar_wrap.custom_minimum_size = Vector2(avatar_side, avatar_side)
+	if is_instance_valid(league_col):
+		league_col.custom_minimum_size.x = league_w
+	if is_instance_valid(avatar) and avatar is CircularAvatarScript:
+		var circ := avatar as CircularAvatarScript
+		circ.ring_width = clampf(avatar_side * 0.022, 3.0, 4.5)
+		circ.ring_gap = clampf(avatar_side * 0.016, 2.0, 3.5)
+		circ.queue_redraw()
+	if is_instance_valid(league_title):
+		league_title.add_theme_font_size_override("font_size", int(clampf(league_w * 0.105, 15.0, 19.0)))
+	if is_instance_valid(league_icon):
+		league_icon.add_theme_font_size_override("font_size", int(clampf(league_w * 0.50, 58.0, 78.0)))
+	if is_instance_valid(points):
+		points.add_theme_font_size_override("font_size", int(clampf(league_w * 0.135, 20.0, 26.0)))
 
 
 func _build_stats_strip() -> PanelContainer:
@@ -309,19 +457,32 @@ func _stat_icon_cell(icon: String, value: String, label: String, color: Color) -
 	var cell := VBoxContainer.new()
 	cell.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	cell.alignment = BoxContainer.ALIGNMENT_CENTER
-	cell.add_theme_constant_override("separation", 2)
+	cell.add_theme_constant_override("separation", 3)
 
+	var icon_wrap := PanelContainer.new()
+	icon_wrap.custom_minimum_size = Vector2(28, 28)
+	var icon_style := StyleBoxFlat.new()
+	icon_style.bg_color = Color(color.r, color.g, color.b, 0.18)
+	icon_style.set_corner_radius_all(14)
+	icon_style.shadow_color = Color(color.r, color.g, color.b, 0.35)
+	icon_style.shadow_size = 8
+	icon_wrap.add_theme_stylebox_override("panel", icon_style)
+	var icon_center := CenterContainer.new()
+	icon_wrap.add_child(icon_center)
 	var icon_label := Label.new()
 	icon_label.text = icon
 	icon_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	icon_label.add_theme_font_size_override("font_size", 18)
-	cell.add_child(icon_label)
+	icon_label.add_theme_font_size_override("font_size", 14)
+	icon_center.add_child(icon_label)
+	var icon_row := CenterContainer.new()
+	icon_row.add_child(icon_wrap)
+	cell.add_child(icon_row)
 
 	var value_label := Label.new()
 	value_label.text = value
 	value_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	value_label.add_theme_font_size_override("font_size", 15)
-	value_label.add_theme_color_override("font_color", color)
+	value_label.add_theme_font_size_override("font_size", 16)
+	value_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	cell.add_child(value_label)
 
 	var caption := Label.new()
@@ -336,9 +497,9 @@ func _stat_icon_cell(icon: String, value: String, label: String, color: Color) -
 
 func _build_categories_tile() -> PanelContainer:
 	var panel := _tile()
-	var root := _tile_body(panel, tr("UI_PROFILE_CATEGORIES_MASTERED"))
+	var root := _tile_body(panel, tr("UI_PROFILE_CATEGORIES_MASTERED"), true)
 	var list := VBoxContainer.new()
-	list.add_theme_constant_override("separation", 10)
+	list.add_theme_constant_override("separation", 12)
 	root.add_child(list)
 
 	var categories: Array = _profile_data.get("categories", [])
@@ -362,17 +523,20 @@ func _category_mastery_row(row: Dictionary) -> Control:
 	hbox.add_theme_constant_override("separation", 10)
 
 	var icon_wrap := PanelContainer.new()
-	icon_wrap.custom_minimum_size = Vector2(36, 36)
+	icon_wrap.custom_minimum_size = Vector2(40, 40)
 	var icon_style := StyleBoxFlat.new()
 	icon_style.bg_color = Color(accent.r, accent.g, accent.b, 0.22)
-	icon_style.set_corner_radius_all(18)
+	icon_style.set_corner_radius_all(20)
+	icon_style.shadow_color = Color(accent.r, accent.g, accent.b, 0.4)
+	icon_style.shadow_size = 10
 	icon_wrap.add_theme_stylebox_override("panel", icon_style)
 	hbox.add_child(icon_wrap)
 	var icon := Label.new()
 	icon.text = str(row.get("icon", "🧠"))
 	icon.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	icon.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	icon.add_theme_font_size_override("font_size", 16)
+	icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	icon.add_theme_font_size_override("font_size", 18)
 	icon_wrap.add_child(icon)
 
 	var mid := VBoxContainer.new()
@@ -380,11 +544,24 @@ func _category_mastery_row(row: Dictionary) -> Control:
 	mid.add_theme_constant_override("separation", 4)
 	hbox.add_child(mid)
 
+	var title_row := HBoxContainer.new()
+	title_row.add_theme_constant_override("separation", 8)
+	mid.add_child(title_row)
+
 	var title := Label.new()
 	title.text = str(row.get("name", ""))
+	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	title.add_theme_font_size_override("font_size", 13)
 	title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-	mid.add_child(title)
+	title_row.add_child(title)
+
+	var level := Label.new()
+	level.text = tr("UI_PLAYER_LEVEL").format({
+		"level": row.get("display_level", row.get("mastery_level", 1)),
+	}).to_upper()
+	level.add_theme_font_size_override("font_size", 10)
+	level.add_theme_color_override("font_color", accent)
+	title_row.add_child(level)
 
 	var bar := ProgressBar.new()
 	bar.custom_minimum_size.y = 7
@@ -395,23 +572,26 @@ func _category_mastery_row(row: Dictionary) -> Control:
 	bar.add_theme_stylebox_override("fill", UiStyle.progress_fill(accent))
 	mid.add_child(bar)
 
-	var right := VBoxContainer.new()
-	right.alignment = BoxContainer.ALIGNMENT_CENTER
-	hbox.add_child(right)
-
-	var level := Label.new()
-	level.text = tr("UI_PLAYER_LEVEL").format({"level": row.get("display_level", row.get("mastery_level", 1))})
-	level.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	level.add_theme_font_size_override("font_size", 10)
-	level.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
-	right.add_child(level)
-
 	var medal := Label.new()
 	medal.text = _medal_icon(str(row.get("medal", "none")))
-	medal.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	medal.add_theme_font_size_override("font_size", 16)
-	right.add_child(medal)
+	medal.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	medal.add_theme_font_size_override("font_size", 22)
+	hbox.add_child(medal)
 	return hbox
+
+
+func _build_insight_row() -> HBoxContainer:
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 8)
+	row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var best := _build_best_subject_tile()
+	best.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var dist := _build_win_distribution_tile()
+	dist.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(best)
+	row.add_child(dist)
+	_animated_nodes.append(row)
+	return row
 
 
 func _build_best_subject_tile() -> PanelContainer:
@@ -455,7 +635,6 @@ func _build_best_subject_tile() -> PanelContainer:
 	acc.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	col.add_child(acc)
 
-	_animated_nodes.append(panel)
 	return panel
 
 
@@ -463,31 +642,44 @@ func _build_win_distribution_tile() -> PanelContainer:
 	var panel := _tile(UiTokens.ACCENT_PROFILE)
 	var root := _tile_body(panel, tr("UI_PROFILE_WIN_SPLIT"))
 	var body := HBoxContainer.new()
-	body.add_theme_constant_override("separation", 10)
+	body.add_theme_constant_override("separation", 8)
 	root.add_child(body)
 
 	var donut := ProfileDonutScript.new()
-	donut.custom_minimum_size = Vector2(96, 96)
+	donut.custom_minimum_size = Vector2(84, 84)
+	donut.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	body.add_child(donut)
 
 	var dist: Array = _profile_data.get("win_distribution", [])
 	var segments: Array = []
 	for row in dist:
 		segments.append({"ratio": row.get("ratio", 0.0), "color": row.get("color", Color.WHITE)})
-	donut.set_segments(segments, tr("UI_PROFILE_WINS_COUNT").format({"count": _profile_data.get("wins", 0)}))
+	donut.set_segments(segments, str(_profile_data.get("wins", 0)))
 
 	var legend := VBoxContainer.new()
 	legend.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	legend.alignment = BoxContainer.ALIGNMENT_CENTER
 	legend.add_theme_constant_override("separation", 4)
 	body.add_child(legend)
-	for row in dist:
-		var line := Label.new()
-		line.text = "%s  %d%%" % [row.get("name", ""), row.get("percent", 0)]
-		line.add_theme_font_size_override("font_size", 11)
-		line.add_theme_color_override("font_color", row.get("color", UiTokens.PROFILE_TEXT))
-		legend.add_child(line)
+	if dist.is_empty():
+		legend.add_child(_empty(tr("UI_PROFILE_NO_CATEGORIES")))
+	else:
+		for row in dist:
+			var line := HBoxContainer.new()
+			line.add_theme_constant_override("separation", 6)
+			legend.add_child(line)
+			var dot := Label.new()
+			dot.text = "●"
+			dot.add_theme_font_size_override("font_size", 10)
+			dot.add_theme_color_override("font_color", row.get("color", UiTokens.PROFILE_TEXT))
+			line.add_child(dot)
+			var text := Label.new()
+			text.text = "%s %d%%" % [row.get("name", ""), row.get("percent", 0)]
+			text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			text.add_theme_font_size_override("font_size", 10)
+			text.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+			line.add_child(text)
 
-	_animated_nodes.append(panel)
 	return panel
 
 
@@ -495,7 +687,7 @@ func _build_history_tile() -> PanelContainer:
 	var panel := _tile()
 	var root := _tile_body(panel, tr("UI_PROFILE_HISTORY_TITLE"))
 	var list := VBoxContainer.new()
-	list.add_theme_constant_override("separation", 8)
+	list.add_theme_constant_override("separation", 10)
 	root.add_child(list)
 
 	var history: Array = _profile_data.get("history", [])
@@ -514,58 +706,84 @@ func _build_history_tile() -> PanelContainer:
 
 func _history_row(row: Dictionary) -> Control:
 	var won: bool = row.get("won", false)
+	var accent := UiTokens.FEEDBACK_CORRECT if won else UiTokens.FEEDBACK_WRONG
 	var hbox := HBoxContainer.new()
 	hbox.add_theme_constant_override("separation", 8)
 
 	var avatar := PanelContainer.new()
-	avatar.custom_minimum_size = Vector2(32, 32)
+	avatar.custom_minimum_size = Vector2(36, 36)
 	var av_style := StyleBoxFlat.new()
 	av_style.bg_color = UiTokens.PROFILE_CARD_BG_RAISED
-	av_style.set_corner_radius_all(16)
+	av_style.set_corner_radius_all(18)
+	av_style.set_border_width_all(1)
+	av_style.border_color = Color(accent.r, accent.g, accent.b, 0.45)
 	avatar.add_theme_stylebox_override("panel", av_style)
 	hbox.add_child(avatar)
 	var initial := Label.new()
 	initial.text = str(row.get("opponent", "?"))[0].to_upper()
 	initial.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	initial.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	initial.add_theme_font_size_override("font_size", 13)
+	initial.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	initial.add_theme_font_size_override("font_size", 14)
 	initial.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	avatar.add_child(initial)
 
-	var mid := VBoxContainer.new()
-	mid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	mid.add_theme_constant_override("separation", 1)
-	hbox.add_child(mid)
+	var left := VBoxContainer.new()
+	left.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	left.add_theme_constant_override("separation", 1)
+	hbox.add_child(left)
 
 	var name_label := Label.new()
 	name_label.text = str(row.get("opponent", ""))
 	name_label.add_theme_font_size_override("font_size", 13)
 	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-	mid.add_child(name_label)
+	left.add_child(name_label)
 
-	var meta := Label.new()
-	meta.text = "%s · %s" % [row.get("category_name", ""), _format_age(int(row.get("age_hours", 0)))]
-	meta.add_theme_font_size_override("font_size", 10)
-	meta.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
-	mid.add_child(meta)
+	var cat := Label.new()
+	cat.text = str(row.get("category_name", ""))
+	cat.add_theme_font_size_override("font_size", 10)
+	cat.add_theme_color_override("font_color", UiTokens.accent_for_category(str(row.get("category_id", ""))))
+	left.add_child(cat)
 
-	var right := VBoxContainer.new()
-	right.alignment = BoxContainer.ALIGNMENT_CENTER
-	hbox.add_child(right)
+	var mid := VBoxContainer.new()
+	mid.alignment = BoxContainer.ALIGNMENT_CENTER
+	hbox.add_child(mid)
 
 	var result := Label.new()
 	result.text = tr("UI_PROFILE_WIN") if won else tr("UI_PROFILE_LOSS")
-	result.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	result.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	result.add_theme_font_size_override("font_size", 11)
-	result.add_theme_color_override("font_color", UiTokens.FEEDBACK_CORRECT if won else UiTokens.FEEDBACK_WRONG)
-	right.add_child(result)
+	result.add_theme_color_override("font_color", accent)
+	mid.add_child(result)
 
+	var theirs := maxi(int(row.get("total_count", 0)) - int(row.get("correct_count", 0)), 0)
 	var score := Label.new()
-	score.text = "%d - %d" % [row.get("correct_count", 0), row.get("total_count", 0)]
-	score.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	score.text = tr("UI_PROFILE_MATCH_SCORE").format({
+		"mine": row.get("correct_count", 0),
+		"theirs": theirs,
+	})
+	score.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	score.add_theme_font_size_override("font_size", 11)
 	score.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
-	right.add_child(score)
+	mid.add_child(score)
+
+	var right := HBoxContainer.new()
+	right.add_theme_constant_override("separation", 4)
+	hbox.add_child(right)
+
+	var age := Label.new()
+	age.text = _format_age(int(row.get("age_hours", 0)))
+	age.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	age.add_theme_font_size_override("font_size", 10)
+	age.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+	right.add_child(age)
+
+	var chevron := Label.new()
+	chevron.text = ">"
+	chevron.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	chevron.add_theme_font_size_override("font_size", 14)
+	chevron.add_theme_color_override("font_color", UiTokens.PROFILE_TITLE_CAPS)
+	right.add_child(chevron)
 	return hbox
 
 
@@ -589,18 +807,25 @@ func _build_badges_tile() -> PanelContainer:
 func _badge_cell(achievement: Dictionary) -> Button:
 	var unlocked: bool = achievement.get("unlocked", false)
 	var button := Button.new()
-	button.custom_minimum_size = Vector2(0, 72)
+	button.custom_minimum_size = Vector2(0, 96)
 	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	button.focus_mode = Control.FOCUS_NONE
 	var accent := UiTokens.ACCENT_LEADERBOARD if unlocked else UiTokens.PROFILE_TEXT_MUTED
 	button.add_theme_stylebox_override("normal", UiStyle.profile_card(accent))
 	button.add_theme_stylebox_override("hover", UiStyle.profile_card(accent, true))
 	button.add_theme_stylebox_override("pressed", UiStyle.profile_card(accent))
 	button.modulate = Color.WHITE if unlocked else UiTokens.PROFILE_BADGE_LOCKED
-	button.text = "%s\n%s" % [str(achievement.get("icon", "?")), tr(str(achievement.get("title_key", "")))]
+	button.clip_text = true
+	button.alignment = HORIZONTAL_ALIGNMENT_CENTER
+	button.text = "%s\n%s\n%s" % [
+		str(achievement.get("icon", "?")),
+		tr(str(achievement.get("title_key", ""))),
+		tr(str(achievement.get("desc_key", ""))),
+	]
 	button.add_theme_font_size_override("font_size", 10)
 	button.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-	button.clip_text = true
 	button.pressed.connect(_on_badge_pressed.bind(achievement))
+	PressScaleUtil.wire(button, self)
 	return button
 
 
@@ -650,12 +875,12 @@ func _build_season_tile() -> PanelContainer:
 
 	var crest := Label.new()
 	crest.text = "🏅"
-	crest.add_theme_font_size_override("font_size", 42)
+	crest.add_theme_font_size_override("font_size", 48)
 	row.add_child(crest)
 
 	var col := VBoxContainer.new()
 	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	col.add_theme_constant_override("separation", 3)
+	col.add_theme_constant_override("separation", 6)
 	row.add_child(col)
 
 	var season_label := Label.new()
@@ -664,23 +889,33 @@ func _build_season_tile() -> PanelContainer:
 	season_label.add_theme_color_override("font_color", UiTokens.ACCENT_LEADERBOARD)
 	col.add_child(season_label)
 
-	var pts := Label.new()
-	pts.text = "%s pts" % _format_int(int(season.get("points", 0)))
-	pts.add_theme_font_size_override("font_size", 16)
-	pts.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-	col.add_child(pts)
-
-	var meta := Label.new()
-	meta.text = tr("UI_PROFILE_SEASON_META").format({
-		"wins": season.get("wins", 0),
-		"rate": "%.0f" % season.get("win_rate", 0.0),
-	})
-	meta.add_theme_font_size_override("font_size", 11)
-	meta.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
-	col.add_child(meta)
+	col.add_child(_season_stat_line("🏆", tr("UI_PROFILE_SEASON_BEST_RANK"), "#%s" % _format_int(int(season.get("best_rank", 0)))))
+	col.add_child(_season_stat_line("🥇", tr("UI_PROFILE_SEASON_WINS"), _format_int(int(season.get("wins", 0)))))
+	col.add_child(_season_stat_line("◎", tr("UI_PROFILE_WIN_RATE"), "%.0f%%" % float(season.get("win_rate", 0.0))))
 
 	_animated_nodes.append(panel)
 	return panel
+
+
+func _season_stat_line(icon: String, label: String, value: String) -> HBoxContainer:
+	var line := HBoxContainer.new()
+	line.add_theme_constant_override("separation", 8)
+	var icon_label := Label.new()
+	icon_label.text = icon
+	icon_label.add_theme_font_size_override("font_size", 12)
+	line.add_child(icon_label)
+	var caption := Label.new()
+	caption.text = label
+	caption.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	caption.add_theme_font_size_override("font_size", 11)
+	caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+	line.add_child(caption)
+	var value_label := Label.new()
+	value_label.text = value
+	value_label.add_theme_font_size_override("font_size", 12)
+	value_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	line.add_child(value_label)
+	return line
 
 
 func _tile(accent: Color = Color(0, 0, 0, 0), raised: bool = false) -> PanelContainer:
@@ -691,17 +926,30 @@ func _tile(accent: Color = Color(0, 0, 0, 0), raised: bool = false) -> PanelCont
 	return panel
 
 
-func _tile_body(panel: PanelContainer, title_text: String) -> VBoxContainer:
+func _tile_body(panel: PanelContainer, title_text: String, with_see_all: bool = false) -> VBoxContainer:
 	var margin := _pad(12, 12)
 	panel.add_child(margin)
 	var root := VBoxContainer.new()
 	root.add_theme_constant_override("separation", 10)
 	margin.add_child(root)
+
+	var header := HBoxContainer.new()
+	header.add_theme_constant_override("separation", 8)
+	root.add_child(header)
+
 	var title := Label.new()
 	title.text = title_text.to_upper()
+	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	title.add_theme_font_size_override("font_size", 11)
 	title.add_theme_color_override("font_color", UiTokens.PROFILE_TITLE_CAPS)
-	root.add_child(title)
+	header.add_child(title)
+
+	if with_see_all:
+		var see_all := Label.new()
+		see_all.text = tr("UI_PROFILE_SEE_ALL").to_upper() + " >"
+		see_all.add_theme_font_size_override("font_size", 10)
+		see_all.add_theme_color_override("font_color", UiTokens.ACCENT_PROFILE)
+		header.add_child(see_all)
 	return root
 
 

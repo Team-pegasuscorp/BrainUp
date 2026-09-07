@@ -119,6 +119,11 @@ UI_RANK_CHALLENGER,Challenger,Challenger
 UI_RANK_EXPERT,Expert,Expert
 UI_RANK_MASTER,Master,Maître
 UI_RANK_LEGEND,Legend,Légende
+UI_LEAGUE_BRONZE,Bronze,Bronze
+UI_LEAGUE_SILVER,Silver,Argent
+UI_LEAGUE_GOLD,Gold,Or
+UI_LEAGUE_PLATINUM,Platinum,Platine
+UI_LEAGUE_DIAMOND,Diamond,Diamant
 UI_MASTERY_0,Not started,Non commencé
 UI_MASTERY_1,Beginner,Débutant
 UI_MASTERY_2,Skilled,Confirmé
@@ -141,7 +146,11 @@ UI_ACH_LEVEL_5_DESC,Reach level 5.,Atteignez le niveau 5.
 UI_ACH_EXPLORER,Explorer,Explorateur
 UI_ACH_EXPLORER_DESC,Play quizzes in at least 2 categories.,Jouez dans au moins 2 catégories.
 UI_PROFILE_EDIT,Edit profile,Modifier le profil
+UI_PROFILE_EMAIL_VERIFIED,Email verified,Adresse e-mail vérifiée
 UI_PROFILE_XP_TO_NEXT,{xp} XP to next level,{xp} XP avant le prochain niveau
+UI_PROFILE_LEVEL_CAPTION,Level,Niveau
+UI_PROFILE_NEXT_LEVEL,Next level: {xp} XP,Prochain niveau : {xp} XP
+UI_PROFILE_XP_LABEL,XP,XP
 UI_PROFILE_LEAGUE,League,Ligue
 UI_PROFILE_RANKING_TITLE,Ranking points,Points de classement
 UI_PROFILE_CATEGORIES_MASTERED,Mastered categories,Catégories maîtrisées
@@ -155,6 +164,10 @@ UI_PROFILE_BADGES_RECENT,Recent achievements,Succès récents
 UI_PROFILE_WORLD_RANK,World ranking,Classement mondial
 UI_PROFILE_TOP_PERCENT,TOP {percent}%,TOP {percent}%
 UI_PROFILE_SEE_LEADERBOARD,View leaderboard,Voir le classement
+UI_PROFILE_SEE_ALL,See all,Voir tout
 UI_PROFILE_BEST_SEASON,Best season,Meilleure saison
 UI_PROFILE_SEASON_N,Season {n},Saison {n}
 UI_PROFILE_SEASON_META,{wins} wins · {rate}% winrate,{wins} victoires · {rate}% winrate
+UI_PROFILE_SEASON_BEST_RANK,Best rank,Meilleur rang
+UI_PROFILE_SEASON_WINS,Season wins,Victoires saison
+UI_PROFILE_MATCH_SCORE,{mine} - {theirs},{mine} - {theirs}

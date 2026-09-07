@@ -5,6 +5,9 @@ const QuestionLoaderScript = preload("res://scripts/quiz/question_loader.gd")
 const PlayerRanks = preload("res://scripts/profile/player_ranks.gd")
 const AchievementsCatalog = preload("res://scripts/profile/achievements_catalog.gd")
 const LeaderboardSnapshot = preload("res://scripts/profile/leaderboard_snapshot.gd")
+const UiTokens = preload("res://scripts/config/ui_tokens.gd")
+const CountryFlags = preload("res://scripts/profile/country_flags.gd")
+const TrophyLeagues = preload("res://scripts/profile/trophy_leagues.gd")
 
 const USE_DEMO_WHEN_EMPTY: bool = true
 const DAILY_GOAL_TARGET: int = 5
@@ -18,6 +21,9 @@ static func build_full(locale: String) -> Dictionary:
 	data["achievements"] = _build_achievements(data)
 	data["ranking"] = _build_ranking(data, locale)
 	data["daily_goal"] = _build_daily_goal(data)
+	data["best_category"] = _pick_best_category(data.get("categories", []))
+	data["win_distribution"] = _build_win_distribution(data)
+	data["season"] = _build_season(data)
 	return data
 
 
@@ -29,6 +35,12 @@ static func _from_save(locale: String) -> Dictionary:
 	var win_rate := SaveManager.get_win_rate_percent()
 	return {
 		"player_name": SaveManager.player_name,
+		"country": "France",
+		"country_flag": CountryFlags.emoji_for("France"),
+		"email_verified": SaveManager.email_verified,
+		## Local player is online while the app session is active.
+		## Social profiles will override this from presence / friends API later.
+		"is_online": true,
 		"level": SaveManager.level,
 		"xp": SaveManager.xp,
 		"xp_to_next": SaveManager.get_xp_for_next_level(),
@@ -100,16 +112,20 @@ static func _merge_demo(base: Dictionary, locale: String) -> Dictionary:
 	demo["current_win_streak"] = 7
 	demo["best_win_streak"] = 17
 	demo["best_score"] = 980
+	demo["country"] = "France"
+	demo["country_flag"] = CountryFlags.emoji_for("France")
+	demo["email_verified"] = true
+	demo["is_online"] = true
 	demo["categories"] = [
-		_make_category_row("sport", locale, 412, 84.0, 4),
-		_make_category_row("cinema", locale, 386, 71.0, 3),
-		_make_category_row("history", locale, 450, 78.0, 4),
+		_make_category_row("sport", locale, 412, 84.0, 4, 24, "gold"),
+		_make_category_row("cinema", locale, 386, 71.0, 3, 19, "bronze"),
+		_make_category_row("history", locale, 450, 78.0, 4, 22, "silver"),
 	]
 	demo["history"] = [
-		_make_history_row("sport", locale, 820, true, 8, 6, 0, "Lucas", 24),
-		_make_history_row("cinema", locale, 510, false, 5, 7, 3, "Emma", -12),
-		_make_history_row("history", locale, 740, true, 7, 5, 8, "Noah", 18),
-		_make_history_row("sport", locale, 630, true, 6, 4, 26, "Léa", 9),
+		_make_history_row("sport", locale, 820, true, 15, 24, 0, "Lucas", 24),
+		_make_history_row("cinema", locale, 510, false, 9, 20, 3, "Emma", -12),
+		_make_history_row("history", locale, 740, true, 14, 22, 8, "Noah", 18),
+		_make_history_row("sport", locale, 630, true, 12, 20, 26, "Léa", 9),
 	]
 	return demo
 
@@ -124,10 +140,12 @@ static func _build_categories(locale: String) -> Array:
 		var total_c: int = int(stats.get("total_correct", 0))
 		var accuracy := 0.0 if total_q <= 0 else float(total_c) / float(total_q) * 100.0
 		var mastery := 0 if games <= 0 else clampi(int(games / 3) + int(accuracy / 30.0), 1, 4)
-		rows.append(_make_category_row(category_id, locale, games, accuracy, mastery))
+		var display_level := 0 if games <= 0 else clampi(int(games * 0.18) + int(accuracy / 8.0), 1, 99)
+		rows.append(_make_category_row(category_id, locale, games, accuracy, mastery, display_level))
 	rows.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
 		return float(a.get("accuracy_percent", 0.0)) > float(b.get("accuracy_percent", 0.0))
 	)
+	_assign_medals(rows)
 	return rows
 
 
@@ -136,8 +154,12 @@ static func _make_category_row(
 	locale: String,
 	games: int,
 	accuracy: float,
-	mastery: int
+	mastery: int,
+	display_level: int = -1,
+	medal: String = "none"
 ) -> Dictionary:
+	if display_level < 0:
+		display_level = 0 if games <= 0 else clampi(int(games * 0.18) + int(accuracy / 8.0), 1, 99)
 	return {
 		"id": category_id,
 		"name": _resolve_category_name(category_id, locale),
@@ -145,10 +167,29 @@ static func _make_category_row(
 		"games_played": games,
 		"accuracy_percent": accuracy,
 		"mastery_level": mastery,
+		"display_level": display_level,
+		"medal": medal,
 		"mastery_label_key": "UI_MASTERY_%d" % mastery,
-		"mastery_progress": clampf(float(games) / 12.0, 0.12, 1.0),
+		"mastery_progress": clampf(float(games) / 12.0, 0.12, 1.0) if games > 0 else 0.0,
 		"win_rate_percent": accuracy,
 	}
+
+
+static func _assign_medals(rows: Array) -> void:
+	var ranked: Array = []
+	for row in rows:
+		if typeof(row) != TYPE_DICTIONARY:
+			continue
+		if int(row.get("games_played", 0)) <= 0:
+			row["medal"] = "none"
+			continue
+		ranked.append(row)
+	ranked.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		return float(a.get("accuracy_percent", 0.0)) > float(b.get("accuracy_percent", 0.0))
+	)
+	var medals := ["gold", "silver", "bronze"]
+	for i in range(mini(ranked.size(), medals.size())):
+		ranked[i]["medal"] = medals[i]
 
 
 static func _category_icon(category_id: String) -> String:
@@ -251,11 +292,16 @@ static func _build_ranking(data: Dictionary, locale: String) -> Dictionary:
 		rank = maxi(1, 220 - int(data.get("level", 1)) * 3)
 		points = maxi(points, int(data.get("wins", 0)) * 12)
 	var weekly_delta := 23 if data.get("is_demo", false) else clampi(int(data.get("current_win_streak", 0)) * 3, -18, 42)
+	## League badge follows trophy count (thresholds still provisional).
+	var league: Dictionary = TrophyLeagues.for_trophies(points)
 	return {
 		"rank": rank,
 		"points": points,
 		"weekly_delta": weekly_delta,
-		"league_key": str(data.get("rank_title_key", "UI_RANK_ROOKIE")),
+		"league_key": str(league.get("title_key", "UI_LEAGUE_BRONZE")),
+		"league_icon": str(league.get("icon", "🥉")),
+		"league_id": str(league.get("id", "bronze")),
+		"league_thresholds_provisional": bool(league.get("thresholds_provisional", true)),
 	}
 
 
@@ -288,3 +334,70 @@ static func _resolve_category_name(category_id: String, locale: String) -> Strin
 		if category.get("id", "") == category_id:
 			return str(category.get("name", category_id))
 	return category_id
+
+
+static func _pick_best_category(categories: Array) -> Dictionary:
+	var best: Dictionary = {}
+	var best_acc := -1.0
+	for row in categories:
+		if typeof(row) != TYPE_DICTIONARY:
+			continue
+		if int(row.get("games_played", 0)) <= 0:
+			continue
+		var acc := float(row.get("accuracy_percent", 0.0))
+		if acc > best_acc:
+			best_acc = acc
+			best = row
+	return best
+
+
+static func _build_win_distribution(data: Dictionary) -> Array:
+	var categories: Array = data.get("categories", [])
+	var weights: Array = []
+	var total := 0.0
+	for row in categories:
+		if typeof(row) != TYPE_DICTIONARY:
+			continue
+		var games := float(row.get("games_played", 0))
+		if games <= 0.0:
+			continue
+		var weight := games * maxf(float(row.get("accuracy_percent", 0.0)), 1.0)
+		weights.append({"row": row, "weight": weight})
+		total += weight
+	if total <= 0.0:
+		return []
+	var out: Array = []
+	for item in weights:
+		var row: Dictionary = item.row
+		var ratio := float(item.weight) / total
+		out.append({
+			"id": row.get("id", ""),
+			"name": row.get("name", ""),
+			"icon": row.get("icon", "🧠"),
+			"ratio": ratio,
+			"percent": int(round(ratio * 100.0)),
+			"color": UiTokens.accent_for_category(str(row.get("id", ""))),
+		})
+	return out
+
+
+static func _build_season(data: Dictionary) -> Dictionary:
+	var ranking: Dictionary = data.get("ranking", {})
+	var wins := int(data.get("wins", 0))
+	var rate := float(data.get("win_rate_percent", 0.0))
+	var points := int(ranking.get("points", data.get("best_score", 0)))
+	if data.get("is_demo", false):
+		return {
+			"number": 3,
+			"points": 2845,
+			"wins": 76,
+			"win_rate": 59.0,
+			"best_rank": 184,
+		}
+	return {
+		"number": maxi(1, int(data.get("level", 1) / 8) + 1),
+		"points": points,
+		"wins": wins,
+		"win_rate": rate,
+		"best_rank": int(ranking.get("rank", 0)),
+	}

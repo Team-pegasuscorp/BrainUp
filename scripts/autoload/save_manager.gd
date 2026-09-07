@@ -9,6 +9,9 @@ const MAX_MATCH_HISTORY: int = 30
 
 var player_name: String = UiTokens.DEFAULT_PLAYER_NAME
 var preferred_locale: String = ""
+var email: String = ""
+## True after the player confirms ownership of `email` (mail verification).
+var email_verified: bool = false
 var level: int = 1
 var xp: int = 0
 var category_stats: Dictionary = {}
@@ -40,6 +43,8 @@ func load_data() -> void:
 
 	player_name = parsed.get("player_name", player_name)
 	preferred_locale = parsed.get("preferred_locale", preferred_locale)
+	email = str(parsed.get("email", email))
+	email_verified = bool(parsed.get("email_verified", email_verified))
 	level = int(parsed.get("level", level))
 	xp = int(parsed.get("xp", xp))
 	category_stats = parsed.get("category_stats", category_stats)
@@ -56,6 +61,8 @@ func save_data() -> void:
 	var data := {
 		"player_name": player_name,
 		"preferred_locale": preferred_locale,
+		"email": email,
+		"email_verified": email_verified,
 		"level": level,
 		"xp": xp,
 		"category_stats": category_stats,
@@ -87,6 +94,18 @@ func set_preferred_locale(locale: String) -> void:
 func set_player_name(name: String) -> void:
 	var trimmed := name.strip_edges()
 	player_name = trimmed if not trimmed.is_empty() else UiTokens.DEFAULT_PLAYER_NAME
+	save_data()
+
+
+func set_email(address: String) -> void:
+	email = address.strip_edges().to_lower()
+	## Changing email invalidates prior verification until confirmed again.
+	email_verified = false
+	save_data()
+
+
+func set_email_verified(verified: bool) -> void:
+	email_verified = verified
 	save_data()
 
 
