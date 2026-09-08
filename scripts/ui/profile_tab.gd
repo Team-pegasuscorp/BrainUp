@@ -915,38 +915,83 @@ func _build_win_distribution_tile() -> PanelContainer:
 
 
 func _build_history_tile() -> PanelContainer:
-	## Height only — snug for 4 matches max (same icon/text scale as categories).
+	## Mock: 4 compact match rows with accent bar + dividers.
 	var panel := _tile()
 	panel.custom_minimum_size.y = UiTokens.DASH_HISTORY_HEIGHT
 	var root := _tile_body(panel, tr("UI_PROFILE_HISTORY_TITLE"))
+	root.add_theme_constant_override("separation", 8)
+	## Larger title for this tile.
+	var header := root.get_child(0) as HBoxContainer
+	if header != null and header.get_child_count() > 0:
+		var title := header.get_child(0) as Label
+		if title != null:
+			title.add_theme_font_size_override("font_size", 20)
 	var list := VBoxContainer.new()
-	list.add_theme_constant_override("separation", 12)
+	list.add_theme_constant_override("separation", 0)
+	list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	root.add_child(list)
 
 	var history: Array = _profile_data.get("history", [])
 	if history.is_empty():
-		list.add_child(_empty(tr("UI_PROFILE_NO_HISTORY")))
+		var empty := _empty(tr("UI_PROFILE_NO_HISTORY"))
+		empty.add_theme_font_size_override("font_size", 14)
+		list.add_child(empty)
 	else:
 		var count := 0
 		for row in history:
 			if count >= 4:
 				break
+			if count > 0:
+				list.add_child(_history_divider())
 			list.add_child(_history_row(row))
 			count += 1
 	_animated_nodes.append(panel)
 	return panel
 
 
+func _history_divider() -> Control:
+	## 2px — 1px rules vanish under swipe/scroll subpixel sampling.
+	var line := ColorRect.new()
+	line.custom_minimum_size = Vector2(0, 2)
+	line.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	line.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	line.color = Color(1, 1, 1, 0.14)
+	return line
+
+
 func _history_row(row: Dictionary) -> Control:
 	var won: bool = row.get("won", false)
-	var accent := UiTokens.FEEDBACK_CORRECT if won else UiTokens.FEEDBACK_WRONG
+	## Explicit win/loss colours (mock: green victory, red defeat).
+	var win_color := Color(0.20, 0.86, 0.48, 1)
+	var loss_color := Color(0.96, 0.26, 0.32, 1)
+	var result_color := win_color if won else loss_color
+	var cat_accent := UiTokens.accent_for_category(str(row.get("category_id", "")))
+
+	var row_wrap := MarginContainer.new()
+	row_wrap.add_theme_constant_override("margin_top", 8)
+	row_wrap.add_theme_constant_override("margin_bottom", 8)
+	row_wrap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+
 	var hbox := HBoxContainer.new()
 	hbox.add_theme_constant_override("separation", 10)
 	hbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row_wrap.add_child(hbox)
 
-	## Same badge footprint as categories (54 / glyph 28 / soft glow).
+	## Category accent bar (mock left rail).
+	var bar := Panel.new()
+	bar.custom_minimum_size = Vector2(3, 48)
+	bar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var bar_style := StyleBoxFlat.new()
+	bar_style.bg_color = cat_accent
+	bar_style.set_corner_radius_all(2)
+	bar.add_theme_stylebox_override("panel", bar_style)
+	hbox.add_child(bar)
+
+	## Circular avatar.
 	var avatar_slot := Control.new()
-	avatar_slot.custom_minimum_size = Vector2(54, 54)
+	avatar_slot.custom_minimum_size = Vector2(48, 48)
 	avatar_slot.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	avatar_slot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	avatar_slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -956,24 +1001,24 @@ func _history_row(row: Dictionary) -> Control:
 	avatar_bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	avatar_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var av_style := StyleBoxFlat.new()
-	av_style.bg_color = Color(accent.r, accent.g, accent.b, 0.28)
-	av_style.set_corner_radius_all(27)
+	av_style.bg_color = Color(cat_accent.r, cat_accent.g, cat_accent.b, 0.28)
+	av_style.set_corner_radius_all(24)
 	av_style.set_content_margin_all(0)
-	av_style.shadow_color = Color(accent.r, accent.g, accent.b, 0.12)
-	av_style.shadow_size = 2
 	avatar_bg.add_theme_stylebox_override("panel", av_style)
 	avatar_slot.add_child(avatar_bg)
 
 	var initial := Label.new()
-	initial.text = str(row.get("opponent", "?"))[0].to_upper()
+	var opponent_name := str(row.get("opponent", "?"))
+	initial.text = opponent_name[0].to_upper() if not opponent_name.is_empty() else "?"
 	initial.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	initial.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	initial.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	initial.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	initial.add_theme_font_size_override("font_size", 28)
+	initial.add_theme_font_size_override("font_size", 20)
 	initial.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	avatar_slot.add_child(initial)
 
+	## Name + category.
 	var left := VBoxContainer.new()
 	left.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	left.size_flags_vertical = Control.SIZE_SHRINK_CENTER
@@ -981,7 +1026,7 @@ func _history_row(row: Dictionary) -> Control:
 	hbox.add_child(left)
 
 	var name_label := Label.new()
-	name_label.text = str(row.get("opponent", ""))
+	name_label.text = opponent_name
 	name_label.clip_text = true
 	name_label.add_theme_font_size_override("font_size", 18)
 	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
@@ -990,41 +1035,54 @@ func _history_row(row: Dictionary) -> Control:
 	var cat := Label.new()
 	cat.text = str(row.get("category_name", ""))
 	cat.clip_text = true
-	cat.add_theme_font_size_override("font_size", 14)
-	cat.add_theme_color_override("font_color", UiTokens.accent_for_category(str(row.get("category_id", ""))))
+	cat.add_theme_font_size_override("font_size", 15)
+	cat.add_theme_color_override("font_color", cat_accent)
 	left.add_child(cat)
 
-	var mid := VBoxContainer.new()
+	## Result then score on one line (aligned across rows).
+	var mid := HBoxContainer.new()
+	mid.add_theme_constant_override("separation", 10)
 	mid.alignment = BoxContainer.ALIGNMENT_CENTER
+	mid.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	mid.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	mid.custom_minimum_size = Vector2(188, 0)
 	hbox.add_child(mid)
 
 	var result := Label.new()
 	result.text = (tr("UI_PROFILE_WIN") if won else tr("UI_PROFILE_LOSS")).to_upper()
-	result.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	result.add_theme_font_size_override("font_size", 14)
-	result.add_theme_color_override("font_color", accent)
+	result.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	result.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	result.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	result.add_theme_font_size_override("font_size", 19)
+	result.add_theme_color_override("font_color", result_color)
 	mid.add_child(result)
 
-	var theirs := maxi(int(row.get("total_count", 0)) - int(row.get("correct_count", 0)), 0)
+	var mine := int(row.get("my_score", row.get("correct_count", 0)))
+	var theirs := int(row.get("opponent_score", maxi(int(row.get("total_count", 0)) - mine, 0)))
 	var score := Label.new()
-	score.text = tr("UI_PROFILE_MATCH_SCORE").format({
-		"mine": row.get("correct_count", 0),
-		"theirs": theirs,
-	})
-	score.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	score.add_theme_font_size_override("font_size", 14)
-	score.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+	score.text = tr("UI_PROFILE_MATCH_SCORE").format({"mine": mine, "theirs": theirs})
+	score.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	score.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	score.custom_minimum_size.x = 60
+	score.add_theme_font_size_override("font_size", 19)
+	## Mock: white score on win, red score on loss.
+	score.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT if won else loss_color)
 	mid.add_child(score)
 
+	## Relative time + chevron (fixed width keeps result column aligned across rows).
 	var right := HBoxContainer.new()
 	right.add_theme_constant_override("separation", 4)
 	right.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	right.size_flags_horizontal = Control.SIZE_SHRINK_END
+	right.custom_minimum_size.x = 118
+	right.alignment = BoxContainer.ALIGNMENT_END
 	hbox.add_child(right)
 
 	var age := Label.new()
-	age.text = _format_age(int(row.get("age_hours", 0)))
+	age.text = _format_age_minutes(int(row.get("age_minutes", int(row.get("age_hours", 0)) * 60)))
 	age.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	age.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	age.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	age.add_theme_font_size_override("font_size", 14)
 	age.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	right.add_child(age)
@@ -1035,7 +1093,7 @@ func _history_row(row: Dictionary) -> Control:
 	chevron.add_theme_font_size_override("font_size", 18)
 	chevron.add_theme_color_override("font_color", UiTokens.PROFILE_TITLE_CAPS)
 	right.add_child(chevron)
-	return hbox
+	return row_wrap
 
 
 func _build_badges_tile() -> PanelContainer:
@@ -1232,11 +1290,17 @@ func _format_int(value: int) -> String:
 
 
 func _format_age(hours: int) -> String:
-	if hours <= 0:
+	return _format_age_minutes(maxi(hours, 0) * 60)
+
+
+func _format_age_minutes(minutes: int) -> String:
+	if minutes <= 0:
 		return tr("UI_PROFILE_TIME_NOW")
-	if hours < 24:
-		return tr("UI_PROFILE_TIME_HOURS").format({"hours": hours})
-	return tr("UI_PROFILE_TIME_DAYS").format({"days": int(hours / 24.0)})
+	if minutes < 60:
+		return tr("UI_PROFILE_TIME_MINUTES").format({"minutes": minutes})
+	if minutes < 24 * 60:
+		return tr("UI_PROFILE_TIME_HOURS").format({"hours": int(minutes / 60.0)})
+	return tr("UI_PROFILE_TIME_DAYS").format({"days": int(minutes / (24.0 * 60.0))})
 
 
 func _style_profile_button(button: Button, accent: Color) -> void:

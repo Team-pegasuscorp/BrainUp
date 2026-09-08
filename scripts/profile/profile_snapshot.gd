@@ -130,10 +130,10 @@ static func _merge_demo(base: Dictionary, locale: String) -> Dictionary:
 	]
 	_assign_medals(demo["categories"])
 	demo["history"] = [
-		_make_history_row("sport", locale, 820, true, 15, 24, 0, "Lucas", 24),
-		_make_history_row("cinema", locale, 510, false, 9, 20, 3, "Emma", -12),
-		_make_history_row("history", locale, 740, true, 14, 22, 8, "Noah", 18),
-		_make_history_row("music", locale, 690, true, 13, 21, 5, "Léa", 9),
+		_make_history_row("science", locale, 820, true, 15, 9, 0, "Lucas", 24, 2),
+		_make_history_row("cinema", locale, 780, true, 18, 12, 0, "Emma", 18, 15),
+		_make_history_row("sport", locale, 410, false, 8, 15, 1, "Theo", -12, 60),
+		_make_history_row("geography", locale, 860, true, 20, 11, 3, "Chloé", 22, 180),
 	]
 	return demo
 
@@ -232,24 +232,30 @@ static func _make_history_row(
 	locale: String,
 	score: int,
 	won: bool,
-	correct: int,
-	total: int,
+	my_score: int,
+	opponent_score: int,
 	age_hours: int,
 	opponent: String = "",
-	points_delta: int = 0
+	points_delta: int = 0,
+	age_minutes: int = -1
 ) -> Dictionary:
 	if opponent.is_empty():
 		opponent = HISTORY_OPPONENTS[absi(hash("%s-%s-%d" % [category_id, locale, score])) % HISTORY_OPPONENTS.size()]
 	if points_delta == 0:
-		points_delta = (correct * 4) if won else -maxi(total - correct, 1) * 3
+		points_delta = (my_score * 4) if won else -maxi(opponent_score, 1) * 3
+	if age_minutes < 0:
+		age_minutes = maxi(age_hours, 0) * 60
 	return {
 		"category_id": category_id,
 		"category_name": _resolve_category_name(category_id, locale),
 		"score": score,
 		"won": won,
-		"correct_count": correct,
-		"total_count": total,
+		"correct_count": my_score,
+		"total_count": my_score + opponent_score,
+		"my_score": my_score,
+		"opponent_score": opponent_score,
 		"age_hours": age_hours,
+		"age_minutes": age_minutes,
 		"opponent": opponent,
 		"points_delta": points_delta,
 	}
@@ -263,20 +269,24 @@ static func _build_history(locale: String) -> Array:
 		if typeof(raw) != TYPE_DICTIONARY:
 			continue
 		var played_at := int(raw.get("played_at", now))
-		var age_hours := int(max(float(now - played_at) / 3600.0, 0.0))
+		var age_seconds := maxi(now - played_at, 0)
+		var age_minutes := int(age_seconds / 60.0)
+		var age_hours := int(age_seconds / 3600.0)
 		var won := bool(raw.get("won", false))
 		var correct := int(raw.get("correct_count", 0))
 		var total := int(raw.get("total_count", 0))
+		var theirs := maxi(total - correct, 0)
 		rows.append(_make_history_row(
 			str(raw.get("category_id", "")),
 			locale,
 			int(raw.get("score", 0)),
 			won,
 			correct,
-			total,
+			theirs,
 			age_hours,
 			HISTORY_OPPONENTS[index % HISTORY_OPPONENTS.size()],
-			0
+			0,
+			age_minutes
 		))
 		index += 1
 	return rows

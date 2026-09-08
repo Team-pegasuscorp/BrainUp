@@ -98,7 +98,7 @@ UI_COMING_SOON_DESC,This feature is under development.,Cette fonctionnalité est
 UI_PROFILE_STATS_TITLE,Statistics,Statistiques
 UI_PROFILE_CATEGORIES_TITLE,Categories,Catégories
 UI_PROFILE_BADGES_TITLE,Achievements,Succès
-UI_PROFILE_HISTORY_TITLE,Recent history,Historique récent
+UI_PROFILE_HISTORY_TITLE,Last games,Dernières parties
 UI_PROFILE_XP_PROGRESS,{current} / {target} XP,{current} / {target} XP
 UI_PROFILE_DEMO_HINT,Sample data shown for preview.,Données d'exemple affichées en aperçu.
 UI_PROFILE_CORRECT_ANSWERS,Correct answers,Bonnes réponses
@@ -110,6 +110,7 @@ UI_PROFILE_NO_HISTORY,No recent matches yet.,Aucune partie récente pour l'insta
 UI_PROFILE_CATEGORY_META,{games} games · {accuracy}% accuracy,{games} parties · {accuracy}% de précision
 UI_PROFILE_HISTORY_LINE,Score {score} · {correct}/{total} correct · {time},Score {score} · {correct}/{total} bonnes · {time}
 UI_PROFILE_TIME_NOW,Just now,À l'instant
+UI_PROFILE_TIME_MINUTES,{minutes}m ago,Il y a {minutes} min
 UI_PROFILE_TIME_HOURS,{hours}h ago,Il y a {hours} h
 UI_PROFILE_TIME_DAYS,{days}d ago,Il y a {days} j
 UI_PROFILE_BADGE_LOCKED,Complete the challenge to unlock this badge.,Terminez le défi pour débloquer ce succès.

@@ -19,9 +19,10 @@ On the **Profil** page (`profile_tab`), **never** change tile / card / page **wi
 
 If text / icons / separators fight for space:
 
-- Prefer **overlap**, clipping, or smaller typography **only if the user asks**
+- Prefer **smaller typography**, clipping, or internal reflow so nothing overlaps
+- Do **not** leave visible overlaps as the default solution
 - Do **not** widen/narrow tiles or page gutters to resolve the conflict
-- Only move/resize **elements inside** a tile (text, icons, separators, vertical padding) when asked
+- Only move/resize **elements inside** a tile (text, icons, separators, vertical padding)
 
 ## Allowed without a width ask
 

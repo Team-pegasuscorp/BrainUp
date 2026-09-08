@@ -1,0 +1,21 @@
+---
+description: Shrink numbers/text that would overlap other UI instead of leaving collisions.
+alwaysApply: true
+---
+
+# Text / number overflow — resize, don’t leave overlaps
+
+If a digit, label, caption, or other text **overlaps** or collides with another element (icon, separator, neighbour label, tile edge), **reduce its font size** (or truncate / clip as a last resort) so the layout stays readable.
+
+## Do
+
+- Detect likely collisions: long numbers (`1 248`), long FR/EN labels, tight HBox rows, donut centre copy
+- Prefer a **slightly smaller font** that fits over leaving a visual overlap
+- Keep hierarchy: shrink the overflowing value first; only shrink neighbours if needed
+- On profile tiles, shrink **inside** the tile — never widen the tile or page gutters to “make room” (see `profile-tile-width.mdc`)
+
+## Don’t
+
+- Ship overlapping text as acceptable by default
+- Fix overlap by changing locked profile tile / page **widths** unless the user asks
+- Scale the whole tile just to fit one label
