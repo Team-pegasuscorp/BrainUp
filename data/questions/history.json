@@ -282,8 +282,8 @@
           "choices": [
             "USS Pueblo",
             "USS Indianapolis",
-            "USS Caroline du Nord",
-            "Constitution américaine"
+            "USS North Carolina",
+            "USS Constitution"
           ],
           "explanation": "La bonne réponse est : USS Pueblo."
         }
@@ -312,12 +312,12 @@
         "fr": {
           "text": "Quel conflit historique a tué le plus de gens ?",
           "choices": [
-            "Rébellion des queues",
-            "Deuxième guerre mondiale",
-            "Trois Royaumes Guerre",
+            "Révolte des Taiping",
+            "Seconde Guerre mondiale",
+            "Guerre des Trois Royaumes",
             "Conquêtes mongoles"
           ],
-          "explanation": "La réponse correcte est : Seconde Guerre mondiale."
+          "explanation": "La bonne réponse est : Seconde Guerre mondiale."
         }
       }
     },
@@ -377,7 +377,7 @@
           "text": "Dans les Sept Merveilles du Monde, quelle merveille est la seule qui ait survécu jusqu'à ce jour?",
           "choices": [
             "Statue de Zeus à Olympia",
-            "Colosses de Rhodes",
+            "Colosse de Rhodes",
             "Grande pyramide de Giza",
             "Phare d'Alexandrie"
           ],
@@ -438,14 +438,14 @@
           "explanation": "The correct answer is: Median, Achaemenid, Parthian, Sassanid."
         },
         "fr": {
-          "text": "Lister les empires iraniens suivants par ordre chronologique:",
+          "text": "Classez les empires iraniens suivants par ordre chronologique :",
           "choices": [
-            "Achaemenid, Médiane, Sassanid, Parthian",
-            "Médiane, Achaemenid, Parthian, Sassanid",
-            "Achaemenid, Médiane, Parthian, Sassanid",
-            "Médiane, Achaemenid, Sassanid, Parthian"
+            "Achéménide, Mède, Sassanide, Parthe",
+            "Mède, Achéménide, Parthe, Sassanide",
+            "Achéménide, Mède, Parthe, Sassanide",
+            "Mède, Achéménide, Sassanide, Parthe"
           ],
-          "explanation": "La bonne réponse est: Médiane, Achaimenid, Parthian, Sassanid."
+          "explanation": "La bonne réponse est : Mède, Achéménide, Parthe, Sassanide."
         }
       }
     },
@@ -598,7 +598,7 @@
           "explanation": "The correct answer is: Aragon."
         },
         "fr": {
-          "text": "L'Espagne a été formée en 1469 avec le mariage d'Isabella I de Castille et Ferdinand II de quel autre royaume ibérique?",
+          "text": "L'Espagne a été formée en 1469 avec le mariage d'Isabelle Ire de Castille et de Ferdinand II de quel autre royaume ibérique ?",
           "choices": [
             "Navarre",
             "León",
@@ -662,7 +662,7 @@
           "explanation": "The correct answer is: Alexander VI."
         },
         "fr": {
-          "text": "Le fils de quel pape aurait tenu une fête léchereuse impliquant 50 courtisans dans le palais pontifical ?",
+          "text": "Le fils de quel pape aurait organisé une fête licencieuse impliquant 50 courtisanes dans le palais pontifical ?",
           "choices": [
             "Pie III",
             "Alexandre VI",
@@ -790,11 +790,11 @@
           "explanation": "The correct answer is: Operation Barbarossa."
         },
         "fr": {
-          "text": "Quel était le nom de code de l'invasion allemande de l'Union soviétique en WW2 ?",
+          "text": "Quel était le nom de code de l'invasion allemande de l'Union soviétique pendant la Seconde Guerre mondiale ?",
           "choices": [
             "Opération Barbarossa",
             "Opération Molotov",
-            "Opération impensable",
+            "Opération Unthinkable",
             "Opération Kaiserschlact"
           ],
           "explanation": "La bonne réponse est : Opération Barbarossa."
@@ -827,9 +827,9 @@
             "Bataille de Constantinople",
             "Bataille de Pollentia",
             "Bataille de Thessalonique",
-            "Bataille d'Adrianople"
+            "Bataille d'Andrinople"
           ],
-          "explanation": "La bonne réponse est : Bataille d'Adrianople."
+          "explanation": "La bonne réponse est : Bataille d'Andrinople."
         }
       }
     },
@@ -886,11 +886,11 @@
           "explanation": "The correct answer is: Billund, Denmark."
         },
         "fr": {
-          "text": "Le premier parc Legoland a été ouvert en 1968 dans laquelle de ces villes?",
+          "text": "Le premier parc Legoland a ouvert en 1968 dans laquelle de ces villes ?",
           "choices": [
             "Nagoya, Japon",
             "Carlsbad, Californie",
-            "Havre d'hiver, Floride",
+            "Winter Haven, Floride",
             "Billund, Danemark"
           ],
           "explanation": "La bonne réponse est: Billund, Danemark."
@@ -1014,14 +1014,14 @@
           "explanation": "The correct answer is: Robbing Trains."
         },
         "fr": {
-          "text": "Joseph Staline avait un passé criminel à faire quoi ?",
+          "text": "Quel était le passé criminel de Joseph Staline ?",
           "choices": [
-            "Trains de vol",
+            "Vol de trains",
             "Évasion fiscale",
             "Fraude d'identité",
-            "Meurtre pour location"
+            "Meurtre à gages"
           ],
-          "explanation": "La bonne réponse est : Vols de trains."
+          "explanation": "La bonne réponse est : Vol de trains."
         }
       }
     },
@@ -1112,7 +1112,7 @@
         "fr": {
           "text": "Lequel des éléments suivants ne figure pas dans la famille des langues indo-européennes?",
           "choices": [
-            "changements climatiques",
+            "Anglais",
             "Hindi",
             "Russe",
             "Finnois"
@@ -1174,7 +1174,7 @@
           "explanation": "The correct answer is: January 25, 1945."
         },
         "fr": {
-          "text": "Quand a pris fin la bataille des Bulge ?",
+          "text": "Quand s'est terminée la bataille des Ardennes ?",
           "choices": [
             "6 août 1945",
             "25 janvier 1945",
@@ -1336,9 +1336,9 @@
         "fr": {
           "text": "Qui était stratège militaire à l'époque du Zhou oriental ?",
           "choices": [
-            "Vlad L'Impaler",
+            "Vlad l'Empaleur",
             "Genghis Khan",
-            "Soleil Tzu",
+            "Sun Tzu",
             "Lu Bu"
           ],
           "explanation": "La bonne réponse est : Sun Tzu."
@@ -1430,12 +1430,12 @@
           "explanation": "The correct answer is: Landsberg Prison."
         },
         "fr": {
-          "text": "Dans quelle prison Adolf Hitler a - t - il été détenu en 1924?",
+          "text": "Dans quelle prison Adolf Hitler a-t-il été détenu en 1924 ?",
           "choices": [
             "Prison de Spandau",
             "Prison de Landsberg",
             "Abbaye d'Ebrach",
-            "Les"
+            "Hohenasperg"
           ],
           "explanation": "La bonne réponse est la prison de Landsberg."
         }
@@ -1558,11 +1558,11 @@
           "explanation": "The correct answer is: The Napoleonic Wars."
         },
         "fr": {
-          "text": "Quel est l'événement historique du référendum d'ouverture de Tchaïkovsky en 1812?",
+          "text": "À quel événement historique l'Ouverture 1812 de Tchaïkovski fait-elle référence ?",
           "choices": [
             "La révolution russe",
             "La guerre américaine de 1812",
-            "L'accusation de la brigade légère (guerre civile)",
+            "La charge de la brigade légère (guerre de Crimée)",
             "Les guerres napoléoniennes"
           ],
           "explanation": "La bonne réponse est : Les guerres napoléoniennes."
@@ -1624,9 +1624,9 @@
         "fr": {
           "text": "Qui était le chef de la Suède dans la Grande Guerre du Nord?",
           "choices": [
-            "Par Albin Hansson",
+            "Per Albin Hansson",
             "Charles XII",
-            "Gustavus Adolphe",
+            "Gustave II Adolphe",
             "Pierre le Grand"
           ],
           "explanation": "La bonne réponse est : Charles XII."
@@ -1750,7 +1750,7 @@
           "explanation": "The correct answer is: Soviet Union."
         },
         "fr": {
-          "text": "Lequel des pays suivants n'était pas une puissance d'axe pendant la Seconde Guerre mondiale?",
+          "text": "Lequel des pays suivants n'était pas une puissance de l'Axe pendant la Seconde Guerre mondiale ?",
           "choices": [
             "Italie",
             "Japon",
@@ -1814,7 +1814,7 @@
           "explanation": "The correct answer is: Andrew Jackson."
         },
         "fr": {
-          "text": "La « Trail of Tears » est le résultat de la politique du président des États-Unis sur l'enlèvement des Indiens?",
+          "text": "La « Piste des larmes » (Trail of Tears) résulte de la politique de déplacement forcé des Amérindiens de quel président des États-Unis ?",
           "choices": [
             "Martin Van Buren",
             "Andrew Jackson",

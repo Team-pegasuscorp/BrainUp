@@ -313,7 +313,7 @@
           "text": "Qui a remporté la Ligue des Champions de l'UEFA en 2016 ?",
           "choices": [
             "Atletico Madrid",
-            "Manchester City C.F.",
+            "Manchester City F.C.",
             "FC Bayern Munich",
             "Real Madrid C.F."
           ],
@@ -342,12 +342,12 @@
           "explanation": "The correct answer is: Los Angeles Lakers."
         },
         "fr": {
-          "text": "Quelle équipe de basketball a assisté à la plus grande finale de la NBA ?",
+          "text": "Quelle équipe de basket a participé au plus grand nombre de finales NBA ?",
           "choices": [
-            "Celtiques de Boston",
-            "Les Lakers de Los Angeles",
-            "Philadelphie 76 ans",
-            "Guerriers d'État dorés"
+            "Boston Celtics",
+            "Los Angeles Lakers",
+            "Philadelphia 76ers",
+            "Golden State Warriors"
           ],
           "explanation": "La bonne réponse est : Los Angeles Lakers."
         }
@@ -374,7 +374,7 @@
           "explanation": "The correct answer is: August 21."
         },
         "fr": {
-          "text": "Les Jeux olympiques d'été de Rio 2016 ont eu lieu à quelle date ?",
+          "text": "À quelle date s'est tenue la cérémonie de clôture des JO d'été de Rio 2016 ?",
           "choices": [
             "19 août",
             "17 août",
@@ -570,7 +570,7 @@
           "choices": [
             "Barcelona FC",
             "Manchester United",
-            "États-Unis",
+            "Sunderland FC",
             "Paris Saints-Germain"
           ],
           "explanation": "La bonne réponse est : Sunderland FC."
@@ -694,11 +694,11 @@
           "explanation": "The correct answer is: Ole Gunnar Solskjær."
         },
         "fr": {
-          "text": "Qui a marqué le but gagnant du temps de blessure lors de la finale de l'UEFA Champions League 1999 entre Manchester United et Bayern Munich ?",
+          "text": "Qui a marqué le but victorieux dans le temps additionnel de la finale de Ligue des champions 1999 entre Manchester United et le Bayern Munich ?",
           "choices": [
             "Andy Cole",
             "Dwight Yorke",
-            "M. Ole Gunnar Solskjær",
+            "Ole Gunnar Solskjær",
             "David Beckham"
           ],
           "explanation": "La bonne réponse est : Ole Gunnar Solskjær."
@@ -760,7 +760,7 @@
         "fr": {
           "text": "Quelle ville possède le maillot de toutes les équipes sportives professionnelles avec le même schéma de couleur ?",
           "choices": [
-            "Baie de Tampa",
+            "Tampa Bay",
             "Seattle",
             "Pittsburgh",
             "New York"
@@ -822,12 +822,12 @@
           "explanation": "The correct answer is: Saints."
         },
         "fr": {
-          "text": "Quel est le surnom du club syndical de rugby de Northampton ?",
+          "text": "Quel est le surnom du club de rugby à XV de Northampton ?",
           "choices": [
             "Saints",
-            "Sarrasins",
+            "Saracens",
             "Wasps",
-            "Arlequins"
+            "Harlequins"
           ],
           "explanation": "La bonne réponse est: Saints."
         }
@@ -857,7 +857,7 @@
           "text": "Quel manager de football a gagné plus de trophées que n'importe quel autre pendant son mandat au club de football anglais Manchester United ?",
           "choices": [
             "José Mourinho",
-            "Monsieur Alex Ferguson",
+            "Sir Alex Ferguson",
             "David Moyes",
             "Louis van Gaal"
           ],
@@ -886,12 +886,12 @@
           "explanation": "The correct answer is: Penrith Panthers."
         },
         "fr": {
-          "text": "Josh Mansour fait partie de l'équipe de NRL ?",
+          "text": "Josh Mansour fait partie de quelle équipe de NRL ?",
           "choices": [
-            "Cowboys du Queensland Nord",
-            "Rôtisseurs de Sydney",
-            "Storm de Melbourne",
-            "Panthères Penrith"
+            "North Queensland Cowboys",
+            "Sydney Roosters",
+            "Melbourne Storm",
+            "Penrith Panthers"
           ],
           "explanation": "La bonne réponse est : Penrith Panthers."
         }
@@ -982,14 +982,14 @@
           "explanation": "The correct answer is: Turkey."
         },
         "fr": {
-          "text": "Dans le bowling, quel est le terme utilisé pour obtenir trois grèves consécutives?",
+          "text": "Au bowling, quel terme désigne trois strikes consécutifs ?",
           "choices": [
-            "Turquie",
-            "Oiseaux",
+            "Turkey",
+            "Birdie",
             "Flamingo",
-            "Aigle"
+            "Eagle"
           ],
-          "explanation": "La bonne réponse est la Turquie."
+          "explanation": "La bonne réponse est : Turkey."
         }
       }
     },
@@ -1080,7 +1080,7 @@
         "fr": {
           "text": "Quelle équipe a remporté la Coupe MLS 2016 ?",
           "choices": [
-            "Sondes de Seattle",
+            "Seattle Sounders",
             "Colorado Rapids",
             "Impact de Montréal",
             "Toronto FC"
@@ -1238,12 +1238,12 @@
           "explanation": "The correct answer is: Fastball."
         },
         "fr": {
-          "text": "Quel est le type de terrain le plus courant lancé par les lanceurs de baseball?",
+          "text": "Quel type de lancer est le plus courant chez les lanceurs de baseball ?",
           "choices": [
-            "Balle de palme",
-            "Bouteille",
-            "Balle lente",
-            "Balle rapide"
+            "Palmball",
+            "Screwball",
+            "Slowball",
+            "Fastball"
           ],
           "explanation": "La bonne réponse est : Fastball."
         }
@@ -1336,7 +1336,7 @@
         "fr": {
           "text": "Quel est le nom de la filiale de l'AHL des Maple Leafs de Toronto?",
           "choices": [
-            "Toronto Argonautes",
+            "Toronto Argonauts",
             "Toronto Marlies",
             "Toronto Wolfpack",
             "Toronto Rock"
@@ -1366,14 +1366,14 @@
           "explanation": "The correct answer is: Cue."
         },
         "fr": {
-          "text": "Quel est le nom de l'outil utilisé pour frapper la balle blanche en snooker ou billard?",
+          "text": "Comment s'appelle l'« outil » utilisé pour frapper la bille blanche au snooker ou au billard ?",
           "choices": [
-            "Racquet",
-            "Mallettes",
-            "Bat",
-            "Cue"
+            "Raquette",
+            "Maillet",
+            "Batte",
+            "Queue"
           ],
-          "explanation": "La bonne réponse est : Cue."
+          "explanation": "La bonne réponse est : Queue."
         }
       }
     },
@@ -1400,7 +1400,7 @@
         "fr": {
           "text": "De quelle île portugaise est le footballeur Cristiano Ronaldo ?",
           "choices": [
-            "Sainte-Marie",
+            "Santa Maria",
             "Porto Santo",
             "Madère",
             "Terceira"
@@ -1432,12 +1432,12 @@
         "fr": {
           "text": "Quelle équipe l'Angleterre a-t-elle battue pour remporter la finale de la Coupe du monde de 1966 ?",
           "choices": [
-            "Allemagne occidentale",
+            "Allemagne de l'Ouest",
             "Union soviétique",
-            "Espagne",
+            "Portugal",
             "Brésil"
           ],
-          "explanation": "La bonne réponse est: Allemagne de l'Ouest."
+          "explanation": "La bonne réponse est : Allemagne de l'Ouest."
         }
       }
     },
@@ -1464,7 +1464,7 @@
         "fr": {
           "text": "Avec quel double partenaire John McEnroe a-t-il eu le plus de succès ?",
           "choices": [
-            "Marie Carillo",
+            "Mary Carillo",
             "Peter Fleming",
             "Michael Stich",
             "Mark Woodforde"
@@ -1497,11 +1497,11 @@
           "text": "Qui a gagné le NFL Super Bowl LI? (51)",
           "choices": [
             "Broncos",
-            "Patriotes",
-            "Aigles",
-            "Faucons"
+            "Patriots",
+            "Eagles",
+            "Falcons"
           ],
-          "explanation": "La bonne réponse est : Patriotes."
+          "explanation": "La bonne réponse est : Patriots."
         }
       }
     },
@@ -1590,12 +1590,12 @@
           "explanation": "The correct answer is: Atlanta Braves."
         },
         "fr": {
-          "text": "Quelle est l'équipe la plus ancienne de la Ligue majeure ?",
+          "text": "Quelle est l'équipe la plus ancienne de Major League Baseball ?",
           "choices": [
             "Atlanta Braves",
-            "Cardinaux Saint Louis",
-            "Cubs de Chicago",
-            "Cincinnati Rouges"
+            "St. Louis Cardinals",
+            "Chicago Cubs",
+            "Cincinnati Reds"
           ],
           "explanation": "La bonne réponse est : Atlanta Braves."
         }
@@ -1656,12 +1656,12 @@
         "fr": {
           "text": "Laquelle de ces équipes n'est pas membre de l'ère \"Original Six\" de la LNH ?",
           "choices": [
-            "Rangers de New York",
-            "Feuilles d'érable de Toronto",
-            "Flyers de Philadelphie",
-            "Bruins de Boston"
+            "New York Rangers",
+            "Toronto Maple Leafs",
+            "Philadelphia Flyers",
+            "Boston Bruins"
           ],
-          "explanation": "La bonne réponse est: Flyers de Philadelphie."
+          "explanation": "La bonne réponse est : Philadelphia Flyers."
         }
       }
     },
@@ -1752,10 +1752,10 @@
         "fr": {
           "text": "L'équipe affiliée de l'AHL des Bruins de Boston s'appelle quoi ?",
           "choices": [
-            "Bruins de Cambridge",
-            "Bruins du nouveau Haven",
-            "Bruins de Hartford",
-            "Bruins de la Providence"
+            "Cambridge Bruins",
+            "New Haven Bruins",
+            "Hartford Bruins",
+            "Providence Bruins"
           ],
           "explanation": "La bonne réponse est : Providence Bruins."
         }
@@ -1848,12 +1848,12 @@
         "fr": {
           "text": "Quelle est l'équipe la plus ancienne de la NFL ?",
           "choices": [
-            "Les géants de New York",
-            "Ours de Chicago",
-            "Emballeurs Green Bay",
-            "Cardinaux d'Arizona"
+            "New York Giants",
+            "Chicago Bears",
+            "Green Bay Packers",
+            "Arizona Cardinals"
           ],
-          "explanation": "La bonne réponse est: Cardinals d'Arizona."
+          "explanation": "La bonne réponse est : Arizona Cardinals."
         }
       }
     },

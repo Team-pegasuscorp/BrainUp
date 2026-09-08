@@ -246,12 +246,12 @@
           "explanation": "The correct answer is: Fay Wray."
         },
         "fr": {
-          "text": "Qui a joué le rôle de leader féminin dans le film \"King Kong\" de 1933 ?",
+          "text": "Qui a joué le premier rôle féminin dans le film « King Kong » de 1933 ?",
           "choices": [
             "Jean Harlow",
             "Fay Wray",
             "Vivien Leigh",
-            "Mae Ouest"
+            "Mae West"
           ],
           "explanation": "La bonne réponse est : Fay Wray."
         }
@@ -278,12 +278,12 @@
           "explanation": "The correct answer is: Isengard."
         },
         "fr": {
-          "text": "Dans le Seigneur des Anneaux: Les Deux Tours, où est la fête des orques qui prennent les hobbits?",
+          "text": "Dans Le Seigneur des anneaux : Les Deux Tours, où les orques emmènent-ils les hobbits ?",
           "choices": [
             "Mordor",
-            "Rivendel",
+            "Fondcombe",
             "Isengard",
-            "Morie"
+            "Moria"
           ],
           "explanation": "La bonne réponse est : Isengard."
         }
@@ -310,10 +310,10 @@
           "explanation": "The correct answer is: Matthew Taylor."
         },
         "fr": {
-          "text": "Qui joue les Nemesis dans les films de Résident Evil ?",
+          "text": "Qui joue Nemesis dans les films Resident Evil ?",
           "choices": [
-            "- Jimmy Matts.",
-            "C'est Matthew Taylor.",
+            "Jimmy Matts",
+            "Matthew Taylor",
             "Jason Dip",
             "Eric Mabius"
           ],
@@ -347,7 +347,7 @@
             "Cheddar",
             "Wensleydale",
             "Edam",
-            "Fromage de lune"
+            "Moon Cheese"
           ],
           "explanation": "La bonne réponse est : Wensleydale."
         }
@@ -406,11 +406,11 @@
           "explanation": "The correct answer is: Ralph Fiennes."
         },
         "fr": {
-          "text": "Lequel de ces acteurs n'apparaît PAS dans le film \"Saving Private Ryan\" de 1998 ?",
+          "text": "Lequel de ces acteurs n'apparaît PAS dans le film « Il faut sauver le soldat Ryan » (1998) ?",
           "choices": [
             "Tom Hanks",
             "Vin Diesel",
-            "C'est Matt Damon.",
+            "Matt Damon",
             "Ralph Fiennes"
           ],
           "explanation": "La bonne réponse est : Ralph Fiennes."
@@ -470,10 +470,10 @@
           "explanation": "The correct answer is: Top Gun."
         },
         "fr": {
-          "text": "Ce film contient la citation, \"Je ressens le besoin ... le besoin de vitesse!\"",
+          "text": "Ce film contient la réplique : « I feel the need... the need for speed! »",
           "choices": [
-            "Haut de la page",
-            "La couleur de l'argent",
+            "Top Gun",
+            "La Couleur de l'argent",
             "Jours de tonnerre",
             "Cocktail"
           ],
@@ -502,14 +502,14 @@
           "explanation": "The correct answer is: \"A Fistful of Dollars\", \"For a Few Dollars More\", \"The Good, the Bad, and the Ugly\"."
         },
         "fr": {
-          "text": "Quels trois films, pour la date de sortie, composent la \"Trilogie Dollars\" ?",
+          "text": "Quels trois films, dans l'ordre de sortie, composent la « trilogie des Dollars » ?",
           "choices": [
-            "\"A Fistful of Dollars\", \"Pour quelques dollars de plus\", \"Les bons, les mauvais et les méchants\"",
-            "\"Pour quelques dollars de plus\", \"Le Bon, le Mauvais, et l'Ugly\", \"Un Feux de Dollars\"",
-            "\"Le Bon, le Mal, et l'Ugly\", \"Pour quelques dollars de plus\", \"Un défi de dollars\"",
-            "\"Pour quelques dollars de plus\", \"Un tas de dollars\", \"Les bons, les mauvais et les méchants\""
+            "\"Pour une poignée de dollars\", \"Et pour quelques dollars de plus\", \"Le Bon, la Brute et le Truand\"",
+            "\"Et pour quelques dollars de plus\", \"Le Bon, la Brute et le Truand\", \"Pour une poignée de dollars\"",
+            "\"Le Bon, la Brute et le Truand\", \"Et pour quelques dollars de plus\", \"Pour une poignée de dollars\"",
+            "\"Et pour quelques dollars de plus\", \"Pour une poignée de dollars\", \"Le Bon, la Brute et le Truand\""
           ],
-          "explanation": "La bonne réponse est: \"Un fichu de dollars\", \"Pour quelques dollars de plus\", \"Le bon, le mauvais, et le mauvais\"."
+          "explanation": "La bonne réponse est : « Pour une poignée de dollars », « Et pour quelques dollars de plus », « Le Bon, la Brute et le Truand »."
         }
       }
     },
@@ -598,10 +598,10 @@
           "explanation": "The correct answer is: Vincent Vega."
         },
         "fr": {
-          "text": "Qui dans Pulp Fiction dit \"Non, ils ont le système métrique là-bas, ils ne sauraient pas ce qu'est un quart de livre.\"",
+          "text": "Qui, dans Pulp Fiction, dit : « Non, ils ont le système métrique là-bas, ils ne sauraient pas ce que c'est qu'un Quarter Pounder » ?",
           "choices": [
             "Jimmie Dimmick",
-            "Refroidissement de la bouche",
+            "Butch Coolidge",
             "Vincent Vega",
             "Jules Winnfield"
           ],
@@ -630,12 +630,12 @@
           "explanation": "The correct answer is: Smash Mouth."
         },
         "fr": {
-          "text": "A la fin du film 2001 \"Rat Race\", à qui les concurrents s'écrasent-ils ?",
+          "text": "À la fin du film « Rat Race » (2001), le concert de quel groupe les concurrents font-ils irruption ?",
           "choices": [
-            "Bowling pour soupe",
-            "Smash Bouche",
-            "Montant total 41",
-            "Parc Linkin"
+            "Bowling for Soup",
+            "Smash Mouth",
+            "Sum 41",
+            "Linkin Park"
           ],
           "explanation": "La bonne réponse est : Smash Mouth."
         }
@@ -662,14 +662,14 @@
           "explanation": "The correct answer is: 1.2 billion USD."
         },
         "fr": {
-          "text": "Combien d'argent le film Marvel 2019 \"Avengers: Endgame\" a-t-il dépensé pour son week-end d'ouverture mondiale record ?",
+          "text": "Combien le film Marvel « Avengers: Endgame » (2019) a-t-il rapporté lors de son week-end d'ouverture mondial record ?",
           "choices": [
             "456 millions de dollars",
             "640 millions de dollars",
-            "1,2 milliard USD",
+            "1,2 milliard de dollars",
             "392 millions de dollars"
           ],
-          "explanation": "La bonne réponse est : 1,2 milliard USD."
+          "explanation": "La bonne réponse est : 1,2 milliard de dollars."
         }
       }
     },
@@ -694,7 +694,7 @@
           "explanation": "The correct answer is: Sierra Leone."
         },
         "fr": {
-          "text": "Dans quel pays africain le film \"Blood Diamond\" a-t-il été réalisé en 2006 ?",
+          "text": "Dans quel pays africain se déroule principalement le film « Blood Diamond » (2006) ?",
           "choices": [
             "République centrafricaine",
             "Libéria",
@@ -726,14 +726,14 @@
           "explanation": "The correct answer is: The Sixth Sense."
         },
         "fr": {
-          "text": "Quel film avec Bruce Willis contient la ligne \"Je vois des morts\" ?",
+          "text": "Quel film avec Bruce Willis contient la réplique « Je vois des gens morts » ?",
           "choices": [
-            "Le sixième sens",
-            "Cinquième élément",
-            "Harmaguédon",
-            "Mourir dur"
+            "Le Sixième Sens",
+            "Le Cinquième Élément",
+            "Armageddon",
+            "Piège de cristal"
           ],
-          "explanation": "La bonne réponse est : Le sixième sens."
+          "explanation": "La bonne réponse est : Le Sixième Sens."
         }
       }
     },
@@ -758,10 +758,10 @@
           "explanation": "The correct answer is: Beer."
         },
         "fr": {
-          "text": "Dans le but de réduire les coûts, quels ont été la plupart des extras de Mad Max (1979) payés?",
+          "text": "Pour réduire les coûts, avec quoi la plupart des figurants de Mad Max (1979) ont-ils été payés ?",
           "choices": [
-            "Timbres alimentaires",
-            "Ils n'étaient pas payés.",
+            "Tickets alimentaires",
+            "Ils n'étaient pas payés",
             "Bière",
             "Restauration rapide"
           ],
@@ -790,14 +790,14 @@
           "explanation": "The correct answer is: The Thing."
         },
         "fr": {
-          "text": "Lequel des films suivants n'était pas basé sur un roman de Stephen King?",
+          "text": "Lequel des films suivants n'est pas adapté d'un roman de Stephen King ?",
           "choices": [
-            "Le Mile Vert",
-            "La misère",
-            "Carré",
-            "La chose"
+            "La Ligne verte",
+            "Misery",
+            "Carrie",
+            "The Thing"
           ],
-          "explanation": "La bonne réponse est : La chose."
+          "explanation": "La bonne réponse est : The Thing."
         }
       }
     },
@@ -824,10 +824,10 @@
         "fr": {
           "text": "Quel film d'animation Steven Lisberger a réalisé en 1980 avant de réaliser Tron ?",
           "choices": [
-            "Le renard et le chien",
-            "Animaux",
-            "La Grande Souris Détective",
-            "Le chaudron noir"
+            "Rox et Rouky",
+            "Animalympics",
+            "Basil, détective privé",
+            "Taram et le Chaudron magique"
           ],
           "explanation": "La bonne réponse est : Animalympics."
         }
@@ -886,7 +886,7 @@
           "explanation": "The correct answer is: Harrison Ford."
         },
         "fr": {
-          "text": "Qui a représenté Han Solo dans la série de films Star Wars ?",
+          "text": "Qui a incarné Han Solo dans la série de films Star Wars ?",
           "choices": [
             "Peter Cushing",
             "Alec Guinness",
@@ -952,10 +952,10 @@
         "fr": {
           "text": "Quel est le nom du groupe rétro-mod fictif avec Austin Powers comme chanteur principal ?",
           "choices": [
-            "Menthe de lance",
-            "Thé Ming",
-            "Monsieur E",
-            "Toux Fi"
+            "Spear Mint",
+            "Ming Tea",
+            "Mister E",
+            "Cough Fi"
           ],
           "explanation": "La bonne réponse est : Ming Tea."
         }
@@ -984,7 +984,7 @@
         "fr": {
           "text": "Qui a réalisé le film \"Alien\" ?",
           "choices": [
-            "C'est moi.",
+            "Ridley Scott",
             "Michael Bay",
             "James Cameron",
             "Christopher Nolan"
@@ -1016,10 +1016,10 @@
         "fr": {
           "text": "Lequel de ces films n'est PAS considéré comme faisant partie de l'Univers Cinématique Marvel ?",
           "choices": [
-            "Spider-Man: Accueil (2017)",
-            "Quatre fantastiques (2015)",
-            "L'incroyable Hulk (2008)",
-            "Capitaine Marvel (2019)"
+            "Spider-Man: Homecoming (2017)",
+            "Les Quatre Fantastiques (2015)",
+            "L'Incroyable Hulk (2008)",
+            "Captain Marvel (2019)"
           ],
           "explanation": "La bonne réponse est : Fantastic Four (2015)."
         }
@@ -1144,12 +1144,12 @@
         "fr": {
           "text": "Quel a été le premier film de James Bond ?",
           "choices": [
-            "Dorure",
-            "Bouton",
-            "Dr. Non",
-            "De Russie avec amour"
+            "Goldfinger",
+            "Opération Tonnerre",
+            "Docteur No",
+            "Bons baisers de Russie"
           ],
-          "explanation": "La bonne réponse est : Dr No."
+          "explanation": "La bonne réponse est : Docteur No."
         }
       }
     },
@@ -1211,7 +1211,7 @@
             "McConahey Ramses",
             "Jim Petersson",
             "Mirana Jonnes",
-            "Jack Noir"
+            "Jack Black"
           ],
           "explanation": "La bonne réponse est : Jack Black."
         }
@@ -1275,7 +1275,7 @@
             "Écosse",
             "Canada",
             "Nouvelle-Zélande",
-            "Espagne"
+            "Islande"
           ],
           "explanation": "La bonne réponse est : Nouvelle-Zélande."
         }
@@ -1306,7 +1306,7 @@
           "choices": [
             "Ted",
             "Pirates des Caraïbes",
-            "Enfants espions",
+            "Spy Kids",
             "Harry Potter"
           ],
           "explanation": "La bonne réponse est : Harry Potter."
@@ -1337,11 +1337,11 @@
           "text": "Lequel des films suivants n'a PAS été réalisé par Quentin Tarantino ?",
           "choices": [
             "Jackie Brown",
-            "De Dusk à Dawn",
-            "Fiction de la pâte",
-            "Chiens de réservoir"
+            "Une nuit en enfer",
+            "Pulp Fiction",
+            "Reservoir Dogs"
           ],
-          "explanation": "La bonne réponse est : De Dusk à Dawn."
+          "explanation": "La bonne réponse est : Une nuit en enfer."
         }
       }
     },
@@ -1369,11 +1369,11 @@
           "text": "Dans Star Wars, quel est le nom du nouveau gouvernement créé après la défaite de l'Empire galactique ?",
           "choices": [
             "L'Alliance rebelle",
-            "Le premier ordre",
-            "L'Aube de Crimson",
-            "Nouvelle République"
+            "Le Premier Ordre",
+            "Crimson Dawn",
+            "La Nouvelle République"
           ],
-          "explanation": "La bonne réponse est la Nouvelle République."
+          "explanation": "La bonne réponse est : La Nouvelle République."
         }
       }
     },
@@ -1403,7 +1403,7 @@
             "Wai Lin",
             "Pam Bouvier",
             "Vanessa Kensington",
-            "Mary Bonne nuit"
+            "Mary Goodnight"
           ],
           "explanation": "La bonne réponse est : Vanessa Kensington."
         }
@@ -1432,9 +1432,9 @@
         "fr": {
           "text": "Lequel des films suivants a été réalisé par Ivan Reitman, écrit par Gary Ross, a présenté Kevin Kline, et est sorti en 1993?",
           "choices": [
-            "Jean",
-            "Volonté",
-            "C'est moi.",
+            "John",
+            "Will",
+            "Carl",
             "Dave"
           ],
           "explanation": "La bonne réponse est : Dave."
@@ -1462,10 +1462,10 @@
           "explanation": "The correct answer is: Count Dracula."
         },
         "fr": {
-          "text": "Bela Lugosi était un acteur hongrois-américain plus connu pour son rôle de star de quel film d'horreur 1931 ?",
+          "text": "Bela Lugosi, acteur hongrois-américain, est surtout connu pour son rôle principal dans quel film d'horreur de 1931 ?",
           "choices": [
             "La Créature de la Lagune Noire",
-            "Comte Dracula",
+            "Dracula",
             "Loup-garou",
             "Dr Frankenstein"
           ],
@@ -1498,8 +1498,8 @@
           "choices": [
             "Mme Winterbourne",
             "Monkeybone",
-            "Titanique",
-            "Encino Homme"
+            "Titanic",
+            "Encino Man"
           ],
           "explanation": "La bonne réponse est : Titanic."
         }
@@ -1622,12 +1622,12 @@
           "explanation": "The correct answer is: Wayne's World."
         },
         "fr": {
-          "text": "Quelles comédies culte classiques des années 90 présentent des apparitions de Meat Loaf, Alice Cooper et Chris Farley ?",
+          "text": "Quelle comédie culte des années 90 met en scène des caméos de Meat Loaf, Alice Cooper et Chris Farley ?",
           "choices": [
-            "Dumb et Dumber",
-            "Belle aventure de Bill & Ted",
-            "Le monde de Wayne",
-            "Austin Powers: L'homme de mystère international"
+            "Dumb and Dumber",
+            "Les Aventures de Bill et Ted",
+            "Wayne's World",
+            "Austin Powers"
           ],
           "explanation": "La bonne réponse est : Wayne's World."
         }
@@ -1654,12 +1654,12 @@
           "explanation": "The correct answer is: Titanic."
         },
         "fr": {
-          "text": "Quel film l'Avatar de James Cameron a-t-il détrôné ?",
+          "text": "Quel film Avatar de James Cameron a-t-il détrôné comme plus gros succès du box-office ?",
           "choices": [
-            "Parti avec le vent",
-            "Mâchoires",
-            "Titanique",
-            "Guerre des étoiles"
+            "Autant en emporte le vent",
+            "Les Dents de la mer",
+            "Titanic",
+            "Star Wars"
           ],
           "explanation": "La bonne réponse est : Titanic."
         }
@@ -1720,10 +1720,10 @@
         "fr": {
           "text": "En 2012, quel film a remporté toutes les catégories dans le 32ème \"Golden Raspberry Awards\" ?",
           "choices": [
-            "La fille avec le tatouage Dragon",
+            "Millénium : Les Hommes qui n'aimaient pas les femmes",
             "Thor",
-            "Discours du Roi",
-            "Jack et Jill"
+            "Le Discours d'un roi",
+            "Jack and Jill"
           ],
           "explanation": "La bonne réponse est : Jack et Jill."
         }
@@ -1785,7 +1785,7 @@
           "text": "Quel quarterback américain retraité a joué dans 'Ace Ventura: Pet Detective' et 'Little Nicky' ?",
           "choices": [
             "Tom Brady",
-            "Danemark",
+            "Dan Marino",
             "Joe Montana",
             "John Elway"
           ],
@@ -1814,12 +1814,12 @@
           "explanation": "The correct answer is: Scarface."
         },
         "fr": {
-          "text": "Quel film contient la citation, \"Dis bonjour à mon petit ami!\"?",
+          "text": "Quel film contient la réplique « Dis bonjour à mon petit ami ! » ?",
           "choices": [
-            "Chiens de réservoir",
-            "Bonnets",
+            "Reservoir Dogs",
+            "Les Affranchis",
             "Scarface",
-            "Chaleur"
+            "Heat"
           ],
           "explanation": "La bonne réponse est : Scarface."
         }
