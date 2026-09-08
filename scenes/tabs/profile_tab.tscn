@@ -13,6 +13,7 @@ mouse_filter = 2
 script = ExtResource("1_profile_tab")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -28,6 +29,7 @@ size_flags_horizontal = 3
 theme_override_constants/separation = 0
 
 [node name="OuterMargin" type="MarginContainer" parent="ScrollContainer/ContentVBox"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_left = 18

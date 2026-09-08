@@ -139,9 +139,14 @@ const PROFILE_AVATAR_SIZE: int = 256
 const DASH_GUTTER: int = 8
 const DASH_TILE_RADIUS: int = 14
 const DASH_TILE_PAD: int = 10
-const DASH_STAT_HEIGHT: float = 101.0
-const DASH_CATEGORY_HEIGHT: float = 118.0
-const DASH_HERO_HEIGHT: float = 220.0
+const DASH_STAT_HEIGHT: float = 106.0
+const DASH_BEST_SUBJECT_HEIGHT: float = 123.0
+const DASH_WIN_SPLIT_HEIGHT: float = 175.0
+## Tall enough for 6 category rows (icon 54 + gaps + header/padding).
+const DASH_CATEGORY_HEIGHT: float = 455.0
+## Recent matches — snug fit for 4 rows (icon 54 + gaps + header/padding).
+const DASH_HISTORY_HEIGHT: float = 310.0
+const DASH_HERO_HEIGHT: float = 225.0
 const DEFAULT_PLAYER_NAME: String = "Player"
 const MAX_PLAYER_NAME_LENGTH: int = 24
 
@@ -174,5 +179,11 @@ static func accent_for_category(category_id: String) -> Color:
 			return ACCENT_SOCIAL
 		"history":
 			return ACCENT_LEADERBOARD
+		"science":
+			return FEEDBACK_CORRECT
+		"geography":
+			return Color(0.36, 0.75, 1.0, 1)
+		"music":
+			return ACCENT_PROFILE
 		_:
 			return ACCENT_PROFILE

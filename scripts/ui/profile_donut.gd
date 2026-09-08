@@ -5,13 +5,15 @@ class_name ProfileDonut
 
 var segments: Array = [] ## [{ratio: float, color: Color}]
 var center_label: String = ""
+var center_sublabel: String = ""
 var track := Color(1, 1, 1, 0.08)
 var line_width: float = 14.0
 
 
-func set_segments(values: Array, label: String) -> void:
+func set_segments(values: Array, label: String, sublabel: String = "") -> void:
 	segments = values
 	center_label = label
+	center_sublabel = sublabel
 	queue_redraw()
 
 
@@ -31,8 +33,10 @@ func _draw() -> void:
 		draw_arc(center, radius, angle, angle + span, 48, color, line_width, true)
 		angle += span
 
-	if not center_label.is_empty():
-		var font := ThemeDB.fallback_font
+	if center_label.is_empty() and center_sublabel.is_empty():
+		return
+	var font := ThemeDB.fallback_font
+	if center_sublabel.is_empty():
 		var font_size := 12
 		var text_size := font.get_string_size(center_label, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size)
 		draw_string(
@@ -44,3 +48,27 @@ func _draw() -> void:
 			font_size,
 			Color(1, 1, 1, 0.92)
 		)
+		return
+
+	var main_size := int(clampf(minf(size.x, size.y) * 0.12, 18.0, 28.0))
+	var sub_size := int(clampf(minf(size.x, size.y) * 0.065, 10.0, 14.0))
+	var main_sz := font.get_string_size(center_label, HORIZONTAL_ALIGNMENT_CENTER, -1, main_size)
+	var sub_sz := font.get_string_size(center_sublabel, HORIZONTAL_ALIGNMENT_CENTER, -1, sub_size)
+	draw_string(
+		font,
+		center + Vector2(-main_sz.x * 0.5, -2),
+		center_label,
+		HORIZONTAL_ALIGNMENT_LEFT,
+		-1,
+		main_size,
+		Color(1, 1, 1, 0.95)
+	)
+	draw_string(
+		font,
+		center + Vector2(-sub_sz.x * 0.5, sub_size + 8),
+		center_sublabel,
+		HORIZONTAL_ALIGNMENT_LEFT,
+		-1,
+		sub_size,
+		Color(1, 1, 1, 0.70)
+	)

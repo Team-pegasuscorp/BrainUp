@@ -10,13 +10,15 @@ const CountryFlags = preload("res://scripts/profile/country_flags.gd")
 const TrophyLeagues = preload("res://scripts/profile/trophy_leagues.gd")
 
 const USE_DEMO_WHEN_EMPTY: bool = true
+## Force demo profile data (categories, history, stats) for layout testing.
+const FORCE_DEMO_PROFILE: bool = true
 const DAILY_GOAL_TARGET: int = 5
 const HISTORY_OPPONENTS: Array[String] = ["Lucas", "Emma", "Noah", "Léa", "Hugo", "Chloé"]
 
 
 static func build_full(locale: String) -> Dictionary:
 	var data := _from_save(locale)
-	if USE_DEMO_WHEN_EMPTY and int(data.get("games_played", 0)) == 0:
+	if FORCE_DEMO_PROFILE or (USE_DEMO_WHEN_EMPTY and int(data.get("games_played", 0)) == 0):
 		data = _merge_demo(data, locale)
 	data["achievements"] = _build_achievements(data)
 	data["ranking"] = _build_ranking(data, locale)
@@ -24,6 +26,8 @@ static func build_full(locale: String) -> Dictionary:
 	data["best_category"] = _pick_best_category(data.get("categories", []))
 	data["win_distribution"] = _build_win_distribution(data)
 	data["season"] = _build_season(data)
+	## Preview: force display name to check hero layout.
+	data["player_name"] = "Arknoid"
 	return data
 
 
@@ -120,7 +124,12 @@ static func _merge_demo(base: Dictionary, locale: String) -> Dictionary:
 		_make_category_row("sport", locale, 412, 84.0, 4, 24, "gold"),
 		_make_category_row("cinema", locale, 386, 71.0, 3, 19, "bronze"),
 		_make_category_row("history", locale, 450, 78.0, 4, 22, "silver"),
+		## Fake categories for mastery-tile layout tests (6 rows).
+		_make_category_row("science", locale, 298, 76.0, 3, 16, "none"),
+		_make_category_row("geography", locale, 210, 58.0, 2, 11, "none"),
+		_make_category_row("music", locale, 164, 51.0, 2, 9, "none"),
 	]
+	_assign_medals(demo["categories"])
 	demo["history"] = [
 		_make_history_row("sport", locale, 820, true, 15, 24, 0, "Lucas", 24),
 		_make_history_row("cinema", locale, 510, false, 9, 20, 3, "Emma", -12),
@@ -200,6 +209,12 @@ static func _category_icon(category_id: String) -> String:
 			return "🎬"
 		"history":
 			return "📜"
+		"science":
+			return "🧪"
+		"geography":
+			return "🌍"
+		"music":
+			return "🎵"
 		_:
 			return "🧠"
 
@@ -333,7 +348,17 @@ static func _resolve_category_name(category_id: String, locale: String) -> Strin
 	for category in QuestionLoaderScript.get_categories(locale):
 		if category.get("id", "") == category_id:
 			return str(category.get("name", category_id))
-	return category_id
+	## Demo-only fake categories (not in question packs yet).
+	var is_fr := str(locale).begins_with("fr")
+	match category_id:
+		"science":
+			return "Sciences" if is_fr else "Science"
+		"geography":
+			return "Géographie" if is_fr else "Geography"
+		"music":
+			return "Musique" if is_fr else "Music"
+		_:
+			return category_id
 
 
 static func _pick_best_category(categories: Array) -> Dictionary:
