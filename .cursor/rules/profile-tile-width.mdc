@@ -1,0 +1,32 @@
+---
+description: Never change profile tile widths unless the user explicitly asks.
+globs: scripts/ui/profile_tab.gd,scenes/tabs/profile_tab.tscn,scripts/config/ui_tokens.gd,scripts/config/ui_style.gd
+alwaysApply: true
+---
+
+# Profile page — tile width is locked
+
+On the **Profil** page (`profile_tab`), **never** change tile / card / page **width** unless the user explicitly asks for it.
+
+## Forbidden without an explicit ask
+
+- Page side margins / insets (`OuterMargin`, `PageMargin`, `PAGE_MARGIN`, scrollbar “compensation”)
+- Forcing content width (`custom_minimum_size.x`, `_constrain_to_page_width`, swipe page width hacks)
+- Stretch ratios, expand flags, or layout restructures whose goal is to make tiles narrower/wider
+- Anything that makes profile content spill onto a neighbouring swipe tab in order to “fix” width
+
+## Preferred conflict handling
+
+If text / icons / separators fight for space:
+
+- Prefer **overlap**, clipping, or smaller typography **only if the user asks**
+- Do **not** widen/narrow tiles or page gutters to resolve the conflict
+- Only move/resize **elements inside** a tile (text, icons, separators, vertical padding) when asked
+
+## Allowed without a width ask
+
+- Height of a tile (when the user asks)
+- Internal layout: icon size, font size, vertical offsets, separators
+- Colours, copy, data binding
+
+If unsure whether a change affects tile width, **ask first** or skip it.

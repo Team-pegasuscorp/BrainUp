@@ -152,6 +152,11 @@ UI_PROFILE_LEVEL_CAPTION,Level,Niveau
 UI_PROFILE_NEXT_LEVEL,Next level: {xp} XP,Prochain niveau : {xp} XP
 UI_PROFILE_XP_LABEL,XP,XP
 UI_PROFILE_LEAGUE,League,Ligue
+UI_PROFILE_STAT_GAMES,Games,Parties
+UI_PROFILE_STAT_WINS,Wins,Victoires
+UI_PROFILE_STAT_WINRATE,Winrate,Winrate
+UI_PROFILE_STAT_STREAK,Max streak,Série max
+UI_PROFILE_STAT_RANK,Ranking,Classement
 UI_PROFILE_RANKING_TITLE,Ranking points,Points de classement
 UI_PROFILE_CATEGORIES_MASTERED,Mastered categories,Catégories maîtrisées
 UI_PROFILE_BEST_SUBJECT,Best subject,Meilleur sujet

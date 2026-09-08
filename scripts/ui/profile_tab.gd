@@ -431,68 +431,133 @@ func _fit_hero_mock_proportions(
 
 
 func _build_stats_strip() -> PanelContainer:
+	## Mock: icon left + value/label right, thin vertical dividers.
+	## Height only (user-requested) — never change tile/page width here.
 	var panel := _tile()
-	var margin := _pad(8, 10)
+	panel.custom_minimum_size.y = UiTokens.DASH_STAT_HEIGHT
+	var margin := _pad(10, 14)
 	panel.add_child(margin)
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 4)
+	row.add_theme_constant_override("separation", 0)
+	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
 	margin.add_child(row)
 
 	var ranking: Dictionary = _profile_data.get("ranking", {})
 	var items := [
-		{"icon": "🎮", "value": _format_int(int(_profile_data.get("games_played", 0))), "label": tr("UI_PROFILE_GAMES_PLAYED"), "color": Color(0.36, 0.75, 1.0)},
-		{"icon": "🏆", "value": _format_int(int(_profile_data.get("wins", 0))), "label": tr("UI_PROFILE_WINS"), "color": UiTokens.FEEDBACK_CORRECT},
-		{"icon": "◎", "value": "%.0f%%" % _profile_data.get("win_rate_percent", 0.0), "label": tr("UI_PROFILE_WIN_RATE"), "color": UiTokens.ACCENT_LEADERBOARD},
-		{"icon": "🔥", "value": str(_profile_data.get("best_win_streak", 0)), "label": tr("UI_PROFILE_BEST_STREAK"), "color": Color(1.0, 0.42, 0.28)},
-		{"icon": "📊", "value": _format_int(int(ranking.get("points", 0))), "label": tr("UI_PROFILE_RANKING_TITLE"), "color": UiTokens.ACCENT_PROFILE},
+		{"icon": "🎮", "value": _format_int(int(_profile_data.get("games_played", 0))), "label": tr("UI_PROFILE_STAT_GAMES"), "color": Color(0.36, 0.75, 1.0)},
+		{"icon": "🏆", "value": _format_int(int(_profile_data.get("wins", 0))), "label": tr("UI_PROFILE_STAT_WINS"), "color": UiTokens.FEEDBACK_CORRECT},
+		{"icon": "🎯", "value": "%.0f%%" % _profile_data.get("win_rate_percent", 0.0), "label": tr("UI_PROFILE_STAT_WINRATE"), "color": Color(1.0, 0.55, 0.18)},
+		{"icon": "🔥", "value": str(_profile_data.get("best_win_streak", 0)), "label": tr("UI_PROFILE_STAT_STREAK"), "color": Color(1.0, 0.42, 0.28)},
+		{"icon": "📊", "value": _format_int(int(ranking.get("points", 0))), "label": tr("UI_PROFILE_STAT_RANK"), "color": UiTokens.ACCENT_PROFILE},
 	]
-	for item in items:
-		row.add_child(_stat_icon_cell(item.icon, str(item.value), str(item.label), item.color))
+	for i in range(items.size()):
+		if i > 0:
+			row.add_child(_stat_strip_divider())
+		var item: Dictionary = items[i]
+		row.add_child(_stat_icon_cell(str(item.icon), str(item.value), str(item.label), item.color))
 
 	_animated_nodes.append(panel)
 	return panel
 
 
-func _stat_icon_cell(icon: String, value: String, label: String, color: Color) -> Control:
-	var cell := VBoxContainer.new()
-	cell.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	cell.alignment = BoxContainer.ALIGNMENT_CENTER
-	cell.add_theme_constant_override("separation", 3)
+func _stat_strip_divider() -> Control:
+	## Non-expanding vertical rule between each stat (mock).
+	var wrap := CenterContainer.new()
+	wrap.custom_minimum_size = Vector2(14, 69)
+	wrap.size_flags_horizontal = 0 ## SIZE_FILL only — never expand/shrink away.
+	wrap.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	wrap.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var line := Panel.new()
+	line.custom_minimum_size = Vector2(2, 65)
+	line.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(1, 1, 1, 0.22)
+	style.set_corner_radius_all(1)
+	line.add_theme_stylebox_override("panel", style)
+	wrap.add_child(line)
+	return wrap
 
-	var icon_wrap := PanelContainer.new()
-	icon_wrap.custom_minimum_size = Vector2(28, 28)
-	var icon_style := StyleBoxFlat.new()
-	icon_style.bg_color = Color(color.r, color.g, color.b, 0.18)
-	icon_style.set_corner_radius_all(14)
-	icon_style.shadow_color = Color(color.r, color.g, color.b, 0.35)
-	icon_style.shadow_size = 8
-	icon_wrap.add_theme_stylebox_override("panel", icon_style)
-	var icon_center := CenterContainer.new()
-	icon_wrap.add_child(icon_center)
+
+func _stat_icon_cell(icon: String, value: String, label: String, color: Color) -> Control:
+	## Mock cell: icon + value on top; caption centered between separators below.
+	var pad := MarginContainer.new()
+	pad.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	pad.size_flags_stretch_ratio = 1.0
+	pad.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	pad.add_theme_constant_override("margin_left", 2)
+	pad.add_theme_constant_override("margin_right", 2)
+
+	var col := VBoxContainer.new()
+	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	col.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	col.alignment = BoxContainer.ALIGNMENT_CENTER
+	col.add_theme_constant_override("separation", 2)
+	pad.add_child(col)
+
+	## Top block: icon + number, same vertical level, lifted together.
+	var top_center := CenterContainer.new()
+	top_center.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	col.add_child(top_center)
+
+	var top_lift := MarginContainer.new()
+	top_lift.add_theme_constant_override("margin_top", -12)
+	top_center.add_child(top_lift)
+
+	var top := HBoxContainer.new()
+	top.alignment = BoxContainer.ALIGNMENT_CENTER
+	top.add_theme_constant_override("separation", 6)
+	top_lift.add_child(top)
+
+	var icon_slot := CenterContainer.new()
+	icon_slot.custom_minimum_size = Vector2(44, 44)
+	icon_slot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	var icon_nudge := MarginContainer.new()
+	icon_nudge.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	icon_nudge.add_theme_constant_override("margin_left", -8)
+	icon_nudge.add_child(icon_slot)
+	top.add_child(icon_nudge)
+
 	var icon_label := Label.new()
 	icon_label.text = icon
 	icon_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	icon_label.add_theme_font_size_override("font_size", 14)
-	icon_center.add_child(icon_label)
-	var icon_row := CenterContainer.new()
-	icon_row.add_child(icon_wrap)
-	cell.add_child(icon_row)
+	icon_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	icon_label.custom_minimum_size = Vector2(44, 44)
+	icon_label.add_theme_font_size_override("font_size", 38)
+	icon_label.add_theme_color_override("font_color", color)
+	var emoji_font := UiFonts.emoji_font()
+	if emoji_font != null:
+		icon_label.add_theme_font_override("font", emoji_font)
+	icon_slot.add_child(icon_label)
 
 	var value_label := Label.new()
 	value_label.text = value
-	value_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	value_label.add_theme_font_size_override("font_size", 16)
-	value_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-	cell.add_child(value_label)
+	value_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	value_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	value_label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	value_label.add_theme_font_size_override("font_size", 26)
+	value_label.add_theme_color_override("font_color", Color(1, 1, 1, 1))
+	var value_wrap := MarginContainer.new()
+	value_wrap.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	value_wrap.add_theme_constant_override("margin_left", 6)
+	value_wrap.add_child(value_label)
+	top.add_child(value_wrap)
 
+	## Caption centered in the full column between separators.
 	var caption := Label.new()
 	caption.text = label.to_upper()
 	caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	caption.add_theme_font_size_override("font_size", 8)
-	caption.add_theme_color_override("font_color", UiTokens.PROFILE_TITLE_CAPS)
-	cell.add_child(caption)
-	return cell
+	caption.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	caption.add_theme_font_size_override("font_size", 13)
+	caption.add_theme_color_override("font_color", Color(0.62, 0.66, 0.78, 1))
+	var caption_wrap := MarginContainer.new()
+	caption_wrap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	caption_wrap.add_theme_constant_override("margin_top", 5)
+	## Absorb the +5 so the tile height does not grow.
+	caption_wrap.add_theme_constant_override("margin_bottom", -5)
+	caption_wrap.add_child(caption)
+	col.add_child(caption_wrap)
+	return pad
 
 
 func _build_categories_tile() -> PanelContainer:
