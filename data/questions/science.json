@@ -1,0 +1,1605 @@
+{
+  "category": "science",
+  "questions": [
+    {
+      "id": "science_001",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Burning which of these metals will produce a bright white flame?",
+          "choices": [
+            "Copper",
+            "Magnesium",
+            "Lithium",
+            "Lead"
+          ],
+          "explanation": "The correct answer is: Magnesium."
+        },
+        "fr": {
+          "text": "Brûler lequel de ces métaux produira une flamme blanche éclatante?",
+          "choices": [
+            "Cuivre",
+            "Magnésium",
+            "Lithium",
+            "Plomb"
+          ],
+          "explanation": "La bonne réponse est: Magnésium."
+        }
+      }
+    },
+    {
+      "id": "science_002",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the Linnean name of the domestic apple tree?",
+          "choices": [
+            "Pomus domestica",
+            "Appelus delectica",
+            "Malus pumila",
+            "Malus americana"
+          ],
+          "explanation": "The correct answer is: Malus pumila."
+        },
+        "fr": {
+          "text": "Quel est le nom linnéen du pommier domestique?",
+          "choices": [
+            "Pomus domestica",
+            "Appelus delectica",
+            "Malus pumila",
+            "Malus americana"
+          ],
+          "explanation": "La bonne réponse est: Malus pumila."
+        }
+      }
+    },
+    {
+      "id": "science_003",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Naturally occuring uranium primarily consists of which isotope?",
+          "choices": [
+            "235",
+            "239",
+            "233",
+            "238"
+          ],
+          "explanation": "The correct answer is: 238."
+        },
+        "fr": {
+          "text": "L'uranium naturel se compose principalement de quel isotope?",
+          "choices": [
+            "235",
+            "239",
+            "233",
+            "238"
+          ],
+          "explanation": "La bonne réponse est : 238."
+        }
+      }
+    },
+    {
+      "id": "science_004",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many officially recognized dwarf planets in the solar system are named after Polynesian deities?",
+          "choices": [
+            "2",
+            "0",
+            "1",
+            "5"
+          ],
+          "explanation": "The correct answer is: 2."
+        },
+        "fr": {
+          "text": "Combien de planètes naines officiellement reconnues dans le système solaire portent le nom de divinités polynésiennes ?",
+          "choices": [
+            "2",
+            "0",
+            "1",
+            "5"
+          ],
+          "explanation": "La bonne réponse est : 2."
+        }
+      }
+    },
+    {
+      "id": "science_005",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "The medial meniscus forms which part of what joint in the human body?",
+          "choices": [
+            "Ankle",
+            "Shoulder",
+            "Elbow",
+            "Knee"
+          ],
+          "explanation": "The correct answer is: Knee."
+        },
+        "fr": {
+          "text": "Le ménisque médial forme quelle partie du corps humain ?",
+          "choices": [
+            "Cheville",
+            "Épaule",
+            "Coude",
+            "Genou"
+          ],
+          "explanation": "La bonne réponse est : Knee."
+        }
+      }
+    },
+    {
+      "id": "science_006",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the most potent toxin known?",
+          "choices": [
+            "Botulinum toxin",
+            "Cyanide",
+            "Ricin",
+            "Asbestos"
+          ],
+          "explanation": "The correct answer is: Botulinum toxin."
+        },
+        "fr": {
+          "text": "Quelle est la toxine la plus puissante connue?",
+          "choices": [
+            "Toxine botulique",
+            "Cyanure",
+            "Ricin",
+            "Asbestos"
+          ],
+          "explanation": "La bonne réponse est la toxine botulique."
+        }
+      }
+    },
+    {
+      "id": "science_007",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What causes the sound of a heartbeat?",
+          "choices": [
+            "Relaxation of the heart chambers",
+            "Blood exiting the heart",
+            "Contraction of the heart chambers",
+            "Closure of the heart valves"
+          ],
+          "explanation": "The correct answer is: Closure of the heart valves."
+        },
+        "fr": {
+          "text": "Qu'est - ce qui provoque un battement de cœur?",
+          "choices": [
+            "Relaxation des chambres du cœur",
+            "Sang sortant du cœur",
+            "La contraction des chambres cardiaques",
+            "Fermeture des valves cardiaques"
+          ],
+          "explanation": "La bonne réponse est : Fermeture des valves cardiaques."
+        }
+      }
+    },
+    {
+      "id": "science_008",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the same in Celsius and Fahrenheit?",
+          "choices": [
+            "-39",
+            "-40",
+            "32",
+            "-42"
+          ],
+          "explanation": "The correct answer is: -40."
+        },
+        "fr": {
+          "text": "Quelle est la même chose à Celsius et Fahrenheit?",
+          "choices": [
+            "-39",
+            "-40",
+            "32",
+            "-42"
+          ],
+          "explanation": "La bonne réponse est : -40."
+        }
+      }
+    },
+    {
+      "id": "science_009",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the unit of electrical inductance?",
+          "choices": [
+            "Mho",
+            "Henry",
+            "Coulomb",
+            "Weber"
+          ],
+          "explanation": "The correct answer is: Henry."
+        },
+        "fr": {
+          "text": "Quelle est l'unité d'inductance électrique?",
+          "choices": [
+            "Mho",
+            "Henry",
+            "Coulomb",
+            "Weber"
+          ],
+          "explanation": "La bonne réponse est : Henry."
+        }
+      }
+    },
+    {
+      "id": "science_010",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the standard SI unit for luminous intensity?",
+          "choices": [
+            "Candela",
+            "Lumen",
+            "Coulomb",
+            "Faraday"
+          ],
+          "explanation": "The correct answer is: Candela."
+        },
+        "fr": {
+          "text": "Quelle est l'unité SI standard pour l'intensité lumineuse?",
+          "choices": [
+            "Candela",
+            "Lumen",
+            "Coulomb",
+            "Faraday"
+          ],
+          "explanation": "La bonne réponse est : Candela."
+        }
+      }
+    },
+    {
+      "id": "science_011",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which of these choices is not one of the phases of mitosis?",
+          "choices": [
+            "Telophase",
+            "Anaphase",
+            "Diplophase",
+            "Metaphase"
+          ],
+          "explanation": "The correct answer is: Diplophase."
+        },
+        "fr": {
+          "text": "Lequel de ces choix n'est pas une des phases de mitose?",
+          "choices": [
+            "Télophase",
+            "Anaphase",
+            "Diplophase",
+            "Métaphase"
+          ],
+          "explanation": "La bonne réponse est : Diplophase."
+        }
+      }
+    },
+    {
+      "id": "science_012",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "The human right lung has how many lobes?",
+          "choices": [
+            "1",
+            "3",
+            "2",
+            "4"
+          ],
+          "explanation": "The correct answer is: 3."
+        },
+        "fr": {
+          "text": "Le poumon droit humain a combien de lobes ?",
+          "choices": [
+            "1",
+            "3",
+            "2",
+            "4"
+          ],
+          "explanation": "La bonne réponse est : 3."
+        }
+      }
+    },
+    {
+      "id": "science_013",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "The 'Islets of Langerhans' is found in which human organ?",
+          "choices": [
+            "Kidney",
+            "Pancreas",
+            "Brain",
+            "Liver"
+          ],
+          "explanation": "The correct answer is: Pancreas."
+        },
+        "fr": {
+          "text": "Les îlots de Langerhans se trouvent dans quel organe humain ?",
+          "choices": [
+            "Rein",
+            "Pancréas",
+            "Cerveau",
+            "Foie"
+          ],
+          "explanation": "La bonne réponse est : Pancréas."
+        }
+      }
+    },
+    {
+      "id": "science_014",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "The \"Tibia\" is found in which part of the body?",
+          "choices": [
+            "Head",
+            "Hand",
+            "Leg",
+            "Arm"
+          ],
+          "explanation": "The correct answer is: Leg."
+        },
+        "fr": {
+          "text": "Le \"Tibia\" se trouve dans quelle partie du corps ?",
+          "choices": [
+            "Tête",
+            "Main",
+            "Jambe",
+            "Bras"
+          ],
+          "explanation": "La bonne réponse est : Jambe."
+        }
+      }
+    },
+    {
+      "id": "science_015",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many moons does the Earth have?",
+          "choices": [
+            "3",
+            "2",
+            "1",
+            "0"
+          ],
+          "explanation": "The correct answer is: 1."
+        },
+        "fr": {
+          "text": "Combien de lunes la Terre a-t-elle ?",
+          "choices": [
+            "3",
+            "2",
+            "1",
+            "0"
+          ],
+          "explanation": "La bonne réponse est : 1."
+        }
+      }
+    },
+    {
+      "id": "science_016",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the medical term for low blood sugar?",
+          "choices": [
+            "Hypoxia",
+            "Hypoglycemia",
+            "Hypothermia",
+            "Hypothyroidism"
+          ],
+          "explanation": "The correct answer is: Hypoglycemia."
+        },
+        "fr": {
+          "text": "Quel est le terme médical pour l'hypoglycémie?",
+          "choices": [
+            "Hypoxia",
+            "Hypoglycemia",
+            "Hypothermia",
+            "Hypothyroidism"
+          ],
+          "explanation": "La bonne réponse est: Hypoglycémie."
+        }
+      }
+    },
+    {
+      "id": "science_017",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "The biggest distinction between a eukaryotic cell and a prokaryotic cell is:",
+          "choices": [
+            "The presence or absence of certain organelles",
+            "The overall size",
+            "The presence or absence of a nucleus",
+            "The mode of reproduction"
+          ],
+          "explanation": "The correct answer is: The presence or absence of a nucleus."
+        },
+        "fr": {
+          "text": "La plus grande distinction entre une cellule eucaryotique et une cellule procaryotique est :",
+          "choices": [
+            "Présence ou absence de certains organites",
+            "The overall size",
+            "Présence ou absence de noyau",
+            "Le mode de reproduction"
+          ],
+          "explanation": "La bonne réponse est : La présence ou l'absence d'un noyau."
+        }
+      }
+    },
+    {
+      "id": "science_018",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the unit of electrical capacitance?",
+          "choices": [
+            "Gauss",
+            "Henry",
+            "Watt",
+            "Farad"
+          ],
+          "explanation": "The correct answer is: Farad."
+        },
+        "fr": {
+          "text": "Quelle est l'unité de capacité électrique?",
+          "choices": [
+            "Gauss",
+            "Henry",
+            "Watt",
+            "Farad"
+          ],
+          "explanation": "La bonne réponse est : Farad."
+        }
+      }
+    },
+    {
+      "id": "science_019",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "All the following metal elements are liquids at or near room temperature EXCEPT:",
+          "choices": [
+            "Mercury",
+            "Caesium",
+            "Gallium",
+            "Beryllium"
+          ],
+          "explanation": "The correct answer is: Beryllium."
+        },
+        "fr": {
+          "text": "Tous les éléments métalliques suivants sont des liquides à température ambiante ou proche EXCEPT:",
+          "choices": [
+            "Mercury",
+            "Caesium",
+            "Gallium",
+            "Beryllium"
+          ],
+          "explanation": "La bonne réponse est : Béryllium."
+        }
+      }
+    },
+    {
+      "id": "science_020",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who made the discovery of X-rays?",
+          "choices": [
+            "Wilhelm Conrad Röntgen",
+            "Albert Einstein",
+            "James Watt",
+            "Thomas Alva Edison"
+          ],
+          "explanation": "The correct answer is: Wilhelm Conrad Röntgen."
+        },
+        "fr": {
+          "text": "Qui a fait la découverte des rayons X ?",
+          "choices": [
+            "Wilhelm Conrad Röntgen",
+            "Albert Einstein",
+            "James Watt",
+            "Thomas Alva Edison"
+          ],
+          "explanation": "La bonne réponse est : Wilhelm Conrad Röntgen."
+        }
+      }
+    },
+    {
+      "id": "science_021",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What part of the body produces insulin?",
+          "choices": [
+            "Liver",
+            "Kidney",
+            "Stomach",
+            "Pancreas"
+          ],
+          "explanation": "The correct answer is: Pancreas."
+        },
+        "fr": {
+          "text": "Quelle partie du corps produit de l'insuline?",
+          "choices": [
+            "Foie",
+            "Rein",
+            "Estomac",
+            "Pancréas"
+          ],
+          "explanation": "La bonne réponse est : Pancréas."
+        }
+      }
+    },
+    {
+      "id": "science_022",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In quantum physics, which of these theorised sub-atomic particles has yet to be observed?",
+          "choices": [
+            "Gluon",
+            "Tau neutrino",
+            "Z boson",
+            "Graviton"
+          ],
+          "explanation": "The correct answer is: Graviton."
+        },
+        "fr": {
+          "text": "En physique quantique, quelles particules subatomiques théorisées n'ont pas encore été observées?",
+          "choices": [
+            "Gluon",
+            "Tau neutrino",
+            "Z boson",
+            "Graviton"
+          ],
+          "explanation": "La bonne réponse est : Graviton."
+        }
+      }
+    },
+    {
+      "id": "science_023",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which planet in the Solar System is the closest to the Sun?",
+          "choices": [
+            "Venus",
+            "Earth",
+            "Mercury",
+            "Mars"
+          ],
+          "explanation": "The correct answer is: Mercury."
+        },
+        "fr": {
+          "text": "Quelle planète du système solaire est la plus proche du Soleil ?",
+          "choices": [
+            "Venus",
+            "Earth",
+            "Mercury",
+            "Mars"
+          ],
+          "explanation": "La bonne réponse est : Mercure."
+        }
+      }
+    },
+    {
+      "id": "science_024",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which of these is used to show that Earth spins on an axis?",
+          "choices": [
+            "Sundial",
+            "Foucault Pendulum",
+            "Polaris",
+            "Tectonic Plates"
+          ],
+          "explanation": "The correct answer is: Foucault Pendulum."
+        },
+        "fr": {
+          "text": "Lequel d'entre eux est utilisé pour montrer que la Terre tourne sur un axe?",
+          "choices": [
+            "Sundial",
+            "Foucault Pendulum",
+            "Polaris",
+            "Tectonic Plates"
+          ],
+          "explanation": "La bonne réponse est : Foucault Pendulum."
+        }
+      }
+    },
+    {
+      "id": "science_025",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the lowest layer of the Earth's atmosphere named?",
+          "choices": [
+            "Stratosphere",
+            "Troposphere",
+            "Mesosphere",
+            "Thermosphere"
+          ],
+          "explanation": "The correct answer is: Troposphere."
+        },
+        "fr": {
+          "text": "Quelle est la couche la plus basse de l'atmosphère terrestre?",
+          "choices": [
+            "Stratosphere",
+            "Troposphere",
+            "Mesosphere",
+            "Thermosphere"
+          ],
+          "explanation": "La bonne réponse est : Troposphère."
+        }
+      }
+    },
+    {
+      "id": "science_026",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "The Western Lowland Gorilla is scientifically know as?",
+          "choices": [
+            "Gorilla Gorilla Diehli",
+            "Gorilla Beringei Beringei",
+            "Gorilla Beringei Graueri",
+            "Gorilla Gorilla Gorilla"
+          ],
+          "explanation": "The correct answer is: Gorilla Gorilla Gorilla."
+        },
+        "fr": {
+          "text": "Le Western Lowland Gorilla est scientifiquement au courant ?",
+          "choices": [
+            "Gorilla Gorilla Diehli",
+            "Gorilla Beringei Beringei",
+            "Gorilla Beringei Graueri",
+            "Gorilla Gorilla Gorilla"
+          ],
+          "explanation": "La bonne réponse est : Gorilla Gorilla Gorilla."
+        }
+      }
+    },
+    {
+      "id": "science_027",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which of the following is NOT a passive electrical component?",
+          "choices": [
+            "Transistor",
+            "Resistor",
+            "Inductor",
+            "Capacitor"
+          ],
+          "explanation": "The correct answer is: Transistor."
+        },
+        "fr": {
+          "text": "Lequel des éléments suivants n'est PAS un composant électrique passif?",
+          "choices": [
+            "Transistor",
+            "Resistor",
+            "Inductor",
+            "Capacitor"
+          ],
+          "explanation": "La bonne réponse est : Transistor."
+        }
+      }
+    },
+    {
+      "id": "science_028",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What stage of development do the majority of eukaryotic cells remain in for most of their life?",
+          "choices": [
+            "Prophase",
+            "Stasis",
+            "Interphase",
+            "Telophase"
+          ],
+          "explanation": "The correct answer is: Interphase."
+        },
+        "fr": {
+          "text": "À quel stade de développement la majorité des cellules eucaryotes demeurent-elles pendant la majeure partie de leur vie?",
+          "choices": [
+            "Prophase",
+            "Stasis",
+            "Interphase",
+            "Télophase"
+          ],
+          "explanation": "La bonne réponse est : Interphase."
+        }
+      }
+    },
+    {
+      "id": "science_029",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the standard SI unit for temperature?",
+          "choices": [
+            "Kelvin",
+            "Rankine",
+            "Fahrenheit",
+            "Celsius"
+          ],
+          "explanation": "The correct answer is: Kelvin."
+        },
+        "fr": {
+          "text": "Quelle est l'unité standard SI pour la température?",
+          "choices": [
+            "Kelvin",
+            "Rankine",
+            "Fahrenheit",
+            "Celsius"
+          ],
+          "explanation": "La bonne réponse est : Kelvin."
+        }
+      }
+    },
+    {
+      "id": "science_030",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which of the following is the term for \"surgical complications resulting from surgical sponges left inside the patient's body?",
+          "choices": [
+            "Meupareunia",
+            "Jentacular",
+            "Gossypiboma",
+            "Gongoozler"
+          ],
+          "explanation": "The correct answer is: Gossypiboma."
+        },
+        "fr": {
+          "text": "Lequel des termes suivants est le terme \"complications chirurgicales résultant d'éponges chirurgicales laissées dans le corps du patient?",
+          "choices": [
+            "Meupareunia",
+            "Jentacular",
+            "Gossypiboma",
+            "Gongoozler"
+          ],
+          "explanation": "La bonne réponse est : Gossypiboma."
+        }
+      }
+    },
+    {
+      "id": "science_031",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "71% of the Earth's surface is made up of",
+          "choices": [
+            "Water",
+            "Forests",
+            "Deserts",
+            "Continents"
+          ],
+          "explanation": "The correct answer is: Water."
+        },
+        "fr": {
+          "text": "71% de la surface de la Terre est constituée de",
+          "choices": [
+            "Water",
+            "Forests",
+            "Deserts",
+            "continents"
+          ],
+          "explanation": "La bonne réponse est : Eau."
+        }
+      }
+    },
+    {
+      "id": "science_032",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What mineral has the lowest number on the Mohs scale?",
+          "choices": [
+            "Talc",
+            "Quartz",
+            "Diamond",
+            "Gypsum"
+          ],
+          "explanation": "The correct answer is: Talc."
+        },
+        "fr": {
+          "text": "Quel minéral a le plus faible nombre sur l'échelle Mohs?",
+          "choices": [
+            "Talc",
+            "Quartz",
+            "Diamond",
+            "Gypsum"
+          ],
+          "explanation": "La bonne réponse est : Talc."
+        }
+      }
+    },
+    {
+      "id": "science_033",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "The medical term for the belly button is which of the following?",
+          "choices": [
+            "Nevus",
+            "Nares",
+            "Umbilicus",
+            "Paxillus"
+          ],
+          "explanation": "The correct answer is: Umbilicus."
+        },
+        "fr": {
+          "text": "Le terme médical pour le bouton ventre est lequel de ce qui suit?",
+          "choices": [
+            "Nevus",
+            "Nares",
+            "Umbilicus",
+            "Paxillus"
+          ],
+          "explanation": "La bonne réponse est : Umbricus."
+        }
+      }
+    },
+    {
+      "id": "science_034",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which of the following elements is typically used in the doping of the semiconductor silicon?",
+          "choices": [
+            "Boron",
+            "Oxygen",
+            "Iron",
+            "Carbon"
+          ],
+          "explanation": "The correct answer is: Boron."
+        },
+        "fr": {
+          "text": "Lequel des éléments suivants est généralement utilisé dans le dopage du silicium semi-conducteur?",
+          "choices": [
+            "Boron",
+            "Oxygène",
+            "Fer",
+            "Carbone"
+          ],
+          "explanation": "La bonne réponse est : Boron."
+        }
+      }
+    },
+    {
+      "id": "science_035",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many planets make up our Solar System?",
+          "choices": [
+            "9",
+            "6",
+            "8",
+            "7"
+          ],
+          "explanation": "The correct answer is: 8."
+        },
+        "fr": {
+          "text": "Combien de planètes composent notre système solaire ?",
+          "choices": [
+            "9",
+            "6",
+            "8",
+            "7"
+          ],
+          "explanation": "La bonne réponse est : 8."
+        }
+      }
+    },
+    {
+      "id": "science_036",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "On which mission did the Space Shuttle Columbia break up upon re-entry?",
+          "choices": [
+            "STS-61-C",
+            "STS-51-L",
+            "STS-109",
+            "STS-107"
+          ],
+          "explanation": "The correct answer is: STS-107."
+        },
+        "fr": {
+          "text": "Sur quelle mission la navette spatiale Columbia a-t-elle rompu à la rentrée ?",
+          "choices": [
+            "STS-61-C",
+            "STS-51-L",
+            "STS-109",
+            "STS-107"
+          ],
+          "explanation": "La bonne réponse est : STS-107."
+        }
+      }
+    },
+    {
+      "id": "science_037",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "The medical condition osteoporosis affects which part of the body?",
+          "choices": [
+            "Bones",
+            "Brain",
+            "Skin",
+            "Heart"
+          ],
+          "explanation": "The correct answer is: Bones."
+        },
+        "fr": {
+          "text": "L'ostéoporose affecte quelle partie du corps ?",
+          "choices": [
+            "Bones",
+            "Cerveau",
+            "Skin",
+            "Cœur"
+          ],
+          "explanation": "La bonne réponse est : Bones."
+        }
+      }
+    },
+    {
+      "id": "science_038",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In Chemistry, how many isomers does Butanol (C4H9OH) have?",
+          "choices": [
+            "5",
+            "3",
+            "4",
+            "6"
+          ],
+          "explanation": "The correct answer is: 4."
+        },
+        "fr": {
+          "text": "En chimie, combien d'isomères le butanol (C4H9OH) a-t-il?",
+          "choices": [
+            "5",
+            "3",
+            "4",
+            "6"
+          ],
+          "explanation": "La bonne réponse est : 4."
+        }
+      }
+    },
+    {
+      "id": "science_039",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Rhinoplasty is a surgical procedure on what part of the human body?",
+          "choices": [
+            "Nose",
+            "Chin",
+            "Ears",
+            "Neck"
+          ],
+          "explanation": "The correct answer is: Nose."
+        },
+        "fr": {
+          "text": "La rhinoplastie est une intervention chirurgicale sur quelle partie du corps humain ?",
+          "choices": [
+            "Nose",
+            "Chin",
+            "Ears",
+            "Neck"
+          ],
+          "explanation": "La bonne réponse est : Nez."
+        }
+      }
+    },
+    {
+      "id": "science_040",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Coulrophobia is the irrational fear of what?",
+          "choices": [
+            "Cemeteries",
+            "Tunnels",
+            "Clowns",
+            "Needles"
+          ],
+          "explanation": "The correct answer is: Clowns."
+        },
+        "fr": {
+          "text": "La coulrophobie est la peur irrationnelle de quoi ?",
+          "choices": [
+            "Cemeteries",
+            "Tunnels",
+            "Clowns",
+            "Needles"
+          ],
+          "explanation": "La bonne réponse est : Clowns."
+        }
+      }
+    },
+    {
+      "id": "science_041",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "The human heart has how many chambers?",
+          "choices": [
+            "4",
+            "2",
+            "6",
+            "3"
+          ],
+          "explanation": "The correct answer is: 4."
+        },
+        "fr": {
+          "text": "Le cœur humain a combien de chambres ?",
+          "choices": [
+            "4",
+            "2",
+            "6",
+            "3"
+          ],
+          "explanation": "La bonne réponse est : 4."
+        }
+      }
+    },
+    {
+      "id": "science_042",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the standard SI unit for distance?",
+          "choices": [
+            "Fathom",
+            "Angstrom",
+            "Foot",
+            "Metre"
+          ],
+          "explanation": "The correct answer is: Metre."
+        },
+        "fr": {
+          "text": "Quelle est l'unité SI standard pour la distance?",
+          "choices": [
+            "Fathom",
+            "Angstrom",
+            "Foot",
+            "Metre"
+          ],
+          "explanation": "La bonne réponse est : Metre."
+        }
+      }
+    },
+    {
+      "id": "science_043",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What cell organelle is known as \"the powerhouse of the cell?\"",
+          "choices": [
+            "Mitochondria",
+            "Endoplasmic reticulum",
+            "Nucleus",
+            "Golgi apparatus"
+          ],
+          "explanation": "The correct answer is: Mitochondria."
+        },
+        "fr": {
+          "text": "Quel organe cellulaire est connu comme \"la puissance de la cellule?\"",
+          "choices": [
+            "Mitochondria",
+            "Endoplasmic reticulum",
+            "Nucleus",
+            "Appareils Golgi"
+          ],
+          "explanation": "La bonne réponse est : Mitochondria."
+        }
+      }
+    },
+    {
+      "id": "science_044",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Deionized water is water with which of the following removed?",
+          "choices": [
+            "Uncharged atoms",
+            "Oxygen",
+            "Hydrogen",
+            "Iron"
+          ],
+          "explanation": "The correct answer is: Iron."
+        },
+        "fr": {
+          "text": "L'eau déionisée est l'eau avec laquelle de ce qui suit a été enlevée?",
+          "choices": [
+            "Uncharged atoms",
+            "Oxygène",
+            "Hydrogène",
+            "Fer"
+          ],
+          "explanation": "La bonne réponse est : Iron."
+        }
+      }
+    },
+    {
+      "id": "science_045",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What part of the brain takes its name from the Greek for seahorse?",
+          "choices": [
+            "Thalamus",
+            "Hippocampus",
+            "Cerebellum",
+            "Amygdala"
+          ],
+          "explanation": "The correct answer is: Hippocampus."
+        },
+        "fr": {
+          "text": "Quelle partie du cerveau prend son nom du grec pour hippocampe ?",
+          "choices": [
+            "Thalamus",
+            "Hippocampus",
+            "Cerebellum",
+            "Amygdala"
+          ],
+          "explanation": "La bonne réponse est : Hippocampus."
+        }
+      }
+    },
+    {
+      "id": "science_046",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the chemical symbol for Helium?",
+          "choices": [
+            "Hs",
+            "He",
+            "H",
+            "Hg"
+          ],
+          "explanation": "The correct answer is: He."
+        },
+        "fr": {
+          "text": "Quel est le symbole chimique de l'hélium?",
+          "choices": [
+            "Hs",
+            "He",
+            "H",
+            "Hg"
+          ],
+          "explanation": "La bonne réponse est : Lui."
+        }
+      }
+    },
+    {
+      "id": "science_047",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many laws of thermodynamics are there?",
+          "choices": [
+            "Three",
+            "Two",
+            "Four",
+            "Five"
+          ],
+          "explanation": "The correct answer is: Four."
+        },
+        "fr": {
+          "text": "Combien y a-t-il de lois de la thermodynamique ?",
+          "choices": [
+            "Three",
+            "Two",
+            "Four",
+            "Five"
+          ],
+          "explanation": "La bonne réponse est : Quatre."
+        }
+      }
+    },
+    {
+      "id": "science_048",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What does DNA stand for?",
+          "choices": [
+            "Detoxic Acid",
+            "Deoxyribogenetic Acid",
+            "Deoxyribonucleic Acid",
+            "Deoxyribogenetic Atoms"
+          ],
+          "explanation": "The correct answer is: Deoxyribonucleic Acid."
+        },
+        "fr": {
+          "text": "Qu'est-ce que l'ADN représente ?",
+          "choices": [
+            "Detoxic Acid",
+            "Deoxyribogenetic Acid",
+            "Deoxyribonucleic Acid",
+            "Deoxyribogenetic Atoms"
+          ],
+          "explanation": "La bonne réponse est : Acide désoxyribonucléique."
+        }
+      }
+    },
+    {
+      "id": "science_049",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Apollo mission was the first one to land on the Moon?",
+          "choices": [
+            "Apollo 11",
+            "Apollo 13",
+            "Apollo 10",
+            "Apollo 9"
+          ],
+          "explanation": "The correct answer is: Apollo 11."
+        },
+        "fr": {
+          "text": "Quelle mission Apollo a été la première à atterrir sur la Lune ?",
+          "choices": [
+            "Apollo 11",
+            "Apollo 13",
+            "Apollo 10",
+            "Apollo 9"
+          ],
+          "explanation": "La bonne réponse est : Apollo 11."
+        }
+      }
+    },
+    {
+      "id": "science_050",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many bones are in the human body?",
+          "choices": [
+            "200",
+            "206",
+            "209",
+            "203"
+          ],
+          "explanation": "The correct answer is: 206."
+        },
+        "fr": {
+          "text": "Combien d'os sont dans le corps humain ?",
+          "choices": [
+            "200",
+            "206",
+            "209",
+            "203"
+          ],
+          "explanation": "La bonne réponse est : 206."
+        }
+      }
+    }
+  ]
+}

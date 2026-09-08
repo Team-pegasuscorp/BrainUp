@@ -1,6 +1,7 @@
 extends Node
 
 const UiTokens = preload("res://scripts/config/ui_tokens.gd")
+const QuestionLoaderScript = preload("res://scripts/quiz/question_loader.gd")
 
 const SAVE_PATH: String = "user://save.json"
 const PROFILE_AVATAR_PATH: String = "user://profile_avatar.png"
@@ -254,7 +255,13 @@ func ensure_leaderboard_rivals() -> void:
 
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 9282
-	var category_ids := ["sport", "cinema", "history"]
+	var category_ids: Array[String] = []
+	for category in QuestionLoaderScript.get_categories("en"):
+		var category_id := str(category.get("id", ""))
+		if not category_id.is_empty():
+			category_ids.append(category_id)
+	if category_ids.is_empty():
+		category_ids = ["sport", "cinema", "history"]
 	for rival_name in _rival_names():
 		var scores := {"all": 0}
 		for category_id in category_ids:

@@ -13,7 +13,7 @@ Résumé pour la prochaine session de travail sur Quizz (Godot 4.7, FR/EN).
 |------|--------|
 | MVP gameplay (quiz 7 Q, timer, score, save) | ✅ |
 | App shell 5 onglets (Minimal Premium UI) | ✅ |
-| Contenu questions (~173, 3 catégories) | ✅ import OpenTDB |
+| Contenu questions (~423, 8 catégories) | ✅ import OpenTDB |
 | **Classement local** | ✅ joueur + 9 rivaux + filtres |
 | **Historique profil** | ✅ 30 dernières parties sauvegardées |
 | Social / multijoueur en ligne | ⬜ placeholder |
@@ -33,7 +33,7 @@ Résumé pour la prochaine session de travail sur Quizz (Godot 4.7, FR/EN).
 ### 2. Contenu questions (OpenTDB + traduction locale)
 - Script `tools/import_opentdb.py` — fetch OpenTDB → traduction FR offline via **Argos Translate** → JSON Quizz
 - `data/categories.json` — champ `opentdb_id` par catégorie
-- ~**59 sport**, **57 cinema**, **57 history** (FR + EN)
+- ~**59 sport**, **57 cinema**, **57 history**, **50 music**, **50 geography**, **50 science**, **50 general**, **50 television** (FR + EN)
 
 ```bash
 python3 -m venv tools/.venv

@@ -179,11 +179,15 @@ static func accent_for_category(category_id: String) -> Color:
 			return ACCENT_SOCIAL
 		"history":
 			return ACCENT_LEADERBOARD
+		"music":
+			return ACCENT_QUIZ
+		"geography":
+			return Color(0.28, 0.72, 0.45, 1)
 		"science":
 			return FEEDBACK_CORRECT
-		"geography":
-			return Color(0.36, 0.75, 1.0, 1)
-		"music":
+		"general":
 			return ACCENT_PROFILE
+		"television":
+			return Color(0.95, 0.48, 0.28, 1)
 		_:
 			return ACCENT_PROFILE

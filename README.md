@@ -37,7 +37,7 @@ scripts/
   ui/             # Scene scripts
 data/
   categories.json
-  questions/      # sport.json, cinema.json, history.json
+  questions/      # one JSON file per category id
 locale/
   ui.csv          # UI translations (en + fr)
 ```

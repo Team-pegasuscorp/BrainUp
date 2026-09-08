@@ -124,17 +124,18 @@ static func _merge_demo(base: Dictionary, locale: String) -> Dictionary:
 		_make_category_row("sport", locale, 412, 84.0, 4, 24, "gold"),
 		_make_category_row("cinema", locale, 386, 71.0, 3, 19, "bronze"),
 		_make_category_row("history", locale, 450, 78.0, 4, 22, "silver"),
-		## Fake categories for mastery-tile layout tests (6 rows).
-		_make_category_row("science", locale, 298, 76.0, 3, 16, "none"),
-		_make_category_row("geography", locale, 210, 58.0, 2, 11, "none"),
-		_make_category_row("music", locale, 164, 51.0, 2, 9, "none"),
+		_make_category_row("music", locale, 398, 76.0, 3, 18, "bronze"),
+		_make_category_row("geography", locale, 430, 81.0, 4, 21, "silver"),
+		_make_category_row("science", locale, 360, 69.0, 2, 15, "bronze"),
+		_make_category_row("general", locale, 405, 74.0, 3, 20, "silver"),
+		_make_category_row("television", locale, 372, 70.0, 2, 16, "bronze"),
 	]
 	_assign_medals(demo["categories"])
 	demo["history"] = [
 		_make_history_row("sport", locale, 820, true, 15, 24, 0, "Lucas", 24),
 		_make_history_row("cinema", locale, 510, false, 9, 20, 3, "Emma", -12),
 		_make_history_row("history", locale, 740, true, 14, 22, 8, "Noah", 18),
-		_make_history_row("sport", locale, 630, true, 12, 20, 26, "Léa", 9),
+		_make_history_row("music", locale, 690, true, 13, 21, 5, "Léa", 9),
 	]
 	return demo
 

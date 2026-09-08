@@ -1,0 +1,1605 @@
+{
+  "category": "general",
+  "questions": [
+    {
+      "id": "general_001",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Where in La Coruña (Spain) is the headquarters of \"Inditex\", the biggest fashion group in the world?",
+          "choices": [
+            "Sanjenjo",
+            "Arteijo",
+            "Mugía",
+            "Órdenes"
+          ],
+          "explanation": "The correct answer is: Arteijo."
+        },
+        "fr": {
+          "text": "Où à La Corogne (Espagne) est le siège de \"Inditex\", le plus grand groupe de mode au monde ?",
+          "choices": [
+            "SANJENJO",
+            "Arteijo",
+            "Mugía",
+            "Órdenes"
+          ],
+          "explanation": "La bonne réponse est : Arteijo."
+        }
+      }
+    },
+    {
+      "id": "general_002",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many letters are in the English alphabet?",
+          "choices": [
+            "30",
+            "26",
+            "17",
+            "5"
+          ],
+          "explanation": "The correct answer is: 26."
+        },
+        "fr": {
+          "text": "Combien de lettres sont en alphabet anglais ?",
+          "choices": [
+            "30",
+            "26",
+            "17",
+            "5"
+          ],
+          "explanation": "La bonne réponse est : 26."
+        }
+      }
+    },
+    {
+      "id": "general_003",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "When did the website \"Facebook\" launch?",
+          "choices": [
+            "2006",
+            "2004",
+            "2003",
+            "2005"
+          ],
+          "explanation": "The correct answer is: 2004."
+        },
+        "fr": {
+          "text": "Quand le site \"Facebook\" a-t-il été lancé ?",
+          "choices": [
+            "2006",
+            "2004",
+            "2003",
+            "2005"
+          ],
+          "explanation": "La bonne réponse est : 2004."
+        }
+      }
+    },
+    {
+      "id": "general_004",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "The tale of Robin Hood originates from which country?",
+          "choices": [
+            "Portugal",
+            "France",
+            "Scotland",
+            "England"
+          ],
+          "explanation": "The correct answer is: England."
+        },
+        "fr": {
+          "text": "L'histoire de Robin des Bois provient de quel pays ?",
+          "choices": [
+            "Portugal",
+            "France",
+            "Écosse",
+            "Angleterre"
+          ],
+          "explanation": "La bonne réponse est : Angleterre."
+        }
+      }
+    },
+    {
+      "id": "general_005",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many calories are in a 355 ml can of Pepsi Cola?",
+          "choices": [
+            "150",
+            "200",
+            "155",
+            "100"
+          ],
+          "explanation": "The correct answer is: 150."
+        },
+        "fr": {
+          "text": "Combien de calories sont dans une boîte de 355 ml de Pepsi Cola?",
+          "choices": [
+            "150",
+            "200",
+            "155",
+            "100"
+          ],
+          "explanation": "La bonne réponse est : 150."
+        }
+      }
+    },
+    {
+      "id": "general_006",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What type of animal was Harambe, who was shot after a child fell into it's enclosure at the Cincinnati Zoo?",
+          "choices": [
+            "Gorilla",
+            "Tiger",
+            "Panda",
+            "Crocodile"
+          ],
+          "explanation": "The correct answer is: Gorilla."
+        },
+        "fr": {
+          "text": "Quel type d'animal était Harambe, qui a été abattu après qu'un enfant soit tombé dans son enclos au zoo de Cincinnati ?",
+          "choices": [
+            "Gorille",
+            "Tigre",
+            "Panda",
+            "Crocodile"
+          ],
+          "explanation": "La bonne réponse est : Gorilla."
+        }
+      }
+    },
+    {
+      "id": "general_007",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "The lesser-known continuation of the saying \"Curiosity killed the cat...\" is:",
+          "choices": [
+            "\"...and the silent mouse remained thereat.\"",
+            "\"...but satisfaction brought it back.\"",
+            "\"...but death by the truth is better than ignorance.\"",
+            "\"...which taught it not to do that.\""
+          ],
+          "explanation": "The correct answer is: \"...but satisfaction brought it back.\"."
+        },
+        "fr": {
+          "text": "La suite moins connue du dicton « La curiosité a tué le chat... » est :",
+          "choices": [
+            "\"et la souris silencieuse y est restée.\"",
+            "\"mais la satisfaction l'a ramené.\"",
+            "\"...mais la mort par la vérité vaut mieux que l'ignorance.\"",
+            "\"qui lui a appris à ne pas faire ça.\""
+          ],
+          "explanation": "La bonne réponse est: \"...mais la satisfaction l'a ramené.\"."
+        }
+      }
+    },
+    {
+      "id": "general_008",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which of these anatomical terms refers to the tail end of the creature?",
+          "choices": [
+            "Ventral",
+            "Coronal",
+            "Proximal",
+            "Caudal"
+          ],
+          "explanation": "The correct answer is: Caudal."
+        },
+        "fr": {
+          "text": "Lequel de ces termes anatomiques fait référence à la queue de la créature ?",
+          "choices": [
+            "Ventral",
+            "Coronal",
+            "Proximal",
+            "Caudal"
+          ],
+          "explanation": "La bonne réponse est : Caudal."
+        }
+      }
+    },
+    {
+      "id": "general_009",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How tall is the Burj Khalifa?",
+          "choices": [
+            "2,717 ft",
+            "2,546 ft",
+            "2,722 ft",
+            "3,024 ft"
+          ],
+          "explanation": "The correct answer is: 2,722 ft."
+        },
+        "fr": {
+          "text": "Quelle est la taille du Burj Khalifa ?",
+          "choices": [
+            "2,717 ft",
+            "2,546 ft",
+            "2 722 ft",
+            "3 024 pieds"
+          ],
+          "explanation": "La bonne réponse est : 2722 pi."
+        }
+      }
+    },
+    {
+      "id": "general_010",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "\"Nephelococcygia\" is the practice of doing what?",
+          "choices": [
+            "Swimming in freezing water",
+            "Sleeping with your eyes open",
+            "Breaking glass with your voice",
+            "Finding shapes in clouds"
+          ],
+          "explanation": "The correct answer is: Finding shapes in clouds."
+        },
+        "fr": {
+          "text": "\"Nephélococcie\" est la pratique de faire quoi?",
+          "choices": [
+            "Natation dans l'eau glacée",
+            "Dormir les yeux ouverts",
+            "Briser le verre avec votre voix",
+            "Trouver des formes dans les nuages"
+          ],
+          "explanation": "La bonne réponse est: Trouver des formes dans les nuages."
+        }
+      }
+    },
+    {
+      "id": "general_011",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which company did Valve cooperate with in the creation of the Vive?",
+          "choices": [
+            "Razer",
+            "Oculus",
+            "Google",
+            "HTC"
+          ],
+          "explanation": "The correct answer is: HTC."
+        },
+        "fr": {
+          "text": "Avec quelle société Valve a-t-elle collaboré à la création de la Vive ?",
+          "choices": [
+            "Razer",
+            "Oculus",
+            "Google",
+            "HTC"
+          ],
+          "explanation": "La bonne réponse est : HTC."
+        }
+      }
+    },
+    {
+      "id": "general_012",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In aerodynamics, which force pushes an object upwards?",
+          "choices": [
+            "Drag",
+            "Thrust",
+            "Lift",
+            "Weight"
+          ],
+          "explanation": "The correct answer is: Lift."
+        },
+        "fr": {
+          "text": "En aérodynamique, quelle force pousse un objet vers le haut ?",
+          "choices": [
+            "Traînée",
+            "Poussée",
+            "Portance",
+            "Poids"
+          ],
+          "explanation": "La bonne réponse est : Soulevez."
+        }
+      }
+    },
+    {
+      "id": "general_013",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Earl Grey tea is black tea flavoured with what?",
+          "choices": [
+            "Bergamot oil",
+            "Honey",
+            "Lavender",
+            "Vanilla"
+          ],
+          "explanation": "The correct answer is: Bergamot oil."
+        },
+        "fr": {
+          "text": "Earl Grey thé est le thé noir aromatisé avec quoi ?",
+          "choices": [
+            "Huile de bergamote",
+            "Miel",
+            "Lavande",
+            "Vanille"
+          ],
+          "explanation": "La bonne réponse est : Huile de Bergamote."
+        }
+      }
+    },
+    {
+      "id": "general_014",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of the poker hand containing three of a kind and a pair?",
+          "choices": [
+            "Flush",
+            "Straight",
+            "High card",
+            "Full House"
+          ],
+          "explanation": "The correct answer is: Full House."
+        },
+        "fr": {
+          "text": "Quel est le nom de la main de poker contenant trois types et une paire?",
+          "choices": [
+            "Flush",
+            "Straight",
+            "High card",
+            "Full House"
+          ],
+          "explanation": "La bonne réponse est: Full House."
+        }
+      }
+    },
+    {
+      "id": "general_015",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of the currency used in Ethiopia?",
+          "choices": [
+            "Rand",
+            "Dirham",
+            "U.S. Dollar",
+            "Birr"
+          ],
+          "explanation": "The correct answer is: Birr."
+        },
+        "fr": {
+          "text": "Quel est le nom de la monnaie utilisée en Éthiopie?",
+          "choices": [
+            "rand",
+            "Dirham",
+            "Dollar américain",
+            "Birr"
+          ],
+          "explanation": "La bonne réponse est : Birr."
+        }
+      }
+    },
+    {
+      "id": "general_016",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the full title of the Prime Minister of the UK?",
+          "choices": [
+            "Her Majesty's Loyal Opposition",
+            "First Lord of the Treasury",
+            "Manager of the Crown Estate",
+            "Duke of Cambridge"
+          ],
+          "explanation": "The correct answer is: First Lord of the Treasury."
+        },
+        "fr": {
+          "text": "Quel est le titre complet du Premier ministre britannique?",
+          "choices": [
+            "Opposition loyaliste de Sa Majesté",
+            "Premier Seigneur du Trésor",
+            "Gestionnaire de la succession de la Couronne",
+            "Duc de Cambridge"
+          ],
+          "explanation": "La bonne réponse est: Premier Seigneur du Trésor."
+        }
+      }
+    },
+    {
+      "id": "general_017",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In Half-Life, what is the name of the alien that attaches to heads?",
+          "choices": [
+            "Vortigaunt",
+            "Headcrab",
+            "Facehugger",
+            "Bullsquid"
+          ],
+          "explanation": "The correct answer is: Headcrab."
+        },
+        "fr": {
+          "text": "Dans la demi-vie, quel est le nom de l'étranger qui s'attache aux têtes?",
+          "choices": [
+            "Vortigaunt",
+            "Headcrab",
+            "Facehugger",
+            "Bullsquid"
+          ],
+          "explanation": "La bonne réponse est : Casse-tête."
+        }
+      }
+    },
+    {
+      "id": "general_018",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Apple co-founder Steve Jobs died from complications of which form of cancer?",
+          "choices": [
+            "Liver",
+            "Pancreatic",
+            "Stomach",
+            "Bone"
+          ],
+          "explanation": "The correct answer is: Pancreatic."
+        },
+        "fr": {
+          "text": "Steve Jobs, co-fondateur d'Apple, est mort de complications de quelle forme de cancer ?",
+          "choices": [
+            "Foie",
+            "Pancreatic",
+            "Estomac",
+            "Bone"
+          ],
+          "explanation": "La bonne réponse est : Pancréatique."
+        }
+      }
+    },
+    {
+      "id": "general_019",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What planet is not named after a Greek or Roman god?",
+          "choices": [
+            "Jupiter",
+            "Mercury",
+            "Mars",
+            "Earth"
+          ],
+          "explanation": "The correct answer is: Earth."
+        },
+        "fr": {
+          "text": "Quelle planète n'est pas nommée d'après un dieu grec ou romain ?",
+          "choices": [
+            "Jupiter",
+            "Mercury",
+            "Mars",
+            "Earth"
+          ],
+          "explanation": "La bonne réponse est : Terre."
+        }
+      }
+    },
+    {
+      "id": "general_020",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is a dead mall?",
+          "choices": [
+            "A mall with high vacancy rates or low consumer foot traffic",
+            "A mall with no stores",
+            "A mall after business hours",
+            "A mall that has been condemed"
+          ],
+          "explanation": "The correct answer is: A mall with high vacancy rates or low consumer foot traffic."
+        },
+        "fr": {
+          "text": "C'est quoi un centre commercial mort ?",
+          "choices": [
+            "Un centre commercial avec des taux de vacance élevés ou un faible trafic routier",
+            "Un centre commercial sans magasins",
+            "Un centre commercial après les heures d'ouverture",
+            "Un centre commercial qui a été condamné"
+          ],
+          "explanation": "La bonne réponse est: Un centre commercial avec des taux de vacance élevés ou un faible trafic de marche grand public."
+        }
+      }
+    },
+    {
+      "id": "general_021",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What does a milliner make and sell?",
+          "choices": [
+            "Belts",
+            "Shirts",
+            "Shoes",
+            "Hats"
+          ],
+          "explanation": "The correct answer is: Hats."
+        },
+        "fr": {
+          "text": "Qu'est-ce qu'un milliner fabrique et vend ?",
+          "choices": [
+            "Belts",
+            "Shirts",
+            "Shoes",
+            "Hats"
+          ],
+          "explanation": "La bonne réponse est : Chapeaux."
+        }
+      }
+    },
+    {
+      "id": "general_022",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the defining characteristic of someone who is described as hirsute?",
+          "choices": [
+            "Funny",
+            "Tall",
+            "Hairy",
+            "Rude"
+          ],
+          "explanation": "The correct answer is: Hairy."
+        },
+        "fr": {
+          "text": "Quelle est la caractéristique caractéristique de quelqu'un qui est décrit comme hirsute?",
+          "choices": [
+            "Funny",
+            "Tall",
+            "Hairy",
+            "Rude"
+          ],
+          "explanation": "La bonne réponse est : poilu."
+        }
+      }
+    },
+    {
+      "id": "general_023",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "The word \"astasia\" means which of the following?",
+          "choices": [
+            "The inability to stand up",
+            "A feverish desire to rip one's clothes off",
+            "The inability to make decisions",
+            "The inability to concentrate on anything"
+          ],
+          "explanation": "The correct answer is: The inability to stand up."
+        },
+        "fr": {
+          "text": "Le mot \"astasia\" signifie lequel des suivants?",
+          "choices": [
+            "L'incapacité de se lever",
+            "Un désir fiévreux d'arracher ses vêtements",
+            "L'incapacité de prendre des décisions",
+            "L'incapacité de se concentrer sur quelque chose"
+          ],
+          "explanation": "La bonne réponse est : L'incapacité de se lever."
+        }
+      }
+    },
+    {
+      "id": "general_024",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "The Fields Medal, one of the most sought after awards in mathematics, is awarded every how many years?",
+          "choices": [
+            "3",
+            "6",
+            "5",
+            "4"
+          ],
+          "explanation": "The correct answer is: 4."
+        },
+        "fr": {
+          "text": "La médaille Fields, l'une des récompenses les plus recherchées en mathématiques, est décernée tous les combien d'années?",
+          "choices": [
+            "3",
+            "6",
+            "5",
+            "4"
+          ],
+          "explanation": "La bonne réponse est : 4."
+        }
+      }
+    },
+    {
+      "id": "general_025",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which canal connects the Mediterranean Sea with the Red Sea?",
+          "choices": [
+            "Sinai Canal",
+            "Suez Canal",
+            "Panama Canal",
+            "Qaraqum Canal"
+          ],
+          "explanation": "The correct answer is: Suez Canal."
+        },
+        "fr": {
+          "text": "Quel canal relie la mer Méditerranée à la mer Rouge ?",
+          "choices": [
+            "Canal du Sinaï",
+            "Canal de Suez",
+            "Canal de Panama",
+            "Canal de Qaraqum"
+          ],
+          "explanation": "La bonne réponse est : Canal de Suez."
+        }
+      }
+    },
+    {
+      "id": "general_026",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "If you are caught \"Goldbricking\", what are you doing wrong?",
+          "choices": [
+            "Cheating",
+            "Slacking",
+            "Stealing",
+            "Smoking"
+          ],
+          "explanation": "The correct answer is: Slacking."
+        },
+        "fr": {
+          "text": "Si vous êtes pris \"Goldbricking\", que faites-vous mal?",
+          "choices": [
+            "Cheating",
+            "Slacking",
+            "Stealing",
+            "Smoking"
+          ],
+          "explanation": "La bonne réponse est : Slacking."
+        }
+      }
+    },
+    {
+      "id": "general_027",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Named after the mallow flower, mauve is a shade of what?",
+          "choices": [
+            "Brown",
+            "Purple",
+            "Pink",
+            "Red"
+          ],
+          "explanation": "The correct answer is: Purple."
+        },
+        "fr": {
+          "text": "D'après la fleur de mauve, mauve est une ombre de quoi ?",
+          "choices": [
+            "Brown",
+            "Purple",
+            "Pink",
+            "Red"
+          ],
+          "explanation": "La bonne réponse est : Purple."
+        }
+      }
+    },
+    {
+      "id": "general_028",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What was the name of the WWF professional wrestling tag team made up of the wrestlers Ax and Smash?",
+          "choices": [
+            "The Dream Team",
+            "The Bushwhackers",
+            "The British Bulldogs",
+            "Demolition"
+          ],
+          "explanation": "The correct answer is: Demolition."
+        },
+        "fr": {
+          "text": "Quel était le nom de l'équipe de lutte professionnelle WWF composée des lutteurs Ax et Smash ?",
+          "choices": [
+            "The Dream Team",
+            "Les Bushwhackers",
+            "Les Bulldogs britanniques",
+            "Demolition"
+          ],
+          "explanation": "La bonne réponse est : Démolition."
+        }
+      }
+    },
+    {
+      "id": "general_029",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "When someone is cowardly, they are said to have what color belly?",
+          "choices": [
+            "Red",
+            "Green",
+            "Blue",
+            "Yellow"
+          ],
+          "explanation": "The correct answer is: Yellow."
+        },
+        "fr": {
+          "text": "Quand quelqu'un est lâche, on dit qu'il a quelle couleur de ventre ?",
+          "choices": [
+            "Red",
+            "Green",
+            "Blue",
+            "Yellow"
+          ],
+          "explanation": "La bonne réponse est : Jaune."
+        }
+      }
+    },
+    {
+      "id": "general_030",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What was Bank of America originally established as?",
+          "choices": [
+            "Bank of Italy",
+            "Bank of Long Island",
+            "Bank of Pennsylvania",
+            "Bank of Charlotte"
+          ],
+          "explanation": "The correct answer is: Bank of Italy."
+        },
+        "fr": {
+          "text": "Comment la Banque d'Amérique a-t-elle été créée à l'origine?",
+          "choices": [
+            "Bank of Italy",
+            "Banque de Long Island",
+            "Bank of Pennsylvania",
+            "Banque de Charlotte"
+          ],
+          "explanation": "La bonne réponse est: Banque d'Italie."
+        }
+      }
+    },
+    {
+      "id": "general_031",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "When was \"YouTube\" founded?",
+          "choices": [
+            "May 22, 2004",
+            "February 14, 2005",
+            "September 12, 2005",
+            "July 19, 2009"
+          ],
+          "explanation": "The correct answer is: February 14, 2005."
+        },
+        "fr": {
+          "text": "Quand \"YouTube\" a-t-il été fondé ?",
+          "choices": [
+            "22 mai 2004",
+            "14 février 2005",
+            "12 septembre 2005",
+            "19 juillet 2009"
+          ],
+          "explanation": "La bonne réponse est : le 14 février 2005."
+        }
+      }
+    },
+    {
+      "id": "general_032",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What are Panama hats made out of?",
+          "choices": [
+            "Flax",
+            "Straw",
+            "Silk",
+            "Hemp"
+          ],
+          "explanation": "The correct answer is: Straw."
+        },
+        "fr": {
+          "text": "De quoi sont faits les chapeaux de Panama ?",
+          "choices": [
+            "Flax",
+            "Straw",
+            "Silk",
+            "Hemp"
+          ],
+          "explanation": "La bonne réponse est : Paille."
+        }
+      }
+    },
+    {
+      "id": "general_033",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How would one say goodbye in Spanish?",
+          "choices": [
+            "Hola",
+            "Adiós",
+            "Au Revoir",
+            "Salir"
+          ],
+          "explanation": "The correct answer is: Adiós."
+        },
+        "fr": {
+          "text": "Comment dire au revoir en espagnol ?",
+          "choices": [
+            "Hola",
+            "Adiós",
+            "Au revoir",
+            "Salir"
+          ],
+          "explanation": "La bonne réponse est : Adiós."
+        }
+      }
+    },
+    {
+      "id": "general_034",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What machine element is located in the center of fidget spinners?",
+          "choices": [
+            "Bearings",
+            "Axles",
+            "Gears",
+            "Belts"
+          ],
+          "explanation": "The correct answer is: Bearings."
+        },
+        "fr": {
+          "text": "Quel élément de machine est situé au centre des spinners fidget?",
+          "choices": [
+            "Bearings",
+            "Axles",
+            "Gears",
+            "Belts"
+          ],
+          "explanation": "La bonne réponse est : Roulements."
+        }
+      }
+    },
+    {
+      "id": "general_035",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which of the following is not another name for the eggplant?",
+          "choices": [
+            "Guinea Squash",
+            "Melongene",
+            "Potimarron",
+            "Brinjal"
+          ],
+          "explanation": "The correct answer is: Potimarron."
+        },
+        "fr": {
+          "text": "Lequel des noms suivants n'est pas un autre nom pour l'aubergine?",
+          "choices": [
+            "Guinée Squash",
+            "Melongene",
+            "Potimarron",
+            "Brinjal"
+          ],
+          "explanation": "La bonne réponse est : Potimarron."
+        }
+      }
+    },
+    {
+      "id": "general_036",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the largest organ of the human body?",
+          "choices": [
+            "Heart",
+            "Liver",
+            "large Intestine",
+            "Skin"
+          ],
+          "explanation": "The correct answer is: Skin."
+        },
+        "fr": {
+          "text": "Quel est le plus grand organe du corps humain?",
+          "choices": [
+            "Cœur",
+            "Foie",
+            "large Intestine",
+            "Skin"
+          ],
+          "explanation": "La bonne réponse est : La peau."
+        }
+      }
+    },
+    {
+      "id": "general_037",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "This field is sometimes known as “The Dismal Science.”",
+          "choices": [
+            "Economics",
+            "Politics",
+            "Physics",
+            "Philosophy"
+          ],
+          "explanation": "The correct answer is: Economics."
+        },
+        "fr": {
+          "text": "Ce champ est parfois connu sous le nom de \"The Dismal Science\".",
+          "choices": [
+            "Economics",
+            "Politics",
+            "Physics",
+            "Philosophy"
+          ],
+          "explanation": "La bonne réponse est: Économie."
+        }
+      }
+    },
+    {
+      "id": "general_038",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In DC comics where does the Green Arrow (Oliver Queen) live?",
+          "choices": [
+            "Star City",
+            "Central City",
+            "Metropolis",
+            "Gotham City"
+          ],
+          "explanation": "The correct answer is: Star City."
+        },
+        "fr": {
+          "text": "Dans DC BD où vit la Green Arrow (Oliver Queen) ?",
+          "choices": [
+            "Star City",
+            "Central City",
+            "Metropolis",
+            "Gotham City"
+          ],
+          "explanation": "La bonne réponse est : Star City."
+        }
+      }
+    },
+    {
+      "id": "general_039",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which one of these is not a typical European sword design?",
+          "choices": [
+            "Ulfberht",
+            "Scimitar",
+            "Flamberge",
+            "Falchion"
+          ],
+          "explanation": "The correct answer is: Scimitar."
+        },
+        "fr": {
+          "text": "Lequel d'entre eux n'est pas un design d'épée européen typique?",
+          "choices": [
+            "Ulfberht",
+            "Scimitar",
+            "Flamberge",
+            "Falchion"
+          ],
+          "explanation": "La bonne réponse est : Scimitar."
+        }
+      }
+    },
+    {
+      "id": "general_040",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "On a dartboard, what number is directly opposite No. 1?",
+          "choices": [
+            "15",
+            "20",
+            "12",
+            "19"
+          ],
+          "explanation": "The correct answer is: 19."
+        },
+        "fr": {
+          "text": "Sur un tableau de bord, quel nombre est directement opposé au numéro 1?",
+          "choices": [
+            "15",
+            "20",
+            "12",
+            "19"
+          ],
+          "explanation": "La bonne réponse est : 19."
+        }
+      }
+    },
+    {
+      "id": "general_041",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the real name of viral internet meme Grumpy Cat?",
+          "choices": [
+            "Maru",
+            "Lil Bub",
+            "Colonel Meow",
+            "Tardar Sauce"
+          ],
+          "explanation": "The correct answer is: Tardar Sauce."
+        },
+        "fr": {
+          "text": "Quel est le vrai nom de l'internet viral meme Grumpy Cat?",
+          "choices": [
+            "Maru",
+            "Lil Bub",
+            "Colonel Meow",
+            "Sauce au tadar"
+          ],
+          "explanation": "La bonne réponse est : Sauce Tardar."
+        }
+      }
+    },
+    {
+      "id": "general_042",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "The Panama Canal was officially opened by which US president?",
+          "choices": [
+            "Theodore Roosevelt",
+            "Calvin Coolidge",
+            "Herbert Hoover",
+            "Woodrow Wilson"
+          ],
+          "explanation": "The correct answer is: Woodrow Wilson."
+        },
+        "fr": {
+          "text": "Le canal de Panama a été officiellement ouvert par quel président américain ?",
+          "choices": [
+            "Théodore Roosevelt",
+            "Calvin Coolidge",
+            "Herbert Hoover",
+            "Woodrow Wilson"
+          ],
+          "explanation": "La bonne réponse est : Woodrow Wilson."
+        }
+      }
+    },
+    {
+      "id": "general_043",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Area 51 is located in which US state?",
+          "choices": [
+            "New Mexico",
+            "Arizona",
+            "Nevada",
+            "Utah"
+          ],
+          "explanation": "The correct answer is: Nevada."
+        },
+        "fr": {
+          "text": "La zone 51 est située dans quel État américain?",
+          "choices": [
+            "New Mexico",
+            "Arizona",
+            "Nevada",
+            "Utah"
+          ],
+          "explanation": "La bonne réponse est : Nevada."
+        }
+      }
+    },
+    {
+      "id": "general_044",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What year was the RoboSapien toy robot released?",
+          "choices": [
+            "2004",
+            "2006",
+            "2000",
+            "2001"
+          ],
+          "explanation": "The correct answer is: 2004."
+        },
+        "fr": {
+          "text": "En quelle année le robot RoboSapien a-t-il été libéré ?",
+          "choices": [
+            "2004",
+            "2006",
+            "2000",
+            "2001"
+          ],
+          "explanation": "La bonne réponse est : 2004."
+        }
+      }
+    },
+    {
+      "id": "general_045",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What English word means to \"think deeply\"?",
+          "choices": [
+            "Constipate",
+            "Contemplate",
+            "Confiscate",
+            "Condensate"
+          ],
+          "explanation": "The correct answer is: Contemplate."
+        },
+        "fr": {
+          "text": "Quel mot anglais signifie \"penser profondément\" ?",
+          "choices": [
+            "Constipate",
+            "Contemplate",
+            "Confiscate",
+            "Condensate"
+          ],
+          "explanation": "La bonne réponse est : Contemplate."
+        }
+      }
+    },
+    {
+      "id": "general_046",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Out of these four buildings, which one is the tallest, with a height of 1,483 ft (451.9 m)?",
+          "choices": [
+            "Trump Intl. Hotel & Tower, United States",
+            "Zifeng Tower, China",
+            "Petronas Twin Towers, Malaysia",
+            "Al Hamra Tower, Kuwait"
+          ],
+          "explanation": "The correct answer is: Petronas Twin Towers, Malaysia."
+        },
+        "fr": {
+          "text": "Sur ces quatre bâtiments, lequel est le plus haut, d'une hauteur de 451.9 m?",
+          "choices": [
+            "Trump Intl. Hotel et Tower, United States",
+            "Tour Zifeng, Chine",
+            "Tours jumelles Petronas, Malaisie",
+            "Tour Al Hamra, Koweït"
+          ],
+          "explanation": "La bonne réponse est: Petronas Twin Towers, Malaisie."
+        }
+      }
+    },
+    {
+      "id": "general_047",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "When someone is inexperienced they are said to be what color?",
+          "choices": [
+            "Blue",
+            "Yellow",
+            "Red",
+            "Green"
+          ],
+          "explanation": "The correct answer is: Green."
+        },
+        "fr": {
+          "text": "Quand quelqu'un est inexpérimenté, on dit qu'il est de quelle couleur ?",
+          "choices": [
+            "Blue",
+            "Yellow",
+            "Red",
+            "Green"
+          ],
+          "explanation": "La bonne réponse est : Vert."
+        }
+      }
+    },
+    {
+      "id": "general_048",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In \"Battle Cats\", what is Moneko / MISS Moneko's critical percentage rate?",
+          "choices": [
+            "25%",
+            "10%",
+            "20%",
+            "15%"
+          ],
+          "explanation": "The correct answer is: 15%."
+        },
+        "fr": {
+          "text": "Dans \"Battle Cats\", quel est le pourcentage critique de Moneko / MISS Moneko?",
+          "choices": [
+            "25%",
+            "10%",
+            "20%",
+            "15%"
+          ],
+          "explanation": "La bonne réponse est : 15%."
+        }
+      }
+    },
+    {
+      "id": "general_049",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who is considered the \"Father of Modern Philosophy\"?",
+          "choices": [
+            "Albert Einstein",
+            "René Descartes",
+            "Antoine Lavoiser",
+            "Plato"
+          ],
+          "explanation": "The correct answer is: René Descartes."
+        },
+        "fr": {
+          "text": "Qui est considéré comme le \"Père de la philosophie moderne\"?",
+          "choices": [
+            "Albert Einstein",
+            "René Descartes",
+            "Antoine Lavoisser",
+            "Plato"
+          ],
+          "explanation": "La bonne réponse est : René Descartes."
+        }
+      }
+    },
+    {
+      "id": "general_050",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What was the original name of the search engine \"Google\"?",
+          "choices": [
+            "BackRub",
+            "SearchPro",
+            "CatMassage",
+            "Netscape Navigator"
+          ],
+          "explanation": "The correct answer is: BackRub."
+        },
+        "fr": {
+          "text": "Quel était le nom original du moteur de recherche \"Google\" ?",
+          "choices": [
+            "BackRub",
+            "SearchPro",
+            "CatMassage",
+            "Navigateur Netscape"
+          ],
+          "explanation": "La bonne réponse est : BackRub."
+        }
+      }
+    }
+  ]
+}

@@ -15,8 +15,13 @@ Définies dans [`data/categories.json`](../data/categories.json). Fichier de que
 | `sport` | 21 — Sports | Sport | Sports | 59 |
 | `cinema` | 11 — Entertainment: Film | Cinéma | Cinema | 57 |
 | `history` | 23 — History | Histoire | History | 57 |
+| `music` | 12 — Entertainment: Music | Musique | Music | 50 |
+| `geography` | 22 — Geography | Géographie | Geography | 50 |
+| `science` | 17 — Science & Nature | Sciences & Nature | Science & Nature | 50 |
+| `general` | 9 — General Knowledge | Culture générale | General Knowledge | 50 |
+| `television` | 14 — Entertainment: Television | Télévision | Television | 50 |
 
-**Total :** 3 catégories, ~173 questions (FR + EN).
+**Total :** 8 catégories, ~423 questions (FR + EN).
 
 ### Import de contenu
 
@@ -36,20 +41,20 @@ Comptages : questions **vérifiées** / **totales** (`api_count_global.php`).
 
 | ID | Catégorie OpenTDB | Vérifiées | Total | Utilisée dans Quizz |
 |----|-------------------|-----------|-------|---------------------|
-| 9 | General Knowledge | 469 | 5 422 | |
+| 9 | General Knowledge | 469 | 5 422 | ✅ `general` |
 | 10 | Entertainment: Books | 120 | 512 | |
 | 11 | Entertainment: Film | 301 | 1 119 | ✅ `cinema` |
-| 12 | Entertainment: Music | 495 | 1 269 | |
+| 12 | Entertainment: Music | 495 | 1 269 | ✅ `music` |
 | 13 | Entertainment: Musicals & Theatres | 36 | 152 | |
-| 14 | Entertainment: Television | 196 | 799 | |
+| 14 | Entertainment: Television | 196 | 799 | ✅ `television` |
 | 15 | Entertainment: Video Games | 1 185 | 4 068 | |
 | 16 | Entertainment: Board Games | 78 | 261 | |
-| 17 | Science & Nature | 299 | 935 | |
+| 17 | Science & Nature | 299 | 935 | ✅ `science` |
 | 18 | Science: Computers | 192 | 950 | |
 | 19 | Science: Mathematics | 80 | 389 | |
 | 20 | Mythology | 71 | 219 | |
 | 21 | Sports | 176 | 809 | ✅ `sport` |
-| 22 | Geography | 383 | 821 | |
+| 22 | Geography | 383 | 821 | ✅ `geography` |
 | 23 | History | 411 | 980 | ✅ `history` |
 | 24 | Politics | 77 | 333 | |
 | 25 | Art | 59 | 212 | |
@@ -73,8 +78,8 @@ Comptages : questions **vérifiées** / **totales** (`api_count_global.php`).
 |---------|--------|
 | Écran | Onglet **Quiz** → `category_select.tscn` |
 | Chargement | `QuestionLoader.get_categories(locale)` |
-| Ordre | Alphabétique sur le **nom traduit** (FR : Cinéma → Histoire → Sport) |
-| Couleurs | `UiTokens.accent_for_category()` — teal / magenta / or |
+| Ordre | Alphabétique sur le **nom traduit** |
+| Couleurs | `UiTokens.accent_for_category()` |
 | Profil | Stats par catégorie dans l'onglet Profil |
 
 ---
@@ -84,41 +89,16 @@ Comptages : questions **vérifiées** / **totales** (`api_count_global.php`).
 | Idée id Quizz | OpenTDB id | Nom API | Vérifiées |
 |---------------|------------|---------|-----------|
 | `gaming` | 15 | Entertainment: Video Games | 1 185 |
-| `general` | 9 | General Knowledge | 469 |
-| `music` | 12 | Entertainment: Music | 495 |
-| `geography` | 22 | Geography | 383 |
-| `science` | 17 | Science & Nature | 299 |
 | `anime` | 31 | Entertainment: Japanese Anime & Manga | 204 |
+| `animals` | 27 | Animals | 99 |
 
 ### Ajouter une catégorie
 
-1. Entrée dans `data/categories.json` :
-
-```json
-"geography": {
-  "opentdb_id": 22,
-  "locales": ["fr", "en"],
-  "translations": {
-    "en": { "name": "Geography", "description": "Countries, capitals, and landmarks." },
-    "fr": { "name": "Géographie", "description": "Pays, capitales et monuments." }
-  }
-}
-```
-
-2. Créer `data/questions/geography.json` :
-
-```json
-{ "category": "geography", "questions": [] }
-```
-
-3. Importer :
-
-```bash
-tools/.venv/bin/python tools/import_opentdb.py --categories geography --amount 50
-```
-
+1. Entrée dans `data/categories.json`
+2. Créer `data/questions/{id}.json` : `{ "category": "…", "questions": [] }`
+3. Importer : `tools/.venv/bin/python tools/import_opentdb.py --categories {id} --amount 50`
 4. (Optionnel) Couleur dans `scripts/config/ui_tokens.gd` → `accent_for_category()`.
 
 ---
 
-*Mis à jour le 2026-09-02 — branche `test`.*
+*Mis à jour le 2026-09-08.*

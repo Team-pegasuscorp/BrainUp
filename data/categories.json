@@ -40,5 +40,75 @@
         "description": "Événements et personnages qui ont marqué le monde."
       }
     }
+  },
+  "music": {
+    "opentdb_id": 12,
+    "locales": ["fr", "en"],
+    "translations": {
+      "en": {
+        "name": "Music",
+        "description": "Artists, albums, and hit songs."
+      },
+      "fr": {
+        "name": "Musique",
+        "description": "Artistes, albums et tubes."
+      }
+    }
+  },
+  "geography": {
+    "opentdb_id": 22,
+    "locales": ["fr", "en"],
+    "translations": {
+      "en": {
+        "name": "Geography",
+        "description": "Countries, capitals, and landmarks."
+      },
+      "fr": {
+        "name": "Géographie",
+        "description": "Pays, capitales et monuments."
+      }
+    }
+  },
+  "science": {
+    "opentdb_id": 17,
+    "locales": ["fr", "en"],
+    "translations": {
+      "en": {
+        "name": "Science & Nature",
+        "description": "Physics, biology, and the natural world."
+      },
+      "fr": {
+        "name": "Sciences & Nature",
+        "description": "Physique, biologie et monde naturel."
+      }
+    }
+  },
+  "general": {
+    "opentdb_id": 9,
+    "locales": ["fr", "en"],
+    "translations": {
+      "en": {
+        "name": "General Knowledge",
+        "description": "A bit of everything."
+      },
+      "fr": {
+        "name": "Culture générale",
+        "description": "Un peu de tout."
+      }
+    }
+  },
+  "television": {
+    "opentdb_id": 14,
+    "locales": ["fr", "en"],
+    "translations": {
+      "en": {
+        "name": "Television",
+        "description": "Series, shows, and TV icons."
+      },
+      "fr": {
+        "name": "Télévision",
+        "description": "Séries, émissions et icônes de la télé."
+      }
+    }
   }
 }

@@ -1,0 +1,1605 @@
+{
+  "category": "music",
+  "questions": [
+    {
+      "id": "music_001",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who is the frontman of Muse?",
+          "choices": [
+            "Jonny Greenwood",
+            "Thom Yorke",
+            "Dominic Howard",
+            "Matt Bellamy"
+          ],
+          "explanation": "The correct answer is: Matt Bellamy."
+        },
+        "fr": {
+          "text": "Qui est le premier de Muse ?",
+          "choices": [
+            "Jonny Greenwood",
+            "Thom Yorke",
+            "Dominic Howard",
+            "Matt Bellamy"
+          ],
+          "explanation": "La bonne réponse est : Matt Bellamy."
+        }
+      }
+    },
+    {
+      "id": "music_002",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "From which country does the piano originate?",
+          "choices": [
+            "France",
+            "Italy",
+            "Austria",
+            "Germany"
+          ],
+          "explanation": "The correct answer is: Italy."
+        },
+        "fr": {
+          "text": "De quel pays provient le piano ?",
+          "choices": [
+            "France",
+            "Italie",
+            "Autriche",
+            "Allemagne"
+          ],
+          "explanation": "La bonne réponse est: Italie."
+        }
+      }
+    },
+    {
+      "id": "music_003",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the first track on Kanye West's 808s & Heartbreak?",
+          "choices": [
+            "Say You Will",
+            "Welcome to Heartbreak",
+            "Street Lights",
+            "Heartless"
+          ],
+          "explanation": "The correct answer is: Say You Will."
+        },
+        "fr": {
+          "text": "Quelle est la première piste sur les 808 et Heartbreak de Kanye West ?",
+          "choices": [
+            "Say You Will",
+            "Welcome to Heartbreak",
+            "Street Lights",
+            "Heartless"
+          ],
+          "explanation": "La bonne réponse est: Dites que vous voulez."
+        }
+      }
+    },
+    {
+      "id": "music_004",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In what year was Avril Lavigne’s first studio album, “Let Go”, released?",
+          "choices": [
+            "2005",
+            "2002",
+            "2001",
+            "2004"
+          ],
+          "explanation": "The correct answer is: 2002."
+        },
+        "fr": {
+          "text": "En quelle année est sorti le premier album studio d'Avril Lavigne, Let Go, ?",
+          "choices": [
+            "2005",
+            "2002",
+            "2001",
+            "2004"
+          ],
+          "explanation": "La bonne réponse est : 2002."
+        }
+      }
+    },
+    {
+      "id": "music_005",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which of the following music bands is not from Finland?",
+          "choices": [
+            "Sabaton",
+            "Waltari",
+            "Lordi",
+            "Apocalyptica"
+          ],
+          "explanation": "The correct answer is: Sabaton."
+        },
+        "fr": {
+          "text": "Lequel des groupes de musique suivants n'est pas de Finlande ?",
+          "choices": [
+            "Sabaton",
+            "Waltari",
+            "Lordi",
+            "Apocalyptica"
+          ],
+          "explanation": "La bonne réponse est : Sabaton."
+        }
+      }
+    },
+    {
+      "id": "music_006",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which famous 90's rap album is commonly referred to as \"The Bible of Hip Hop\"?",
+          "choices": [
+            "Illmatic",
+            "The Chronic",
+            "The Low End Theory",
+            "Enter The Wu-Tang (36 Chambers)"
+          ],
+          "explanation": "The correct answer is: Illmatic."
+        },
+        "fr": {
+          "text": "Quel célèbre album de rap des années 90 est communément appelé \"La Bible de Hip Hop\" ?",
+          "choices": [
+            "Illmatic",
+            "The Chronic",
+            "The Low End Theory",
+            "Enter The Wu-Tang (36 Chambers)"
+          ],
+          "explanation": "La bonne réponse est : Illmatic."
+        }
+      }
+    },
+    {
+      "id": "music_007",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many copies have Metallica album \"Metallica\" (A.K.A The Black Album) sold worldwide (in Millions of Copies)?",
+          "choices": [
+            "20.5",
+            "25.5",
+            "22.5",
+            "19.5"
+          ],
+          "explanation": "The correct answer is: 20.5."
+        },
+        "fr": {
+          "text": "Combien d'exemplaires ont Metallica album \"Metallica\" (A.K.A The Black Album) vendu dans le monde entier (en millions de copies) ?",
+          "choices": [
+            "20.5",
+            "25.5",
+            "22.5",
+            "19.5"
+          ],
+          "explanation": "La bonne réponse est : 20.5."
+        }
+      }
+    },
+    {
+      "id": "music_008",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Whose albums included \"Back in Black\" and \"Ballbreaker\"?",
+          "choices": [
+            "Iron Maiden",
+            "Black Sabbath",
+            "AC/DC",
+            "Metallica"
+          ],
+          "explanation": "The correct answer is: AC/DC."
+        },
+        "fr": {
+          "text": "Dont les albums comprenaient \"Back in Black\" et \"Ballbreaker\" ?",
+          "choices": [
+            "Iron Maiden",
+            "Black Sabbath",
+            "AC/DC",
+            "Metallica"
+          ],
+          "explanation": "La bonne réponse est : AC/DC."
+        }
+      }
+    },
+    {
+      "id": "music_009",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "For which civil rights activist did Stevie Wonder write the song 'Happy Birthday' in 1980?",
+          "choices": [
+            "Booker T. Washington",
+            "Nelson Mandella",
+            "Martin Luther King Jr",
+            "Rosa Parks"
+          ],
+          "explanation": "The correct answer is: Martin Luther King Jr."
+        },
+        "fr": {
+          "text": "Pour quel militant des droits civils Stevie Wonder a-t-elle écrit la chanson « Joyeux anniversaire » en 1980 ?",
+          "choices": [
+            "Booker T. Washington",
+            "Nelson Mandella",
+            "Martin Luther King Jr",
+            "Rosa Parks"
+          ],
+          "explanation": "La bonne réponse est: Martin Luther King Jr."
+        }
+      }
+    },
+    {
+      "id": "music_010",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What song originally performed by The Bee Gees in 1978 had a cover version by Steps 20 years later?",
+          "choices": [
+            "Night Fever",
+            "You Should Be Dancing",
+            "Stayin' Alive",
+            "Tragedy"
+          ],
+          "explanation": "The correct answer is: Tragedy."
+        },
+        "fr": {
+          "text": "Quelle chanson jouée à l'origine par The Bee Gees en 1978 avait une version reprise par Steps 20 ans plus tard ?",
+          "choices": [
+            "Night Fever",
+            "You Should Be Dancing",
+            "Stayin' Alive",
+            "Tragedy"
+          ],
+          "explanation": "La bonne réponse est : Tragédie."
+        }
+      }
+    },
+    {
+      "id": "music_011",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which song is not by TheFatRat?",
+          "choices": [
+            "Monody",
+            "Windfall",
+            "Ascent",
+            "Infinite Power!"
+          ],
+          "explanation": "The correct answer is: Ascent."
+        },
+        "fr": {
+          "text": "Quelle chanson n'est pas de TheFatRat ?",
+          "choices": [
+            "Monody",
+            "Windfall",
+            "Ascent",
+            "Infinite Power!"
+          ],
+          "explanation": "La bonne réponse est : Ascent."
+        }
+      }
+    },
+    {
+      "id": "music_012",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Moby, an American DJ, singer, and musician, achieved worldwide success for the 1999 release of which of the following albums?",
+          "choices": [
+            "Everything Is Wrong",
+            "Moby",
+            "18",
+            "Play"
+          ],
+          "explanation": "The correct answer is: Play."
+        },
+        "fr": {
+          "text": "Moby, un DJ, chanteur et musicien américain, a remporté un succès mondial pour la sortie en 1999 des albums suivants ?",
+          "choices": [
+            "Everything Is Wrong",
+            "Moby",
+            "18",
+            "Play"
+          ],
+          "explanation": "La bonne réponse est : Jouer."
+        }
+      }
+    },
+    {
+      "id": "music_013",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What album is the song 'New Slang' by The Shins found on?",
+          "choices": [
+            "Wincing The Night Away",
+            "Port Of Morrow",
+            "Oh, Inverted World",
+            "Chutes Too Narrow"
+          ],
+          "explanation": "The correct answer is: Oh, Inverted World."
+        },
+        "fr": {
+          "text": "Sur quel album est la chanson 'New Slang' de The Shins ?",
+          "choices": [
+            "Wincing The Night Away",
+            "Port Of Morrow",
+            "Oh, Inverted World",
+            "Chutes Too Narrow"
+          ],
+          "explanation": "La bonne réponse est : Oh, monde inversé."
+        }
+      }
+    },
+    {
+      "id": "music_014",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "The Who's eponymous line, \"Teenage Wasteland\", appears in which of their songs?",
+          "choices": [
+            "The Seeker",
+            "Won't Get Fooled Again",
+            "Baba O' Riley",
+            "Pinball Wizard"
+          ],
+          "explanation": "The correct answer is: Baba O' Riley."
+        },
+        "fr": {
+          "text": "La ligne éponyme de Who, \"Teenage Wasteland\", apparaît dans laquelle de leurs chansons?",
+          "choices": [
+            "The Seeker",
+            "Won't Get Fooled Again",
+            "Baba O' Riley",
+            "Pinball Wizard"
+          ],
+          "explanation": "La bonne réponse est : Baba O' Riley."
+        }
+      }
+    },
+    {
+      "id": "music_015",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Daft Punk album is the song \"Harder, Better, Faster, Stronger\" from?",
+          "choices": [
+            "Random Access Memories",
+            "Human After All",
+            "Homework",
+            "Discovery"
+          ],
+          "explanation": "The correct answer is: Discovery."
+        },
+        "fr": {
+          "text": "Quel album Daft Punk est la chanson \"Harder, Better, Faster, Stronger\" de ?",
+          "choices": [
+            "Random Access Memories",
+            "Human After All",
+            "Homework",
+            "Discovery"
+          ],
+          "explanation": "La bonne réponse est : Découverte."
+        }
+      }
+    },
+    {
+      "id": "music_016",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Brian May was the guitarist for which band?",
+          "choices": [
+            "The Doors",
+            "Rolling Stones",
+            "Queen",
+            "Pink Floyd"
+          ],
+          "explanation": "The correct answer is: Queen."
+        },
+        "fr": {
+          "text": "Brian May était le guitariste pour quel groupe ?",
+          "choices": [
+            "The Doors",
+            "Rolling Stones",
+            "Queen",
+            "Pink Floyd"
+          ],
+          "explanation": "La bonne réponse est : Reine."
+        }
+      }
+    },
+    {
+      "id": "music_017",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which country is singer Kyary Pamyu Pamyu from?",
+          "choices": [
+            "South Korea",
+            "China",
+            "Vietnam",
+            "Japan"
+          ],
+          "explanation": "The correct answer is: Japan."
+        },
+        "fr": {
+          "text": "De quel pays est la chanteuse Kyary Pamyu Pamyu ?",
+          "choices": [
+            "Corée du Sud",
+            "Chine",
+            "Viêt Nam",
+            "Japon"
+          ],
+          "explanation": "La bonne réponse est : Japon."
+        }
+      }
+    },
+    {
+      "id": "music_018",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "On which Beatles album would you find the song 'Eleanor Rigby'?",
+          "choices": [
+            "Rubber Soul",
+            "Help!",
+            "Revolver",
+            "Abbey Road"
+          ],
+          "explanation": "The correct answer is: Revolver."
+        },
+        "fr": {
+          "text": "Sur quel album de Beatles trouveriez-vous la chanson 'Eleanor Rigby' ?",
+          "choices": [
+            "Rubber Soul",
+            "Help!",
+            "Revolver",
+            "Abbey Road"
+          ],
+          "explanation": "La bonne réponse est : Revolver."
+        }
+      }
+    },
+    {
+      "id": "music_019",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "According to the American rapper Nelly, what should you do when its hot in here?",
+          "choices": [
+            "Take a cool shower",
+            "Drink some water",
+            "Take off all your clothes",
+            "Go skinny dipping"
+          ],
+          "explanation": "The correct answer is: Take off all your clothes."
+        },
+        "fr": {
+          "text": "Selon le rappeur américain Nelly, qu'est-ce que tu dois faire quand il fait chaud ici ?",
+          "choices": [
+            "Take a cool shower",
+            "Drink some water",
+            "Take off all your clothes",
+            "Go skinny dipping"
+          ],
+          "explanation": "La bonne réponse est : Enlevez tous vos vêtements."
+        }
+      }
+    },
+    {
+      "id": "music_020",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which artists' version of the song \"The Tide is High\" came first?",
+          "choices": [
+            "Kardinal Offishall",
+            "Atomic Kitten",
+            "Blondie",
+            "The Paragons"
+          ],
+          "explanation": "The correct answer is: The Paragons."
+        },
+        "fr": {
+          "text": "Quelle est la première version de la chanson \"The Tide is High\" ?",
+          "choices": [
+            "Kardinal Offishall",
+            "Atomic Kitten",
+            "Blondie",
+            "The Paragons"
+          ],
+          "explanation": "La bonne réponse est : Les Paragons."
+        }
+      }
+    },
+    {
+      "id": "music_021",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Aerosmith album featured \"Walk This Way\"?",
+          "choices": [
+            "Draw the Line",
+            "Toys in the Attic",
+            "Get Your Wings",
+            "Rocks"
+          ],
+          "explanation": "The correct answer is: Toys in the Attic."
+        },
+        "fr": {
+          "text": "Quel album Aerosmith contenait \"Walk This Way\" ?",
+          "choices": [
+            "Draw the Line",
+            "Toys in the Attic",
+            "Get Your Wings",
+            "Rocks"
+          ],
+          "explanation": "La bonne réponse est : Jouets dans le grenier."
+        }
+      }
+    },
+    {
+      "id": "music_022",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of the album released in 2014 by American band Maroon 5?",
+          "choices": [
+            "IV",
+            "X",
+            "III",
+            "V"
+          ],
+          "explanation": "The correct answer is: V."
+        },
+        "fr": {
+          "text": "Quel est le nom de l'album sorti en 2014 par le groupe américain Maroon 5 ?",
+          "choices": [
+            "IV",
+            "X",
+            "III",
+            "V"
+          ],
+          "explanation": "La bonne réponse est : V."
+        }
+      }
+    },
+    {
+      "id": "music_023",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which European capital city gives its name to a 1981 song by Ultravox?",
+          "choices": [
+            "Brussels",
+            "Berlin",
+            "Paris",
+            "Vienna"
+          ],
+          "explanation": "The correct answer is: Vienna."
+        },
+        "fr": {
+          "text": "Quelle capitale européenne donne son nom à une chanson d'Ultravox en 1981 ?",
+          "choices": [
+            "Brussels",
+            "Berlin",
+            "Paris",
+            "Vienna"
+          ],
+          "explanation": "La bonne réponse est : Vienne."
+        }
+      }
+    },
+    {
+      "id": "music_024",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the frontman's name of the metal band Megadeth?",
+          "choices": [
+            "Dave Mustaine",
+            "Vince Neil",
+            "James Hetfield",
+            "Rob Halford"
+          ],
+          "explanation": "The correct answer is: Dave Mustaine."
+        },
+        "fr": {
+          "text": "Quel est le nom du groupe Megadeth ?",
+          "choices": [
+            "Dave Mustaine",
+            "Vince Neil",
+            "James Hetfield",
+            "Rob Halford"
+          ],
+          "explanation": "La bonne réponse est : Dave Mustaine."
+        }
+      }
+    },
+    {
+      "id": "music_025",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In music theory, how many notes are in a seventh chord?",
+          "choices": [
+            "3",
+            "2",
+            "4",
+            "7"
+          ],
+          "explanation": "The correct answer is: 4."
+        },
+        "fr": {
+          "text": "En théorie musicale, combien de notes sont dans un septième accord ?",
+          "choices": [
+            "3",
+            "2",
+            "4",
+            "7"
+          ],
+          "explanation": "La bonne réponse est : 4."
+        }
+      }
+    },
+    {
+      "id": "music_026",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Pink Floyd made this song for their previous lead singer Syd Barrett.",
+          "choices": [
+            "Wish You Were Here",
+            "Have A Cigar",
+            "Shine On You Crazy Diamond",
+            "Welcome to the Machine"
+          ],
+          "explanation": "The correct answer is: Shine On You Crazy Diamond."
+        },
+        "fr": {
+          "text": "Pink Floyd a fait cette chanson pour leur précédent chanteur Syd Barrett.",
+          "choices": [
+            "Wish You Were Here",
+            "Have A Cigar",
+            "Shine On You Crazy Diamond",
+            "Welcome to the Machine"
+          ],
+          "explanation": "La bonne réponse est: Shine On You Crazy Diamond."
+        }
+      }
+    },
+    {
+      "id": "music_027",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Beatle wrote and sang the song \"Why Don't We Do It in the Road\" after being inspired by seeing two monkeys copulating in the street?",
+          "choices": [
+            "George",
+            "Paul",
+            "Ringo",
+            "John"
+          ],
+          "explanation": "The correct answer is: Paul."
+        },
+        "fr": {
+          "text": "Quel Beatle a écrit et chanté la chanson \"Why Don't We Do It in the Road\" après avoir été inspiré en voyant deux singes se copuler dans la rue ?",
+          "choices": [
+            "George",
+            "Paul",
+            "Ringo",
+            "John"
+          ],
+          "explanation": "La bonne réponse est : Paul."
+        }
+      }
+    },
+    {
+      "id": "music_028",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who was the previous drummer of blink-182 before Travis Barker?",
+          "choices": [
+            "Derek Grant",
+            "Ilan Rubin",
+            "Atom Willard",
+            "Scott Raynor"
+          ],
+          "explanation": "The correct answer is: Scott Raynor."
+        },
+        "fr": {
+          "text": "Qui était le batteur précédent de clin d'oeil-182 avant Travis Barker ?",
+          "choices": [
+            "Derek Grant",
+            "Ilan Rubin",
+            "Atom Willard",
+            "Scott Raynor"
+          ],
+          "explanation": "La bonne réponse est : Scott Raynor."
+        }
+      }
+    },
+    {
+      "id": "music_029",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who had a 1983 hit with the song 'Africa'?",
+          "choices": [
+            "Steely Dan",
+            "Journey",
+            "Toto",
+            "Foreigner"
+          ],
+          "explanation": "The correct answer is: Toto."
+        },
+        "fr": {
+          "text": "Qui a eu un succès 1983 avec la chanson 'Africa'?",
+          "choices": [
+            "Steely Dan",
+            "Journey",
+            "Toto",
+            "Foreigner"
+          ],
+          "explanation": "La bonne réponse est : Toto."
+        }
+      }
+    },
+    {
+      "id": "music_030",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What was the name of the cold-war singer who has a song in Grand Theft Auto IV, and a wall landmark in Moscow for his memorial?",
+          "choices": [
+            "Viktor Tsoi",
+            "Brian Jones",
+            "Vladimir Vysotsky",
+            "Jimi Hendrix"
+          ],
+          "explanation": "The correct answer is: Viktor Tsoi."
+        },
+        "fr": {
+          "text": "Quel était le nom du chanteur de la guerre froide qui a une chanson dans Grand Theft Auto IV, et un point de repère mural à Moscou pour son mémorial ?",
+          "choices": [
+            "Viktor Tsoi",
+            "Brian Jones",
+            "Vladimir Vysotsky",
+            "Jimi Hendrix"
+          ],
+          "explanation": "La bonne réponse est : Viktor Tsoi."
+        }
+      }
+    },
+    {
+      "id": "music_031",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which member of the British pop group \"The Spice Girls\" was known as Ginger Spice?",
+          "choices": [
+            "Emma Bunton",
+            "Geri Halliwell",
+            "Melanie Brown",
+            "Victoria Beckham"
+          ],
+          "explanation": "The correct answer is: Geri Halliwell."
+        },
+        "fr": {
+          "text": "Quel membre du groupe pop britannique \"The Spice Girls\" était connu sous le nom de Ginger Spice ?",
+          "choices": [
+            "Emma Bunton",
+            "Geri Halliwell",
+            "Melanie Brown",
+            "Victoria Beckham"
+          ],
+          "explanation": "La bonne réponse est : Geri Halliwell."
+        }
+      }
+    },
+    {
+      "id": "music_032",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which company did the animation for Peter Gabriel's Video Sledgehammer (1986)?",
+          "choices": [
+            "HIT Entertainment",
+            "Aardman Animations",
+            "VIZ Media",
+            "Illumination Entertainment"
+          ],
+          "explanation": "The correct answer is: Aardman Animations."
+        },
+        "fr": {
+          "text": "Quelle société a fait l'animation de la vidéo de Peter Gabriel (1986) ?",
+          "choices": [
+            "HIT Entertainment",
+            "Aardman Animations",
+            "VIZ Media",
+            "Illumination Entertainment"
+          ],
+          "explanation": "La bonne réponse est : Aardman Animations."
+        }
+      }
+    },
+    {
+      "id": "music_033",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What was Bon Iver's debut album released in 2007?",
+          "choices": [
+            "For Emma, Forever Ago",
+            "Blood Bank EP",
+            "Bon Iver, Bon Iver",
+            "22, A Million"
+          ],
+          "explanation": "The correct answer is: For Emma, Forever Ago."
+        },
+        "fr": {
+          "text": "Quel était le premier album de Bon Iver sorti en 2007 ?",
+          "choices": [
+            "For Emma, Forever Ago",
+            "Blood Bank EP",
+            "Bon Iver, Bon Iver",
+            "22, A Million"
+          ],
+          "explanation": "La bonne réponse est : Pour Emma, Forever Ago."
+        }
+      }
+    },
+    {
+      "id": "music_034",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What collaborative album was released by Kanye West and Jay-Z in 2011?",
+          "choices": [
+            "Distant Relatives",
+            "What a Time to be Alive",
+            "Unfinished Business",
+            "Watch the Throne"
+          ],
+          "explanation": "The correct answer is: Watch the Throne."
+        },
+        "fr": {
+          "text": "Quel album collaboratif est sorti par Kanye West et Jay-Z en 2011 ?",
+          "choices": [
+            "Distant Relatives",
+            "Quel temps pour vivre",
+            "Unfinished Business",
+            "Watch the Throne"
+          ],
+          "explanation": "La bonne réponse est : Surveillez le Trône."
+        }
+      }
+    },
+    {
+      "id": "music_035",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "When did Radiohead release their album \"OK Computer\"?",
+          "choices": [
+            "1993",
+            "1997",
+            "2000",
+            "1995"
+          ],
+          "explanation": "The correct answer is: 1997."
+        },
+        "fr": {
+          "text": "Quand Radiohead a sorti leur album \"OK Computer\" ?",
+          "choices": [
+            "1993",
+            "1997",
+            "2000",
+            "1995"
+          ],
+          "explanation": "La bonne réponse est : 1997."
+        }
+      }
+    },
+    {
+      "id": "music_036",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which of these is NOT a song on The Beatles' 1968 self titled album, also known as the White album?",
+          "choices": [
+            "Everybody's Got Something to Hide Except Me and My Monkey",
+            "Being For The Benefit Of Mr. Kite!",
+            "The Continuing Story of Bungalow Bill",
+            "Why Don't We Do It in the Road?"
+          ],
+          "explanation": "The correct answer is: Being For The Benefit Of Mr. Kite!."
+        },
+        "fr": {
+          "text": "Lequel d'entre eux n'est PAS une chanson sur l'album The Beatles de 1968, aussi connu sous le nom d'album White ?",
+          "choices": [
+            "Everybody's Got Something to Hide Except Me and My Monkey",
+            "Being For The Benefit Of Mr. Kite!",
+            "The Continuing Story of Bungalow Bill",
+            "Why Don't We Do It in the Road?"
+          ],
+          "explanation": "La bonne réponse est: Être pour le bénéfice de M. Kite!."
+        }
+      }
+    },
+    {
+      "id": "music_037",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "\"All the Boys\" by Panic! At the Disco was released as a bonus track on what album?",
+          "choices": [
+            "A Fever You Can't Sweat Out",
+            "Too Weird To Live, Too Rare To Die!",
+            "Death Of A Bachelor",
+            "Vices & Virtues"
+          ],
+          "explanation": "The correct answer is: Too Weird To Live, Too Rare To Die!."
+        },
+        "fr": {
+          "text": "\"Tous les garçons\" par Panic ! Au Disco a été publié en bonus sur quel album?",
+          "choices": [
+            "A Fever You Can't Sweat Out",
+            "Too Weird To Live, Too Rare To Die!",
+            "Death Of A Bachelor",
+            "Vices & Virtues"
+          ],
+          "explanation": "La bonne réponse est: Trop bizarre de vivre, Trop rare de mourir!."
+        }
+      }
+    },
+    {
+      "id": "music_038",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is rapper Drake's real name?",
+          "choices": [
+            "Shaun Carter",
+            "Aubrey Graham",
+            "Dwayne Carter",
+            "Andre Young"
+          ],
+          "explanation": "The correct answer is: Aubrey Graham."
+        },
+        "fr": {
+          "text": "Quel est le vrai nom du rappeur Drake ?",
+          "choices": [
+            "Shaun Carter",
+            "Aubrey Graham",
+            "Dwayne Carter",
+            "Andre Young"
+          ],
+          "explanation": "La bonne réponse est: Aubrey Graham."
+        }
+      }
+    },
+    {
+      "id": "music_039",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which singer was featured in Jack Ü (Skrillex & Diplo)'s 2015 song 'Where Are Ü Now'?",
+          "choices": [
+            "Justin Bieber",
+            "Ellie Goulding",
+            "The Weeknd",
+            "Selena Gomez"
+          ],
+          "explanation": "The correct answer is: Justin Bieber."
+        },
+        "fr": {
+          "text": "Quel chanteur a été présenté dans la chanson 2015 de Jack Ü (Skrillex & Diplo) 'Où sont Ü Now'?",
+          "choices": [
+            "Justin Bieber",
+            "Ellie Goulding",
+            "The Weeknd",
+            "Selena Gomez"
+          ],
+          "explanation": "La bonne réponse est : Justin Bieber."
+        }
+      }
+    },
+    {
+      "id": "music_040",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In the song “The Ultimate Showdown of Ultimate Destiny,” who is the only one to survive the battle?",
+          "choices": [
+            "Godzilla",
+            "Mr. Rogers",
+            "Chuck Norris",
+            "Batman"
+          ],
+          "explanation": "The correct answer is: Mr. Rogers."
+        },
+        "fr": {
+          "text": "Dans la chanson \"The Ultimate Showdown of Ultimate Destiny,\" qui est le seul à survivre à la bataille ?",
+          "choices": [
+            "Godzilla",
+            "Mr. Rogers",
+            "Chuck Norris",
+            "Batman"
+          ],
+          "explanation": "La bonne réponse est : M. Rogers."
+        }
+      }
+    },
+    {
+      "id": "music_041",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which band released songs suchs as \"Rio\", \"Girls on Film\", and \"The Reflex\"?",
+          "choices": [
+            "Duran Duran",
+            "The Cure",
+            "Depeche Mode",
+            "New Order"
+          ],
+          "explanation": "The correct answer is: Duran Duran."
+        },
+        "fr": {
+          "text": "Quel groupe a sorti des chansons comme \"Rio\", \"Girls on Film\" et \"The Reflex\" ?",
+          "choices": [
+            "Duran Duran",
+            "The Cure",
+            "Depeche Mode",
+            "New Order"
+          ],
+          "explanation": "La bonne réponse est : Duran Duran."
+        }
+      }
+    },
+    {
+      "id": "music_042",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What animal is featured on the cover of English electronic music group The Prodigy's album, \"The Fat of the Land\"?",
+          "choices": [
+            "Elephant",
+            "Tiger",
+            "Fox",
+            "Crab"
+          ],
+          "explanation": "The correct answer is: Crab."
+        },
+        "fr": {
+          "text": "Quel animal figure sur la couverture du groupe de musique électronique anglais The Prodigy's album, \"The Fat of the Land\"?",
+          "choices": [
+            "Elephant",
+            "Tigre",
+            "Fox",
+            "Crab"
+          ],
+          "explanation": "La bonne réponse est : Crabe."
+        }
+      }
+    },
+    {
+      "id": "music_043",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Chino Moreno is the lead singer of which alternative metal band?",
+          "choices": [
+            "Deftones",
+            "Tool",
+            "Korn",
+            "Type O Negative"
+          ],
+          "explanation": "The correct answer is: Deftones."
+        },
+        "fr": {
+          "text": "Chino Moreno est le chanteur principal de quel groupe de métal alternatif ?",
+          "choices": [
+            "Deftones",
+            "Tool",
+            "Korn",
+            "Type O Negative"
+          ],
+          "explanation": "La bonne réponse est : Deftones."
+        }
+      }
+    },
+    {
+      "id": "music_044",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which song previously recorded by Elvis Presley was covered by UB40 with a reggae beat?",
+          "choices": [
+            "Jailhouse Rock",
+            "In the Ghetto",
+            "Wooden Heart",
+            "Can't Help Falling in Love"
+          ],
+          "explanation": "The correct answer is: Can't Help Falling in Love."
+        },
+        "fr": {
+          "text": "Quelle chanson précédemment enregistrée par Elvis Presley a été couverte par UB40 avec un beat reggae ?",
+          "choices": [
+            "Jailhouse Rock",
+            "In the Ghetto",
+            "Wooden Heart",
+            "Can't Help Falling in Love"
+          ],
+          "explanation": "La bonne réponse est : Ne peut pas aider à tomber amoureux."
+        }
+      }
+    },
+    {
+      "id": "music_045",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who had hits in the 70s with the songs \"Lonely Boy\" and \"Never Let Her Slip Away\"?",
+          "choices": [
+            "Barry White",
+            "Leo Sayer",
+            "Andrew Gold",
+            "Elton John"
+          ],
+          "explanation": "The correct answer is: Andrew Gold."
+        },
+        "fr": {
+          "text": "Qui a eu des succès dans les années 70 avec les chansons \"Lonely Boy\" et \"Never Let Her Slip Away\" ?",
+          "choices": [
+            "Barry White",
+            "Leo Sayer",
+            "Andrew Gold",
+            "Elton John"
+          ],
+          "explanation": "La bonne réponse est : Andrew Gold."
+        }
+      }
+    },
+    {
+      "id": "music_046",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which of these is the name of an American psychedelic rock band formed in 2002 by Benjamin Goldwasser and Andrew VanWyngarden?",
+          "choices": [
+            "MSTRKRFT",
+            "SBTRKT",
+            "STRFKR",
+            "MGMT"
+          ],
+          "explanation": "The correct answer is: MGMT."
+        },
+        "fr": {
+          "text": "Lequel est le nom d'un groupe de rock psychédélique américain formé en 2002 par Benjamin Goldwasser et Andrew VanWyngarden ?",
+          "choices": [
+            "MSTRKRFT",
+            "SBTRKT",
+            "STRFKR",
+            "MGMT"
+          ],
+          "explanation": "La bonne réponse est : MGMT."
+        }
+      }
+    },
+    {
+      "id": "music_047",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the real name of rapper, The Notorious B.I.G?",
+          "choices": [
+            "Calvin Cordozar Broadus Jr.",
+            "O'Shea Jackson",
+            "Eric Lynn Wright",
+            "Christopher Wallace"
+          ],
+          "explanation": "The correct answer is: Christopher Wallace."
+        },
+        "fr": {
+          "text": "Quel est le vrai nom du rappeur, The Notorious B.I.G ?",
+          "choices": [
+            "Calvin Cordozar Broadus Jr.",
+            "O'Shea Jackson",
+            "Eric Lynn Wright",
+            "Christopher Wallace"
+          ],
+          "explanation": "La bonne réponse est : Christopher Wallace."
+        }
+      }
+    },
+    {
+      "id": "music_048",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "The four strings on a violin are the G string, D string, A string, and...",
+          "choices": [
+            "C string",
+            "E string",
+            "B string",
+            "F string"
+          ],
+          "explanation": "The correct answer is: E string."
+        },
+        "fr": {
+          "text": "Les quatre cordes sur un violon sont la corde G, la corde D, la corde A, et...",
+          "choices": [
+            "C string",
+            "E string",
+            "B string",
+            "F string"
+          ],
+          "explanation": "La bonne réponse est : Chaîne E."
+        }
+      }
+    },
+    {
+      "id": "music_049",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Finish these lyrics from the 2016 song \"Panda\" by Desiigner: \"I got broads in _______\".",
+          "choices": [
+            "Augusta",
+            "Marietta",
+            "Savannah",
+            "Atlanta"
+          ],
+          "explanation": "The correct answer is: Atlanta."
+        },
+        "fr": {
+          "text": "Terminez ces paroles de la chanson 2016 \"Panda\" de Desiigner : \"J'ai eu des filles en       \".",
+          "choices": [
+            "Augusta",
+            "Marietta",
+            "Savannah",
+            "Atlanta"
+          ],
+          "explanation": "La bonne réponse est : Atlanta."
+        }
+      }
+    },
+    {
+      "id": "music_050",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "According to the RIAA: Which artist has sold the most albums by the million?",
+          "choices": [
+            "The Beatles",
+            "Elvis Presley",
+            "Michael Jackson",
+            "Pink Floyd"
+          ],
+          "explanation": "The correct answer is: The Beatles."
+        },
+        "fr": {
+          "text": "Selon la RIAA : Quel artiste a vendu le plus d'albums par million ?",
+          "choices": [
+            "The Beatles",
+            "Elvis Presley",
+            "Michael Jackson",
+            "Pink Floyd"
+          ],
+          "explanation": "La bonne réponse est : Les Beatles."
+        }
+      }
+    }
+  ]
+}

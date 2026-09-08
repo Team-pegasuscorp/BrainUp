@@ -1,0 +1,1605 @@
+{
+  "category": "television",
+  "questions": [
+    {
+      "id": "television_001",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who sang the theme song for the TV show 'Rawhide'?",
+          "choices": [
+            "Slim Whitman",
+            "Frankie Laine",
+            "Guy Mitchell",
+            "Tennessee Ernie Ford"
+          ],
+          "explanation": "The correct answer is: Frankie Laine."
+        },
+        "fr": {
+          "text": "Qui a chanté la chanson à thème pour l'émission \"Rawhide\" ?",
+          "choices": [
+            "Slim Whitman",
+            "Frankie Laine",
+            "Guy Mitchell",
+            "Tennessee Ernie Ford"
+          ],
+          "explanation": "La bonne réponse est : Frankie Laine."
+        }
+      }
+    },
+    {
+      "id": "television_002",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Grant Gustin plays which superhero on the CW show of the same name?",
+          "choices": [
+            "Daredevil",
+            "The Flash",
+            "Black Canary",
+            "The Arrow"
+          ],
+          "explanation": "The correct answer is: The Flash."
+        },
+        "fr": {
+          "text": "Grant Gustin joue quel super-héros sur l'émission CW du même nom ?",
+          "choices": [
+            "Daredevil",
+            "The Flash",
+            "Black Canary",
+            "The Arrow"
+          ],
+          "explanation": "La bonne réponse est: Le Flash."
+        }
+      }
+    },
+    {
+      "id": "television_003",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which year did the British television series \"The Bill\" end?",
+          "choices": [
+            "2007",
+            "2010",
+            "2001",
+            "2012"
+          ],
+          "explanation": "The correct answer is: 2010."
+        },
+        "fr": {
+          "text": "En quelle année la série télévisée britannique \"The Bill\" a-t-elle pris fin?",
+          "choices": [
+            "2007",
+            "2010",
+            "2001",
+            "2012"
+          ],
+          "explanation": "La bonne réponse est: 2010."
+        }
+      }
+    },
+    {
+      "id": "television_004",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In the TV series \"Person of Interest\", who plays the character \"Harold Finch\"?",
+          "choices": [
+            "Taraji P. Henson",
+            "Michael Emerson",
+            "Kevin Chapman",
+            "Jim Caviezel"
+          ],
+          "explanation": "The correct answer is: Michael Emerson."
+        },
+        "fr": {
+          "text": "Dans la série télévisée \"Personne d'intérêt\", qui joue le personnage \"Harold Finch\" ?",
+          "choices": [
+            "Taraji P. Henson",
+            "Michael Emerson",
+            "Kevin Chapman",
+            "Jim Caviezel"
+          ],
+          "explanation": "La bonne réponse est : Michael Emerson."
+        }
+      }
+    },
+    {
+      "id": "television_005",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Alan Reed is known for providing the voice of which character?",
+          "choices": [
+            "G.I. Joe",
+            "Fred Flintstone",
+            "Bugs Bunny",
+            "Fangface"
+          ],
+          "explanation": "The correct answer is: Fred Flintstone."
+        },
+        "fr": {
+          "text": "Alan Reed est connu pour avoir fourni la voix de quel personnage ?",
+          "choices": [
+            "G.I. Joe",
+            "Fred Flintstone",
+            "Bugs Bunny",
+            "Fangface"
+          ],
+          "explanation": "La bonne réponse est : Fred Flintstone."
+        }
+      }
+    },
+    {
+      "id": "television_006",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who was the first Big Brother US winner to win with a perfect game?",
+          "choices": [
+            "Rachael Reilly",
+            "Ian Terry",
+            "Jordan Lloyd",
+            "Dan Gheesling"
+          ],
+          "explanation": "The correct answer is: Dan Gheesling."
+        },
+        "fr": {
+          "text": "Qui a été le premier Grand Frère à gagner avec un match parfait ?",
+          "choices": [
+            "Rachael Reilly",
+            "Ian Terry",
+            "Jordan Lloyd",
+            "Dan Gheesling"
+          ],
+          "explanation": "La bonne réponse est : Dan Gheesling."
+        }
+      }
+    },
+    {
+      "id": "television_007",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In \"Star Trek\", what is the Klingon death ritual?",
+          "choices": [
+            "Kiss the jagged forehead before burial.",
+            "Shoot into space in a torpedo casing.",
+            "Split the deceased's earnings between bloodkin.",
+            "Look into sky and yell loudly in mourning."
+          ],
+          "explanation": "The correct answer is: Look into sky and yell loudly in mourning.."
+        },
+        "fr": {
+          "text": "Dans \"Star Trek\", qu'est-ce que le rituel de la mort klingon ?",
+          "choices": [
+            "Embrasse le front déchiqueté avant l'enterrement.",
+            "Tirez dans l'espace dans une douille de torpille.",
+            "Séparer les gains de la personne décédée entre les deux.",
+            "Regarde dans le ciel et crie fort en deuil."
+          ],
+          "explanation": "La bonne réponse est: Regardez dans le ciel et hurlez fort en deuil.."
+        }
+      }
+    },
+    {
+      "id": "television_008",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which of these in the Star Trek series is NOT Klingon food?",
+          "choices": [
+            "Racht",
+            "Hors d'oeuvre",
+            "Bloodwine",
+            "Gagh"
+          ],
+          "explanation": "The correct answer is: Hors d'oeuvre."
+        },
+        "fr": {
+          "text": "Lequel d'entre eux dans la série Star Trek n'est PAS la nourriture klingon?",
+          "choices": [
+            "Racht",
+            "Hors d'oeuvre",
+            "Bloodwine",
+            "Gagh"
+          ],
+          "explanation": "La bonne réponse est : Hors d'oeuvre."
+        }
+      }
+    },
+    {
+      "id": "television_009",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In DuckTales, what is the name of the city where all the main characters live?",
+          "choices": [
+            "Duckwing",
+            "Tailspin",
+            "Wingford",
+            "Duckburg"
+          ],
+          "explanation": "The correct answer is: Duckburg."
+        },
+        "fr": {
+          "text": "Dans DuckTales, quel est le nom de la ville où vivent tous les personnages principaux ?",
+          "choices": [
+            "Duckwing",
+            "Tailspin",
+            "Wingford",
+            "Duckburg"
+          ],
+          "explanation": "La bonne réponse est : Duckburg."
+        }
+      }
+    },
+    {
+      "id": "television_010",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In AMC's TV Series \"The Walking Dead\" what are \"Zombies\" referred to as?",
+          "choices": [
+            "Maggots",
+            "Hell Pigs",
+            "Walkers",
+            "Creepers"
+          ],
+          "explanation": "The correct answer is: Walkers."
+        },
+        "fr": {
+          "text": "Dans la série télévisée d'AMC \"The Walking Dead\", que sont les \"Zombies\"?",
+          "choices": [
+            "Maggots",
+            "Hell Pigs",
+            "Walkers",
+            "Creepers"
+          ],
+          "explanation": "La bonne réponse est : Walkers."
+        }
+      }
+    },
+    {
+      "id": "television_011",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "The 1985 Toyota Corolla \"AE86\" was the hero car for what anime?",
+          "choices": [
+            "Ghost MF",
+            "Initial D",
+            "Ex Driver",
+            "Wangan Midnight"
+          ],
+          "explanation": "The correct answer is: Initial D."
+        },
+        "fr": {
+          "text": "La Toyota Corolla \"AE86\" 1985 était la voiture de héros pour quel anime ?",
+          "choices": [
+            "Ghost MF",
+            "Initial D",
+            "Ex Driver",
+            "Wangan Midnight"
+          ],
+          "explanation": "La bonne réponse est : D."
+        }
+      }
+    },
+    {
+      "id": "television_012",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the real name of the famous spanish humorist, El Risitas?",
+          "choices": [
+            "Jesus Quintero",
+            "Juan Joya Borga",
+            "Gabriel Garcia Marquez",
+            "Ernesto Guevara"
+          ],
+          "explanation": "The correct answer is: Juan Joya Borga."
+        },
+        "fr": {
+          "text": "Quel est le vrai nom du célèbre humoriste espagnol, El Risitas ?",
+          "choices": [
+            "Jesus Quintero",
+            "Juan Joya Borga",
+            "Gabriel Garcia Marquez",
+            "Ernesto Guevara"
+          ],
+          "explanation": "La bonne réponse est : Juan Joya Borga."
+        }
+      }
+    },
+    {
+      "id": "television_013",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many seasons did the Sci-Fi television show \"Stargate Universe\" have?",
+          "choices": [
+            "5",
+            "3",
+            "10",
+            "2"
+          ],
+          "explanation": "The correct answer is: 2."
+        },
+        "fr": {
+          "text": "Combien de saisons l'émission de télévision Sci-Fi \"Stargate Universe\" avait-elle ?",
+          "choices": [
+            "5",
+            "3",
+            "10",
+            "2"
+          ],
+          "explanation": "La bonne réponse est : 2."
+        }
+      }
+    },
+    {
+      "id": "television_014",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In Breaking Bad, the initials W.W. refer to which of the following?",
+          "choices": [
+            "William Wolf",
+            "Walter White",
+            "Wally Walrus",
+            "Willy Wonka"
+          ],
+          "explanation": "The correct answer is: Walter White."
+        },
+        "fr": {
+          "text": "Dans Breaking Bad, les initiales W.W. renvoient à laquelle de ce qui suit?",
+          "choices": [
+            "William Wolf",
+            "Walter White",
+            "Wally Walrus",
+            "Willy Wonka"
+          ],
+          "explanation": "La bonne réponse est : Walter White."
+        }
+      }
+    },
+    {
+      "id": "television_015",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What was the callsign of Commander William Adama in Battlestar Galactica (2004)?",
+          "choices": [
+            "Husker",
+            "Crashdown",
+            "Starbuck",
+            "Apollo"
+          ],
+          "explanation": "The correct answer is: Husker."
+        },
+        "fr": {
+          "text": "Quel était le callsign du commandant William Adama dans Battlestar Galactica (2004)?",
+          "choices": [
+            "Husker",
+            "Crashdown",
+            "Starbuck",
+            "Apollo"
+          ],
+          "explanation": "La bonne réponse est : Husker."
+        }
+      }
+    },
+    {
+      "id": "television_016",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which of these Nickelodeon game shows aired first?",
+          "choices": [
+            "Double Dare",
+            "Finders Keepers",
+            "Nickelodeon Guts",
+            "Nick Arcade"
+          ],
+          "explanation": "The correct answer is: Double Dare."
+        },
+        "fr": {
+          "text": "Lequel de ces jeux Nickelodeon est diffusé en premier ?",
+          "choices": [
+            "Double Dare",
+            "Finders Keepers",
+            "Nickelodeon Guts",
+            "Nick Arcade"
+          ],
+          "explanation": "La bonne réponse est : Double Dare."
+        }
+      }
+    },
+    {
+      "id": "television_017",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which of these Bojack Horseman characters is a human?",
+          "choices": [
+            "Todd Chavez",
+            "Princess Carolyn",
+            "Lennie Turtletaub",
+            "Tom Jumbo-Grumbo"
+          ],
+          "explanation": "The correct answer is: Todd Chavez."
+        },
+        "fr": {
+          "text": "Lequel de ces personnages est un humain ?",
+          "choices": [
+            "Todd Chavez",
+            "Princess Carolyn",
+            "Lennie Turtletaub",
+            "Tom Jumbo-Grumbo"
+          ],
+          "explanation": "La bonne réponse est : Todd Chavez."
+        }
+      }
+    },
+    {
+      "id": "television_018",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In season one of the Netflix political drama \"House of Cards\", what government position does Frank Underwood hold?",
+          "choices": [
+            "Chief of Staff",
+            "Attorney General",
+            "President",
+            "House Majority Whip"
+          ],
+          "explanation": "The correct answer is: House Majority Whip."
+        },
+        "fr": {
+          "text": "Dans la saison 1 du drame politique Netflix \"Maison des cartes\", quelle position le gouvernement tient-il?",
+          "choices": [
+            "Chief of Staff",
+            "Attorney General",
+            "President",
+            "House Majority Whip"
+          ],
+          "explanation": "La bonne réponse est: Whip House Majority."
+        }
+      }
+    },
+    {
+      "id": "television_019",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Baron Silas Greenback is the arch nemesis of which cartoon hero?",
+          "choices": [
+            "Bananaman",
+            "SuperTed",
+            "Captain Star",
+            "Danger Mouse"
+          ],
+          "explanation": "The correct answer is: Danger Mouse."
+        },
+        "fr": {
+          "text": "Baron Silas Greenback est l'arche-némésis de quel héros de dessin animé ?",
+          "choices": [
+            "Bananaman",
+            "SuperTed",
+            "Captain Star",
+            "Danger Mouse"
+          ],
+          "explanation": "La bonne réponse est: Danger Mouse."
+        }
+      }
+    },
+    {
+      "id": "television_020",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What actor portrays Hogan \"Wash\" Washburne in the TV Show Firefly?",
+          "choices": [
+            "Sean Maher",
+            "Alan Tudyk",
+            "Nathan Fillion",
+            "Adam Baldwin"
+          ],
+          "explanation": "The correct answer is: Alan Tudyk."
+        },
+        "fr": {
+          "text": "Quel acteur représente Hogan \"Wash\" Washburne dans l'émission Firefly?",
+          "choices": [
+            "Sean Maher",
+            "Alan Tudyk",
+            "Nathan Fillion",
+            "Adam Baldwin"
+          ],
+          "explanation": "La bonne réponse est : Alan Tudyk."
+        }
+      }
+    },
+    {
+      "id": "television_021",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which former Coronation Street actress was once a hostess on the British Game Show \"Double Your Money\"?",
+          "choices": [
+            "Jean Alexander",
+            "Amanda Barrie",
+            "Sue Nicholls",
+            "Violet Carson"
+          ],
+          "explanation": "The correct answer is: Amanda Barrie."
+        },
+        "fr": {
+          "text": "Quelle ancienne actrice de Coronation Street était une hôtesse du British Game Show \"Doublez votre argent\" ?",
+          "choices": [
+            "Jean Alexander",
+            "Amanda Barrie",
+            "Sue Nicholls",
+            "Violet Carson"
+          ],
+          "explanation": "La bonne réponse est : Amanda Barrie."
+        }
+      }
+    },
+    {
+      "id": "television_022",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "From what show is the character \"James Doakes\"?",
+          "choices": [
+            "Boardwalk Empire",
+            "Marvel's Daredevil",
+            "Dexter",
+            "The Walking Dead"
+          ],
+          "explanation": "The correct answer is: Dexter."
+        },
+        "fr": {
+          "text": "De quel spectacle est le personnage \"James Doakes\" ?",
+          "choices": [
+            "Boardwalk Empire",
+            "Marvel's Daredevil",
+            "Dexter",
+            "The Walking Dead"
+          ],
+          "explanation": "La bonne réponse est : Dexter."
+        }
+      }
+    },
+    {
+      "id": "television_023",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which movie served as the KTMA pilot episode for the show \"Mystery Science Theater 3000\"?",
+          "choices": [
+            "The Crawling Eye",
+            "The Green Slime",
+            "Plan 9 From Outer Space",
+            "The Robot Vs. The Aztec Mummy"
+          ],
+          "explanation": "The correct answer is: The Green Slime."
+        },
+        "fr": {
+          "text": "Quel film a servi d'épisode pilote pour le spectacle \"Mystery Science Theater 3000\" ?",
+          "choices": [
+            "The Crawling Eye",
+            "The Green Slime",
+            "Plan 9 From Outer Space",
+            "The Robot Vs. The Aztec Mummy"
+          ],
+          "explanation": "La bonne réponse est: Le Slime Vert."
+        }
+      }
+    },
+    {
+      "id": "television_024",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "On the NBC show Community what was Star Burns' real name?",
+          "choices": [
+            "Alex",
+            "Todd",
+            "Grimus",
+            "Neal"
+          ],
+          "explanation": "The correct answer is: Alex."
+        },
+        "fr": {
+          "text": "Sur le NBC montrer Communauté quel était le vrai nom de Star Burns?",
+          "choices": [
+            "Alex",
+            "Todd",
+            "Grimus",
+            "Neal"
+          ],
+          "explanation": "La bonne réponse est : Alex."
+        }
+      }
+    },
+    {
+      "id": "television_025",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In season one of the US Kitchen Nightmares, Gordan Ramsay tried to save 10 different restaurants. How many ended up closing afterwards?",
+          "choices": [
+            "3",
+            "6",
+            "0",
+            "9"
+          ],
+          "explanation": "The correct answer is: 9."
+        },
+        "fr": {
+          "text": "En saison une des US Kitchen Nightmares, Gordan Ramsay a essayé de sauver 10 restaurants différents. Combien ont fini par fermer après ?",
+          "choices": [
+            "3",
+            "6",
+            "0",
+            "9"
+          ],
+          "explanation": "La bonne réponse est : 9."
+        }
+      }
+    },
+    {
+      "id": "television_026",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In Battlestar Galactica (2004), what is the name of the President of the Twelve Colonies?",
+          "choices": [
+            "Laura Roslin",
+            "William Adama",
+            "Tricia Helfer",
+            "Harry Stills"
+          ],
+          "explanation": "The correct answer is: Laura Roslin."
+        },
+        "fr": {
+          "text": "Dans Battlestar Galactica (2004), quel est le nom du président des Douze Colonies?",
+          "choices": [
+            "Laura Roslin",
+            "William Adama",
+            "Tricia Helfer",
+            "Harry Stills"
+          ],
+          "explanation": "La bonne réponse est : Laura Roslin."
+        }
+      }
+    },
+    {
+      "id": "television_027",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In the show \"Dragonball Z\", what is the name of Cell's most powerful attack?",
+          "choices": [
+            "Cell Kamehameha",
+            "Super Kamehameha",
+            "Android Kamehameha",
+            "Solar Kamehameha"
+          ],
+          "explanation": "The correct answer is: Solar Kamehameha."
+        },
+        "fr": {
+          "text": "Dans le spectacle \"Dragonball Z\", quel est le nom de l'attaque la plus puissante de Cell ?",
+          "choices": [
+            "Cell Kamehameha",
+            "Super Kamehameha",
+            "Android Kamehameha",
+            "Solar Kamehameha"
+          ],
+          "explanation": "La bonne réponse est: Solar Kamehameha."
+        }
+      }
+    },
+    {
+      "id": "television_028",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which of these voices wasn't a choice for the House AI in \"The Simpsons Treehouse of Horror\" short, House of Whacks?",
+          "choices": [
+            "George Clooney",
+            "Pierce Brosnan",
+            "Matthew Perry",
+            "Dennis Miller"
+          ],
+          "explanation": "The correct answer is: George Clooney."
+        },
+        "fr": {
+          "text": "Laquelle de ces voix n'a pas été un choix pour la maison AI dans \"The Simpsons Treehouse of Horror\" court, House of Whacks?",
+          "choices": [
+            "George Clooney",
+            "Pierce Brosnan",
+            "Matthew Perry",
+            "Dennis Miller"
+          ],
+          "explanation": "La bonne réponse est : George Clooney."
+        }
+      }
+    },
+    {
+      "id": "television_029",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In \"The Simpsons\", what is the real name of \"Comic Book Guy\"?",
+          "choices": [
+            "Jeff Albertson",
+            "Comic Book Guy",
+            "Edward Stone",
+            "Jack Richardson"
+          ],
+          "explanation": "The correct answer is: Jeff Albertson."
+        },
+        "fr": {
+          "text": "Dans \"Les Simpson\", quel est le vrai nom de \"Comic Book Guy\" ?",
+          "choices": [
+            "Jeff Albertson",
+            "Comic Book Guy",
+            "Edward Stone",
+            "Jack Richardson"
+          ],
+          "explanation": "La bonne réponse est : Jeff Albertson."
+        }
+      }
+    },
+    {
+      "id": "television_030",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who is the main character in the show \"Burn Notice\"?",
+          "choices": [
+            "Madeline Westen",
+            "Sam Axe",
+            "Michael Westen",
+            "Fiona Glenanne"
+          ],
+          "explanation": "The correct answer is: Michael Westen."
+        },
+        "fr": {
+          "text": "Qui est le personnage principal de l'émission \"Burn Notice\" ?",
+          "choices": [
+            "Madeline Westen",
+            "Sam Axe",
+            "Michael Westen",
+            "Fiona Glenanne"
+          ],
+          "explanation": "La bonne réponse est : Michael Westen."
+        }
+      }
+    },
+    {
+      "id": "television_031",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Dee from \"It's Always Sunny in Philadelphia\" has dated all of the following guys EXCEPT",
+          "choices": [
+            "Ben the Soldier",
+            "Kevin Gallagher aka Lil' Kevin",
+            "Colin the Thief",
+            "Matthew \"Rickety Cricket\" Mara"
+          ],
+          "explanation": "The correct answer is: Matthew \"Rickety Cricket\" Mara."
+        },
+        "fr": {
+          "text": "Dee de \"It's Always Sunny in Philadelphia\" a daté tous les gars suivants EXCEPT",
+          "choices": [
+            "Ben the Soldier",
+            "Kevin Gallagher aka Lil' Kevin",
+            "Colin the Thief",
+            "Matthew \"Rickety Cricket\" Mara"
+          ],
+          "explanation": "La bonne réponse est : Matthew \"Rickety Cricket\" Mara."
+        }
+      }
+    },
+    {
+      "id": "television_032",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What's Dr. Doofenshmirtz first name?",
+          "choices": [
+            "Hans",
+            "Heinz",
+            "Heidi",
+            "Hank"
+          ],
+          "explanation": "The correct answer is: Heinz."
+        },
+        "fr": {
+          "text": "Quel est le prénom du Dr Doofenshmirtz ?",
+          "choices": [
+            "Hans",
+            "Heinz",
+            "Heidi",
+            "Hank"
+          ],
+          "explanation": "La bonne réponse est : Heinz."
+        }
+      }
+    },
+    {
+      "id": "television_033",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In the show \"Tengen Toppa Gurren Lagann\" what is the name of the character who force everyone to live underground?",
+          "choices": [
+            "Lord Genome",
+            "Kingloname",
+            "Lordgenome",
+            "King Loname"
+          ],
+          "explanation": "The correct answer is: Lordgenome."
+        },
+        "fr": {
+          "text": "Dans l'émission \"Tengen Toppa Gurren Lagann\" quel est le nom du personnage qui force tout le monde à vivre sous terre ?",
+          "choices": [
+            "Lord Genome",
+            "Kingloname",
+            "Lordgenome",
+            "King Loname"
+          ],
+          "explanation": "La bonne réponse est : Lordgenome."
+        }
+      }
+    },
+    {
+      "id": "television_034",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of Chris's brother in \"Everybody Hates Chris\"?",
+          "choices": [
+            "Greg",
+            "Drew",
+            "Joe",
+            "Jerome"
+          ],
+          "explanation": "The correct answer is: Drew."
+        },
+        "fr": {
+          "text": "Quel est le nom du frère de Chris dans \"Tout le monde déteste Chris\" ?",
+          "choices": [
+            "Greg",
+            "Drew",
+            "Joe",
+            "Jerome"
+          ],
+          "explanation": "La bonne réponse est : Drew."
+        }
+      }
+    },
+    {
+      "id": "television_035",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which WWF wrestler had the nickname \"The Ayatollah of Rock 'N' Rolla\"?",
+          "choices": [
+            "Shawn Michaels",
+            "Chris Jericho",
+            "Marty Jannetty",
+            "Scott Hall"
+          ],
+          "explanation": "The correct answer is: Chris Jericho."
+        },
+        "fr": {
+          "text": "Quel lutteur WWF avait le surnom \"L'ayatollah de Rock 'N' Rolla\"?",
+          "choices": [
+            "Shawn Michaels",
+            "Chris Jericho",
+            "Marty Jannetty",
+            "Scott Hall"
+          ],
+          "explanation": "La bonne réponse est : Chris Jericho."
+        }
+      }
+    },
+    {
+      "id": "television_036",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In the Black Mirror episode \"Bandersnatch\", PAC-MAN stands for:",
+          "choices": [
+            "Political Action Committee Man",
+            "Physics & Astronomy Classification Man",
+            "Postgraduate Aplications Centre Man",
+            "Program And Control Man"
+          ],
+          "explanation": "The correct answer is: Program And Control Man."
+        },
+        "fr": {
+          "text": "Dans l'épisode Black Mirror \"Bandersnatch\", PAC-MAN représente:",
+          "choices": [
+            "Political Action Committee Man",
+            "Physics & Astronomy Classification Man",
+            "Postgraduate Aplications Centre Man",
+            "Program And Control Man"
+          ],
+          "explanation": "La bonne réponse est : Programme et Contrôle Homme."
+        }
+      }
+    },
+    {
+      "id": "television_037",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who composed the theme song for The Simpsons?",
+          "choices": [
+            "Ennio Morricone",
+            "Hans Zimmer",
+            "Danny Elfman",
+            "John Williams"
+          ],
+          "explanation": "The correct answer is: Danny Elfman."
+        },
+        "fr": {
+          "text": "Qui a composé la chanson pour The Simpsons ?",
+          "choices": [
+            "Ennio Morricone",
+            "Hans Zimmer",
+            "Danny Elfman",
+            "John Williams"
+          ],
+          "explanation": "La bonne réponse est : Danny Elfman."
+        }
+      }
+    },
+    {
+      "id": "television_038",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In \"Breaking Bad,\" which main character was planned to be killed in Season 1 but wasn't because the show creator liked the actor?",
+          "choices": [
+            "Saul Goodman",
+            "Hank Schrader",
+            "Gus Fring",
+            "Jesse Pinkman"
+          ],
+          "explanation": "The correct answer is: Jesse Pinkman."
+        },
+        "fr": {
+          "text": "Dans \"Breaking Bad\", quel personnage principal devait être tué en saison 1 mais n'était pas parce que le créateur du spectacle aimait l'acteur ?",
+          "choices": [
+            "Saul Goodman",
+            "Hank Schrader",
+            "Gus Fring",
+            "Jesse Pinkman"
+          ],
+          "explanation": "La bonne réponse est : Jesse Pinkman."
+        }
+      }
+    },
+    {
+      "id": "television_039",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In the cartoon 'SpongeBob SquarePants', what did the acronym E.V.I.L stand for?",
+          "choices": [
+            "Each Villain Is Lemonade",
+            "Every Villain Is Lemonade",
+            "Every Villain Is Lemons",
+            "Every Villain Is Limes"
+          ],
+          "explanation": "The correct answer is: Every Villain Is Lemons."
+        },
+        "fr": {
+          "text": "Dans le dessin animé 'SpongeBob SquarePants', pour quoi l'acronyme E.V.I.L ?",
+          "choices": [
+            "Each Villain Is Lemonade",
+            "Every Villain Is Lemonade",
+            "Every Villain Is Lemons",
+            "Every Villain Is Limes"
+          ],
+          "explanation": "La bonne réponse est: Chaque Villain est Lemons."
+        }
+      }
+    },
+    {
+      "id": "television_040",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "When Donkey Kong died in the \"Donkey Kong Country\" episode \"It's a Wonderful Life\", who was his guardian angel?",
+          "choices": [
+            "King K. Rool",
+            "Kiddy Kong",
+            "Diddy Kong",
+            "Eddie the Mean Old Yeti"
+          ],
+          "explanation": "The correct answer is: Eddie the Mean Old Yeti."
+        },
+        "fr": {
+          "text": "Quand Donkey Kong est mort dans l'épisode \"Donkey Kong Country\" \"C'est une vie merveilleuse\", qui était son ange gardien ?",
+          "choices": [
+            "King K. Rool",
+            "Kiddy Kong",
+            "Diddy Kong",
+            "Eddie the Mean Old Yeti"
+          ],
+          "explanation": "La bonne réponse est : Eddie le vieux Yéti moyen."
+        }
+      }
+    },
+    {
+      "id": "television_041",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What year was Netflix founded?",
+          "choices": [
+            "1999",
+            "2004",
+            "1997",
+            "2001"
+          ],
+          "explanation": "The correct answer is: 1997."
+        },
+        "fr": {
+          "text": "Quelle année Netflix a-t-elle été fondée ?",
+          "choices": [
+            "1999",
+            "2004",
+            "1997",
+            "2001"
+          ],
+          "explanation": "La bonne réponse est : 1997."
+        }
+      }
+    },
+    {
+      "id": "television_042",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which track by \"Massive Attack\" is used for the theme of \"House\"?",
+          "choices": [
+            "Angel",
+            "Teardrop",
+            "Protection",
+            "Black Milk"
+          ],
+          "explanation": "The correct answer is: Teardrop."
+        },
+        "fr": {
+          "text": "Quelle piste de \"Massive Attack\" est utilisée pour le thème \"House\" ?",
+          "choices": [
+            "Angel",
+            "Teardrop",
+            "Protection",
+            "Black Milk"
+          ],
+          "explanation": "La bonne réponse est : Teardrop."
+        }
+      }
+    },
+    {
+      "id": "television_043",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which character was played by Dustin Diamond in the sitcom 'Saved by the Bell'?",
+          "choices": [
+            "Zack",
+            "Screech",
+            "A.C. Slater",
+            "Mr. Belding"
+          ],
+          "explanation": "The correct answer is: Screech."
+        },
+        "fr": {
+          "text": "Quel personnage a été joué par Dustin Diamond dans la sitcom \"Saved by the Bell\" ?",
+          "choices": [
+            "Zack",
+            "Screech",
+            "A.C. Slater",
+            "Mr. Belding"
+          ],
+          "explanation": "La bonne réponse est: Screech."
+        }
+      }
+    },
+    {
+      "id": "television_044",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of the planet that the Doctor from television series \"Doctor Who\" comes from?",
+          "choices": [
+            "Gallifrey",
+            "Skaro",
+            "Mondas",
+            "Sontar"
+          ],
+          "explanation": "The correct answer is: Gallifrey."
+        },
+        "fr": {
+          "text": "Quel est le nom de la planète dont le Docteur de la série télévisée \"Docteur de qui\" vient ?",
+          "choices": [
+            "Gallifrey",
+            "Skaro",
+            "Mondas",
+            "Sontar"
+          ],
+          "explanation": "La bonne réponse est : Gallifrey."
+        }
+      }
+    },
+    {
+      "id": "television_045",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who was the original voice actor of Shaggy Rogers in Scooby-Doo?",
+          "choices": [
+            "Billy West",
+            "Dante Basco",
+            "Frank Welker",
+            "Casey Kasem"
+          ],
+          "explanation": "The correct answer is: Casey Kasem."
+        },
+        "fr": {
+          "text": "Qui était l'acteur vocal original de Shaggy Rogers à Scooby-Doo ?",
+          "choices": [
+            "Billy West",
+            "Dante Basco",
+            "Frank Welker",
+            "Casey Kasem"
+          ],
+          "explanation": "La bonne réponse est : Casey Kasem."
+        }
+      }
+    },
+    {
+      "id": "television_046",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In \"Star Trek\", what sauce is commonly used by Klingons on bregit lung?",
+          "choices": [
+            "Sweet chili sauce",
+            "Grapok sauce",
+            "Gazorpazorp pudding",
+            "Grapork sauce"
+          ],
+          "explanation": "The correct answer is: Grapok sauce."
+        },
+        "fr": {
+          "text": "Dans \"Star Trek\", quelle sauce est couramment utilisée par les Klingons sur le poumon bregit?",
+          "choices": [
+            "Sweet chili sauce",
+            "Grapok sauce",
+            "Gazorpazorp pudding",
+            "Grapork sauce"
+          ],
+          "explanation": "La bonne réponse est : sauce Grapok."
+        }
+      }
+    },
+    {
+      "id": "television_047",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which of these television shows makes everyone look under their chair?",
+          "choices": [
+            "Larry Rubert",
+            "Oprah",
+            "Jimmy Fallon",
+            "Saturday Night Live"
+          ],
+          "explanation": "The correct answer is: Oprah."
+        },
+        "fr": {
+          "text": "Laquelle de ces émissions de télévision fait regarder tout le monde sous sa chaise ?",
+          "choices": [
+            "Larry Rubert",
+            "Oprah",
+            "Jimmy Fallon",
+            "Saturday Night Live"
+          ],
+          "explanation": "La bonne réponse est : Oprah."
+        }
+      }
+    },
+    {
+      "id": "television_048",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "British actor David Morrissey stars as which role in \"The Walking Dead\"?",
+          "choices": [
+            "Negan",
+            "The Governor",
+            "Daryl Dixon",
+            "Rick Grimes"
+          ],
+          "explanation": "The correct answer is: The Governor."
+        },
+        "fr": {
+          "text": "L'acteur britannique David Morrissey joue le rôle de \"The Walking Dead\" ?",
+          "choices": [
+            "Negan",
+            "The Governor",
+            "Daryl Dixon",
+            "Rick Grimes"
+          ],
+          "explanation": "La bonne réponse est : Le gouverneur."
+        }
+      }
+    },
+    {
+      "id": "television_049",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of the inspector in the series \"On the Buses\"?",
+          "choices": [
+            "Harper",
+            "Gally",
+            "Naily",
+            "Blakey"
+          ],
+          "explanation": "The correct answer is: Blakey."
+        },
+        "fr": {
+          "text": "Quel est le nom de l'inspecteur dans la série \"Sur les autobus\" ?",
+          "choices": [
+            "Harper",
+            "Gally",
+            "Naily",
+            "Blakey"
+          ],
+          "explanation": "La bonne réponse est : Blakey."
+        }
+      }
+    },
+    {
+      "id": "television_050",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which British writer wrote for both Doctor Who and Sherlock?",
+          "choices": [
+            "Steven Moffatt",
+            "Toby Whithouse",
+            "Phil Ford",
+            "Russell T Davies"
+          ],
+          "explanation": "The correct answer is: Steven Moffatt."
+        },
+        "fr": {
+          "text": "Quel écrivain britannique a écrit pour le docteur Who et Sherlock ?",
+          "choices": [
+            "Steven Moffatt",
+            "Toby Whithouse",
+            "Phil Ford",
+            "Russell T Davies"
+          ],
+          "explanation": "La bonne réponse est : Steven Moffatt."
+        }
+      }
+    }
+  ]
+}
