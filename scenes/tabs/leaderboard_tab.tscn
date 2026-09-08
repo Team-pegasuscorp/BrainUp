@@ -10,6 +10,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+clip_contents = true
 script = ExtResource("1_leaderboard_tab")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -44,9 +45,16 @@ theme_override_font_sizes/font_size = 14
 text = "Your rank: #1"
 horizontal_alignment = 1
 
-[node name="FilterRow" type="HBoxContainer" parent="MarginContainer/VBox"]
+[node name="FilterScroll" type="ScrollContainer" parent="MarginContainer/VBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+vertical_scroll_mode = 0
+horizontal_scroll_mode = 1
+
+[node name="FilterRow" type="HBoxContainer" parent="MarginContainer/VBox/FilterScroll"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 0
 theme_override_constants/separation = 8
 alignment = 1
 

@@ -20,6 +20,8 @@ func set_segments(values: Array, label: String, sublabel: String = "") -> void:
 func _draw() -> void:
 	var center := size * 0.5
 	var radius := minf(size.x, size.y) * 0.38
+	## Small gaps between slices so neighbouring colours stay distinct.
+	const SEGMENT_GAP := 0.07 ## ~4°
 	draw_arc(center, radius, 0.0, TAU, 64, track, line_width, true)
 	var angle := -PI * 0.5
 	for segment in segments:
@@ -29,8 +31,11 @@ func _draw() -> void:
 		if ratio <= 0.001:
 			continue
 		var span := TAU * ratio
+		var draw_span := maxf(span - SEGMENT_GAP, 0.0)
+		var start := angle + SEGMENT_GAP * 0.5
 		var color: Color = segment.get("color", Color.WHITE)
-		draw_arc(center, radius, angle, angle + span, 48, color, line_width, true)
+		if draw_span > 0.001:
+			draw_arc(center, radius, start, start + draw_span, 48, color, line_width, true)
 		angle += span
 
 	if center_label.is_empty() and center_sublabel.is_empty():
@@ -50,13 +55,13 @@ func _draw() -> void:
 		)
 		return
 
-	var main_size := int(clampf(minf(size.x, size.y) * 0.12, 18.0, 28.0))
-	var sub_size := int(clampf(minf(size.x, size.y) * 0.065, 10.0, 14.0))
+	var main_size := int(clampf(minf(size.x, size.y) * 0.18, 24.0, 36.0))
+	var sub_size := int(clampf(minf(size.x, size.y) * 0.09, 12.0, 16.0))
 	var main_sz := font.get_string_size(center_label, HORIZONTAL_ALIGNMENT_CENTER, -1, main_size)
 	var sub_sz := font.get_string_size(center_sublabel, HORIZONTAL_ALIGNMENT_CENTER, -1, sub_size)
 	draw_string(
 		font,
-		center + Vector2(-main_sz.x * 0.5, -2),
+		center + Vector2(-main_sz.x * 0.5, -4),
 		center_label,
 		HORIZONTAL_ALIGNMENT_LEFT,
 		-1,
@@ -65,7 +70,7 @@ func _draw() -> void:
 	)
 	draw_string(
 		font,
-		center + Vector2(-sub_sz.x * 0.5, sub_size + 8),
+		center + Vector2(-sub_sz.x * 0.5, sub_size + 10),
 		center_sublabel,
 		HORIZONTAL_ALIGNMENT_LEFT,
 		-1,

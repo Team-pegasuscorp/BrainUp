@@ -121,14 +121,12 @@ static func _merge_demo(base: Dictionary, locale: String) -> Dictionary:
 	demo["email_verified"] = true
 	demo["is_online"] = true
 	demo["categories"] = [
-		_make_category_row("sport", locale, 412, 84.0, 4, 24, "gold"),
-		_make_category_row("cinema", locale, 386, 71.0, 3, 19, "bronze"),
-		_make_category_row("history", locale, 450, 78.0, 4, 22, "silver"),
-		_make_category_row("music", locale, 398, 76.0, 3, 18, "bronze"),
-		_make_category_row("geography", locale, 430, 81.0, 4, 21, "silver"),
-		_make_category_row("science", locale, 360, 69.0, 2, 15, "bronze"),
-		_make_category_row("general", locale, 405, 74.0, 3, 20, "silver"),
-		_make_category_row("television", locale, 372, 70.0, 2, 16, "bronze"),
+		_make_category_row("sport", locale, 412, 84.0, 4, 24),
+		_make_category_row("cinema", locale, 386, 71.0, 3, 19),
+		_make_category_row("history", locale, 450, 78.0, 4, 22),
+		_make_category_row("music", locale, 398, 76.0, 3, 18),
+		_make_category_row("geography", locale, 430, 81.0, 4, 21),
+		_make_category_row("science", locale, 360, 69.0, 2, 15),
 	]
 	_assign_medals(demo["categories"])
 	demo["history"] = [
@@ -190,16 +188,25 @@ static func _assign_medals(rows: Array) -> void:
 	for row in rows:
 		if typeof(row) != TYPE_DICTIONARY:
 			continue
+		row["medal"] = "none"
 		if int(row.get("games_played", 0)) <= 0:
-			row["medal"] = "none"
 			continue
 		ranked.append(row)
 	ranked.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
 		return float(a.get("accuracy_percent", 0.0)) > float(b.get("accuracy_percent", 0.0))
 	)
+	## Only the top 3 get medals.
 	var medals := ["gold", "silver", "bronze"]
 	for i in range(mini(ranked.size(), medals.size())):
 		ranked[i]["medal"] = medals[i]
+	## Keep list order: best accuracy first (gold → silver → bronze → …).
+	rows.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		var a_played := int(a.get("games_played", 0)) > 0
+		var b_played := int(b.get("games_played", 0)) > 0
+		if a_played != b_played:
+			return a_played
+		return float(a.get("accuracy_percent", 0.0)) > float(b.get("accuracy_percent", 0.0))
+	)
 
 
 static func _category_icon(category_id: String) -> String:
@@ -379,6 +386,7 @@ static func _pick_best_category(categories: Array) -> Dictionary:
 
 static func _build_win_distribution(data: Dictionary) -> Array:
 	var categories: Array = data.get("categories", [])
+	var total_wins := int(data.get("wins", 0))
 	var weights: Array = []
 	var total := 0.0
 	for row in categories:
@@ -402,6 +410,7 @@ static func _build_win_distribution(data: Dictionary) -> Array:
 			"icon": row.get("icon", "🧠"),
 			"ratio": ratio,
 			"percent": int(round(ratio * 100.0)),
+			"wins": int(round(ratio * float(total_wins))),
 			"color": UiTokens.accent_for_category(str(row.get("id", ""))),
 		})
 	return out

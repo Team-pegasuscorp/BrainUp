@@ -11,7 +11,7 @@ signal tab_changed(index: int)
 ## Fade duration when jumping more than one tab (nav tap).
 @export var jump_fade_duration: float = 0.11
 
-@onready var pages_row: HBoxContainer = %PagesRow
+@onready var pages_row: Control = %PagesRow
 
 var tab_count: int = 0
 var current_tab: int = 0
@@ -63,13 +63,20 @@ func get_tab() -> int:
 func _on_resized() -> void:
 	_page_width = size.x
 	tab_count = pages_row.get_child_count()
-	for child in pages_row.get_children():
-		if child is Control:
-			var page := child as Control
-			page.custom_minimum_size = Vector2(_page_width, size.y)
-			page.size_flags_horizontal = Control.SIZE_FILL
-			page.size_flags_vertical = Control.SIZE_FILL
-	pages_row.size = Vector2(_page_width * tab_count, size.y)
+	## Manual page slots: HBox would expand past viewport when a tab's min width grows
+	## (e.g. category chip rows on Classement / Social) and bleed onto neighbours.
+	for i in range(tab_count):
+		var child := pages_row.get_child(i)
+		if not (child is Control):
+			continue
+		var page := child as Control
+		page.clip_contents = true
+		page.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
+		page.position = Vector2(float(i) * _page_width, 0.0)
+		page.size = Vector2(_page_width, size.y)
+		page.custom_minimum_size = Vector2(_page_width, size.y)
+	pages_row.custom_minimum_size = Vector2(_page_width * float(tab_count), size.y)
+	pages_row.size = Vector2(_page_width * float(tab_count), size.y)
 	pages_row.position.y = 0.0
 	_snap_to_tab(current_tab, false)
 

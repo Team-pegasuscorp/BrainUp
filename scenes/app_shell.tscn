@@ -53,10 +53,10 @@ size_flags_vertical = 3
 mouse_filter = 0
 script = ExtResource("4_tab_swipe")
 
-[node name="PagesRow" type="HBoxContainer" parent="MainColumn/TabSwipeContainer"]
+[node name="PagesRow" type="Control" parent="MainColumn/TabSwipeContainer"]
 unique_name_in_owner = true
 layout_mode = 0
-theme_override_constants/separation = 0
+clip_contents = false
 
 [node name="HomeTab" parent="MainColumn/TabSwipeContainer/PagesRow" instance=ExtResource("5_home_tab")]
 unique_name_in_owner = true

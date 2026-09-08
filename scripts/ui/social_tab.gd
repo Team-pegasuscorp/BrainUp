@@ -104,9 +104,16 @@ func _create_section() -> PanelContainer:
 	caption.add_theme_color_override("font_color", UiTokens.INK)
 	vbox.add_child(caption)
 
+	var category_scroll := ScrollContainer.new()
+	category_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	category_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	category_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	category_scroll.custom_minimum_size.y = 48
+	vbox.add_child(category_scroll)
+
 	var category_row := HBoxContainer.new()
 	category_row.add_theme_constant_override("separation", 8)
-	vbox.add_child(category_row)
+	category_scroll.add_child(category_row)
 	for category in _categories:
 		var category_id := str(category.get("id", ""))
 		var button := Button.new()

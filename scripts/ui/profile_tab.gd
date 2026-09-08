@@ -135,7 +135,6 @@ func _rebuild_sections() -> void:
 	sections.add_child(_build_mastery_mosaic())
 	sections.add_child(_build_history_tile())
 	sections.add_child(_build_badges_tile())
-	sections.add_child(_build_world_rank_tile())
 	sections.add_child(_build_season_tile())
 
 
@@ -628,12 +627,11 @@ func _build_mastery_mosaic() -> Control:
 
 
 func _build_categories_tile() -> PanelContainer:
-	## Mock: header + rows [icon | name/bar | NIVEAU+n | badge].
-	## Height locked for 5 category slots (width unchanged).
+	## Header + rows [icon | name/bar | NIVEAU+n | badge] — max 6 visible.
 	var panel := _tile()
 	panel.custom_minimum_size.y = UiTokens.DASH_CATEGORY_HEIGHT
 	panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	var root := _tile_body(panel, tr("UI_PROFILE_CATEGORIES_MASTERED"), true)
+	var root := _tile_body(panel, tr("UI_PROFILE_CATEGORIES_MASTERED"))
 	## Extra air between title and category rows.
 	root.add_theme_constant_override("separation", 13)
 	root.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -642,9 +640,19 @@ func _build_categories_tile() -> PanelContainer:
 	list.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	root.add_child(list)
 
-	var categories: Array = _profile_data.get("categories", [])
+	var categories: Array = _profile_data.get("categories", []).duplicate()
+	categories.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		var a_played := int(a.get("games_played", 0)) > 0
+		var b_played := int(b.get("games_played", 0)) > 0
+		if a_played != b_played:
+			return a_played
+		return float(a.get("accuracy_percent", 0.0)) > float(b.get("accuracy_percent", 0.0))
+	)
 	var shown := 0
+	const MAX_VISIBLE := 6
 	for row in categories:
+		if shown >= MAX_VISIBLE:
+			break
 		if typeof(row) != TYPE_DICTIONARY:
 			continue
 		if int(row.get("games_played", 0)) <= 0 and not _profile_data.get("is_demo", false):
@@ -752,20 +760,25 @@ func _category_mastery_row(row: Dictionary) -> Control:
 	level_num_wrap.add_child(level_num)
 	level_col.add_child(level_num_wrap)
 
-	## Rank badge / empty shield.
-	var medal := Label.new()
-	medal.text = _medal_icon(str(row.get("medal", "none")))
-	medal.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	medal.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	medal.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	medal.custom_minimum_size = Vector2(28, 28)
-	medal.add_theme_font_size_override("font_size", 24)
-	var emoji_font := UiFonts.emoji_font()
-	if emoji_font != null:
-		medal.add_theme_font_override("font", emoji_font)
-	if str(row.get("medal", "none")) == "none":
-		medal.add_theme_color_override("font_color", Color(1, 1, 1, 0.28))
-	hbox.add_child(medal)
+	## Rank badge — only gold / silver / bronze (top 3); spacer keeps levels aligned.
+	var medal_kind := str(row.get("medal", "none"))
+	if medal_kind != "none":
+		var medal := Label.new()
+		medal.text = _medal_icon(medal_kind)
+		medal.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		medal.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		medal.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		medal.custom_minimum_size = Vector2(28, 28)
+		medal.add_theme_font_size_override("font_size", 24)
+		var emoji_font := UiFonts.emoji_font()
+		if emoji_font != null:
+			medal.add_theme_font_override("font", emoji_font)
+		hbox.add_child(medal)
+	else:
+		var medal_slot := Control.new()
+		medal_slot.custom_minimum_size = Vector2(28, 28)
+		medal_slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		hbox.add_child(medal_slot)
 	return hbox
 
 
@@ -824,27 +837,28 @@ func _build_best_subject_tile() -> PanelContainer:
 
 
 func _build_win_distribution_tile() -> PanelContainer:
-	## Mock: donut centered, legend stacked below.
+	## Donut pinned under the title; legend below.
 	var panel := _tile(UiTokens.ACCENT_PROFILE)
 	panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	var root := _tile_body(panel, tr("UI_PROFILE_WIN_SPLIT"))
 	root.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	root.add_theme_constant_override("separation", 6)
 
 	var body := VBoxContainer.new()
-	body.add_theme_constant_override("separation", 12)
+	body.add_theme_constant_override("separation", 6)
 	body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	body.alignment = BoxContainer.ALIGNMENT_CENTER
+	body.alignment = BoxContainer.ALIGNMENT_BEGIN
 	root.add_child(body)
 
 	var donut_wrap := CenterContainer.new()
 	donut_wrap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	donut_wrap.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	donut_wrap.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 	body.add_child(donut_wrap)
 
 	var donut := ProfileDonutScript.new()
 	donut.custom_minimum_size = Vector2(168, 168)
-	donut.line_width = 22.0
+	donut.line_width = 34.0
 	donut_wrap.add_child(donut)
 
 	var dist: Array = _profile_data.get("win_distribution", [])
@@ -887,12 +901,15 @@ func _build_win_distribution_tile() -> PanelContainer:
 			text.add_theme_font_size_override("font_size", 12)
 			text.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 			line.add_child(text)
-			var pct := Label.new()
-			pct.text = "%d%%" % int(row.get("percent", 0))
-			pct.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-			pct.add_theme_font_size_override("font_size", 12)
-			pct.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
-			line.add_child(pct)
+			var wins_label := Label.new()
+			wins_label.text = _format_int(int(row.get("wins", 0)))
+			wins_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+			wins_label.add_theme_font_size_override("font_size", 12)
+			wins_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+			var wins_wrap := MarginContainer.new()
+			wins_wrap.add_theme_constant_override("margin_right", 8)
+			wins_wrap.add_child(wins_label)
+			line.add_child(wins_wrap)
 
 	return panel
 
@@ -1062,42 +1079,6 @@ func _badge_cell(achievement: Dictionary) -> Button:
 	button.pressed.connect(_on_badge_pressed.bind(achievement))
 	PressScaleUtil.wire(button, self)
 	return button
-
-
-func _build_world_rank_tile() -> PanelContainer:
-	var panel := _tile(UiTokens.ACCENT_PROFILE, true)
-	var root := _tile_body(panel, tr("UI_PROFILE_WORLD_RANK"))
-	var ranking: Dictionary = _profile_data.get("ranking", {})
-
-	var rank := Label.new()
-	rank.text = "#%s" % _format_int(int(ranking.get("rank", 0)))
-	rank.add_theme_font_size_override("font_size", 28)
-	rank.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-	root.add_child(rank)
-
-	var top := Label.new()
-	var percentile := 8 if _profile_data.get("is_demo", false) else clampi(100 - int(ranking.get("rank", 100)), 1, 99)
-	top.text = tr("UI_PROFILE_TOP_PERCENT").format({"percent": percentile})
-	top.add_theme_font_size_override("font_size", 13)
-	top.add_theme_color_override("font_color", UiTokens.ACCENT_PROFILE)
-	root.add_child(top)
-
-	var spark := Label.new()
-	spark.text = "📈  · · · · ·"
-	spark.add_theme_font_size_override("font_size", 18)
-	spark.add_theme_color_override("font_color", Color(UiTokens.ACCENT_PROFILE.r, UiTokens.ACCENT_PROFILE.g, UiTokens.ACCENT_PROFILE.b, 0.85))
-	root.add_child(spark)
-
-	var btn := Button.new()
-	btn.text = tr("UI_PROFILE_SEE_LEADERBOARD")
-	_style_profile_button(btn, UiTokens.ACCENT_PROFILE)
-	btn.pressed.connect(_open_leaderboard)
-	PressScaleUtil.wire(btn, self)
-	root.add_child(btn)
-
-	_nudge_tile_height(root, 5)
-	_animated_nodes.append(panel)
-	return panel
 
 
 func _build_season_tile() -> PanelContainer:
@@ -1291,17 +1272,6 @@ func _play_entrance_animation() -> void:
 		tween.tween_property(node, "modulate:a", 1.0, 0.2).set_delay(delay)
 		delay += 0.025
 	_animated_nodes.clear()
-
-
-func _open_leaderboard() -> void:
-	var shell := get_tree().current_scene
-	if shell == null:
-		return
-	var page := ScenePaths.page_index_for_tab(ScenePaths.Tab.LEADERBOARD)
-	if shell.has_node("%TabSwipeContainer"):
-		shell.get_node("%TabSwipeContainer").set_tab(page, true)
-	if shell.has_node("%BottomNavBar"):
-		shell.get_node("%BottomNavBar").set_active_tab(page)
 
 
 func _open_edit_profile() -> void:

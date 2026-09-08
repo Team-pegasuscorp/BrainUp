@@ -50,7 +50,7 @@ func _ready() -> void:
 
 
 func _apply_page_backgrounds() -> void:
-	var pages: HBoxContainer = tab_swipe.pages_row
+	var pages: Control = tab_swipe.pages_row
 	for page_index in range(pages.get_child_count()):
 		var tab_id: int = ScenePaths.tab_for_page_index(page_index)
 		## Quiz keeps the shared brand navy canvas behind the pages.
@@ -136,7 +136,7 @@ func _on_tab_changed(page_index: int) -> void:
 
 
 func _notify_tab_shown(page_index: int) -> void:
-	var pages: HBoxContainer = tab_swipe.pages_row
+	var pages: Control = tab_swipe.pages_row
 	if page_index < 0 or page_index >= pages.get_child_count():
 		return
 	var page := pages.get_child(page_index)
