@@ -116,6 +116,7 @@ static func _merge_demo(base: Dictionary, locale: String) -> Dictionary:
 	demo["current_win_streak"] = 7
 	demo["best_win_streak"] = 17
 	demo["best_score"] = 980
+	demo["has_perfect_round"] = false
 	demo["country"] = "France"
 	demo["country_flag"] = CountryFlags.emoji_for("France")
 	demo["email_verified"] = true
@@ -298,9 +299,10 @@ static func _build_achievements(data: Dictionary) -> Array:
 		"wins": data.get("wins", 0),
 		"best_win_streak": data.get("best_win_streak", 0),
 		"best_score": data.get("best_score", 0),
-		"has_perfect_round": SaveManager.has_perfect_round,
+		"has_perfect_round": data.get("has_perfect_round", SaveManager.has_perfect_round),
 		"level": data.get("level", 1),
 		"categories_played": _count_categories_played_from_data(data),
+		"accuracy_percent": data.get("accuracy_percent", 0.0),
 	}
 	var rows: Array = []
 	for achievement in AchievementsCatalog.all():
@@ -309,6 +311,7 @@ static func _build_achievements(data: Dictionary) -> Array:
 			"title_key": achievement.get("title_key", ""),
 			"desc_key": achievement.get("desc_key", ""),
 			"icon": achievement.get("icon", "?"),
+			"accent": achievement.get("accent", UiTokens.ACCENT_PROFILE),
 			"unlocked": AchievementsCatalog.is_unlocked(str(achievement.get("id", "")), unlock_stats),
 		})
 	return rows
@@ -427,22 +430,24 @@ static func _build_win_distribution(data: Dictionary) -> Array:
 
 
 static func _build_season(data: Dictionary) -> Dictionary:
+	## Seasons are not shipped yet — locked for real profiles.
+	## Demo profile previews the unlocked tile so we can polish the layout early.
 	var ranking: Dictionary = data.get("ranking", {})
 	var wins := int(data.get("wins", 0))
 	var rate := float(data.get("win_rate_percent", 0.0))
 	var points := int(ranking.get("points", data.get("best_score", 0)))
-	if data.get("is_demo", false):
-		return {
-			"number": 3,
-			"points": 2845,
-			"wins": 76,
-			"win_rate": 59.0,
-			"best_rank": 184,
-		}
-	return {
+	var season := {
+		"unlocked": false,
 		"number": maxi(1, int(data.get("level", 1) / 8) + 1),
 		"points": points,
 		"wins": wins,
 		"win_rate": rate,
 		"best_rank": int(ranking.get("rank", 0)),
 	}
+	if data.get("is_demo", false):
+		season["number"] = 12
+		season["points"] = 2845
+		season["wins"] = 68
+		season["win_rate"] = 63.0
+		season["best_rank"] = 184
+	return season

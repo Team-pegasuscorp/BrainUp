@@ -146,6 +146,18 @@ UI_ACH_LEVEL_5,Rising Star,Étoile montante
 UI_ACH_LEVEL_5_DESC,Reach level 5.,Atteignez le niveau 5.
 UI_ACH_EXPLORER,Explorer,Explorateur
 UI_ACH_EXPLORER_DESC,Play quizzes in at least 2 categories.,Jouez dans au moins 2 catégories.
+UI_ACH_STREAK_10,10-win streak,Série de 10
+UI_ACH_STREAK_10_DESC,10 wins in a row,10 victoires de suite
+UI_ACH_UNBEATABLE,Unbeatable,Imbattable
+UI_ACH_UNBEATABLE_DESC,100 wins,100 victoires
+UI_ACH_EXPERT,Expert,Expert
+UI_ACH_EXPERT_DESC,Reach level 20,Atteindre le niveau 20
+UI_ACH_PRECISION,Precision,Précision
+UI_ACH_PRECISION_DESC,75% correct answers,75% de bonnes réponses
+UI_ACH_FAST,Fast,Rapide
+UI_ACH_FAST_DESC,Answer in under 3 sec,Répondre en moins de 3 sec
+UI_ACH_GOLDEN_BRAIN,Golden brain,Cerveau d'or
+UI_ACH_GOLDEN_BRAIN_DESC,Win 50 gold matches,Gagner 50 parties en or
 UI_PROFILE_EDIT,Edit profile,Modifier le profil
 UI_PROFILE_EMAIL_VERIFIED,Email verified,Adresse e-mail vérifiée
 UI_PROFILE_XP_TO_NEXT,{xp} XP to next level,{xp} XP avant le prochain niveau
@@ -167,12 +179,18 @@ UI_PROFILE_WINS_COUNT,{count} wins,{count} victoires
 UI_PROFILE_WIN,Win,Victoire
 UI_PROFILE_LOSS,Loss,Défaite
 UI_PROFILE_BADGES_RECENT,Recent achievements,Succès récents
+UI_PROFILE_BADGES_ALL,All achievements,Tous les succès
 UI_PROFILE_WORLD_RANK,World ranking,Classement mondial
 UI_PROFILE_TOP_PERCENT,TOP {percent}%,TOP {percent}%
 UI_PROFILE_SEE_LEADERBOARD,View leaderboard,Voir le classement
 UI_PROFILE_SEE_ALL,See all,Voir tout
 UI_PROFILE_BEST_SEASON,Best season,Meilleure saison
+UI_PROFILE_SEASON_LOCKED,Seasons are not available yet.,Les saisons ne sont pas encore disponibles.
+UI_PROFILE_SEASON_COMING_SOON,Coming soon,Bientôt disponible
 UI_PROFILE_SEASON_N,Season {n},Saison {n}
+UI_PROFILE_SEASON_BEST_RANKING,Best ranking,meilleur classement
+UI_PROFILE_SEASON_WINS_THIS,Season wins,victoires cette saison
+UI_PROFILE_SEASON_WINRATE,Season winrate,Winrate saison
 UI_PROFILE_SEASON_META,{wins} wins · {rate}% winrate,{wins} victoires · {rate}% winrate
 UI_PROFILE_SEASON_BEST_RANK,Best rank,Meilleur rang
 UI_PROFILE_SEASON_WINS,Season wins,Victoires saison

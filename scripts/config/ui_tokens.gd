@@ -146,6 +146,9 @@ const DASH_WIN_SPLIT_HEIGHT: float = 175.0
 const DASH_CATEGORY_HEIGHT: float = 455.0
 ## Recent matches — snug fit for 4 rows (icon 54 + gaps + header/padding).
 const DASH_HISTORY_HEIGHT: float = 326.0
+## Recent achievements — room for 3×2 grid at history-name text scale.
+const DASH_BADGES_HEIGHT: float = 410.0
+const DASH_SEASON_HEIGHT: float = 235.0
 const DASH_HERO_HEIGHT: float = 225.0
 const DEFAULT_PLAYER_NAME: String = "Player"
 const MAX_PLAYER_NAME_LENGTH: int = 24

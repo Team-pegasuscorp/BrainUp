@@ -34,6 +34,8 @@ var _profile_data: Dictionary = {}
 var _animated_nodes: Array[Control] = []
 var _xp_bar: ProgressBar
 var _active_tweens: Array[Tween] = []
+var _achievements_page: Control
+var _achievements_grid: GridContainer
 ## Base page gutter; left/right stay equal visually without changing tile width.
 const _PAGE_GUTTER: int = 18
 
@@ -80,6 +82,7 @@ func _style_dark_controls() -> void:
 
 
 func refresh() -> void:
+	_close_achievements_page()
 	_profile_data = ProfileSnapshot.build_full(LocaleManager.get_content_locale())
 	_rebuild_sections()
 	call_deferred("_balance_page_gutters")
@@ -88,6 +91,12 @@ func refresh() -> void:
 
 func on_tab_shown() -> void:
 	refresh()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if _achievements_page != null and _achievements_page.visible and event.is_action_pressed("ui_cancel"):
+		_close_achievements_page()
+		get_viewport().set_input_as_handled()
 
 
 func _wire_events() -> void:
@@ -1097,100 +1106,280 @@ func _history_row(row: Dictionary) -> Control:
 
 
 func _build_badges_tile() -> PanelContainer:
-	var panel := _tile(UiTokens.ACCENT_LEADERBOARD)
-	var root := _tile_body(panel, tr("UI_PROFILE_BADGES_RECENT"))
+	## Mock: title + see-all, 3×2 achievement grid (icon / title / desc).
+	var panel := _tile()
+	panel.custom_minimum_size.y = UiTokens.DASH_BADGES_HEIGHT
+	var root := _tile_body(panel, tr("UI_PROFILE_BADGES_RECENT"), true, _open_achievements_page)
+	root.add_theme_constant_override("separation", 12)
 	var grid := GridContainer.new()
 	grid.columns = 3
-	grid.add_theme_constant_override("h_separation", 8)
-	grid.add_theme_constant_override("v_separation", 8)
+	grid.add_theme_constant_override("h_separation", 10)
+	grid.add_theme_constant_override("v_separation", 16)
+	grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	root.add_child(grid)
 
 	var achievements: Array = _profile_data.get("achievements", [])
 	var limit := mini(achievements.size(), 6)
 	for i in range(limit):
 		grid.add_child(_badge_cell(achievements[i]))
-	_nudge_tile_height(root, 5)
 	_animated_nodes.append(panel)
 	return panel
 
 
-func _badge_cell(achievement: Dictionary) -> Button:
+func _badge_cell(achievement: Dictionary) -> Control:
 	var unlocked: bool = achievement.get("unlocked", false)
+	var accent: Color = achievement.get("accent", UiTokens.ACCENT_PROFILE)
+	if typeof(accent) != TYPE_COLOR:
+		accent = UiTokens.ACCENT_PROFILE
+
 	var button := Button.new()
-	button.custom_minimum_size = Vector2(0, 96)
 	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	button.custom_minimum_size = Vector2(0, 156)
 	button.focus_mode = Control.FOCUS_NONE
-	var accent := UiTokens.ACCENT_LEADERBOARD if unlocked else UiTokens.PROFILE_TEXT_MUTED
-	button.add_theme_stylebox_override("normal", UiStyle.profile_card(accent))
-	button.add_theme_stylebox_override("hover", UiStyle.profile_card(accent, true))
-	button.add_theme_stylebox_override("pressed", UiStyle.profile_card(accent))
+	button.flat = true
+	var empty := StyleBoxEmpty.new()
+	button.add_theme_stylebox_override("normal", empty)
+	button.add_theme_stylebox_override("hover", empty)
+	button.add_theme_stylebox_override("pressed", empty)
+	button.add_theme_stylebox_override("focus", empty)
 	button.modulate = Color.WHITE if unlocked else UiTokens.PROFILE_BADGE_LOCKED
-	button.clip_text = true
-	button.alignment = HORIZONTAL_ALIGNMENT_CENTER
-	button.text = "%s\n%s\n%s" % [
-		str(achievement.get("icon", "?")),
-		tr(str(achievement.get("title_key", ""))),
-		tr(str(achievement.get("desc_key", ""))),
-	]
-	button.add_theme_font_size_override("font_size", 10)
-	button.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+
+	var col := VBoxContainer.new()
+	col.add_theme_constant_override("separation", 6)
+	col.alignment = BoxContainer.ALIGNMENT_CENTER
+	col.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	col.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	button.add_child(col)
+
+	## Glowing badge icon.
+	var icon_wrap := CenterContainer.new()
+	icon_wrap.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	col.add_child(icon_wrap)
+
+	var icon_slot := Control.new()
+	icon_slot.custom_minimum_size = Vector2(56, 56)
+	icon_slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	icon_wrap.add_child(icon_slot)
+
+	var badge := Panel.new()
+	badge.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var badge_style := StyleBoxFlat.new()
+	badge_style.bg_color = Color(accent.r, accent.g, accent.b, 0.22)
+	badge_style.set_border_width_all(2)
+	badge_style.border_color = Color(accent.r, accent.g, accent.b, 0.85)
+	badge_style.set_corner_radius_all(28)
+	badge_style.shadow_color = Color(accent.r, accent.g, accent.b, 0.35)
+	badge_style.shadow_size = 8
+	badge.add_theme_stylebox_override("panel", badge_style)
+	icon_slot.add_child(badge)
+
+	var icon := Label.new()
+	var icon_text := str(achievement.get("icon", "?"))
+	icon.text = icon_text
+	icon.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	icon.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	icon.add_theme_font_size_override("font_size", 24 if icon_text.is_valid_int() else 26)
+	icon.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	var emoji_font := UiFonts.emoji_font()
+	if emoji_font != null and not icon_text.is_valid_int():
+		icon.add_theme_font_override("font", emoji_font)
+	icon_slot.add_child(icon)
+
+	var title := Label.new()
+	title.text = tr(str(achievement.get("title_key", "")))
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	## Same size as history-tile opponent names (pseudos).
+	title.add_theme_font_size_override("font_size", 18)
+	title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	title.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	col.add_child(title)
+
+	var desc := Label.new()
+	desc.text = tr(str(achievement.get("desc_key", "")))
+	desc.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	desc.add_theme_font_size_override("font_size", 16)
+	desc.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+	desc.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	col.add_child(desc)
+
 	button.pressed.connect(_on_badge_pressed.bind(achievement))
 	PressScaleUtil.wire(button, self)
 	return button
 
 
 func _build_season_tile() -> PanelContainer:
+	## Locked until seasons ship; demo previews the mock unlocked layout.
 	var panel := _tile(UiTokens.ACCENT_LEADERBOARD, true)
-	var root := _tile_body(panel, tr("UI_PROFILE_BEST_SEASON"))
 	var season: Dictionary = _profile_data.get("season", {})
+	var unlocked: bool = bool(season.get("unlocked", false))
+
+	if not unlocked:
+		var root := _tile_body(panel, tr("UI_PROFILE_BEST_SEASON"))
+		var body := VBoxContainer.new()
+		body.add_theme_constant_override("separation", 10)
+		body.alignment = BoxContainer.ALIGNMENT_CENTER
+		body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		root.add_child(body)
+
+		var lock := Label.new()
+		lock.text = "🔒"
+		lock.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		lock.add_theme_font_size_override("font_size", 40)
+		var emoji_font := UiFonts.emoji_font()
+		if emoji_font != null:
+			lock.add_theme_font_override("font", emoji_font)
+		body.add_child(lock)
+
+		var caption := Label.new()
+		caption.text = tr("UI_PROFILE_SEASON_LOCKED")
+		caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		caption.add_theme_font_size_override("font_size", 15)
+		caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+		body.add_child(caption)
+
+		var hint := Label.new()
+		hint.text = tr("UI_PROFILE_SEASON_COMING_SOON")
+		hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		hint.add_theme_font_size_override("font_size", 13)
+		hint.add_theme_color_override("font_color", UiTokens.ACCENT_LEADERBOARD)
+		body.add_child(hint)
+
+		_nudge_tile_height(root, 8)
+		_animated_nodes.append(panel)
+		return panel
+
+	## Mock unlocked layout: title + season chip, crown emoji, icon/value/label stats.
+	panel.custom_minimum_size.y = UiTokens.DASH_SEASON_HEIGHT
+	var margin := _pad(12, 14)
+	margin.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	panel.add_child(margin)
+	var root := VBoxContainer.new()
+	root.add_theme_constant_override("separation", 12)
+	root.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	margin.add_child(root)
+
+	var header := HBoxContainer.new()
+	header.add_theme_constant_override("separation", 8)
+	header.alignment = BoxContainer.ALIGNMENT_CENTER
+	root.add_child(header)
+
+	var title := Label.new()
+	title.text = tr("UI_PROFILE_BEST_SEASON").to_upper()
+	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	title.add_theme_font_size_override("font_size", 18)
+	title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	header.add_child(title)
+
+	var chip := PanelContainer.new()
+	var chip_style := StyleBoxFlat.new()
+	chip_style.bg_color = Color(UiTokens.ACCENT_PROFILE.r, UiTokens.ACCENT_PROFILE.g, UiTokens.ACCENT_PROFILE.b, 0.28)
+	chip_style.set_corner_radius_all(14)
+	chip_style.content_margin_left = 12
+	chip_style.content_margin_right = 12
+	chip_style.content_margin_top = 6
+	chip_style.content_margin_bottom = 6
+	chip.add_theme_stylebox_override("panel", chip_style)
+	header.add_child(chip)
+	var chip_label := Label.new()
+	chip_label.text = tr("UI_PROFILE_SEASON_N").format({"n": season.get("number", 1)}).to_upper()
+	chip_label.add_theme_font_size_override("font_size", 16)
+	chip_label.add_theme_color_override("font_color", Color(0.75, 0.72, 1.0, 1))
+	chip.add_child(chip_label)
 
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 12)
+	row.add_theme_constant_override("separation", 14)
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	root.add_child(row)
 
+	var crest_wrap := MarginContainer.new()
+	crest_wrap.add_theme_constant_override("margin_left", 56)
+	crest_wrap.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	row.add_child(crest_wrap)
+
 	var crest := Label.new()
-	crest.text = "🏅"
-	crest.add_theme_font_size_override("font_size", 48)
-	row.add_child(crest)
+	crest.text = "👑"
+	crest.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	crest.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	crest.custom_minimum_size = Vector2(132, 132)
+	crest.add_theme_font_size_override("font_size", 96)
+	crest.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	var crest_font := UiFonts.emoji_font()
+	if crest_font != null:
+		crest.add_theme_font_override("font", crest_font)
+	crest_wrap.add_child(crest)
+
+	## Nudge the stats block 50px to the right.
+	var col_wrap := MarginContainer.new()
+	col_wrap.add_theme_constant_override("margin_left", 200)
+	col_wrap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	col_wrap.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	row.add_child(col_wrap)
 
 	var col := VBoxContainer.new()
 	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	col.add_theme_constant_override("separation", 6)
-	row.add_child(col)
+	col.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	col.add_theme_constant_override("separation", 12)
+	col_wrap.add_child(col)
 
-	var season_label := Label.new()
-	season_label.text = tr("UI_PROFILE_SEASON_N").format({"n": season.get("number", 1)}).to_upper()
-	season_label.add_theme_font_size_override("font_size", 12)
-	season_label.add_theme_color_override("font_color", UiTokens.ACCENT_LEADERBOARD)
-	col.add_child(season_label)
+	## Same value size on every stat line (mock).
+	col.add_child(_season_stat_line(
+		"🏆",
+		_format_int(int(season.get("points", 0))),
+		tr("UI_PROFILE_SEASON_BEST_RANKING")
+	))
+	col.add_child(_season_stat_line(
+		"⭐",
+		_format_int(int(season.get("wins", 0))),
+		tr("UI_PROFILE_SEASON_WINS_THIS")
+	))
+	col.add_child(_season_stat_line(
+		"🎯",
+		"%.0f%%" % float(season.get("win_rate", 0.0)),
+		tr("UI_PROFILE_SEASON_WINRATE")
+	))
 
-	col.add_child(_season_stat_line("🏆", tr("UI_PROFILE_SEASON_BEST_RANK"), "#%s" % _format_int(int(season.get("best_rank", 0)))))
-	col.add_child(_season_stat_line("🥇", tr("UI_PROFILE_SEASON_WINS"), _format_int(int(season.get("wins", 0)))))
-	col.add_child(_season_stat_line("◎", tr("UI_PROFILE_WIN_RATE"), "%.0f%%" % float(season.get("win_rate", 0.0))))
-
-	_nudge_tile_height(root, 5)
 	_animated_nodes.append(panel)
 	return panel
 
 
-func _season_stat_line(icon: String, label: String, value: String) -> HBoxContainer:
+func _season_stat_line(icon: String, value: String, label: String) -> HBoxContainer:
+	## Mock: [icon] [big value] [small label] — values share one size.
 	var line := HBoxContainer.new()
 	line.add_theme_constant_override("separation", 8)
+	line.alignment = BoxContainer.ALIGNMENT_CENTER
+
 	var icon_label := Label.new()
 	icon_label.text = icon
-	icon_label.add_theme_font_size_override("font_size", 12)
+	icon_label.add_theme_font_size_override("font_size", 20)
+	icon_label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	var emoji_font := UiFonts.emoji_font()
+	if emoji_font != null:
+		icon_label.add_theme_font_override("font", emoji_font)
 	line.add_child(icon_label)
+
+	var value_label := Label.new()
+	value_label.text = value
+	value_label.add_theme_font_size_override("font_size", 22)
+	value_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	value_label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	line.add_child(value_label)
+
 	var caption := Label.new()
 	caption.text = label
 	caption.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	caption.add_theme_font_size_override("font_size", 11)
-	caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+	caption.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	caption.add_theme_font_size_override("font_size", 16)
+	caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	line.add_child(caption)
-	var value_label := Label.new()
-	value_label.text = value
-	value_label.add_theme_font_size_override("font_size", 12)
-	value_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-	line.add_child(value_label)
 	return line
 
 
@@ -1210,7 +1399,12 @@ func _nudge_tile_height(root: VBoxContainer, extra_px: float) -> void:
 	root.add_child(slack)
 
 
-func _tile_body(panel: PanelContainer, title_text: String, with_see_all: bool = false) -> VBoxContainer:
+func _tile_body(
+	panel: PanelContainer,
+	title_text: String,
+	with_see_all: bool = false,
+	see_all_callback: Callable = Callable()
+) -> VBoxContainer:
 	var margin := _pad(12, 12)
 	margin.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	margin.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -1236,13 +1430,22 @@ func _tile_body(panel: PanelContainer, title_text: String, with_see_all: bool = 
 	header.add_child(title)
 
 	if with_see_all:
-		var see_all := Label.new()
+		var see_all := Button.new()
 		see_all.text = tr("UI_PROFILE_SEE_ALL").to_upper() + " >"
+		see_all.flat = true
+		see_all.focus_mode = Control.FOCUS_NONE
 		see_all.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-		see_all.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		see_all.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-		see_all.add_theme_font_size_override("font_size", 14)
+		see_all.add_theme_font_size_override("font_size", 17)
 		see_all.add_theme_color_override("font_color", UiTokens.ACCENT_PROFILE)
+		see_all.add_theme_color_override("font_hover_color", UiTokens.ACCENT_PROFILE.lightened(0.15))
+		see_all.add_theme_color_override("font_pressed_color", UiTokens.ACCENT_PROFILE.darkened(0.1))
+		var empty := StyleBoxEmpty.new()
+		see_all.add_theme_stylebox_override("normal", empty)
+		see_all.add_theme_stylebox_override("hover", empty)
+		see_all.add_theme_stylebox_override("pressed", empty)
+		see_all.add_theme_stylebox_override("focus", empty)
+		if see_all_callback.is_valid():
+			see_all.pressed.connect(see_all_callback)
 		header.add_child(see_all)
 	return root
 
@@ -1365,6 +1568,128 @@ func _on_edit_backdrop_gui_input(event: InputEvent) -> void:
 			_close_edit_profile()
 
 
+func _open_achievements_page() -> void:
+	_ensure_achievements_page()
+	_populate_achievements_page()
+	_achievements_page.visible = true
+	_achievements_page.move_to_front()
+	_set_shell_swipe_enabled(false)
+
+
+func _close_achievements_page() -> void:
+	if _achievements_page != null:
+		_achievements_page.visible = false
+	_set_shell_swipe_enabled(true)
+
+
+func _set_shell_swipe_enabled(enabled: bool) -> void:
+	var shell := get_tree().current_scene
+	if shell != null and shell.has_node("%TabSwipeContainer"):
+		shell.get_node("%TabSwipeContainer").set_input_enabled(enabled)
+
+
+func _ensure_achievements_page() -> void:
+	if _achievements_page != null and is_instance_valid(_achievements_page):
+		return
+
+	_achievements_page = Control.new()
+	_achievements_page.name = "AchievementsPage"
+	_achievements_page.visible = false
+	_achievements_page.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_achievements_page.mouse_filter = Control.MOUSE_FILTER_STOP
+	add_child(_achievements_page)
+
+	var bg := ColorRect.new()
+	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	bg.color = UiTokens.page_bg_for_tab(ScenePaths.Tab.PROFILE)
+	bg.mouse_filter = Control.MOUSE_FILTER_STOP
+	_achievements_page.add_child(bg)
+
+	var page_margin := MarginContainer.new()
+	page_margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	page_margin.add_theme_constant_override("margin_left", 18)
+	page_margin.add_theme_constant_override("margin_right", 18)
+	page_margin.add_theme_constant_override("margin_top", 16)
+	page_margin.add_theme_constant_override("margin_bottom", 20)
+	_achievements_page.add_child(page_margin)
+
+	var panel := PanelContainer.new()
+	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	panel.add_theme_stylebox_override("panel", UiStyle.profile_card(UiTokens.ACCENT_PROFILE, true))
+	page_margin.add_child(panel)
+
+	var inner := MarginContainer.new()
+	inner.add_theme_constant_override("margin_left", 14)
+	inner.add_theme_constant_override("margin_right", 14)
+	inner.add_theme_constant_override("margin_top", 14)
+	inner.add_theme_constant_override("margin_bottom", 14)
+	panel.add_child(inner)
+
+	var vbox := VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 12)
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	inner.add_child(vbox)
+
+	var header := HBoxContainer.new()
+	header.add_theme_constant_override("separation", 10)
+	vbox.add_child(header)
+
+	var back := Button.new()
+	back.text = "< " + tr("UI_BACK")
+	back.flat = true
+	back.focus_mode = Control.FOCUS_NONE
+	back.add_theme_font_size_override("font_size", 16)
+	back.add_theme_color_override("font_color", UiTokens.ACCENT_PROFILE)
+	var empty := StyleBoxEmpty.new()
+	back.add_theme_stylebox_override("normal", empty)
+	back.add_theme_stylebox_override("hover", empty)
+	back.add_theme_stylebox_override("pressed", empty)
+	back.pressed.connect(_close_achievements_page)
+	PressScaleUtil.wire(back, self)
+	header.add_child(back)
+
+	var page_title := Label.new()
+	page_title.text = tr("UI_PROFILE_BADGES_ALL").to_upper()
+	page_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	page_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	page_title.add_theme_font_size_override("font_size", 20)
+	page_title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	header.add_child(page_title)
+
+	var spacer := Control.new()
+	spacer.custom_minimum_size.x = 72
+	header.add_child(spacer)
+
+	var scroll_box := ScrollContainer.new()
+	scroll_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll_box.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll_box.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	vbox.add_child(scroll_box)
+
+	_achievements_grid = GridContainer.new()
+	_achievements_grid.columns = 3
+	_achievements_grid.add_theme_constant_override("h_separation", 10)
+	_achievements_grid.add_theme_constant_override("v_separation", 16)
+	_achievements_grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll_box.add_child(_achievements_grid)
+
+
+func _populate_achievements_page() -> void:
+	if _achievements_grid == null:
+		return
+	while _achievements_grid.get_child_count() > 0:
+		var child := _achievements_grid.get_child(0)
+		_achievements_grid.remove_child(child)
+		child.free()
+	var achievements: Array = _profile_data.get("achievements", [])
+	for row in achievements:
+		if typeof(row) != TYPE_DICTIONARY:
+			continue
+		_achievements_grid.add_child(_badge_cell(row))
+
+
 func _on_badge_pressed(achievement: Dictionary) -> void:
 	badge_detail_icon.text = str(achievement.get("icon", "?"))
 	badge_detail_title.text = tr(str(achievement.get("title_key", "")))
@@ -1374,6 +1699,9 @@ func _on_badge_pressed(achievement: Dictionary) -> void:
 	badge_backdrop.visible = true
 	badge_detail_panel.visible = true
 	badge_detail_panel.move_to_front()
+	if _achievements_page != null and _achievements_page.visible:
+		badge_backdrop.move_to_front()
+		badge_detail_panel.move_to_front()
 
 
 func _close_badge_detail() -> void:
