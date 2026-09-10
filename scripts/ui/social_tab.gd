@@ -105,7 +105,6 @@ func _rebuild_content() -> void:
 		content.add_child(_friends_section())
 		content.add_child(_friend_requests_section())
 		content.add_child(_player_search_section())
-		content.add_child(_live_search_section())
 		content.add_child(_create_section())
 		content.add_child(_join_section())
 	else:
@@ -132,7 +131,7 @@ func _rebuild_content() -> void:
 func _friends_section() -> PanelContainer:
 	## Same title size / left inset as profile tiles; Voir tout on the right.
 	var panel := PanelContainer.new()
-	panel.custom_minimum_size.y = 236
+	panel.custom_minimum_size.y = 200
 	panel.add_theme_stylebox_override("panel", UiStyle.social_surface(false, 0))
 
 	var pad := MarginContainer.new()
@@ -193,7 +192,7 @@ func _friends_section() -> PanelContainer:
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
 	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	scroll.custom_minimum_size.y = 156
+	scroll.custom_minimum_size.y = 128
 	vbox.add_child(scroll)
 
 	var row := HBoxContainer.new()
@@ -216,8 +215,8 @@ func _friend_requests_section() -> PanelContainer:
 	var pad := MarginContainer.new()
 	pad.add_theme_constant_override("margin_left", 12)
 	pad.add_theme_constant_override("margin_right", 12)
-	pad.add_theme_constant_override("margin_top", 12)
-	pad.add_theme_constant_override("margin_bottom", 12)
+	pad.add_theme_constant_override("margin_top", 11)
+	pad.add_theme_constant_override("margin_bottom", 11)
 	panel.add_child(pad)
 
 	var vbox := VBoxContainer.new()
@@ -676,12 +675,12 @@ func _populate_friend_requests_page() -> void:
 
 func _friend_chip(friend: Dictionary) -> Control:
 	## Mock: accent ring avatar + green/grey presence + name + Lv.
-	const AVATAR := 72.0
+	const AVATAR := 64.0
 	var wrap := Control.new()
-	wrap.custom_minimum_size = Vector2(88, 136)
+	wrap.custom_minimum_size = Vector2(84, 118)
 
 	var col := VBoxContainer.new()
-	col.add_theme_constant_override("separation", 6)
+	col.add_theme_constant_override("separation", 4)
 	col.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	col.alignment = BoxContainer.ALIGNMENT_CENTER
 	col.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -710,7 +709,7 @@ func _friend_chip(friend: Dictionary) -> Control:
 	initial.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	initial.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	initial.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	initial.add_theme_font_size_override("font_size", 26)
+	initial.add_theme_font_size_override("font_size", 24)
 	initial.add_theme_color_override("font_color", Color.WHITE)
 	avatar.add_child(initial)
 	avatar_wrap.add_child(avatar)
@@ -720,7 +719,7 @@ func _friend_chip(friend: Dictionary) -> Control:
 	var dot_color := Color(0.55, 0.56, 0.60, 1)
 	if presence == "online":
 		dot_color = Color(0.22, 0.86, 0.42, 1)
-	var dot_size := 14.0
+	var dot_size := 12.0
 	var dot := Panel.new()
 	dot.custom_minimum_size = Vector2(dot_size, dot_size)
 	dot.position = Vector2(AVATAR - dot_size - 1.0, AVATAR - dot_size - 1.0)
@@ -783,11 +782,11 @@ func _ensure_friend_detail_overlay() -> void:
 	_friend_detail_panel = PanelContainer.new()
 	_friend_detail_panel.visible = false
 	_friend_detail_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
-	## Phone-card proportions from the friend-detail mock.
-	_friend_detail_panel.offset_left = -188.0
-	_friend_detail_panel.offset_top = -290.0
-	_friend_detail_panel.offset_right = 188.0
-	_friend_detail_panel.offset_bottom = 290.0
+	## Fixed width; height is fitted to content in `_fit_friend_detail_panel`.
+	_friend_detail_panel.offset_left = -196.0
+	_friend_detail_panel.offset_top = 0.0
+	_friend_detail_panel.offset_right = 196.0
+	_friend_detail_panel.offset_bottom = 0.0
 	_friend_detail_panel.add_theme_stylebox_override("panel", UiStyle.social_surface(true, 0))
 	add_child(_friend_detail_panel)
 
@@ -797,13 +796,11 @@ func _ensure_friend_detail_overlay() -> void:
 	pad.add_theme_constant_override("margin_top", 16)
 	pad.add_theme_constant_override("margin_bottom", 14)
 	pad.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	pad.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_friend_detail_panel.add_child(pad)
 
 	_friend_detail_body = VBoxContainer.new()
 	_friend_detail_body.add_theme_constant_override("separation", 14)
 	_friend_detail_body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	_friend_detail_body.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	pad.add_child(_friend_detail_body)
 
 
@@ -816,6 +813,21 @@ func _open_friend_detail(friend: Dictionary) -> void:
 	_friend_backdrop.move_to_front()
 	_friend_detail_panel.move_to_front()
 	_set_shell_swipe_enabled(false)
+	call_deferred("_fit_friend_detail_panel")
+
+
+func _fit_friend_detail_panel() -> void:
+	## Shrink sheet height to content so no empty band sits above the CTA.
+	if _friend_detail_panel == null or _friend_detail_body == null:
+		return
+	var pad_h := 30.0 ## top 16 + bottom 14
+	var content_h := _friend_detail_body.get_combined_minimum_size().y
+	if content_h < 1.0:
+		content_h = _friend_detail_body.size.y
+	var h := maxf(content_h + pad_h, 120.0)
+	_friend_detail_panel.offset_top = -h * 0.5
+	_friend_detail_panel.offset_bottom = h * 0.5
+	_friend_detail_panel.reset_size()
 
 
 func _close_friend_detail() -> void:
@@ -1004,7 +1016,7 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 	_friend_detail_body.add_child(header)
 
 	var avatar_wrap := Control.new()
-	avatar_wrap.custom_minimum_size = Vector2(72, 72)
+	avatar_wrap.custom_minimum_size = Vector2(80, 80)
 	avatar_wrap.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	header.add_child(avatar_wrap)
 
@@ -1013,7 +1025,7 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 	avatar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var disc := StyleBoxFlat.new()
 	disc.bg_color = Color(accent.r, accent.g, accent.b, 0.55)
-	disc.set_corner_radius_all(36)
+	disc.set_corner_radius_all(40)
 	disc.set_border_width_all(3)
 	disc.border_color = Color(1, 1, 1, 0.92)
 	disc.shadow_color = Color(1, 1, 1, 0.18)
@@ -1027,7 +1039,7 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 	initial.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	initial.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	initial.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	initial.add_theme_font_size_override("font_size", 30)
+	initial.add_theme_font_size_override("font_size", 34)
 	initial.add_theme_color_override("font_color", Color.WHITE)
 	avatar_wrap.add_child(initial)
 
@@ -1036,36 +1048,35 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 	if presence == "online":
 		dot_color = Color(0.22, 0.86, 0.42, 1)
 	var dot := Panel.new()
-	dot.custom_minimum_size = Vector2(14, 14)
-	dot.position = Vector2(56, 56)
+	dot.custom_minimum_size = Vector2(16, 16)
+	dot.position = Vector2(62, 62)
 	dot.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var dot_style := StyleBoxFlat.new()
 	dot_style.bg_color = dot_color
-	dot_style.set_corner_radius_all(7)
+	dot_style.set_corner_radius_all(8)
 	dot_style.set_border_width_all(2)
 	dot_style.border_color = UiTokens.SOCIAL_CARD_BG_RAISED
 	dot.add_theme_stylebox_override("panel", dot_style)
 	avatar_wrap.add_child(dot)
 
 	var identity := VBoxContainer.new()
-	identity.add_theme_constant_override("separation", 2)
+	identity.add_theme_constant_override("separation", 4)
 	identity.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	identity.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	header.add_child(identity)
 
 	var name_label := Label.new()
 	name_label.text = str(friend.get("name", ""))
-	name_label.add_theme_font_size_override("font_size", 28)
+	name_label.add_theme_font_size_override("font_size", 30)
 	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	identity.add_child(name_label)
 
 	var meta := Label.new()
-	meta.text = "%s %d • %s" % [
+	meta.text = "%s %d" % [
 		tr("UI_PROFILE_LEVEL_CAPTION"),
 		int(friend.get("level", 1)),
-		_presence_label(presence),
 	]
-	meta.add_theme_font_size_override("font_size", 14)
+	meta.add_theme_font_size_override("font_size", 16)
 	meta.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	identity.add_child(meta)
 
@@ -1118,19 +1129,13 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 		tr("UI_SOCIAL_FRIEND_LAST_GAME").to_upper(),
 		tr("UI_PROFILE_WIN") if last_won else tr("UI_PROFILE_LOSS"),
 		str(friend.get("last_game_subject", "")),
-		UiTokens.FEEDBACK_CORRECT if last_won else UiTokens.FEEDBACK_WRONG,
-		true
+		UiTokens.FEEDBACK_CORRECT if last_won else UiTokens.FEEDBACK_WRONG
 	))
-
-	var spacer := Control.new()
-	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	spacer.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_friend_detail_body.add_child(spacer)
 
 	## Challenge CTA.
 	var challenge := Button.new()
 	challenge.focus_mode = Control.FOCUS_NONE
-	challenge.custom_minimum_size.y = 52
+	challenge.custom_minimum_size.y = 56
 	challenge.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var challenge_style := StyleBoxFlat.new()
 	challenge_style.bg_color = UiTokens.ACCENT_SOCIAL
@@ -1162,7 +1167,7 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 	var swords := Label.new()
 	swords.text = "⚔"
 	swords.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	swords.add_theme_font_size_override("font_size", 20)
+	swords.add_theme_font_size_override("font_size", 22)
 	swords.add_theme_color_override("font_color", Color(0.12, 0.06, 0.1, 1))
 	var emoji_font := UiFonts.emoji_font()
 	if emoji_font != null:
@@ -1173,14 +1178,14 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 	challenge_label.text = tr("UI_SOCIAL_FRIEND_CHALLENGE")
 	challenge_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	challenge_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	challenge_label.add_theme_font_size_override("font_size", 18)
+	challenge_label.add_theme_font_size_override("font_size", 20)
 	challenge_label.add_theme_color_override("font_color", Color(0.12, 0.06, 0.1, 1))
 	challenge_row.add_child(challenge_label)
 
 	var challenge_chevron := Label.new()
 	challenge_chevron.text = ">"
 	challenge_chevron.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	challenge_chevron.add_theme_font_size_override("font_size", 18)
+	challenge_chevron.add_theme_font_size_override("font_size", 20)
 	challenge_chevron.add_theme_color_override("font_color", Color(0.12, 0.06, 0.1, 0.7))
 	challenge_row.add_child(challenge_chevron)
 
@@ -1196,7 +1201,7 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 	close_btn.flat = true
 	close_btn.focus_mode = Control.FOCUS_NONE
 	close_btn.alignment = HORIZONTAL_ALIGNMENT_CENTER
-	close_btn.add_theme_font_size_override("font_size", 16)
+	close_btn.add_theme_font_size_override("font_size", 18)
 	close_btn.add_theme_color_override("font_color", UiTokens.ACCENT_SOCIAL)
 	var empty := StyleBoxEmpty.new()
 	close_btn.add_theme_stylebox_override("normal", empty)
@@ -1204,44 +1209,53 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 	close_btn.add_theme_stylebox_override("pressed", empty)
 	close_btn.pressed.connect(_close_friend_detail)
 	_friend_detail_body.add_child(close_btn)
+	call_deferred("_fit_friend_detail_panel")
 
 
 func _friend_best_subject_card(friend: Dictionary, cat_accent: Color) -> Control:
 	var card := PanelContainer.new()
 	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	card.custom_minimum_size.y = 100
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color(1, 1, 1, 0.04)
 	style.set_corner_radius_all(14)
 	style.set_border_width_all(1)
 	style.border_color = Color(1, 1, 1, 0.10)
-	style.content_margin_left = 12
-	style.content_margin_right = 10
-	style.content_margin_top = 10
-	style.content_margin_bottom = 10
+	style.content_margin_left = 14
+	style.content_margin_right = 14
+	style.content_margin_top = 14
+	style.content_margin_bottom = 14
 	card.add_theme_stylebox_override("panel", style)
 
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 10)
+	row.add_theme_constant_override("separation", 14)
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	card.add_child(row)
 
-	row.add_child(_friend_category_icon(str(friend.get("best_subject_icon", "🧠")), cat_accent, 40))
+	var cat_icon := _friend_category_icon(str(friend.get("best_subject_icon", "🧠")), cat_accent, 68)
+	cat_icon.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	row.add_child(cat_icon)
 
 	var texts := VBoxContainer.new()
-	texts.add_theme_constant_override("separation", 1)
+	texts.add_theme_constant_override("separation", 4)
 	texts.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	texts.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	texts.alignment = BoxContainer.ALIGNMENT_CENTER
 	row.add_child(texts)
 
 	var caption := Label.new()
-	caption.text = tr("UI_PROFILE_BEST_SUBJECT").to_upper()
-	caption.add_theme_font_size_override("font_size", 11)
+	caption.text = tr("UI_SOCIAL_BEST_CATEGORY").to_upper()
+	caption.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	caption.add_theme_font_size_override("font_size", 17)
 	caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	texts.add_child(caption)
 
 	var subject := Label.new()
 	subject.text = str(friend.get("best_subject", "—"))
 	subject.clip_text = true
-	subject.add_theme_font_size_override("font_size", 16)
+	subject.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	subject.add_theme_font_size_override("font_size", 22)
 	subject.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	texts.add_child(subject)
 
@@ -1250,133 +1264,152 @@ func _friend_best_subject_card(friend: Dictionary, cat_accent: Color) -> Control
 	var badge_style := StyleBoxFlat.new()
 	badge_style.bg_color = Color(UiTokens.ACCENT_SOCIAL.r, UiTokens.ACCENT_SOCIAL.g, UiTokens.ACCENT_SOCIAL.b, 0.22)
 	badge_style.set_corner_radius_all(12)
-	badge_style.content_margin_left = 10
-	badge_style.content_margin_right = 10
-	badge_style.content_margin_top = 4
-	badge_style.content_margin_bottom = 4
+	badge_style.content_margin_left = 12
+	badge_style.content_margin_right = 12
+	badge_style.content_margin_top = 8
+	badge_style.content_margin_bottom = 8
 	badge.add_theme_stylebox_override("panel", badge_style)
 	var badge_label := Label.new()
 	badge_label.text = "%s %d" % [
 		tr("UI_PROFILE_LEVEL_CAPTION"),
 		int(friend.get("best_subject_level", 1)),
 	]
-	badge_label.add_theme_font_size_override("font_size", 12)
+	badge_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	badge_label.add_theme_font_size_override("font_size", 16)
 	badge_label.add_theme_color_override("font_color", UiTokens.ACCENT_SOCIAL)
 	badge.add_child(badge_label)
 	row.add_child(badge)
-
-	var chevron := Label.new()
-	chevron.text = ">"
-	chevron.add_theme_font_size_override("font_size", 16)
-	chevron.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
-	row.add_child(chevron)
 	return card
 
 
 func _friend_stat_tile(
 	icon_text: String,
-	icon_color: Color,
+	_icon_color: Color,
 	caption: String,
 	value: String,
 	subtitle: String,
 	value_color: Color,
 	with_chevron: bool = false
 ) -> Control:
+	const ICON_SIZE := 48.0
+	const CAPTION_H := 48.0
 	var card := PanelContainer.new()
 	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	card.custom_minimum_size.y = 118
+	card.custom_minimum_size.y = 172
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color(1, 1, 1, 0.04)
 	style.set_corner_radius_all(14)
 	style.set_border_width_all(1)
 	style.border_color = Color(1, 1, 1, 0.10)
-	style.content_margin_left = 10
-	style.content_margin_right = 8
-	style.content_margin_top = 10
+	style.content_margin_left = 4
+	style.content_margin_right = 4
+	style.content_margin_top = 8
 	style.content_margin_bottom = 10
 	card.add_theme_stylebox_override("panel", style)
 
 	var col := VBoxContainer.new()
-	col.add_theme_constant_override("separation", 6)
+	col.add_theme_constant_override("separation", 2)
+	col.alignment = BoxContainer.ALIGNMENT_BEGIN
+	col.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	card.add_child(col)
 
-	var top := HBoxContainer.new()
-	top.add_theme_constant_override("separation", 4)
-	col.add_child(top)
+	## Fixed-height icon band so the 3 sibling tiles share the same icon baseline.
+	var icon_row := HBoxContainer.new()
+	icon_row.custom_minimum_size.y = ICON_SIZE
+	icon_row.alignment = BoxContainer.ALIGNMENT_CENTER
+	icon_row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	col.add_child(icon_row)
+
+	if with_chevron:
+		var lead := Control.new()
+		lead.custom_minimum_size.x = 16
+		lead.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		icon_row.add_child(lead)
 
 	var icon_slot := Control.new()
-	icon_slot.custom_minimum_size = Vector2(28, 28)
-	top.add_child(icon_slot)
-	var icon_bg := Panel.new()
-	icon_bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	icon_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var icon_style := StyleBoxFlat.new()
-	icon_style.bg_color = Color(icon_color.r, icon_color.g, icon_color.b, 0.22)
-	icon_style.set_corner_radius_all(14)
-	icon_bg.add_theme_stylebox_override("panel", icon_style)
-	icon_slot.add_child(icon_bg)
+	icon_slot.custom_minimum_size = Vector2(ICON_SIZE, ICON_SIZE)
+	icon_slot.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	icon_slot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	icon_row.add_child(icon_slot)
 	var icon := Label.new()
 	icon.text = icon_text
 	icon.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	icon.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	icon.add_theme_font_size_override("font_size", 14)
+	icon.add_theme_font_size_override("font_size", 28)
 	var emoji_font := UiFonts.emoji_font()
 	if emoji_font != null:
 		icon.add_theme_font_override("font", emoji_font)
 	icon_slot.add_child(icon)
 
 	if with_chevron:
-		var gap := Control.new()
-		gap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		top.add_child(gap)
+		var trail := HBoxContainer.new()
+		trail.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		trail.alignment = BoxContainer.ALIGNMENT_END
+		icon_row.add_child(trail)
 		var chevron := Label.new()
 		chevron.text = ">"
-		chevron.add_theme_font_size_override("font_size", 14)
+		chevron.add_theme_font_size_override("font_size", 16)
 		chevron.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
-		top.add_child(chevron)
+		trail.add_child(chevron)
+
+	## Fixed caption band tall enough for 2 wrapped lines on all 3 tiles.
+	var caption_slot := Control.new()
+	caption_slot.custom_minimum_size.y = CAPTION_H
+	caption_slot.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	col.add_child(caption_slot)
 
 	var caption_label := Label.new()
 	caption_label.text = caption
+	caption_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	caption_label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	caption_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	caption_label.add_theme_font_size_override("font_size", 10)
+	caption_label.max_lines_visible = 2
+	caption_label.clip_text = false
+	caption_label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	caption_label.add_theme_font_size_override("font_size", 15)
 	caption_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
-	col.add_child(caption_label)
+	caption_slot.add_child(caption_label)
+
+	## Fixed value band so the 3 results share one baseline.
+	var value_slot := Control.new()
+	value_slot.custom_minimum_size.y = 34
+	value_slot.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	col.add_child(value_slot)
 
 	var value_label := Label.new()
 	value_label.text = value
-	value_label.add_theme_font_size_override("font_size", 22)
+	value_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	value_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	value_label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	value_label.add_theme_font_size_override("font_size", 28)
 	value_label.add_theme_color_override("font_color", value_color)
-	col.add_child(value_label)
+	value_slot.add_child(value_label)
 
-	if not subtitle.is_empty():
-		var sub := Label.new()
-		sub.text = subtitle
-		sub.clip_text = true
-		sub.add_theme_font_size_override("font_size", 10)
-		sub.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
-		col.add_child(sub)
+	## Always reserve subtitle height so tiles without one stay aligned.
+	var sub_slot := Control.new()
+	sub_slot.custom_minimum_size.y = 18
+	sub_slot.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	col.add_child(sub_slot)
+
+	var sub := Label.new()
+	sub.text = subtitle
+	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	sub.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	sub.clip_text = true
+	sub.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	sub.add_theme_font_size_override("font_size", 14)
+	sub.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+	sub_slot.add_child(sub)
 	return card
 
 
-func _friend_category_icon(icon_text: String, accent: Color, size_px: float = 36.0) -> Control:
+func _friend_category_icon(icon_text: String, _accent: Color, size_px: float = 36.0) -> Control:
 	var slot := Control.new()
 	slot.custom_minimum_size = Vector2(size_px, size_px)
 	slot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
-
-	var bg := Panel.new()
-	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var icon_style := StyleBoxFlat.new()
-	icon_style.bg_color = Color(accent.r, accent.g, accent.b, 0.28)
-	icon_style.set_corner_radius_all(int(size_px * 0.5))
-	icon_style.set_content_margin_all(0)
-	icon_style.shadow_color = Color(accent.r, accent.g, accent.b, 0.12)
-	icon_style.shadow_size = 2
-	bg.add_theme_stylebox_override("panel", icon_style)
-	slot.add_child(bg)
 
 	var icon := Label.new()
 	icon.text = icon_text
@@ -1384,7 +1417,7 @@ func _friend_category_icon(icon_text: String, accent: Color, size_px: float = 36
 	icon.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	icon.add_theme_font_size_override("font_size", int(size_px * 0.55))
+	icon.add_theme_font_size_override("font_size", int(size_px * 0.72))
 	var emoji_font := UiFonts.emoji_font()
 	if emoji_font != null:
 		icon.add_theme_font_override("font", emoji_font)
@@ -1470,15 +1503,24 @@ func _demo_friend(
 
 
 func _create_section() -> PanelContainer:
+	## Category picker: icon disc + name under (not chip pills).
 	var panel := PanelContainer.new()
-	panel.add_theme_stylebox_override("panel", UiStyle.social_surface(false, 10))
+	panel.add_theme_stylebox_override("panel", UiStyle.social_surface(false, 0))
+
+	var pad := MarginContainer.new()
+	pad.add_theme_constant_override("margin_left", 12)
+	pad.add_theme_constant_override("margin_right", 12)
+	pad.add_theme_constant_override("margin_top", 12)
+	pad.add_theme_constant_override("margin_bottom", 12)
+	panel.add_child(pad)
 
 	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 10)
-	panel.add_child(vbox)
+	vbox.add_theme_constant_override("separation", 12)
+	pad.add_child(vbox)
 
 	var caption := Label.new()
 	caption.text = tr("UI_SOCIAL_CREATE_CHALLENGE").to_upper()
+	caption.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	caption.add_theme_font_size_override("font_size", 18)
 	caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	vbox.add_child(caption)
@@ -1487,34 +1529,111 @@ func _create_section() -> PanelContainer:
 	category_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	category_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
 	category_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	category_scroll.custom_minimum_size.y = 48
+	category_scroll.custom_minimum_size.y = 164
 	vbox.add_child(category_scroll)
 
 	var category_row := HBoxContainer.new()
-	category_row.add_theme_constant_override("separation", 8)
+	category_row.add_theme_constant_override("separation", 22)
+	category_row.alignment = BoxContainer.ALIGNMENT_BEGIN
 	category_scroll.add_child(category_row)
 	for category in _categories:
-		var category_id := str(category.get("id", ""))
-		var button := Button.new()
-		button.text = str(category.get("name", category_id))
-		var accent := UiTokens.accent_for_category(category_id)
-		var selected := category_id == _selected_category_id
-		button.add_theme_stylebox_override(
-			"normal",
-			UiStyle.social_chip(accent, true) if selected else UiStyle.social_chip(accent, false)
-		)
-		button.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-		button.add_theme_color_override("font_hover_color", UiTokens.PROFILE_TEXT)
-		button.add_theme_color_override("font_pressed_color", UiTokens.PROFILE_TEXT)
-		button.pressed.connect(_on_category_pressed.bind(category_id))
-		category_row.add_child(button)
+		if typeof(category) != TYPE_DICTIONARY:
+			continue
+		category_row.add_child(_challenge_category_chip(category))
 
 	var create_button := Button.new()
 	create_button.text = tr("UI_SOCIAL_CREATE_BUTTON")
+	create_button.focus_mode = Control.FOCUS_NONE
 	create_button.pressed.connect(_on_create_pressed)
+	PressScaleUtil.wire(create_button, self)
 	vbox.add_child(create_button)
 
 	return panel
+
+
+func _challenge_category_chip(category: Dictionary) -> Control:
+	const ICON := 72.0
+	const CHIP_W := 118.0
+	var category_id := str(category.get("id", ""))
+	var accent := UiTokens.accent_for_category(category_id)
+	var selected := category_id == _selected_category_id
+
+	var wrap := Control.new()
+	## Fixed width so neighbour labels never collide; names wrap inside.
+	wrap.custom_minimum_size = Vector2(CHIP_W, 152)
+	wrap.clip_contents = true
+
+	var col := VBoxContainer.new()
+	col.add_theme_constant_override("separation", 10)
+	col.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	col.alignment = BoxContainer.ALIGNMENT_CENTER
+	col.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	wrap.add_child(col)
+
+	var icon_wrap := Control.new()
+	icon_wrap.custom_minimum_size = Vector2(ICON, ICON)
+	icon_wrap.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	icon_wrap.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	col.add_child(icon_wrap)
+
+	var disc := Panel.new()
+	disc.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	disc.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var disc_style := StyleBoxFlat.new()
+	disc_style.bg_color = Color(accent.r, accent.g, accent.b, 0.55 if selected else 0.28)
+	disc_style.set_corner_radius_all(int(ICON * 0.5))
+	disc_style.set_border_width_all(3 if selected else 2)
+	disc_style.border_color = accent if selected else Color(accent.r, accent.g, accent.b, 0.55)
+	if selected:
+		disc_style.shadow_color = Color(accent.r, accent.g, accent.b, 0.35)
+		disc_style.shadow_size = 8
+	disc.add_theme_stylebox_override("panel", disc_style)
+	icon_wrap.add_child(disc)
+
+	var icon := Label.new()
+	icon.text = ProfileSnapshot._category_icon(category_id)
+	icon.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	icon.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	icon.add_theme_font_size_override("font_size", 34)
+	var emoji_font := UiFonts.emoji_font()
+	if emoji_font != null:
+		icon.add_theme_font_override("font", emoji_font)
+	icon_wrap.add_child(icon)
+
+	var name_label := Label.new()
+	name_label.text = str(category.get("name", category_id))
+	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	name_label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	## Constrain width so long names wrap instead of stretching the chip.
+	name_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	name_label.max_lines_visible = 2
+	name_label.clip_text = false
+	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	name_label.custom_minimum_size = Vector2(CHIP_W, 44)
+	name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	name_label.add_theme_font_size_override("font_size", 17)
+	name_label.add_theme_color_override(
+		"font_color",
+		UiTokens.PROFILE_TEXT if selected else UiTokens.PROFILE_TEXT_MUTED
+	)
+	col.add_child(name_label)
+
+	var hit := Button.new()
+	hit.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	hit.flat = true
+	hit.focus_mode = Control.FOCUS_NONE
+	hit.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	var empty := StyleBoxEmpty.new()
+	hit.add_theme_stylebox_override("normal", empty)
+	hit.add_theme_stylebox_override("hover", empty)
+	hit.add_theme_stylebox_override("pressed", empty)
+	hit.add_theme_stylebox_override("focus", empty)
+	hit.pressed.connect(_on_category_pressed.bind(category_id))
+	PressScaleUtil.wire(hit, self)
+	wrap.add_child(hit)
+	return wrap
 
 
 func _live_search_section() -> PanelContainer:

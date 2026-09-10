@@ -1,0 +1,23 @@
+---
+description: Player/opponent pseudos are always 18px unless the user changes it.
+globs: scripts/ui/**/*.gd,scripts/config/ui_tokens.gd
+alwaysApply: true
+---
+
+# Pseudo font size is locked at 18px
+
+Player names, opponent names, and friend display names (**pseudos**) use **`UiTokens.PSEUDO_FONT_SIZE` (18)** everywhere in the app.
+
+## Do
+
+- Use `UiTokens.PSEUDO_FONT_SIZE` for any label that shows a player/opponent/friend pseudo
+- Keep history, friends, leaderboard rows, and similar list tiles on 18
+
+## Don’t
+
+- Hardcode another size for a pseudo without an explicit user ask
+- Shrink or grow pseudos to “fix” layout — prefer clipping / internal reflow (see `text-overlap-sizing.mdc`)
+
+## Exception
+
+- Profile **hero** display name may stay larger until the user asks to change it

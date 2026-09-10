@@ -193,6 +193,7 @@ UI_PROFILE_CATEGORIES_MASTERED,Mastered categories,Catégories maîtrisées
 UI_PROFILE_CATEGORIES_ALL,All categories,Toutes les catégories
 UI_PROFILE_BEST_SUBJECT,Best subject,Meilleur sujet
 UI_PROFILE_BEST_SUBJECT_ACC,{percent}% correct answers,{percent}% de bonnes réponses
+UI_SOCIAL_BEST_CATEGORY,Best category,Meilleure catégorie
 UI_PROFILE_WIN_SPLIT,Victory breakdown,Répartition des victoires
 UI_PROFILE_WINS_COUNT,{count} wins,{count} victoires
 UI_PROFILE_WIN,Win,Victoire
