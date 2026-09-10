@@ -77,6 +77,15 @@ UI_SOCIAL_FRIEND_ACCURACY,Best accuracy,Meilleure précision
 UI_SOCIAL_FRIEND_LAST_GAME,Last game,Dernière partie
 UI_SOCIAL_FRIEND_CHALLENGE,Challenge,Proposer un défi
 UI_SOCIAL_FRIEND_CHALLENGE_SENT,Challenge sent to {name}.,Défi proposé à {name}.
+UI_SOCIAL_FRIEND_REQUESTS,Friend requests,Demandes d'amis
+UI_SOCIAL_FRIEND_REQUESTS_EMPTY,No pending friend requests.,Aucune demande d'ami en attente.
+UI_SOCIAL_FRIEND_REQUEST_ACCEPTED,Friend request from {name} accepted.,Demande d'ami de {name} acceptée.
+UI_SOCIAL_FRIEND_REQUEST_DECLINED,Friend request from {name} declined.,Demande d'ami de {name} refusée.
+UI_SOCIAL_SEARCH_PLAYER,Search for a player,Rechercher un joueur
+UI_SOCIAL_SEARCH_PLACEHOLDER,Username...,Nom d'utilisateur...
+UI_SOCIAL_ADD_FRIEND,Add a friend,Ajouter un ami
+UI_SOCIAL_ADD_FRIEND_SENT,Friend request sent to {name}.,Demande d'ami envoyée à {name}.
+UI_SOCIAL_ADD_FRIEND_EMPTY,Enter a username first.,Entre d'abord un nom d'utilisateur.
 UI_SOCIAL_CREATE_CHALLENGE,Create a challenge,Créer un défi
 UI_SOCIAL_CREATE_BUTTON,Create,Créer
 UI_SOCIAL_JOIN_CHALLENGE,Join a challenge,Rejoindre un défi
