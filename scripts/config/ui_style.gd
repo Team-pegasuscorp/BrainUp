@@ -174,6 +174,57 @@ static func profile_card(accent: Color = Color(0, 0, 0, 0), raised: bool = false
 	return style
 
 
+static func profile_surface(accent: Color = Color(0, 0, 0, 0), raised: bool = false, pad: int = 16) -> StyleBoxFlat:
+	## Profile navy tile with built-in padding (for Home / Social / Leaderboard).
+	var style := profile_card(accent, raised)
+	style.set_content_margin_all(pad)
+	return style
+
+
+static func social_surface(raised: bool = false, pad: int = 10) -> StyleBoxFlat:
+	## Dark magenta tiles tuned to Social's pastel page wash.
+	var style := profile_card(UiTokens.ACCENT_SOCIAL, raised)
+	style.bg_color = UiTokens.SOCIAL_CARD_BG_RAISED if raised else UiTokens.SOCIAL_CARD_BG
+	style.border_color = UiTokens.SOCIAL_CARD_BORDER
+	style.shadow_color = Color(UiTokens.ACCENT_SOCIAL.r, UiTokens.ACCENT_SOCIAL.g, UiTokens.ACCENT_SOCIAL.b, 0.20)
+	style.shadow_size = 12 if raised else 9
+	style.set_content_margin_all(pad)
+	return style
+
+
+static func social_chip(accent: Color, selected: bool = false) -> StyleBoxFlat:
+	## Category chips on Social dark-rose tiles.
+	var style := profile_chip(accent, selected)
+	if not selected:
+		style.bg_color = UiTokens.SOCIAL_CARD_BG_RAISED
+		style.border_color = UiTokens.SOCIAL_CARD_BORDER
+	return style
+
+
+static func profile_chip(accent: Color, selected: bool = false) -> StyleBoxFlat:
+	## Filter / category chip on navy surfaces.
+	var style := StyleBoxFlat.new()
+	if selected:
+		style.bg_color = Color(accent.r, accent.g, accent.b, 0.22)
+		style.set_border_width_all(2)
+		style.border_color = Color(accent.r, accent.g, accent.b, 0.55)
+		style.shadow_color = Color(accent.r, accent.g, accent.b, 0.16)
+		style.shadow_size = 8
+	else:
+		style.bg_color = UiTokens.PROFILE_CARD_BG
+		style.set_border_width_all(1)
+		style.border_color = UiTokens.PROFILE_CARD_BORDER
+		style.shadow_color = Color(0, 0, 0, 0.22)
+		style.shadow_size = 4
+	style.set_corner_radius_all(14)
+	style.content_margin_left = 12
+	style.content_margin_top = 6
+	style.content_margin_right = 12
+	style.content_margin_bottom = 6
+	style.shadow_offset = Vector2(0, 2)
+	return style
+
+
 static func dash_tile(accent: Color = Color(0, 0, 0, 0), raised: bool = false) -> StyleBoxFlat:
 	## Compact mosaic tile: raised navy fill + accent rim for peripheral coding.
 	var style := StyleBoxFlat.new()

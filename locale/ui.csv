@@ -68,6 +68,15 @@ UI_HOME_LAST_MATCH,Last match,Dernière partie
 UI_HOME_LAST_MATCH_LINE,{category} · {score} pts · {result} · {time},{category} · {score} pts · {result} · {time}
 UI_HOME_NO_LAST_MATCH,No matches yet. Start with the Quiz button.,Pas encore de partie. Lance-toi avec le bouton Quiz.
 UI_SOCIAL_CHALLENGE_HINT,Ready for a challenge,Prêt pour un défi
+UI_SOCIAL_FRIENDS,Friends,Amis
+UI_SOCIAL_FRIENDS_EMPTY,No friends yet. Add players as you meet them.,Aucun ami pour l'instant. Ajoute des joueurs au fur et à mesure.
+UI_SOCIAL_FRIEND_ONLINE,Online,En ligne
+UI_SOCIAL_FRIEND_AWAY,Away,Absent
+UI_SOCIAL_FRIEND_OFFLINE,Offline,Hors ligne
+UI_SOCIAL_FRIEND_ACCURACY,Best accuracy,Meilleure précision
+UI_SOCIAL_FRIEND_LAST_GAME,Last game,Dernière partie
+UI_SOCIAL_FRIEND_CHALLENGE,Challenge,Proposer un défi
+UI_SOCIAL_FRIEND_CHALLENGE_SENT,Challenge sent to {name}.,Défi proposé à {name}.
 UI_SOCIAL_CREATE_CHALLENGE,Create a challenge,Créer un défi
 UI_SOCIAL_CREATE_BUTTON,Create,Créer
 UI_SOCIAL_JOIN_CHALLENGE,Join a challenge,Rejoindre un défi
@@ -172,6 +181,7 @@ UI_PROFILE_STAT_STREAK,Max streak,Série max
 UI_PROFILE_STAT_RANK,Ranking,Classement
 UI_PROFILE_RANKING_TITLE,Ranking points,Points de classement
 UI_PROFILE_CATEGORIES_MASTERED,Mastered categories,Catégories maîtrisées
+UI_PROFILE_CATEGORIES_ALL,All categories,Toutes les catégories
 UI_PROFILE_BEST_SUBJECT,Best subject,Meilleur sujet
 UI_PROFILE_BEST_SUBJECT_ACC,{percent}% correct answers,{percent}% de bonnes réponses
 UI_PROFILE_WIN_SPLIT,Victory breakdown,Répartition des victoires

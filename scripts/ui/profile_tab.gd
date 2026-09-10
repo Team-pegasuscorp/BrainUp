@@ -36,6 +36,8 @@ var _xp_bar: ProgressBar
 var _active_tweens: Array[Tween] = []
 var _achievements_page: Control
 var _achievements_grid: GridContainer
+var _categories_page: Control
+var _categories_list: VBoxContainer
 ## Base page gutter; left/right stay equal visually without changing tile width.
 const _PAGE_GUTTER: int = 18
 
@@ -83,6 +85,7 @@ func _style_dark_controls() -> void:
 
 func refresh() -> void:
 	_close_achievements_page()
+	_close_categories_page()
 	_profile_data = ProfileSnapshot.build_full(LocaleManager.get_content_locale())
 	_rebuild_sections()
 	call_deferred("_balance_page_gutters")
@@ -94,9 +97,14 @@ func on_tab_shown() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if _achievements_page != null and _achievements_page.visible and event.is_action_pressed("ui_cancel"):
-		_close_achievements_page()
-		get_viewport().set_input_as_handled()
+	if event.is_action_pressed("ui_cancel"):
+		if _achievements_page != null and _achievements_page.visible:
+			_close_achievements_page()
+			get_viewport().set_input_as_handled()
+			return
+		if _categories_page != null and _categories_page.visible:
+			_close_categories_page()
+			get_viewport().set_input_as_handled()
 
 
 func _wire_events() -> void:
@@ -640,7 +648,7 @@ func _build_categories_tile() -> PanelContainer:
 	var panel := _tile()
 	panel.custom_minimum_size.y = UiTokens.DASH_CATEGORY_HEIGHT
 	panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	var root := _tile_body(panel, tr("UI_PROFILE_CATEGORIES_MASTERED"))
+	var root := _tile_body(panel, tr("UI_PROFILE_CATEGORIES_MASTERED"), true, _open_categories_page)
 	## Extra air between title and category rows.
 	root.add_theme_constant_override("separation", 13)
 	root.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -793,7 +801,7 @@ func _category_mastery_row(row: Dictionary) -> Control:
 
 func _build_best_subject_tile() -> PanelContainer:
 	## Mock: [icon] name | big % + caption — no level (same icon as categories).
-	var panel := _tile(UiTokens.FEEDBACK_CORRECT)
+	var panel := _tile()
 	var root := _tile_body(panel, tr("UI_PROFILE_BEST_SUBJECT"))
 	root.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	var best: Dictionary = _profile_data.get("best_category", {})
@@ -847,7 +855,7 @@ func _build_best_subject_tile() -> PanelContainer:
 
 func _build_win_distribution_tile() -> PanelContainer:
 	## Donut pinned under the title; legend below.
-	var panel := _tile(UiTokens.ACCENT_PROFILE)
+	var panel := _tile()
 	panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	var root := _tile_body(panel, tr("UI_PROFILE_WIN_SPLIT"))
 	root.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -1037,7 +1045,7 @@ func _history_row(row: Dictionary) -> Control:
 	var name_label := Label.new()
 	name_label.text = opponent_name
 	name_label.clip_text = true
-	name_label.add_theme_font_size_override("font_size", 18)
+	name_label.add_theme_font_size_override("font_size", UiTokens.PSEUDO_FONT_SIZE)
 	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	left.add_child(name_label)
 
@@ -1569,6 +1577,7 @@ func _on_edit_backdrop_gui_input(event: InputEvent) -> void:
 
 
 func _open_achievements_page() -> void:
+	_close_categories_page()
 	_ensure_achievements_page()
 	_populate_achievements_page()
 	_achievements_page.visible = true
@@ -1579,7 +1588,24 @@ func _open_achievements_page() -> void:
 func _close_achievements_page() -> void:
 	if _achievements_page != null:
 		_achievements_page.visible = false
-	_set_shell_swipe_enabled(true)
+	if _categories_page == null or not _categories_page.visible:
+		_set_shell_swipe_enabled(true)
+
+
+func _open_categories_page() -> void:
+	_close_achievements_page()
+	_ensure_categories_page()
+	_populate_categories_page()
+	_categories_page.visible = true
+	_categories_page.move_to_front()
+	_set_shell_swipe_enabled(false)
+
+
+func _close_categories_page() -> void:
+	if _categories_page != null:
+		_categories_page.visible = false
+	if _achievements_page == null or not _achievements_page.visible:
+		_set_shell_swipe_enabled(true)
 
 
 func _set_shell_swipe_enabled(enabled: bool) -> void:
@@ -1676,6 +1702,92 @@ func _ensure_achievements_page() -> void:
 	scroll_box.add_child(_achievements_grid)
 
 
+func _ensure_categories_page() -> void:
+	if _categories_page != null and is_instance_valid(_categories_page):
+		return
+
+	_categories_page = Control.new()
+	_categories_page.name = "CategoriesPage"
+	_categories_page.visible = false
+	_categories_page.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_categories_page.mouse_filter = Control.MOUSE_FILTER_STOP
+	add_child(_categories_page)
+
+	var bg := ColorRect.new()
+	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	bg.color = UiTokens.page_bg_for_tab(ScenePaths.Tab.PROFILE)
+	bg.mouse_filter = Control.MOUSE_FILTER_STOP
+	_categories_page.add_child(bg)
+
+	var page_margin := MarginContainer.new()
+	page_margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	page_margin.add_theme_constant_override("margin_left", 18)
+	page_margin.add_theme_constant_override("margin_right", 18)
+	page_margin.add_theme_constant_override("margin_top", 16)
+	page_margin.add_theme_constant_override("margin_bottom", 20)
+	_categories_page.add_child(page_margin)
+
+	var panel := PanelContainer.new()
+	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	panel.add_theme_stylebox_override("panel", UiStyle.profile_card(UiTokens.ACCENT_PROFILE, true))
+	page_margin.add_child(panel)
+
+	var inner := MarginContainer.new()
+	inner.add_theme_constant_override("margin_left", 14)
+	inner.add_theme_constant_override("margin_right", 14)
+	inner.add_theme_constant_override("margin_top", 14)
+	inner.add_theme_constant_override("margin_bottom", 14)
+	panel.add_child(inner)
+
+	var vbox := VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 12)
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	inner.add_child(vbox)
+
+	var header := HBoxContainer.new()
+	header.add_theme_constant_override("separation", 10)
+	vbox.add_child(header)
+
+	var back := Button.new()
+	back.text = "< " + tr("UI_BACK")
+	back.flat = true
+	back.focus_mode = Control.FOCUS_NONE
+	back.add_theme_font_size_override("font_size", 16)
+	back.add_theme_color_override("font_color", UiTokens.ACCENT_PROFILE)
+	var empty := StyleBoxEmpty.new()
+	back.add_theme_stylebox_override("normal", empty)
+	back.add_theme_stylebox_override("hover", empty)
+	back.add_theme_stylebox_override("pressed", empty)
+	back.pressed.connect(_close_categories_page)
+	PressScaleUtil.wire(back, self)
+	header.add_child(back)
+
+	var page_title := Label.new()
+	page_title.text = tr("UI_PROFILE_CATEGORIES_ALL").to_upper()
+	page_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	page_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	page_title.add_theme_font_size_override("font_size", 20)
+	page_title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	header.add_child(page_title)
+
+	var spacer := Control.new()
+	spacer.custom_minimum_size.x = 72
+	header.add_child(spacer)
+
+	var scroll_box := ScrollContainer.new()
+	scroll_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll_box.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll_box.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	vbox.add_child(scroll_box)
+
+	_categories_list = VBoxContainer.new()
+	_categories_list.add_theme_constant_override("separation", 14)
+	_categories_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll_box.add_child(_categories_list)
+
+
 func _populate_achievements_page() -> void:
 	if _achievements_grid == null:
 		return
@@ -1688,6 +1800,31 @@ func _populate_achievements_page() -> void:
 		if typeof(row) != TYPE_DICTIONARY:
 			continue
 		_achievements_grid.add_child(_badge_cell(row))
+
+
+func _populate_categories_page() -> void:
+	if _categories_list == null:
+		return
+	while _categories_list.get_child_count() > 0:
+		var child := _categories_list.get_child(0)
+		_categories_list.remove_child(child)
+		child.free()
+	var categories: Array = _profile_data.get("categories", []).duplicate()
+	categories.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		var a_played := int(a.get("games_played", 0)) > 0
+		var b_played := int(b.get("games_played", 0)) > 0
+		if a_played != b_played:
+			return a_played
+		return float(a.get("accuracy_percent", 0.0)) > float(b.get("accuracy_percent", 0.0))
+	)
+	var shown := 0
+	for row in categories:
+		if typeof(row) != TYPE_DICTIONARY:
+			continue
+		_categories_list.add_child(_category_mastery_row(row))
+		shown += 1
+	if shown == 0:
+		_categories_list.add_child(_empty(tr("UI_PROFILE_NO_CATEGORIES")))
 
 
 func _on_badge_pressed(achievement: Dictionary) -> void:

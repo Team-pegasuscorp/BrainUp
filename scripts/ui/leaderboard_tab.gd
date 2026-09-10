@@ -187,7 +187,7 @@ func _podium_card(entry: Dictionary, height: float, accent: Color, rank: int) ->
 	var is_player: bool = bool(entry.get("is_player", false))
 	panel.add_theme_stylebox_override(
 		"panel",
-		UiStyle.category_tile_selected(UiTokens.ACCENT_LEADERBOARD) if is_player else UiStyle.card(accent)
+		UiStyle.profile_surface(UiTokens.ACCENT_LEADERBOARD, true, 0) if is_player else UiStyle.profile_surface(accent, false, 0)
 	)
 
 	var margin := MarginContainer.new()
@@ -225,8 +225,8 @@ func _podium_card(entry: Dictionary, height: float, accent: Color, rank: int) ->
 	name_label.text = str(entry.get("name", ""))
 	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	name_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	name_label.add_theme_font_size_override("font_size", 13)
-	name_label.add_theme_color_override("font_color", UiTokens.INK)
+	name_label.add_theme_font_size_override("font_size", UiTokens.PSEUDO_FONT_SIZE)
+	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	vbox.add_child(name_label)
 
 	var score_label := Label.new()
@@ -241,11 +241,11 @@ func _podium_card(entry: Dictionary, height: float, accent: Color, rank: int) ->
 
 func _make_rank_row(entry: Dictionary) -> PanelContainer:
 	var is_player: bool = bool(entry.get("is_player", false))
-	var accent: Color = UiTokens.ACCENT_LEADERBOARD if is_player else UiTokens.INK_MUTED
+	var accent: Color = UiTokens.ACCENT_LEADERBOARD if is_player else UiTokens.PROFILE_TEXT_MUTED
 	var panel := PanelContainer.new()
 	panel.add_theme_stylebox_override(
 		"panel",
-		UiStyle.category_tile_selected(UiTokens.ACCENT_LEADERBOARD) if is_player else UiStyle.card(UiTokens.ACCENT_LEADERBOARD)
+		UiStyle.profile_surface(UiTokens.ACCENT_LEADERBOARD, true, 0) if is_player else UiStyle.profile_surface(UiTokens.ACCENT_LEADERBOARD, false, 0)
 	)
 
 	var margin := MarginContainer.new()
@@ -285,8 +285,8 @@ func _make_rank_row(entry: Dictionary) -> PanelContainer:
 	name.text = str(entry.get("name", ""))
 	if is_player:
 		name.text += " (%s)" % tr("UI_LEADERBOARD_YOU")
-	name.add_theme_font_size_override("font_size", 16)
-	name.add_theme_color_override("font_color", UiTokens.INK)
+	name.add_theme_font_size_override("font_size", UiTokens.PSEUDO_FONT_SIZE)
+	name.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	info.add_child(name)
 
 	var meta := Label.new()
@@ -295,7 +295,7 @@ func _make_rank_row(entry: Dictionary) -> PanelContainer:
 		"level": entry.get("level", 1),
 	})
 	meta.add_theme_font_size_override("font_size", 12)
-	meta.add_theme_color_override("font_color", UiTokens.INK_MUTED)
+	meta.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	info.add_child(meta)
 
 	var score := Label.new()
@@ -332,10 +332,13 @@ func _update_filter_styles() -> void:
 		var filter_id := str(filters[index].get("id", "all"))
 		button.set_meta("filter_id", filter_id)
 		var selected := filter_id == _selected_filter
-		var normal := UiStyle.category_tile_selected(UiTokens.ACCENT_LEADERBOARD) if selected else UiStyle.category_tile(UiTokens.ACCENT_LEADERBOARD)
+		var normal := UiStyle.profile_chip(UiTokens.ACCENT_LEADERBOARD, selected)
 		button.add_theme_stylebox_override("normal", normal)
 		button.add_theme_stylebox_override("hover", normal)
-		button.add_theme_stylebox_override("pressed", UiStyle.category_tile_selected(UiTokens.ACCENT_LEADERBOARD))
+		button.add_theme_stylebox_override("pressed", UiStyle.profile_chip(UiTokens.ACCENT_LEADERBOARD, true))
+		button.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+		button.add_theme_color_override("font_hover_color", UiTokens.PROFILE_TEXT)
+		button.add_theme_color_override("font_pressed_color", UiTokens.PROFILE_TEXT)
 
 
 func _normalize_selected_filter() -> String:

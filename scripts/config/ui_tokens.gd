@@ -125,6 +125,10 @@ const PROFILE_PAGE_BG := Color(0.043, 0.043, 0.118, 1)       # #0B0B1E
 const PROFILE_CARD_BG := Color(0.102, 0.102, 0.180, 1)         # #1A1A2E
 const PROFILE_CARD_BG_RAISED := Color(0.125, 0.125, 0.210, 1)  # #202036
 const PROFILE_CARD_BORDER := Color(1, 1, 1, 0.08)
+## Social tiles — dark rose matching the page pastel (ACCENT_SOCIAL family).
+const SOCIAL_CARD_BG := Color(0.180, 0.078, 0.125, 1)         # #2E1420
+const SOCIAL_CARD_BG_RAISED := Color(0.220, 0.100, 0.155, 1)  # #381A28
+const SOCIAL_CARD_BORDER := Color(0.95, 0.62, 0.76, 0.22)
 const PROFILE_TEXT := Color(1, 1, 1, 1)
 const PROFILE_TEXT_MUTED := Color(0.62, 0.66, 0.78, 1)
 const PROFILE_TITLE_CAPS := Color(0.55, 0.58, 0.70, 1)
@@ -150,8 +154,15 @@ const DASH_HISTORY_HEIGHT: float = 326.0
 const DASH_BADGES_HEIGHT: float = 410.0
 const DASH_SEASON_HEIGHT: float = 235.0
 const DASH_HERO_HEIGHT: float = 225.0
+## Category level XP: correct answers only. Level 1 needs BASE; each next level × GROWTH.
+## Ex: 10 → 25 → 63 → …
+const CATEGORY_LEVEL_BASE_CORRECTS: int = 10
+const CATEGORY_LEVEL_GROWTH: float = 2.5
+const CATEGORY_LEVEL_MAX: int = 99
 const DEFAULT_PLAYER_NAME: String = "Player"
 const MAX_PLAYER_NAME_LENGTH: int = 24
+## Player / opponent display names (pseudos) — keep 18 until the user changes it.
+const PSEUDO_FONT_SIZE: int = 18
 
 const ANSWER_TILE_MIN: float = 140.0
 const ANSWER_TILE_MAX: float = 200.0

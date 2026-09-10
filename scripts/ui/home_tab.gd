@@ -28,6 +28,7 @@ func _apply_hello(snapshot: Dictionary) -> void:
 	var name: String = str(snapshot.get("player_name", UiTokens.DEFAULT_PLAYER_NAME))
 	subtitle_label.text = tr("UI_HOME_HELLO").format({"name": name})
 	subtitle_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	subtitle_label.add_theme_color_override("font_color", UiTokens.INK)
 
 
 func _rebuild_cards(snapshot: Dictionary) -> void:
@@ -43,7 +44,7 @@ func _rebuild_cards(snapshot: Dictionary) -> void:
 func _make_progress_compact(snapshot: Dictionary) -> PanelContainer:
 	var panel := PanelContainer.new()
 	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	panel.add_theme_stylebox_override("panel", UiStyle.card(UiTokens.ACCENT_XP))
+	panel.add_theme_stylebox_override("panel", UiStyle.profile_surface(UiTokens.ACCENT_XP, false, 0))
 
 	var margin := _pad(12, 10)
 	panel.add_child(margin)
@@ -54,7 +55,7 @@ func _make_progress_compact(snapshot: Dictionary) -> PanelContainer:
 	var level := Label.new()
 	level.text = tr("UI_PLAYER_LEVEL").format({"level": snapshot.get("level", 1)})
 	level.add_theme_font_size_override("font_size", 18)
-	level.add_theme_color_override("font_color", UiTokens.INK)
+	level.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	vbox.add_child(level)
 
 	var bar := ProgressBar.new()
@@ -72,7 +73,7 @@ func _make_progress_compact(snapshot: Dictionary) -> PanelContainer:
 		"target": snapshot.get("xp_to_next", 100),
 	})
 	xp.add_theme_font_size_override("font_size", 12)
-	xp.add_theme_color_override("font_color", UiTokens.INK_MUTED)
+	xp.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	vbox.add_child(xp)
 	return panel
 
@@ -81,7 +82,7 @@ func _make_today_card(snapshot: Dictionary) -> PanelContainer:
 	## Priority: resume last category → suggest weakest category → FAB hint.
 	var panel := PanelContainer.new()
 	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	panel.add_theme_stylebox_override("panel", UiStyle.card(UiTokens.ACCENT_HOME))
+	panel.add_theme_stylebox_override("panel", UiStyle.profile_surface(UiTokens.ACCENT_HOME, false, 0))
 
 	var margin := _pad(14, 12)
 	panel.add_child(margin)
@@ -98,13 +99,13 @@ func _make_today_card(snapshot: Dictionary) -> PanelContainer:
 	var title := Label.new()
 	title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	title.add_theme_font_size_override("font_size", 18)
-	title.add_theme_color_override("font_color", UiTokens.INK)
+	title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	vbox.add_child(title)
 
 	var detail := Label.new()
 	detail.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	detail.add_theme_font_size_override("font_size", 13)
-	detail.add_theme_color_override("font_color", UiTokens.INK_MUTED)
+	detail.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	vbox.add_child(detail)
 
 	var history: Array = snapshot.get("history", [])
@@ -151,7 +152,7 @@ func _make_metric_chip(caption: String, value: String, accent: Color) -> PanelCo
 	var panel := PanelContainer.new()
 	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	panel.custom_minimum_size.y = 84
-	panel.add_theme_stylebox_override("panel", UiStyle.card(accent))
+	panel.add_theme_stylebox_override("panel", UiStyle.profile_surface(accent, false, 0))
 
 	var margin := _pad(10, 10)
 	panel.add_child(margin)
@@ -172,7 +173,7 @@ func _make_metric_chip(caption: String, value: String, accent: Color) -> PanelCo
 	caption_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	caption_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	caption_label.add_theme_font_size_override("font_size", 12)
-	caption_label.add_theme_color_override("font_color", UiTokens.INK_MUTED)
+	caption_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	vbox.add_child(caption_label)
 	return panel
 
@@ -180,7 +181,7 @@ func _make_metric_chip(caption: String, value: String, accent: Color) -> PanelCo
 func _make_last_match_card(snapshot: Dictionary) -> PanelContainer:
 	var panel := PanelContainer.new()
 	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	panel.add_theme_stylebox_override("panel", UiStyle.card(UiTokens.ACCENT_QUIZ))
+	panel.add_theme_stylebox_override("panel", UiStyle.profile_surface(UiTokens.ACCENT_QUIZ, false, 0))
 
 	var margin := _pad(14, 12)
 	panel.add_child(margin)
@@ -197,7 +198,7 @@ func _make_last_match_card(snapshot: Dictionary) -> PanelContainer:
 	var line := Label.new()
 	line.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	line.add_theme_font_size_override("font_size", 15)
-	line.add_theme_color_override("font_color", UiTokens.INK)
+	line.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	vbox.add_child(line)
 
 	var history: Array = snapshot.get("history", [])

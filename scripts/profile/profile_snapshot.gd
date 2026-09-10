@@ -121,15 +121,8 @@ static func _merge_demo(base: Dictionary, locale: String) -> Dictionary:
 	demo["country_flag"] = CountryFlags.emoji_for("France")
 	demo["email_verified"] = true
 	demo["is_online"] = true
-	demo["categories"] = [
-		_make_category_row("sport", locale, 412, 84.0, 4, 24),
-		_make_category_row("cinema", locale, 386, 71.0, 3, 19),
-		_make_category_row("history", locale, 450, 78.0, 4, 22),
-		_make_category_row("music", locale, 398, 76.0, 3, 18),
-		_make_category_row("geography", locale, 430, 81.0, 4, 21),
-		_make_category_row("science", locale, 360, 69.0, 2, 15),
-	]
-	_assign_medals(demo["categories"])
+	## Demo XP = total correct answers; one row per real category pack.
+	demo["categories"] = _build_demo_categories(locale)
 	demo["history"] = [
 		_make_history_row("science", locale, 820, true, 15, 9, 0, "Lucas", 24, 2),
 		_make_history_row("cinema", locale, 780, true, 18, 12, 0, "Emma", 18, 15),
@@ -137,6 +130,42 @@ static func _merge_demo(base: Dictionary, locale: String) -> Dictionary:
 		_make_history_row("geography", locale, 860, true, 20, 11, 3, "Chloé", 22, 180),
 	]
 	return demo
+
+
+static func _build_demo_categories(locale: String) -> Array:
+	## Preset stats for layout preview; every pack from QuestionLoader is included.
+	var presets := {
+		"sport": {"games": 412, "accuracy": 84.0, "correct": 118},
+		"cinema": {"games": 386, "accuracy": 71.0, "correct": 93},
+		"history": {"games": 450, "accuracy": 78.0, "correct": 108},
+		"music": {"games": 398, "accuracy": 76.0, "correct": 88},
+		"geography": {"games": 430, "accuracy": 81.0, "correct": 103},
+		"science": {"games": 360, "accuracy": 69.0, "correct": 72},
+		"general": {"games": 310, "accuracy": 74.0, "correct": 64},
+		"television": {"games": 280, "accuracy": 66.0, "correct": 55},
+	}
+	var rows: Array = []
+	for category in QuestionLoaderScript.get_categories(locale):
+		var category_id: String = str(category.get("id", ""))
+		if category_id.is_empty():
+			continue
+		var preset: Dictionary = presets.get(category_id, {
+			"games": 120,
+			"accuracy": 60.0,
+			"correct": 30,
+		})
+		rows.append(_make_category_row(
+			category_id,
+			locale,
+			int(preset.get("games", 0)),
+			float(preset.get("accuracy", 0.0)),
+			-1,
+			-1,
+			"none",
+			int(preset.get("correct", 0))
+		))
+	_assign_medals(rows)
+	return rows
 
 
 static func _build_categories(locale: String) -> Array:
@@ -148,14 +177,69 @@ static func _build_categories(locale: String) -> Array:
 		var total_q: int = int(stats.get("total_questions", 0))
 		var total_c: int = int(stats.get("total_correct", 0))
 		var accuracy := 0.0 if total_q <= 0 else float(total_c) / float(total_q) * 100.0
-		var mastery := 0 if games <= 0 else clampi(int(games / 3) + int(accuracy / 30.0), 1, 4)
-		var display_level := 0 if games <= 0 else clampi(int(games * 0.18) + int(accuracy / 8.0), 1, 99)
-		rows.append(_make_category_row(category_id, locale, games, accuracy, mastery, display_level))
+		rows.append(_make_category_row(category_id, locale, games, accuracy, -1, -1, "none", total_c))
 	rows.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
-		return float(a.get("accuracy_percent", 0.0)) > float(b.get("accuracy_percent", 0.0))
+		return int(a.get("total_correct", 0)) > int(b.get("total_correct", 0))
 	)
 	_assign_medals(rows)
 	return rows
+
+
+static func category_corrects_to_complete_level(level: int) -> int:
+	## Cost in correct answers to finish this level (exponential).
+	## Level 1 = 10, level 2 = 25, level 3 ≈ 63, …
+	if level <= 0:
+		return 0
+	var base := float(maxi(UiTokens.CATEGORY_LEVEL_BASE_CORRECTS, 1))
+	var growth := maxf(UiTokens.CATEGORY_LEVEL_GROWTH, 1.01)
+	return maxi(1, int(round(base * pow(growth, float(level - 1)))))
+
+
+static func category_level_from_correct(total_correct: int) -> int:
+	## Current level from cumulative correct answers (starts at 1 while filling the first bar).
+	if total_correct < 0:
+		total_correct = 0
+	var remaining := total_correct
+	var level := 1
+	var max_level := maxi(UiTokens.CATEGORY_LEVEL_MAX, 1)
+	while level < max_level:
+		var need := category_corrects_to_complete_level(level)
+		if remaining < need:
+			return level
+		remaining -= need
+		level += 1
+	return max_level
+
+
+static func category_progress_from_correct(total_correct: int) -> float:
+	## Fill of the current level bar (0→1 within the level).
+	if total_correct < 0:
+		total_correct = 0
+	var level := category_level_from_correct(total_correct)
+	var spent := 0
+	for prev in range(1, level):
+		spent += category_corrects_to_complete_level(prev)
+	var into_level := total_correct - spent
+	var need := category_corrects_to_complete_level(level)
+	if need <= 0:
+		return 0.0
+	if level >= UiTokens.CATEGORY_LEVEL_MAX:
+		return 1.0
+	return clampf(float(into_level) / float(need), 0.0, 1.0)
+
+
+static func category_mastery_from_correct(total_correct: int) -> int:
+	## Coarse 1–4 band from the same correct-answer XP.
+	if total_correct <= 0:
+		return 0
+	var level := category_level_from_correct(total_correct)
+	if level <= 2:
+		return 1
+	if level <= 4:
+		return 2
+	if level <= 6:
+		return 3
+	return 4
 
 
 static func _make_category_row(
@@ -163,23 +247,30 @@ static func _make_category_row(
 	locale: String,
 	games: int,
 	accuracy: float,
-	mastery: int,
+	mastery: int = -1,
 	display_level: int = -1,
-	medal: String = "none"
+	medal: String = "none",
+	total_correct: int = -1
 ) -> Dictionary:
+	if total_correct < 0:
+		## Demo rows often omit totals — approximate from games × accuracy.
+		total_correct = int(round(float(games) * accuracy / 100.0)) if games > 0 else 0
 	if display_level < 0:
-		display_level = 0 if games <= 0 else clampi(int(games * 0.18) + int(accuracy / 8.0), 1, 99)
+		display_level = category_level_from_correct(total_correct)
+	if mastery < 0:
+		mastery = category_mastery_from_correct(total_correct)
 	return {
 		"id": category_id,
 		"name": _resolve_category_name(category_id, locale),
 		"icon": _category_icon(category_id),
 		"games_played": games,
+		"total_correct": total_correct,
 		"accuracy_percent": accuracy,
 		"mastery_level": mastery,
 		"display_level": display_level,
 		"medal": medal,
 		"mastery_label_key": "UI_MASTERY_%d" % mastery,
-		"mastery_progress": clampf(float(games) / 12.0, 0.12, 1.0) if games > 0 else 0.0,
+		"mastery_progress": category_progress_from_correct(total_correct),
 		"win_rate_percent": accuracy,
 	}
 
@@ -224,6 +315,10 @@ static func _category_icon(category_id: String) -> String:
 			return "🌍"
 		"music":
 			return "🎵"
+		"general":
+			return "💡"
+		"television":
+			return "📺"
 		_:
 			return "🧠"
 
