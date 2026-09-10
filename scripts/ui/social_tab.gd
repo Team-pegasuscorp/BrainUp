@@ -190,7 +190,7 @@ func _friends_section() -> PanelContainer:
 
 	var scroll := ScrollContainer.new()
 	scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
 	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.custom_minimum_size.y = 156
@@ -267,7 +267,7 @@ func _friend_requests_section() -> PanelContainer:
 		var empty := Label.new()
 		empty.text = tr("UI_SOCIAL_FRIEND_REQUESTS_EMPTY")
 		empty.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		empty.add_theme_font_size_override("font_size", 14)
+		empty.add_theme_font_size_override("font_size", 18)
 		empty.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 		vbox.add_child(empty)
 		return panel
@@ -275,7 +275,7 @@ func _friend_requests_section() -> PanelContainer:
 	var list := VBoxContainer.new()
 	list.add_theme_constant_override("separation", 8)
 	vbox.add_child(list)
-	var shown := mini(requests.size(), 2)
+	var shown := mini(requests.size(), 3)
 	for i in range(shown):
 		if typeof(requests[i]) != TYPE_DICTIONARY:
 			continue
@@ -303,8 +303,6 @@ func _player_search_section() -> PanelContainer:
 	header.add_theme_constant_override("separation", 8)
 	header.alignment = BoxContainer.ALIGNMENT_CENTER
 	vbox.add_child(header)
-
-	header.add_child(_social_header_icon("🔍", Color(1, 1, 1, 0.92), false))
 
 	var caption := Label.new()
 	caption.text = tr("UI_SOCIAL_SEARCH_PLAYER").to_upper()
@@ -340,9 +338,9 @@ func _player_search_section() -> PanelContainer:
 	var search := LineEdit.new()
 	search.placeholder_text = tr("UI_SOCIAL_SEARCH_PLACEHOLDER")
 	search.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	search.custom_minimum_size.y = 36
+	search.custom_minimum_size.y = 44
 	search.focus_mode = Control.FOCUS_CLICK
-	search.add_theme_font_size_override("font_size", 15)
+	search.add_theme_font_size_override("font_size", 18)
 	search.add_theme_color_override("font_color", Color(0.18, 0.12, 0.16, 1))
 	search.add_theme_color_override("font_placeholder_color", Color(0.45, 0.42, 0.48, 1))
 	var clear_line := StyleBoxEmpty.new()
@@ -408,35 +406,6 @@ func _player_search_section() -> PanelContainer:
 	add_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	add_row.add_child(add_label)
 	return panel
-
-
-func _social_header_icon(icon_text: String, accent: Color, filled: bool = true) -> Control:
-	var slot := Control.new()
-	slot.custom_minimum_size = Vector2(28, 28)
-	slot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	if filled:
-		var bg := Panel.new()
-		bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-		bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		var style := StyleBoxFlat.new()
-		style.bg_color = accent
-		style.set_corner_radius_all(14)
-		bg.add_theme_stylebox_override("panel", style)
-		slot.add_child(bg)
-	var icon := Label.new()
-	icon.text = icon_text
-	icon.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	icon.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	icon.add_theme_font_size_override("font_size", 14)
-	icon.add_theme_color_override("font_color", Color.WHITE if filled else accent)
-	var emoji_font := UiFonts.emoji_font()
-	if emoji_font != null:
-		icon.add_theme_font_override("font", emoji_font)
-	slot.add_child(icon)
-	return slot
 
 
 func _friend_request_row(request: Dictionary) -> Control:
@@ -515,12 +484,12 @@ func _friend_request_action_btn(label_text: String, color: Color, callback: Call
 	var btn := Button.new()
 	btn.text = label_text
 	btn.focus_mode = Control.FOCUS_NONE
-	btn.custom_minimum_size = Vector2(36, 36)
-	btn.add_theme_font_size_override("font_size", 16)
+	btn.custom_minimum_size = Vector2(48, 48)
+	btn.add_theme_font_size_override("font_size", 24)
 	btn.add_theme_color_override("font_color", Color.WHITE)
 	var style := StyleBoxFlat.new()
 	style.bg_color = color
-	style.set_corner_radius_all(18)
+	style.set_corner_radius_all(24)
 	btn.add_theme_stylebox_override("normal", style)
 	btn.add_theme_stylebox_override("hover", style)
 	btn.add_theme_stylebox_override("pressed", style)
@@ -675,6 +644,7 @@ func _ensure_friend_requests_page() -> void:
 	scroll_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll_box.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll_box.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll_box.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
 	vbox.add_child(scroll_box)
 
 	_friend_requests_list = VBoxContainer.new()
@@ -694,7 +664,7 @@ func _populate_friend_requests_page() -> void:
 		var empty := Label.new()
 		empty.text = tr("UI_SOCIAL_FRIEND_REQUESTS_EMPTY")
 		empty.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		empty.add_theme_font_size_override("font_size", 14)
+		empty.add_theme_font_size_override("font_size", 18)
 		empty.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 		_friend_requests_list.add_child(empty)
 		return
@@ -972,6 +942,7 @@ func _ensure_friends_page() -> void:
 	scroll_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll_box.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll_box.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll_box.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
 	scroll_box.resized.connect(_fit_friends_page_grid)
 	vbox.add_child(scroll_box)
 	_friends_page_scroll = scroll_box
@@ -1514,7 +1485,7 @@ func _create_section() -> PanelContainer:
 
 	var category_scroll := ScrollContainer.new()
 	category_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	category_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	category_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
 	category_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	category_scroll.custom_minimum_size.y = 48
 	vbox.add_child(category_scroll)

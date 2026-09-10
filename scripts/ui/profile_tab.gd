@@ -887,7 +887,7 @@ func _build_win_distribution_tile() -> PanelContainer:
 
 	var legend_scroll := ScrollContainer.new()
 	legend_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	legend_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	legend_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
 	## Fixed legend viewport — extra categories scroll; donut keeps center space.
 	legend_scroll.custom_minimum_size.y = 78
 	legend_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -1692,6 +1692,7 @@ func _ensure_achievements_page() -> void:
 	scroll_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll_box.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll_box.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll_box.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
 	vbox.add_child(scroll_box)
 
 	_achievements_grid = GridContainer.new()
@@ -1780,6 +1781,7 @@ func _ensure_categories_page() -> void:
 	scroll_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll_box.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll_box.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll_box.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
 	vbox.add_child(scroll_box)
 
 	_categories_list = VBoxContainer.new()
