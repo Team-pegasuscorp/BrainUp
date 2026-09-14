@@ -6,6 +6,7 @@ const ProfileDonutScript = preload("res://scripts/ui/profile_donut.gd")
 const CircularAvatarScript = preload("res://scripts/ui/circular_avatar.gd")
 const CountryFlags = preload("res://scripts/profile/country_flags.gd")
 const UiFonts = preload("res://scripts/config/ui_fonts.gd")
+const GameAssets = preload("res://scripts/config/game_assets.gd")
 const UiTokens = preload("res://scripts/config/ui_tokens.gd")
 const UiStyle = preload("res://scripts/config/ui_style.gd")
 const PressScaleUtil = preload("res://scripts/ui/press_scale.gd")
@@ -405,13 +406,16 @@ func _build_hero() -> PanelContainer:
 	league_col.add_child(league_title)
 
 	## Icon follows trophy league tier (not a fixed diamond).
-	var league_icon := Label.new()
-	league_icon.text = str(ranking.get("league_icon", "🥉"))
-	league_icon.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	league_icon.add_theme_font_size_override("font_size", 64)
-	var league_emoji_font := UiFonts.emoji_font()
-	if league_emoji_font != null:
-		league_icon.add_theme_font_override("font", league_emoji_font)
+	var league_icon := Control.new()
+	league_icon.custom_minimum_size = Vector2(72, 72)
+	league_icon.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	GameAssets.fill_icon_slot(
+		league_icon,
+		GameAssets.league_texture(str(ranking.get("league_id", "bronze"))),
+		str(ranking.get("league_icon", "🥉")),
+		64,
+		0.88
+	)
 	league_col.add_child(league_icon)
 
 	var points := Label.new()
@@ -445,7 +449,7 @@ func _fit_hero_mock_proportions(
 	avatar_wrap: Control,
 	avatar: Control,
 	league_col: Control,
-	league_icon: Label,
+	league_icon: Control,
 	league_title: Label = null,
 	points: Label = null
 ) -> void:
@@ -473,7 +477,8 @@ func _fit_hero_mock_proportions(
 	if is_instance_valid(league_title):
 		league_title.add_theme_font_size_override("font_size", int(clampf(league_w * 0.105, 15.0, 19.0)))
 	if is_instance_valid(league_icon):
-		league_icon.add_theme_font_size_override("font_size", int(clampf(league_w * 0.50, 58.0, 78.0)))
+		var league_icon_side := clampf(league_w * 0.55, 64.0, 88.0)
+		league_icon.custom_minimum_size = Vector2(league_icon_side, league_icon_side)
 	if is_instance_valid(points):
 		points.add_theme_font_size_override("font_size", int(clampf(league_w * 0.135, 20.0, 26.0)))
 
@@ -682,7 +687,7 @@ func _build_categories_tile() -> PanelContainer:
 	return panel
 
 
-func _mastery_category_icon(icon_text: String, accent: Color) -> Control:
+func _mastery_category_icon(category_id: String, icon_text: String, accent: Color) -> Control:
 	## Shared badge used by categories + best subject (identical size/glow).
 	var slot := Control.new()
 	slot.custom_minimum_size = Vector2(54, 54)
@@ -702,17 +707,17 @@ func _mastery_category_icon(icon_text: String, accent: Color) -> Control:
 	bg.add_theme_stylebox_override("panel", icon_style)
 	slot.add_child(bg)
 
-	var icon := Label.new()
-	icon.text = icon_text
-	icon.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	icon.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	icon.add_theme_font_size_override("font_size", 28)
-	var emoji_font := UiFonts.emoji_font()
-	if emoji_font != null:
-		icon.add_theme_font_override("font", emoji_font)
-	slot.add_child(icon)
+	var icon_slot := Control.new()
+	icon_slot.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	icon_slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	slot.add_child(icon_slot)
+	GameAssets.fill_icon_slot(
+		icon_slot,
+		GameAssets.category_texture(category_id),
+		icon_text,
+		28,
+		0.68
+	)
 	return slot
 
 
@@ -723,7 +728,7 @@ func _category_mastery_row(row: Dictionary) -> Control:
 	hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	hbox.alignment = BoxContainer.ALIGNMENT_CENTER
 
-	hbox.add_child(_mastery_category_icon(str(row.get("icon", "🧠")), accent))
+	hbox.add_child(_mastery_category_icon(str(row.get("id", "")), str(row.get("icon", "🧠")), accent))
 
 	## Name + progress bar (center stretch).
 	var mid := VBoxContainer.new()
@@ -816,7 +821,7 @@ func _build_best_subject_tile() -> PanelContainer:
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
 	root.add_child(row)
 
-	row.add_child(_mastery_category_icon(str(best.get("icon", "🧠")), accent))
+	row.add_child(_mastery_category_icon(str(best.get("id", "")), str(best.get("icon", "🧠")), accent))
 
 	var name_label := Label.new()
 	name_label.text = str(best.get("name", ""))
@@ -1182,19 +1187,15 @@ func _badge_cell(achievement: Dictionary) -> Control:
 	badge.add_theme_stylebox_override("panel", badge_style)
 	icon_slot.add_child(badge)
 
-	var icon := Label.new()
 	var icon_text := str(achievement.get("icon", "?"))
-	icon.text = icon_text
-	icon.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	icon.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	icon.add_theme_font_size_override("font_size", 24 if icon_text.is_valid_int() else 26)
-	icon.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-	var emoji_font := UiFonts.emoji_font()
-	if emoji_font != null and not icon_text.is_valid_int():
-		icon.add_theme_font_override("font", emoji_font)
-	icon_slot.add_child(icon)
+	var icon_font_size := 24 if icon_text.is_valid_int() else 26
+	GameAssets.fill_icon_slot(
+		icon_slot,
+		GameAssets.badge_texture(str(achievement.get("id", ""))),
+		icon_text,
+		icon_font_size,
+		0.78
+	)
 
 	var title := Label.new()
 	title.text = tr(str(achievement.get("title_key", "")))
@@ -1830,7 +1831,7 @@ func _populate_categories_page() -> void:
 
 
 func _on_badge_pressed(achievement: Dictionary) -> void:
-	badge_detail_icon.text = str(achievement.get("icon", "?"))
+	_set_badge_detail_icon(achievement)
 	badge_detail_title.text = tr(str(achievement.get("title_key", "")))
 	badge_detail_desc.text = tr(str(achievement.get("desc_key", "")))
 	if not achievement.get("unlocked", false):
@@ -1844,8 +1845,34 @@ func _on_badge_pressed(achievement: Dictionary) -> void:
 
 
 func _close_badge_detail() -> void:
+	badge_detail_icon.visible = true
+	var slot := badge_detail_icon.get_parent().get_node_or_null("BadgeDetailIconSlot")
+	if slot != null:
+		slot.visible = false
 	badge_backdrop.visible = false
 	badge_detail_panel.visible = false
+
+
+func _set_badge_detail_icon(achievement: Dictionary) -> void:
+	badge_detail_icon.visible = false
+	var parent := badge_detail_icon.get_parent()
+	var slot := parent.get_node_or_null("BadgeDetailIconSlot") as Control
+	if slot == null:
+		slot = Control.new()
+		slot.name = "BadgeDetailIconSlot"
+		slot.custom_minimum_size = Vector2(72, 72)
+		slot.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		parent.add_child(slot)
+		parent.move_child(slot, badge_detail_icon.get_index())
+	slot.visible = true
+	var icon_text := str(achievement.get("icon", "?"))
+	GameAssets.fill_icon_slot(
+		slot,
+		GameAssets.badge_texture(str(achievement.get("id", ""))),
+		icon_text,
+		48,
+		0.82
+	)
 
 
 func _on_badge_backdrop_gui_input(event: InputEvent) -> void:

@@ -6,6 +6,7 @@ const UiStyle = preload("res://scripts/config/ui_style.gd")
 const QuestionLoaderScript = preload("res://scripts/quiz/question_loader.gd")
 const ScenePaths = preload("res://scripts/config/scene_paths.gd")
 const PressScaleUtil = preload("res://scripts/ui/press_scale.gd")
+const GameAssets = preload("res://scripts/config/game_assets.gd")
 
 @onready var content: VBoxContainer = %Content
 @onready var message_label: Label = %MessageLabel
@@ -712,6 +713,8 @@ func _friend_chip(friend: Dictionary) -> Control:
 	initial.add_theme_font_size_override("font_size", 24)
 	initial.add_theme_color_override("font_color", Color.WHITE)
 	avatar.add_child(initial)
+	if GameAssets.wire_demo_avatar(avatar, str(friend.get("name", ""))):
+		initial.visible = false
 	avatar_wrap.add_child(avatar)
 
 	## Mock presence: green online, grey otherwise.
@@ -1042,6 +1045,8 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 	initial.add_theme_font_size_override("font_size", 34)
 	initial.add_theme_color_override("font_color", Color.WHITE)
 	avatar_wrap.add_child(initial)
+	if GameAssets.wire_demo_avatar_to_control(avatar, str(friend.get("name", ""))):
+		initial.visible = false
 
 	var presence := str(friend.get("presence", "offline"))
 	var dot_color := Color(0.55, 0.56, 0.60, 1)
@@ -1233,7 +1238,12 @@ func _friend_best_subject_card(friend: Dictionary, cat_accent: Color) -> Control
 	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	card.add_child(row)
 
-	var cat_icon := _friend_category_icon(str(friend.get("best_subject_icon", "🧠")), cat_accent, 68)
+	var cat_icon := _friend_category_icon(
+		cat_id,
+		str(friend.get("best_subject_icon", "🧠")),
+		cat_accent,
+		68
+	)
 	cat_icon.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	row.add_child(cat_icon)
 
@@ -1405,23 +1415,23 @@ func _friend_stat_tile(
 	return card
 
 
-func _friend_category_icon(icon_text: String, _accent: Color, size_px: float = 36.0) -> Control:
+func _friend_category_icon(
+	category_id: String,
+	icon_text: String,
+	_accent: Color,
+	size_px: float = 36.0
+) -> Control:
 	var slot := Control.new()
 	slot.custom_minimum_size = Vector2(size_px, size_px)
 	slot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
-
-	var icon := Label.new()
-	icon.text = icon_text
-	icon.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	icon.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	icon.add_theme_font_size_override("font_size", int(size_px * 0.72))
-	var emoji_font := UiFonts.emoji_font()
-	if emoji_font != null:
-		icon.add_theme_font_override("font", emoji_font)
-	slot.add_child(icon)
+	GameAssets.fill_icon_slot(
+		slot,
+		GameAssets.category_texture(category_id),
+		icon_text,
+		int(size_px * 0.72),
+		0.72
+	)
 	return slot
 
 
@@ -1590,17 +1600,17 @@ func _challenge_category_chip(category: Dictionary) -> Control:
 	disc.add_theme_stylebox_override("panel", disc_style)
 	icon_wrap.add_child(disc)
 
-	var icon := Label.new()
-	icon.text = ProfileSnapshot._category_icon(category_id)
-	icon.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	icon.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	icon.add_theme_font_size_override("font_size", 34)
-	var emoji_font := UiFonts.emoji_font()
-	if emoji_font != null:
-		icon.add_theme_font_override("font", emoji_font)
-	icon_wrap.add_child(icon)
+	var icon_slot := Control.new()
+	icon_slot.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	icon_slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	icon_wrap.add_child(icon_slot)
+	GameAssets.fill_icon_slot(
+		icon_slot,
+		GameAssets.category_texture(category_id),
+		ProfileSnapshot._category_icon(category_id),
+		34,
+		0.68
+	)
 
 	var name_label := Label.new()
 	name_label.text = str(category.get("name", category_id))
