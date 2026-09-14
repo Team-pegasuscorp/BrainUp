@@ -33,6 +33,28 @@ static func friend_slug(friend_name: String) -> String:
 static func load_texture(path: String) -> Texture2D:
 	if path.is_empty():
 		return null
+
+	var fs_path := ProjectSettings.globalize_path(path)
+	var candidates: PackedStringArray = [path]
+	if fs_path != path and not fs_path.is_empty():
+		candidates.append(fs_path)
+
+	# Prefer the PNG on disk so updated assets show up without waiting for
+	# Godot's .import / .godot/imported cache to catch up.
+	for try_path in candidates:
+		if not FileAccess.file_exists(try_path):
+			continue
+		var mtime := FileAccess.get_modified_time(try_path)
+		var cache_key := "%s:%d" % [path, mtime]
+		if _cache.has(cache_key):
+			return _cache[cache_key] as Texture2D
+		var image := Image.new()
+		if image.load(try_path) != OK:
+			continue
+		var tex := ImageTexture.create_from_image(image)
+		_cache[cache_key] = tex
+		return tex
+
 	if _cache.has(path):
 		return _cache[path] as Texture2D
 
@@ -41,21 +63,6 @@ static func load_texture(path: String) -> Texture2D:
 		if imported != null:
 			_cache[path] = imported
 			return imported
-
-	var fs_path := ProjectSettings.globalize_path(path)
-	var candidates: PackedStringArray = [path]
-	if fs_path != path and not fs_path.is_empty():
-		candidates.append(fs_path)
-
-	for try_path in candidates:
-		if not FileAccess.file_exists(try_path):
-			continue
-		var image := Image.new()
-		if image.load(try_path) != OK:
-			continue
-		var tex := ImageTexture.create_from_image(image)
-		_cache[path] = tex
-		return tex
 
 	push_warning("GameAssets: failed to load texture %s" % path)
 	return null
