@@ -406,16 +406,14 @@ func _build_hero() -> PanelContainer:
 	league_col.add_child(league_title)
 
 	## Icon follows trophy league tier (not a fixed diamond).
-	var league_icon := Control.new()
-	league_icon.custom_minimum_size = Vector2(72, 72)
-	league_icon.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	GameAssets.fill_icon_slot(
-		league_icon,
+	var league_icon := GameAssets.make_icon_display(
 		GameAssets.league_texture(str(ranking.get("league_id", "bronze"))),
 		str(ranking.get("league_icon", "🥉")),
+		72.0,
 		64,
 		0.88
 	)
+	league_icon.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	league_col.add_child(league_icon)
 
 	var points := Label.new()
@@ -707,17 +705,15 @@ func _mastery_category_icon(category_id: String, icon_text: String, accent: Colo
 	bg.add_theme_stylebox_override("panel", icon_style)
 	slot.add_child(bg)
 
-	var icon_slot := Control.new()
-	icon_slot.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	icon_slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	slot.add_child(icon_slot)
-	GameAssets.fill_icon_slot(
-		icon_slot,
+	var icon_display := GameAssets.make_icon_display(
 		GameAssets.category_texture(category_id),
 		icon_text,
+		54.0,
 		28,
 		0.68
 	)
+	icon_display.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	slot.add_child(icon_display)
 	return slot
 
 
@@ -1174,6 +1170,8 @@ func _badge_cell(achievement: Dictionary) -> Control:
 	icon_slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	icon_wrap.add_child(icon_slot)
 
+	var icon_text := str(achievement.get("icon", "?"))
+	var icon_font_size := 24 if icon_text.is_valid_int() else 26
 	var badge := Panel.new()
 	badge.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -1187,20 +1185,15 @@ func _badge_cell(achievement: Dictionary) -> Control:
 	badge.add_theme_stylebox_override("panel", badge_style)
 	icon_slot.add_child(badge)
 
-	var overlay := Control.new()
-	overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	icon_slot.add_child(overlay)
-
-	var icon_text := str(achievement.get("icon", "?"))
-	var icon_font_size := 24 if icon_text.is_valid_int() else 26
-	GameAssets.fill_icon_slot(
-		overlay,
+	var overlay := GameAssets.make_icon_display(
 		GameAssets.badge_texture(str(achievement.get("id", ""))),
 		icon_text,
+		56.0,
 		icon_font_size,
 		0.78
 	)
+	overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	icon_slot.add_child(overlay)
 
 	var title := Label.new()
 	title.text = tr(str(achievement.get("title_key", "")))
@@ -1871,13 +1864,16 @@ func _set_badge_detail_icon(achievement: Dictionary) -> void:
 		parent.move_child(slot, badge_detail_icon.get_index())
 	slot.visible = true
 	var icon_text := str(achievement.get("icon", "?"))
-	GameAssets.fill_icon_slot(
-		slot,
+	var display := GameAssets.make_icon_display(
 		GameAssets.badge_texture(str(achievement.get("id", ""))),
 		icon_text,
+		72.0,
 		48,
 		0.82
 	)
+	for child in slot.get_children():
+		child.queue_free()
+	slot.add_child(display)
 
 
 func _on_badge_backdrop_gui_input(event: InputEvent) -> void:
