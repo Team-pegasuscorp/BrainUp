@@ -77,13 +77,18 @@ static func demo_avatar_texture(friend_name: String) -> Texture2D:
 	return load_texture(demo_avatar_path(friend_name))
 
 
+const ROUND_ICON_INSET := 0.50
+const ROUND_AVATAR_INSET := 0.56
+const ROUND_LEAGUE_INSET := 0.44
+
+
 ## Round PNG assets (categories, badges, avatars) — already circular on disk.
 static func make_circular_icon_display(
 	texture: Texture2D,
 	emoji_fallback: String,
 	size_px: float,
 	font_size: int = 28,
-	inset_ratio: float = 0.72
+	inset_ratio: float = ROUND_ICON_INSET
 ) -> Control:
 	return make_icon_display(texture, emoji_fallback, size_px, font_size, inset_ratio)
 
@@ -102,7 +107,7 @@ static func make_icon_display(
 	wrap.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 	if texture != null:
-		var inner := maxf(size_px * inset_ratio, 16.0)
+		var inner := maxf(size_px * inset_ratio, 12.0)
 		var icon := TextureRect.new()
 		icon.custom_minimum_size = Vector2(inner, inner)
 		icon.expand_mode = TextureRect.EXPAND_KEEP_SIZE
@@ -172,7 +177,7 @@ static func wire_demo_avatar_to_control(host: Control, friend_name: String) -> b
 	if existing != null:
 		existing.queue_free()
 	var side := size_px_from_slot(host, 56.0)
-	var wrap := make_circular_icon_display(tex, "", side, 28, 0.78)
+	var wrap := make_circular_icon_display(tex, "", side, 28, ROUND_AVATAR_INSET)
 	wrap.name = "DemoAvatarWrap"
 	wrap.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	host.add_child(wrap)
