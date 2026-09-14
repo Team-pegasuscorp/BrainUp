@@ -33,13 +33,15 @@ static func load_texture(path: String) -> Texture2D:
 		return null
 	if _cache.has(path):
 		return _cache[path] as Texture2D
+	if ResourceLoader.exists(path):
+		var imported := load(path) as Texture2D
+		if imported != null:
+			_cache[path] = imported
+			return imported
 	if not FileAccess.file_exists(path):
-		_cache[path] = null
 		return null
-	# New PNG/SVG assets may exist before the editor generates *.import sidecars.
 	var image := Image.new()
 	if image.load(path) != OK:
-		_cache[path] = null
 		return null
 	var tex := ImageTexture.create_from_image(image)
 	_cache[path] = tex
@@ -69,6 +71,15 @@ static func clear_icon_slot(slot: Control) -> void:
 		child.queue_free()
 
 
+static func _slot_side(slot: Control, fallback: float = 48.0) -> float:
+	var side := slot.custom_minimum_size.x
+	if side <= 0.0:
+		side = slot.size.x
+	if side <= 0.0:
+		side = fallback
+	return side
+
+
 static func fill_icon_slot(
 	slot: Control,
 	texture: Texture2D,
@@ -80,23 +91,19 @@ static func fill_icon_slot(
 		return
 	clear_icon_slot(slot)
 	if texture != null:
-		var pad := int(round(slot.custom_minimum_size.x * (1.0 - inset_ratio) * 0.5))
-		pad = maxi(pad, 2)
-		var margin := MarginContainer.new()
-		margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-		margin.add_theme_constant_override("margin_left", pad)
-		margin.add_theme_constant_override("margin_right", pad)
-		margin.add_theme_constant_override("margin_top", pad)
-		margin.add_theme_constant_override("margin_bottom", pad)
-		margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		slot.add_child(margin)
+		var side := _slot_side(slot)
+		var inner := maxf(side * inset_ratio, 16.0)
+		var center := CenterContainer.new()
+		center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		center.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		slot.add_child(center)
 		var rect := TextureRect.new()
 		rect.texture = texture
+		rect.custom_minimum_size = Vector2(inner, inner)
 		rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		margin.add_child(rect)
+		center.add_child(rect)
 		return
 	if emoji_fallback.is_empty():
 		return
@@ -137,19 +144,21 @@ static func wire_demo_avatar_to_control(host: Control, friend_name: String) -> b
 	var existing := host.get_node_or_null("DemoAvatarTex")
 	if existing != null:
 		existing.queue_free()
+	var side := _slot_side(host, 56.0)
+	var inner := maxf(side - 8.0, 24.0)
+	var center := CenterContainer.new()
+	center.name = "DemoAvatarTex"
+	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	center.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	host.add_child(center)
 	var rect := TextureRect.new()
-	rect.name = "DemoAvatarTex"
 	rect.texture = texture
+	rect.custom_minimum_size = Vector2(inner, inner)
 	rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	rect.offset_left = 4.0
-	rect.offset_top = 4.0
-	rect.offset_right = -4.0
-	rect.offset_bottom = -4.0
 	rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	host.add_child(rect)
-	host.move_child(rect, 0)
+	center.add_child(rect)
+	host.move_child(center, 0)
 	return true
 
 

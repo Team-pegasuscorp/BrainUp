@@ -1218,6 +1218,7 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 
 
 func _friend_best_subject_card(friend: Dictionary, cat_accent: Color) -> Control:
+	var cat_id := str(friend.get("best_category_id", ""))
 	var card := PanelContainer.new()
 	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	card.custom_minimum_size.y = 100

@@ -1,6 +1,7 @@
 # Godot 4
 .godot/
 *.import
+!assets/**/*.import
 export_presets.cfg
 export/
 
