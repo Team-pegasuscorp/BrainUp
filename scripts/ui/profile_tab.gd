@@ -685,13 +685,25 @@ func _build_categories_tile() -> PanelContainer:
 	return panel
 
 
-func _mastery_category_icon(category_id: String, icon_text: String, _accent: Color) -> Control:
-	## The PNG already contains its circular navy disc and rim.
+func _mastery_category_icon(category_id: String, icon_text: String, accent: Color) -> Control:
+	## Transparent subject over one UI-owned circular background.
 	var slot := Control.new()
 	slot.custom_minimum_size = Vector2(54, 54)
 	slot.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	slot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+	var bg := Panel.new()
+	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var icon_style := StyleBoxFlat.new()
+	icon_style.bg_color = Color(accent.r, accent.g, accent.b, 0.28)
+	icon_style.set_corner_radius_all(27)
+	icon_style.set_content_margin_all(0)
+	icon_style.shadow_color = Color(accent.r, accent.g, accent.b, 0.12)
+	icon_style.shadow_size = 2
+	bg.add_theme_stylebox_override("panel", icon_style)
+	slot.add_child(bg)
 
 	var icon_display := GameAssets.make_circular_icon_display(
 		GameAssets.category_texture(category_id),
@@ -1157,6 +1169,22 @@ func _badge_cell(achievement: Dictionary) -> Control:
 
 	var icon_text := str(achievement.get("icon", "?"))
 	var icon_font_size := 24 if icon_text.is_valid_int() else 26
+	var accent: Color = achievement.get("accent", UiTokens.ACCENT_PROFILE)
+	if typeof(accent) != TYPE_COLOR:
+		accent = UiTokens.ACCENT_PROFILE
+	var badge := Panel.new()
+	badge.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var badge_style := StyleBoxFlat.new()
+	badge_style.bg_color = Color(accent.r, accent.g, accent.b, 0.22)
+	badge_style.set_border_width_all(2)
+	badge_style.border_color = Color(accent.r, accent.g, accent.b, 0.85)
+	badge_style.set_corner_radius_all(28)
+	badge_style.shadow_color = Color(accent.r, accent.g, accent.b, 0.35)
+	badge_style.shadow_size = 8
+	badge.add_theme_stylebox_override("panel", badge_style)
+	icon_slot.add_child(badge)
+
 	var overlay := GameAssets.make_circular_icon_display(
 		GameAssets.badge_texture(str(achievement.get("id", ""))),
 		icon_text,

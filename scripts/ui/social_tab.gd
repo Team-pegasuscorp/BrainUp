@@ -675,7 +675,7 @@ func _populate_friend_requests_page() -> void:
 
 
 func _friend_chip(friend: Dictionary) -> Control:
-	## The generated avatar already includes its circular background and rim.
+	## Demo avatars keep their generated circular background.
 	const AVATAR := 64.0
 	var wrap := Control.new()
 	wrap.custom_minimum_size = Vector2(84, 118)
@@ -1403,16 +1403,33 @@ func _friend_stat_tile(
 func _friend_category_icon(
 	category_id: String,
 	icon_text: String,
-	_accent: Color,
+	accent: Color,
 	size_px: float = 36.0
 ) -> Control:
-	return GameAssets.make_icon_display(
+	var slot := Control.new()
+	slot.custom_minimum_size = Vector2(size_px, size_px)
+	slot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+	var bg := Panel.new()
+	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(accent.r, accent.g, accent.b, 0.28)
+	style.set_corner_radius_all(int(size_px * 0.5))
+	bg.add_theme_stylebox_override("panel", style)
+	slot.add_child(bg)
+
+	var icon := GameAssets.make_icon_display(
 		GameAssets.category_texture(category_id),
 		icon_text,
 		size_px,
 		int(size_px * 0.72),
 		0.84
 	)
+	icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	slot.add_child(icon)
+	return slot
 
 
 func _presence_label(presence: String) -> String:
@@ -1545,6 +1562,7 @@ func _challenge_category_chip(category: Dictionary) -> Control:
 	const ICON := 72.0
 	const CHIP_W := 118.0
 	var category_id := str(category.get("id", ""))
+	var accent := UiTokens.accent_for_category(category_id)
 	var selected := category_id == _selected_category_id
 
 	var wrap := Control.new()
@@ -1564,6 +1582,20 @@ func _challenge_category_chip(category: Dictionary) -> Control:
 	icon_wrap.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	icon_wrap.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	col.add_child(icon_wrap)
+
+	var disc := Panel.new()
+	disc.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	disc.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var disc_style := StyleBoxFlat.new()
+	disc_style.bg_color = Color(accent.r, accent.g, accent.b, 0.55 if selected else 0.28)
+	disc_style.set_corner_radius_all(int(ICON * 0.5))
+	disc_style.set_border_width_all(3 if selected else 2)
+	disc_style.border_color = accent if selected else Color(accent.r, accent.g, accent.b, 0.55)
+	if selected:
+		disc_style.shadow_color = Color(accent.r, accent.g, accent.b, 0.35)
+		disc_style.shadow_size = 8
+	disc.add_theme_stylebox_override("panel", disc_style)
+	icon_wrap.add_child(disc)
 
 	var icon_display := GameAssets.make_circular_icon_display(
 		GameAssets.category_texture(category_id),
