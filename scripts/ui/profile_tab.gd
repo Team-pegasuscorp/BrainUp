@@ -411,7 +411,7 @@ func _build_hero() -> PanelContainer:
 		str(ranking.get("league_icon", "🥉")),
 		72.0,
 		64,
-		0.72
+		0.58
 	)
 	league_icon.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	league_col.add_child(league_icon)
@@ -710,7 +710,7 @@ func _mastery_category_icon(category_id: String, icon_text: String, accent: Colo
 		icon_text,
 		54.0,
 		28,
-		0.12
+		0.68
 	)
 	icon_display.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	slot.add_child(icon_display)
@@ -1190,7 +1190,7 @@ func _badge_cell(achievement: Dictionary) -> Control:
 		icon_text,
 		56.0,
 		icon_font_size,
-		0.14
+		0.66
 	)
 	overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	icon_slot.add_child(overlay)
@@ -1869,7 +1869,7 @@ func _set_badge_detail_icon(achievement: Dictionary) -> void:
 		icon_text,
 		72.0,
 		48,
-		0.10
+		0.68
 	)
 	for child in slot.get_children():
 		child.queue_free()

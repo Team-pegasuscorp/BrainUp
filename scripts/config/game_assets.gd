@@ -83,9 +83,9 @@ static func make_circular_icon_display(
 	emoji_fallback: String,
 	size_px: float,
 	font_size: int = 28,
-	_inset: float = 0.10
+	inset_ratio: float = 0.72
 ) -> Control:
-	return make_icon_display(texture, emoji_fallback, size_px, font_size, 0.94)
+	return make_icon_display(texture, emoji_fallback, size_px, font_size, inset_ratio)
 
 
 static func make_icon_display(
@@ -172,7 +172,7 @@ static func wire_demo_avatar_to_control(host: Control, friend_name: String) -> b
 	if existing != null:
 		existing.queue_free()
 	var side := size_px_from_slot(host, 56.0)
-	var wrap := make_circular_icon_display(tex, "", side, 28)
+	var wrap := make_circular_icon_display(tex, "", side, 28, 0.78)
 	wrap.name = "DemoAvatarWrap"
 	wrap.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	host.add_child(wrap)
