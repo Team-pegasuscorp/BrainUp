@@ -1,8 +1,10 @@
 # BrainUp — prompts génération assets (ComfyUI / RunPod)
 
-Style global : premium mobile quiz, fond navy `#1C1830`, accents cyan `#12C4B8`, violet `#6B5CFF`, magenta `#E85D9A`, glow doux, fond transparent ou `#010010`.
+Style global : premium mobile quiz, fond navy `#1C1830`, accents cyan `#12C4B8`, violet `#6B5CFF`, magenta `#E85D9A`, glow doux.
 
-Modèle recommandé : **Juggernaut XL v9** (512×512 ou 768×768, PNG transparent si possible).
+**Format cible (v3)** : PNG **circulaire** — disque navy uniforme + sujet centré + alpha transparent hors cercle. Finalisation via `finalize_brainup.py` (masque rond + gradient radial).
+
+Modèle : **Juggernaut XL v9** (1024×1024 → finalize 128 ou 256 px).
 
 ---
 
@@ -12,23 +14,12 @@ Nommage : `assets/categories/{id}.png` — ids : `sport`, `cinema`, `history`, `
 
 Prompt base :
 ```
-game UI icon, single subject centered, flat premium mobile app style,
-navy and cyan glow, soft gradient, no text, transparent background,
-BrainUp quiz app, clean silhouette, 128px icon
+perfect circular game UI icon, single centered object inside round badge,
+symmetrical round composition, soft navy circular disc background,
+cyan violet glow rim, no square frame, no corners, no text
 ```
 
-| id | sujet |
-|----|-------|
-| sport | soccer ball |
-| cinema | film clapperboard |
-| history | ancient scroll |
-| science | laboratory flask |
-| geography | globe |
-| music | musical note |
-| general | light bulb |
-| television | retro TV set |
-
-Negative : `text, watermark, blurry, photorealistic face, cluttered`
+Negative : `square frame, rectangular background, corner vignette, text, watermark`
 
 ---
 
@@ -38,11 +29,9 @@ Nommage : `assets/badges/{achievement_id}.png` — voir `scripts/profile/achieve
 
 Prompt base :
 ```
-achievement badge icon, circular medal, premium mobile game UI,
-glow accent color, navy rim, no text, transparent background, 128px
+achievement badge icon, circular medal, centered in round disc,
+premium mobile game UI, glow accent, navy rim, no text, no square frame
 ```
-
-Ajouter l’accent par badge (teal, gold, violet, magenta, etc.) selon le champ `accent` du catalogue.
 
 ---
 
@@ -52,30 +41,36 @@ Nommage : `assets/leagues/{league_id}.png` — voir `scripts/profile/trophy_leag
 
 Prompt base :
 ```
-trophy league badge, stylized cup shield emblem, premium quiz app,
-metallic glow, no text, transparent background, 128px
+epic circular league rank badge, trophy emblem centered in round medal,
+soft navy round disc background, metallic glow, no text, no square frame
 ```
 
 ---
 
-## Avatars demo social (14–20 × 256 px)
+## Avatars demo social (14 × 256 px)
 
-Nommage : `assets/avatars/demo/{friend_id}.png` — ids dans `social_tab.gd` → `_demo_friends()`.
+Nommage : `assets/avatars/demo/{slug}.png` — slugs dans `social_tab.gd` → `_demo_friends()`.
 
 Prompt base :
 ```
-stylized portrait avatar, shoulders up, friendly quiz gamer,
-semi-flat illustration, soft navy violet cyan palette,
-no text, no watermark, centered face, 256px square
+cute animal mascot avatar, head and shoulders, centered in perfect circle,
+round circular composition, soft navy violet cyan gradient disc background,
+semi-flat illustration, no square frame, no text
 ```
-
-Varier genre, cheveux, accessoires entre profils. Éviter le photoréalisme pur.
 
 ---
 
 ## Workflow RunPod
 
-1. Créer pod 4090 sur volume `e9354hq21w` (voir `Documents/Onboarding-Collab/04-RunPod.md`).
-2. Générer par batch, récupérer via fileserver `:3000`.
-3. Copier dans `assets/` ci-dessus.
-4. **Supprimer le pod** après usage.
+```bash
+/mnt/stockage/comfyui/run_brainup_pod.sh
+# ou manuellement :
+export COMFY_URL="https://<pod>-8188.proxy.runpod.net"
+python3 /mnt/stockage/comfyui/gen_brainup.py --kind all --out ./raw
+python3 /mnt/stockage/comfyui/finalize_brainup.py --src ./raw --out ./final
+```
+
+1. Pod 4090 sur volume `e9354hq21w` (voir `Documents/Onboarding-Collab/04-RunPod.md`).
+2. Générer 41 jobs, finaliser (fond rond), copier dans `BrainUp/assets/`.
+3. **Supprimer le pod** après usage.
+4. Godot : Project → Reload (réimport PNG).
