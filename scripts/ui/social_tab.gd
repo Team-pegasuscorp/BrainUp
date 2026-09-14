@@ -675,7 +675,7 @@ func _populate_friend_requests_page() -> void:
 
 
 func _friend_chip(friend: Dictionary) -> Control:
-	## Mock: accent ring avatar + green/grey presence + name + Lv.
+	## The generated avatar already includes its circular background and rim.
 	const AVATAR := 64.0
 	var wrap := Control.new()
 	wrap.custom_minimum_size = Vector2(84, 118)
@@ -687,7 +687,6 @@ func _friend_chip(friend: Dictionary) -> Control:
 	col.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	wrap.add_child(col)
 
-	var accent: Color = friend.get("accent", UiTokens.ACCENT_SOCIAL)
 	var avatar_wrap := Control.new()
 	avatar_wrap.custom_minimum_size = Vector2(AVATAR, AVATAR)
 	avatar_wrap.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
@@ -696,14 +695,7 @@ func _friend_chip(friend: Dictionary) -> Control:
 	var avatar := PanelContainer.new()
 	avatar.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	avatar.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var disc := StyleBoxFlat.new()
-	disc.bg_color = Color(accent.r, accent.g, accent.b, 0.42)
-	disc.set_corner_radius_all(int(AVATAR * 0.5))
-	disc.set_border_width_all(3)
-	disc.border_color = accent
-	disc.set_content_margin_all(0)
-	disc.anti_aliasing = true
-	avatar.add_theme_stylebox_override("panel", disc)
+	avatar.add_theme_stylebox_override("panel", StyleBoxEmpty.new())
 	var initial := Label.new()
 	initial.text = str(friend.get("name", "?")).substr(0, 1).to_upper()
 	initial.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -1007,7 +999,6 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 		_friend_detail_body.remove_child(child)
 		child.free()
 
-	var accent: Color = friend.get("accent", UiTokens.ACCENT_SOCIAL)
 	var cat_id := str(friend.get("best_category_id", ""))
 	var cat_accent := UiTokens.accent_for_category(cat_id) if not cat_id.is_empty() else UiTokens.ACCENT_SOCIAL
 	var last_won := bool(friend.get("last_won", false))
@@ -1026,14 +1017,7 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 	var avatar := Panel.new()
 	avatar.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	avatar.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var disc := StyleBoxFlat.new()
-	disc.bg_color = Color(accent.r, accent.g, accent.b, 0.55)
-	disc.set_corner_radius_all(40)
-	disc.set_border_width_all(3)
-	disc.border_color = Color(1, 1, 1, 0.92)
-	disc.shadow_color = Color(1, 1, 1, 0.18)
-	disc.shadow_size = 6
-	avatar.add_theme_stylebox_override("panel", disc)
+	avatar.add_theme_stylebox_override("panel", StyleBoxEmpty.new())
 	avatar_wrap.add_child(avatar)
 
 	var initial := Label.new()
@@ -1561,7 +1545,6 @@ func _challenge_category_chip(category: Dictionary) -> Control:
 	const ICON := 72.0
 	const CHIP_W := 118.0
 	var category_id := str(category.get("id", ""))
-	var accent := UiTokens.accent_for_category(category_id)
 	var selected := category_id == _selected_category_id
 
 	var wrap := Control.new()
@@ -1582,20 +1565,6 @@ func _challenge_category_chip(category: Dictionary) -> Control:
 	icon_wrap.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	col.add_child(icon_wrap)
 
-	var disc := Panel.new()
-	disc.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	disc.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var disc_style := StyleBoxFlat.new()
-	disc_style.bg_color = Color(accent.r, accent.g, accent.b, 0.55 if selected else 0.28)
-	disc_style.set_corner_radius_all(int(ICON * 0.5))
-	disc_style.set_border_width_all(3 if selected else 2)
-	disc_style.border_color = accent if selected else Color(accent.r, accent.g, accent.b, 0.55)
-	if selected:
-		disc_style.shadow_color = Color(accent.r, accent.g, accent.b, 0.35)
-		disc_style.shadow_size = 8
-	disc.add_theme_stylebox_override("panel", disc_style)
-	icon_wrap.add_child(disc)
-
 	var icon_display := GameAssets.make_circular_icon_display(
 		GameAssets.category_texture(category_id),
 		ProfileSnapshot._category_icon(category_id),
@@ -1603,6 +1572,7 @@ func _challenge_category_chip(category: Dictionary) -> Control:
 		34,
 		GameAssets.ROUND_ICON_INSET
 	)
+	icon_display.modulate.a = 1.0 if selected else 0.72
 	icon_display.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	icon_wrap.add_child(icon_display)
 
