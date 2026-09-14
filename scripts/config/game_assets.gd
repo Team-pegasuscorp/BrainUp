@@ -110,7 +110,9 @@ static func make_icon_display(
 		var inner := maxf(size_px * inset_ratio, 12.0)
 		var icon := TextureRect.new()
 		icon.custom_minimum_size = Vector2(inner, inner)
-		icon.expand_mode = TextureRect.EXPAND_KEEP_SIZE
+		## IGNORE_SIZE is required here: KEEP_SIZE restores the PNG's native
+		## 128/256 px minimum and makes it overflow the smaller UI slot.
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		icon.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 		icon.texture = texture
