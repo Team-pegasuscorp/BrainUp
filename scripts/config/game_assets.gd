@@ -2,6 +2,7 @@ class_name GameAssets
 extends RefCounted
 
 const UiFonts = preload("res://scripts/config/ui_fonts.gd")
+const CircularTextureIcon = preload("res://scripts/ui/circular_texture_icon.gd")
 
 static var _cache: Dictionary = {}
 
@@ -35,7 +36,6 @@ static func load_texture(path: String) -> Texture2D:
 		return null
 	if _cache.has(path):
 		return _cache[path] as Texture2D
-	## Read PNG/JPG straight from disk first — survives missing/broken .godot import cache.
 	if FileAccess.file_exists(path):
 		var image := Image.new()
 		if image.load(path) == OK:
@@ -66,7 +66,7 @@ static func demo_avatar_texture(friend_name: String) -> Texture2D:
 	return load_texture(demo_avatar_path(friend_name))
 
 
-## Same layout pattern as bottom_nav_bar tab icons (CenterContainer + TextureRect).
+## Square slot — leagues, flat chips without a circular frame.
 static func make_icon_display(
 	texture: Texture2D,
 	emoji_fallback: String,
@@ -108,19 +108,43 @@ static func make_icon_display(
 	return wrap
 
 
+## Circular slot — categories, badges, avatars inside round frames.
+static func make_circular_icon_display(
+	texture: Texture2D,
+	emoji_fallback: String,
+	size_px: float,
+	font_size: int = 28,
+	clip_inset: float = 0.10
+) -> CircularTextureIcon:
+	var icon := CircularTextureIcon.new()
+	icon.custom_minimum_size = Vector2(size_px, size_px)
+	icon.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	icon.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	icon.clip_inset = clip_inset
+	icon.set_content(texture, emoji_fallback, font_size)
+	return icon
+
+
 static func fill_icon_slot(
 	slot: Control,
 	texture: Texture2D,
 	emoji_fallback: String = "",
 	font_size: int = 28,
-	inset_ratio: float = 0.72
+	inset_ratio: float = 0.72,
+	circular: bool = false,
+	clip_inset: float = 0.10
 ) -> void:
 	if slot == null:
 		return
 	for child in slot.get_children():
 		child.queue_free()
 	var side := size_px_from_slot(slot)
-	var display := make_icon_display(texture, emoji_fallback, side, font_size, inset_ratio)
+	var display: Control
+	if circular:
+		display = make_circular_icon_display(texture, emoji_fallback, side, font_size, clip_inset)
+	else:
+		display = make_icon_display(texture, emoji_fallback, side, font_size, inset_ratio)
 	display.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	slot.add_child(display)
 
@@ -135,8 +159,8 @@ static func size_px_from_slot(slot: Control, fallback: float = 48.0) -> float:
 
 
 static func wire_demo_avatar_to_control(host: Control, friend_name: String) -> bool:
-	var texture := demo_avatar_texture(friend_name)
-	if texture == null:
+	var tex := demo_avatar_texture(friend_name)
+	if tex == null:
 		return false
 	for child in host.get_children():
 		if child is Label:
@@ -145,11 +169,12 @@ static func wire_demo_avatar_to_control(host: Control, friend_name: String) -> b
 	if existing != null:
 		existing.queue_free()
 	var side := size_px_from_slot(host, 56.0)
-	var wrap := make_icon_display(texture, "", side, 28, 0.82)
-	wrap.name = "DemoAvatarWrap"
-	wrap.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	host.add_child(wrap)
-	host.move_child(wrap, 0)
+	var border_inset := clampf(3.0 / maxf(side, 1.0), 0.08, 0.16)
+	var icon := make_circular_icon_display(tex, "", side, 28, border_inset)
+	icon.name = "DemoAvatarWrap"
+	icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	host.add_child(icon)
+	host.move_child(icon, 0)
 	return true
 
 

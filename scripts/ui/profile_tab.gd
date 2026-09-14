@@ -411,7 +411,7 @@ func _build_hero() -> PanelContainer:
 		str(ranking.get("league_icon", "🥉")),
 		72.0,
 		64,
-		0.88
+		0.72
 	)
 	league_icon.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	league_col.add_child(league_icon)
@@ -705,12 +705,12 @@ func _mastery_category_icon(category_id: String, icon_text: String, accent: Colo
 	bg.add_theme_stylebox_override("panel", icon_style)
 	slot.add_child(bg)
 
-	var icon_display := GameAssets.make_icon_display(
+	var icon_display := GameAssets.make_circular_icon_display(
 		GameAssets.category_texture(category_id),
 		icon_text,
 		54.0,
 		28,
-		0.68
+		0.12
 	)
 	icon_display.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	slot.add_child(icon_display)
@@ -1185,12 +1185,12 @@ func _badge_cell(achievement: Dictionary) -> Control:
 	badge.add_theme_stylebox_override("panel", badge_style)
 	icon_slot.add_child(badge)
 
-	var overlay := GameAssets.make_icon_display(
+	var overlay := GameAssets.make_circular_icon_display(
 		GameAssets.badge_texture(str(achievement.get("id", ""))),
 		icon_text,
 		56.0,
 		icon_font_size,
-		0.78
+		0.14
 	)
 	overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	icon_slot.add_child(overlay)
@@ -1864,12 +1864,12 @@ func _set_badge_detail_icon(achievement: Dictionary) -> void:
 		parent.move_child(slot, badge_detail_icon.get_index())
 	slot.visible = true
 	var icon_text := str(achievement.get("icon", "?"))
-	var display := GameAssets.make_icon_display(
+	var display := GameAssets.make_circular_icon_display(
 		GameAssets.badge_texture(str(achievement.get("id", ""))),
 		icon_text,
 		72.0,
 		48,
-		0.82
+		0.10
 	)
 	for child in slot.get_children():
 		child.queue_free()

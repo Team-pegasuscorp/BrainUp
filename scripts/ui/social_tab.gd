@@ -1427,7 +1427,7 @@ func _friend_category_icon(
 		icon_text,
 		size_px,
 		int(size_px * 0.72),
-		0.72
+		0.62
 	)
 
 
@@ -1596,12 +1596,12 @@ func _challenge_category_chip(category: Dictionary) -> Control:
 	disc.add_theme_stylebox_override("panel", disc_style)
 	icon_wrap.add_child(disc)
 
-	var icon_display := GameAssets.make_icon_display(
+	var icon_display := GameAssets.make_circular_icon_display(
 		GameAssets.category_texture(category_id),
 		ProfileSnapshot._category_icon(category_id),
 		ICON,
 		34,
-		0.68
+		0.12
 	)
 	icon_display.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	icon_wrap.add_child(icon_display)
