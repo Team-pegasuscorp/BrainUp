@@ -77,9 +77,9 @@ static func demo_avatar_texture(friend_name: String) -> Texture2D:
 	return load_texture(demo_avatar_path(friend_name))
 
 
-const ROUND_ICON_INSET := 0.78
-const ROUND_AVATAR_INSET := 0.84
-const ROUND_LEAGUE_INSET := 0.74
+const ROUND_ICON_INSET := 0.88
+const ROUND_AVATAR_INSET := 0.92
+const ROUND_LEAGUE_INSET := 0.86
 
 
 ## Round PNG assets (categories, badges, avatars) — already circular on disk.

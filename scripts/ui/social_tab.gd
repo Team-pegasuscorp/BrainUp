@@ -1427,7 +1427,7 @@ func _friend_category_icon(
 		icon_text,
 		size_px,
 		int(size_px * 0.72),
-		0.72
+		0.84
 	)
 
 
