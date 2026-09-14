@@ -1190,7 +1190,7 @@ func _badge_cell(achievement: Dictionary) -> Control:
 		icon_text,
 		56.0,
 		icon_font_size,
-		0.46
+		GameAssets.ROUND_ICON_INSET
 	)
 	overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	icon_slot.add_child(overlay)
@@ -1869,7 +1869,7 @@ func _set_badge_detail_icon(achievement: Dictionary) -> void:
 		icon_text,
 		72.0,
 		48,
-		0.48
+		GameAssets.ROUND_ICON_INSET
 	)
 	for child in slot.get_children():
 		child.queue_free()
