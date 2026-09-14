@@ -1187,10 +1187,15 @@ func _badge_cell(achievement: Dictionary) -> Control:
 	badge.add_theme_stylebox_override("panel", badge_style)
 	icon_slot.add_child(badge)
 
+	var overlay := Control.new()
+	overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	icon_slot.add_child(overlay)
+
 	var icon_text := str(achievement.get("icon", "?"))
 	var icon_font_size := 24 if icon_text.is_valid_int() else 26
 	GameAssets.fill_icon_slot(
-		icon_slot,
+		overlay,
 		GameAssets.badge_texture(str(achievement.get("id", ""))),
 		icon_text,
 		icon_font_size,

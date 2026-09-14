@@ -130,8 +130,10 @@ func get_profile_avatar_texture() -> Texture2D:
 		var image := Image.load_from_file(PROFILE_AVATAR_PATH)
 		if image != null:
 			return ImageTexture.create_from_image(image)
-	if ResourceLoader.exists(DEFAULT_AVATAR_PATH):
-		return load(DEFAULT_AVATAR_PATH) as Texture2D
+	if FileAccess.file_exists(DEFAULT_AVATAR_PATH):
+		var image := Image.new()
+		if image.load(DEFAULT_AVATAR_PATH) == OK:
+			return ImageTexture.create_from_image(image)
 	return null
 
 

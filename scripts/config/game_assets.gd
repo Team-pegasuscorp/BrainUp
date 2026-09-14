@@ -33,10 +33,15 @@ static func load_texture(path: String) -> Texture2D:
 		return null
 	if _cache.has(path):
 		return _cache[path] as Texture2D
-	if not ResourceLoader.exists(path):
+	if not FileAccess.file_exists(path):
 		_cache[path] = null
 		return null
-	var tex := load(path) as Texture2D
+	# New PNG/SVG assets may exist before the editor generates *.import sidecars.
+	var image := Image.new()
+	if image.load(path) != OK:
+		_cache[path] = null
+		return null
+	var tex := ImageTexture.create_from_image(image)
 	_cache[path] = tex
 	return tex
 
@@ -87,10 +92,9 @@ static func fill_icon_slot(
 		slot.add_child(margin)
 		var rect := TextureRect.new()
 		rect.texture = texture
-		rect.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
+		rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		rect.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		rect.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		margin.add_child(rect)
 		return
