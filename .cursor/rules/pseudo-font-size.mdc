@@ -1,17 +1,17 @@
 ---
-description: Player/opponent pseudos are always 18px unless the user changes it.
+description: Player/opponent pseudos are always 20px unless the user changes it.
 globs: scripts/ui/**/*.gd,scripts/config/ui_tokens.gd
 alwaysApply: true
 ---
 
-# Pseudo font size is locked at 18px
+# Pseudo font size is locked at 20px
 
-Player names, opponent names, and friend display names (**pseudos**) use **`UiTokens.PSEUDO_FONT_SIZE` (18)** everywhere in the app.
+Player names, opponent names, and friend display names (**pseudos**) use **`UiTokens.PSEUDO_FONT_SIZE` (20)** everywhere in the app.
 
 ## Do
 
 - Use `UiTokens.PSEUDO_FONT_SIZE` for any label that shows a player/opponent/friend pseudo
-- Keep history, friends, leaderboard rows, and similar list tiles on 18
+- Keep history, friends, leaderboard rows, and similar list tiles on 20
 
 ## Don’t
 

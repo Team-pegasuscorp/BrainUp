@@ -291,7 +291,8 @@ func _best_score_global() -> int:
 
 
 func _rival_names() -> Array[String]:
-	return ["Nova", "Kira", "Milo", "Zara", "Theo", "Luna", "Axel", "Iris", "Leo"]
+	## Prefer names that match assets/avatars/demo portraits.
+	return ["Lucas", "Emma", "Noah", "Léa", "Hugo", "Chloé", "Adam", "Sarah", "Maya"]
 
 
 func _xp_for_next_level() -> int:

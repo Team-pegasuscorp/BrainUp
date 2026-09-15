@@ -40,7 +40,7 @@ var _achievements_grid: GridContainer
 var _categories_page: Control
 var _categories_list: VBoxContainer
 ## Base page gutter; left/right stay equal visually without changing tile width.
-const _PAGE_GUTTER: int = 18
+const _PAGE_GUTTER: int = 10
 
 
 func _ready() -> void:
@@ -496,17 +496,17 @@ func _build_stats_strip() -> PanelContainer:
 
 	var ranking: Dictionary = _profile_data.get("ranking", {})
 	var items := [
-		{"icon": "🎮", "value": _format_int(int(_profile_data.get("games_played", 0))), "label": tr("UI_PROFILE_STAT_GAMES"), "color": Color(0.36, 0.75, 1.0)},
-		{"icon": "🏆", "value": _format_int(int(_profile_data.get("wins", 0))), "label": tr("UI_PROFILE_STAT_WINS"), "color": UiTokens.FEEDBACK_CORRECT},
-		{"icon": "🎯", "value": "%.0f%%" % _profile_data.get("win_rate_percent", 0.0), "label": tr("UI_PROFILE_STAT_WINRATE"), "color": Color(1.0, 0.55, 0.18)},
-		{"icon": "🔥", "value": str(_profile_data.get("best_win_streak", 0)), "label": tr("UI_PROFILE_STAT_STREAK"), "color": Color(1.0, 0.42, 0.28)},
-		{"icon": "📊", "value": _format_int(int(ranking.get("points", 0))), "label": tr("UI_PROFILE_STAT_RANK"), "color": UiTokens.ACCENT_PROFILE},
+		{"value": _format_int(int(_profile_data.get("games_played", 0))), "label": tr("UI_PROFILE_STAT_GAMES"), "color": Color(0.36, 0.75, 1.0)},
+		{"value": _format_int(int(_profile_data.get("wins", 0))), "label": tr("UI_PROFILE_STAT_WINS"), "color": UiTokens.FEEDBACK_CORRECT},
+		{"value": "%.0f%%" % _profile_data.get("win_rate_percent", 0.0), "label": tr("UI_PROFILE_STAT_WINRATE"), "color": Color(1.0, 0.55, 0.18)},
+		{"value": str(_profile_data.get("best_win_streak", 0)), "label": tr("UI_PROFILE_STAT_STREAK"), "color": Color(1.0, 0.42, 0.28)},
+		{"value": _format_int(int(ranking.get("points", 0))), "label": tr("UI_PROFILE_STAT_RANK"), "color": UiTokens.ACCENT_PROFILE},
 	]
 	for i in range(items.size()):
 		if i > 0:
 			row.add_child(_stat_strip_divider())
 		var item: Dictionary = items[i]
-		row.add_child(_stat_icon_cell(str(item.icon), str(item.value), str(item.label), item.color))
+		row.add_child(_stat_icon_cell(str(item.value), str(item.label), item.color))
 
 	_animated_nodes.append(panel)
 	return panel
@@ -530,8 +530,8 @@ func _stat_strip_divider() -> Control:
 	return wrap
 
 
-func _stat_icon_cell(icon: String, value: String, label: String, color: Color) -> Control:
-	## Mock cell: icon + value on top; caption centered between separators below.
+func _stat_icon_cell(value: String, label: String, _color: Color) -> Control:
+	## Value on top, caption below — no icons (avoids overlap in the strip).
 	var pad := MarginContainer.new()
 	pad.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	pad.size_flags_stretch_ratio = 1.0
@@ -543,10 +543,9 @@ func _stat_icon_cell(icon: String, value: String, label: String, color: Color) -
 	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	col.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	col.alignment = BoxContainer.ALIGNMENT_CENTER
-	col.add_theme_constant_override("separation", 2)
+	col.add_theme_constant_override("separation", 0)
 	pad.add_child(col)
 
-	## Top block: icon + number, same vertical level, lifted together.
 	var top_center := CenterContainer.new()
 	top_center.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	col.add_child(top_center)
@@ -555,46 +554,14 @@ func _stat_icon_cell(icon: String, value: String, label: String, color: Color) -
 	top_lift.add_theme_constant_override("margin_top", -9)
 	top_center.add_child(top_lift)
 
-	var top := HBoxContainer.new()
-	top.alignment = BoxContainer.ALIGNMENT_CENTER
-	top.add_theme_constant_override("separation", 6)
-	top_lift.add_child(top)
-
-	var icon_slot := CenterContainer.new()
-	icon_slot.custom_minimum_size = Vector2(44, 44)
-	icon_slot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	var icon_nudge := MarginContainer.new()
-	icon_nudge.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	icon_nudge.add_theme_constant_override("margin_left", -8)
-	icon_nudge.add_child(icon_slot)
-	top.add_child(icon_nudge)
-
-	var icon_label := Label.new()
-	icon_label.text = icon
-	icon_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	icon_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	icon_label.custom_minimum_size = Vector2(44, 44)
-	icon_label.add_theme_font_size_override("font_size", 38)
-	icon_label.add_theme_color_override("font_color", color)
-	var emoji_font := UiFonts.emoji_font()
-	if emoji_font != null:
-		icon_label.add_theme_font_override("font", emoji_font)
-	icon_slot.add_child(icon_label)
-
 	var value_label := Label.new()
 	value_label.text = value
-	value_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	value_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	value_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	value_label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	value_label.add_theme_font_size_override("font_size", 26)
 	value_label.add_theme_color_override("font_color", Color(1, 1, 1, 1))
-	var value_wrap := MarginContainer.new()
-	value_wrap.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	value_wrap.add_theme_constant_override("margin_left", 6)
-	value_wrap.add_child(value_label)
-	top.add_child(value_wrap)
+	top_lift.add_child(value_label)
 
-	## Caption centered in the full column between separators.
 	var caption := Label.new()
 	caption.text = label.to_upper()
 	caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -603,7 +570,7 @@ func _stat_icon_cell(icon: String, value: String, label: String, color: Color) -
 	caption.add_theme_color_override("font_color", Color(0.62, 0.66, 0.78, 1))
 	var caption_wrap := MarginContainer.new()
 	caption_wrap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	caption_wrap.add_theme_constant_override("margin_top", 5)
+	caption_wrap.add_theme_constant_override("margin_top", 1)
 	## Keep tile height: larger caption overlaps instead of growing.
 	caption_wrap.add_theme_constant_override("margin_bottom", -8)
 	caption_wrap.add_child(caption)
@@ -1007,7 +974,7 @@ func _history_row(row: Dictionary) -> Control:
 	bar.add_theme_stylebox_override("panel", bar_style)
 	hbox.add_child(bar)
 
-	## Circular avatar.
+	## Circular avatar (demo portrait when available).
 	var avatar_slot := Control.new()
 	avatar_slot.custom_minimum_size = Vector2(48, 48)
 	avatar_slot.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
@@ -1016,6 +983,7 @@ func _history_row(row: Dictionary) -> Control:
 	hbox.add_child(avatar_slot)
 
 	var avatar_bg := Panel.new()
+	avatar_bg.custom_minimum_size = Vector2(48, 48)
 	avatar_bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	avatar_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var av_style := StyleBoxFlat.new()
@@ -1035,6 +1003,10 @@ func _history_row(row: Dictionary) -> Control:
 	initial.add_theme_font_size_override("font_size", 20)
 	initial.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	avatar_slot.add_child(initial)
+	## Size must be set before wire — otherwise GameAssets falls back to 56px / fails layout.
+	if GameAssets.wire_demo_avatar_to_control(avatar_bg, opponent_name):
+		av_style.bg_color = Color(0, 0, 0, 0)
+		initial.visible = false
 
 	## Name + category.
 	var left := VBoxContainer.new()
@@ -1632,10 +1604,10 @@ func _ensure_achievements_page() -> void:
 
 	var page_margin := MarginContainer.new()
 	page_margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	page_margin.add_theme_constant_override("margin_left", 18)
-	page_margin.add_theme_constant_override("margin_right", 18)
-	page_margin.add_theme_constant_override("margin_top", 16)
-	page_margin.add_theme_constant_override("margin_bottom", 20)
+	page_margin.add_theme_constant_override("margin_left", 10)
+	page_margin.add_theme_constant_override("margin_right", 10)
+	page_margin.add_theme_constant_override("margin_top", 10)
+	page_margin.add_theme_constant_override("margin_bottom", 10)
 	_achievements_page.add_child(page_margin)
 
 	var panel := PanelContainer.new()
@@ -1721,10 +1693,10 @@ func _ensure_categories_page() -> void:
 
 	var page_margin := MarginContainer.new()
 	page_margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	page_margin.add_theme_constant_override("margin_left", 18)
-	page_margin.add_theme_constant_override("margin_right", 18)
-	page_margin.add_theme_constant_override("margin_top", 16)
-	page_margin.add_theme_constant_override("margin_bottom", 20)
+	page_margin.add_theme_constant_override("margin_left", 10)
+	page_margin.add_theme_constant_override("margin_right", 10)
+	page_margin.add_theme_constant_override("margin_top", 10)
+	page_margin.add_theme_constant_override("margin_bottom", 10)
 	_categories_page.add_child(page_margin)
 
 	var panel := PanelContainer.new()

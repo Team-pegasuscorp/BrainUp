@@ -132,7 +132,7 @@ func _rebuild_content() -> void:
 func _friends_section() -> PanelContainer:
 	## Same title size / left inset as profile tiles; Voir tout on the right.
 	var panel := PanelContainer.new()
-	panel.custom_minimum_size.y = 200
+	panel.custom_minimum_size.y = 220
 	panel.add_theme_stylebox_override("panel", UiStyle.social_surface(false, 0))
 
 	var pad := MarginContainer.new()
@@ -193,7 +193,7 @@ func _friends_section() -> PanelContainer:
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
 	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	scroll.custom_minimum_size.y = 128
+	scroll.custom_minimum_size.y = 148
 	vbox.add_child(scroll)
 
 	var row := HBoxContainer.new()
@@ -426,6 +426,7 @@ func _friend_request_row(request: Dictionary) -> Control:
 	row.add_child(hbox)
 
 	var accent: Color = request.get("accent", UiTokens.ACCENT_SOCIAL)
+	var request_name := str(request.get("name", ""))
 	var avatar := PanelContainer.new()
 	avatar.custom_minimum_size = Vector2(44, 44)
 	var disc := StyleBoxFlat.new()
@@ -435,13 +436,19 @@ func _friend_request_row(request: Dictionary) -> Control:
 	disc.border_color = accent
 	avatar.add_theme_stylebox_override("panel", disc)
 	var initial := Label.new()
-	initial.text = str(request.get("name", "?")).substr(0, 1).to_upper()
+	initial.text = request_name.substr(0, 1).to_upper() if not request_name.is_empty() else "?"
 	initial.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	initial.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	initial.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	initial.add_theme_font_size_override("font_size", 18)
 	initial.add_theme_color_override("font_color", Color.WHITE)
 	avatar.add_child(initial)
+	## Size must be set before wire — otherwise GameAssets falls back to 56px.
+	if GameAssets.wire_demo_avatar(avatar, request_name):
+		disc.bg_color = Color(0, 0, 0, 0)
+		disc.border_color = Color(0, 0, 0, 0)
+		disc.set_border_width_all(0)
+		initial.visible = false
 	hbox.add_child(avatar)
 
 	var identity := VBoxContainer.new()
@@ -450,7 +457,7 @@ func _friend_request_row(request: Dictionary) -> Control:
 	hbox.add_child(identity)
 
 	var name_label := Label.new()
-	name_label.text = str(request.get("name", ""))
+	name_label.text = request_name
 	name_label.clip_text = true
 	name_label.add_theme_font_size_override("font_size", UiTokens.PSEUDO_FONT_SIZE)
 	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
@@ -466,7 +473,6 @@ func _friend_request_row(request: Dictionary) -> Control:
 	actions.add_theme_constant_override("separation", 8)
 	hbox.add_child(actions)
 
-	var request_name := str(request.get("name", ""))
 	actions.add_child(_friend_request_action_btn(
 		"✕",
 		UiTokens.FEEDBACK_WRONG,
@@ -501,11 +507,12 @@ func _friend_request_action_btn(label_text: String, color: Color, callback: Call
 
 
 func _demo_friend_requests() -> Array:
+	## Names must match assets/avatars/demo/*.png slugs.
 	return [
-		{"name": "Sophie", "level": 18, "accent": Color(0.95, 0.45, 0.70, 1)},
-		{"name": "Thomas", "level": 21, "accent": Color(0.35, 0.55, 0.95, 1)},
-		{"name": "Clara", "level": 14, "accent": Color(0.95, 0.60, 0.25, 1)},
-		{"name": "Maxime", "level": 27, "accent": Color(0.30, 0.75, 0.55, 1)},
+		{"name": "Sarah", "level": 18, "accent": Color(0.95, 0.45, 0.70, 1)},
+		{"name": "Theo", "level": 21, "accent": Color(0.35, 0.55, 0.95, 1)},
+		{"name": "Maya", "level": 14, "accent": Color(0.95, 0.60, 0.25, 1)},
+		{"name": "Yanis", "level": 27, "accent": Color(0.30, 0.75, 0.55, 1)},
 	]
 
 
@@ -676,9 +683,9 @@ func _populate_friend_requests_page() -> void:
 
 func _friend_chip(friend: Dictionary) -> Control:
 	## Demo avatars keep their generated circular background.
-	const AVATAR := 64.0
+	const AVATAR := 80.0
 	var wrap := Control.new()
-	wrap.custom_minimum_size = Vector2(84, 118)
+	wrap.custom_minimum_size = Vector2(96, 138)
 
 	var col := VBoxContainer.new()
 	col.add_theme_constant_override("separation", 4)
@@ -693,6 +700,7 @@ func _friend_chip(friend: Dictionary) -> Control:
 	avatar_wrap.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 	var avatar := PanelContainer.new()
+	avatar.custom_minimum_size = Vector2(AVATAR, AVATAR)
 	avatar.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	avatar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	avatar.add_theme_stylebox_override("panel", StyleBoxEmpty.new())
@@ -702,9 +710,10 @@ func _friend_chip(friend: Dictionary) -> Control:
 	initial.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	initial.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	initial.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	initial.add_theme_font_size_override("font_size", 24)
+	initial.add_theme_font_size_override("font_size", 28)
 	initial.add_theme_color_override("font_color", Color.WHITE)
 	avatar.add_child(initial)
+	## Size must be set on the panel before wire — otherwise GameAssets falls back to 56px.
 	if GameAssets.wire_demo_avatar(avatar, str(friend.get("name", ""))):
 		initial.visible = false
 	avatar_wrap.add_child(avatar)
@@ -714,7 +723,7 @@ func _friend_chip(friend: Dictionary) -> Control:
 	var dot_color := Color(0.55, 0.56, 0.60, 1)
 	if presence == "online":
 		dot_color = Color(0.22, 0.86, 0.42, 1)
-	var dot_size := 12.0
+	var dot_size := 14.0
 	var dot := Panel.new()
 	dot.custom_minimum_size = Vector2(dot_size, dot_size)
 	dot.position = Vector2(AVATAR - dot_size - 1.0, AVATAR - dot_size - 1.0)
@@ -1015,6 +1024,7 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 	header.add_child(avatar_wrap)
 
 	var avatar := Panel.new()
+	avatar.custom_minimum_size = Vector2(80, 80)
 	avatar.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	avatar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	avatar.add_theme_stylebox_override("panel", StyleBoxEmpty.new())

@@ -129,6 +129,14 @@ const PROFILE_CARD_BORDER := Color(1, 1, 1, 0.08)
 const SOCIAL_CARD_BG := Color(0.180, 0.078, 0.125, 1)         # #2E1420
 const SOCIAL_CARD_BG_RAISED := Color(0.220, 0.100, 0.155, 1)  # #381A28
 const SOCIAL_CARD_BORDER := Color(0.95, 0.62, 0.76, 0.22)
+## Home tiles — dark teal matching the page wash (ACCENT_HOME family).
+const HOME_CARD_BG := Color(0.045, 0.175, 0.170, 1)           # deep teal
+const HOME_CARD_BG_RAISED := Color(0.065, 0.220, 0.210, 1)
+const HOME_CARD_BORDER := Color(0.071, 0.769, 0.722, 0.28)
+## Dark gold tiles tuned to Leaderboard's gold page wash.
+const LEADERBOARD_CARD_BG := Color(0.38, 0.28, 0.08, 1)       # deep gold
+const LEADERBOARD_CARD_BG_RAISED := Color(0.46, 0.34, 0.10, 1)
+const LEADERBOARD_CARD_BORDER := Color(0.941, 0.706, 0.161, 0.30)
 const PROFILE_TEXT := Color(1, 1, 1, 1)
 const PROFILE_TEXT_MUTED := Color(0.62, 0.66, 0.78, 1)
 const PROFILE_TITLE_CAPS := Color(0.55, 0.58, 0.70, 1)
@@ -162,7 +170,7 @@ const CATEGORY_LEVEL_MAX: int = 99
 const DEFAULT_PLAYER_NAME: String = "Player"
 const MAX_PLAYER_NAME_LENGTH: int = 24
 ## Player / opponent display names (pseudos) — keep 18 until the user changes it.
-const PSEUDO_FONT_SIZE: int = 18
+const PSEUDO_FONT_SIZE: int = 20
 
 const ANSWER_TILE_MIN: float = 140.0
 const ANSWER_TILE_MAX: float = 200.0

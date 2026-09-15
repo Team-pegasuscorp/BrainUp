@@ -30,6 +30,24 @@ static func friend_slug(friend_name: String) -> String:
 	return slug
 
 
+## Demo portrait basenames under assets/avatars/demo/.
+const DEMO_AVATAR_SLUGS: Array[String] = [
+	"lucas", "emma", "theo", "hugo", "noah", "lea", "chloe",
+	"adam", "sarah", "maya", "yanis", "jade", "louis", "ines",
+]
+
+
+static func demo_avatar_slug_for(seed_name: String) -> String:
+	## Map any display name onto a real demo portrait file.
+	var direct := friend_slug(seed_name)
+	if DEMO_AVATAR_SLUGS.has(direct):
+		return direct
+	if DEMO_AVATAR_SLUGS.is_empty():
+		return "lucas"
+	var idx := absi(hash(direct)) % DEMO_AVATAR_SLUGS.size()
+	return DEMO_AVATAR_SLUGS[idx]
+
+
 static func load_texture(path: String) -> Texture2D:
 	if path.is_empty():
 		return null
@@ -81,11 +99,17 @@ static func league_texture(league_id: String) -> Texture2D:
 
 
 static func demo_avatar_texture(friend_name: String) -> Texture2D:
-	return load_texture(demo_avatar_path(friend_name))
+	var tex := load_texture(demo_avatar_path(friend_name))
+	if tex != null:
+		return tex
+	## Fallback onto a deterministic demo portrait when the name has no file.
+	var slug := demo_avatar_slug_for(friend_name)
+	return load_texture("res://assets/avatars/demo/%s.png" % slug)
 
 
 const ROUND_ICON_INSET := 0.88
-const ROUND_AVATAR_INSET := 0.92
+## Avatars already fill their circular PNG — match the UI circle 1:1.
+const ROUND_AVATAR_INSET := 1.0
 const ROUND_LEAGUE_INSET := 0.86
 
 

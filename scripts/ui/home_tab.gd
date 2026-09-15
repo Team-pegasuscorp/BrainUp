@@ -44,7 +44,7 @@ func _rebuild_cards(snapshot: Dictionary) -> void:
 func _make_progress_compact(snapshot: Dictionary) -> PanelContainer:
 	var panel := PanelContainer.new()
 	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	panel.add_theme_stylebox_override("panel", UiStyle.profile_surface(UiTokens.ACCENT_XP, false, 0))
+	panel.add_theme_stylebox_override("panel", UiStyle.home_surface(false, 0))
 
 	var margin := _pad(12, 10)
 	panel.add_child(margin)
@@ -82,7 +82,7 @@ func _make_today_card(snapshot: Dictionary) -> PanelContainer:
 	## Priority: resume last category → suggest weakest category → FAB hint.
 	var panel := PanelContainer.new()
 	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	panel.add_theme_stylebox_override("panel", UiStyle.profile_surface(UiTokens.ACCENT_HOME, false, 0))
+	panel.add_theme_stylebox_override("panel", UiStyle.home_surface(true, 0))
 
 	var margin := _pad(14, 12)
 	panel.add_child(margin)
@@ -152,7 +152,7 @@ func _make_metric_chip(caption: String, value: String, accent: Color) -> PanelCo
 	var panel := PanelContainer.new()
 	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	panel.custom_minimum_size.y = 84
-	panel.add_theme_stylebox_override("panel", UiStyle.profile_surface(accent, false, 0))
+	panel.add_theme_stylebox_override("panel", UiStyle.home_surface(false, 0))
 
 	var margin := _pad(10, 10)
 	panel.add_child(margin)
@@ -181,7 +181,7 @@ func _make_metric_chip(caption: String, value: String, accent: Color) -> PanelCo
 func _make_last_match_card(snapshot: Dictionary) -> PanelContainer:
 	var panel := PanelContainer.new()
 	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	panel.add_theme_stylebox_override("panel", UiStyle.profile_surface(UiTokens.ACCENT_QUIZ, false, 0))
+	panel.add_theme_stylebox_override("panel", UiStyle.home_surface(false, 0))
 
 	var margin := _pad(14, 12)
 	panel.add_child(margin)
@@ -192,7 +192,7 @@ func _make_last_match_card(snapshot: Dictionary) -> PanelContainer:
 	var title := Label.new()
 	title.text = tr("UI_HOME_LAST_MATCH").to_upper()
 	title.add_theme_font_size_override("font_size", 11)
-	title.add_theme_color_override("font_color", UiTokens.ACCENT_QUIZ)
+	title.add_theme_color_override("font_color", UiTokens.ACCENT_HOME)
 	vbox.add_child(title)
 
 	var line := Label.new()

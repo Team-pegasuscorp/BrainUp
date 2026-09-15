@@ -49,11 +49,23 @@ UI_TAB_LEADERBOARD,Leaderboard,Classement
 UI_LEADERBOARD_FILTER_ALL,All,Toutes
 UI_LEADERBOARD_PODIUM,Top 3,Top 3
 UI_LEADERBOARD_YOUR_RANK,Your rank: #{rank},Votre rang : #{rank}
+UI_LEADERBOARD_GAP,#{from} ··· #{to},#{from} ··· #{to}
 UI_LEADERBOARD_NO_RANK,Play a quiz to enter the leaderboard.,Jouez à un quiz pour entrer au classement.
+UI_LEADERBOARD_NO_RANK_SHORT,Unranked,Non classé
 UI_LEADERBOARD_YOU,You,Vous
+UI_LEADERBOARD_YOU_NAME,You ({name}),Vous ({name})
 UI_LEADERBOARD_ROW_META,{rank_title} · Lv.{level},{rank_title} · Niv.{level}
 UI_LEADERBOARD_EMPTY,No scores yet for this category.,Aucun score pour cette catégorie.
 UI_LEADERBOARD_DEMO_HINT,Sample leaderboard shown for preview.,Classement d'exemple affiché en aperçu.
+UI_LEADERBOARD_TAGLINE,Compete with the best players and climb the ranks!,Affronte les meilleurs joueurs et grimpe dans le classement !
+UI_LEADERBOARD_SCOPE_GENERAL,General,Général
+UI_LEADERBOARD_SCOPE_FRIENDS,Friends,Amis
+UI_LEADERBOARD_MODE_ALL,Overall,Tout
+UI_LEADERBOARD_MODE_CATEGORY,By category,Par catégorie
+UI_LEADERBOARD_GENERAL_TITLE,Global leaderboard,Classement général
+UI_LEADERBOARD_FRIENDS_TITLE,Friends leaderboard,Classement amis
+UI_LEADERBOARD_TOP_100,Top 100,Top 100
+UI_LEADERBOARD_FRIENDS_DROPDOWN,My friends,Mes amis
 UI_TAB_PROFILE,Profile,Profil
 UI_HOME_HELLO,Hey {name},Salut {name}
 UI_HOME_QUIZ_HINT,Tap the Quiz button below to start a round.,Appuie sur le bouton Quiz pour lancer une partie.

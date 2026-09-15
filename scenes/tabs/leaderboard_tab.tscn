@@ -20,62 +20,20 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 32
-theme_override_constants/margin_top = 24
-theme_override_constants/margin_right = 32
-theme_override_constants/margin_bottom = 24
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
-[node name="VBox" type="VBoxContainer" parent="MarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 12
-
-[node name="TitleLabel" type="Label" parent="MarginContainer/VBox"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_type_variation = &"TitleLabel"
-theme_override_font_sizes/font_size = 24
-text = "Leaderboard"
-horizontal_alignment = 1
-
-[node name="SubtitleLabel" type="Label" parent="MarginContainer/VBox"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_type_variation = &"SubtitleLabel"
-theme_override_font_sizes/font_size = 14
-text = "Your rank: #1"
-horizontal_alignment = 1
-
-[node name="FilterScroll" type="ScrollContainer" parent="MarginContainer/VBox"]
-layout_mode = 2
-size_flags_horizontal = 3
-vertical_scroll_mode = 0
-horizontal_scroll_mode = 3
-
-[node name="FilterRow" type="HBoxContainer" parent="MarginContainer/VBox/FilterScroll"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_constants/separation = 8
-alignment = 1
-
-[node name="Scroll" type="ScrollContainer" parent="MarginContainer/VBox"]
+[node name="Scroll" type="ScrollContainer" parent="MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 3
 
-[node name="Content" type="VBoxContainer" parent="MarginContainer/VBox/Scroll"]
+[node name="Content" type="VBoxContainer" parent="MarginContainer/Scroll"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 10
-
-[node name="DemoHintLabel" type="Label" parent="MarginContainer/VBox"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_type_variation = &"SubtitleLabel"
-theme_override_font_sizes/font_size = 12
-text = "Sample leaderboard shown for preview."
-horizontal_alignment = 1
-autowrap_mode = 3
+theme_override_constants/separation = 14

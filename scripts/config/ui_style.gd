@@ -192,6 +192,28 @@ static func social_surface(raised: bool = false, pad: int = 10) -> StyleBoxFlat:
 	return style
 
 
+static func home_surface(raised: bool = false, pad: int = 10) -> StyleBoxFlat:
+	## Dark teal tiles tuned to Home's page wash.
+	var style := profile_card(UiTokens.ACCENT_HOME, raised)
+	style.bg_color = UiTokens.HOME_CARD_BG_RAISED if raised else UiTokens.HOME_CARD_BG
+	style.border_color = UiTokens.HOME_CARD_BORDER
+	style.shadow_color = Color(UiTokens.ACCENT_HOME.r, UiTokens.ACCENT_HOME.g, UiTokens.ACCENT_HOME.b, 0.20)
+	style.shadow_size = 12 if raised else 9
+	style.set_content_margin_all(pad)
+	return style
+
+
+static func leaderboard_surface(raised: bool = false, pad: int = 10) -> StyleBoxFlat:
+	## Dark gold tiles tuned to Leaderboard's gold page wash.
+	var style := profile_card(UiTokens.ACCENT_LEADERBOARD, raised)
+	style.bg_color = UiTokens.LEADERBOARD_CARD_BG_RAISED if raised else UiTokens.LEADERBOARD_CARD_BG
+	style.border_color = UiTokens.LEADERBOARD_CARD_BORDER
+	style.shadow_color = Color(UiTokens.ACCENT_LEADERBOARD.r, UiTokens.ACCENT_LEADERBOARD.g, UiTokens.ACCENT_LEADERBOARD.b, 0.22)
+	style.shadow_size = 12 if raised else 9
+	style.set_content_margin_all(pad)
+	return style
+
+
 static func social_chip(accent: Color, selected: bool = false) -> StyleBoxFlat:
 	## Category chips on Social dark-rose tiles.
 	var style := profile_chip(accent, selected)
