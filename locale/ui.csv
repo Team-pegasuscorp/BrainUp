@@ -79,6 +79,18 @@ UI_HOME_RANK,World rank,Classement
 UI_HOME_LAST_MATCH,Last match,Dernière partie
 UI_HOME_LAST_MATCH_LINE,{category} · {score} pts · {result} · {time},{category} · {score} pts · {result} · {time}
 UI_HOME_NO_LAST_MATCH,No matches yet. Start with the Quiz button.,Pas encore de partie. Lance-toi avec le bouton Quiz.
+UI_HOME_DAILY_CHALLENGES,Daily challenges,Défis du jour
+UI_HOME_DAILY_CHALLENGE_SCIENCE_TITLE,Science mastery,Maîtrise des sciences
+UI_HOME_DAILY_CHALLENGE_SCIENCE_DESC,Win 3 games in the Science category,Gagne 3 parties dans la catégorie Sciences
+UI_HOME_DAILY_CHALLENGE_STREAK_TITLE,Win streak,Série de victoires
+UI_HOME_DAILY_CHALLENGE_STREAK_DESC,Win 5 games in a row,Remporte 5 parties consécutives
+UI_HOME_DAILY_CHALLENGE_FRIENDS_TITLE,Friend challenge,Défi amis
+UI_HOME_DAILY_CHALLENGE_FRIENDS_DESC,Play 2 games with a friend,Joue 2 parties avec un ami
+UI_HOME_DAILY_CHALLENGE_XP,+ {xp} XP,+ {xp} XP
+UI_HOME_DAILY_PROGRESS,{current} / {target},{current} / {target}
+UI_HOME_NEAR_ACHIEVEMENTS,Almost unlocked,Succès proches
+UI_HOME_NEAR_ACHIEVEMENTS_EMPTY,Play a few rounds to get close to new badges.,Joue quelques parties pour approcher de nouveaux succès.
+UI_HOME_NEAR_REMAINING,{n} left,Plus que {n}
 UI_SOCIAL_CHALLENGE_HINT,Ready for a challenge,Prêt pour un défi
 UI_SOCIAL_FRIENDS,Friends,Amis
 UI_SOCIAL_FRIENDS_EMPTY,No friends yet. Add players as you meet them.,Aucun ami pour l'instant. Ajoute des joueurs au fur et à mesure.

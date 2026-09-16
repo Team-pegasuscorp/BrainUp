@@ -401,13 +401,20 @@ static func _build_achievements(data: Dictionary) -> Array:
 	}
 	var rows: Array = []
 	for achievement in AchievementsCatalog.all():
+		var achievement_id := str(achievement.get("id", ""))
+		var progress: Dictionary = AchievementsCatalog.progress_for(achievement_id, unlock_stats)
+		var current := int(progress.get("current", 0))
+		var target := maxi(int(progress.get("target", 1)), 1)
 		rows.append({
-			"id": achievement.get("id", ""),
+			"id": achievement_id,
 			"title_key": achievement.get("title_key", ""),
 			"desc_key": achievement.get("desc_key", ""),
 			"icon": achievement.get("icon", "?"),
 			"accent": achievement.get("accent", UiTokens.ACCENT_PROFILE),
-			"unlocked": AchievementsCatalog.is_unlocked(str(achievement.get("id", "")), unlock_stats),
+			"unlocked": AchievementsCatalog.is_unlocked(achievement_id, unlock_stats),
+			"current": current,
+			"target": target,
+			"progress": clampf(float(current) / float(target), 0.0, 1.0),
 		})
 	return rows
 

@@ -107,33 +107,47 @@ static func all() -> Array[Dictionary]:
 
 
 static func is_unlocked(achievement_id: String, stats: Dictionary) -> bool:
+	var progress := progress_for(achievement_id, stats)
+	return int(progress.get("current", 0)) >= int(progress.get("target", 1))
+
+
+## Returns { current, target } for progress bars (target always >= 1).
+static func progress_for(achievement_id: String, stats: Dictionary) -> Dictionary:
 	match achievement_id:
 		"streak_10":
-			return stats.get("best_win_streak", 0) >= 10
+			return _clamp_progress(int(stats.get("best_win_streak", 0)), 10)
 		"unbeatable":
-			return stats.get("wins", 0) >= 100
+			return _clamp_progress(int(stats.get("wins", 0)), 100)
 		"expert":
-			return stats.get("level", 1) >= 20
+			return _clamp_progress(int(stats.get("level", 1)), 20)
 		"precision":
-			return float(stats.get("accuracy_percent", 0.0)) >= 75.0
+			return _clamp_progress(int(round(float(stats.get("accuracy_percent", 0.0)))), 75)
 		"fast":
-			return stats.get("has_perfect_round", false)
+			return _clamp_progress(1 if stats.get("has_perfect_round", false) else 0, 1)
 		"golden_brain":
-			return stats.get("wins", 0) >= 50
+			return _clamp_progress(int(stats.get("wins", 0)), 50)
 		"first_match":
-			return stats.get("games_played", 0) >= 1
+			return _clamp_progress(int(stats.get("games_played", 0)), 1)
 		"first_win":
-			return stats.get("wins", 0) >= 1
+			return _clamp_progress(int(stats.get("wins", 0)), 1)
 		"streak_3":
-			return stats.get("best_win_streak", 0) >= 3
+			return _clamp_progress(int(stats.get("best_win_streak", 0)), 3)
 		"ten_matches":
-			return stats.get("games_played", 0) >= 10
+			return _clamp_progress(int(stats.get("games_played", 0)), 10)
 		"score_500":
-			return stats.get("best_score", 0) >= 500
+			return _clamp_progress(int(stats.get("best_score", 0)), 500)
 		"perfect_round":
-			return stats.get("has_perfect_round", false)
+			return _clamp_progress(1 if stats.get("has_perfect_round", false) else 0, 1)
 		"level_5":
-			return stats.get("level", 1) >= 5
+			return _clamp_progress(int(stats.get("level", 1)), 5)
 		"category_explorer":
-			return stats.get("categories_played", 0) >= 2
-	return false
+			return _clamp_progress(int(stats.get("categories_played", 0)), 2)
+	return {"current": 0, "target": 1}
+
+
+static func _clamp_progress(current: int, target: int) -> Dictionary:
+	var safe_target := maxi(target, 1)
+	return {
+		"current": clampi(current, 0, safe_target),
+		"target": safe_target,
+	}
