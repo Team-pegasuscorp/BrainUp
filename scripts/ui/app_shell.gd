@@ -127,6 +127,17 @@ func _build_sound_settings() -> void:
 	volume_slider.step = 0.05
 	volume_slider.value = SaveManager.sound_volume
 	volume_slider.custom_minimum_size = Vector2(0, 32)
+	var track := UiStyle.progress_bg()
+	track.content_margin_top = 6
+	track.content_margin_bottom = 6
+	var fill := UiStyle.progress_fill(UiTokens.ACCENT_QUIZ)
+	fill.content_margin_top = 6
+	fill.content_margin_bottom = 6
+	volume_slider.add_theme_stylebox_override("slider", track)
+	volume_slider.add_theme_stylebox_override("grabber_area", fill)
+	volume_slider.add_theme_stylebox_override("grabber_area_highlight", fill)
+	sound_toggle.add_theme_font_size_override("font_size", 18)
+	sound_toggle.add_theme_color_override("font_color", UiTokens.INK)
 	volume_slider.editable = SaveManager.sound_enabled
 	volume_slider.value_changed.connect(func(value: float) -> void: SaveManager.set_sound_volume(value))
 	## Preview at the new level once the player lets go of the handle.

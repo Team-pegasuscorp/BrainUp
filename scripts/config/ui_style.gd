@@ -144,11 +144,12 @@ static func category_tile(accent: Color) -> StyleBoxFlat:
 
 
 static func category_tile_selected(accent: Color) -> StyleBoxFlat:
+	## Stays opaque white: a translucent tint reads as dark on the navy Quiz page.
 	var style := category_tile(accent)
-	style.bg_color = Color(accent.r, accent.g, accent.b, 0.12)
-	style.set_border_width_all(2)
-	style.border_color = Color(accent.r, accent.g, accent.b, 0.55)
-	style.shadow_color = Color(accent.r, accent.g, accent.b, 0.16)
+	style.set_border_width_all(3)
+	style.border_color = accent
+	style.shadow_color = Color(accent.r, accent.g, accent.b, 0.45)
+	style.shadow_size = 20
 	return style
 
 

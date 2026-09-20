@@ -50,6 +50,7 @@ func _ready() -> void:
 	correct_value_label.add_theme_color_override("font_color", UiTokens.FEEDBACK_CORRECT)
 	combo_value_label.add_theme_color_override("font_color", UiTokens.ACCENT_QUIZ)
 	average_value_label.add_theme_color_override("font_color", UiTokens.INK)
+	_enlarge_layout()
 	_build_outcome_sections()
 	_apply_translations()
 	_play_intro()
@@ -109,18 +110,33 @@ func _outcome_color() -> Color:
 	return UiTokens.FEEDBACK_CORRECT if _is_win() else UiTokens.FEEDBACK_WRONG
 
 
+## Bigger type, values pushed to the right edge, roomier cards.
+func _enlarge_layout() -> void:
+	title_label.add_theme_font_size_override("font_size", 60)
+	vbox.add_theme_constant_override("separation", 22)
+	stats_grid.add_theme_constant_override("v_separation", 20)
+	var kids := stats_grid.get_children()
+	for index in kids.size():
+		var label := kids[index] as Label
+		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		if index % 2 == 0:
+			label.add_theme_font_size_override("font_size", 20)
+		else:
+			label.add_theme_font_size_override("font_size", 40 if index == 1 else 30)
+
+
 ## Subtitle, XP card and new-achievements card, inserted above the stats panel.
 func _build_outcome_sections() -> void:
 	title_label.add_theme_color_override("font_color", _outcome_color())
 	_subtitle_label = Label.new()
 	_subtitle_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_subtitle_label.add_theme_font_size_override("font_size", 16)
+	_subtitle_label.add_theme_font_size_override("font_size", 20)
 	_subtitle_label.add_theme_color_override("font_color", UiTokens.INK_MUTED)
 	_insert_before_stats(_subtitle_label)
 
 	_streak_label = Label.new()
 	_streak_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_streak_label.add_theme_font_size_override("font_size", 18)
+	_streak_label.add_theme_font_size_override("font_size", 22)
 	_streak_label.add_theme_color_override("font_color", Color(1.0, 0.45, 0.18))
 	_streak_label.visible = _is_win() and SaveManager.current_win_streak >= 2
 	_insert_before_stats(_streak_label)
@@ -164,11 +180,11 @@ func _build_xp_card() -> PanelContainer:
 	column.add_child(header)
 	_level_label = Label.new()
 	_level_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	_level_label.add_theme_font_size_override("font_size", 20)
+	_level_label.add_theme_font_size_override("font_size", 26)
 	_level_label.add_theme_color_override("font_color", UiTokens.INK)
 	header.add_child(_level_label)
 	_xp_gain_label = Label.new()
-	_xp_gain_label.add_theme_font_size_override("font_size", 20)
+	_xp_gain_label.add_theme_font_size_override("font_size", 26)
 	_xp_gain_label.add_theme_color_override("font_color", UiTokens.ACCENT_QUIZ_DEEP)
 	header.add_child(_xp_gain_label)
 
@@ -177,13 +193,13 @@ func _build_xp_card() -> PanelContainer:
 	_xp_bar.max_value = 1.0
 	_xp_bar.step = 0.001
 	_xp_bar.show_percentage = false
-	_xp_bar.custom_minimum_size = Vector2(0, 16)
+	_xp_bar.custom_minimum_size = Vector2(0, 22)
 	_xp_bar.add_theme_stylebox_override("background", UiStyle.progress_bg())
 	_xp_bar.add_theme_stylebox_override("fill", UiStyle.progress_fill(UiTokens.ACCENT_QUIZ))
 	column.add_child(_xp_bar)
 
 	_xp_detail_label = Label.new()
-	_xp_detail_label.add_theme_font_size_override("font_size", 14)
+	_xp_detail_label.add_theme_font_size_override("font_size", 18)
 	_xp_detail_label.add_theme_color_override("font_color", UiTokens.INK_MUTED)
 	column.add_child(_xp_detail_label)
 	return panel

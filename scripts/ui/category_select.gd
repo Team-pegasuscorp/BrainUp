@@ -38,6 +38,8 @@ func _apply_embedded_layout() -> void:
 	if not embedded_mode:
 		return
 	background.visible = false
+	## The embedded page sits on the dark shell, so the title must be light.
+	title_label.add_theme_color_override("font_color", Color(1, 1, 1, 0.95))
 	back_button.visible = false
 	description_label.visible = false
 
@@ -78,7 +80,7 @@ func _make_category_tile(index: int, category: Dictionary) -> Button:
 	var category_id := str(category.get("id", ""))
 	var accent := UiTokens.accent_for_category(category_id)
 	var button := Button.new()
-	button.custom_minimum_size.y = 88
+	button.custom_minimum_size.y = 92
 	button.text = ""
 	button.pressed.connect(_on_category_selected.bind(index))
 	PressScaleUtil.wire(button, self)
@@ -102,6 +104,8 @@ func _make_category_tile(index: int, category: Dictionary) -> Button:
 	swatch.color = accent
 	swatch.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	row.add_child(swatch)
+
+	row.add_child(GameAssets.make_circular_icon_display(GameAssets.category_texture(category_id), "🧠", 64.0))
 
 	var labels := VBoxContainer.new()
 	labels.size_flags_horizontal = Control.SIZE_EXPAND_FILL
