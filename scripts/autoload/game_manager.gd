@@ -97,6 +97,7 @@ func finish_round() -> Dictionary:
 		correct_count,
 		questions.size(),
 		max_combo,
+		not active_challenge_code.is_empty(),
 	)
 	var progress_after: Dictionary = SaveManager.capture_progress()
 	var new_achievements: Array[String] = []

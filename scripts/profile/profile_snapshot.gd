@@ -301,6 +301,10 @@ static func _assign_medals(rows: Array) -> void:
 	)
 
 
+static func category_icon(category_id: String) -> String:
+	return _category_icon(category_id)
+
+
 static func _category_icon(category_id: String) -> String:
 	match category_id:
 		"sport":

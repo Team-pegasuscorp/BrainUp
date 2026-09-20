@@ -251,3 +251,21 @@ UI_RESULTS_NEW_ACHIEVEMENTS,New achievements,Nouveaux succès
 UI_RESULTS_STREAK,🔥 {count} wins in a row!,🔥 {count} victoires d'affilée !
 UI_SETTINGS_SOUND,Sound effects,Effets sonores
 UI_SETTINGS_VOLUME,Volume,Volume
+UI_DAILY_RESET_IN,Resets in {time},Renouvellement dans {time}
+UI_DAILY_CLAIM,Claim,Récupérer
+UI_DAILY_CATEGORY_GAMES_TITLE,{category} mastery,Maîtrise : {category}
+UI_DAILY_CATEGORY_GAMES_DESC,Play {n} games in the {category} category,Joue {n} parties dans la catégorie {category}
+UI_DAILY_WIN_GAMES_TITLE,Winner,Victorieux
+UI_DAILY_WIN_GAMES_DESC,Win {n} games,Gagne {n} parties
+UI_DAILY_WIN_STREAK_TITLE,Win streak,Série de victoires
+UI_DAILY_WIN_STREAK_DESC,Win {n} games in a row,Remporte {n} parties consécutives
+UI_DAILY_CORRECT_ANSWERS_TITLE,Sharp mind,Bon élève
+UI_DAILY_CORRECT_ANSWERS_DESC,Answer {n} questions correctly,Réponds juste à {n} questions
+UI_DAILY_COMBO_TITLE,Combo master,Enchaînement
+UI_DAILY_COMBO_DESC,Reach a x{n} combo,Atteins un combo de x{n}
+UI_DAILY_PLAY_CHALLENGE_TITLE,Friend challenge,Défi amis
+UI_DAILY_PLAY_CHALLENGE_DESC,Play {n} challenge against a friend,Joue {n} défi contre un ami
+UI_DAILY_CATEGORIES_VARIETY_TITLE,Curious,Curieux
+UI_DAILY_CATEGORIES_VARIETY_DESC,Play in {n} different categories,Joue dans {n} catégories différentes
+UI_DAILY_PLAY_GAMES_TITLE,Regular,Assidu
+UI_DAILY_PLAY_GAMES_DESC,Play {n} games,Joue {n} parties

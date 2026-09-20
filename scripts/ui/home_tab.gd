@@ -8,6 +8,8 @@ const GameAssets = preload("res://scripts/config/game_assets.gd")
 const ProfileSnapshot = preload("res://scripts/profile/profile_snapshot.gd")
 const CircularAvatarScript = preload("res://scripts/ui/circular_avatar.gd")
 const CountryFlags = preload("res://scripts/profile/country_flags.gd")
+const DailyQuests = preload("res://scripts/profile/daily_quests.gd")
+const PressScaleUtil = preload("res://scripts/ui/press_scale.gd")
 
 @onready var content: VBoxContainer = %Content
 
@@ -218,7 +220,6 @@ func _summary_divider() -> Control:
 
 
 func _make_daily_challenges_card() -> PanelContainer:
-	## Mock daily challenges tile — demo progress until daily system ships.
 	var panel := PanelContainer.new()
 	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	panel.add_theme_stylebox_override("panel", UiStyle.home_surface(true, 0))
@@ -241,36 +242,16 @@ func _make_daily_challenges_card() -> PanelContainer:
 	title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	header.add_child(title)
 
-	var challenges := [
-		{
-			"icon": "🧪",
-			"accent": Color(0.55, 0.35, 0.95, 1),
-			"title": tr("UI_HOME_DAILY_CHALLENGE_SCIENCE_TITLE"),
-			"desc": tr("UI_HOME_DAILY_CHALLENGE_SCIENCE_DESC"),
-			"current": 1,
-			"target": 3,
-			"xp": 50,
-		},
-		{
-			"icon": "🔥",
-			"accent": Color(1.0, 0.45, 0.18, 1),
-			"title": tr("UI_HOME_DAILY_CHALLENGE_STREAK_TITLE"),
-			"desc": tr("UI_HOME_DAILY_CHALLENGE_STREAK_DESC"),
-			"current": 3,
-			"target": 5,
-			"xp": 100,
-		},
-		{
-			"icon": "👥",
-			"accent": Color(0.95, 0.28, 0.55, 1),
-			"title": tr("UI_HOME_DAILY_CHALLENGE_FRIENDS_TITLE"),
-			"desc": tr("UI_HOME_DAILY_CHALLENGE_FRIENDS_DESC"),
-			"current": 0,
-			"target": 2,
-			"xp": 50,
-		},
-	]
-	for row in challenges:
+	var seconds := DailyQuests.seconds_until_reset()
+	var reset := Label.new()
+	reset.text = tr("UI_DAILY_RESET_IN").format({
+		"time": "%dh%02d" % [int(seconds / 3600.0), int((seconds % 3600) / 60.0)],
+	})
+	reset.add_theme_font_size_override("font_size", 14)
+	reset.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+	header.add_child(reset)
+
+	for row in DailyQuests.get_quests(LocaleManager.get_content_locale()):
 		vbox.add_child(_make_daily_challenge_row(row))
 
 	return panel
@@ -451,7 +432,7 @@ func _make_near_achievement_row(data: Dictionary) -> Control:
 	bar.value = clampf(float(current) / float(target), 0.0, 1.0)
 	bar.show_percentage = false
 	bar.add_theme_stylebox_override("background", UiStyle.progress_bg())
-	var fill := UiStyle.progress_fill(UiTokens.ACCENT_HOME)
+	var fill := UiStyle.progress_fill(data.get("accent", UiTokens.ACCENT_HOME))
 	fill.set_corner_radius_all(6)
 	bar.add_theme_stylebox_override("fill", fill)
 	progress_row.add_child(bar)
@@ -544,10 +525,25 @@ func _make_daily_challenge_row(data: Dictionary) -> Control:
 	bar.add_theme_stylebox_override("fill", fill)
 	progress_row.add_child(bar)
 
+	var claimed := bool(data.get("claimed", false))
+	if bool(data.get("completed", false)) and not claimed:
+		progress_row.add_child(_make_claim_button(str(data.get("id", "")), int(data.get("xp", 0))))
+	elif claimed:
+		var done := Label.new()
+		done.text = "✓"
+		done.add_theme_font_size_override("font_size", 20)
+		done.add_theme_color_override("font_color", UiTokens.FEEDBACK_CORRECT)
+		progress_row.add_child(done)
+	else:
+		progress_row.add_child(_make_xp_badge(int(data.get("xp", 0))))
+
+	return row
+
+
+func _make_xp_badge(xp_amount: int) -> Control:
 	var xp_row := HBoxContainer.new()
 	xp_row.add_theme_constant_override("separation", 4)
 	xp_row.size_flags_horizontal = Control.SIZE_SHRINK_END
-	progress_row.add_child(xp_row)
 
 	var star := Label.new()
 	star.text = "⭐"
@@ -558,12 +554,45 @@ func _make_daily_challenge_row(data: Dictionary) -> Control:
 	xp_row.add_child(star)
 
 	var xp := Label.new()
-	xp.text = tr("UI_HOME_DAILY_CHALLENGE_XP").format({"xp": int(data.get("xp", 0))})
+	xp.text = tr("UI_HOME_DAILY_CHALLENGE_XP").format({"xp": xp_amount})
 	xp.add_theme_font_size_override("font_size", 15)
 	xp.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	xp_row.add_child(xp)
+	return xp_row
 
-	return row
+
+## Gold button shown once a quest is complete; tapping it pays the XP out.
+func _make_claim_button(quest_id: String, xp_amount: int) -> Button:
+	var button := Button.new()
+	button.text = "%s +%d" % [tr("UI_DAILY_CLAIM"), xp_amount]
+	button.custom_minimum_size = Vector2(0, 34)
+	button.add_theme_font_size_override("font_size", 15)
+	button.add_theme_color_override("font_color", UiTokens.INK)
+	button.add_theme_color_override("font_hover_color", UiTokens.INK)
+	button.add_theme_color_override("font_pressed_color", UiTokens.INK)
+	var style := UiStyle.filled(UiTokens.ACCENT_LEADERBOARD, 17)
+	style.content_margin_left = 14
+	style.content_margin_right = 14
+	for state in ["normal", "hover", "pressed", "focus"]:
+		button.add_theme_stylebox_override(state, style)
+	PressScaleUtil.wire(button, self)
+	button.pressed.connect(_on_claim_pressed.bind(quest_id, button))
+	return button
+
+
+func _on_claim_pressed(quest_id: String, button: Button) -> void:
+	var granted := DailyQuests.claim(quest_id, LocaleManager.get_content_locale())
+	if granted <= 0:
+		return
+	AudioManager.play("achievement")
+	button.disabled = true
+	button.text = tr("UI_RESULTS_XP_GAINED").format({"xp": granted})
+	button.pivot_offset = button.size * 0.5
+	var pop := create_tween()
+	pop.tween_property(button, "scale", Vector2(1.25, 1.25), 0.12)
+	pop.tween_property(button, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	pop.tween_interval(0.5)
+	pop.tween_callback(_rebuild)
 
 
 func _make_challenge_icon(icon_text: String, accent: Color) -> Control:

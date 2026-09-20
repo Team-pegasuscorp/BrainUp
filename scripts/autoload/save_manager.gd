@@ -3,6 +3,7 @@ extends Node
 const UiTokens = preload("res://scripts/config/ui_tokens.gd")
 const QuestionLoaderScript = preload("res://scripts/quiz/question_loader.gd")
 const AchievementsCatalogScript = preload("res://scripts/profile/achievements_catalog.gd")
+const DailyQuestsScript = preload("res://scripts/profile/daily_quests.gd")
 
 const SAVE_PATH: String = "user://save.json"
 const PROFILE_AVATAR_PATH: String = "user://profile_avatar.png"
@@ -24,6 +25,7 @@ var losses: int = 0
 var current_win_streak: int = 0
 var best_win_streak: int = 0
 var has_perfect_round: bool = false
+var daily_state: Dictionary = {}
 var sound_enabled: bool = true
 var sound_volume: float = 0.8
 
@@ -59,6 +61,7 @@ func load_data() -> void:
 	current_win_streak = int(parsed.get("current_win_streak", current_win_streak))
 	best_win_streak = int(parsed.get("best_win_streak", best_win_streak))
 	has_perfect_round = bool(parsed.get("has_perfect_round", has_perfect_round))
+	daily_state = parsed.get("daily_state", daily_state)
 	sound_enabled = bool(parsed.get("sound_enabled", sound_enabled))
 	sound_volume = clampf(float(parsed.get("sound_volume", sound_volume)), 0.0, 1.0)
 
@@ -79,6 +82,7 @@ func save_data() -> void:
 		"current_win_streak": current_win_streak,
 		"best_win_streak": best_win_streak,
 		"has_perfect_round": has_perfect_round,
+		"daily_state": daily_state,
 		"sound_enabled": sound_enabled,
 		"sound_volume": sound_volume,
 	}
@@ -181,6 +185,7 @@ func record_match_result(
 	correct_count: int,
 	total_count: int,
 	max_combo: int = 0,
+	is_challenge: bool = false,
 ) -> int:
 	if not category_stats.has(category_id):
 		category_stats[category_id] = {
@@ -218,6 +223,8 @@ func record_match_result(
 		"won": won,
 		"played_at": int(Time.get_unix_time_from_system()),
 	})
+
+	DailyQuestsScript.record_match(category_id, won, correct_count, max_combo, is_challenge)
 
 	var gained_xp: int = correct_count * 10 + score / 10
 	add_xp(gained_xp)
