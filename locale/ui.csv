@@ -274,3 +274,9 @@ UI_DAILY_CHALLENGE_SUB,Same questions for everyone,Mêmes questions pour tous
 UI_DAILY_CHALLENGE_LOADING,Loading…,Chargement…
 UI_DAILY_CHALLENGE_DONE,Done · {score} pts · {correct}/{total},Terminé · {score} pts · {correct}/{total}
 UI_DAILY_CHALLENGE_NEXT,New challenge in {time},Nouveau défi dans {time}
+UI_DAILY_BOARD_TITLE,Today's ranking,Classement du jour
+UI_DAILY_BOARD_BUTTON,Ranking,Classement
+UI_DAILY_BOARD_EMPTY,No results yet,Aucun résultat pour l'instant
+UI_DAILY_BOARD_ERROR,Ranking unavailable,Classement indisponible
+UI_DAILY_RANK,Rank #{rank} today,Rang n°{rank} aujourd'hui
+UI_DAILY_RANK_TOTAL,Rank #{rank} of {total},Rang n°{rank} sur {total}

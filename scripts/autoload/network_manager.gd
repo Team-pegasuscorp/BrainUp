@@ -16,6 +16,9 @@ signal live_match_over(data: Dictionary)
 signal live_error(reason: String)
 signal daily_challenge_received(data: Dictionary)
 signal daily_challenge_failed
+signal daily_result_submitted(data: Dictionary)
+signal daily_leaderboard_received(data: Dictionary)
+signal daily_leaderboard_failed
 
 ## Local dev backend (docker compose in ~/Documents/quizz-backend).
 ## Swap this for the Hetzner domain once the backend is migrated (Phase 7).
@@ -30,6 +33,12 @@ var _matches_request: HTTPRequest
 var _challenges_request: HTTPRequest
 var _challenge_result_request: HTTPRequest
 var _daily_request: HTTPRequest
+var _daily_result_request: HTTPRequest
+var _daily_board_request: HTTPRequest
+
+## Server's answer to today's submission ({rank, score, ...}); lets the results
+## screen show the rank even if the reply lands before the screen is up.
+var last_daily_result: Dictionary = {}
 
 var _live_socket: WebSocketPeer = null
 var _live_pending_join: Variant = null
@@ -119,6 +128,8 @@ func _ready() -> void:
 	_challenges_request = _make_request_node()
 	_challenge_result_request = _make_request_node()
 	_daily_request = _make_request_node()
+	_daily_result_request = _make_request_node()
+	_daily_board_request = _make_request_node()
 	_register_player()
 
 
@@ -158,6 +169,50 @@ func fetch_daily_challenge() -> void:
 		return
 
 	daily_challenge_received.emit(parsed)
+
+
+## Idempotent on the server: only the first result of the day is kept, so it is
+## safe to resend a stored result (e.g. after playing offline).
+func submit_daily_result(score: int, correct_count: int, total_count: int, max_combo: int) -> void:
+	if player_id.is_empty():
+		return
+	var payload := {
+		"player_id": player_id,
+		"score": score,
+		"correct_count": correct_count,
+		"total_count": total_count,
+		"max_combo": max_combo,
+	}
+	if _daily_result_request.request(
+		"%s/daily-challenge/result" % BASE_URL,
+		["Content-Type: application/json"],
+		HTTPClient.METHOD_POST,
+		JSON.stringify(payload)
+	) != OK:
+		return
+
+	var result: Array = await _daily_result_request.request_completed
+	var parsed: Variant = JSON.parse_string((result[3] as PackedByteArray).get_string_from_utf8())
+	if result[1] != 200 or typeof(parsed) != TYPE_DICTIONARY:
+		return
+	last_daily_result = parsed
+	daily_result_submitted.emit(parsed)
+
+
+func fetch_daily_leaderboard() -> void:
+	var url := "%s/daily-challenge/leaderboard" % BASE_URL
+	if not player_id.is_empty():
+		url += "?player_id=%s" % player_id.uri_encode()
+	if _daily_board_request.request(url) != OK:
+		daily_leaderboard_failed.emit()
+		return
+
+	var result: Array = await _daily_board_request.request_completed
+	var parsed: Variant = JSON.parse_string((result[3] as PackedByteArray).get_string_from_utf8())
+	if result[1] != 200 or typeof(parsed) != TYPE_DICTIONARY:
+		daily_leaderboard_failed.emit()
+		return
+	daily_leaderboard_received.emit(parsed)
 
 
 func submit_match(

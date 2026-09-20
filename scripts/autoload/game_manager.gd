@@ -113,7 +113,9 @@ func finish_round() -> Dictionary:
 	)
 	var is_daily := not active_daily_date.is_empty()
 	if is_daily:
-		xp_gained += SaveManager.record_daily_challenge(active_daily_date, score, correct_count, questions.size())
+		xp_gained += SaveManager.record_daily_challenge(active_daily_date, score, correct_count, questions.size(), max_combo)
+		NetworkManager.last_daily_result = {}
+		NetworkManager.submit_daily_result(score, correct_count, questions.size(), max_combo)
 	var progress_after: Dictionary = SaveManager.capture_progress()
 	var new_achievements: Array[String] = []
 	for achievement_id in progress_after.get("unlocked", []):
