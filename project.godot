@@ -22,6 +22,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+SafeArea="*res://scripts/autoload/safe_area.gd"
 SaveManager="*res://scripts/autoload/save_manager.gd"
 AudioManager="*res://scripts/autoload/audio_manager.gd"
 LocaleManager="*res://scripts/autoload/locale_manager.gd"

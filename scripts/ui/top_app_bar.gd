@@ -17,6 +17,9 @@ const PressScaleUtil = preload("res://scripts/ui/press_scale.gd")
 @onready var settings_button: Button = %SettingsButton
 
 
+var _base_top_pad: int = 0
+
+
 func _ready() -> void:
 	clip_contents = false
 	custom_minimum_size.y = UiTokens.HEADER_SHELL_HEIGHT
@@ -41,6 +44,16 @@ func _ready() -> void:
 	_apply_translations()
 	LocaleManager.locale_changed.connect(_on_locale_changed)
 	PressScaleUtil.wire(settings_button, self)
+	_base_top_pad = bar_margin.get_theme_constant("margin_top")
+	SafeArea.changed.connect(_apply_safe_area)
+	_apply_safe_area()
+
+
+## The bar keeps its colour under the status bar / notch; only its content moves down.
+func _apply_safe_area() -> void:
+	custom_minimum_size.y = UiTokens.HEADER_SHELL_HEIGHT + SafeArea.top
+	bar.custom_minimum_size.y = UiTokens.HEADER_BANNER_HEIGHT + SafeArea.top
+	bar_margin.add_theme_constant_override("margin_top", _base_top_pad + int(SafeArea.top))
 
 
 func _configure_brand_row() -> void:

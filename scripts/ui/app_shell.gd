@@ -25,8 +25,8 @@ var _brand_bg_material: Material
 
 func _ready() -> void:
 	_brand_bg_material = shell_background.material
-	## Small protected band under the bottom menu — nothing from pages draws there.
-	main_column.offset_bottom = -UiTokens.BOTTOM_NAV_SAFE_ZONE
+	SafeArea.changed.connect(_apply_safe_area)
+	_apply_safe_area()
 	tab_swipe.swipe_threshold = UiTokens.TAB_SWIPE_THRESHOLD
 	tab_swipe.drag_lock_threshold = UiTokens.TAB_SWIPE_DRAG_LOCK
 	tab_swipe.animation_duration = UiTokens.TAB_SWIPE_DURATION
@@ -153,6 +153,14 @@ func _on_sound_toggled(enabled: bool) -> void:
 	SaveManager.set_sound_enabled(enabled)
 	volume_slider.editable = enabled
 	AudioManager.play("click")
+
+
+## Small protected band under the bottom menu (nothing from pages draws there), lifted
+## above the system gesture / navigation bar.
+func _apply_safe_area() -> void:
+	main_column.offset_bottom = -(UiTokens.BOTTOM_NAV_SAFE_ZONE + SafeArea.bottom)
+	bottom_nav.offset_top = -UiTokens.BOTTOM_NAV_TOTAL_HEIGHT - SafeArea.bottom
+	bottom_nav.offset_bottom = -SafeArea.bottom
 
 
 func _configure_chrome() -> void:

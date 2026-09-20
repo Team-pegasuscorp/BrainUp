@@ -42,6 +42,7 @@ func _ready() -> void:
 		ScenePaths.go_to_shell(get_tree(), ScenePaths.Tab.QUIZ)
 		return
 
+	SafeArea.fit_margins($MarginContainer)
 	_accent = UiTokens.accent_for_category(GameManager.category_id)
 	_build_category_header()
 

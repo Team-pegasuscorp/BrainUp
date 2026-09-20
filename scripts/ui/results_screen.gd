@@ -51,6 +51,7 @@ func _ready() -> void:
 	correct_value_label.add_theme_color_override("font_color", UiTokens.FEEDBACK_CORRECT)
 	combo_value_label.add_theme_color_override("font_color", UiTokens.ACCENT_QUIZ)
 	average_value_label.add_theme_color_override("font_color", UiTokens.INK)
+	SafeArea.fit_margins($MarginContainer)
 	_enlarge_layout()
 	_build_outcome_sections()
 	_apply_translations()
