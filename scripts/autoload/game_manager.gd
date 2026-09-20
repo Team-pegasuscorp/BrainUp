@@ -89,6 +89,21 @@ func finish_round() -> Dictionary:
 			total_time += value
 		average_time = total_time / answer_times.size()
 
+	var progress_before: Dictionary = SaveManager.capture_progress()
+	var won := SaveManager.is_match_won(correct_count, questions.size())
+	var xp_gained := SaveManager.record_match_result(
+		category_id,
+		score,
+		correct_count,
+		questions.size(),
+		max_combo,
+	)
+	var progress_after: Dictionary = SaveManager.capture_progress()
+	var new_achievements: Array[String] = []
+	for achievement_id in progress_after.get("unlocked", []):
+		if not progress_before.get("unlocked", []).has(achievement_id):
+			new_achievements.append(achievement_id)
+
 	var summary := {
 		"category_id": category_id,
 		"score": score,
@@ -96,22 +111,24 @@ func finish_round() -> Dictionary:
 		"total_count": questions.size(),
 		"max_combo": max_combo,
 		"average_time": average_time,
+		"won": won,
+		"xp_gained": xp_gained,
+		"level_before": int(progress_before.get("level", 1)),
+		"level_after": int(progress_after.get("level", 1)),
+		"xp_before": int(progress_before.get("xp", 0)),
+		"xp_after": int(progress_after.get("xp", 0)),
+		"xp_needed_before": int(progress_before.get("xp_needed", 100)),
+		"xp_needed_after": int(progress_after.get("xp_needed", 100)),
+		"new_achievements": new_achievements,
 	}
 
-	SaveManager.record_match_result(
-		category_id,
-		score,
-		correct_count,
-		questions.size(),
-		max_combo,
-	)
 	NetworkManager.submit_match(
 		category_id,
 		score,
 		correct_count,
 		questions.size(),
 		max_combo,
-		SaveManager.is_match_won(correct_count, questions.size()),
+		won,
 	)
 	if not active_challenge_code.is_empty():
 		NetworkManager.submit_challenge_result(active_challenge_code, score, correct_count)

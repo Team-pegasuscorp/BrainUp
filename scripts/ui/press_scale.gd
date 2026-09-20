@@ -11,6 +11,7 @@ static func wire(button: Button, host: Node) -> void:
 		button.pivot_offset = button.size * 0.5
 	)
 	button.button_down.connect(func() -> void:
+		AudioManager.play("click")
 		button.pivot_offset = button.size * 0.5
 		var tween: Tween = host.create_tween()
 		tween.tween_property(button, "scale", Vector2.ONE * SCALE, 0.06)

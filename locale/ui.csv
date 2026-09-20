@@ -239,3 +239,15 @@ UI_PROFILE_SEASON_META,{wins} wins · {rate}% winrate,{wins} victoires · {rate}
 UI_PROFILE_SEASON_BEST_RANK,Best rank,Meilleur rang
 UI_PROFILE_SEASON_WINS,Season wins,Victoires saison
 UI_PROFILE_MATCH_SCORE,{mine} - {theirs},{mine} - {theirs}
+UI_RESULTS_VICTORY,VICTORY!,VICTOIRE !
+UI_RESULTS_DEFEAT,DEFEAT,DÉFAITE
+UI_RESULTS_VICTORY_SUB,Well played!,Bien joué !
+UI_RESULTS_DEFEAT_SUB,"Keep going, you'll get it next time.","Continuez, ce sera pour la prochaine."
+UI_RESULTS_XP_GAINED,+{xp} XP,+{xp} XP
+UI_RESULTS_LEVEL,Level {level},Niveau {level}
+UI_RESULTS_LEVEL_UP,Level up! Level {level},Niveau supérieur ! Niveau {level}
+UI_RESULTS_XP_PROGRESS,{current} / {needed} XP,{current} / {needed} XP
+UI_RESULTS_NEW_ACHIEVEMENTS,New achievements,Nouveaux succès
+UI_RESULTS_STREAK,🔥 {count} wins in a row!,🔥 {count} victoires d'affilée !
+UI_SETTINGS_SOUND,Sound effects,Effets sonores
+UI_SETTINGS_VOLUME,Volume,Volume

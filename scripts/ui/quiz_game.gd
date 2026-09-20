@@ -29,6 +29,7 @@ var time_remaining: float = 0.0
 var question_start_time: float = 0.0
 var accepting_input: bool = true
 var _blink_tweens: Array[Tween] = []
+var _last_tick_second: int = 99
 
 
 func _ready() -> void:
@@ -78,6 +79,12 @@ func _process(delta: float) -> void:
 	time_remaining -= delta
 	timer_bar.value = (time_remaining / GameManager.QUESTION_TIME_SECONDS) * 100.0
 
+	## Countdown ticks for the last three seconds.
+	var whole_seconds := ceili(time_remaining)
+	if whole_seconds <= 3 and whole_seconds > 0 and whole_seconds != _last_tick_second:
+		_last_tick_second = whole_seconds
+		AudioManager.play("tick", 1.0 + float(3 - whole_seconds) * 0.15)
+
 	if time_remaining <= 0.0:
 		_submit_answer(-1)
 
@@ -108,6 +115,7 @@ func _show_current_question() -> void:
 			button.visible = false
 
 	time_remaining = GameManager.QUESTION_TIME_SECONDS
+	_last_tick_second = 99
 	question_start_time = Time.get_ticks_msec() / 1000.0
 	timer_bar.value = 100.0
 	accepting_input = true
@@ -145,12 +153,16 @@ func _show_feedback(result: Dictionary, selected_index: int, correct_index: int)
 	if result.get("is_timeout", false):
 		feedback_label.text = tr("UI_TIME_UP")
 		feedback_label.modulate = UiTokens.FEEDBACK_TIMEOUT
+		AudioManager.play("timeout")
 	elif result.get("is_correct", false):
 		feedback_label.text = "%s +%d" % [tr("UI_CORRECT"), result.get("points", 0)]
 		feedback_label.modulate = UiTokens.FEEDBACK_CORRECT
+		## Each consecutive hit climbs a little higher (capped at ~an octave).
+		AudioManager.play("correct", 1.0 + minf(float(result.get("combo", 1)) - 1.0, 8.0) * 0.06)
 	else:
 		feedback_label.text = tr("UI_WRONG")
 		feedback_label.modulate = UiTokens.FEEDBACK_WRONG
+		AudioManager.play("wrong")
 
 	score_label.text = "%s: %d" % [tr("UI_SCORE"), GameManager.score]
 	combo_label.text = "%s: x%d" % [tr("UI_COMBO"), max(GameManager.combo, 1)]

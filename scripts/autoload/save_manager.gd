@@ -2,6 +2,7 @@ extends Node
 
 const UiTokens = preload("res://scripts/config/ui_tokens.gd")
 const QuestionLoaderScript = preload("res://scripts/quiz/question_loader.gd")
+const AchievementsCatalogScript = preload("res://scripts/profile/achievements_catalog.gd")
 
 const SAVE_PATH: String = "user://save.json"
 const PROFILE_AVATAR_PATH: String = "user://profile_avatar.png"
@@ -23,6 +24,8 @@ var losses: int = 0
 var current_win_streak: int = 0
 var best_win_streak: int = 0
 var has_perfect_round: bool = false
+var sound_enabled: bool = true
+var sound_volume: float = 0.8
 
 
 func _ready() -> void:
@@ -56,6 +59,8 @@ func load_data() -> void:
 	current_win_streak = int(parsed.get("current_win_streak", current_win_streak))
 	best_win_streak = int(parsed.get("best_win_streak", best_win_streak))
 	has_perfect_round = bool(parsed.get("has_perfect_round", has_perfect_round))
+	sound_enabled = bool(parsed.get("sound_enabled", sound_enabled))
+	sound_volume = clampf(float(parsed.get("sound_volume", sound_volume)), 0.0, 1.0)
 
 
 func save_data() -> void:
@@ -74,6 +79,8 @@ func save_data() -> void:
 		"current_win_streak": current_win_streak,
 		"best_win_streak": best_win_streak,
 		"has_perfect_round": has_perfect_round,
+		"sound_enabled": sound_enabled,
+		"sound_volume": sound_volume,
 	}
 	var file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	if file == null:
@@ -95,6 +102,16 @@ func set_preferred_locale(locale: String) -> void:
 func set_player_name(name: String) -> void:
 	var trimmed := name.strip_edges()
 	player_name = trimmed if not trimmed.is_empty() else UiTokens.DEFAULT_PLAYER_NAME
+	save_data()
+
+
+func set_sound_enabled(enabled: bool) -> void:
+	sound_enabled = enabled
+	save_data()
+
+
+func set_sound_volume(volume: float) -> void:
+	sound_volume = clampf(volume, 0.0, 1.0)
 	save_data()
 
 
@@ -164,7 +181,7 @@ func record_match_result(
 	correct_count: int,
 	total_count: int,
 	max_combo: int = 0,
-) -> void:
+) -> int:
 	if not category_stats.has(category_id):
 		category_stats[category_id] = {
 			"games_played": 0,
@@ -205,6 +222,46 @@ func record_match_result(
 	var gained_xp: int = correct_count * 10 + score / 10
 	add_xp(gained_xp)
 	save_data()
+	return gained_xp
+
+
+## Level, XP bar and unlocked achievement ids at this instant.
+## Taken before and after a match so the results screen can show what changed.
+func capture_progress() -> Dictionary:
+	var unlocked: Array[String] = []
+	var unlock_stats := get_achievement_stats()
+	for achievement in AchievementsCatalogScript.all():
+		var achievement_id := str(achievement.get("id", ""))
+		if AchievementsCatalogScript.is_unlocked(achievement_id, unlock_stats):
+			unlocked.append(achievement_id)
+	return {
+		"level": level,
+		"xp": xp,
+		"xp_needed": _xp_for_next_level(),
+		"unlocked": unlocked,
+	}
+
+
+func get_achievement_stats() -> Dictionary:
+	var questions := 0
+	var correct := 0
+	var categories_played := 0
+	for category_id in category_stats.keys():
+		var stats: Dictionary = category_stats[category_id]
+		questions += int(stats.get("total_questions", 0))
+		correct += int(stats.get("total_correct", 0))
+		if int(stats.get("games_played", 0)) > 0:
+			categories_played += 1
+	return {
+		"games_played": get_games_played_total(),
+		"wins": wins,
+		"best_win_streak": best_win_streak,
+		"best_score": _best_score_global(),
+		"has_perfect_round": has_perfect_round,
+		"level": level,
+		"categories_played": categories_played,
+		"accuracy_percent": 0.0 if questions <= 0 else float(correct) / float(questions) * 100.0,
+	}
 
 
 func get_win_rate_percent() -> float:

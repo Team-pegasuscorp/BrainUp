@@ -13,6 +13,10 @@ const UiStyle = preload("res://scripts/config/ui_style.gd")
 @onready var language_label: Label = %LanguageLabel
 @onready var settings_panel: PanelContainer = %SettingsPanel
 @onready var close_settings_button: Button = %CloseSettingsButton
+
+var sound_toggle: CheckButton
+var volume_label: Label
+var volume_slider: HSlider
 @onready var shell_background: ColorRect = $Background
 @onready var main_column: VBoxContainer = $MainColumn
 
@@ -27,6 +31,7 @@ func _ready() -> void:
 	tab_swipe.drag_lock_threshold = UiTokens.TAB_SWIPE_DRAG_LOCK
 	tab_swipe.animation_duration = UiTokens.TAB_SWIPE_DURATION
 	_configure_chrome()
+	_build_sound_settings()
 	_apply_page_backgrounds()
 	_apply_translations()
 	_setup_language_option()
@@ -103,12 +108,50 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 
+## Sound on/off and volume, inserted above the Back button.
+func _build_sound_settings() -> void:
+	var column := close_settings_button.get_parent()
+	var insert_at := close_settings_button.get_index()
+
+	sound_toggle = CheckButton.new()
+	sound_toggle.button_pressed = SaveManager.sound_enabled
+	sound_toggle.toggled.connect(_on_sound_toggled)
+
+	volume_label = Label.new()
+	volume_label.theme_type_variation = &"MonoLabel"
+	volume_label.add_theme_font_size_override("font_size", 14)
+
+	volume_slider = HSlider.new()
+	volume_slider.min_value = 0.0
+	volume_slider.max_value = 1.0
+	volume_slider.step = 0.05
+	volume_slider.value = SaveManager.sound_volume
+	volume_slider.custom_minimum_size = Vector2(0, 32)
+	volume_slider.editable = SaveManager.sound_enabled
+	volume_slider.value_changed.connect(func(value: float) -> void: SaveManager.set_sound_volume(value))
+	## Preview at the new level once the player lets go of the handle.
+	volume_slider.drag_ended.connect(func(_changed: bool) -> void: AudioManager.play("correct"))
+
+	for node in [sound_toggle, volume_label, volume_slider]:
+		column.add_child(node)
+		column.move_child(node, insert_at)
+		insert_at += 1
+
+
+func _on_sound_toggled(enabled: bool) -> void:
+	SaveManager.set_sound_enabled(enabled)
+	volume_slider.editable = enabled
+	AudioManager.play("click")
+
+
 func _configure_chrome() -> void:
 	settings_panel.add_theme_stylebox_override("panel", UiStyle.card(UiTokens.ACCENT_QUIZ))
 	settings_backdrop.color = Color(0.12, 0.13, 0.15, 0.28)
 
 
 func _apply_translations() -> void:
+	sound_toggle.text = tr("UI_SETTINGS_SOUND")
+	volume_label.text = tr("UI_SETTINGS_VOLUME")
 	language_label.text = tr("UI_LANGUAGE")
 	close_settings_button.text = tr("UI_BACK")
 
