@@ -14,6 +14,8 @@ signal live_question(data: Dictionary)
 signal live_reveal(data: Dictionary)
 signal live_match_over(data: Dictionary)
 signal live_error(reason: String)
+signal daily_challenge_received(data: Dictionary)
+signal daily_challenge_failed
 
 ## Local dev backend (docker compose in ~/Documents/quizz-backend).
 ## Swap this for the Hetzner domain once the backend is migrated (Phase 7).
@@ -27,6 +29,7 @@ var _leaderboard_request: HTTPRequest
 var _matches_request: HTTPRequest
 var _challenges_request: HTTPRequest
 var _challenge_result_request: HTTPRequest
+var _daily_request: HTTPRequest
 
 var _live_socket: WebSocketPeer = null
 var _live_pending_join: Variant = null
@@ -115,6 +118,7 @@ func _ready() -> void:
 	_matches_request = _make_request_node()
 	_challenges_request = _make_request_node()
 	_challenge_result_request = _make_request_node()
+	_daily_request = _make_request_node()
 	_register_player()
 
 
@@ -137,6 +141,23 @@ func fetch_leaderboard(category: String) -> void:
 		return
 
 	leaderboard_received.emit(category, parsed)
+
+
+## Today's shared challenge ({date, category_id, seed}); the server owns the rotation.
+func fetch_daily_challenge() -> void:
+	if _daily_request.request("%s/daily-challenge" % BASE_URL) != OK:
+		daily_challenge_failed.emit()
+		return
+
+	var result: Array = await _daily_request.request_completed
+	var response_code: int = result[1]
+	var parsed: Variant = JSON.parse_string((result[3] as PackedByteArray).get_string_from_utf8())
+	if response_code != 200 or typeof(parsed) != TYPE_DICTIONARY \
+			or str(parsed.get("category_id", "")).is_empty() or str(parsed.get("seed", "")).is_empty():
+		daily_challenge_failed.emit()
+		return
+
+	daily_challenge_received.emit(parsed)
 
 
 func submit_match(

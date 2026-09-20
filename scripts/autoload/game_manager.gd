@@ -17,18 +17,30 @@ var answer_times: Array[float] = []
 var last_summary: Dictionary = {}
 var shell_tab_index: int = 0
 var active_challenge_code: String = ""
+var active_daily_date: String = ""
 
 
-func start_round(selected_category_id: String, challenge_code: String = "") -> void:
+## `daily_date` (the server's date string) starts the shared daily challenge:
+## same questions for everyone, ordered by that date.
+func start_round(selected_category_id: String, challenge_code: String = "", daily_date: String = "") -> void:
 	category_id = selected_category_id
 	active_challenge_code = challenge_code
-	var seed_value := challenge_code.hash() if not challenge_code.is_empty() else 0
-	questions = QuestionLoaderScript.load_questions_for_category(
-		category_id,
-		LocaleManager.get_content_locale(),
-		QUESTIONS_PER_ROUND,
-		seed_value
-	)
+	active_daily_date = daily_date
+	if not daily_date.is_empty():
+		questions = QuestionLoaderScript.load_daily_questions(
+			category_id,
+			LocaleManager.get_content_locale(),
+			QUESTIONS_PER_ROUND,
+			daily_date
+		)
+	else:
+		var seed_value := challenge_code.hash() if not challenge_code.is_empty() else 0
+		questions = QuestionLoaderScript.load_questions_for_category(
+			category_id,
+			LocaleManager.get_content_locale(),
+			QUESTIONS_PER_ROUND,
+			seed_value
+		)
 	current_index = 0
 	score = 0
 	correct_count = 0
@@ -99,6 +111,9 @@ func finish_round() -> Dictionary:
 		max_combo,
 		not active_challenge_code.is_empty(),
 	)
+	var is_daily := not active_daily_date.is_empty()
+	if is_daily:
+		xp_gained += SaveManager.record_daily_challenge(active_daily_date, score, correct_count, questions.size())
 	var progress_after: Dictionary = SaveManager.capture_progress()
 	var new_achievements: Array[String] = []
 	for achievement_id in progress_after.get("unlocked", []):
@@ -121,6 +136,7 @@ func finish_round() -> Dictionary:
 		"xp_needed_before": int(progress_before.get("xp_needed", 100)),
 		"xp_needed_after": int(progress_after.get("xp_needed", 100)),
 		"new_achievements": new_achievements,
+		"is_daily": is_daily,
 	}
 
 	NetworkManager.submit_match(
@@ -134,5 +150,6 @@ func finish_round() -> Dictionary:
 	if not active_challenge_code.is_empty():
 		NetworkManager.submit_challenge_result(active_challenge_code, score, correct_count)
 		active_challenge_code = ""
+	active_daily_date = ""
 	last_summary = summary
 	return summary

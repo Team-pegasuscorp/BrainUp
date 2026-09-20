@@ -34,29 +34,53 @@ static func load_questions_for_category(
 	count: int,
 	seed_value: int = 0
 ) -> Array[Dictionary]:
-	var path: String = "%s%s.json" % [QUESTIONS_DIR, category_id]
-	var parsed: Variant = _load_json(path)
-	if typeof(parsed) != TYPE_DICTIONARY:
-		push_error("QuestionLoader: invalid question file %s" % path)
-		return []
-
-	var raw_questions: Array = parsed.get("questions", [])
-	var localized: Array[Dictionary] = []
-
-	for raw in raw_questions:
-		if typeof(raw) != TYPE_DICTIONARY:
-			continue
-		var question: Dictionary = _localize_question(raw, locale)
-		if question.is_empty():
-			continue
-		localized.append(question)
-
+	var localized := _load_localized(category_id, locale)
 	if seed_value == 0:
 		localized.shuffle()
 	else:
 		_seeded_shuffle(localized, seed_value)
 	if count > 0 and localized.size() > count:
 		return localized.slice(0, count)
+	return localized
+
+
+## Daily challenge: every player gets the same questions in the same order.
+## Ordering is by SHA-256 of (seed + question id), not a shuffle of the localised
+## list, so a question missing in one language cannot shift the others.
+## (String.hash() is too regular for this: near-identical ids sort in id order.)
+static func load_daily_questions(
+	category_id: String,
+	locale: String,
+	count: int,
+	seed_key: String
+) -> Array[Dictionary]:
+	var localized := _load_localized(category_id, locale)
+	var keys := {}
+	for question in localized:
+		var question_id := str(question.get("id", ""))
+		keys[question_id] = ("%s|%s" % [seed_key, question_id]).sha256_text()
+	localized.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		return str(keys[str(a.get("id", ""))]) < str(keys[str(b.get("id", ""))])
+	)
+	if count > 0 and localized.size() > count:
+		return localized.slice(0, count)
+	return localized
+
+
+static func _load_localized(category_id: String, locale: String) -> Array[Dictionary]:
+	var path: String = "%s%s.json" % [QUESTIONS_DIR, category_id]
+	var parsed: Variant = _load_json(path)
+	if typeof(parsed) != TYPE_DICTIONARY:
+		push_error("QuestionLoader: invalid question file %s" % path)
+		return []
+
+	var localized: Array[Dictionary] = []
+	for raw in parsed.get("questions", []):
+		if typeof(raw) != TYPE_DICTIONARY:
+			continue
+		var question: Dictionary = _localize_question(raw, locale)
+		if not question.is_empty():
+			localized.append(question)
 	return localized
 
 

@@ -4,6 +4,7 @@ const UiTokens = preload("res://scripts/config/ui_tokens.gd")
 const QuestionLoaderScript = preload("res://scripts/quiz/question_loader.gd")
 const AchievementsCatalogScript = preload("res://scripts/profile/achievements_catalog.gd")
 const DailyQuestsScript = preload("res://scripts/profile/daily_quests.gd")
+const DailyChallengeScript = preload("res://scripts/profile/daily_challenge.gd")
 
 const SAVE_PATH: String = "user://save.json"
 const PROFILE_AVATAR_PATH: String = "user://profile_avatar.png"
@@ -26,6 +27,7 @@ var current_win_streak: int = 0
 var best_win_streak: int = 0
 var has_perfect_round: bool = false
 var daily_state: Dictionary = {}
+var daily_challenge_result: Dictionary = {}
 var sound_enabled: bool = true
 var sound_volume: float = 0.8
 
@@ -62,6 +64,7 @@ func load_data() -> void:
 	best_win_streak = int(parsed.get("best_win_streak", best_win_streak))
 	has_perfect_round = bool(parsed.get("has_perfect_round", has_perfect_round))
 	daily_state = parsed.get("daily_state", daily_state)
+	daily_challenge_result = parsed.get("daily_challenge_result", daily_challenge_result)
 	sound_enabled = bool(parsed.get("sound_enabled", sound_enabled))
 	sound_volume = clampf(float(parsed.get("sound_volume", sound_volume)), 0.0, 1.0)
 
@@ -83,6 +86,7 @@ func save_data() -> void:
 		"best_win_streak": best_win_streak,
 		"has_perfect_round": has_perfect_round,
 		"daily_state": daily_state,
+		"daily_challenge_result": daily_challenge_result,
 		"sound_enabled": sound_enabled,
 		"sound_volume": sound_volume,
 	}
@@ -269,6 +273,22 @@ func get_achievement_stats() -> Dictionary:
 		"categories_played": categories_played,
 		"accuracy_percent": 0.0 if questions <= 0 else float(correct) / float(questions) * 100.0,
 	}
+
+
+## Stores today's shared-challenge result. Only the first play of a day counts;
+## returns the bonus XP granted (0 on a repeat).
+func record_daily_challenge(date: String, score: int, correct_count: int, total_count: int) -> int:
+	if str(daily_challenge_result.get("date", "")) == date:
+		return 0
+	daily_challenge_result = {
+		"date": date,
+		"score": score,
+		"correct_count": correct_count,
+		"total_count": total_count,
+	}
+	add_xp(DailyChallengeScript.BONUS_XP)
+	save_data()
+	return DailyChallengeScript.BONUS_XP
 
 
 func get_win_rate_percent() -> float:

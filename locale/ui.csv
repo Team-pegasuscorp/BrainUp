@@ -269,3 +269,8 @@ UI_DAILY_CATEGORIES_VARIETY_TITLE,Curious,Curieux
 UI_DAILY_CATEGORIES_VARIETY_DESC,Play in {n} different categories,Joue dans {n} catégories différentes
 UI_DAILY_PLAY_GAMES_TITLE,Regular,Assidu
 UI_DAILY_PLAY_GAMES_DESC,Play {n} games,Joue {n} parties
+UI_DAILY_CHALLENGE_TITLE,Daily challenge,Défi du jour
+UI_DAILY_CHALLENGE_SUB,Same questions for everyone,Mêmes questions pour tous
+UI_DAILY_CHALLENGE_LOADING,Loading…,Chargement…
+UI_DAILY_CHALLENGE_DONE,Done · {score} pts · {correct}/{total},Terminé · {score} pts · {correct}/{total}
+UI_DAILY_CHALLENGE_NEXT,New challenge in {time},Nouveau défi dans {time}

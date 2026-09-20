@@ -273,6 +273,8 @@ func _apply_outcome_texts() -> void:
 	var won := _is_win()
 	title_label.text = tr("UI_RESULTS_VICTORY") if won else tr("UI_RESULTS_DEFEAT")
 	_subtitle_label.text = tr("UI_RESULTS_VICTORY_SUB") if won else tr("UI_RESULTS_DEFEAT_SUB")
+	if bool(summary.get("is_daily", false)):
+		_subtitle_label.text = "%s · %s" % [tr("UI_DAILY_CHALLENGE_TITLE"), _subtitle_label.text]
 	_streak_label.text = tr("UI_RESULTS_STREAK").format({"count": SaveManager.current_win_streak})
 	_xp_gain_label.text = tr("UI_RESULTS_XP_GAINED").format({"xp": int(summary.get("xp_gained", 0))})
 
