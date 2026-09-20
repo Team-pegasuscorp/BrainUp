@@ -118,7 +118,7 @@ func _rebuild_content() -> void:
 		var status := Label.new()
 		status.text = _status_text
 		status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		status.add_theme_font_size_override("font_size", 13)
+		status.add_theme_font_size_override("font_size", UiScale.font(13))
 		status.add_theme_color_override("font_color", UiTokens.INK_MUTED)
 		content.add_child(status)
 
@@ -156,7 +156,7 @@ func _friends_section() -> PanelContainer:
 	caption.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	caption.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	caption.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	caption.add_theme_font_size_override("font_size", 18)
+	caption.add_theme_font_size_override("font_size", UiScale.font(18))
 	caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	header.add_child(caption)
 
@@ -165,7 +165,7 @@ func _friends_section() -> PanelContainer:
 	see_all.flat = true
 	see_all.focus_mode = Control.FOCUS_NONE
 	see_all.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	see_all.add_theme_font_size_override("font_size", 17)
+	see_all.add_theme_font_size_override("font_size", UiScale.font(17))
 	see_all.add_theme_color_override("font_color", UiTokens.ACCENT_SOCIAL)
 	see_all.add_theme_color_override("font_hover_color", UiTokens.ACCENT_SOCIAL.lightened(0.15))
 	see_all.add_theme_color_override("font_pressed_color", UiTokens.ACCENT_SOCIAL.darkened(0.1))
@@ -183,7 +183,7 @@ func _friends_section() -> PanelContainer:
 		var empty := Label.new()
 		empty.text = tr("UI_SOCIAL_FRIENDS_EMPTY")
 		empty.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		empty.add_theme_font_size_override("font_size", 14)
+		empty.add_theme_font_size_override("font_size", UiScale.font(14))
 		empty.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 		vbox.add_child(empty)
 		return panel
@@ -234,7 +234,7 @@ func _friend_requests_section() -> PanelContainer:
 	caption.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	caption.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	caption.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	caption.add_theme_font_size_override("font_size", 18)
+	caption.add_theme_font_size_override("font_size", UiScale.font(18))
 	caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	header.add_child(caption)
 
@@ -243,7 +243,7 @@ func _friend_requests_section() -> PanelContainer:
 	see_all.flat = true
 	see_all.focus_mode = Control.FOCUS_NONE
 	see_all.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	see_all.add_theme_font_size_override("font_size", 17)
+	see_all.add_theme_font_size_override("font_size", UiScale.font(17))
 	see_all.add_theme_color_override("font_color", UiTokens.ACCENT_SOCIAL)
 	see_all.add_theme_color_override("font_hover_color", UiTokens.ACCENT_SOCIAL.lightened(0.15))
 	see_all.add_theme_color_override("font_pressed_color", UiTokens.ACCENT_SOCIAL.darkened(0.1))
@@ -267,7 +267,7 @@ func _friend_requests_section() -> PanelContainer:
 		var empty := Label.new()
 		empty.text = tr("UI_SOCIAL_FRIEND_REQUESTS_EMPTY")
 		empty.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		empty.add_theme_font_size_override("font_size", 18)
+		empty.add_theme_font_size_override("font_size", UiScale.font(18))
 		empty.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 		vbox.add_child(empty)
 		return panel
@@ -309,7 +309,7 @@ func _player_search_section() -> PanelContainer:
 	caption.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	caption.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	caption.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	caption.add_theme_font_size_override("font_size", 18)
+	caption.add_theme_font_size_override("font_size", UiScale.font(18))
 	caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	header.add_child(caption)
 
@@ -340,7 +340,7 @@ func _player_search_section() -> PanelContainer:
 	search.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	search.custom_minimum_size.y = 44
 	search.focus_mode = Control.FOCUS_CLICK
-	search.add_theme_font_size_override("font_size", 18)
+	search.add_theme_font_size_override("font_size", UiScale.font(18))
 	search.add_theme_color_override("font_color", Color(0.18, 0.12, 0.16, 1))
 	search.add_theme_color_override("font_placeholder_color", Color(0.45, 0.42, 0.48, 1))
 	var clear_line := StyleBoxEmpty.new()
@@ -352,7 +352,7 @@ func _player_search_section() -> PanelContainer:
 	search_btn.text = "🔍"
 	search_btn.focus_mode = Control.FOCUS_NONE
 	search_btn.custom_minimum_size = Vector2(40, 40)
-	search_btn.add_theme_font_size_override("font_size", 16)
+	search_btn.add_theme_font_size_override("font_size", UiScale.font(16))
 	var search_btn_style := StyleBoxFlat.new()
 	search_btn_style.bg_color = UiTokens.ACCENT_SOCIAL
 	search_btn_style.set_corner_radius_all(20)
@@ -395,14 +395,14 @@ func _player_search_section() -> PanelContainer:
 	var plus := Label.new()
 	plus.text = "＋"
 	plus.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	plus.add_theme_font_size_override("font_size", 18)
+	plus.add_theme_font_size_override("font_size", UiScale.font(18))
 	plus.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	add_row.add_child(plus)
 
 	var add_label := Label.new()
 	add_label.text = tr("UI_SOCIAL_ADD_FRIEND").to_upper()
 	add_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_label.add_theme_font_size_override("font_size", 15)
+	add_label.add_theme_font_size_override("font_size", UiScale.font(15))
 	add_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	add_row.add_child(add_label)
 	return panel
@@ -440,7 +440,7 @@ func _friend_request_row(request: Dictionary) -> Control:
 	initial.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	initial.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	initial.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	initial.add_theme_font_size_override("font_size", 18)
+	initial.add_theme_font_size_override("font_size", UiScale.font(18))
 	initial.add_theme_color_override("font_color", Color.WHITE)
 	avatar.add_child(initial)
 	## Size must be set before wire — otherwise GameAssets falls back to 56px.
@@ -459,13 +459,13 @@ func _friend_request_row(request: Dictionary) -> Control:
 	var name_label := Label.new()
 	name_label.text = request_name
 	name_label.clip_text = true
-	name_label.add_theme_font_size_override("font_size", UiTokens.PSEUDO_FONT_SIZE)
+	name_label.add_theme_font_size_override("font_size", UiScale.font(UiTokens.PSEUDO_FONT_SIZE))
 	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	identity.add_child(name_label)
 
 	var level_label := Label.new()
 	level_label.text = "%s %d" % [tr("UI_PROFILE_LEVEL_CAPTION"), int(request.get("level", 1))]
-	level_label.add_theme_font_size_override("font_size", 13)
+	level_label.add_theme_font_size_override("font_size", UiScale.font(13))
 	level_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	identity.add_child(level_label)
 
@@ -491,7 +491,7 @@ func _friend_request_action_btn(label_text: String, color: Color, callback: Call
 	btn.text = label_text
 	btn.focus_mode = Control.FOCUS_NONE
 	btn.custom_minimum_size = Vector2(48, 48)
-	btn.add_theme_font_size_override("font_size", 24)
+	btn.add_theme_font_size_override("font_size", UiScale.font(24))
 	btn.add_theme_color_override("font_color", Color.WHITE)
 	var style := StyleBoxFlat.new()
 	style.bg_color = color
@@ -625,7 +625,7 @@ func _ensure_friend_requests_page() -> void:
 	back.text = "< " + tr("UI_BACK")
 	back.flat = true
 	back.focus_mode = Control.FOCUS_NONE
-	back.add_theme_font_size_override("font_size", 16)
+	back.add_theme_font_size_override("font_size", UiScale.font(16))
 	back.add_theme_color_override("font_color", UiTokens.ACCENT_SOCIAL)
 	var empty := StyleBoxEmpty.new()
 	back.add_theme_stylebox_override("normal", empty)
@@ -639,7 +639,7 @@ func _ensure_friend_requests_page() -> void:
 	page_title.text = tr("UI_SOCIAL_FRIEND_REQUESTS").to_upper()
 	page_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	page_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	page_title.add_theme_font_size_override("font_size", 20)
+	page_title.add_theme_font_size_override("font_size", UiScale.font(20))
 	page_title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	header.add_child(page_title)
 
@@ -671,7 +671,7 @@ func _populate_friend_requests_page() -> void:
 		var empty := Label.new()
 		empty.text = tr("UI_SOCIAL_FRIEND_REQUESTS_EMPTY")
 		empty.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		empty.add_theme_font_size_override("font_size", 18)
+		empty.add_theme_font_size_override("font_size", UiScale.font(18))
 		empty.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 		_friend_requests_list.add_child(empty)
 		return
@@ -710,7 +710,7 @@ func _friend_chip(friend: Dictionary) -> Control:
 	initial.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	initial.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	initial.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	initial.add_theme_font_size_override("font_size", 28)
+	initial.add_theme_font_size_override("font_size", UiScale.font(28))
 	initial.add_theme_color_override("font_color", Color.WHITE)
 	avatar.add_child(initial)
 	## Size must be set on the panel before wire — otherwise GameAssets falls back to 56px.
@@ -742,7 +742,7 @@ func _friend_chip(friend: Dictionary) -> Control:
 	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	name_label.clip_text = true
 	name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	name_label.add_theme_font_size_override("font_size", UiTokens.PSEUDO_FONT_SIZE)
+	name_label.add_theme_font_size_override("font_size", UiScale.font(UiTokens.PSEUDO_FONT_SIZE))
 	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	col.add_child(name_label)
 
@@ -750,7 +750,7 @@ func _friend_chip(friend: Dictionary) -> Control:
 	level_label.text = "Lv.%d" % int(friend.get("level", 1))
 	level_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	level_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	level_label.add_theme_font_size_override("font_size", 13)
+	level_label.add_theme_font_size_override("font_size", UiScale.font(13))
 	level_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	col.add_child(level_label)
 
@@ -927,7 +927,7 @@ func _ensure_friends_page() -> void:
 	back.text = "< " + tr("UI_BACK")
 	back.flat = true
 	back.focus_mode = Control.FOCUS_NONE
-	back.add_theme_font_size_override("font_size", 16)
+	back.add_theme_font_size_override("font_size", UiScale.font(16))
 	back.add_theme_color_override("font_color", UiTokens.ACCENT_SOCIAL)
 	var empty := StyleBoxEmpty.new()
 	back.add_theme_stylebox_override("normal", empty)
@@ -946,7 +946,7 @@ func _ensure_friends_page() -> void:
 	page_title.text = tr("UI_SOCIAL_FRIENDS").to_upper()
 	page_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	page_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	page_title.add_theme_font_size_override("font_size", 20)
+	page_title.add_theme_font_size_override("font_size", UiScale.font(20))
 	page_title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	title_row.add_child(page_title)
 
@@ -1036,7 +1036,7 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 	initial.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	initial.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	initial.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	initial.add_theme_font_size_override("font_size", 34)
+	initial.add_theme_font_size_override("font_size", UiScale.font(34))
 	initial.add_theme_color_override("font_color", Color.WHITE)
 	avatar_wrap.add_child(initial)
 	if GameAssets.wire_demo_avatar_to_control(avatar, str(friend.get("name", ""))):
@@ -1066,7 +1066,7 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 
 	var name_label := Label.new()
 	name_label.text = str(friend.get("name", ""))
-	name_label.add_theme_font_size_override("font_size", 30)
+	name_label.add_theme_font_size_override("font_size", UiScale.font(30))
 	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	identity.add_child(name_label)
 
@@ -1075,7 +1075,7 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 		tr("UI_PROFILE_LEVEL_CAPTION"),
 		int(friend.get("level", 1)),
 	]
-	meta.add_theme_font_size_override("font_size", 16)
+	meta.add_theme_font_size_override("font_size", UiScale.font(16))
 	meta.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	identity.add_child(meta)
 
@@ -1085,7 +1085,7 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 	menu.focus_mode = Control.FOCUS_NONE
 	menu.custom_minimum_size = Vector2(34, 34)
 	menu.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
-	menu.add_theme_font_size_override("font_size", 22)
+	menu.add_theme_font_size_override("font_size", UiScale.font(22))
 	menu.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	var menu_bg := StyleBoxFlat.new()
 	menu_bg.bg_color = Color(1, 1, 1, 0.06)
@@ -1166,7 +1166,7 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 	var swords := Label.new()
 	swords.text = "⚔"
 	swords.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	swords.add_theme_font_size_override("font_size", 22)
+	swords.add_theme_font_size_override("font_size", UiScale.font(22))
 	swords.add_theme_color_override("font_color", Color(0.12, 0.06, 0.1, 1))
 	var emoji_font := UiFonts.emoji_font()
 	if emoji_font != null:
@@ -1177,14 +1177,14 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 	challenge_label.text = tr("UI_SOCIAL_FRIEND_CHALLENGE")
 	challenge_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	challenge_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	challenge_label.add_theme_font_size_override("font_size", 20)
+	challenge_label.add_theme_font_size_override("font_size", UiScale.font(20))
 	challenge_label.add_theme_color_override("font_color", Color(0.12, 0.06, 0.1, 1))
 	challenge_row.add_child(challenge_label)
 
 	var challenge_chevron := Label.new()
 	challenge_chevron.text = ">"
 	challenge_chevron.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	challenge_chevron.add_theme_font_size_override("font_size", 20)
+	challenge_chevron.add_theme_font_size_override("font_size", UiScale.font(20))
 	challenge_chevron.add_theme_color_override("font_color", Color(0.12, 0.06, 0.1, 0.7))
 	challenge_row.add_child(challenge_chevron)
 
@@ -1200,7 +1200,7 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 	close_btn.flat = true
 	close_btn.focus_mode = Control.FOCUS_NONE
 	close_btn.alignment = HORIZONTAL_ALIGNMENT_CENTER
-	close_btn.add_theme_font_size_override("font_size", 18)
+	close_btn.add_theme_font_size_override("font_size", UiScale.font(18))
 	close_btn.add_theme_color_override("font_color", UiTokens.ACCENT_SOCIAL)
 	var empty := StyleBoxEmpty.new()
 	close_btn.add_theme_stylebox_override("normal", empty)
@@ -1252,7 +1252,7 @@ func _friend_best_subject_card(friend: Dictionary, cat_accent: Color) -> Control
 	var caption := Label.new()
 	caption.text = tr("UI_SOCIAL_BEST_CATEGORY").to_upper()
 	caption.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	caption.add_theme_font_size_override("font_size", 17)
+	caption.add_theme_font_size_override("font_size", UiScale.font(17))
 	caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	texts.add_child(caption)
 
@@ -1260,7 +1260,7 @@ func _friend_best_subject_card(friend: Dictionary, cat_accent: Color) -> Control
 	subject.text = str(friend.get("best_subject", "—"))
 	subject.clip_text = true
 	subject.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	subject.add_theme_font_size_override("font_size", 22)
+	subject.add_theme_font_size_override("font_size", UiScale.font(22))
 	subject.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	texts.add_child(subject)
 
@@ -1280,7 +1280,7 @@ func _friend_best_subject_card(friend: Dictionary, cat_accent: Color) -> Control
 		int(friend.get("best_subject_level", 1)),
 	]
 	badge_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	badge_label.add_theme_font_size_override("font_size", 16)
+	badge_label.add_theme_font_size_override("font_size", UiScale.font(16))
 	badge_label.add_theme_color_override("font_color", UiTokens.ACCENT_SOCIAL)
 	badge.add_child(badge_label)
 	row.add_child(badge)
@@ -1342,7 +1342,7 @@ func _friend_stat_tile(
 	icon.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	icon.add_theme_font_size_override("font_size", 28)
+	icon.add_theme_font_size_override("font_size", UiScale.font(28))
 	var emoji_font := UiFonts.emoji_font()
 	if emoji_font != null:
 		icon.add_theme_font_override("font", emoji_font)
@@ -1355,7 +1355,7 @@ func _friend_stat_tile(
 		icon_row.add_child(trail)
 		var chevron := Label.new()
 		chevron.text = ">"
-		chevron.add_theme_font_size_override("font_size", 16)
+		chevron.add_theme_font_size_override("font_size", UiScale.font(16))
 		chevron.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 		trail.add_child(chevron)
 
@@ -1373,7 +1373,7 @@ func _friend_stat_tile(
 	caption_label.max_lines_visible = 2
 	caption_label.clip_text = false
 	caption_label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	caption_label.add_theme_font_size_override("font_size", 15)
+	caption_label.add_theme_font_size_override("font_size", UiScale.font(15))
 	caption_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	caption_slot.add_child(caption_label)
 
@@ -1388,7 +1388,7 @@ func _friend_stat_tile(
 	value_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	value_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	value_label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	value_label.add_theme_font_size_override("font_size", 28)
+	value_label.add_theme_font_size_override("font_size", UiScale.font(28))
 	value_label.add_theme_color_override("font_color", value_color)
 	value_slot.add_child(value_label)
 
@@ -1404,7 +1404,7 @@ func _friend_stat_tile(
 	sub.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	sub.clip_text = true
 	sub.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	sub.add_theme_font_size_override("font_size", 14)
+	sub.add_theme_font_size_override("font_size", UiScale.font(14))
 	sub.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	sub_slot.add_child(sub)
 	return card
@@ -1538,7 +1538,7 @@ func _create_section() -> PanelContainer:
 	var caption := Label.new()
 	caption.text = tr("UI_SOCIAL_CREATE_CHALLENGE").to_upper()
 	caption.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	caption.add_theme_font_size_override("font_size", 18)
+	caption.add_theme_font_size_override("font_size", UiScale.font(18))
 	caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	vbox.add_child(caption)
 
@@ -1629,7 +1629,7 @@ func _challenge_category_chip(category: Dictionary) -> Control:
 	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	name_label.custom_minimum_size = Vector2(CHIP_W, 44)
 	name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	name_label.add_theme_font_size_override("font_size", 17)
+	name_label.add_theme_font_size_override("font_size", UiScale.font(17))
 	name_label.add_theme_color_override(
 		"font_color",
 		UiTokens.PROFILE_TEXT if selected else UiTokens.PROFILE_TEXT_MUTED
@@ -1662,7 +1662,7 @@ func _live_search_section() -> PanelContainer:
 
 	var caption := Label.new()
 	caption.text = tr("UI_SOCIAL_LIVE_TITLE").to_upper()
-	caption.add_theme_font_size_override("font_size", 18)
+	caption.add_theme_font_size_override("font_size", UiScale.font(18))
 	caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	vbox.add_child(caption)
 
@@ -1707,21 +1707,21 @@ func _build_live_question_view(vbox: VBoxContainer) -> void:
 		"my_score": _live_my_score,
 		"opponent_score": _live_opponent_score,
 	})
-	header.add_theme_font_size_override("font_size", 14)
+	header.add_theme_font_size_override("font_size", UiScale.font(14))
 	header.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	vbox.add_child(header)
 
 	_countdown_label = Label.new()
 	_countdown_label.text = "%d" % ceili(_live_countdown)
 	_countdown_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_countdown_label.add_theme_font_size_override("font_size", 22)
+	_countdown_label.add_theme_font_size_override("font_size", UiScale.font(22))
 	_countdown_label.add_theme_color_override("font_color", UiTokens.ACCENT_SOCIAL)
 	vbox.add_child(_countdown_label)
 
 	var question_label := Label.new()
 	question_label.text = str(_live_question.get("text", ""))
 	question_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	question_label.add_theme_font_size_override("font_size", 17)
+	question_label.add_theme_font_size_override("font_size", UiScale.font(17))
 	question_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	vbox.add_child(question_label)
 
@@ -1747,7 +1747,7 @@ func _build_live_question_view(vbox: VBoxContainer) -> void:
 		var your_result: Dictionary = _live_last_reveal.get("your_result", {})
 		var points_label := Label.new()
 		points_label.text = tr("UI_SOCIAL_LIVE_POINTS").format({"points": int(your_result.get("points", 0))})
-		points_label.add_theme_font_size_override("font_size", 13)
+		points_label.add_theme_font_size_override("font_size", UiScale.font(13))
 		points_label.add_theme_color_override("font_color", UiTokens.ACCENT_SOCIAL)
 		vbox.add_child(points_label)
 
@@ -1765,7 +1765,7 @@ func _build_live_over_view(vbox: VBoxContainer) -> void:
 
 	var label := Label.new()
 	label.text = tr(key).format({"my_score": my_score, "opponent_score": opponent_score})
-	label.add_theme_font_size_override("font_size", 18)
+	label.add_theme_font_size_override("font_size", UiScale.font(18))
 	label.add_theme_color_override("font_color", UiTokens.ACCENT_SOCIAL)
 	vbox.add_child(label)
 
@@ -1785,7 +1785,7 @@ func _join_section() -> PanelContainer:
 
 	var caption := Label.new()
 	caption.text = tr("UI_SOCIAL_JOIN_CHALLENGE").to_upper()
-	caption.add_theme_font_size_override("font_size", 18)
+	caption.add_theme_font_size_override("font_size", UiScale.font(18))
 	caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	vbox.add_child(caption)
 
@@ -1820,7 +1820,7 @@ func _challenge_card() -> PanelContainer:
 
 	var header := Label.new()
 	header.text = tr("UI_SOCIAL_CHALLENGE_HEADER").format({"category": category_id, "code": code}).to_upper()
-	header.add_theme_font_size_override("font_size", 18)
+	header.add_theme_font_size_override("font_size", UiScale.font(18))
 	header.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	vbox.add_child(header)
 
@@ -1838,7 +1838,7 @@ func _challenge_card() -> PanelContainer:
 	else:
 		var status_label := Label.new()
 		status_label.text = tr("UI_SOCIAL_STATUS_PENDING") if status == "pending" else tr("UI_SOCIAL_STATUS_ACCEPTED")
-		status_label.add_theme_font_size_override("font_size", 13)
+		status_label.add_theme_font_size_override("font_size", UiScale.font(13))
 		status_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 		vbox.add_child(status_label)
 
@@ -1867,7 +1867,7 @@ func _make_result_label() -> Label:
 	elif my_score == opponent_score:
 		key = "UI_SOCIAL_RESULT_TIE"
 	label.text = tr(key).format({"my_score": my_score, "opponent_score": opponent_score})
-	label.add_theme_font_size_override("font_size", 15)
+	label.add_theme_font_size_override("font_size", UiScale.font(15))
 	label.add_theme_color_override("font_color", UiTokens.ACCENT_SOCIAL)
 	return label
 

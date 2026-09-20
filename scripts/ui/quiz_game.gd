@@ -8,6 +8,8 @@ const QuestionLoaderScript = preload("res://scripts/quiz/question_loader.gd")
 
 const ANSWER_HEIGHT := 92.0
 const ANSWER_RADIUS := 24
+## Card style margins + inner margin around the question text, per axis.
+const QUESTION_PADDING := 68.0
 const TIMER_WARN_SECONDS := 5.0
 const TIMER_DANGER_SECONDS := 3.0
 
@@ -56,22 +58,22 @@ func _ready() -> void:
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		button.size_flags_vertical = Control.SIZE_FILL
 		button.custom_minimum_size = Vector2(0, ANSWER_HEIGHT)
-		button.add_theme_font_size_override("font_size", 24)
+		button.add_theme_font_size_override("font_size", UiScale.font(24))
 
 	timer_bar.custom_minimum_size = Vector2(0, 18)
 	timer_bar.add_theme_stylebox_override("background", UiStyle.progress_bg())
 	combo_label.add_theme_color_override("font_color", UiTokens.ACCENT_QUIZ)
 	for label in [progress_label]:
-		label.add_theme_font_size_override("font_size", 18)
+		label.add_theme_font_size_override("font_size", UiScale.font(18))
 	for label in [score_label, combo_label]:
-		label.add_theme_font_size_override("font_size", 22)
+		label.add_theme_font_size_override("font_size", UiScale.font(22))
 
 	question_panel.add_theme_stylebox_override("panel", UiStyle.card(_accent))
-	question_label.add_theme_font_size_override("font_size", 32)
+	question_label.add_theme_font_size_override("font_size", UiScale.font(32))
 	question_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	question_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	question_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	feedback_label.add_theme_font_size_override("font_size", 24)
+	feedback_label.add_theme_font_size_override("font_size", UiScale.font(24))
 	_show_current_question()
 
 
@@ -88,7 +90,7 @@ func _build_category_header() -> void:
 	name_label.text = _category_name(category_id)
 	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	name_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	name_label.add_theme_font_size_override("font_size", 26)
+	name_label.add_theme_font_size_override("font_size", UiScale.font(26))
 	name_label.add_theme_color_override("font_color", Color(1, 1, 1, 0.95))
 	row.add_child(name_label)
 
@@ -96,7 +98,7 @@ func _build_category_header() -> void:
 	_timer_label.custom_minimum_size = Vector2(64, 0)
 	_timer_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_timer_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	_timer_label.add_theme_font_size_override("font_size", 44)
+	_timer_label.add_theme_font_size_override("font_size", UiScale.font(44))
 	row.add_child(_timer_label)
 
 	var column := header_row.get_parent()
@@ -178,6 +180,7 @@ func _show_current_question() -> void:
 	_update_timer_visuals()
 	accepting_input = true
 	_animate_question_in()
+	_fit_texts()
 
 
 ## Question card fades in, then the answers cascade one after another.
@@ -193,6 +196,62 @@ func _animate_question_in() -> void:
 		button.modulate.a = 0.0
 		tween.tween_property(button, "modulate:a", 1.0, 0.2).set_delay(0.1 + float(order) * 0.07)
 		order += 1
+
+
+## The question page never scrolls, so long texts shrink until they fit their box.
+func _fit_texts() -> void:
+	await get_tree().process_frame
+	if not is_inside_tree():
+		return
+	question_label.add_theme_font_size_override("font_size", _largest_fitting(
+		question_label.text, question_label,
+		question_panel.size.x - QUESTION_PADDING, _question_room(),
+		[36, 32, 28, 25, 22, 19, 16]
+	))
+	for button in answer_buttons:
+		if not button.visible:
+			continue
+		button.add_theme_font_size_override("font_size", _largest_fitting(
+			button.text, button,
+			button.size.x - 44.0, button.size.y - 20.0,
+			[28, 25, 22, 19, 16]
+		))
+
+
+## Height left for the question text once everything else on the page has its space.
+## (Measured from the other rows, not from the card: the card grows with its text.)
+func _question_room() -> float:
+	var frame: MarginContainer = $MarginContainer
+	var column: VBoxContainer = $MarginContainer/VBox
+	## Screen height minus the frame margins: the column itself can be stretched past
+	## the screen when its content overflows, so it cannot be used as the reference.
+	var screen_room := size.y - float(frame.get_theme_constant("margin_top") + frame.get_theme_constant("margin_bottom"))
+	var used := 0.0
+	var rows := 0
+	for child in column.get_children():
+		if not (child is Control) or not child.visible:
+			continue
+		rows += 1
+		if child != question_panel:
+			used += (child as Control).get_combined_minimum_size().y
+	used += float(column.get_theme_constant("separation")) * float(maxi(rows - 1, 0))
+	## Small safety margin: text metrics and label layout differ by a few pixels.
+	return screen_room - used - QUESTION_PADDING - 14.0
+
+
+## Biggest of `sizes` (base sizes, scaled like the rest of the UI) whose wrapped
+## text fits in width x height.
+func _largest_fitting(text: String, control: Control, width: float, height: float, sizes: Array) -> int:
+	var font := control.get_theme_font("font")
+	var spacing := float(control.get_theme_constant("line_spacing"))
+	for base in sizes:
+		var size := UiScale.font(int(base))
+		var measured := font.get_multiline_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, maxf(width, 1.0), size)
+		## Labels add their line spacing between lines; the raw measure does not.
+		var lines := maxi(roundi(measured.y / font.get_height(size)), 1)
+		if measured.y + spacing * float(lines) <= height:
+			return size
+	return UiScale.font(int(sizes[sizes.size() - 1]))
 
 
 func _on_answer_pressed(selected_index: int) -> void:

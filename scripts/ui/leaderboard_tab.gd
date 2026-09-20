@@ -68,7 +68,7 @@ func _rebuild() -> void:
 		hint.text = tr("UI_LEADERBOARD_DEMO_HINT")
 		hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		hint.add_theme_font_size_override("font_size", 12)
+		hint.add_theme_font_size_override("font_size", UiScale.font(12))
 		hint.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 		content.add_child(hint)
 	else:
@@ -253,7 +253,7 @@ func _pill_chip(
 	var icon := Label.new()
 	icon.text = icon_text
 	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	icon.add_theme_font_size_override("font_size", icon_size)
+	icon.add_theme_font_size_override("font_size", UiScale.font(icon_size))
 	var emoji_font := UiFonts.emoji_font()
 	if emoji_font != null:
 		icon.add_theme_font_override("font", emoji_font)
@@ -262,7 +262,7 @@ func _pill_chip(
 	var label := Label.new()
 	label.text = label_text
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	label.add_theme_font_size_override("font_size", label_size)
+	label.add_theme_font_size_override("font_size", UiScale.font(label_size))
 	label.add_theme_color_override(
 		"font_color",
 		Color(0.12, 0.1, 0.08, 1) if selected else Color(1, 1, 1, 0.92)
@@ -293,7 +293,7 @@ func _board_section(
 
 		var icon := Label.new()
 		icon.text = icon_text
-		icon.add_theme_font_size_override("font_size", 18)
+		icon.add_theme_font_size_override("font_size", UiScale.font(18))
 		var emoji_font := UiFonts.emoji_font()
 		if emoji_font != null:
 			icon.add_theme_font_override("font", emoji_font)
@@ -302,7 +302,7 @@ func _board_section(
 		var title := Label.new()
 		title.text = title_text
 		title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		title.add_theme_font_size_override("font_size", 18)
+		title.add_theme_font_size_override("font_size", UiScale.font(18))
 		title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 		header.add_child(title)
 
@@ -317,7 +317,7 @@ func _board_section(
 		var rank_hint := Label.new()
 		rank_hint.text = tr("UI_LEADERBOARD_YOUR_RANK").format({"rank": player_rank})
 		rank_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		rank_hint.add_theme_font_size_override("font_size", 22)
+		rank_hint.add_theme_font_size_override("font_size", UiScale.font(22))
 		rank_hint.add_theme_color_override("font_color", UiTokens.ACCENT_LEADERBOARD)
 		vbox.add_child(rank_hint)
 
@@ -352,7 +352,7 @@ func _make_gap_row(entry: Dictionary) -> Control:
 	else:
 		label.text = "···"
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	label.add_theme_font_size_override("font_size", 16)
+	label.add_theme_font_size_override("font_size", UiScale.font(16))
 	label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	wrap.add_child(label)
 	return wrap
@@ -458,7 +458,7 @@ func _podium_card(
 	medal.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	medal.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	var medal_size := 48 if place == 1 else (40 if place == 2 else 34)
-	medal.add_theme_font_size_override("font_size", medal_size)
+	medal.add_theme_font_size_override("font_size", UiScale.font(medal_size))
 	var emoji_font := UiFonts.emoji_font()
 	if emoji_font != null:
 		medal.add_theme_font_override("font", emoji_font)
@@ -471,21 +471,21 @@ func _podium_card(
 	name_label.text = str(entry.get("name", ""))
 	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	name_label.clip_text = true
-	name_label.add_theme_font_size_override("font_size", UiTokens.PSEUDO_FONT_SIZE)
+	name_label.add_theme_font_size_override("font_size", UiScale.font(UiTokens.PSEUDO_FONT_SIZE))
 	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	vbox.add_child(name_label)
 
 	var level := Label.new()
 	level.text = "★ %s %d" % [tr("UI_PROFILE_LEVEL_CAPTION"), int(entry.get("level", 1))]
 	level.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	level.add_theme_font_size_override("font_size", 12 if place != 3 else 11)
+	level.add_theme_font_size_override("font_size", UiScale.font(12 if place != 3 else 11))
 	level.add_theme_color_override("font_color", Color(0.72, 0.62, 1.0, 1))
 	vbox.add_child(level)
 
 	var score := Label.new()
 	score.text = "🏆 %s" % _format_int(int(entry.get("score", 0)))
 	score.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	score.add_theme_font_size_override("font_size", 26 if place == 1 else (24 if place == 2 else 22))
+	score.add_theme_font_size_override("font_size", UiScale.font(26 if place == 1 else (24 if place == 2 else 22)))
 	score.add_theme_color_override("font_color", accent)
 	vbox.add_child(score)
 	return panel
@@ -526,7 +526,7 @@ func _make_rank_row(entry: Dictionary) -> PanelContainer:
 		medal.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		medal.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		medal.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-		medal.add_theme_font_size_override("font_size", 42)
+		medal.add_theme_font_size_override("font_size", UiScale.font(42))
 		var emoji_font := UiFonts.emoji_font()
 		if emoji_font != null:
 			medal.add_theme_font_override("font", emoji_font)
@@ -544,7 +544,7 @@ func _make_rank_row(entry: Dictionary) -> PanelContainer:
 		rank_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		rank_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		rank_label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-		rank_label.add_theme_font_size_override("font_size", 13)
+		rank_label.add_theme_font_size_override("font_size", UiScale.font(13))
 		rank_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 		rank_slot.add_child(rank_label)
 
@@ -560,19 +560,19 @@ func _make_rank_row(entry: Dictionary) -> PanelContainer:
 	if is_player:
 		name.text = tr("UI_LEADERBOARD_YOU_NAME").format({"name": name.text})
 	name.clip_text = true
-	name.add_theme_font_size_override("font_size", UiTokens.PSEUDO_FONT_SIZE)
+	name.add_theme_font_size_override("font_size", UiScale.font(UiTokens.PSEUDO_FONT_SIZE))
 	name.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	info.add_child(name)
 
 	var level := Label.new()
 	level.text = "★ %s %d" % [tr("UI_PROFILE_LEVEL_CAPTION"), int(entry.get("level", 1))]
-	level.add_theme_font_size_override("font_size", 12)
+	level.add_theme_font_size_override("font_size", UiScale.font(12))
 	level.add_theme_color_override("font_color", Color(0.72, 0.62, 1.0, 1))
 	info.add_child(level)
 
 	var score := Label.new()
 	score.text = "🏆 %s" % _format_int(int(entry.get("score", 0)))
-	score.add_theme_font_size_override("font_size", 24)
+	score.add_theme_font_size_override("font_size", UiScale.font(24))
 	score.add_theme_color_override("font_color", UiTokens.ACCENT_LEADERBOARD)
 	row.add_child(score)
 	return panel
@@ -629,7 +629,7 @@ func _entry_avatar(entry: Dictionary, size_px: float, accent: Color) -> Control:
 	initial.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	initial.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	initial.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	initial.add_theme_font_size_override("font_size", int(size_px * 0.42))
+	initial.add_theme_font_size_override("font_size", UiScale.font(int(size_px * 0.42)))
 	initial.add_theme_color_override("font_color", Color.WHITE)
 	panel.add_child(initial)
 	return wrap
@@ -640,7 +640,7 @@ func _make_empty_label(text: String) -> Label:
 	label.text = text
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	label.add_theme_font_size_override("font_size", 14)
+	label.add_theme_font_size_override("font_size", UiScale.font(14))
 	label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	return label
 

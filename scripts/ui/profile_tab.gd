@@ -147,13 +147,19 @@ func _rebuild_sections() -> void:
 	sections.add_theme_constant_override("separation", 12)
 	sections.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
-	## Mobile stack matching the competitive mock tiles.
+	## Mobile stack matching the competitive mock tiles. Their multi-column rows are
+	## tuned to the page width, so text grows less here than elsewhere.
+	## The hero is pixel-tuned to the page width and already uses large type: unchanged.
+	UiScale.identity = true
 	sections.add_child(_build_hero())
+	UiScale.identity = false
+	UiScale.compact = true
 	sections.add_child(_build_stats_strip())
 	sections.add_child(_build_mastery_mosaic())
 	sections.add_child(_build_history_tile())
 	sections.add_child(_build_badges_tile())
 	sections.add_child(_build_season_tile())
+	UiScale.compact = false
 
 
 func _kill_profile_tweens() -> void:
@@ -233,7 +239,7 @@ func _build_hero() -> PanelContainer:
 
 	var name_label := Label.new()
 	name_label.text = str(_profile_data.get("player_name", UiTokens.DEFAULT_PLAYER_NAME))
-	name_label.add_theme_font_size_override("font_size", 34)
+	name_label.add_theme_font_size_override("font_size", UiScale.font(34))
 	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	name_row.add_child(name_label)
 
@@ -242,7 +248,7 @@ func _build_hero() -> PanelContainer:
 		var verified := Label.new()
 		verified.text = "☑"
 		verified.tooltip_text = tr("UI_PROFILE_EMAIL_VERIFIED")
-		verified.add_theme_font_size_override("font_size", 20)
+		verified.add_theme_font_size_override("font_size", UiScale.font(20))
 		verified.add_theme_color_override("font_color", Color(0.36, 0.75, 1.0, 1))
 		name_row.add_child(verified)
 
@@ -258,7 +264,7 @@ func _build_hero() -> PanelContainer:
 	## Separate label so the flag uses a CBDT emoji font (Godot can't render Windows COLR emoji).
 	var flag_label := Label.new()
 	flag_label.text = flag
-	flag_label.add_theme_font_size_override("font_size", 26)
+	flag_label.add_theme_font_size_override("font_size", UiScale.font(26))
 	var emoji_font := UiFonts.emoji_font()
 	if emoji_font != null:
 		flag_label.add_theme_font_override("font", emoji_font)
@@ -268,7 +274,7 @@ func _build_hero() -> PanelContainer:
 
 	var country := Label.new()
 	country.text = country_name
-	country.add_theme_font_size_override("font_size", 19)
+	country.add_theme_font_size_override("font_size", UiScale.font(19))
 	country.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	country_row.add_child(country)
 
@@ -297,14 +303,14 @@ func _build_hero() -> PanelContainer:
 	var level_caption := Label.new()
 	level_caption.text = tr("UI_PROFILE_LEVEL_CAPTION").to_upper()
 	level_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	level_caption.add_theme_font_size_override("font_size", 14)
+	level_caption.add_theme_font_size_override("font_size", UiScale.font(14))
 	level_caption.add_theme_color_override("font_color", UiTokens.PROFILE_TITLE_CAPS)
 	level_col.add_child(level_caption)
 
 	var level_num := Label.new()
 	level_num.text = str(_profile_data.get("level", 1))
 	level_num.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	level_num.add_theme_font_size_override("font_size", 34)
+	level_num.add_theme_font_size_override("font_size", UiScale.font(34))
 	level_num.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	## Keep a readable gap under the larger "NIVEAU" caption.
 	var level_num_wrap := MarginContainer.new()
@@ -335,7 +341,7 @@ func _build_hero() -> PanelContainer:
 
 	var xp_tag := Label.new()
 	xp_tag.text = tr("UI_PROFILE_XP_LABEL")
-	xp_tag.add_theme_font_size_override("font_size", 14)
+	xp_tag.add_theme_font_size_override("font_size", UiScale.font(14))
 	xp_tag.add_theme_color_override("font_color", UiTokens.ACCENT_PROFILE)
 	xp_line.add_child(xp_tag)
 
@@ -344,7 +350,7 @@ func _build_hero() -> PanelContainer:
 		_format_int(int(_profile_data.get("xp", 0))),
 		_format_int(int(_profile_data.get("xp_to_next", 100))),
 	]
-	xp_values.add_theme_font_size_override("font_size", 14)
+	xp_values.add_theme_font_size_override("font_size", UiScale.font(14))
 	xp_values.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	xp_line.add_child(xp_values)
 
@@ -365,7 +371,7 @@ func _build_hero() -> PanelContainer:
 	next_xp.text = tr("UI_PROFILE_NEXT_LEVEL").format({
 		"xp": _format_int(int(_profile_data.get("xp_remaining", 0))),
 	})
-	next_xp.add_theme_font_size_override("font_size", 12)
+	next_xp.add_theme_font_size_override("font_size", UiScale.font(12))
 	next_xp.add_theme_color_override("font_color", UiTokens.PROFILE_TITLE_CAPS)
 	xp_col.add_child(next_xp)
 
@@ -401,7 +407,7 @@ func _build_hero() -> PanelContainer:
 	).to_upper()
 	league_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	league_title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	league_title.add_theme_font_size_override("font_size", 16)
+	league_title.add_theme_font_size_override("font_size", UiScale.font(16))
 	league_title.add_theme_color_override("font_color", UiTokens.ACCENT_PROFILE)
 	league_col.add_child(league_title)
 
@@ -419,7 +425,7 @@ func _build_hero() -> PanelContainer:
 	var points := Label.new()
 	points.text = "🏆  %s" % _format_int(int(ranking.get("points", 0)))
 	points.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	points.add_theme_font_size_override("font_size", 22)
+	points.add_theme_font_size_override("font_size", UiScale.font(22))
 	points.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	league_col.add_child(points)
 
@@ -461,8 +467,8 @@ func _fit_hero_mock_proportions(
 	if h <= 1.0 or w <= 1.0:
 		return
 	## Avatar ≈ full inner height; league column wider for larger right-side info.
-	var avatar_side := clampf(h - 32.0, 128.0, 196.0)
-	var league_w := clampf(w * 0.34, 140.0, 190.0)
+	var avatar_side := clampf(h - 32.0, 128.0, 176.0)
+	var league_w := clampf(w * 0.34, 140.0, 172.0)
 	if is_instance_valid(avatar_wrap):
 		avatar_wrap.custom_minimum_size = Vector2(avatar_side, avatar_side)
 	if is_instance_valid(league_col):
@@ -473,12 +479,12 @@ func _fit_hero_mock_proportions(
 		circ.ring_gap = clampf(avatar_side * 0.016, 2.0, 3.5)
 		circ.queue_redraw()
 	if is_instance_valid(league_title):
-		league_title.add_theme_font_size_override("font_size", int(clampf(league_w * 0.105, 15.0, 19.0)))
+		league_title.add_theme_font_size_override("font_size", UiScale.font(int(clampf(league_w * 0.105, 15.0, 19.0))))
 	if is_instance_valid(league_icon):
 		var league_icon_side := clampf(league_w * 0.55, 64.0, 88.0)
 		league_icon.custom_minimum_size = Vector2(league_icon_side, league_icon_side)
 	if is_instance_valid(points):
-		points.add_theme_font_size_override("font_size", int(clampf(league_w * 0.135, 20.0, 26.0)))
+		points.add_theme_font_size_override("font_size", UiScale.font(int(clampf(league_w * 0.135, 20.0, 26.0))))
 
 
 func _build_stats_strip() -> PanelContainer:
@@ -558,7 +564,7 @@ func _stat_icon_cell(value: String, label: String, _color: Color) -> Control:
 	value_label.text = value
 	value_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	value_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	value_label.add_theme_font_size_override("font_size", 26)
+	value_label.add_theme_font_size_override("font_size", UiScale.font(26))
 	value_label.add_theme_color_override("font_color", Color(1, 1, 1, 1))
 	top_lift.add_child(value_label)
 
@@ -566,8 +572,9 @@ func _stat_icon_cell(value: String, label: String, _color: Color) -> Control:
 	caption.text = label.to_upper()
 	caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	caption.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	caption.add_theme_font_size_override("font_size", 16)
+	caption.add_theme_font_size_override("font_size", UiScale.font(16))
 	caption.add_theme_color_override("font_color", Color(0.62, 0.66, 0.78, 1))
+	caption.clip_text = true
 	var caption_wrap := MarginContainer.new()
 	caption_wrap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	caption_wrap.add_theme_constant_override("margin_top", 1)
@@ -704,7 +711,7 @@ func _category_mastery_row(row: Dictionary) -> Control:
 	title.text = str(row.get("name", ""))
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	title.clip_text = true
-	title.add_theme_font_size_override("font_size", 18)
+	title.add_theme_font_size_override("font_size", UiScale.font(18))
 	title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	mid.add_child(title)
 
@@ -731,14 +738,14 @@ func _category_mastery_row(row: Dictionary) -> Control:
 	var level_caption := Label.new()
 	level_caption.text = tr("UI_PROFILE_LEVEL_CAPTION").to_upper()
 	level_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	level_caption.add_theme_font_size_override("font_size", 9)
+	level_caption.add_theme_font_size_override("font_size", UiScale.font(9))
 	level_caption.add_theme_color_override("font_color", UiTokens.PROFILE_TITLE_CAPS)
 	level_col.add_child(level_caption)
 
 	var level_num := Label.new()
 	level_num.text = str(row.get("display_level", row.get("mastery_level", 1)))
 	level_num.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	level_num.add_theme_font_size_override("font_size", 20)
+	level_num.add_theme_font_size_override("font_size", UiScale.font(20))
 	level_num.add_theme_color_override("font_color", accent)
 	var level_num_wrap := MarginContainer.new()
 	level_num_wrap.add_theme_constant_override("margin_top", -2)
@@ -754,7 +761,7 @@ func _category_mastery_row(row: Dictionary) -> Control:
 		medal.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		medal.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		medal.custom_minimum_size = Vector2(28, 28)
-		medal.add_theme_font_size_override("font_size", 24)
+		medal.add_theme_font_size_override("font_size", UiScale.font(24))
 		var emoji_font := UiFonts.emoji_font()
 		if emoji_font != null:
 			medal.add_theme_font_override("font", emoji_font)
@@ -792,7 +799,7 @@ func _build_best_subject_tile() -> PanelContainer:
 	name_label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	name_label.clip_text = true
 	name_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	name_label.add_theme_font_size_override("font_size", 18)
+	name_label.add_theme_font_size_override("font_size", UiScale.font(18))
 	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	row.add_child(name_label)
 
@@ -806,7 +813,7 @@ func _build_best_subject_tile() -> PanelContainer:
 	var pct := Label.new()
 	pct.text = "%s%%" % pct_value
 	pct.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	pct.add_theme_font_size_override("font_size", 28)
+	pct.add_theme_font_size_override("font_size", UiScale.font(28))
 	pct.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	pct_col.add_child(pct)
 
@@ -814,7 +821,7 @@ func _build_best_subject_tile() -> PanelContainer:
 	## Reuse existing i18n template, strip the percent placeholder for the small caption.
 	acc_caption.text = tr("UI_PROFILE_BEST_SUBJECT_ACC").format({"percent": "§"}).replace("§%", "").replace("§", "").strip_edges()
 	acc_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	acc_caption.add_theme_font_size_override("font_size", 10)
+	acc_caption.add_theme_font_size_override("font_size", UiScale.font(10))
 	acc_caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	pct_col.add_child(acc_caption)
 
@@ -876,20 +883,20 @@ func _build_win_distribution_tile() -> PanelContainer:
 			legend.add_child(line)
 			var dot := Label.new()
 			dot.text = "●"
-			dot.add_theme_font_size_override("font_size", 11)
+			dot.add_theme_font_size_override("font_size", UiScale.font(11))
 			dot.add_theme_color_override("font_color", row.get("color", UiTokens.PROFILE_TEXT))
 			line.add_child(dot)
 			var text := Label.new()
 			text.text = str(row.get("name", ""))
 			text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			text.clip_text = true
-			text.add_theme_font_size_override("font_size", 12)
+			text.add_theme_font_size_override("font_size", UiScale.font(12))
 			text.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 			line.add_child(text)
 			var wins_label := Label.new()
 			wins_label.text = _format_int(int(row.get("wins", 0)))
 			wins_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-			wins_label.add_theme_font_size_override("font_size", 12)
+			wins_label.add_theme_font_size_override("font_size", UiScale.font(12))
 			wins_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 			var wins_wrap := MarginContainer.new()
 			wins_wrap.add_theme_constant_override("margin_right", 8)
@@ -910,7 +917,7 @@ func _build_history_tile() -> PanelContainer:
 	if header != null and header.get_child_count() > 0:
 		var title := header.get_child(0) as Label
 		if title != null:
-			title.add_theme_font_size_override("font_size", 20)
+			title.add_theme_font_size_override("font_size", UiScale.font(20))
 	var list := VBoxContainer.new()
 	list.add_theme_constant_override("separation", 0)
 	list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -919,7 +926,7 @@ func _build_history_tile() -> PanelContainer:
 	var history: Array = _profile_data.get("history", [])
 	if history.is_empty():
 		var empty := _empty(tr("UI_PROFILE_NO_HISTORY"))
-		empty.add_theme_font_size_override("font_size", 14)
+		empty.add_theme_font_size_override("font_size", UiScale.font(14))
 		list.add_child(empty)
 	else:
 		var count := 0
@@ -1000,7 +1007,7 @@ func _history_row(row: Dictionary) -> Control:
 	initial.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	initial.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	initial.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	initial.add_theme_font_size_override("font_size", 20)
+	initial.add_theme_font_size_override("font_size", UiScale.font(20))
 	initial.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	avatar_slot.add_child(initial)
 	## Size must be set before wire — otherwise GameAssets falls back to 56px / fails layout.
@@ -1018,14 +1025,14 @@ func _history_row(row: Dictionary) -> Control:
 	var name_label := Label.new()
 	name_label.text = opponent_name
 	name_label.clip_text = true
-	name_label.add_theme_font_size_override("font_size", UiTokens.PSEUDO_FONT_SIZE)
+	name_label.add_theme_font_size_override("font_size", UiScale.font(UiTokens.PSEUDO_FONT_SIZE))
 	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	left.add_child(name_label)
 
 	var cat := Label.new()
 	cat.text = str(row.get("category_name", ""))
 	cat.clip_text = true
-	cat.add_theme_font_size_override("font_size", 15)
+	cat.add_theme_font_size_override("font_size", UiScale.font(15))
 	cat.add_theme_color_override("font_color", cat_accent)
 	left.add_child(cat)
 
@@ -1043,7 +1050,7 @@ func _history_row(row: Dictionary) -> Control:
 	result.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	result.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	result.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	result.add_theme_font_size_override("font_size", 19)
+	result.add_theme_font_size_override("font_size", UiScale.font(19))
 	result.add_theme_color_override("font_color", result_color)
 	mid.add_child(result)
 
@@ -1054,7 +1061,7 @@ func _history_row(row: Dictionary) -> Control:
 	score.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	score.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	score.custom_minimum_size.x = 60
-	score.add_theme_font_size_override("font_size", 19)
+	score.add_theme_font_size_override("font_size", UiScale.font(19))
 	## Mock: white score on win, red score on loss.
 	score.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT if won else loss_color)
 	mid.add_child(score)
@@ -1073,14 +1080,14 @@ func _history_row(row: Dictionary) -> Control:
 	age.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	age.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	age.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	age.add_theme_font_size_override("font_size", 14)
+	age.add_theme_font_size_override("font_size", UiScale.font(14))
 	age.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	right.add_child(age)
 
 	var chevron := Label.new()
 	chevron.text = ">"
 	chevron.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	chevron.add_theme_font_size_override("font_size", 18)
+	chevron.add_theme_font_size_override("font_size", UiScale.font(18))
 	chevron.add_theme_color_override("font_color", UiTokens.PROFILE_TITLE_CAPS)
 	right.add_child(chevron)
 	return row_wrap
@@ -1172,7 +1179,7 @@ func _badge_cell(achievement: Dictionary) -> Control:
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	## Same size as history-tile opponent names (pseudos).
-	title.add_theme_font_size_override("font_size", 18)
+	title.add_theme_font_size_override("font_size", UiScale.font(18))
 	title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	title.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	col.add_child(title)
@@ -1181,7 +1188,7 @@ func _badge_cell(achievement: Dictionary) -> Control:
 	desc.text = tr(str(achievement.get("desc_key", "")))
 	desc.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	desc.add_theme_font_size_override("font_size", 16)
+	desc.add_theme_font_size_override("font_size", UiScale.font(16))
 	desc.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	desc.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	col.add_child(desc)
@@ -1208,7 +1215,7 @@ func _build_season_tile() -> PanelContainer:
 		var lock := Label.new()
 		lock.text = "🔒"
 		lock.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		lock.add_theme_font_size_override("font_size", 40)
+		lock.add_theme_font_size_override("font_size", UiScale.font(40))
 		var emoji_font := UiFonts.emoji_font()
 		if emoji_font != null:
 			lock.add_theme_font_override("font", emoji_font)
@@ -1218,7 +1225,7 @@ func _build_season_tile() -> PanelContainer:
 		caption.text = tr("UI_PROFILE_SEASON_LOCKED")
 		caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		caption.add_theme_font_size_override("font_size", 15)
+		caption.add_theme_font_size_override("font_size", UiScale.font(15))
 		caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 		body.add_child(caption)
 
@@ -1226,7 +1233,7 @@ func _build_season_tile() -> PanelContainer:
 		hint.text = tr("UI_PROFILE_SEASON_COMING_SOON")
 		hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		hint.add_theme_font_size_override("font_size", 13)
+		hint.add_theme_font_size_override("font_size", UiScale.font(13))
 		hint.add_theme_color_override("font_color", UiTokens.ACCENT_LEADERBOARD)
 		body.add_child(hint)
 
@@ -1252,7 +1259,7 @@ func _build_season_tile() -> PanelContainer:
 	var title := Label.new()
 	title.text = tr("UI_PROFILE_BEST_SEASON").to_upper()
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	title.add_theme_font_size_override("font_size", 18)
+	title.add_theme_font_size_override("font_size", UiScale.font(18))
 	title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	header.add_child(title)
 
@@ -1268,7 +1275,7 @@ func _build_season_tile() -> PanelContainer:
 	header.add_child(chip)
 	var chip_label := Label.new()
 	chip_label.text = tr("UI_PROFILE_SEASON_N").format({"n": season.get("number", 1)}).to_upper()
-	chip_label.add_theme_font_size_override("font_size", 16)
+	chip_label.add_theme_font_size_override("font_size", UiScale.font(16))
 	chip_label.add_theme_color_override("font_color", Color(0.75, 0.72, 1.0, 1))
 	chip.add_child(chip_label)
 
@@ -1288,7 +1295,7 @@ func _build_season_tile() -> PanelContainer:
 	crest.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	crest.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	crest.custom_minimum_size = Vector2(132, 132)
-	crest.add_theme_font_size_override("font_size", 96)
+	crest.add_theme_font_size_override("font_size", UiScale.font(96))
 	crest.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	var crest_font := UiFonts.emoji_font()
 	if crest_font != null:
@@ -1337,7 +1344,7 @@ func _season_stat_line(icon: String, value: String, label: String) -> HBoxContai
 
 	var icon_label := Label.new()
 	icon_label.text = icon
-	icon_label.add_theme_font_size_override("font_size", 20)
+	icon_label.add_theme_font_size_override("font_size", UiScale.font(20))
 	icon_label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	var emoji_font := UiFonts.emoji_font()
 	if emoji_font != null:
@@ -1346,7 +1353,7 @@ func _season_stat_line(icon: String, value: String, label: String) -> HBoxContai
 
 	var value_label := Label.new()
 	value_label.text = value
-	value_label.add_theme_font_size_override("font_size", 22)
+	value_label.add_theme_font_size_override("font_size", UiScale.font(22))
 	value_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	value_label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	line.add_child(value_label)
@@ -1356,7 +1363,7 @@ func _season_stat_line(icon: String, value: String, label: String) -> HBoxContai
 	caption.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	caption.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	caption.add_theme_font_size_override("font_size", 16)
+	caption.add_theme_font_size_override("font_size", UiScale.font(16))
 	caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	line.add_child(caption)
 	return line
@@ -1404,8 +1411,10 @@ func _tile_body(
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	title.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	title.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	title.add_theme_font_size_override("font_size", 18)
+	title.add_theme_font_size_override("font_size", UiScale.font(18))
 	title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	title.clip_text = true
+	title.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	header.add_child(title)
 
 	if with_see_all:
@@ -1414,7 +1423,7 @@ func _tile_body(
 		see_all.flat = true
 		see_all.focus_mode = Control.FOCUS_NONE
 		see_all.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-		see_all.add_theme_font_size_override("font_size", 17)
+		see_all.add_theme_font_size_override("font_size", UiScale.font(17))
 		see_all.add_theme_color_override("font_color", UiTokens.ACCENT_PROFILE)
 		see_all.add_theme_color_override("font_hover_color", UiTokens.ACCENT_PROFILE.lightened(0.15))
 		see_all.add_theme_color_override("font_pressed_color", UiTokens.ACCENT_PROFILE.darkened(0.1))
@@ -1442,7 +1451,7 @@ func _empty(text: String) -> Label:
 	var label := Label.new()
 	label.text = text
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	label.add_theme_font_size_override("font_size", 12)
+	label.add_theme_font_size_override("font_size", UiScale.font(12))
 	label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	return label
 
@@ -1637,7 +1646,7 @@ func _ensure_achievements_page() -> void:
 	back.text = "< " + tr("UI_BACK")
 	back.flat = true
 	back.focus_mode = Control.FOCUS_NONE
-	back.add_theme_font_size_override("font_size", 16)
+	back.add_theme_font_size_override("font_size", UiScale.font(16))
 	back.add_theme_color_override("font_color", UiTokens.ACCENT_PROFILE)
 	var empty := StyleBoxEmpty.new()
 	back.add_theme_stylebox_override("normal", empty)
@@ -1651,7 +1660,7 @@ func _ensure_achievements_page() -> void:
 	page_title.text = tr("UI_PROFILE_BADGES_ALL").to_upper()
 	page_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	page_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	page_title.add_theme_font_size_override("font_size", 20)
+	page_title.add_theme_font_size_override("font_size", UiScale.font(20))
 	page_title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	header.add_child(page_title)
 
@@ -1726,7 +1735,7 @@ func _ensure_categories_page() -> void:
 	back.text = "< " + tr("UI_BACK")
 	back.flat = true
 	back.focus_mode = Control.FOCUS_NONE
-	back.add_theme_font_size_override("font_size", 16)
+	back.add_theme_font_size_override("font_size", UiScale.font(16))
 	back.add_theme_color_override("font_color", UiTokens.ACCENT_PROFILE)
 	var empty := StyleBoxEmpty.new()
 	back.add_theme_stylebox_override("normal", empty)
@@ -1740,7 +1749,7 @@ func _ensure_categories_page() -> void:
 	page_title.text = tr("UI_PROFILE_CATEGORIES_ALL").to_upper()
 	page_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	page_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	page_title.add_theme_font_size_override("font_size", 20)
+	page_title.add_theme_font_size_override("font_size", UiScale.font(20))
 	page_title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	header.add_child(page_title)
 

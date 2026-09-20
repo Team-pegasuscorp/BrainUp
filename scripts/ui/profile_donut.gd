@@ -42,7 +42,7 @@ func _draw() -> void:
 		return
 	var font := ThemeDB.fallback_font
 	if center_sublabel.is_empty():
-		var font_size := 12
+		var font_size := UiScale.font(12)
 		var text_size := font.get_string_size(center_label, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size)
 		draw_string(
 			font,

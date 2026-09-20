@@ -47,7 +47,7 @@ theme_override_constants/separation = 18
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"TitleLabel"
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 35
 text = "Player profile"
 horizontal_alignment = 1
 
@@ -85,13 +85,13 @@ theme_override_constants/separation = 8
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"MonoLabel"
-theme_override_font_sizes/font_size = 13
+theme_override_font_sizes/font_size = 16
 text = "Pseudonym"
 
 [node name="PseudoInput" type="LineEdit" parent="MarginContainer/ScrollContainer/VBox/ProfileHeaderPanel/ProfileHeaderMargin/ProfileHeaderHBox/ProfileInfoVBox"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 21
 placeholder_text = "Enter your name..."
 max_length = 24
 
@@ -99,7 +99,7 @@ max_length = 24
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"GoldMonoLabel"
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 17
 text = "Level 1"
 
 [node name="PhotoButtonsHBox" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBox"]
@@ -138,14 +138,14 @@ columns = 2
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"MonoLabel"
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 17
 text = "Quizzes played"
 
 [node name="GamesValueLabel" type="Label" parent="MarginContainer/ScrollContainer/VBox/StatsPanel/StatsMargin/StatsGrid"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9098, 0.8784, 0.8157, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 23
 text = "0"
 horizontal_alignment = 2
 
@@ -153,14 +153,14 @@ horizontal_alignment = 2
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"MonoLabel"
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 17
 text = "Wins"
 
 [node name="WinsValueLabel" type="Label" parent="MarginContainer/ScrollContainer/VBox/StatsPanel/StatsMargin/StatsGrid"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.4275, 0.9804, 0.7373, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 23
 text = "0"
 horizontal_alignment = 2
 
@@ -168,14 +168,14 @@ horizontal_alignment = 2
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"MonoLabel"
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 17
 text = "Losses"
 
 [node name="LossesValueLabel" type="Label" parent="MarginContainer/ScrollContainer/VBox/StatsPanel/StatsMargin/StatsGrid"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9804, 0.4275, 0.5608, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 23
 text = "0"
 horizontal_alignment = 2
 
@@ -183,14 +183,14 @@ horizontal_alignment = 2
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"MonoLabel"
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 17
 text = "Win rate"
 
 [node name="WinRateValueLabel" type="Label" parent="MarginContainer/ScrollContainer/VBox/StatsPanel/StatsMargin/StatsGrid"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"GoldMonoLabel"
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 23
 text = "0%"
 horizontal_alignment = 2
 
@@ -198,14 +198,14 @@ horizontal_alignment = 2
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"MonoLabel"
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 17
 text = "Favorite theme"
 
 [node name="FavoriteValueLabel" type="Label" parent="MarginContainer/ScrollContainer/VBox/StatsPanel/StatsMargin/StatsGrid"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9098, 0.8314, 0.6275, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 23
 text = "No favorite yet"
 horizontal_alignment = 2
 
@@ -213,7 +213,7 @@ horizontal_alignment = 2
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"GoldMonoLabel"
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 17
 horizontal_alignment = 1
 
 [node name="SaveButton" type="Button" parent="MarginContainer/ScrollContainer/VBox"]

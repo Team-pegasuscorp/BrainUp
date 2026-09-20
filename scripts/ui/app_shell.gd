@@ -119,7 +119,7 @@ func _build_sound_settings() -> void:
 
 	volume_label = Label.new()
 	volume_label.theme_type_variation = &"MonoLabel"
-	volume_label.add_theme_font_size_override("font_size", 14)
+	volume_label.add_theme_font_size_override("font_size", UiScale.font(14))
 
 	volume_slider = HSlider.new()
 	volume_slider.min_value = 0.0
@@ -136,7 +136,7 @@ func _build_sound_settings() -> void:
 	volume_slider.add_theme_stylebox_override("slider", track)
 	volume_slider.add_theme_stylebox_override("grabber_area", fill)
 	volume_slider.add_theme_stylebox_override("grabber_area_highlight", fill)
-	sound_toggle.add_theme_font_size_override("font_size", 18)
+	sound_toggle.add_theme_font_size_override("font_size", UiScale.font(18))
 	sound_toggle.add_theme_color_override("font_color", UiTokens.INK)
 	volume_slider.editable = SaveManager.sound_enabled
 	volume_slider.value_changed.connect(func(value: float) -> void: SaveManager.set_sound_volume(value))

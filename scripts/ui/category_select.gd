@@ -28,9 +28,11 @@ var _daily_board: Dictionary = {}
 var _daily_board_failed: bool = false
 var _daily_resubmitted: bool = false
 var _board_overlay: Control
+var _scroll_content: VBoxContainer
 
 
 func _ready() -> void:
+	_wrap_list_in_scroll()
 	_apply_embedded_layout()
 	_apply_translations()
 	_load_categories()
@@ -42,6 +44,22 @@ func _ready() -> void:
 	PressScaleUtil.wire(start_button, self)
 	if not embedded_mode:
 		PressScaleUtil.wire(back_button, self)
+
+
+## The list (and daily card) scroll when they do not fit; the Play button stays pinned.
+func _wrap_list_in_scroll() -> void:
+	var column := category_list.get_parent()
+	var scroll := ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	column.add_child(scroll)
+	column.move_child(scroll, category_list.get_index())
+	_scroll_content = VBoxContainer.new()
+	_scroll_content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_scroll_content.add_theme_constant_override("separation", 16)
+	scroll.add_child(_scroll_content)
+	category_list.reparent(_scroll_content)
+	category_list.size_flags_vertical = Control.SIZE_FILL
 
 
 func _apply_embedded_layout() -> void:
@@ -92,9 +110,8 @@ func _load_categories() -> void:
 func _setup_daily_card() -> void:
 	_daily_card = PanelContainer.new()
 	_daily_card.add_theme_stylebox_override("panel", UiStyle.card(UiTokens.ACCENT_LEADERBOARD))
-	var column := title_label.get_parent()
-	column.add_child(_daily_card)
-	column.move_child(_daily_card, title_label.get_index() + 1)
+	_scroll_content.add_child(_daily_card)
+	_scroll_content.move_child(_daily_card, 0)
 	NetworkManager.daily_challenge_received.connect(_on_daily_received)
 	NetworkManager.daily_challenge_failed.connect(_on_daily_failed)
 	NetworkManager.daily_leaderboard_received.connect(_on_daily_board_received)
@@ -186,18 +203,18 @@ func _render_daily() -> void:
 				"total": int(_daily_board.get("total_players", 0)),
 			}),
 		]
-	tag.add_theme_font_size_override("font_size", 14)
+	tag.add_theme_font_size_override("font_size", UiScale.font(14))
 	tag.add_theme_color_override("font_color", UiTokens.ACCENT_LEADERBOARD)
 	labels.add_child(tag)
 
 	var name_label := Label.new()
 	name_label.text = category_name if known else tr("UI_DAILY_CHALLENGE_LOADING")
-	name_label.add_theme_font_size_override("font_size", 24)
+	name_label.add_theme_font_size_override("font_size", UiScale.font(24))
 	name_label.add_theme_color_override("font_color", UiTokens.INK)
 	labels.add_child(name_label)
 
 	var sub := Label.new()
-	sub.add_theme_font_size_override("font_size", 14)
+	sub.add_theme_font_size_override("font_size", UiScale.font(14))
 	sub.add_theme_color_override("font_color", UiTokens.INK_MUTED)
 	if not result.is_empty():
 		var seconds := DailyChallenge.seconds_until_reset()
@@ -219,7 +236,7 @@ func _render_daily() -> void:
 		var board := Button.new()
 		board.text = "🏆 " + tr("UI_DAILY_BOARD_BUTTON")
 		board.custom_minimum_size = Vector2(150, 48)
-		board.add_theme_font_size_override("font_size", 18)
+		board.add_theme_font_size_override("font_size", UiScale.font(18))
 		for slot in ["font_color", "font_hover_color", "font_pressed_color"]:
 			board.add_theme_color_override(slot, UiTokens.INK)
 		var outline := UiStyle.filled(Color(1, 1, 1, 1), 24)
@@ -235,7 +252,7 @@ func _render_daily() -> void:
 	var play := Button.new()
 	play.text = tr("UI_PLAY")
 	play.custom_minimum_size = Vector2(110, 48)
-	play.add_theme_font_size_override("font_size", 20)
+	play.add_theme_font_size_override("font_size", UiScale.font(20))
 	for slot in ["font_color", "font_hover_color", "font_pressed_color", "font_disabled_color"]:
 		play.add_theme_color_override(slot, UiTokens.INK)
 	var style := UiStyle.filled(UiTokens.ACCENT_LEADERBOARD, 24)
@@ -272,7 +289,7 @@ func _open_daily_board() -> void:
 	var title := Label.new()
 	title.text = "🏆 " + tr("UI_DAILY_BOARD_TITLE")
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.add_theme_font_size_override("font_size", 28)
+	title.add_theme_font_size_override("font_size", UiScale.font(28))
 	title.add_theme_color_override("font_color", UiTokens.INK)
 	column.add_child(title)
 
@@ -293,7 +310,7 @@ func _open_daily_board() -> void:
 			tr("UI_DAILY_BOARD_EMPTY") if not _daily_board.is_empty() else tr("UI_DAILY_CHALLENGE_LOADING")
 		)
 		note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		note.add_theme_font_size_override("font_size", 20)
+		note.add_theme_font_size_override("font_size", UiScale.font(20))
 		note.add_theme_color_override("font_color", UiTokens.INK_MUTED)
 		list.add_child(note)
 	for entry in entries:
@@ -302,7 +319,7 @@ func _open_daily_board() -> void:
 	var close := Button.new()
 	close.text = tr("UI_BACK")
 	close.custom_minimum_size = Vector2(0, 52)
-	close.add_theme_font_size_override("font_size", 20)
+	close.add_theme_font_size_override("font_size", UiScale.font(20))
 	PressScaleUtil.wire(close, self)
 	close.pressed.connect(func() -> void:
 		_board_overlay.queue_free()
@@ -331,7 +348,7 @@ func _make_board_row(entry: Dictionary) -> Control:
 	var rank_label := Label.new()
 	rank_label.text = ["🥇", "🥈", "🥉"][rank - 1] if rank >= 1 and rank <= 3 else "#%d" % rank
 	rank_label.custom_minimum_size = Vector2(56, 0)
-	rank_label.add_theme_font_size_override("font_size", 22)
+	rank_label.add_theme_font_size_override("font_size", UiScale.font(22))
 	rank_label.add_theme_color_override("font_color", UiTokens.INK)
 	line.add_child(rank_label)
 
@@ -339,13 +356,13 @@ func _make_board_row(entry: Dictionary) -> Control:
 	name_label.text = str(entry.get("display_name", ""))
 	name_label.clip_text = true
 	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	name_label.add_theme_font_size_override("font_size", 20)
+	name_label.add_theme_font_size_override("font_size", UiScale.font(20))
 	name_label.add_theme_color_override("font_color", UiTokens.INK)
 	line.add_child(name_label)
 
 	var score := Label.new()
 	score.text = "%d" % int(entry.get("score", 0))
-	score.add_theme_font_size_override("font_size", 22)
+	score.add_theme_font_size_override("font_size", UiScale.font(22))
 	score.add_theme_color_override("font_color", UiTokens.ACCENT_LEADERBOARD)
 	line.add_child(score)
 	return row
@@ -400,14 +417,14 @@ func _make_category_tile(index: int, category: Dictionary) -> Button:
 
 	var name_label := Label.new()
 	name_label.text = str(category.get("name", category_id))
-	name_label.add_theme_font_size_override("font_size", 22)
+	name_label.add_theme_font_size_override("font_size", UiScale.font(22))
 	name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	labels.add_child(name_label)
 
 	var desc := Label.new()
 	desc.text = str(category.get("description", ""))
 	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	desc.add_theme_font_size_override("font_size", 13)
+	desc.add_theme_font_size_override("font_size", UiScale.font(13))
 	desc.add_theme_color_override("font_color", UiTokens.INK_MUTED)
 	desc.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	labels.add_child(desc)

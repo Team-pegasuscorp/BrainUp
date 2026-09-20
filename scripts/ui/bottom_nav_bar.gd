@@ -70,7 +70,7 @@ func set_active_tab(page_index: int) -> void:
 		_tab_labels[slot].add_theme_color_override("font_color", color)
 		_tab_labels[slot].add_theme_font_size_override(
 			"font_size",
-			UiTokens.SECONDARY_NAV_LABEL_SIZE_ACTIVE if is_active else UiTokens.SECONDARY_NAV_LABEL_SIZE_INACTIVE
+			UiScale.font(UiTokens.SECONDARY_NAV_LABEL_SIZE_ACTIVE if is_active else UiTokens.SECONDARY_NAV_LABEL_SIZE_INACTIVE)
 		)
 		_tab_items[slot].modulate.a = 1.0 if is_active else UiTokens.SECONDARY_NAV_INACTIVE_ALPHA
 
@@ -206,7 +206,7 @@ func _make_quiz_fab(page_index: int) -> Control:
 
 	_quiz_label = Label.new()
 	_quiz_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_quiz_label.add_theme_font_size_override("font_size", UiTokens.QUIZ_FAB_LABEL_SIZE)
+	_quiz_label.add_theme_font_size_override("font_size", UiScale.font(UiTokens.QUIZ_FAB_LABEL_SIZE))
 	_quiz_label.add_theme_color_override("font_color", Color.WHITE)
 	_quiz_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	column.add_child(_quiz_label)

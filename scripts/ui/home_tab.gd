@@ -84,7 +84,7 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 	var name_label := Label.new()
 	name_label.text = str(snapshot.get("player_name", UiTokens.DEFAULT_PLAYER_NAME))
 	name_label.clip_text = true
-	name_label.add_theme_font_size_override("font_size", UiTokens.PSEUDO_FONT_SIZE)
+	name_label.add_theme_font_size_override("font_size", UiScale.font(UiTokens.PSEUDO_FONT_SIZE))
 	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	info.add_child(name_label)
 
@@ -99,7 +99,7 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 
 	var flag_label := Label.new()
 	flag_label.text = flag
-	flag_label.add_theme_font_size_override("font_size", 20)
+	flag_label.add_theme_font_size_override("font_size", UiScale.font(20))
 	var emoji_font := UiFonts.emoji_font()
 	if emoji_font != null:
 		flag_label.add_theme_font_override("font", emoji_font)
@@ -109,7 +109,7 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 
 	var country := Label.new()
 	country.text = country_name
-	country.add_theme_font_size_override("font_size", 16)
+	country.add_theme_font_size_override("font_size", UiScale.font(16))
 	country.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	country_row.add_child(country)
 
@@ -118,7 +118,7 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 		tr("UI_PROFILE_LEVEL_CAPTION").to_upper(),
 		str(snapshot.get("level", 1)),
 	]
-	level_label.add_theme_font_size_override("font_size", 15)
+	level_label.add_theme_font_size_override("font_size", UiScale.font(15))
 	level_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	info.add_child(level_label)
 
@@ -137,14 +137,14 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 	league_title.text = tr(str(ranking.get("league_key", "UI_LEAGUE_BRONZE"))).to_upper()
 	league_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	league_title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	league_title.add_theme_font_size_override("font_size", 13)
+	league_title.add_theme_font_size_override("font_size", UiScale.font(13))
 	league_title.add_theme_color_override("font_color", UiTokens.ACCENT_HOME)
 	league_col.add_child(league_title)
 
 	var points := Label.new()
 	points.text = "🏆 %s" % _format_int(int(ranking.get("points", 0)))
 	points.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	points.add_theme_font_size_override("font_size", 16)
+	points.add_theme_font_size_override("font_size", UiScale.font(16))
 	points.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	if emoji_font != null:
 		points.add_theme_font_override("font", emoji_font)
@@ -162,7 +162,7 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 	var rank_value := Label.new()
 	rank_value.text = "#%s" % _format_int(int(ranking.get("rank", 0)))
 	rank_value.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	rank_value.add_theme_font_size_override("font_size", 18)
+	rank_value.add_theme_font_size_override("font_size", UiScale.font(18))
 	rank_value.add_theme_color_override("font_color", UiTokens.ACCENT_LEADERBOARD)
 	rank_col.add_child(rank_value)
 
@@ -170,7 +170,7 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 	rank_caption.text = tr("UI_HOME_RANK")
 	rank_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	rank_caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	rank_caption.add_theme_font_size_override("font_size", 12)
+	rank_caption.add_theme_font_size_override("font_size", UiScale.font(12))
 	rank_caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	rank_col.add_child(rank_caption)
 
@@ -186,7 +186,7 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 	var streak_value := Label.new()
 	streak_value.text = str(snapshot.get("current_win_streak", 0))
 	streak_value.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	streak_value.add_theme_font_size_override("font_size", 18)
+	streak_value.add_theme_font_size_override("font_size", UiScale.font(18))
 	streak_value.add_theme_color_override("font_color", UiTokens.ACCENT_HOME)
 	streak_col.add_child(streak_value)
 
@@ -194,7 +194,7 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 	streak_caption.text = tr("UI_PROFILE_WIN_STREAK")
 	streak_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	streak_caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	streak_caption.add_theme_font_size_override("font_size", 12)
+	streak_caption.add_theme_font_size_override("font_size", UiScale.font(12))
 	streak_caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	streak_col.add_child(streak_caption)
 
@@ -238,7 +238,7 @@ func _make_daily_challenges_card() -> PanelContainer:
 	var title := Label.new()
 	title.text = tr("UI_HOME_DAILY_CHALLENGES").to_upper()
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	title.add_theme_font_size_override("font_size", 20)
+	title.add_theme_font_size_override("font_size", UiScale.font(20))
 	title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	header.add_child(title)
 
@@ -247,7 +247,7 @@ func _make_daily_challenges_card() -> PanelContainer:
 	reset.text = tr("UI_DAILY_RESET_IN").format({
 		"time": "%dh%02d" % [int(seconds / 3600.0), int((seconds % 3600) / 60.0)],
 	})
-	reset.add_theme_font_size_override("font_size", 14)
+	reset.add_theme_font_size_override("font_size", UiScale.font(14))
 	reset.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	header.add_child(reset)
 
@@ -277,7 +277,7 @@ func _make_near_achievements_card(snapshot: Dictionary) -> PanelContainer:
 	var title := Label.new()
 	title.text = tr("UI_HOME_NEAR_ACHIEVEMENTS").to_upper()
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	title.add_theme_font_size_override("font_size", 20)
+	title.add_theme_font_size_override("font_size", UiScale.font(20))
 	title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	header.add_child(title)
 
@@ -396,14 +396,14 @@ func _make_near_achievement_row(data: Dictionary) -> Control:
 	var title := Label.new()
 	title.text = tr(str(data.get("title_key", "")))
 	title.clip_text = true
-	title.add_theme_font_size_override("font_size", 18)
+	title.add_theme_font_size_override("font_size", UiScale.font(18))
 	title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	mid.add_child(title)
 
 	var desc := Label.new()
 	desc.text = tr(str(data.get("desc_key", "")))
 	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	desc.add_theme_font_size_override("font_size", 16)
+	desc.add_theme_font_size_override("font_size", UiScale.font(16))
 	desc.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	mid.add_child(desc)
 
@@ -421,7 +421,7 @@ func _make_near_achievement_row(data: Dictionary) -> Control:
 		"current": current,
 		"target": target,
 	})
-	ratio_label.add_theme_font_size_override("font_size", 15)
+	ratio_label.add_theme_font_size_override("font_size", UiScale.font(15))
 	ratio_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	progress_row.add_child(ratio_label)
 
@@ -444,7 +444,7 @@ func _make_near_achievement_row(data: Dictionary) -> Control:
 
 	var lock := Label.new()
 	lock.text = "🔒"
-	lock.add_theme_font_size_override("font_size", 15)
+	lock.add_theme_font_size_override("font_size", UiScale.font(15))
 	var lock_font := UiFonts.emoji_font()
 	if lock_font != null:
 		lock.add_theme_font_override("font", lock_font)
@@ -452,7 +452,7 @@ func _make_near_achievement_row(data: Dictionary) -> Control:
 
 	var remaining := Label.new()
 	remaining.text = tr("UI_HOME_NEAR_REMAINING").format({"n": maxi(target - current, 0)})
-	remaining.add_theme_font_size_override("font_size", 15)
+	remaining.add_theme_font_size_override("font_size", UiScale.font(15))
 	remaining.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	remaining_row.add_child(remaining)
 
@@ -463,7 +463,7 @@ func _empty_line(text: String) -> Label:
 	var label := Label.new()
 	label.text = text
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	label.add_theme_font_size_override("font_size", 16)
+	label.add_theme_font_size_override("font_size", UiScale.font(16))
 	label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	return label
 
@@ -484,14 +484,14 @@ func _make_daily_challenge_row(data: Dictionary) -> Control:
 	var title := Label.new()
 	title.text = str(data.get("title", ""))
 	title.clip_text = true
-	title.add_theme_font_size_override("font_size", 18)
+	title.add_theme_font_size_override("font_size", UiScale.font(18))
 	title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	mid.add_child(title)
 
 	var desc := Label.new()
 	desc.text = str(data.get("desc", ""))
 	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	desc.add_theme_font_size_override("font_size", 16)
+	desc.add_theme_font_size_override("font_size", UiScale.font(16))
 	desc.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	mid.add_child(desc)
 
@@ -509,7 +509,7 @@ func _make_daily_challenge_row(data: Dictionary) -> Control:
 		"current": current,
 		"target": target,
 	})
-	ratio_label.add_theme_font_size_override("font_size", 15)
+	ratio_label.add_theme_font_size_override("font_size", UiScale.font(15))
 	ratio_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	progress_row.add_child(ratio_label)
 
@@ -531,7 +531,7 @@ func _make_daily_challenge_row(data: Dictionary) -> Control:
 	elif claimed:
 		var done := Label.new()
 		done.text = "✓"
-		done.add_theme_font_size_override("font_size", 20)
+		done.add_theme_font_size_override("font_size", UiScale.font(20))
 		done.add_theme_color_override("font_color", UiTokens.FEEDBACK_CORRECT)
 		progress_row.add_child(done)
 	else:
@@ -547,7 +547,7 @@ func _make_xp_badge(xp_amount: int) -> Control:
 
 	var star := Label.new()
 	star.text = "⭐"
-	star.add_theme_font_size_override("font_size", 15)
+	star.add_theme_font_size_override("font_size", UiScale.font(15))
 	var emoji_font := UiFonts.emoji_font()
 	if emoji_font != null:
 		star.add_theme_font_override("font", emoji_font)
@@ -555,7 +555,7 @@ func _make_xp_badge(xp_amount: int) -> Control:
 
 	var xp := Label.new()
 	xp.text = tr("UI_HOME_DAILY_CHALLENGE_XP").format({"xp": xp_amount})
-	xp.add_theme_font_size_override("font_size", 15)
+	xp.add_theme_font_size_override("font_size", UiScale.font(15))
 	xp.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	xp_row.add_child(xp)
 	return xp_row
@@ -566,7 +566,7 @@ func _make_claim_button(quest_id: String, xp_amount: int) -> Button:
 	var button := Button.new()
 	button.text = "%s +%d" % [tr("UI_DAILY_CLAIM"), xp_amount]
 	button.custom_minimum_size = Vector2(0, 34)
-	button.add_theme_font_size_override("font_size", 15)
+	button.add_theme_font_size_override("font_size", UiScale.font(15))
 	button.add_theme_color_override("font_color", UiTokens.INK)
 	button.add_theme_color_override("font_hover_color", UiTokens.INK)
 	button.add_theme_color_override("font_pressed_color", UiTokens.INK)
@@ -617,7 +617,7 @@ func _make_challenge_icon(icon_text: String, accent: Color) -> Control:
 	icon.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	icon.add_theme_font_size_override("font_size", 22)
+	icon.add_theme_font_size_override("font_size", UiScale.font(22))
 	var emoji_font := UiFonts.emoji_font()
 	if emoji_font != null:
 		icon.add_theme_font_override("font", emoji_font)
@@ -639,7 +639,7 @@ func _make_last_match_card(snapshot: Dictionary) -> PanelContainer:
 
 	var title := Label.new()
 	title.text = tr("UI_HOME_LAST_MATCH").to_upper()
-	title.add_theme_font_size_override("font_size", 18)
+	title.add_theme_font_size_override("font_size", UiScale.font(18))
 	title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	vbox.add_child(title)
 
@@ -653,7 +653,7 @@ func _make_last_match_card(snapshot: Dictionary) -> PanelContainer:
 		var empty := Label.new()
 		empty.text = tr("UI_HOME_NO_LAST_MATCH")
 		empty.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		empty.add_theme_font_size_override("font_size", 14)
+		empty.add_theme_font_size_override("font_size", UiScale.font(14))
 		empty.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 		list.add_child(empty)
 	else:
@@ -715,7 +715,7 @@ func _history_row(row: Dictionary) -> Control:
 	initial.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	initial.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	initial.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	initial.add_theme_font_size_override("font_size", 20)
+	initial.add_theme_font_size_override("font_size", UiScale.font(20))
 	initial.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	avatar_slot.add_child(initial)
 	if GameAssets.wire_demo_avatar_to_control(avatar_bg, opponent_name):
@@ -731,14 +731,14 @@ func _history_row(row: Dictionary) -> Control:
 	var name_label := Label.new()
 	name_label.text = opponent_name
 	name_label.clip_text = true
-	name_label.add_theme_font_size_override("font_size", UiTokens.PSEUDO_FONT_SIZE)
+	name_label.add_theme_font_size_override("font_size", UiScale.font(UiTokens.PSEUDO_FONT_SIZE))
 	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	left.add_child(name_label)
 
 	var cat := Label.new()
 	cat.text = str(row.get("category_name", ""))
 	cat.clip_text = true
-	cat.add_theme_font_size_override("font_size", 15)
+	cat.add_theme_font_size_override("font_size", UiScale.font(15))
 	cat.add_theme_color_override("font_color", cat_accent)
 	left.add_child(cat)
 
@@ -755,7 +755,7 @@ func _history_row(row: Dictionary) -> Control:
 	result.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	result.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	result.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	result.add_theme_font_size_override("font_size", 19)
+	result.add_theme_font_size_override("font_size", UiScale.font(19))
 	result.add_theme_color_override("font_color", result_color)
 	mid.add_child(result)
 
@@ -766,7 +766,7 @@ func _history_row(row: Dictionary) -> Control:
 	score.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	score.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	score.custom_minimum_size.x = 60
-	score.add_theme_font_size_override("font_size", 19)
+	score.add_theme_font_size_override("font_size", UiScale.font(19))
 	score.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT if won else loss_color)
 	mid.add_child(score)
 
@@ -783,14 +783,14 @@ func _history_row(row: Dictionary) -> Control:
 	age.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	age.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	age.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	age.add_theme_font_size_override("font_size", 14)
+	age.add_theme_font_size_override("font_size", UiScale.font(14))
 	age.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	right.add_child(age)
 
 	var chevron := Label.new()
 	chevron.text = ">"
 	chevron.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	chevron.add_theme_font_size_override("font_size", 18)
+	chevron.add_theme_font_size_override("font_size", UiScale.font(18))
 	chevron.add_theme_color_override("font_color", UiTokens.PROFILE_TITLE_CAPS)
 	right.add_child(chevron)
 	return row_wrap

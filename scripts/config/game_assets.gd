@@ -159,7 +159,7 @@ static func make_icon_display(
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	label.add_theme_font_size_override("font_size", font_size)
+	label.add_theme_font_size_override("font_size", UiScale.font(font_size))
 	var emoji_font := UiFonts.emoji_font()
 	if emoji_font != null and not emoji_fallback.is_valid_int():
 		label.add_theme_font_override("font", emoji_font)
