@@ -185,18 +185,21 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 	row.add_child(streak_col)
 
 	var streak_value := Label.new()
-	streak_value.text = str(snapshot.get("current_win_streak", 0))
+	## Consecutive days played: the habit the home screen should push.
+	streak_value.text = str(snapshot.get("day_streak", 0))
 	streak_value.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	streak_value.add_theme_font_size_override("font_size", UiScale.font(18))
 	streak_value.add_theme_color_override("font_color", UiTokens.ACCENT_HOME)
 	streak_col.add_child(streak_value)
 
 	var streak_caption := Label.new()
-	streak_caption.text = tr("UI_PROFILE_WIN_STREAK")
+	## Streak alive but nothing played yet today: nudge before it breaks at midnight.
+	var at_risk := not bool(snapshot.get("is_demo", false)) and DayStreak.at_risk()
+	streak_caption.text = tr("UI_HOME_DAY_STREAK_RISK" if at_risk else "UI_HOME_DAY_STREAK")
 	streak_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	streak_caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	streak_caption.add_theme_font_size_override("font_size", UiScale.font(12))
-	streak_caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+	streak_caption.add_theme_color_override("font_color", Color(1.0, 0.62, 0.20) if at_risk else UiTokens.PROFILE_TEXT_MUTED)
 	streak_col.add_child(streak_caption)
 
 	return panel

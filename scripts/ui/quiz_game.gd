@@ -12,6 +12,15 @@ const ANSWER_RADIUS := 24
 const QUESTION_PADDING := 68.0
 const TIMER_WARN_SECONDS := 5.0
 const TIMER_DANGER_SECONDS := 3.0
+## After an answer the card shows the explanation for a reading time that grows with
+## its length; a tap anywhere moves on sooner.
+const EXPLANATION_DELAY := 0.7
+const READ_BASE_SECONDS := 3.0
+const READ_SECONDS_PER_CHAR := 0.035
+const READ_MIN_SECONDS := 4.0
+const READ_MAX_SECONDS := 10.0
+## Room kept in the card for the caption above and the hint below the explanation.
+const EXPLANATION_CHROME := 76.0
 
 @onready var progress_label: Label = %ProgressLabel
 @onready var score_label: Label = %ScoreLabel
@@ -37,6 +46,10 @@ var _last_tick_second: int = 99
 var _accent: Color = UiTokens.ACCENT_QUIZ
 var _timer_label: Label
 var _timer_state: int = -1
+var _explain_caption: Label
+var _tap_hint: Label
+var _tap_catcher: Control
+var _skip_requested: bool = false
 
 
 func _ready() -> void:
@@ -74,6 +87,7 @@ func _ready() -> void:
 	question_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	question_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	feedback_label.add_theme_font_size_override("font_size", UiScale.font(24))
+	_build_explanation_nodes()
 	_show_current_question()
 
 
@@ -104,6 +118,39 @@ func _build_category_header() -> void:
 	var column := header_row.get_parent()
 	column.add_child(row)
 	column.move_child(row, 0)
+
+
+## Caption, hint and a full-screen tap catcher, only visible while an explanation is read.
+func _build_explanation_nodes() -> void:
+	var margin := question_label.get_parent()
+	_explain_caption = Label.new()
+	_explain_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_explain_caption.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	_explain_caption.add_theme_font_size_override("font_size", UiScale.font(16))
+	_explain_caption.add_theme_color_override("font_color", _accent)
+	_explain_caption.visible = false
+	margin.add_child(_explain_caption)
+
+	_tap_hint = Label.new()
+	_tap_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_tap_hint.size_flags_vertical = Control.SIZE_SHRINK_END
+	_tap_hint.add_theme_font_size_override("font_size", UiScale.font(14))
+	_tap_hint.add_theme_color_override("font_color", UiTokens.INK_MUTED)
+	_tap_hint.visible = false
+	margin.add_child(_tap_hint)
+
+	_tap_catcher = Control.new()
+	_tap_catcher.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_tap_catcher.mouse_filter = Control.MOUSE_FILTER_STOP
+	_tap_catcher.visible = false
+	_tap_catcher.gui_input.connect(_on_tap_catcher_input)
+	add_child(_tap_catcher)
+
+
+func _on_tap_catcher_input(event: InputEvent) -> void:
+	var tapped: bool = (event is InputEventMouseButton and event.pressed) or (event is InputEventScreenTouch and event.pressed)
+	if tapped:
+		_skip_requested = true
 
 
 func _category_name(category_id: String) -> String:
@@ -158,6 +205,10 @@ func _show_current_question() -> void:
 	score_label.text = "%s: %d" % [tr("UI_SCORE"), GameManager.score]
 	combo_label.text = "%s: x%d" % [tr("UI_COMBO"), max(GameManager.combo, 1)]
 	question_label.text = question.get("text", "")
+	question_label.modulate.a = 1.0
+	_explain_caption.visible = false
+	_tap_hint.visible = false
+	_timer_state = -1
 	feedback_label.text = ""
 	feedback_label.modulate = UiTokens.NEUTRAL
 
@@ -274,12 +325,67 @@ func _submit_answer(selected_index: int) -> void:
 	var result: Dictionary = GameManager.submit_answer(selected_index, elapsed)
 	_show_feedback(result, selected_index, correct_index)
 
-	await get_tree().create_timer(1.2).timeout
+	var explanation := _explanation_for(question)
+	if explanation.is_empty():
+		await get_tree().create_timer(1.2).timeout
+	else:
+		await get_tree().create_timer(EXPLANATION_DELAY).timeout
+		await _read_explanation(explanation)
+	if not is_inside_tree():
+		return
 
 	if result.get("finished", false):
 		_finish_quiz()
 	else:
 		_show_current_question()
+
+
+## Old imported questions only say "the correct answer is: X": nothing to learn there.
+func _explanation_for(question: Dictionary) -> String:
+	var text := str(question.get("explanation", "")).strip_edges()
+	for filler in ["The correct answer is", "La bonne réponse est"]:
+		if text.begins_with(filler):
+			return ""
+	return text
+
+
+## Swaps the question for its explanation and drains the timer bar as a reading
+## gauge. Returns when the time is up or the player taps anywhere.
+func _read_explanation(text: String) -> void:
+	var fade := create_tween()
+	_feedback_tweens.append(fade)
+	fade.tween_property(question_label, "modulate:a", 0.0, 0.15)
+	await fade.finished
+	if not is_inside_tree():
+		return
+
+	question_label.text = text
+	_explain_caption.text = tr("UI_EXPLANATION_TITLE")
+	_tap_hint.text = tr("UI_EXPLANATION_TAP")
+	_explain_caption.visible = true
+	_tap_hint.visible = true
+	question_label.add_theme_font_size_override("font_size", _largest_fitting(
+		text, question_label,
+		question_panel.size.x - QUESTION_PADDING, _question_room() - EXPLANATION_CHROME,
+		[28, 25, 22, 19, 16]
+	))
+	var fade_in := create_tween()
+	_feedback_tweens.append(fade_in)
+	fade_in.tween_property(question_label, "modulate:a", 1.0, 0.2)
+
+	timer_bar.add_theme_stylebox_override("fill", UiStyle.progress_fill(_accent))
+	_timer_label.text = ""
+	var duration := clampf(READ_BASE_SECONDS + float(text.length()) * READ_SECONDS_PER_CHAR, READ_MIN_SECONDS, READ_MAX_SECONDS)
+	var elapsed := 0.0
+	_skip_requested = false
+	_tap_catcher.visible = true
+	while elapsed < duration and not _skip_requested:
+		await get_tree().process_frame
+		if not is_inside_tree():
+			return
+		elapsed += get_process_delta_time()
+		timer_bar.value = (1.0 - elapsed / duration) * 100.0
+	_tap_catcher.visible = false
 
 
 func _show_feedback(result: Dictionary, selected_index: int, correct_index: int) -> void:

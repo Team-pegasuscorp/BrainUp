@@ -280,3 +280,13 @@ UI_DAILY_BOARD_EMPTY,No results yet,Aucun résultat pour l'instant
 UI_DAILY_BOARD_ERROR,Ranking unavailable,Classement indisponible
 UI_DAILY_RANK,Rank #{rank} today,Rang n°{rank} aujourd'hui
 UI_DAILY_RANK_TOTAL,Rank #{rank} of {total},Rang n°{rank} sur {total}
+UI_HOME_DAY_STREAK,Days in a row,Jours d'affilée
+UI_HOME_DAY_STREAK_RISK,Play today!,Joue aujourd'hui !
+UI_RESULTS_DAY_STREAK,📅 {days}-day streak · +{xp} XP,📅 Série de {days} jours · +{xp} XP
+UI_RESULTS_DAY_MILESTONE,🎉 {days} days in a row! +{xp} XP bonus,🎉 {days} jours d'affilée ! +{xp} XP bonus
+UI_ACH_DAYS_7,Regular,Habitué
+UI_ACH_DAYS_7_DESC,Play 7 days in a row.,Jouez 7 jours d'affilée.
+UI_ACH_DAYS_30,Unstoppable,Inarrêtable
+UI_ACH_DAYS_30_DESC,Play 30 days in a row.,Jouez 30 jours d'affilée.
+UI_EXPLANATION_TITLE,DID YOU KNOW?,LE SAVAIS-TU ?
+UI_EXPLANATION_TAP,Tap to continue,Touche pour continuer

@@ -103,6 +103,20 @@ static func all() -> Array[Dictionary]:
 			"icon": "🧭",
 			"accent": Color(0.91, 0.365, 0.604, 1),
 		},
+		{
+			"id": "days_7",
+			"title_key": "UI_ACH_DAYS_7",
+			"desc_key": "UI_ACH_DAYS_7_DESC",
+			"icon": "📅",
+			"accent": Color(1.0, 0.62, 0.20, 1),
+		},
+		{
+			"id": "days_30",
+			"title_key": "UI_ACH_DAYS_30",
+			"desc_key": "UI_ACH_DAYS_30_DESC",
+			"icon": "🗓",
+			"accent": Color(1.0, 0.45, 0.18, 1),
+		},
 	]
 
 
@@ -142,6 +156,10 @@ static func progress_for(achievement_id: String, stats: Dictionary) -> Dictionar
 			return _clamp_progress(int(stats.get("level", 1)), 5)
 		"category_explorer":
 			return _clamp_progress(int(stats.get("categories_played", 0)), 2)
+		"days_7":
+			return _clamp_progress(int(stats.get("best_day_streak", 0)), 7)
+		"days_30":
+			return _clamp_progress(int(stats.get("best_day_streak", 0)), 30)
 	return {"current": 0, "target": 1}
 
 

@@ -25,6 +25,10 @@ var wins: int = 0
 var losses: int = 0
 var current_win_streak: int = 0
 var best_win_streak: int = 0
+## Consecutive days played (see DayStreak); last_play_day is a local "YYYY-MM-DD".
+var day_streak: int = 0
+var best_day_streak: int = 0
+var last_play_day: String = ""
 var has_perfect_round: bool = false
 var daily_state: Dictionary = {}
 var daily_challenge_result: Dictionary = {}
@@ -62,6 +66,9 @@ func load_data() -> void:
 	losses = int(parsed.get("losses", losses))
 	current_win_streak = int(parsed.get("current_win_streak", current_win_streak))
 	best_win_streak = int(parsed.get("best_win_streak", best_win_streak))
+	day_streak = int(parsed.get("day_streak", day_streak))
+	best_day_streak = int(parsed.get("best_day_streak", best_day_streak))
+	last_play_day = str(parsed.get("last_play_day", last_play_day))
 	has_perfect_round = bool(parsed.get("has_perfect_round", has_perfect_round))
 	daily_state = parsed.get("daily_state", daily_state)
 	daily_challenge_result = parsed.get("daily_challenge_result", daily_challenge_result)
@@ -84,6 +91,9 @@ func save_data() -> void:
 		"losses": losses,
 		"current_win_streak": current_win_streak,
 		"best_win_streak": best_win_streak,
+		"day_streak": day_streak,
+		"best_day_streak": best_day_streak,
+		"last_play_day": last_play_day,
 		"has_perfect_round": has_perfect_round,
 		"daily_state": daily_state,
 		"daily_challenge_result": daily_challenge_result,
@@ -267,6 +277,7 @@ func get_achievement_stats() -> Dictionary:
 		"games_played": get_games_played_total(),
 		"wins": wins,
 		"best_win_streak": best_win_streak,
+		"best_day_streak": best_day_streak,
 		"best_score": _best_score_global(),
 		"has_perfect_round": has_perfect_round,
 		"level": level,

@@ -37,6 +37,7 @@ var _xp_bar: ProgressBar
 var _xp_card: PanelContainer
 var _achievements_card: PanelContainer
 var _streak_label: Label
+var _day_streak_label: Label
 var _daily_rank_label: Label
 var _flash: ColorRect
 var _intro: Tween
@@ -174,6 +175,16 @@ func _build_outcome_sections() -> void:
 	_streak_label.add_theme_color_override("font_color", Color(1.0, 0.45, 0.18))
 	_streak_label.visible = _is_win() and SaveManager.current_win_streak >= 2
 	_insert_before_stats(_streak_label)
+
+	## First round of the day extends the day streak: show it (and its bonus) from day 2.
+	var day_streak: Dictionary = summary.get("day_streak", {})
+	_day_streak_label = Label.new()
+	_day_streak_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_day_streak_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_day_streak_label.add_theme_font_size_override("font_size", UiScale.font(20))
+	_day_streak_label.add_theme_color_override("font_color", Color(1.0, 0.62, 0.20))
+	_day_streak_label.visible = bool(day_streak.get("extended", false)) and int(day_streak.get("streak", 0)) >= 2
+	_insert_before_stats(_day_streak_label)
 
 	if bool(summary.get("is_daily", false)):
 		_daily_rank_label = Label.new()
@@ -321,6 +332,12 @@ func _apply_outcome_texts() -> void:
 	if bool(summary.get("is_daily", false)):
 		_subtitle_label.text = "%s · %s" % [tr("UI_DAILY_CHALLENGE_TITLE"), _subtitle_label.text]
 	_streak_label.text = tr("UI_RESULTS_STREAK").format({"count": SaveManager.current_win_streak})
+	var day_streak: Dictionary = summary.get("day_streak", {})
+	var day_key := "UI_RESULTS_DAY_MILESTONE" if int(day_streak.get("milestone", 0)) > 0 else "UI_RESULTS_DAY_STREAK"
+	_day_streak_label.text = tr(day_key).format({
+		"days": int(day_streak.get("streak", 0)),
+		"xp": int(day_streak.get("xp", 0)),
+	})
 	_xp_gain_label.text = tr("UI_RESULTS_XP_GAINED").format({"xp": int(summary.get("xp_gained", 0))})
 
 	var leveled_up := int(summary.get("level_after", 1)) > int(summary.get("level_before", 1))
@@ -348,6 +365,7 @@ func _play_intro() -> void:
 	title_label.modulate.a = 0.0
 	_subtitle_label.modulate.a = 0.0
 	_streak_label.modulate.a = 0.0
+	_day_streak_label.modulate.a = 0.0
 	_xp_card.modulate.a = 0.0
 	_xp_bar.value = ratio_before
 	var stat_rows := _stat_rows()
@@ -372,6 +390,7 @@ func _play_intro() -> void:
 		_intro.tween_method(_wobble_title, 0.0, 1.0, 0.5)
 	_intro.tween_property(_subtitle_label, "modulate:a", 1.0, 0.3).set_delay(0.35)
 	_intro.tween_property(_streak_label, "modulate:a", 1.0, 0.3).set_delay(0.6)
+	_intro.tween_property(_day_streak_label, "modulate:a", 1.0, 0.3).set_delay(0.7)
 
 	# 0.55 — stat rows cascade in and count up.
 	var t := 0.55

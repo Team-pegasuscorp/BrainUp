@@ -62,6 +62,8 @@ static func _from_save(locale: String) -> Dictionary:
 		"accuracy_percent": accuracy,
 		"current_win_streak": SaveManager.current_win_streak,
 		"best_win_streak": SaveManager.best_win_streak,
+		"day_streak": DayStreak.current(),
+		"best_day_streak": SaveManager.best_day_streak,
 		"best_score": _best_score(),
 		"categories": _build_categories(locale),
 		"history": _build_history(locale),
@@ -115,6 +117,8 @@ static func _merge_demo(base: Dictionary, locale: String) -> Dictionary:
 	demo["accuracy_percent"] = 92.0
 	demo["current_win_streak"] = 7
 	demo["best_win_streak"] = 17
+	demo["day_streak"] = 12
+	demo["best_day_streak"] = 23
 	demo["best_score"] = 980
 	demo["has_perfect_round"] = false
 	demo["country"] = "France"
@@ -397,6 +401,7 @@ static func _build_achievements(data: Dictionary) -> Array:
 		"games_played": data.get("games_played", 0),
 		"wins": data.get("wins", 0),
 		"best_win_streak": data.get("best_win_streak", 0),
+		"best_day_streak": data.get("best_day_streak", 0),
 		"best_score": data.get("best_score", 0),
 		"has_perfect_round": data.get("has_perfect_round", SaveManager.has_perfect_round),
 		"level": data.get("level", 1),

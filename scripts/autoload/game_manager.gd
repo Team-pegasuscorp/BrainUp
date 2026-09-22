@@ -116,6 +116,11 @@ func finish_round() -> Dictionary:
 		xp_gained += SaveManager.record_daily_challenge(active_daily_date, score, correct_count, questions.size(), max_combo)
 		NetworkManager.last_daily_result = {}
 		NetworkManager.submit_daily_result(score, correct_count, questions.size(), max_combo)
+	var day_streak: Dictionary = DayStreak.record_play()
+	if int(day_streak.get("xp", 0)) > 0:
+		SaveManager.add_xp(int(day_streak["xp"]))
+		xp_gained += int(day_streak["xp"])
+	SaveManager.save_data()
 	var progress_after: Dictionary = SaveManager.capture_progress()
 	var new_achievements: Array[String] = []
 	for achievement_id in progress_after.get("unlocked", []):
@@ -139,6 +144,7 @@ func finish_round() -> Dictionary:
 		"xp_needed_after": int(progress_after.get("xp_needed", 100)),
 		"new_achievements": new_achievements,
 		"is_daily": is_daily,
+		"day_streak": day_streak,
 	}
 
 	NetworkManager.submit_match(
