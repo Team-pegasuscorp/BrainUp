@@ -39,6 +39,7 @@ static func record_match(
 	correct_count: int,
 	max_combo: int,
 	is_challenge: bool,
+	ranked: bool = true,
 ) -> void:
 	ensure_today()
 	var state: Dictionary = SaveManager.daily_state
@@ -46,7 +47,9 @@ static func record_match(
 	var played: Array = state["categories_played"]
 	if not played.has(category_id):
 		played.append(category_id)
-	state["win_streak"] = int(state.get("win_streak", 0)) + 1 if won else 0
+	## Survival / time attack cannot be won or lost: they leave the win streak alone.
+	if ranked:
+		state["win_streak"] = int(state.get("win_streak", 0)) + 1 if won else 0
 
 	for quest in state["quests"]:
 		var quest_id := str(quest["id"])

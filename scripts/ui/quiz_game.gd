@@ -12,6 +12,13 @@ const ANSWER_RADIUS := 24
 const QUESTION_PADDING := 68.0
 const TIMER_WARN_SECONDS := 5.0
 const TIMER_DANGER_SECONDS := 3.0
+## Time attack: the shared clock turns amber then red over its last seconds.
+const CLOCK_WARN_SECONDS := 15.0
+const CLOCK_DANGER_SECONDS := 5.0
+## Time attack keeps the pace: short feedback, no explanation.
+const TIME_ATTACK_FEEDBACK := 0.35
+## Survival: a right answer moves on quickly; mistakes get their explanation.
+const SURVIVAL_FEEDBACK := 0.8
 ## After an answer the card shows the explanation for a reading time that grows with
 ## its length; a tap anywhere moves on sooner.
 const EXPLANATION_DELAY := 0.7
@@ -50,6 +57,13 @@ var _explain_caption: Label
 var _tap_hint: Label
 var _tap_catcher: Control
 var _skip_requested: bool = false
+var _time_attack: bool = false
+var _survival: bool = false
+## Time attack's shared clock, running from the first question to the end.
+var _clock: float = 0.0
+var _clock_over: bool = false
+var _finished: bool = false
+var _lives_label: Label
 
 
 func _ready() -> void:
@@ -58,6 +72,16 @@ func _ready() -> void:
 		return
 
 	SafeArea.fit_margins($MarginContainer)
+	_time_attack = GameManager.mode == GameManager.Mode.TIME_ATTACK
+	_survival = GameManager.mode == GameManager.Mode.SURVIVAL
+	_clock = GameManager.TIME_ATTACK_SECONDS
+	if _survival:
+		## Hearts get their own red label in front of "Question N".
+		_lives_label = Label.new()
+		_lives_label.add_theme_color_override("font_color", UiTokens.FEEDBACK_WRONG)
+		_lives_label.add_theme_font_size_override("font_size", UiScale.font(22))
+		header_row.add_child(_lives_label)
+		header_row.move_child(_lives_label, 0)
 	_accent = UiTokens.accent_for_category(GameManager.category_id)
 	_build_category_header()
 
@@ -161,7 +185,12 @@ func _category_name(category_id: String) -> String:
 
 
 func _process(delta: float) -> void:
-	if not accepting_input or _timer_label == null:
+	if _timer_label == null:
+		return
+	if _time_attack:
+		_process_clock(delta)
+		return
+	if not accepting_input:
 		return
 
 	time_remaining -= delta
@@ -179,19 +208,49 @@ func _process(delta: float) -> void:
 		_submit_answer(-1)
 
 
+## Time attack: one clock for the whole run, running during feedback too.
+func _process_clock(delta: float) -> void:
+	if _clock_over:
+		return
+	_clock -= delta
+	timer_bar.value = (maxf(_clock, 0.0) / GameManager.TIME_ATTACK_SECONDS) * 100.0
+	_update_timer_visuals()
+	var whole_seconds := ceili(_clock)
+	if whole_seconds <= 5 and whole_seconds > 0 and whole_seconds != _last_tick_second:
+		_last_tick_second = whole_seconds
+		AudioManager.play("tick", 1.0 + float(5 - whole_seconds) * 0.1)
+		_pulse(_timer_label, 1.3)
+	if _clock <= 0.0:
+		_clock_over = true
+		accepting_input = false
+		AudioManager.play("timeout")
+		GameManager.end_time_attack()
+		_finish_quiz()
+
+
 ## Bar and number turn amber then red as time runs out.
 func _update_timer_visuals() -> void:
+	var shown := _clock if _time_attack else time_remaining
+	var danger := CLOCK_DANGER_SECONDS if _time_attack else TIMER_DANGER_SECONDS
+	var warn := CLOCK_WARN_SECONDS if _time_attack else TIMER_WARN_SECONDS
 	var state := 0
-	if time_remaining <= TIMER_DANGER_SECONDS:
+	if shown <= danger:
 		state = 2
-	elif time_remaining <= TIMER_WARN_SECONDS:
+	elif shown <= warn:
 		state = 1
 	if state != _timer_state:
 		_timer_state = state
 		var color := [_accent, UiTokens.FEEDBACK_TIMEOUT, UiTokens.FEEDBACK_WRONG][state] as Color
 		timer_bar.add_theme_stylebox_override("fill", UiStyle.progress_fill(color))
 		_timer_label.add_theme_color_override("font_color", color)
-	_timer_label.text = str(maxi(ceili(time_remaining), 0))
+	_timer_label.text = str(maxi(ceili(shown), 0))
+
+
+## "Question 3 / 7"; survival also refreshes the hearts left.
+func _progress_text() -> String:
+	if _lives_label != null:
+		_lives_label.text = "♥".repeat(GameManager.lives) + "♡".repeat(maxi(GameManager.SURVIVAL_LIVES - GameManager.lives, 0)) + " "
+	return "%s %s" % [tr("UI_QUESTION"), GameManager.get_progress_label()]
 
 
 func _show_current_question() -> void:
@@ -201,7 +260,7 @@ func _show_current_question() -> void:
 		_finish_quiz()
 		return
 
-	progress_label.text = "%s %s" % [tr("UI_QUESTION"), GameManager.get_progress_label()]
+	progress_label.text = _progress_text()
 	score_label.text = "%s: %d" % [tr("UI_SCORE"), GameManager.score]
 	combo_label.text = "%s: x%d" % [tr("UI_COMBO"), max(GameManager.combo, 1)]
 	question_label.text = question.get("text", "")
@@ -224,10 +283,11 @@ func _show_current_question() -> void:
 			button.visible = false
 
 	time_remaining = GameManager.QUESTION_TIME_SECONDS
-	_last_tick_second = 99
+	if not _time_attack:
+		_last_tick_second = 99
+		timer_bar.value = 100.0
 	_timer_state = -1
 	question_start_time = Time.get_ticks_msec() / 1000.0
-	timer_bar.value = 100.0
 	_update_timer_visuals()
 	accepting_input = true
 	_animate_question_in()
@@ -325,14 +385,28 @@ func _submit_answer(selected_index: int) -> void:
 	var result: Dictionary = GameManager.submit_answer(selected_index, elapsed)
 	_show_feedback(result, selected_index, correct_index)
 
-	var explanation := _explanation_for(question)
-	if explanation.is_empty():
-		await get_tree().create_timer(1.2).timeout
+	if _time_attack:
+		if not result.get("is_correct", false):
+			_clock -= GameManager.TIME_ATTACK_WRONG_PENALTY
+			feedback_label.text = "%s  −%d s" % [tr("UI_WRONG"), int(GameManager.TIME_ATTACK_WRONG_PENALTY)]
+			_shake(_timer_label)
+		await get_tree().create_timer(TIME_ATTACK_FEEDBACK).timeout
+		## The clock may have run out meanwhile and already ended the round.
+		if not is_inside_tree() or _clock_over:
+			return
 	else:
-		await get_tree().create_timer(EXPLANATION_DELAY).timeout
-		await _read_explanation(explanation)
-	if not is_inside_tree():
-		return
+		progress_label.text = _progress_text()
+		var explanation := _explanation_for(question)
+		## Survival only explains mistakes, so a good run keeps its rhythm.
+		if _survival and result.get("is_correct", false):
+			explanation = ""
+		if explanation.is_empty():
+			await get_tree().create_timer(SURVIVAL_FEEDBACK if _survival else 1.2).timeout
+		else:
+			await get_tree().create_timer(EXPLANATION_DELAY).timeout
+			await _read_explanation(explanation)
+		if not is_inside_tree():
+			return
 
 	if result.get("finished", false):
 		_finish_quiz()
@@ -493,6 +567,11 @@ func _reset_answer_visuals() -> void:
 
 
 func _finish_quiz() -> void:
+	## Time attack can end from the clock and from the last answer in the same frame.
+	if _finished:
+		return
+	_finished = true
+	_clock_over = true
 	_reset_answer_visuals()
 	GameManager.finish_round()
 	get_tree().change_scene_to_file(ScenePaths.RESULTS)

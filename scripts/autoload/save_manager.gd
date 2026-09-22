@@ -32,6 +32,8 @@ var last_play_day: String = ""
 var has_perfect_round: bool = false
 var daily_state: Dictionary = {}
 var daily_challenge_result: Dictionary = {}
+## Best survival / time-attack runs: { mode: { category: {score, correct} } }.
+var mode_records: Dictionary = {}
 var sound_enabled: bool = true
 var sound_volume: float = 0.8
 
@@ -72,6 +74,7 @@ func load_data() -> void:
 	has_perfect_round = bool(parsed.get("has_perfect_round", has_perfect_round))
 	daily_state = parsed.get("daily_state", daily_state)
 	daily_challenge_result = parsed.get("daily_challenge_result", daily_challenge_result)
+	mode_records = parsed.get("mode_records", mode_records)
 	sound_enabled = bool(parsed.get("sound_enabled", sound_enabled))
 	sound_volume = clampf(float(parsed.get("sound_volume", sound_volume)), 0.0, 1.0)
 
@@ -97,6 +100,7 @@ func save_data() -> void:
 		"has_perfect_round": has_perfect_round,
 		"daily_state": daily_state,
 		"daily_challenge_result": daily_challenge_result,
+		"mode_records": mode_records,
 		"sound_enabled": sound_enabled,
 		"sound_volume": sound_volume,
 	}
@@ -200,6 +204,8 @@ func record_match_result(
 	total_count: int,
 	max_combo: int = 0,
 	is_challenge: bool = false,
+	mode: String = "classic",
+	xp_cap: int = 0,
 ) -> int:
 	if not category_stats.has(category_id):
 		category_stats[category_id] = {
@@ -216,14 +222,17 @@ func record_match_result(
 	stats["total_questions"] = int(stats.get("total_questions", 0)) + total_count
 	category_stats[category_id] = stats
 
-	var won := is_match_won(correct_count, total_count)
-	if won:
-		wins += 1
-		current_win_streak += 1
-		best_win_streak = max(best_win_streak, current_win_streak)
-	else:
-		losses += 1
-		current_win_streak = 0
+	## Survival and time attack have no win or loss: they leave the record untouched.
+	var ranked := mode == "classic"
+	var won := ranked and is_match_won(correct_count, total_count)
+	if ranked:
+		if won:
+			wins += 1
+			current_win_streak += 1
+			best_win_streak = max(best_win_streak, current_win_streak)
+		else:
+			losses += 1
+			current_win_streak = 0
 
 	if total_count > 0 and correct_count >= total_count:
 		has_perfect_round = true
@@ -235,12 +244,15 @@ func record_match_result(
 		"total_count": total_count,
 		"max_combo": max_combo,
 		"won": won,
+		"mode": mode,
 		"played_at": int(Time.get_unix_time_from_system()),
 	})
 
-	DailyQuestsScript.record_match(category_id, won, correct_count, max_combo, is_challenge)
+	DailyQuestsScript.record_match(category_id, won, correct_count, max_combo, is_challenge, ranked)
 
 	var gained_xp: int = correct_count * 10 + score / 10
+	if xp_cap > 0:
+		gained_xp = mini(gained_xp, xp_cap)
 	add_xp(gained_xp)
 	save_data()
 	return gained_xp
@@ -301,6 +313,21 @@ func record_daily_challenge(date: String, score: int, correct_count: int, total_
 	add_xp(DailyChallengeScript.BONUS_XP)
 	save_data()
 	return DailyChallengeScript.BONUS_XP
+
+
+## Returns {previous, is_record} and stores the run if it beats the best score.
+func record_mode_result(mode: String, category_id: String, score: int, correct_count: int) -> Dictionary:
+	var by_category: Dictionary = mode_records.get(mode, {})
+	var previous: Dictionary = by_category.get(category_id, {})
+	var is_record := score > int(previous.get("score", 0))
+	if is_record:
+		by_category[category_id] = {"score": score, "correct": correct_count}
+		mode_records[mode] = by_category
+	return {"previous_score": int(previous.get("score", 0)), "previous_correct": int(previous.get("correct", 0)), "is_record": is_record}
+
+
+func get_mode_record(mode: String, category_id: String) -> Dictionary:
+	return (mode_records.get(mode, {}) as Dictionary).get(category_id, {})
 
 
 func get_win_rate_percent() -> float:

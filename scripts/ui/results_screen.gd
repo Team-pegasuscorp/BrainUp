@@ -43,6 +43,7 @@ var _flash: ColorRect
 var _intro: Tween
 var _intro_done: bool = false
 var _skipping: bool = false
+var _share_button: Button
 
 
 func _ready() -> void:
@@ -56,6 +57,7 @@ func _ready() -> void:
 	_wrap_cards_in_scroll()
 	_enlarge_layout()
 	_build_outcome_sections()
+	_build_share_button()
 	_apply_translations()
 	_play_intro()
 	play_again_button.pressed.connect(_on_play_again_pressed)
@@ -82,14 +84,50 @@ func _apply_translations() -> void:
 	})
 	play_again_button.text = tr("UI_PLAY_AGAIN")
 	menu_button.text = tr("UI_MAIN_MENU")
+	_share_button.text = tr("UI_SHARE_SCORE")
 
 
 func _on_play_again_pressed() -> void:
-	GameManager.start_round(summary.get("category_id", ""))
+	## Same mode again; a daily or challenge round replays as a normal classic one.
+	var replay_mode: int = GameManager.mode if not bool(summary.get("is_daily", false)) else GameManager.Mode.CLASSIC
+	GameManager.start_round(summary.get("category_id", ""), "", "", replay_mode)
 	if GameManager.has_questions():
 		get_tree().change_scene_to_file(ScenePaths.QUIZ_GAME)
 	else:
 		ScenePaths.go_to_shell(get_tree(), ScenePaths.Tab.QUIZ)
+
+
+## "Share" sits next to "Main menu" so the pinned buttons keep their height.
+func _build_share_button() -> void:
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 12)
+	menu_button.get_parent().add_child(row)
+	menu_button.get_parent().move_child(row, menu_button.get_index())
+	_share_button = Button.new()
+	_share_button.custom_minimum_size = menu_button.custom_minimum_size
+	_share_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_share_button.theme_type_variation = menu_button.theme_type_variation
+	row.add_child(_share_button)
+	menu_button.reparent(row)
+	menu_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_share_button.pressed.connect(_on_share_pressed)
+	PressScaleUtil.wire(_share_button, self)
+
+
+func _on_share_pressed() -> void:
+	_share_button.disabled = true
+	var image: Image = await ShareCard.render(self, summary)
+	var result := ShareUtil.share(image, ShareCard.message(summary))
+	if not is_inside_tree():
+		return
+	if result == ShareUtil.Result.COPIED:
+		## No share sheet (desktop, or Android refused): the text is in the clipboard.
+		_share_button.text = tr("UI_SHARE_COPIED")
+		await get_tree().create_timer(2.0).timeout
+		if not is_inside_tree():
+			return
+		_share_button.text = tr("UI_SHARE_SCORE")
+	_share_button.disabled = false
 
 
 func _on_menu_pressed() -> void:
@@ -118,11 +156,20 @@ func _show_daily_rank(data: Dictionary) -> void:
 	pop.tween_property(_daily_rank_label, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 
+## Survival / time attack have no victory: beating the record plays the victory.
 func _is_win() -> bool:
+	if _is_mode_round():
+		return bool((summary.get("record", {}) as Dictionary).get("is_record", false))
 	return bool(summary.get("won", false))
 
 
+func _is_mode_round() -> bool:
+	return str(summary.get("mode", "classic")) != "classic"
+
+
 func _outcome_color() -> Color:
+	if _is_mode_round() and not _is_win():
+		return UiTokens.ACCENT_QUIZ
 	return UiTokens.FEEDBACK_CORRECT if _is_win() else UiTokens.FEEDBACK_WRONG
 
 
@@ -173,7 +220,7 @@ func _build_outcome_sections() -> void:
 	_streak_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_streak_label.add_theme_font_size_override("font_size", UiScale.font(22))
 	_streak_label.add_theme_color_override("font_color", Color(1.0, 0.45, 0.18))
-	_streak_label.visible = _is_win() and SaveManager.current_win_streak >= 2
+	_streak_label.visible = not _is_mode_round() and _is_win() and SaveManager.current_win_streak >= 2
 	_insert_before_stats(_streak_label)
 
 	## First round of the day extends the day streak: show it (and its bonus) from day 2.
@@ -329,6 +376,16 @@ func _apply_outcome_texts() -> void:
 	var won := _is_win()
 	title_label.text = tr("UI_RESULTS_VICTORY") if won else tr("UI_RESULTS_DEFEAT")
 	_subtitle_label.text = tr("UI_RESULTS_VICTORY_SUB") if won else tr("UI_RESULTS_DEFEAT_SUB")
+	if _is_mode_round():
+		var record: Dictionary = summary.get("record", {})
+		var mode_name := tr("UI_MODE_SURVIVAL") if str(summary.get("mode", "")) == "survival" else tr("UI_MODE_TIME_ATTACK")
+		title_label.text = tr("UI_RESULTS_NEW_RECORD") if won else mode_name.to_upper()
+		if won and int(record.get("previous_score", 0)) > 0:
+			_subtitle_label.text = tr("UI_RESULTS_RECORD_BEATEN").format({"mode": mode_name, "previous": int(record.get("previous_score", 0))})
+		elif won:
+			_subtitle_label.text = tr("UI_RESULTS_FIRST_RECORD").format({"mode": mode_name})
+		else:
+			_subtitle_label.text = tr("UI_RESULTS_RECORD_TO_BEAT").format({"previous": int(record.get("previous_score", 0))})
 	if bool(summary.get("is_daily", false)):
 		_subtitle_label.text = "%s · %s" % [tr("UI_DAILY_CHALLENGE_TITLE"), _subtitle_label.text]
 	_streak_label.text = tr("UI_RESULTS_STREAK").format({"count": SaveManager.current_win_streak})

@@ -29,10 +29,20 @@ var _daily_board_failed: bool = false
 var _daily_resubmitted: bool = false
 var _board_overlay: Control
 var _scroll_content: VBoxContainer
+var _mode_buttons: Dictionary = {}
+var _mode_hint: Label
+
+## Mode chips, in display order: [mode, label key, hint key].
+const MODES := [
+	[0, "UI_MODE_CLASSIC", "UI_MODE_CLASSIC_HINT"],
+	[1, "UI_MODE_SURVIVAL", "UI_MODE_SURVIVAL_HINT"],
+	[2, "UI_MODE_TIME_ATTACK", "UI_MODE_TIME_ATTACK_HINT"],
+]
 
 
 func _ready() -> void:
 	_wrap_list_in_scroll()
+	_build_mode_picker()
 	_apply_embedded_layout()
 	_apply_translations()
 	_load_categories()
@@ -62,6 +72,66 @@ func _wrap_list_in_scroll() -> void:
 	category_list.size_flags_vertical = Control.SIZE_FILL
 
 
+## Mode chips and a hint line (rules + personal record), pinned above Play.
+func _build_mode_picker() -> void:
+	var column := start_button.get_parent()
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 8)
+	column.add_child(row)
+	column.move_child(row, start_button.get_index())
+	for entry in MODES:
+		var chip := Button.new()
+		chip.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		chip.custom_minimum_size.y = 44
+		chip.add_theme_font_size_override("font_size", UiScale.font(15))
+		chip.pressed.connect(_on_mode_selected.bind(int(entry[0])))
+		PressScaleUtil.wire(chip, self)
+		row.add_child(chip)
+		_mode_buttons[int(entry[0])] = chip
+
+	_mode_hint = Label.new()
+	_mode_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_mode_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_mode_hint.add_theme_font_size_override("font_size", UiScale.font(14))
+	_mode_hint.add_theme_color_override("font_color", Color(1, 1, 1, 0.75))
+	column.add_child(_mode_hint)
+	column.move_child(_mode_hint, start_button.get_index())
+
+
+func _on_mode_selected(mode: int) -> void:
+	GameManager.selected_mode = mode
+	_refresh_mode_picker()
+
+
+func _refresh_mode_picker() -> void:
+	var accent := UiTokens.ACCENT_QUIZ
+	for entry in MODES:
+		var chip: Button = _mode_buttons[int(entry[0])]
+		var selected := int(entry[0]) == GameManager.selected_mode
+		chip.text = tr(str(entry[1]))
+		for state in ["normal", "hover", "pressed", "focus"]:
+			chip.add_theme_stylebox_override(state, UiStyle.profile_chip(accent, selected))
+		chip.add_theme_color_override("font_color", Color(1, 1, 1, 1.0 if selected else 0.7))
+		chip.add_theme_color_override("font_hover_color", Color(1, 1, 1, 1))
+		chip.add_theme_color_override("font_pressed_color", Color(1, 1, 1, 1))
+		chip.add_theme_color_override("font_focus_color", Color(1, 1, 1, 1.0 if selected else 0.7))
+		if selected:
+			_mode_hint.text = tr(str(entry[2])) + _record_text()
+
+
+## " · Record: 1 234 pts (12 ✓)" for survival / time attack in the selected category.
+func _record_text() -> String:
+	if GameManager.selected_mode == GameManager.Mode.CLASSIC:
+		return ""
+	if _selected_index < 0 or _selected_index >= categories.size():
+		return ""
+	var mode_key := str(GameManager.MODE_KEYS[GameManager.selected_mode])
+	var record: Dictionary = SaveManager.get_mode_record(mode_key, str(categories[_selected_index].get("id", "")))
+	if record.is_empty():
+		return "\n" + tr("UI_MODE_NO_RECORD")
+	return "\n" + tr("UI_MODE_RECORD").format({"score": int(record.get("score", 0)), "correct": int(record.get("correct", 0))})
+
+
 func _apply_embedded_layout() -> void:
 	if not embedded_mode:
 		return
@@ -76,6 +146,8 @@ func _apply_translations() -> void:
 	title_label.text = tr("UI_CHOOSE_CATEGORY")
 	back_button.text = tr("UI_BACK")
 	start_button.text = tr("UI_PLAY")
+	if _mode_hint != null:
+		_refresh_mode_picker()
 
 
 func refresh() -> void:
@@ -441,6 +513,7 @@ func _on_category_selected(index: int) -> void:
 	_selected_index = index
 	description_label.text = categories[index].get("description", "")
 	start_button.disabled = false
+	_refresh_mode_picker()
 	for tile_index in range(_tile_buttons.size()):
 		var tile := _tile_buttons[tile_index]
 		var accent: Color = tile.get_meta("accent")
@@ -467,7 +540,7 @@ func _on_start_pressed() -> void:
 	if _selected_index < 0 or _selected_index >= categories.size():
 		return
 	var category_id: String = str(categories[_selected_index].get("id", ""))
-	GameManager.start_round(category_id)
+	GameManager.start_round(category_id, "", "", GameManager.selected_mode)
 	if not GameManager.has_questions():
 		description_label.text = tr("UI_EMPTY_QUESTIONS")
 		return

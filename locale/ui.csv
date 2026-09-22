@@ -290,3 +290,23 @@ UI_ACH_DAYS_30,Unstoppable,Inarrêtable
 UI_ACH_DAYS_30_DESC,Play 30 days in a row.,Jouez 30 jours d'affilée.
 UI_EXPLANATION_TITLE,DID YOU KNOW?,LE SAVAIS-TU ?
 UI_EXPLANATION_TAP,Tap to continue,Touche pour continuer
+UI_MODE_CLASSIC,Classic,Classique
+UI_MODE_SURVIVAL,Survival,Survie
+UI_MODE_TIME_ATTACK,Time attack,Chrono
+UI_MODE_CLASSIC_HINT,"7 questions, 10 seconds each.","7 questions, 10 secondes chacune."
+UI_MODE_SURVIVAL_HINT,"3 lives: how far can you go?","3 vies : jusqu'où iras-tu ?"
+UI_MODE_TIME_ATTACK_HINT,"60 seconds, as many answers as you can. A mistake costs 5 s.","60 secondes, un maximum de bonnes réponses. Une erreur coûte 5 s."
+UI_MODE_RECORD,"Record: {score} pts · {correct} correct","Record : {score} pts · {correct} bonnes réponses"
+UI_MODE_NO_RECORD,No record yet in this category.,Pas encore de record dans cette catégorie.
+UI_RESULTS_NEW_RECORD,NEW RECORD!,NOUVEAU RECORD !
+UI_RESULTS_RECORD_BEATEN,{mode} · previous best: {previous} pts,{mode} · ancien record : {previous} pts
+UI_RESULTS_FIRST_RECORD,{mode} · your first record!,{mode} · ton premier record !
+UI_RESULTS_RECORD_TO_BEAT,Record to beat: {previous} pts,Record à battre : {previous} pts
+UI_SHARE,Share,Partager
+UI_SHARE_SCORE,Share,Partager
+UI_SHARE_COPIED,Text copied!,Texte copié !
+UI_SHARE_CORRECT,{correct}/{total} correct,{correct}/{total} bonnes réponses
+UI_SHARE_COMBO,combo x{combo},combo x{combo}
+UI_SHARE_STREAK,🔥 {days} days in a row,🔥 {days} jours d'affilée
+UI_SHARE_CHALLENGE,Can you beat me on BrainUp?,Tu fais mieux sur BrainUp ?
+UI_SHARE_MESSAGE,I scored {score} points in {category}!,J'ai fait {score} points en {category} !
