@@ -36,6 +36,7 @@ func _rebuild_cards(snapshot: Dictionary) -> void:
 	content.add_child(_make_last_match_card(snapshot))
 	content.add_child(_make_daily_challenges_card())
 	content.add_child(_make_near_achievements_card(snapshot))
+	ScrollTouch.let_drags_through(content)
 
 
 func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:

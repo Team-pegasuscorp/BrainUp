@@ -160,6 +160,7 @@ func _rebuild_sections() -> void:
 	sections.add_child(_build_badges_tile())
 	sections.add_child(_build_season_tile())
 	UiScale.compact = false
+	ScrollTouch.let_drags_through(sections)
 
 
 func _kill_profile_tweens() -> void:
@@ -1782,6 +1783,7 @@ func _populate_achievements_page() -> void:
 		if typeof(row) != TYPE_DICTIONARY:
 			continue
 		_achievements_grid.add_child(_badge_cell(row))
+	ScrollTouch.let_drags_through(_achievements_grid)
 
 
 func _populate_categories_page() -> void:
@@ -1807,6 +1809,7 @@ func _populate_categories_page() -> void:
 		shown += 1
 	if shown == 0:
 		_categories_list.add_child(_empty(tr("UI_PROFILE_NO_CATEGORIES")))
+	ScrollTouch.let_drags_through(_categories_list)
 
 
 func _on_badge_pressed(achievement: Dictionary) -> void:
