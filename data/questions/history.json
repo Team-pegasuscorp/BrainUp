@@ -19,17 +19,17 @@
             "1945",
             "1946"
           ],
-          "explanation": "World War II ended in 1945."
+          "explanation": "Germany surrendered on 8 May 1945 and Japan on 2 September 1945, ending the war."
         },
         "fr": {
-          "text": "En quelle année la Seconde Guerre mondiale s'est-elle terminée ?",
+          "text": "En quelle année la Seconde Guerre mondiale s'est-elle terminée ?",
           "choices": [
             "1943",
             "1944",
             "1945",
             "1946"
           ],
-          "explanation": "La Seconde Guerre mondiale s'est terminée en 1945."
+          "explanation": "L'Allemagne a capitulé le 8 mai 1945 et le Japon le 2 septembre 1945, mettant fin à la guerre."
         }
       }
     },
@@ -51,17 +51,17 @@
             "Abraham Lincoln",
             "John Adams"
           ],
-          "explanation": "George Washington served as the first U.S. president from 1789 to 1797."
+          "explanation": "George Washington served two terms, from 1789 to 1797, then chose to step down."
         },
         "fr": {
-          "text": "Qui fut le premier président des États-Unis ?",
+          "text": "Qui fut le premier président des États-Unis ?",
           "choices": [
             "Thomas Jefferson",
             "George Washington",
             "Abraham Lincoln",
             "John Adams"
           ],
-          "explanation": "George Washington fut le premier président américain de 1789 à 1797."
+          "explanation": "George Washington a exercé deux mandats, de 1789 à 1797, puis a choisi de se retirer."
         }
       }
     },
@@ -83,17 +83,17 @@
             "1815",
             "1776"
           ],
-          "explanation": "The French Revolution began in 1789 with the storming of the Bastille."
+          "explanation": "The Revolution began in 1789, with the Estates-General in May and the storming of the Bastille on 14 July."
         },
         "fr": {
-          "text": "La Révolution française a commencé en quelle année ?",
+          "text": "La Révolution française a commencé en quelle année ?",
           "choices": [
             "1789",
             "1799",
             "1815",
             "1776"
           ],
-          "explanation": "La Révolution française débuta en 1789 avec la prise de la Bastille."
+          "explanation": "La Révolution a commencé en 1789, avec les États généraux en mai et la prise de la Bastille le 14 juillet."
         }
       }
     },
@@ -115,56 +115,24 @@
             "Statue of Zeus",
             "Lighthouse"
           ],
-          "explanation": "The Lighthouse of Alexandria was one of the Seven Wonders of the Ancient World."
+          "explanation": "The Lighthouse of Alexandria, about 100 m tall, guided ships for centuries before earthquakes toppled it."
         },
         "fr": {
-          "text": "Quelle merveille antique se trouvait à Alexandrie ?",
+          "text": "Quelle merveille antique se trouvait à Alexandrie ?",
           "choices": [
             "Colosse de Rhodes",
             "Jardins suspendus",
             "Statue de Zeus",
             "Phare"
           ],
-          "explanation": "Le phare d'Alexandrie faisait partie des sept merveilles du monde antique."
-        }
-      }
-    },
-    {
-      "id": "history_005",
-      "category": "history",
-      "difficulty": 1,
-      "correct_index": 2,
-      "locales": [
-        "fr",
-        "en"
-      ],
-      "translations": {
-        "en": {
-          "text": "Who painted the Mona Lisa?",
-          "choices": [
-            "Michelangelo",
-            "Raphael",
-            "Leonardo da Vinci",
-            "Donatello"
-          ],
-          "explanation": "Leonardo da Vinci painted the Mona Lisa in the early 16th century."
-        },
-        "fr": {
-          "text": "Qui a peint la Joconde ?",
-          "choices": [
-            "Michel-Ange",
-            "Raphaël",
-            "Léonard de Vinci",
-            "Donatello"
-          ],
-          "explanation": "Léonard de Vinci a peint la Joconde au début du XVIe siècle."
+          "explanation": "Le phare d'Alexandrie, haut d'environ 100 m, a guidé les navires pendant des siècles avant d'être abattu par des séismes."
         }
       }
     },
     {
       "id": "history_006",
       "category": "history",
-      "difficulty": 3,
+      "difficulty": 1,
       "correct_index": 1,
       "locales": [
         "fr",
@@ -179,17 +147,17 @@
             "1991",
             "1985"
           ],
-          "explanation": "The Berlin Wall fell on 9 November 1989."
+          "explanation": "The Wall fell on 9 November 1989; Germany was reunified less than a year later."
         },
         "fr": {
-          "text": "En quelle année le mur de Berlin est-il tombé ?",
+          "text": "En quelle année le mur de Berlin est-il tombé ?",
           "choices": [
             "1987",
             "1989",
             "1991",
             "1985"
           ],
-          "explanation": "Le mur de Berlin est tombé le 9 novembre 1989."
+          "explanation": "Le Mur est tombé le 9 novembre 1989 ; l'Allemagne a été réunifiée moins d'un an plus tard."
         }
       }
     },
@@ -211,17 +179,17 @@
             "Maya",
             "Ottoman"
           ],
-          "explanation": "Machu Picchu was built by the Inca civilization in the 15th century."
+          "explanation": "The Incas built Machu Picchu in the 15th century, probably as an estate for emperor Pachacuti."
         },
         "fr": {
-          "text": "Quel empire a construit Machu Picchu ?",
+          "text": "Quel empire a construit Machu Picchu ?",
           "choices": [
             "Inca",
             "Aztèque",
             "Maya",
             "Ottoman"
           ],
-          "explanation": "Machu Picchu a été construit par la civilisation inca au XVe siècle."
+          "explanation": "Les Incas ont bâti le Machu Picchu au XVe siècle, sans doute comme domaine de l'empereur Pachacutec."
         }
       }
     },
@@ -236,24 +204,24 @@
       ],
       "translations": {
         "en": {
-          "text": "The pantheon in Rome was used to worship what god?",
+          "text": "The Pantheon in Rome was a temple dedicated to which gods?",
           "choices": [
-            "Zeus",
-            "Any god they wanted",
-            "Athena",
-            "Both Athena and Zeus"
+            "Jupiter",
+            "All the gods",
+            "Mars",
+            "Venus"
           ],
-          "explanation": "The correct answer is: Any god they wanted."
+          "explanation": "\"Pantheon\" means \"all the gods\" in Greek: the temple was dedicated to every god."
         },
         "fr": {
-          "text": "Le panthéon de Rome était utilisé pour adorer quel dieu?",
+          "text": "À quels dieux le Panthéon de Rome était-il dédié ?",
           "choices": [
-            "Zeus",
-            "Tout dieu qu'ils voulaient",
-            "Athéna",
-            "Athéna et Zeus"
+            "Jupiter",
+            "Tous les dieux",
+            "Mars",
+            "Vénus"
           ],
-          "explanation": "La bonne réponse est: Tout dieu qu'ils voulaient."
+          "explanation": "« Panthéon » signifie « tous les dieux » en grec : le temple leur était dédié à tous."
         }
       }
     },
@@ -275,17 +243,17 @@
             "USS North Carolina",
             "USS Constitution"
           ],
-          "explanation": "The correct answer is: USS Pueblo."
+          "explanation": "North Korea still holds the USS Pueblo; it is displayed as a museum ship in Pyongyang."
         },
         "fr": {
-          "text": "Quel est le nom du navire espion de la marine américaine qui a été attaqué et capturé par les forces nord-coréennes en 1968 ?",
+          "text": "Quel est le nom du navire espion de la marine américaine qui a été attaqué et capturé par les forces nord-coréennes en 1968 ?",
           "choices": [
             "USS Pueblo",
             "USS Indianapolis",
             "USS North Carolina",
             "USS Constitution"
           ],
-          "explanation": "La bonne réponse est : USS Pueblo."
+          "explanation": "La Corée du Nord détient toujours l'USS Pueblo ; il est exposé comme navire-musée à Pyongyang."
         }
       }
     },
@@ -307,17 +275,17 @@
             "Three Kingdoms War",
             "Mongol conquests"
           ],
-          "explanation": "The correct answer is: World War II."
+          "explanation": "World War II caused an estimated 70 to 85 million deaths, about 3% of the world's population."
         },
         "fr": {
-          "text": "Quel conflit historique a tué le plus de gens ?",
+          "text": "Quel conflit a fait le plus de morts de l'histoire ?",
           "choices": [
             "Révolte des Taiping",
             "Seconde Guerre mondiale",
             "Guerre des Trois Royaumes",
             "Conquêtes mongoles"
           ],
-          "explanation": "La bonne réponse est : Seconde Guerre mondiale."
+          "explanation": "La Seconde Guerre mondiale a fait environ 70 à 85 millions de morts, près de 3 % de la population mondiale."
         }
       }
     },
@@ -336,20 +304,20 @@
           "choices": [
             "Galicia",
             "Navarre",
-            "Granada",
+            "Portugal",
             "Catalonia"
           ],
-          "explanation": "The correct answer is: Navarre."
+          "explanation": "The Spanish royal arms combine Castile, León, Aragon and Navarre, with Granada's pomegranate at the bottom."
         },
         "fr": {
-          "text": "Les armoiries du roi d'Espagne contiennent les armoiries des monarques de Castille, Léon, Aragon et quel autre ancien royaume ibérique ?",
+          "text": "Les armoiries du roi d'Espagne contiennent les armoiries des monarques de Castille, Léon, Aragon et quel autre ancien royaume ibérique ?",
           "choices": [
             "Galice",
             "Navarre",
-            "Grenade",
+            "Portugal",
             "Catalogne"
           ],
-          "explanation": "La bonne réponse est : Navarre."
+          "explanation": "Les armes royales espagnoles réunissent Castille, León, Aragon et Navarre, avec la grenade de Grenade en pointe."
         }
       }
     },
@@ -371,17 +339,17 @@
             "Great Pyramid of Giza",
             "Lighthouse of Alexandria"
           ],
-          "explanation": "The correct answer is: Great Pyramid of Giza."
+          "explanation": "Built around 2560 BC, the Great Pyramid is the oldest of the seven wonders and the only one still standing."
         },
         "fr": {
-          "text": "Dans les Sept Merveilles du Monde, quelle merveille est la seule qui ait survécu jusqu'à ce jour?",
+          "text": "Parmi les Sept Merveilles du monde, laquelle est la seule à avoir survécu ?",
           "choices": [
-            "Statue de Zeus à Olympia",
-            "Colosse de Rhodes",
-            "Grande pyramide de Giza",
-            "Phare d'Alexandrie"
+            "La statue de Zeus à Olympie",
+            "Le colosse de Rhodes",
+            "La grande pyramide de Gizeh",
+            "Le phare d'Alexandrie"
           ],
-          "explanation": "La bonne réponse est: Grande Pyramide de Giza."
+          "explanation": "Bâtie vers 2560 av. J.-C., la grande pyramide est la plus ancienne des sept merveilles et la seule encore debout."
         }
       }
     },
@@ -403,17 +371,17 @@
             "December 24",
             "August 21"
           ],
-          "explanation": "The correct answer is: August 19."
+          "explanation": "Hardliners tried to overthrow Gorbachev on 19 August 1991; the coup collapsed within three days."
         },
         "fr": {
-          "text": "À quel jour a commencé la tentative de coup d'État de 1991 en Union soviétique?",
+          "text": "Quel jour a commencé la tentative de coup d'État de 1991 en Union soviétique ?",
           "choices": [
             "26 décembre",
             "19 août",
             "24 décembre",
             "21 août"
           ],
-          "explanation": "La bonne réponse est : 19 août."
+          "explanation": "Des conservateurs ont tenté de renverser Gorbatchev le 19 août 1991 ; le putsch a échoué en trois jours."
         }
       }
     },
@@ -435,7 +403,7 @@
             "Achaemenid, Median, Parthian, Sassanid",
             "Median, Achaemenid, Sassanid, Parthian"
           ],
-          "explanation": "The correct answer is: Median, Achaemenid, Parthian, Sassanid."
+          "explanation": "The Medes (7th c. BC) came first, then the Achaemenids of Cyrus, the Parthians, and finally the Sassanids."
         },
         "fr": {
           "text": "Classez les empires iraniens suivants par ordre chronologique :",
@@ -445,7 +413,7 @@
             "Achéménide, Mède, Parthe, Sassanide",
             "Mède, Achéménide, Sassanide, Parthe"
           ],
-          "explanation": "La bonne réponse est : Mède, Achéménide, Parthe, Sassanide."
+          "explanation": "Les Mèdes (VIIe s. av. J.-C.) viennent d'abord, puis les Achéménides de Cyrus, les Parthes et enfin les Sassanides."
         }
       }
     },
@@ -460,24 +428,24 @@
       ],
       "translations": {
         "en": {
-          "text": "In which year was Nelson Mandela released from prison",
+          "text": "In which year was Nelson Mandela released from prison?",
           "choices": [
             "1992",
             "1994",
             "1990",
             "1980"
           ],
-          "explanation": "The correct answer is: 1990."
+          "explanation": "Mandela walked free on 11 February 1990 after 27 years in prison; he became president in 1994."
         },
         "fr": {
-          "text": "L'année où Nelson Mandela a été libéré de prison",
+          "text": "En quelle année Nelson Mandela a-t-il été libéré de prison ?",
           "choices": [
             "1992",
             "1994",
             "1990",
             "1980"
           ],
-          "explanation": "La bonne réponse est : 1990."
+          "explanation": "Mandela a été libéré le 11 février 1990 après 27 ans de prison ; il est devenu président en 1994."
         }
       }
     },
@@ -492,24 +460,24 @@
       ],
       "translations": {
         "en": {
-          "text": "How many Sister Ships were related to the TItanic?",
+          "text": "How many sister ships did the Titanic have?",
           "choices": [
             "2",
             "4",
             "1",
             "3"
           ],
-          "explanation": "The correct answer is: 2."
+          "explanation": "Titanic's sisters were the Olympic, which sailed until 1935, and the Britannic, sunk in 1916."
         },
         "fr": {
-          "text": "Combien de Sister Ships étaient liés au TItanic ?",
+          "text": "Combien de navires jumeaux (sister-ships) le Titanic avait-il ?",
           "choices": [
             "2",
             "4",
             "1",
             "3"
           ],
-          "explanation": "La bonne réponse est : 2."
+          "explanation": "Les sister-ships du Titanic étaient l'Olympic, en service jusqu'en 1935, et le Britannic, coulé en 1916."
         }
       }
     },
@@ -531,17 +499,17 @@
             "1816",
             "1823"
           ],
-          "explanation": "The correct answer is: 1816."
+          "explanation": "The eruption of Mount Tambora in 1815 cooled the planet, causing snow in June 1816 in Europe and America."
         },
         "fr": {
-          "text": "Laquelle des années suivantes est communément appelée l'année sans été?",
+          "text": "Quelle année est surnommée « l'année sans été » ?",
           "choices": [
             "1808",
             "1813",
             "1816",
             "1823"
           ],
-          "explanation": "La bonne réponse est : 1816."
+          "explanation": "L'éruption du Tambora en 1815 a refroidi la planète : il a neigé en juin 1816 en Europe et en Amérique."
         }
       }
     },
@@ -563,17 +531,17 @@
             "1998",
             "1975"
           ],
-          "explanation": "The correct answer is: 1986."
+          "explanation": "Reactor 4 exploded on 26 April 1986 during a safety test."
         },
         "fr": {
-          "text": "En quelle année la centrale nucléaire de Tchernobyl a-t-elle fondu ?",
+          "text": "En quelle année a eu lieu la catastrophe de la centrale nucléaire de Tchernobyl ?",
           "choices": [
             "1986",
             "1991",
             "1998",
             "1975"
           ],
-          "explanation": "La bonne réponse est : 1986."
+          "explanation": "Le réacteur 4 a explosé le 26 avril 1986, pendant un test de sécurité."
         }
       }
     },
@@ -595,17 +563,17 @@
             "Aragon",
             "Galicia"
           ],
-          "explanation": "The correct answer is: Aragon."
+          "explanation": "The Catholic Monarchs' marriage united Castile and Aragon, the core of modern Spain."
         },
         "fr": {
-          "text": "L'Espagne a été formée en 1469 avec le mariage d'Isabelle Ire de Castille et de Ferdinand II de quel autre royaume ibérique ?",
+          "text": "L'Espagne a été formée en 1469 avec le mariage d'Isabelle Ire de Castille et de Ferdinand II de quel autre royaume ibérique ?",
           "choices": [
             "Navarre",
             "León",
             "Aragon",
             "Galice"
           ],
-          "explanation": "La bonne réponse est : Aragon."
+          "explanation": "Le mariage des Rois catholiques a uni la Castille et l'Aragon, le cœur de l'Espagne moderne."
         }
       }
     },
@@ -627,49 +595,17 @@
             "In bed",
             "At the theatre"
           ],
-          "explanation": "The correct answer is: At the theatre."
+          "explanation": "Lincoln was shot at Ford's Theatre in Washington during a comedy, five days after the Confederate surrender."
         },
         "fr": {
-          "text": "Où était Abraham Lincoln quand il a été assassiné par John Wilkes Booth en 1865?",
+          "text": "Où se trouvait Abraham Lincoln quand John Wilkes Booth l'a assassiné en 1865 ?",
           "choices": [
             "Sur un bateau",
             "Sur son cheval",
             "Au lit",
             "Au théâtre"
           ],
-          "explanation": "La bonne réponse est : Au théâtre."
-        }
-      }
-    },
-    {
-      "id": "history_021",
-      "category": "history",
-      "difficulty": 3,
-      "correct_index": 1,
-      "locales": [
-        "fr",
-        "en"
-      ],
-      "translations": {
-        "en": {
-          "text": "The son of which pope supposedly held a lecherous fête involving 50 courtesans in the papal palace?",
-          "choices": [
-            "Pius III",
-            "Alexander VI",
-            "Innocent V",
-            "Urban II"
-          ],
-          "explanation": "The correct answer is: Alexander VI."
-        },
-        "fr": {
-          "text": "Le fils de quel pape aurait organisé une fête licencieuse impliquant 50 courtisanes dans le palais pontifical ?",
-          "choices": [
-            "Pie III",
-            "Alexandre VI",
-            "Innocent V",
-            "Urbain II"
-          ],
-          "explanation": "La bonne réponse est : Alexandre VI."
+          "explanation": "Lincoln a été abattu au théâtre Ford à Washington pendant une comédie, cinq jours après la reddition sudiste."
         }
       }
     },
@@ -691,17 +627,17 @@
             "1991",
             "1995"
           ],
-          "explanation": "The correct answer is: 1995."
+          "explanation": "On 20 March 1995 the Aum Shinrikyo cult released sarin in the Tokyo subway, killing 13 people."
         },
         "fr": {
-          "text": "En quelle année a eu lieu l'attaque de Tokyo Subway Sarin ?",
+          "text": "En quelle année a eu lieu l'attentat au gaz sarin dans le métro de Tokyo ?",
           "choices": [
             "2011",
             "2001",
             "1991",
             "1995"
           ],
-          "explanation": "La bonne réponse est : 1995."
+          "explanation": "Le 20 mars 1995, la secte Aum Shinrikyo a répandu du sarin dans le métro de Tokyo, faisant 13 morts."
         }
       }
     },
@@ -723,17 +659,17 @@
             "1971",
             "1986"
           ],
-          "explanation": "The correct answer is: 1997."
+          "explanation": "The 1997 handover of Hong Kong to China is often seen as the end of the British Empire."
         },
         "fr": {
-          "text": "Quelle année est considérée comme l'année où l'Empire britannique a pris fin?",
+          "text": "Quelle année est souvent retenue comme celle de la fin de l'Empire britannique ?",
           "choices": [
             "1997",
             "1981",
             "1971",
             "1986"
           ],
-          "explanation": "La bonne réponse est : 1997."
+          "explanation": "La rétrocession de Hong Kong à la Chine en 1997 est souvent vue comme la fin de l'Empire britannique."
         }
       }
     },
@@ -751,21 +687,21 @@
           "text": "Who was the last emperor of Mexico?",
           "choices": [
             "Agustín de Iturbide",
-            "Andrés Manuel López Obrador",
+            "Porfirio Díaz",
             "Napoleon III",
             "Ferdinand Maximilian"
           ],
-          "explanation": "The correct answer is: Ferdinand Maximilian."
+          "explanation": "Maximilian of Habsburg, installed by Napoleon III, was executed by Mexican republicans in 1867."
         },
         "fr": {
-          "text": "Qui était le dernier empereur du Mexique ?",
+          "text": "Qui était le dernier empereur du Mexique ?",
           "choices": [
             "Agustín de Iturbide",
-            "Andrés Manuel López Obrador",
+            "Porfirio Díaz",
             "Napoléon III",
-            "Ferdinand Maximilien"
+            "Maximilien de Habsbourg"
           ],
-          "explanation": "La bonne réponse est : Ferdinand Maximilian."
+          "explanation": "Maximilien de Habsbourg, installé par Napoléon III, a été fusillé par les républicains mexicains en 1867."
         }
       }
     },
@@ -785,19 +721,19 @@
             "Operation Barbarossa",
             "Operation Molotov",
             "Operation Unthinkable",
-            "Operation Kaiserschlact"
+            "Operation Kaiserschlacht"
           ],
-          "explanation": "The correct answer is: Operation Barbarossa."
+          "explanation": "Operation Barbarossa, launched on 22 June 1941, was named after the medieval emperor Frederick Barbarossa."
         },
         "fr": {
-          "text": "Quel était le nom de code de l'invasion allemande de l'Union soviétique pendant la Seconde Guerre mondiale ?",
+          "text": "Quel était le nom de code de l'invasion allemande de l'Union soviétique pendant la Seconde Guerre mondiale ?",
           "choices": [
             "Opération Barbarossa",
             "Opération Molotov",
             "Opération Unthinkable",
-            "Opération Kaiserschlact"
+            "Opération Kaiserschlacht"
           ],
-          "explanation": "La bonne réponse est : Opération Barbarossa."
+          "explanation": "L'opération Barbarossa, lancée le 22 juin 1941, porte le nom de l'empereur médiéval Frédéric Barberousse."
         }
       }
     },
@@ -819,49 +755,17 @@
             "Battle of Thessalonica",
             "Battle of Adrianople"
           ],
-          "explanation": "The correct answer is: Battle of Adrianople."
+          "explanation": "In 378 the Goths crushed the Roman army at Adrianople and killed Emperor Valens."
         },
         "fr": {
-          "text": "Laquelle des batailles suivantes est souvent considérée comme marquant le début de la chute de l'Empire romain occidental?",
+          "text": "Quelle bataille est souvent considérée comme le début de la chute de l'Empire romain d'Occident ?",
           "choices": [
             "Bataille de Constantinople",
             "Bataille de Pollentia",
             "Bataille de Thessalonique",
             "Bataille d'Andrinople"
           ],
-          "explanation": "La bonne réponse est : Bataille d'Andrinople."
-        }
-      }
-    },
-    {
-      "id": "history_027",
-      "category": "history",
-      "difficulty": 2,
-      "correct_index": 0,
-      "locales": [
-        "fr",
-        "en"
-      ],
-      "translations": {
-        "en": {
-          "text": "When did O, Canada officially become the national anthem?",
-          "choices": [
-            "1980",
-            "1920",
-            "1880",
-            "1950"
-          ],
-          "explanation": "The correct answer is: 1980."
-        },
-        "fr": {
-          "text": "Quand O, le Canada est-il officiellement devenu l'hymne national?",
-          "choices": [
-            "1980",
-            "1920",
-            "1880",
-            "1950"
-          ],
-          "explanation": "La bonne réponse est : 1980."
+          "explanation": "En 378, les Goths ont écrasé l'armée romaine à Andrinople et tué l'empereur Valens."
         }
       }
     },
@@ -883,17 +787,17 @@
             "Winter Haven, Florida",
             "Billund, Denmark"
           ],
-          "explanation": "The correct answer is: Billund, Denmark."
+          "explanation": "Billund is the home town of the LEGO company, founded there in 1932."
         },
         "fr": {
-          "text": "Le premier parc Legoland a ouvert en 1968 dans laquelle de ces villes ?",
+          "text": "Le premier parc Legoland a ouvert en 1968 dans laquelle de ces villes ?",
           "choices": [
             "Nagoya, Japon",
             "Carlsbad, Californie",
             "Winter Haven, Floride",
             "Billund, Danemark"
           ],
-          "explanation": "La bonne réponse est: Billund, Danemark."
+          "explanation": "Billund est la ville natale de l'entreprise LEGO, fondée là en 1932."
         }
       }
     },
@@ -915,17 +819,17 @@
             "John Paul II",
             "Pius VII"
           ],
-          "explanation": "The correct answer is: Alexander VI."
+          "explanation": "Rodrigo Borgia became Pope Alexander VI in 1492, the year Columbus reached the Americas."
         },
         "fr": {
-          "text": "Sous quel nom Rodrigo Borgia a-t-il été fait pape ?",
+          "text": "Sous quel nom Rodrigo Borgia est-il devenu pape ?",
           "choices": [
             "Rodrigo I",
             "Alexandre VI",
             "Jean-Paul II",
             "Pie VII"
           ],
-          "explanation": "La bonne réponse est : Alexandre VI."
+          "explanation": "Rodrigo Borgia est devenu le pape Alexandre VI en 1492, l'année où Colomb a atteint l'Amérique."
         }
       }
     },
@@ -947,17 +851,17 @@
             "France",
             "Germany"
           ],
-          "explanation": "The correct answer is: Hungary."
+          "explanation": "Czechoslovakia, Romania and Yugoslavia allied in 1920-21 to block Hungarian claims on their land."
         },
         "fr": {
-          "text": "La Petite Entente était une alliance formée contre quelle nation ?",
+          "text": "La Petite Entente était une alliance formée contre quelle nation ?",
           "choices": [
             "Hongrie",
             "Prusse",
             "France",
             "Allemagne"
           ],
-          "explanation": "La bonne réponse est la Hongrie."
+          "explanation": "La Tchécoslovaquie, la Roumanie et la Yougoslavie s'allièrent en 1920-21 contre les revendications hongroises."
         }
       }
     },
@@ -979,17 +883,17 @@
             "Elba",
             "St. Helena"
           ],
-          "explanation": "The correct answer is: St. Helena."
+          "explanation": "Napoleon died on Saint Helena, in the South Atlantic, in 1821; his first exile had been on Elba."
         },
         "fr": {
-          "text": "Après sa perte à la bataille de Waterloo, Napoléon Bonaparte fut exilé vers quelle île?",
+          "text": "Après sa défaite à Waterloo, sur quelle île Napoléon Bonaparte fut-il exilé ?",
           "choices": [
-            "Corse",
-            "Canaries",
-            "Elbe",
+            "La Corse",
+            "Les Canaries",
+            "L'île d'Elbe",
             "Sainte-Hélène"
           ],
-          "explanation": "La bonne réponse est : Sainte-Hélène."
+          "explanation": "Napoléon est mort à Sainte-Hélène, dans l'Atlantique Sud, en 1821 ; son premier exil avait eu lieu à l'île d'Elbe."
         }
       }
     },
@@ -1004,24 +908,24 @@
       ],
       "translations": {
         "en": {
-          "text": "Joseph Stalin had a criminal past doing what?",
+          "text": "Before taking power, Joseph Stalin had a criminal past doing what?",
           "choices": [
-            "Robbing Trains",
-            "Tax Evasion",
-            "Identity Fraud",
-            "Murder for Hire"
+            "Robbing banks",
+            "Tax evasion",
+            "Identity fraud",
+            "Contract killing"
           ],
-          "explanation": "The correct answer is: Robbing Trains."
+          "explanation": "Young Stalin organised robberies to fund the Bolsheviks, including the 1907 Tiflis bank heist."
         },
         "fr": {
-          "text": "Quel était le passé criminel de Joseph Staline ?",
+          "text": "Avant d'arriver au pouvoir, Joseph Staline avait un passé criminel : lequel ?",
           "choices": [
-            "Vol de trains",
-            "Évasion fiscale",
-            "Fraude d'identité",
-            "Meurtre à gages"
+            "Des braquages de banques",
+            "De la fraude fiscale",
+            "De l'usurpation d'identité",
+            "Des meurtres sur commande"
           ],
-          "explanation": "La bonne réponse est : Vol de trains."
+          "explanation": "Le jeune Staline organisait des braquages pour financer les bolcheviks, dont celui de la banque de Tiflis en 1907."
         }
       }
     },
@@ -1036,24 +940,24 @@
       ],
       "translations": {
         "en": {
-          "text": "During World War I, which nation's monarchs were blood related?",
+          "text": "During World War I, the monarchs of which three nations were cousins?",
           "choices": [
             "Germany, Spain, Austria",
             "Serbia, Russia, Croatia",
             "France, Russia, Germany",
-            "England, Germany, Russia"
+            "United Kingdom, Germany, Russia"
           ],
-          "explanation": "The correct answer is: England, Germany, Russia."
+          "explanation": "George V, Wilhelm II and Nicholas II were cousins, all related to Queen Victoria's family."
         },
         "fr": {
-          "text": "Pendant la Première Guerre mondiale, quels monarques étaient liés au sang ?",
+          "text": "Pendant la Première Guerre mondiale, les monarques de quels trois pays étaient cousins ?",
           "choices": [
             "Allemagne, Espagne, Autriche",
             "Serbie, Russie, Croatie",
             "France, Russie, Allemagne",
-            "Angleterre, Allemagne, Russie"
+            "Royaume-Uni, Allemagne, Russie"
           ],
-          "explanation": "La bonne réponse est: Angleterre, Allemagne, Russie."
+          "explanation": "George V, Guillaume II et Nicolas II étaient cousins, tous liés à la famille de la reine Victoria."
         }
       }
     },
@@ -1075,17 +979,17 @@
             "Ukraine",
             "Lithuania"
           ],
-          "explanation": "The correct answer is: Ukraine."
+          "explanation": "Mass protests against a rigged election led to a rerun won by Viktor Yushchenko."
         },
         "fr": {
-          "text": "Quel pays a connu une « révolution orange » entre 2004 et 2005?",
+          "text": "Quel pays a connu une « révolution orange » entre 2004 et 2005 ?",
           "choices": [
-            "Lettonie",
-            "Bélarus",
-            "Ukraine",
-            "Lituanie"
+            "La Lettonie",
+            "La Biélorussie",
+            "L'Ukraine",
+            "La Lituanie"
           ],
-          "explanation": "La bonne réponse est: l'Ukraine."
+          "explanation": "Des manifestations massives contre une élection truquée ont abouti à un nouveau scrutin remporté par Viktor Iouchtchenko."
         }
       }
     },
@@ -1107,17 +1011,17 @@
             "Russian",
             "Finnish"
           ],
-          "explanation": "The correct answer is: Finnish."
+          "explanation": "Finnish is a Uralic language, related to Estonian and, more distantly, to Hungarian."
         },
         "fr": {
-          "text": "Lequel des éléments suivants ne figure pas dans la famille des langues indo-européennes?",
+          "text": "Laquelle de ces langues n'appartient PAS à la famille indo-européenne ?",
           "choices": [
-            "Anglais",
-            "Hindi",
-            "Russe",
-            "Finnois"
+            "L'anglais",
+            "L'hindi",
+            "Le russe",
+            "Le finnois"
           ],
-          "explanation": "La bonne réponse est : finnois."
+          "explanation": "Le finnois est une langue ouralienne, parente de l'estonien et, plus lointainement, du hongrois."
         }
       }
     },
@@ -1139,17 +1043,17 @@
             "1501",
             "1582"
           ],
-          "explanation": "The correct answer is: 1582."
+          "explanation": "Pope Gregory XIII introduced it in 1582, skipping ten days: 4 October was followed by 15 October."
         },
         "fr": {
-          "text": "Quand le calendrier grégorien a-t-il été adopté pour la première fois?",
+          "text": "En quelle année le calendrier grégorien a-t-il été adopté pour la première fois ?",
           "choices": [
             "1623",
             "1555",
             "1501",
             "1582"
           ],
-          "explanation": "La bonne réponse est : 1582."
+          "explanation": "Le pape Grégoire XIII l'a instauré en 1582 en sautant dix jours : le 4 octobre fut suivi du 15 octobre."
         }
       }
     },
@@ -1171,17 +1075,17 @@
             "December 16, 1944",
             "December 7, 1941"
           ],
-          "explanation": "The correct answer is: January 25, 1945."
+          "explanation": "Germany's last big offensive in the west, launched on 16 December 1944, failed by late January 1945."
         },
         "fr": {
-          "text": "Quand s'est terminée la bataille des Ardennes ?",
+          "text": "Quand s'est terminée la bataille des Ardennes ?",
           "choices": [
             "6 août 1945",
             "25 janvier 1945",
             "16 décembre 1944",
             "7 décembre 1941"
           ],
-          "explanation": "La bonne réponse est : 25 janvier 1945."
+          "explanation": "La dernière grande offensive allemande à l'ouest, lancée le 16 décembre 1944, a échoué fin janvier 1945."
         }
       }
     },
@@ -1203,17 +1107,17 @@
             "1915",
             "1905"
           ],
-          "explanation": "The correct answer is: 1887."
+          "explanation": "Zamenhof signed his 1887 book \"Doktoro Esperanto\" — \"one who hopes\" — which gave the language its name."
         },
         "fr": {
-          "text": "Quand L. L. Zamenhof a-t-il publié pour la première fois \"Unua Libro\", la première publication décrivant sa langue internationale espéranto?",
+          "text": "En quelle année L. L. Zamenhof a-t-il publié « Unua Libro », le premier livre décrivant l'espéranto ?",
           "choices": [
             "1897",
             "1887",
             "1915",
             "1905"
           ],
-          "explanation": "La bonne réponse est : 1887."
+          "explanation": "Zamenhof a signé son livre de 1887 « Doktoro Esperanto » (« celui qui espère »), d'où le nom de la langue."
         }
       }
     },
@@ -1228,24 +1132,24 @@
       ],
       "translations": {
         "en": {
-          "text": "What year did the Boxing Day earthquake & tsunami occur in the Indian Ocean?",
+          "text": "In which year did the Boxing Day earthquake and tsunami strike the Indian Ocean?",
           "choices": [
             "2006",
             "2002",
             "2004",
             "2008"
           ],
-          "explanation": "The correct answer is: 2004."
+          "explanation": "On 26 December 2004 a magnitude 9.1 quake off Sumatra triggered a tsunami that killed about 230,000 people."
         },
         "fr": {
-          "text": "Quelle année a eu lieu le tremblement de terre et le tsunami de la journée de boxe dans l'océan Indien?",
+          "text": "En quelle année le séisme et le tsunami du 26 décembre ont-ils frappé l'océan Indien ?",
           "choices": [
             "2006",
             "2002",
             "2004",
             "2008"
           ],
-          "explanation": "La bonne réponse est : 2004."
+          "explanation": "Le 26 décembre 2004, un séisme de magnitude 9,1 au large de Sumatra a provoqué un tsunami qui a fait environ 230 000 morts."
         }
       }
     },
@@ -1267,17 +1171,17 @@
             "1401",
             "1463"
           ],
-          "explanation": "The correct answer is: 1415."
+          "explanation": "At Agincourt in 1415, Henry V's English archers defeated a much larger French army."
         },
         "fr": {
-          "text": "Quelle année a eu lieu la bataille d'Agincourt?",
+          "text": "En quelle année a eu lieu la bataille d'Azincourt ?",
           "choices": [
             "1422",
             "1415",
             "1401",
             "1463"
           ],
-          "explanation": "La bonne réponse est : 1415."
+          "explanation": "À Azincourt en 1415, les archers anglais d'Henri V ont battu une armée française bien plus nombreuse."
         }
       }
     },
@@ -1299,17 +1203,17 @@
             "Toltecs",
             "Mayans"
           ],
-          "explanation": "The correct answer is: Mayans."
+          "explanation": "The Maya built Chichén Itzá in Yucatán; its El Castillo pyramid is a calendar in stone."
         },
         "fr": {
-          "text": "L'ancienne ville de Chichén Itzá a été construite par quelle civilisation?",
+          "text": "L'ancienne ville de Chichén Itzá a été construite par quelle civilisation ?",
           "choices": [
-            "Incas",
-            "Aztèques",
-            "Toltecs",
-            "Mayas"
+            "Les Incas",
+            "Les Aztèques",
+            "Les Toltèques",
+            "Les Mayas"
           ],
-          "explanation": "La bonne réponse est : Mayas."
+          "explanation": "Les Mayas ont bâti Chichén Itzá dans le Yucatán ; sa pyramide El Castillo est un calendrier de pierre."
         }
       }
     },
@@ -1331,49 +1235,17 @@
             "Sun Tzu",
             "Lu Bu"
           ],
-          "explanation": "The correct answer is: Sun Tzu."
+          "explanation": "Sun Tzu is credited with The Art of War, still read by generals and business leaders."
         },
         "fr": {
-          "text": "Qui était stratège militaire à l'époque du Zhou oriental ?",
+          "text": "Qui était stratège militaire à l'époque du Zhou oriental ?",
           "choices": [
             "Vlad l'Empaleur",
             "Genghis Khan",
             "Sun Tzu",
             "Lu Bu"
           ],
-          "explanation": "La bonne réponse est : Sun Tzu."
-        }
-      }
-    },
-    {
-      "id": "history_043",
-      "category": "history",
-      "difficulty": 2,
-      "correct_index": 3,
-      "locales": [
-        "fr",
-        "en"
-      ],
-      "translations": {
-        "en": {
-          "text": "The Panama Canal was finished under the administration of which U.S. president?",
-          "choices": [
-            "Herbert Hoover",
-            "Theodore Roosevelt",
-            "Franklin Delano Roosevelt",
-            "Woodrow Wilson"
-          ],
-          "explanation": "The correct answer is: Woodrow Wilson."
-        },
-        "fr": {
-          "text": "Le canal de Panama a été terminé sous l'administration de quel président américain ?",
-          "choices": [
-            "Herbert Hoover",
-            "Théodore Roosevelt",
-            "Franklin Delano Roosevelt",
-            "Woodrow Wilson"
-          ],
-          "explanation": "La bonne réponse est : Woodrow Wilson."
+          "explanation": "On attribue à Sun Tzu L'Art de la guerre, encore lu par les militaires et les dirigeants d'entreprise."
         }
       }
     },
@@ -1395,17 +1267,17 @@
             "1925",
             "1905"
           ],
-          "explanation": "The correct answer is: 1905."
+          "explanation": "Norway voted to dissolve its union with Sweden in 1905 and chose its own king, Haakon VII."
         },
         "fr": {
-          "text": "Quand la Norvège est-elle sortie de Suède ?",
+          "text": "En quelle année la Norvège s'est-elle séparée de la Suède ?",
           "choices": [
             "1834",
             "1814",
             "1925",
             "1905"
           ],
-          "explanation": "La bonne réponse est : 1905."
+          "explanation": "La Norvège a voté la fin de son union avec la Suède en 1905 et s'est choisi un roi, Haakon VII."
         }
       }
     },
@@ -1427,17 +1299,17 @@
             "Ebrach Abbey",
             "Hohenasperg"
           ],
-          "explanation": "The correct answer is: Landsberg Prison."
+          "explanation": "Hitler dictated Mein Kampf during his months in Landsberg after the failed Munich putsch."
         },
         "fr": {
-          "text": "Dans quelle prison Adolf Hitler a-t-il été détenu en 1924 ?",
+          "text": "Dans quelle prison Adolf Hitler a-t-il été détenu en 1924 ?",
           "choices": [
             "Prison de Spandau",
             "Prison de Landsberg",
             "Abbaye d'Ebrach",
             "Hohenasperg"
           ],
-          "explanation": "La bonne réponse est la prison de Landsberg."
+          "explanation": "Hitler a dicté Mein Kampf pendant ses mois à Landsberg, après l'échec du putsch de Munich."
         }
       }
     },
@@ -1452,24 +1324,24 @@
       ],
       "translations": {
         "en": {
-          "text": "Which building was set aflame on August 24th, 1812?",
+          "text": "Which building was set on fire on 24 August 1814?",
           "choices": [
-            "Parliament Building",
-            "Grand National Assembly Building",
+            "The Palace of Westminster",
+            "The Grand National Assembly of Turkey",
             "The White House",
-            "Palace of the Nation"
+            "The Palace of the Nation"
           ],
-          "explanation": "The correct answer is: The White House."
+          "explanation": "British troops burned the White House and the Capitol in 1814, during the War of 1812."
         },
         "fr": {
-          "text": "Quel bâtiment a été enflammé le 24 août 1812 ?",
+          "text": "Quel bâtiment a été incendié le 24 août 1814 ?",
           "choices": [
-            "Bâtiment du Parlement",
-            "Bâtiment de la Grande Assemblée nationale",
-            "La Maison Blanche",
-            "Palais de la Nation"
+            "Le Parlement de Londres",
+            "La Grande Assemblée nationale turque",
+            "La Maison-Blanche",
+            "Le Palais de la Nation"
           ],
-          "explanation": "La bonne réponse est : La Maison Blanche."
+          "explanation": "Les troupes britanniques ont incendié la Maison-Blanche et le Capitole en 1814, pendant la guerre de 1812."
         }
       }
     },
@@ -1491,17 +1363,17 @@
             "Claudius",
             "Julius Caesar"
           ],
-          "explanation": "The correct answer is: Trajan."
+          "explanation": "Under Trajan, around 117, the Empire stretched from Britain to Mesopotamia."
         },
         "fr": {
-          "text": "Quel empereur romain a conduit l'Empire romain à atteindre son étendue territoriale maximale?",
+          "text": "Sous quel empereur romain l'Empire a-t-il atteint sa plus grande étendue ?",
           "choices": [
             "Trajan",
             "Constantin le Grand",
-            "Claudius",
+            "Claude",
             "Jules César"
           ],
-          "explanation": "La bonne réponse est : Trajan."
+          "explanation": "Sous Trajan, vers 117, l'Empire allait de la Bretagne à la Mésopotamie."
         }
       }
     },
@@ -1523,17 +1395,17 @@
             "1945",
             "1960"
           ],
-          "explanation": "The correct answer is: 1950."
+          "explanation": "North Korea invaded the South on 25 June 1950; fighting stopped with an armistice in 1953."
         },
         "fr": {
-          "text": "La guerre de Corée a commencé en quelle année ?",
+          "text": "La guerre de Corée a commencé en quelle année ?",
           "choices": [
             "1950",
             "1912",
             "1945",
             "1960"
           ],
-          "explanation": "La bonne réponse est : 1950."
+          "explanation": "La Corée du Nord a envahi le Sud le 25 juin 1950 ; les combats ont cessé avec un armistice en 1953."
         }
       }
     },
@@ -1555,17 +1427,17 @@
             "The Charge of the Light Brigade (Crimean War)",
             "The Napoleonic Wars"
           ],
-          "explanation": "The correct answer is: The Napoleonic Wars."
+          "explanation": "The overture celebrates Russia's defence against Napoleon's 1812 invasion, with real cannon shots."
         },
         "fr": {
-          "text": "À quel événement historique l'Ouverture 1812 de Tchaïkovski fait-elle référence ?",
+          "text": "À quel événement historique l'Ouverture 1812 de Tchaïkovski fait-elle référence ?",
           "choices": [
             "La révolution russe",
             "La guerre américaine de 1812",
             "La charge de la brigade légère (guerre de Crimée)",
             "Les guerres napoléoniennes"
           ],
-          "explanation": "La bonne réponse est : Les guerres napoléoniennes."
+          "explanation": "L'ouverture célèbre la résistance russe à l'invasion de Napoléon en 1812, avec de vrais coups de canon."
         }
       }
     },
@@ -1580,24 +1452,24 @@
       ],
       "translations": {
         "en": {
-          "text": "Which of these theoretical phycisists first predicted the existence of antimatter?",
+          "text": "Which of these theoretical physicists first predicted the existence of antimatter?",
           "choices": [
             "Paul Dirac",
             "Werner Heisenberg",
             "Albert Einstein",
             "Niels Bohr"
           ],
-          "explanation": "The correct answer is: Paul Dirac."
+          "explanation": "Dirac's 1928 equation predicted the positron, which was discovered in 1932."
         },
         "fr": {
-          "text": "Lequel de ces phycisistes théoriques a d'abord prédit l'existence de l'antimatière?",
+          "text": "Lequel de ces physiciens théoriciens a le premier prédit l'existence de l'antimatière ?",
           "choices": [
             "Paul Dirac",
             "Werner Heisenberg",
             "Albert Einstein",
             "Niels Bohr"
           ],
-          "explanation": "La bonne réponse est : Paul Dirac."
+          "explanation": "L'équation de Dirac de 1928 prédisait le positon, découvert en 1932."
         }
       }
     },
@@ -1619,17 +1491,17 @@
             "Gustavus Adolphus",
             "Peter the Great"
           ],
-          "explanation": "The correct answer is: Charles XII."
+          "explanation": "Charles XII fought Russia, Denmark and Poland; his defeat at Poltava in 1709 ended Sweden's great-power era."
         },
         "fr": {
-          "text": "Qui était le chef de la Suède dans la Grande Guerre du Nord?",
+          "text": "Qui dirigeait la Suède pendant la grande guerre du Nord ?",
           "choices": [
             "Per Albin Hansson",
             "Charles XII",
             "Gustave II Adolphe",
             "Pierre le Grand"
           ],
-          "explanation": "La bonne réponse est : Charles XII."
+          "explanation": "Charles XII a combattu la Russie, le Danemark et la Pologne ; sa défaite à Poltava en 1709 a mis fin à la puissance suédoise."
         }
       }
     },
@@ -1651,24 +1523,24 @@
             "Battle of Britain (1940)",
             "Invasion of Poland (1939)"
           ],
-          "explanation": "The correct answer is: Invasion of Poland (1939)."
+          "explanation": "Germany invaded Poland on 1 September 1939; Britain and France declared war two days later."
         },
         "fr": {
-          "text": "Quel événement a marqué le début de la Seconde Guerre mondiale?",
+          "text": "Quel événement a marqué le début de la Seconde Guerre mondiale ?",
           "choices": [
-            "Invasion de Normandie (1944)",
-            "Invasion de la Russie (1942)",
-            "Bataille d'Angleterre (1940)",
-            "Invasion de la Pologne (1939)"
+            "Le Débarquement en Normandie (1944)",
+            "L'invasion de la Russie (1942)",
+            "La bataille d'Angleterre (1940)",
+            "L'invasion de la Pologne (1939)"
           ],
-          "explanation": "La bonne réponse est : Invasion de la Pologne (1939)."
+          "explanation": "L'Allemagne a envahi la Pologne le 1er septembre 1939 ; le Royaume-Uni et la France ont déclaré la guerre deux jours après."
         }
       }
     },
     {
       "id": "history_053",
       "category": "history",
-      "difficulty": 1,
+      "difficulty": 2,
       "correct_index": 1,
       "locales": [
         "fr",
@@ -1683,17 +1555,17 @@
             "Alexandre Petion",
             "Henri Christophe"
           ],
-          "explanation": "The correct answer is: Jean-Jacques Dessalines."
+          "explanation": "Dessalines declared Haiti's independence on 1 January 1804, making it the first free Black republic."
         },
         "fr": {
-          "text": "Qui a été le premier dirigeant d'Haïti après que le pays ait acquis son indépendance ?",
+          "text": "Qui a été le premier dirigeant d'Haïti après son indépendance ?",
           "choices": [
             "Toussaint Louverture",
             "Jean-Jacques Dessalines",
             "Alexandre Pétion",
             "Henri Christophe"
           ],
-          "explanation": "La bonne réponse est : Jean-Jacques Dessalines."
+          "explanation": "Dessalines a proclamé l'indépendance d'Haïti le 1er janvier 1804 : la première république noire libre."
         }
       }
     },
@@ -1715,17 +1587,17 @@
             "The Mayans",
             "The Incas"
           ],
-          "explanation": "The correct answer is: The Mayans."
+          "explanation": "21 December 2012 ended a cycle of the Maya Long Count calendar, not the world."
         },
         "fr": {
-          "text": "Quelle civilisation américaine est la source de la croyance que le monde finirait ou changerait radicalement le 21 décembre 2012 ?",
+          "text": "Quelle civilisation américaine est la source de la croyance que le monde finirait ou changerait radicalement le 21 décembre 2012 ?",
           "choices": [
             "Les Navajos",
             "Les Aztèques",
             "Les Mayas",
             "Les Incas"
           ],
-          "explanation": "La bonne réponse est : Les Mayas."
+          "explanation": "Le 21 décembre 2012 marquait la fin d'un cycle du calendrier maya, pas la fin du monde."
         }
       }
     },
@@ -1747,49 +1619,17 @@
             "Soviet Union",
             "Germany"
           ],
-          "explanation": "The correct answer is: Soviet Union."
+          "explanation": "The USSR signed a pact with Germany in 1939 but joined the Allies after being invaded in 1941."
         },
         "fr": {
-          "text": "Lequel des pays suivants n'était pas une puissance de l'Axe pendant la Seconde Guerre mondiale ?",
+          "text": "Lequel des pays suivants n'était pas une puissance de l'Axe pendant la Seconde Guerre mondiale ?",
           "choices": [
             "Italie",
             "Japon",
             "Union soviétique",
             "Allemagne"
           ],
-          "explanation": "La bonne réponse est: Union soviétique."
-        }
-      }
-    },
-    {
-      "id": "history_056",
-      "category": "history",
-      "difficulty": 2,
-      "correct_index": 2,
-      "locales": [
-        "fr",
-        "en"
-      ],
-      "translations": {
-        "en": {
-          "text": "The catastrophic nuclear accident that occurred in Ukraine in 1986 occurred at which power plant?",
-          "choices": [
-            "Ignalina",
-            "Kursk",
-            "Chernobyl",
-            "Mayak"
-          ],
-          "explanation": "The correct answer is: Chernobyl."
-        },
-        "fr": {
-          "text": "L'accident nucléaire catastrophique qui s'est produit en Ukraine en 1986 s'est produit à quelle centrale?",
-          "choices": [
-            "Ignaline",
-            "Kursk",
-            "Tchernobyl",
-            "Mayak"
-          ],
-          "explanation": "La bonne réponse est : Tchernobyl."
+          "explanation": "L'URSS avait signé un pacte avec l'Allemagne en 1939, mais a rejoint les Alliés après l'invasion de 1941."
         }
       }
     },
@@ -1811,17 +1651,913 @@
             "Harry S. Truman",
             "John Quincy Adams"
           ],
-          "explanation": "The correct answer is: Andrew Jackson."
+          "explanation": "Jackson's 1830 Indian Removal Act forced the Cherokee west; thousands died along the way."
         },
         "fr": {
-          "text": "La « Piste des larmes » (Trail of Tears) résulte de la politique de déplacement forcé des Amérindiens de quel président des États-Unis ?",
+          "text": "La « Piste des larmes » (Trail of Tears) résulte de la politique de déplacement forcé des Amérindiens de quel président des États-Unis ?",
           "choices": [
             "Martin Van Buren",
             "Andrew Jackson",
             "Harry S. Truman",
             "John Quincy Adams"
           ],
-          "explanation": "La bonne réponse est : Andrew Jackson."
+          "explanation": "L'Indian Removal Act de Jackson (1830) a forcé les Cherokees à partir vers l'ouest ; des milliers sont morts en route."
+        }
+      }
+    },
+    {
+      "id": "history_058",
+      "category": "history",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who was the first man to walk on the Moon?",
+          "choices": [
+            "Yuri Gagarin",
+            "Michael Collins",
+            "Buzz Aldrin",
+            "Neil Armstrong"
+          ],
+          "explanation": "Neil Armstrong stepped onto the Moon on 21 July 1969 (UTC), during Apollo 11."
+        },
+        "fr": {
+          "text": "Qui a été le premier homme à marcher sur la Lune ?",
+          "choices": [
+            "Youri Gagarine",
+            "Michael Collins",
+            "Buzz Aldrin",
+            "Neil Armstrong"
+          ],
+          "explanation": "Neil Armstrong a posé le pied sur la Lune le 21 juillet 1969 (heure de Paris), lors d'Apollo 11."
+        }
+      }
+    },
+    {
+      "id": "history_059",
+      "category": "history",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French queen is famous for the (false) quote 'Let them eat cake'?",
+          "choices": [
+            "Joséphine de Beauharnais",
+            "Anne of Austria",
+            "Catherine de' Medici",
+            "Marie Antoinette"
+          ],
+          "explanation": "The line predates her: Rousseau wrote it down when Marie Antoinette was still a child."
+        },
+        "fr": {
+          "text": "Quelle reine de France est célèbre pour la phrase (apocryphe) « Qu'ils mangent de la brioche » ?",
+          "choices": [
+            "Joséphine de Beauharnais",
+            "Anne d'Autriche",
+            "Catherine de Médicis",
+            "Marie-Antoinette"
+          ],
+          "explanation": "La phrase est antérieure : Rousseau la rapporte alors que Marie-Antoinette n'était qu'une enfant."
+        }
+      }
+    },
+    {
+      "id": "history_060",
+      "category": "history",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which year did Christopher Columbus first reach the Americas?",
+          "choices": [
+            "1453",
+            "1515",
+            "1607",
+            "1492"
+          ],
+          "explanation": "Columbus landed in the Bahamas on 12 October 1492, believing he had reached Asia."
+        },
+        "fr": {
+          "text": "En quelle année Christophe Colomb a-t-il atteint l'Amérique pour la première fois ?",
+          "choices": [
+            "1453",
+            "1515",
+            "1607",
+            "1492"
+          ],
+          "explanation": "Colomb a débarqué aux Bahamas le 12 octobre 1492, persuadé d'avoir atteint l'Asie."
+        }
+      }
+    },
+    {
+      "id": "history_061",
+      "category": "history",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which ship sank on its maiden voyage in April 1912?",
+          "choices": [
+            "Britannic",
+            "Titanic",
+            "Queen Mary",
+            "Lusitania"
+          ],
+          "explanation": "The Titanic hit an iceberg on 14 April 1912; about 1,500 people died."
+        },
+        "fr": {
+          "text": "Quel paquebot a coulé lors de son premier voyage, en avril 1912 ?",
+          "choices": [
+            "Le Britannic",
+            "Le Titanic",
+            "Le Queen Mary",
+            "Le Lusitania"
+          ],
+          "explanation": "Le Titanic a heurté un iceberg le 14 avril 1912 ; environ 1 500 personnes sont mortes."
+        }
+      }
+    },
+    {
+      "id": "history_062",
+      "category": "history",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which wall was built to protect China from northern invaders?",
+          "choices": [
+            "The Berlin Wall",
+            "Hadrian's Wall",
+            "The Wailing Wall",
+            "The Great Wall"
+          ],
+          "explanation": "Built and rebuilt over 2,000 years, most of what stands today dates from the Ming dynasty."
+        },
+        "fr": {
+          "text": "Quelle muraille a été bâtie pour protéger la Chine des envahisseurs du nord ?",
+          "choices": [
+            "Le mur de Berlin",
+            "Le mur d'Hadrien",
+            "Le mur des Lamentations",
+            "La Grande Muraille"
+          ],
+          "explanation": "Construite et reconstruite pendant 2 000 ans, l'essentiel de ce qui reste date de la dynastie Ming."
+        }
+      }
+    },
+    {
+      "id": "history_063",
+      "category": "history",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who was the French leader who crowned himself emperor in 1804?",
+          "choices": [
+            "Louis XIV",
+            "Louis XVI",
+            "Napoleon Bonaparte",
+            "Charlemagne"
+          ],
+          "explanation": "At Notre-Dame, Napoleon took the crown from the Pope's hands and placed it on his own head."
+        },
+        "fr": {
+          "text": "Quel dirigeant français s'est couronné empereur en 1804 ?",
+          "choices": [
+            "Louis XIV",
+            "Louis XVI",
+            "Napoléon Bonaparte",
+            "Charlemagne"
+          ],
+          "explanation": "À Notre-Dame, Napoléon a pris la couronne des mains du pape pour la poser lui-même sur sa tête."
+        }
+      }
+    },
+    {
+      "id": "history_064",
+      "category": "history",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which king of France was known as the Sun King?",
+          "choices": [
+            "Louis XV",
+            "Henri IV",
+            "Louis XIV",
+            "François I"
+          ],
+          "explanation": "Louis XIV reigned for 72 years (1643-1715), the longest reign in European history; he built Versailles."
+        },
+        "fr": {
+          "text": "Quel roi de France était surnommé le Roi-Soleil ?",
+          "choices": [
+            "Louis XV",
+            "Henri IV",
+            "Louis XIV",
+            "François Ier"
+          ],
+          "explanation": "Louis XIV a régné 72 ans (1643-1715), le plus long règne de l'histoire européenne ; il a bâti Versailles."
+        }
+      }
+    },
+    {
+      "id": "history_065",
+      "category": "history",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who was the first woman to win a Nobel Prize?",
+          "choices": [
+            "Rosalind Franklin",
+            "Mother Teresa",
+            "Bertha von Suttner",
+            "Marie Curie"
+          ],
+          "explanation": "Marie Curie won in physics in 1903 and in chemistry in 1911: the only person with Nobels in two sciences."
+        },
+        "fr": {
+          "text": "Qui a été la première femme à recevoir un prix Nobel ?",
+          "choices": [
+            "Rosalind Franklin",
+            "Mère Teresa",
+            "Bertha von Suttner",
+            "Marie Curie"
+          ],
+          "explanation": "Marie Curie a été primée en physique en 1903 et en chimie en 1911 : la seule personne titrée dans deux sciences."
+        }
+      }
+    },
+    {
+      "id": "history_066",
+      "category": "history",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which year did the Normans win the Battle of Hastings?",
+          "choices": [
+            "1215",
+            "1346",
+            "1066",
+            "987"
+          ],
+          "explanation": "William the Conqueror's victory in 1066 made him King of England; the Bayeux Tapestry tells the story."
+        },
+        "fr": {
+          "text": "En quelle année les Normands ont-ils remporté la bataille d'Hastings ?",
+          "choices": [
+            "1215",
+            "1346",
+            "1066",
+            "987"
+          ],
+          "explanation": "La victoire de Guillaume le Conquérant en 1066 l'a fait roi d'Angleterre ; la tapisserie de Bayeux la raconte."
+        }
+      }
+    },
+    {
+      "id": "history_067",
+      "category": "history",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which city was destroyed by the eruption of Vesuvius in 79 AD?",
+          "choices": [
+            "Athens",
+            "Pompeii",
+            "Rome",
+            "Carthage"
+          ],
+          "explanation": "Ash preserved Pompeii so well that excavations still reveal its frescoes and streets."
+        },
+        "fr": {
+          "text": "Quelle ville a été ensevelie par l'éruption du Vésuve en 79 ?",
+          "choices": [
+            "Athènes",
+            "Pompéi",
+            "Rome",
+            "Carthage"
+          ],
+          "explanation": "Les cendres ont si bien conservé Pompéi que les fouilles en révèlent encore les fresques et les rues."
+        }
+      }
+    },
+    {
+      "id": "history_068",
+      "category": "history",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who was the French heroine burned at the stake in Rouen in 1431?",
+          "choices": [
+            "Joan of Arc",
+            "Catherine de' Medici",
+            "Olympe de Gouges",
+            "Eleanor of Aquitaine"
+          ],
+          "explanation": "Joan of Arc was 19; she was cleared in 1456 and made a saint in 1920."
+        },
+        "fr": {
+          "text": "Quelle héroïne française a été brûlée à Rouen en 1431 ?",
+          "choices": [
+            "Jeanne d'Arc",
+            "Catherine de Médicis",
+            "Olympe de Gouges",
+            "Aliénor d'Aquitaine"
+          ],
+          "explanation": "Jeanne d'Arc avait 19 ans ; elle a été réhabilitée en 1456 et canonisée en 1920."
+        }
+      }
+    },
+    {
+      "id": "history_069",
+      "category": "history",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which civilisation built the city of Tenochtitlan, on the site of Mexico City?",
+          "choices": [
+            "The Olmecs",
+            "The Maya",
+            "The Aztecs",
+            "The Incas"
+          ],
+          "explanation": "Tenochtitlan, built on a lake in 1325, fell to Hernán Cortés in 1521."
+        },
+        "fr": {
+          "text": "Quelle civilisation a bâti Tenochtitlan, à l'emplacement de Mexico ?",
+          "choices": [
+            "Les Olmèques",
+            "Les Mayas",
+            "Les Aztèques",
+            "Les Incas"
+          ],
+          "explanation": "Tenochtitlan, bâtie sur un lac en 1325, est tombée aux mains d'Hernán Cortés en 1521."
+        }
+      }
+    },
+    {
+      "id": "history_070",
+      "category": "history",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "On which date did the D-Day landings take place in Normandy?",
+          "choices": [
+            "6 June 1944",
+            "11 November 1918",
+            "8 May 1945",
+            "1 September 1939"
+          ],
+          "explanation": "About 156,000 Allied soldiers landed on five beaches on the first day."
+        },
+        "fr": {
+          "text": "À quelle date a eu lieu le Débarquement en Normandie ?",
+          "choices": [
+            "6 juin 1944",
+            "11 novembre 1918",
+            "8 mai 1945",
+            "1er septembre 1939"
+          ],
+          "explanation": "Environ 156 000 soldats alliés ont débarqué sur cinq plages le premier jour."
+        }
+      }
+    },
+    {
+      "id": "history_071",
+      "category": "history",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which treaty ended World War I with Germany in 1919?",
+          "choices": [
+            "The Treaty of Paris",
+            "The Treaty of Vienna",
+            "The Treaty of Rome",
+            "The Treaty of Versailles"
+          ],
+          "explanation": "It was signed in the Hall of Mirrors, where the German Empire had been proclaimed in 1871."
+        },
+        "fr": {
+          "text": "Quel traité a mis fin à la Première Guerre mondiale avec l'Allemagne en 1919 ?",
+          "choices": [
+            "Le traité de Paris",
+            "Le traité de Vienne",
+            "Le traité de Rome",
+            "Le traité de Versailles"
+          ],
+          "explanation": "Il a été signé dans la galerie des Glaces, là où l'Empire allemand avait été proclamé en 1871."
+        }
+      }
+    },
+    {
+      "id": "history_072",
+      "category": "history",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which pharaoh's tomb was discovered almost intact by Howard Carter in 1922?",
+          "choices": [
+            "Ramses II",
+            "Khufu",
+            "Tutankhamun",
+            "Akhenaten"
+          ],
+          "explanation": "Tutankhamun died at about 19; his gold mask became one of the most famous objects in the world."
+        },
+        "fr": {
+          "text": "Quel pharaon a vu son tombeau découvert presque intact par Howard Carter en 1922 ?",
+          "choices": [
+            "Ramsès II",
+            "Khéops",
+            "Toutânkhamon",
+            "Akhenaton"
+          ],
+          "explanation": "Toutânkhamon est mort vers 19 ans ; son masque d'or est devenu l'un des objets les plus célèbres du monde."
+        }
+      }
+    },
+    {
+      "id": "history_073",
+      "category": "history",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who wrote the Communist Manifesto with Friedrich Engels?",
+          "choices": [
+            "Pierre-Joseph Proudhon",
+            "Leon Trotsky",
+            "Karl Marx",
+            "Lenin"
+          ],
+          "explanation": "The Manifesto was published in 1848, a year of revolutions across Europe."
+        },
+        "fr": {
+          "text": "Qui a écrit le Manifeste du Parti communiste avec Friedrich Engels ?",
+          "choices": [
+            "Pierre-Joseph Proudhon",
+            "Léon Trotski",
+            "Karl Marx",
+            "Lénine"
+          ],
+          "explanation": "Le Manifeste a paru en 1848, une année de révolutions dans toute l'Europe."
+        }
+      }
+    },
+    {
+      "id": "history_074",
+      "category": "history",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which year did women vote for the first time in France?",
+          "choices": [
+            "1918",
+            "1968",
+            "1936",
+            "1945"
+          ],
+          "explanation": "Women won the right to vote in 1944 and first used it in the municipal elections of April 1945."
+        },
+        "fr": {
+          "text": "En quelle année les femmes ont-elles voté pour la première fois en France ?",
+          "choices": [
+            "1918",
+            "1968",
+            "1936",
+            "1945"
+          ],
+          "explanation": "Les femmes ont obtenu le droit de vote en 1944 et l'ont exercé pour la première fois aux municipales d'avril 1945."
+        }
+      }
+    },
+    {
+      "id": "history_075",
+      "category": "history",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Carthaginian general crossed the Alps with elephants?",
+          "choices": [
+            "Scipio",
+            "Vercingetorix",
+            "Hamilcar",
+            "Hannibal"
+          ],
+          "explanation": "Hannibal crossed the Alps in 218 BC to attack Rome during the Second Punic War."
+        },
+        "fr": {
+          "text": "Quel général carthaginois a franchi les Alpes avec des éléphants ?",
+          "choices": [
+            "Scipion",
+            "Vercingétorix",
+            "Hamilcar",
+            "Hannibal"
+          ],
+          "explanation": "Hannibal a franchi les Alpes en 218 av. J.-C. pour attaquer Rome pendant la deuxième guerre punique."
+        }
+      }
+    },
+    {
+      "id": "history_076",
+      "category": "history",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Gallic chief surrendered to Julius Caesar at Alesia?",
+          "choices": [
+            "Brennus",
+            "Vercingetorix",
+            "Ambiorix",
+            "Asterix"
+          ],
+          "explanation": "After the siege of Alesia in 52 BC, Vercingetorix was taken to Rome and executed years later."
+        },
+        "fr": {
+          "text": "Quel chef gaulois s'est rendu à Jules César à Alésia ?",
+          "choices": [
+            "Brennus",
+            "Vercingétorix",
+            "Ambiorix",
+            "Astérix"
+          ],
+          "explanation": "Après le siège d'Alésia en 52 av. J.-C., Vercingétorix fut emmené à Rome et exécuté des années plus tard."
+        }
+      }
+    },
+    {
+      "id": "history_077",
+      "category": "history",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which document signed in 1215 limited the power of the English king?",
+          "choices": [
+            "Bill of Rights",
+            "Act of Union",
+            "Magna Carta",
+            "Domesday Book"
+          ],
+          "explanation": "Barons forced King John to seal the Magna Carta, a founding text for the rule of law."
+        },
+        "fr": {
+          "text": "Quel texte signé en 1215 a limité le pouvoir du roi d'Angleterre ?",
+          "choices": [
+            "Le Bill of Rights",
+            "L'Acte d'Union",
+            "La Magna Carta",
+            "Le Domesday Book"
+          ],
+          "explanation": "Les barons ont contraint le roi Jean sans Terre à sceller la Magna Carta, texte fondateur de l'État de droit."
+        }
+      }
+    },
+    {
+      "id": "history_078",
+      "category": "history",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How long did the Hundred Years' War between France and England actually last?",
+          "choices": [
+            "99 years",
+            "116 years",
+            "84 years",
+            "100 years"
+          ],
+          "explanation": "It ran from 1337 to 1453, with long truces in between."
+        },
+        "fr": {
+          "text": "Combien de temps a réellement duré la guerre de Cent Ans entre la France et l'Angleterre ?",
+          "choices": [
+            "99 ans",
+            "116 ans",
+            "84 ans",
+            "100 ans"
+          ],
+          "explanation": "Elle a duré de 1337 à 1453, entrecoupée de longues trêves."
+        }
+      }
+    },
+    {
+      "id": "history_079",
+      "category": "history",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French king signed the Edict of Nantes in 1598?",
+          "choices": [
+            "Charles IX",
+            "Louis XIII",
+            "François I",
+            "Henri IV"
+          ],
+          "explanation": "The edict granted Protestants freedom of worship; Louis XIV revoked it in 1685."
+        },
+        "fr": {
+          "text": "Quel roi de France a signé l'édit de Nantes en 1598 ?",
+          "choices": [
+            "Charles IX",
+            "Louis XIII",
+            "François Ier",
+            "Henri IV"
+          ],
+          "explanation": "L'édit accordait la liberté de culte aux protestants ; Louis XIV l'a révoqué en 1685."
+        }
+      }
+    },
+    {
+      "id": "history_080",
+      "category": "history",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which empire was ruled from Constantinople until 1453?",
+          "choices": [
+            "The Ottoman Empire",
+            "The Byzantine Empire",
+            "The Persian Empire",
+            "The Holy Roman Empire"
+          ],
+          "explanation": "The Ottomans took Constantinople in 1453, ending the Eastern Roman Empire after more than 1,000 years."
+        },
+        "fr": {
+          "text": "Quel empire était gouverné depuis Constantinople jusqu'en 1453 ?",
+          "choices": [
+            "L'Empire ottoman",
+            "L'Empire byzantin",
+            "L'Empire perse",
+            "Le Saint-Empire romain germanique"
+          ],
+          "explanation": "Les Ottomans ont pris Constantinople en 1453, mettant fin à l'Empire romain d'Orient après plus de 1 000 ans."
+        }
+      }
+    },
+    {
+      "id": "history_081",
+      "category": "history",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who was the first emperor of a unified China?",
+          "choices": [
+            "Liu Bang",
+            "Qin Shi Huang",
+            "Confucius",
+            "Kublai Khan"
+          ],
+          "explanation": "Qin Shi Huang unified China in 221 BC; his tomb is guarded by the terracotta army."
+        },
+        "fr": {
+          "text": "Qui a été le premier empereur de la Chine unifiée ?",
+          "choices": [
+            "Liu Bang",
+            "Qin Shi Huang",
+            "Confucius",
+            "Kubilai Khan"
+          ],
+          "explanation": "Qin Shi Huang a unifié la Chine en 221 av. J.-C. ; son tombeau est gardé par l'armée de terre cuite."
+        }
+      }
+    },
+    {
+      "id": "history_082",
+      "category": "history",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which ancient wonder stood at the entrance of the harbour of Rhodes?",
+          "choices": [
+            "The Hanging Gardens",
+            "The Colossus",
+            "The Lighthouse",
+            "The Mausoleum"
+          ],
+          "explanation": "The bronze statue of the sun god Helios, about 33 m tall, fell in an earthquake in 226 BC."
+        },
+        "fr": {
+          "text": "Quelle merveille antique se dressait à l'entrée du port de Rhodes ?",
+          "choices": [
+            "Les Jardins suspendus",
+            "Le Colosse",
+            "Le Phare",
+            "Le Mausolée"
+          ],
+          "explanation": "La statue de bronze du dieu Hélios, haute d'environ 33 m, s'est effondrée lors d'un séisme en 226 av. J.-C."
+        }
+      }
+    },
+    {
+      "id": "history_083",
+      "category": "history",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which year did the Soviet Union dissolve?",
+          "choices": [
+            "1991",
+            "1993",
+            "1985",
+            "1989"
+          ],
+          "explanation": "Gorbachev resigned on 25 December 1991 and the USSR split into 15 independent states."
+        },
+        "fr": {
+          "text": "En quelle année l'Union soviétique a-t-elle été dissoute ?",
+          "choices": [
+            "1991",
+            "1993",
+            "1985",
+            "1989"
+          ],
+          "explanation": "Gorbatchev a démissionné le 25 décembre 1991 et l'URSS a éclaté en 15 États indépendants."
+        }
+      }
+    },
+    {
+      "id": "history_084",
+      "category": "history",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Egyptian queen allied with Julius Caesar and then Mark Antony?",
+          "choices": [
+            "Nefertiti",
+            "Hatshepsut",
+            "Cleopatra VII",
+            "Nefertari"
+          ],
+          "explanation": "Cleopatra was the last ruler of Ptolemaic Egypt; she died in 30 BC after Octavian's victory."
+        },
+        "fr": {
+          "text": "Quelle reine d'Égypte s'est alliée à Jules César puis à Marc Antoine ?",
+          "choices": [
+            "Néfertiti",
+            "Hatchepsout",
+            "Cléopâtre VII",
+            "Néfertari"
+          ],
+          "explanation": "Cléopâtre a été la dernière souveraine de l'Égypte ptolémaïque ; elle est morte en 30 av. J.-C. après la victoire d'Octave."
+        }
+      }
+    },
+    {
+      "id": "history_085",
+      "category": "history",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who was the first President of the French Fifth Republic?",
+          "choices": [
+            "Charles de Gaulle",
+            "René Coty",
+            "Vincent Auriol",
+            "Georges Pompidou"
+          ],
+          "explanation": "De Gaulle drafted the new constitution in 1958 and took office in January 1959."
+        },
+        "fr": {
+          "text": "Qui a été le premier président de la Ve République, en 1959 ?",
+          "choices": [
+            "Charles de Gaulle",
+            "René Coty",
+            "Vincent Auriol",
+            "Georges Pompidou"
+          ],
+          "explanation": "De Gaulle a fait adopter la nouvelle Constitution en 1958 et a pris ses fonctions en janvier 1959."
         }
       }
     }

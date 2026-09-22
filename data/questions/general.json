@@ -2,38 +2,6 @@
   "category": "general",
   "questions": [
     {
-      "id": "general_001",
-      "category": "general",
-      "difficulty": 3,
-      "correct_index": 1,
-      "locales": [
-        "fr",
-        "en"
-      ],
-      "translations": {
-        "en": {
-          "text": "Where in La Coruña (Spain) is the headquarters of \"Inditex\", the biggest fashion group in the world?",
-          "choices": [
-            "Sanjenjo",
-            "Arteijo",
-            "Mugía",
-            "Órdenes"
-          ],
-          "explanation": "The correct answer is: Arteijo."
-        },
-        "fr": {
-          "text": "Où à La Corogne (Espagne) est le siège de \"Inditex\", le plus grand groupe de mode au monde ?",
-          "choices": [
-            "SANJENJO",
-            "Arteijo",
-            "Mugía",
-            "Órdenes"
-          ],
-          "explanation": "La bonne réponse est : Arteijo."
-        }
-      }
-    },
-    {
       "id": "general_002",
       "category": "general",
       "difficulty": 1,
@@ -44,24 +12,24 @@
       ],
       "translations": {
         "en": {
-          "text": "How many letters are in the English alphabet?",
+          "text": "How many letters are there in the alphabet used by English and French?",
           "choices": [
             "30",
             "26",
             "17",
             "5"
           ],
-          "explanation": "The correct answer is: 26."
+          "explanation": "The modern Latin alphabet used by English and French has 26 letters, from A to Z."
         },
         "fr": {
-          "text": "Combien de lettres sont en alphabet anglais ?",
+          "text": "Combien de lettres compte l'alphabet utilisé en français ?",
           "choices": [
             "30",
             "26",
             "17",
             "5"
           ],
-          "explanation": "La bonne réponse est : 26."
+          "explanation": "L'alphabet latin moderne, utilisé en français comme en anglais, compte 26 lettres de A à Z."
         }
       }
     },
@@ -83,17 +51,17 @@
             "2003",
             "2005"
           ],
-          "explanation": "The correct answer is: 2004."
+          "explanation": "Mark Zuckerberg launched \"TheFacebook\" from his Harvard dorm in February 2004."
         },
         "fr": {
-          "text": "Quand le site \"Facebook\" a-t-il été lancé ?",
+          "text": "En quelle année le site Facebook a-t-il été lancé ?",
           "choices": [
             "2006",
             "2004",
             "2003",
             "2005"
           ],
-          "explanation": "La bonne réponse est : 2004."
+          "explanation": "Mark Zuckerberg a lancé « TheFacebook » depuis sa chambre d'étudiant à Harvard en février 2004."
         }
       }
     },
@@ -115,81 +83,17 @@
             "Scotland",
             "England"
           ],
-          "explanation": "The correct answer is: England."
+          "explanation": "Robin Hood comes from English ballads of the Middle Ages, set in Sherwood Forest near Nottingham."
         },
         "fr": {
-          "text": "L'histoire de Robin des Bois provient de quel pays ?",
+          "text": "L'histoire de Robin des Bois provient de quel pays ?",
           "choices": [
             "Portugal",
             "France",
             "Écosse",
             "Angleterre"
           ],
-          "explanation": "La bonne réponse est : Angleterre."
-        }
-      }
-    },
-    {
-      "id": "general_005",
-      "category": "general",
-      "difficulty": 3,
-      "correct_index": 0,
-      "locales": [
-        "fr",
-        "en"
-      ],
-      "translations": {
-        "en": {
-          "text": "How many calories are in a 355 ml can of Pepsi Cola?",
-          "choices": [
-            "150",
-            "200",
-            "155",
-            "100"
-          ],
-          "explanation": "The correct answer is: 150."
-        },
-        "fr": {
-          "text": "Combien de calories sont dans une boîte de 355 ml de Pepsi Cola?",
-          "choices": [
-            "150",
-            "200",
-            "155",
-            "100"
-          ],
-          "explanation": "La bonne réponse est : 150."
-        }
-      }
-    },
-    {
-      "id": "general_006",
-      "category": "general",
-      "difficulty": 1,
-      "correct_index": 0,
-      "locales": [
-        "fr",
-        "en"
-      ],
-      "translations": {
-        "en": {
-          "text": "What type of animal was Harambe, who was shot after a child fell into it's enclosure at the Cincinnati Zoo?",
-          "choices": [
-            "Gorilla",
-            "Tiger",
-            "Panda",
-            "Crocodile"
-          ],
-          "explanation": "The correct answer is: Gorilla."
-        },
-        "fr": {
-          "text": "Quel type d'animal était Harambe, qui a été abattu après qu'un enfant soit tombé dans son enclos au zoo de Cincinnati ?",
-          "choices": [
-            "Gorille",
-            "Tigre",
-            "Panda",
-            "Crocodile"
-          ],
-          "explanation": "La bonne réponse est : Gorilla."
+          "explanation": "Robin des Bois vient de ballades anglaises du Moyen Âge, dans la forêt de Sherwood près de Nottingham."
         }
       }
     },
@@ -211,17 +115,17 @@
             "\"...but death by the truth is better than ignorance.\"",
             "\"...which taught it not to do that.\""
           ],
-          "explanation": "The correct answer is: \"...but satisfaction brought it back.\"."
+          "explanation": "The rejoinder \"but satisfaction brought it back\" was added to the proverb in the 20th century."
         },
         "fr": {
-          "text": "La suite moins connue du dicton « La curiosité a tué le chat... » est :",
+          "text": "Quelle est la suite méconnue du proverbe anglais « Curiosity killed the cat » (la curiosité a tué le chat) ?",
           "choices": [
-            "\"et la souris silencieuse y est restée.\"",
-            "\"mais la satisfaction l'a ramené.\"",
-            "\"...mais la mort par la vérité vaut mieux que l'ignorance.\"",
-            "\"qui lui a appris à ne pas faire ça.\""
+            "« …et la souris silencieuse est restée. »",
+            "« …mais la satisfaction l'a ramené. »",
+            "« …mais mieux vaut mourir de vérité que d'ignorance. »",
+            "« …ce qui lui a appris à ne plus le faire. »"
           ],
-          "explanation": "La bonne réponse est: \"...mais la satisfaction l'a ramené.\"."
+          "explanation": "La réplique « mais la satisfaction l'a ramené » a été ajoutée au proverbe anglais au XXe siècle."
         }
       }
     },
@@ -243,24 +147,24 @@
             "Proximal",
             "Caudal"
           ],
-          "explanation": "The correct answer is: Caudal."
+          "explanation": "Caudal comes from the Latin cauda, \"tail\"; its opposite is cranial, toward the head."
         },
         "fr": {
-          "text": "Lequel de ces termes anatomiques fait référence à la queue de la créature ?",
+          "text": "Quel terme anatomique désigne ce qui est du côté de la queue ?",
           "choices": [
             "Ventral",
             "Coronal",
             "Proximal",
             "Caudal"
           ],
-          "explanation": "La bonne réponse est : Caudal."
+          "explanation": "Caudal vient du latin cauda, « queue » ; son contraire est crânial, vers la tête."
         }
       }
     },
     {
       "id": "general_009",
       "category": "general",
-      "difficulty": 1,
+      "difficulty": 2,
       "correct_index": 2,
       "locales": [
         "fr",
@@ -270,22 +174,22 @@
         "en": {
           "text": "How tall is the Burj Khalifa?",
           "choices": [
-            "2,717 ft",
-            "2,546 ft",
-            "2,722 ft",
-            "3,024 ft"
+            "1,776 ft (541 m)",
+            "2,073 ft (632 m)",
+            "2,722 ft (830 m)",
+            "3,281 ft (1,000 m)"
           ],
-          "explanation": "The correct answer is: 2,722 ft."
+          "explanation": "The Burj Khalifa in Dubai reaches about 830 m: the world's tallest building since 2010."
         },
         "fr": {
-          "text": "Quelle est la taille du Burj Khalifa ?",
+          "text": "Quelle est la hauteur du Burj Khalifa ?",
           "choices": [
-            "2,717 ft",
-            "2,546 ft",
-            "2 722 ft",
-            "3 024 pieds"
+            "541 m",
+            "632 m",
+            "830 m",
+            "1 000 m"
           ],
-          "explanation": "La bonne réponse est : 2722 pi."
+          "explanation": "Le Burj Khalifa à Dubaï culmine à environ 830 m : le plus haut bâtiment du monde depuis 2010."
         }
       }
     },
@@ -307,17 +211,17 @@
             "Breaking glass with your voice",
             "Finding shapes in clouds"
           ],
-          "explanation": "The correct answer is: Finding shapes in clouds."
+          "explanation": "The word comes from Aristophanes' play The Birds, which invents a city in the clouds."
         },
         "fr": {
-          "text": "\"Nephélococcie\" est la pratique de faire quoi?",
+          "text": "Que désigne la « néphélococcygie » ?",
           "choices": [
-            "Natation dans l'eau glacée",
+            "Nager dans l'eau glacée",
             "Dormir les yeux ouverts",
-            "Briser le verre avec votre voix",
-            "Trouver des formes dans les nuages"
+            "Briser du verre avec sa voix",
+            "Voir des formes dans les nuages"
           ],
-          "explanation": "La bonne réponse est: Trouver des formes dans les nuages."
+          "explanation": "Le mot vient de la pièce Les Oiseaux d'Aristophane, qui imagine une cité dans les nuages."
         }
       }
     },
@@ -339,17 +243,17 @@
             "Google",
             "HTC"
           ],
-          "explanation": "The correct answer is: HTC."
+          "explanation": "The HTC Vive headset, released in 2016, was developed by HTC with Valve's tracking technology."
         },
         "fr": {
-          "text": "Avec quelle société Valve a-t-elle collaboré à la création de la Vive ?",
+          "text": "Avec quelle entreprise Valve a-t-elle conçu le casque de réalité virtuelle Vive ?",
           "choices": [
             "Razer",
             "Oculus",
             "Google",
             "HTC"
           ],
-          "explanation": "La bonne réponse est : HTC."
+          "explanation": "Le casque HTC Vive, sorti en 2016, a été conçu par HTC avec la technologie de suivi de Valve."
         }
       }
     },
@@ -371,17 +275,17 @@
             "Lift",
             "Weight"
           ],
-          "explanation": "The correct answer is: Lift."
+          "explanation": "Lift is created by the wings' shape and angle, which make air pressure lower above them."
         },
         "fr": {
-          "text": "En aérodynamique, quelle force pousse un objet vers le haut ?",
+          "text": "En aérodynamique, quelle force pousse un objet vers le haut ?",
           "choices": [
             "Traînée",
             "Poussée",
             "Portance",
             "Poids"
           ],
-          "explanation": "La bonne réponse est : Soulevez."
+          "explanation": "La portance vient de la forme et de l'angle des ailes, qui créent une pression plus faible au-dessus."
         }
       }
     },
@@ -403,17 +307,17 @@
             "Lavender",
             "Vanilla"
           ],
-          "explanation": "The correct answer is: Bergamot oil."
+          "explanation": "Bergamot is a citrus fruit grown mostly in Calabria, in southern Italy."
         },
         "fr": {
-          "text": "Earl Grey thé est le thé noir aromatisé avec quoi ?",
+          "text": "Le thé Earl Grey est un thé noir aromatisé à quoi ?",
           "choices": [
             "Huile de bergamote",
             "Miel",
             "Lavande",
             "Vanille"
           ],
-          "explanation": "La bonne réponse est : Huile de Bergamote."
+          "explanation": "La bergamote est un agrume cultivé surtout en Calabre, dans le sud de l'Italie."
         }
       }
     },
@@ -435,24 +339,24 @@
             "High card",
             "Full House"
           ],
-          "explanation": "The correct answer is: Full House."
+          "explanation": "A full house (three of a kind plus a pair) beats a flush but loses to four of a kind."
         },
         "fr": {
-          "text": "Quel est le nom de la main de poker contenant trois types et une paire?",
+          "text": "Comment s'appelle la main de poker composée d'un brelan et d'une paire ?",
           "choices": [
-            "Flush",
-            "Straight",
-            "High card",
-            "Full House"
+            "Couleur",
+            "Quinte",
+            "Carte haute",
+            "Full"
           ],
-          "explanation": "La bonne réponse est: Full House."
+          "explanation": "Un full (brelan + paire) bat la couleur mais perd face au carré."
         }
       }
     },
     {
       "id": "general_015",
       "category": "general",
-      "difficulty": 3,
+      "difficulty": 2,
       "correct_index": 3,
       "locales": [
         "fr",
@@ -467,17 +371,17 @@
             "U.S. Dollar",
             "Birr"
           ],
-          "explanation": "The correct answer is: Birr."
+          "explanation": "The birr has been Ethiopia's currency since 1945."
         },
         "fr": {
-          "text": "Quel est le nom de la monnaie utilisée en Éthiopie?",
+          "text": "Quel est le nom de la monnaie utilisée en Éthiopie ?",
           "choices": [
-            "rand",
+            "Rand",
             "Dirham",
             "Dollar américain",
             "Birr"
           ],
-          "explanation": "La bonne réponse est : Birr."
+          "explanation": "Le birr est la monnaie de l'Éthiopie depuis 1945."
         }
       }
     },
@@ -499,24 +403,24 @@
             "Manager of the Crown Estate",
             "Duke of Cambridge"
           ],
-          "explanation": "The correct answer is: First Lord of the Treasury."
+          "explanation": "The title is engraved on the letterbox of 10 Downing Street, the Prime Minister's residence."
         },
         "fr": {
-          "text": "Quel est le titre complet du Premier ministre britannique?",
+          "text": "Quel est le titre officiel complet du Premier ministre britannique ?",
           "choices": [
-            "Opposition loyaliste de Sa Majesté",
-            "Premier Seigneur du Trésor",
-            "Gestionnaire de la succession de la Couronne",
+            "Opposition loyale de Sa Majesté",
+            "Premier Lord du Trésor",
+            "Gardien des biens de la Couronne",
             "Duc de Cambridge"
           ],
-          "explanation": "La bonne réponse est: Premier Seigneur du Trésor."
+          "explanation": "Ce titre est gravé sur la boîte aux lettres du 10 Downing Street, la résidence du Premier ministre."
         }
       }
     },
     {
       "id": "general_017",
       "category": "general",
-      "difficulty": 1,
+      "difficulty": 2,
       "correct_index": 1,
       "locales": [
         "fr",
@@ -531,17 +435,17 @@
             "Facehugger",
             "Bullsquid"
           ],
-          "explanation": "The correct answer is: Headcrab."
+          "explanation": "Headcrabs latch onto a victim's head and turn it into a zombie in Valve's Half-Life."
         },
         "fr": {
-          "text": "Dans la demi-vie, quel est le nom de l'étranger qui s'attache aux têtes?",
+          "text": "Dans le jeu vidéo Half-Life, comment s'appelle la créature qui s'accroche aux têtes ?",
           "choices": [
             "Vortigaunt",
             "Headcrab",
             "Facehugger",
             "Bullsquid"
           ],
-          "explanation": "La bonne réponse est : Casse-tête."
+          "explanation": "Les headcrabs s'accrochent à la tête de leur victime et en font un zombie dans Half-Life de Valve."
         }
       }
     },
@@ -563,17 +467,17 @@
             "Stomach",
             "Bone"
           ],
-          "explanation": "The correct answer is: Pancreatic."
+          "explanation": "Steve Jobs died in 2011 at 56, after years of fighting a rare form of pancreatic cancer."
         },
         "fr": {
-          "text": "Steve Jobs, co-fondateur d'Apple, est mort de complications de quelle forme de cancer ?",
+          "text": "Steve Jobs, cofondateur d'Apple, est mort des suites de quel cancer ?",
           "choices": [
-            "Foie",
-            "Pancreatic",
-            "Estomac",
-            "Bone"
+            "Du foie",
+            "Du pancréas",
+            "De l'estomac",
+            "Des os"
           ],
-          "explanation": "La bonne réponse est : Pancréatique."
+          "explanation": "Steve Jobs est mort en 2011 à 56 ans, après des années de lutte contre un cancer rare du pancréas."
         }
       }
     },
@@ -595,17 +499,17 @@
             "Mars",
             "Earth"
           ],
-          "explanation": "The correct answer is: Earth."
+          "explanation": "Earth's name comes from Old English and German words for the ground, not from a god."
         },
         "fr": {
-          "text": "Quelle planète n'est pas nommée d'après un dieu grec ou romain ?",
+          "text": "Quelle planète ne porte pas le nom d'un dieu grec ou romain ?",
           "choices": [
             "Jupiter",
-            "Mercury",
+            "Mercure",
             "Mars",
-            "Earth"
+            "La Terre"
           ],
-          "explanation": "La bonne réponse est : Terre."
+          "explanation": "Le nom de la Terre vient du latin terra, « le sol » : ce n'est pas le nom d'un dieu."
         }
       }
     },
@@ -627,17 +531,17 @@
             "A mall after business hours",
             "A mall that has been condemed"
           ],
-          "explanation": "The correct answer is: A mall with high vacancy rates or low consumer foot traffic."
+          "explanation": "Dead malls multiplied in the US with online shopping and the decline of big department stores."
         },
         "fr": {
-          "text": "C'est quoi un centre commercial mort ?",
+          "text": "Qu'appelle-t-on un « centre commercial mort » (dead mall) ?",
           "choices": [
-            "Un centre commercial avec des taux de vacance élevés ou un faible trafic routier",
-            "Un centre commercial sans magasins",
-            "Un centre commercial après les heures d'ouverture",
-            "Un centre commercial qui a été condamné"
+            "Un centre avec beaucoup de boutiques vides et peu de clients",
+            "Un centre sans aucun magasin",
+            "Un centre après la fermeture",
+            "Un centre condamné par la justice"
           ],
-          "explanation": "La bonne réponse est: Un centre commercial avec des taux de vacance élevés ou un faible trafic de marche grand public."
+          "explanation": "Les centres commerciaux fantômes se sont multipliés aux États-Unis avec l'essor du commerce en ligne."
         }
       }
     },
@@ -659,17 +563,17 @@
             "Shoes",
             "Hats"
           ],
-          "explanation": "The correct answer is: Hats."
+          "explanation": "A milliner designs and sells hats; the word comes from Milan, once famous for its accessories."
         },
         "fr": {
-          "text": "Qu'est-ce qu'un milliner fabrique et vend ?",
+          "text": "Que fabrique et vend une modiste ?",
           "choices": [
-            "Belts",
-            "Shirts",
-            "Shoes",
-            "Hats"
+            "Des ceintures",
+            "Des chemises",
+            "Des chaussures",
+            "Des chapeaux"
           ],
-          "explanation": "La bonne réponse est : Chapeaux."
+          "explanation": "Une modiste crée et vend des chapeaux ; en anglais, « milliner » vient de Milan, célèbre pour ses accessoires."
         }
       }
     },
@@ -691,49 +595,17 @@
             "Hairy",
             "Rude"
           ],
-          "explanation": "The correct answer is: Hairy."
+          "explanation": "Hirsute comes from the Latin hirsutus, \"shaggy, bristly\"."
         },
         "fr": {
-          "text": "Quelle est la caractéristique caractéristique de quelqu'un qui est décrit comme hirsute?",
+          "text": "Quelle est la caractéristique d'une personne dite « hirsute » ?",
           "choices": [
-            "Funny",
-            "Tall",
-            "Hairy",
-            "Rude"
+            "Drôle",
+            "Grande",
+            "Poilue",
+            "Impolie"
           ],
-          "explanation": "La bonne réponse est : poilu."
-        }
-      }
-    },
-    {
-      "id": "general_023",
-      "category": "general",
-      "difficulty": 3,
-      "correct_index": 0,
-      "locales": [
-        "fr",
-        "en"
-      ],
-      "translations": {
-        "en": {
-          "text": "The word \"astasia\" means which of the following?",
-          "choices": [
-            "The inability to stand up",
-            "A feverish desire to rip one's clothes off",
-            "The inability to make decisions",
-            "The inability to concentrate on anything"
-          ],
-          "explanation": "The correct answer is: The inability to stand up."
-        },
-        "fr": {
-          "text": "Le mot \"astasia\" signifie lequel des suivants?",
-          "choices": [
-            "L'incapacité de se lever",
-            "Un désir fiévreux d'arracher ses vêtements",
-            "L'incapacité de prendre des décisions",
-            "L'incapacité de se concentrer sur quelque chose"
-          ],
-          "explanation": "La bonne réponse est : L'incapacité de se lever."
+          "explanation": "Hirsute vient du latin hirsutus, « hérissé, poilu »."
         }
       }
     },
@@ -755,17 +627,17 @@
             "5",
             "4"
           ],
-          "explanation": "The correct answer is: 4."
+          "explanation": "The Fields Medal is awarded every four years to mathematicians under 40."
         },
         "fr": {
-          "text": "La médaille Fields, l'une des récompenses les plus recherchées en mathématiques, est décernée tous les combien d'années?",
+          "text": "La médaille Fields, prestigieux prix de mathématiques, est décernée tous les combien d'années ?",
           "choices": [
             "3",
             "6",
             "5",
             "4"
           ],
-          "explanation": "La bonne réponse est : 4."
+          "explanation": "La médaille Fields est remise tous les quatre ans à des mathématiciens de moins de 40 ans."
         }
       }
     },
@@ -787,56 +659,24 @@
             "Panama Canal",
             "Qaraqum Canal"
           ],
-          "explanation": "The correct answer is: Suez Canal."
+          "explanation": "The Suez Canal in Egypt opened in 1869; it saves ships the long trip around Africa."
         },
         "fr": {
-          "text": "Quel canal relie la mer Méditerranée à la mer Rouge ?",
+          "text": "Quel canal relie la mer Méditerranée à la mer Rouge ?",
           "choices": [
             "Canal du Sinaï",
             "Canal de Suez",
             "Canal de Panama",
-            "Canal de Qaraqum"
+            "Canal du Karakoum"
           ],
-          "explanation": "La bonne réponse est : Canal de Suez."
-        }
-      }
-    },
-    {
-      "id": "general_026",
-      "category": "general",
-      "difficulty": 1,
-      "correct_index": 1,
-      "locales": [
-        "fr",
-        "en"
-      ],
-      "translations": {
-        "en": {
-          "text": "If you are caught \"Goldbricking\", what are you doing wrong?",
-          "choices": [
-            "Cheating",
-            "Slacking",
-            "Stealing",
-            "Smoking"
-          ],
-          "explanation": "The correct answer is: Slacking."
-        },
-        "fr": {
-          "text": "Si vous êtes pris \"Goldbricking\", que faites-vous mal?",
-          "choices": [
-            "Cheating",
-            "Slacking",
-            "Stealing",
-            "Smoking"
-          ],
-          "explanation": "La bonne réponse est : Slacking."
+          "explanation": "Le canal de Suez, en Égypte, a ouvert en 1869 ; il évite aux navires de contourner l'Afrique."
         }
       }
     },
     {
       "id": "general_027",
       "category": "general",
-      "difficulty": 3,
+      "difficulty": 1,
       "correct_index": 1,
       "locales": [
         "fr",
@@ -851,24 +691,24 @@
             "Pink",
             "Red"
           ],
-          "explanation": "The correct answer is: Purple."
+          "explanation": "Mauve was also the first synthetic dye, discovered by chance by William Perkin in 1856."
         },
         "fr": {
-          "text": "D'après la fleur de mauve, mauve est une ombre de quoi ?",
+          "text": "Nommé d'après la fleur de mauve, le mauve est une nuance de quelle couleur ?",
           "choices": [
-            "Brown",
-            "Purple",
-            "Pink",
-            "Red"
+            "Marron",
+            "Violet",
+            "Rose",
+            "Rouge"
           ],
-          "explanation": "La bonne réponse est : Purple."
+          "explanation": "Le mauve est aussi le premier colorant de synthèse, découvert par hasard par William Perkin en 1856."
         }
       }
     },
     {
       "id": "general_028",
       "category": "general",
-      "difficulty": 1,
+      "difficulty": 3,
       "correct_index": 3,
       "locales": [
         "fr",
@@ -883,49 +723,17 @@
             "The British Bulldogs",
             "Demolition"
           ],
-          "explanation": "The correct answer is: Demolition."
+          "explanation": "Demolition, with face paint and studded leather, were WWF tag team champions in the late 1980s."
         },
         "fr": {
-          "text": "Quel était le nom de l'équipe de lutte professionnelle WWF composée des lutteurs Ax et Smash ?",
+          "text": "Comment s'appelait l'équipe de catch de la WWF formée par Ax et Smash ?",
           "choices": [
             "The Dream Team",
-            "Les Bushwhackers",
-            "Les Bulldogs britanniques",
+            "The Bushwhackers",
+            "The British Bulldogs",
             "Demolition"
           ],
-          "explanation": "La bonne réponse est : Démolition."
-        }
-      }
-    },
-    {
-      "id": "general_029",
-      "category": "general",
-      "difficulty": 1,
-      "correct_index": 3,
-      "locales": [
-        "fr",
-        "en"
-      ],
-      "translations": {
-        "en": {
-          "text": "When someone is cowardly, they are said to have what color belly?",
-          "choices": [
-            "Red",
-            "Green",
-            "Blue",
-            "Yellow"
-          ],
-          "explanation": "The correct answer is: Yellow."
-        },
-        "fr": {
-          "text": "Quand quelqu'un est lâche, on dit qu'il a quelle couleur de ventre ?",
-          "choices": [
-            "Red",
-            "Green",
-            "Blue",
-            "Yellow"
-          ],
-          "explanation": "La bonne réponse est : Jaune."
+          "explanation": "Demolition, maquillés et vêtus de cuir clouté, ont été champions par équipe de la WWF à la fin des années 1980."
         }
       }
     },
@@ -947,17 +755,17 @@
             "Bank of Pennsylvania",
             "Bank of Charlotte"
           ],
-          "explanation": "The correct answer is: Bank of Italy."
+          "explanation": "Amadeo Giannini founded the Bank of Italy in San Francisco in 1904 to serve immigrants."
         },
         "fr": {
-          "text": "Comment la Banque d'Amérique a-t-elle été créée à l'origine?",
+          "text": "Sous quel nom la Bank of America a-t-elle été fondée à l'origine ?",
           "choices": [
             "Bank of Italy",
-            "Banque de Long Island",
+            "Bank of Long Island",
             "Bank of Pennsylvania",
-            "Banque de Charlotte"
+            "Bank of Charlotte"
           ],
-          "explanation": "La bonne réponse est: Banque d'Italie."
+          "explanation": "Amadeo Giannini a fondé la Bank of Italy à San Francisco en 1904 pour servir les immigrés."
         }
       }
     },
@@ -979,17 +787,17 @@
             "September 12, 2005",
             "July 19, 2009"
           ],
-          "explanation": "The correct answer is: February 14, 2005."
+          "explanation": "The youtube.com domain was activated on 14 February 2005; the first video followed in April."
         },
         "fr": {
-          "text": "Quand \"YouTube\" a-t-il été fondé ?",
+          "text": "Quand YouTube a-t-il été fondé ?",
           "choices": [
             "22 mai 2004",
             "14 février 2005",
             "12 septembre 2005",
             "19 juillet 2009"
           ],
-          "explanation": "La bonne réponse est : le 14 février 2005."
+          "explanation": "Le domaine youtube.com a été activé le 14 février 2005 ; la première vidéo a suivi en avril."
         }
       }
     },
@@ -1011,17 +819,17 @@
             "Silk",
             "Hemp"
           ],
-          "explanation": "The correct answer is: Straw."
+          "explanation": "Despite the name, Panama hats come from Ecuador and are woven from toquilla palm straw."
         },
         "fr": {
-          "text": "De quoi sont faits les chapeaux de Panama ?",
+          "text": "En quoi sont faits les chapeaux panama ?",
           "choices": [
-            "Flax",
-            "Straw",
-            "Silk",
-            "Hemp"
+            "En lin",
+            "En paille",
+            "En soie",
+            "En chanvre"
           ],
-          "explanation": "La bonne réponse est : Paille."
+          "explanation": "Malgré leur nom, les panamas viennent d'Équateur et sont tressés en paille de toquilla."
         }
       }
     },
@@ -1043,17 +851,17 @@
             "Au Revoir",
             "Salir"
           ],
-          "explanation": "The correct answer is: Adiós."
+          "explanation": "Adiós literally means \"to God\", just like the old French \"adieu\"."
         },
         "fr": {
-          "text": "Comment dire au revoir en espagnol ?",
+          "text": "Comment dire au revoir en espagnol ?",
           "choices": [
             "Hola",
             "Adiós",
             "Au revoir",
             "Salir"
           ],
-          "explanation": "La bonne réponse est : Adiós."
+          "explanation": "Adiós signifie littéralement « à Dieu », comme « adieu » en français."
         }
       }
     },
@@ -1075,17 +883,17 @@
             "Gears",
             "Belts"
           ],
-          "explanation": "The correct answer is: Bearings."
+          "explanation": "A ball bearing in the middle lets the spinner turn freely for minutes."
         },
         "fr": {
-          "text": "Quel élément de machine est situé au centre des spinners fidget?",
+          "text": "Quelle pièce mécanique se trouve au centre d'un hand spinner ?",
           "choices": [
-            "Bearings",
-            "Axles",
-            "Gears",
-            "Belts"
+            "Un roulement à billes",
+            "Un essieu",
+            "Un engrenage",
+            "Une courroie"
           ],
-          "explanation": "La bonne réponse est : Roulements."
+          "explanation": "Un roulement à billes au centre permet au hand spinner de tourner librement pendant des minutes."
         }
       }
     },
@@ -1107,17 +915,17 @@
             "Potimarron",
             "Brinjal"
           ],
-          "explanation": "The correct answer is: Potimarron."
+          "explanation": "The potimarron is a small chestnut-flavoured squash, not an eggplant."
         },
         "fr": {
-          "text": "Lequel des noms suivants n'est pas un autre nom pour l'aubergine?",
+          "text": "Lequel de ces noms ne désigne pas l'aubergine ?",
           "choices": [
-            "Guinée Squash",
-            "Melongene",
+            "Courge de Guinée",
+            "Mélongène",
             "Potimarron",
             "Brinjal"
           ],
-          "explanation": "La bonne réponse est : Potimarron."
+          "explanation": "Le potimarron est une petite courge au goût de châtaigne, pas une aubergine."
         }
       }
     },
@@ -1139,17 +947,17 @@
             "large Intestine",
             "Skin"
           ],
-          "explanation": "The correct answer is: Skin."
+          "explanation": "The skin weighs about 4 kg in an adult and covers nearly 2 m²."
         },
         "fr": {
-          "text": "Quel est le plus grand organe du corps humain?",
+          "text": "Quel est le plus grand organe du corps humain ?",
           "choices": [
-            "Cœur",
-            "Foie",
-            "large Intestine",
-            "Skin"
+            "Le cœur",
+            "Le foie",
+            "Le gros intestin",
+            "La peau"
           ],
-          "explanation": "La bonne réponse est : La peau."
+          "explanation": "La peau pèse environ 4 kg chez l'adulte et couvre près de 2 m²."
         }
       }
     },
@@ -1171,17 +979,17 @@
             "Physics",
             "Philosophy"
           ],
-          "explanation": "The correct answer is: Economics."
+          "explanation": "Historian Thomas Carlyle called economics \"the dismal science\" in 1849."
         },
         "fr": {
-          "text": "Ce champ est parfois connu sous le nom de \"The Dismal Science\".",
+          "text": "Quelle discipline est parfois surnommée « la science lugubre » ?",
           "choices": [
-            "Economics",
-            "Politics",
-            "Physics",
-            "Philosophy"
+            "L'économie",
+            "La politique",
+            "La physique",
+            "La philosophie"
           ],
-          "explanation": "La bonne réponse est: Économie."
+          "explanation": "L'historien Thomas Carlyle a surnommé l'économie « la science lugubre » en 1849."
         }
       }
     },
@@ -1203,24 +1011,24 @@
             "Metropolis",
             "Gotham City"
           ],
-          "explanation": "The correct answer is: Star City."
+          "explanation": "Oliver Queen protects Star City; Central City belongs to the Flash, Metropolis to Superman."
         },
         "fr": {
-          "text": "Dans DC BD où vit la Green Arrow (Oliver Queen) ?",
+          "text": "Dans les comics DC, dans quelle ville vit Green Arrow (Oliver Queen) ?",
           "choices": [
             "Star City",
             "Central City",
             "Metropolis",
             "Gotham City"
           ],
-          "explanation": "La bonne réponse est : Star City."
+          "explanation": "Oliver Queen protège Star City ; Central City est celle de Flash, Metropolis celle de Superman."
         }
       }
     },
     {
       "id": "general_039",
       "category": "general",
-      "difficulty": 1,
+      "difficulty": 2,
       "correct_index": 1,
       "locales": [
         "fr",
@@ -1235,24 +1043,24 @@
             "Flamberge",
             "Falchion"
           ],
-          "explanation": "The correct answer is: Scimitar."
+          "explanation": "The scimitar, a curved sabre, comes from the Middle East and Central Asia."
         },
         "fr": {
-          "text": "Lequel d'entre eux n'est pas un design d'épée européen typique?",
+          "text": "Laquelle de ces épées n'est pas un modèle européen typique ?",
           "choices": [
             "Ulfberht",
-            "Scimitar",
+            "Cimeterre",
             "Flamberge",
-            "Falchion"
+            "Fauchon"
           ],
-          "explanation": "La bonne réponse est : Scimitar."
+          "explanation": "Le cimeterre, un sabre courbe, vient du Moyen-Orient et d'Asie centrale."
         }
       }
     },
     {
       "id": "general_040",
       "category": "general",
-      "difficulty": 1,
+      "difficulty": 3,
       "correct_index": 3,
       "locales": [
         "fr",
@@ -1267,17 +1075,17 @@
             "12",
             "19"
           ],
-          "explanation": "The correct answer is: 19."
+          "explanation": "The 1 sits between 20 and 18 at the top; the 19 is right below it at the bottom of the board."
         },
         "fr": {
-          "text": "Sur un tableau de bord, quel nombre est directement opposé au numéro 1?",
+          "text": "Sur une cible de fléchettes, quel nombre se trouve à l'opposé du 1 ?",
           "choices": [
             "15",
             "20",
             "12",
             "19"
           ],
-          "explanation": "La bonne réponse est : 19."
+          "explanation": "Le 1 est en haut entre le 20 et le 18 ; le 19 lui fait face tout en bas de la cible."
         }
       }
     },
@@ -1299,17 +1107,17 @@
             "Colonel Meow",
             "Tardar Sauce"
           ],
-          "explanation": "The correct answer is: Tardar Sauce."
+          "explanation": "Grumpy Cat's frown came from feline dwarfism; she became famous online in 2012."
         },
         "fr": {
-          "text": "Quel est le vrai nom de l'internet viral meme Grumpy Cat?",
+          "text": "Quel était le vrai nom du chat Grumpy Cat, star des mèmes ?",
           "choices": [
             "Maru",
             "Lil Bub",
             "Colonel Meow",
-            "Sauce au tadar"
+            "Tardar Sauce"
           ],
-          "explanation": "La bonne réponse est : Sauce Tardar."
+          "explanation": "La mine renfrognée de Grumpy Cat venait d'une forme de nanisme ; elle est devenue célèbre en 2012."
         }
       }
     },
@@ -1331,17 +1139,17 @@
             "Herbert Hoover",
             "Woodrow Wilson"
           ],
-          "explanation": "The correct answer is: Woodrow Wilson."
+          "explanation": "The Panama Canal opened in August 1914, under Woodrow Wilson's presidency."
         },
         "fr": {
-          "text": "Le canal de Panama a été officiellement ouvert par quel président américain ?",
+          "text": "Le canal de Panama a été officiellement ouvert par quel président américain ?",
           "choices": [
-            "Théodore Roosevelt",
+            "Theodore Roosevelt",
             "Calvin Coolidge",
             "Herbert Hoover",
             "Woodrow Wilson"
           ],
-          "explanation": "La bonne réponse est : Woodrow Wilson."
+          "explanation": "Le canal de Panama a ouvert en août 1914, sous la présidence de Woodrow Wilson."
         }
       }
     },
@@ -1363,81 +1171,17 @@
             "Nevada",
             "Utah"
           ],
-          "explanation": "The correct answer is: Nevada."
+          "explanation": "Area 51 is a secret US Air Force base in the Nevada desert, famous for UFO theories."
         },
         "fr": {
-          "text": "La zone 51 est située dans quel État américain?",
+          "text": "La zone 51 est située dans quel État américain ?",
           "choices": [
-            "New Mexico",
+            "Nouveau-Mexique",
             "Arizona",
             "Nevada",
             "Utah"
           ],
-          "explanation": "La bonne réponse est : Nevada."
-        }
-      }
-    },
-    {
-      "id": "general_044",
-      "category": "general",
-      "difficulty": 3,
-      "correct_index": 0,
-      "locales": [
-        "fr",
-        "en"
-      ],
-      "translations": {
-        "en": {
-          "text": "What year was the RoboSapien toy robot released?",
-          "choices": [
-            "2004",
-            "2006",
-            "2000",
-            "2001"
-          ],
-          "explanation": "The correct answer is: 2004."
-        },
-        "fr": {
-          "text": "En quelle année le robot RoboSapien a-t-il été libéré ?",
-          "choices": [
-            "2004",
-            "2006",
-            "2000",
-            "2001"
-          ],
-          "explanation": "La bonne réponse est : 2004."
-        }
-      }
-    },
-    {
-      "id": "general_045",
-      "category": "general",
-      "difficulty": 2,
-      "correct_index": 1,
-      "locales": [
-        "fr",
-        "en"
-      ],
-      "translations": {
-        "en": {
-          "text": "What English word means to \"think deeply\"?",
-          "choices": [
-            "Constipate",
-            "Contemplate",
-            "Confiscate",
-            "Condensate"
-          ],
-          "explanation": "The correct answer is: Contemplate."
-        },
-        "fr": {
-          "text": "Quel mot anglais signifie \"penser profondément\" ?",
-          "choices": [
-            "Constipate",
-            "Contemplate",
-            "Confiscate",
-            "Condensate"
-          ],
-          "explanation": "La bonne réponse est : Contemplate."
+          "explanation": "La zone 51 est une base secrète de l'US Air Force dans le désert du Nevada, célèbre pour les théories sur les OVNI."
         }
       }
     },
@@ -1459,17 +1203,17 @@
             "Petronas Twin Towers, Malaysia",
             "Al Hamra Tower, Kuwait"
           ],
-          "explanation": "The correct answer is: Petronas Twin Towers, Malaysia."
+          "explanation": "The Petronas Towers in Kuala Lumpur were the world's tallest buildings from 1998 to 2004."
         },
         "fr": {
-          "text": "Sur ces quatre bâtiments, lequel est le plus haut, d'une hauteur de 451.9 m?",
+          "text": "Lequel de ces quatre gratte-ciel est le plus haut, avec 451,9 m ?",
           "choices": [
-            "Trump Intl. Hotel et Tower, United States",
+            "Trump International Hotel & Tower, États-Unis",
             "Tour Zifeng, Chine",
-            "Tours jumelles Petronas, Malaisie",
+            "Tours Petronas, Malaisie",
             "Tour Al Hamra, Koweït"
           ],
-          "explanation": "La bonne réponse est: Petronas Twin Towers, Malaisie."
+          "explanation": "Les tours Petronas, à Kuala Lumpur, ont été les plus hauts gratte-ciel du monde de 1998 à 2004."
         }
       }
     },
@@ -1484,56 +1228,24 @@
       ],
       "translations": {
         "en": {
-          "text": "When someone is inexperienced they are said to be what color?",
+          "text": "In English, what colour is someone inexperienced said to be?",
           "choices": [
             "Blue",
             "Yellow",
             "Red",
             "Green"
           ],
-          "explanation": "The correct answer is: Green."
+          "explanation": "In English a beginner is \"green\"; in French a newcomer is called \"un bleu\"."
         },
         "fr": {
-          "text": "Quand quelqu'un est inexpérimenté, on dit qu'il est de quelle couleur ?",
+          "text": "En français, comment appelle-t-on familièrement un débutant ?",
           "choices": [
-            "Blue",
-            "Yellow",
-            "Red",
-            "Green"
+            "Un vert",
+            "Un jaune",
+            "Un rouge",
+            "Un bleu"
           ],
-          "explanation": "La bonne réponse est : Vert."
-        }
-      }
-    },
-    {
-      "id": "general_048",
-      "category": "general",
-      "difficulty": 3,
-      "correct_index": 3,
-      "locales": [
-        "fr",
-        "en"
-      ],
-      "translations": {
-        "en": {
-          "text": "In \"Battle Cats\", what is Moneko / MISS Moneko's critical percentage rate?",
-          "choices": [
-            "25%",
-            "10%",
-            "20%",
-            "15%"
-          ],
-          "explanation": "The correct answer is: 15%."
-        },
-        "fr": {
-          "text": "Dans \"Battle Cats\", quel est le pourcentage critique de Moneko / MISS Moneko?",
-          "choices": [
-            "25%",
-            "10%",
-            "20%",
-            "15%"
-          ],
-          "explanation": "La bonne réponse est : 15%."
+          "explanation": "En français, un débutant est « un bleu » ; en anglais, on dit qu'il est « green » (vert)."
         }
       }
     },
@@ -1555,17 +1267,17 @@
             "Antoine Lavoiser",
             "Plato"
           ],
-          "explanation": "The correct answer is: René Descartes."
+          "explanation": "René Descartes, author of \"I think, therefore I am\", is seen as the father of modern philosophy."
         },
         "fr": {
-          "text": "Qui est considéré comme le \"Père de la philosophie moderne\"?",
+          "text": "Qui est considéré comme le « père de la philosophie moderne » ?",
           "choices": [
             "Albert Einstein",
             "René Descartes",
-            "Antoine Lavoisser",
-            "Plato"
+            "Antoine Lavoisier",
+            "Platon"
           ],
-          "explanation": "La bonne réponse est : René Descartes."
+          "explanation": "René Descartes, auteur du « Je pense, donc je suis », est vu comme le père de la philosophie moderne."
         }
       }
     },
@@ -1587,17 +1299,1265 @@
             "CatMassage",
             "Netscape Navigator"
           ],
-          "explanation": "The correct answer is: BackRub."
+          "explanation": "Larry Page and Sergey Brin's engine was called BackRub because it analysed backlinks."
         },
         "fr": {
-          "text": "Quel était le nom original du moteur de recherche \"Google\" ?",
+          "text": "Quel était le nom d'origine du moteur de recherche Google ?",
           "choices": [
             "BackRub",
             "SearchPro",
             "CatMassage",
-            "Navigateur Netscape"
+            "Netscape Navigator"
           ],
-          "explanation": "La bonne réponse est : BackRub."
+          "explanation": "Le moteur de Larry Page et Sergey Brin s'appelait BackRub car il analysait les liens entrants."
+        }
+      }
+    },
+    {
+      "id": "general_051",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many days are there in a leap year?",
+          "choices": [
+            "365",
+            "364",
+            "367",
+            "366"
+          ],
+          "explanation": "A leap year adds 29 February, roughly every four years, to keep the calendar in step with the seasons."
+        },
+        "fr": {
+          "text": "Combien de jours compte une année bissextile ?",
+          "choices": [
+            "365",
+            "364",
+            "367",
+            "366"
+          ],
+          "explanation": "Une année bissextile ajoute le 29 février, environ tous les quatre ans, pour caler le calendrier sur les saisons."
+        }
+      }
+    },
+    {
+      "id": "general_052",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What colour do you get by mixing blue and yellow paint?",
+          "choices": [
+            "Brown",
+            "Orange",
+            "Green",
+            "Purple"
+          ],
+          "explanation": "Blue and yellow are primary colours in painting; together they make green."
+        },
+        "fr": {
+          "text": "Quelle couleur obtient-on en mélangeant de la peinture bleue et jaune ?",
+          "choices": [
+            "Marron",
+            "Orange",
+            "Vert",
+            "Violet"
+          ],
+          "explanation": "Le bleu et le jaune sont des couleurs primaires en peinture ; mélangés, ils donnent du vert."
+        }
+      }
+    },
+    {
+      "id": "general_053",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many sides does a hexagon have?",
+          "choices": [
+            "6",
+            "8",
+            "7",
+            "5"
+          ],
+          "explanation": "\"Hexa\" means six in Greek. Bees build hexagonal cells because the shape uses the least wax."
+        },
+        "fr": {
+          "text": "Combien de côtés a un hexagone ?",
+          "choices": [
+            "6",
+            "8",
+            "7",
+            "5"
+          ],
+          "explanation": "« Hexa » signifie six en grec. Les abeilles font des alvéoles hexagonales, la forme qui économise le plus de cire."
+        }
+      }
+    },
+    {
+      "id": "general_054",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who painted the Mona Lisa?",
+          "choices": [
+            "Botticelli",
+            "Michelangelo",
+            "Raphael",
+            "Leonardo da Vinci"
+          ],
+          "explanation": "Leonardo da Vinci painted it in the early 1500s; it has hung in the Louvre since the French Revolution."
+        },
+        "fr": {
+          "text": "Qui a peint La Joconde ?",
+          "choices": [
+            "Botticelli",
+            "Michel-Ange",
+            "Raphaël",
+            "Léonard de Vinci"
+          ],
+          "explanation": "Léonard de Vinci l'a peinte au début du XVIe siècle ; elle est au Louvre depuis la Révolution."
+        }
+      }
+    },
+    {
+      "id": "general_055",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many minutes are there in a day?",
+          "choices": [
+            "3,600",
+            "2,400",
+            "1,200",
+            "1,440"
+          ],
+          "explanation": "24 hours × 60 minutes = 1,440 minutes."
+        },
+        "fr": {
+          "text": "Combien de minutes y a-t-il dans une journée ?",
+          "choices": [
+            "3 600",
+            "2 400",
+            "1 200",
+            "1 440"
+          ],
+          "explanation": "24 heures × 60 minutes = 1 440 minutes."
+        }
+      }
+    },
+    {
+      "id": "general_056",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which fruit is used to make guacamole?",
+          "choices": [
+            "Tomato",
+            "Mango",
+            "Lime",
+            "Avocado"
+          ],
+          "explanation": "Guacamole comes from Mexico; the Aztecs already mashed avocados, whose name comes from the Nahuatl ahuacatl."
+        },
+        "fr": {
+          "text": "Quel fruit est la base du guacamole ?",
+          "choices": [
+            "La tomate",
+            "La mangue",
+            "Le citron vert",
+            "L'avocat"
+          ],
+          "explanation": "Le guacamole vient du Mexique ; les Aztèques écrasaient déjà l'avocat, ahuacatl en nahuatl."
+        }
+      }
+    },
+    {
+      "id": "general_057",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which country is the city of Venice?",
+          "choices": [
+            "Croatia",
+            "Spain",
+            "Greece",
+            "Italy"
+          ],
+          "explanation": "Venice is built on 118 small islands in a lagoon of the Adriatic, linked by over 400 bridges."
+        },
+        "fr": {
+          "text": "Dans quel pays se trouve la ville de Venise ?",
+          "choices": [
+            "Croatie",
+            "Espagne",
+            "Grèce",
+            "Italie"
+          ],
+          "explanation": "Venise est bâtie sur 118 îlots d'une lagune de l'Adriatique, reliés par plus de 400 ponts."
+        }
+      }
+    },
+    {
+      "id": "general_058",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the main ingredient of a traditional omelette?",
+          "choices": [
+            "Potatoes",
+            "Flour",
+            "Eggs",
+            "Milk"
+          ],
+          "explanation": "An omelette is simply beaten eggs cooked in a pan; the Mont-Saint-Michel one is famously fluffy."
+        },
+        "fr": {
+          "text": "Quel est l'ingrédient principal d'une omelette ?",
+          "choices": [
+            "Les pommes de terre",
+            "La farine",
+            "Les œufs",
+            "Le lait"
+          ],
+          "explanation": "Une omelette, ce sont des œufs battus cuits à la poêle ; celle du Mont-Saint-Michel est célèbre pour son moelleux."
+        }
+      }
+    },
+    {
+      "id": "general_059",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of the fairy in Peter Pan?",
+          "choices": [
+            "Merryweather",
+            "Fauna",
+            "Tinker Bell",
+            "Wendy"
+          ],
+          "explanation": "Tinker Bell was created by J. M. Barrie in 1904; her name comes from the tinkling sound she makes."
+        },
+        "fr": {
+          "text": "Comment s'appelle la fée de Peter Pan ?",
+          "choices": [
+            "Pimprenelle",
+            "Pâquerette",
+            "Clochette",
+            "Wendy"
+          ],
+          "explanation": "La fée Clochette a été créée par J. M. Barrie en 1904 ; son nom vient du tintement qu'elle produit."
+        }
+      }
+    },
+    {
+      "id": "general_060",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which fruit becomes a prune when dried?",
+          "choices": [
+            "Grape",
+            "Apricot",
+            "Fig",
+            "Plum"
+          ],
+          "explanation": "Prunes are dried plums; the Agen prune is a famous French speciality."
+        },
+        "fr": {
+          "text": "Quel fruit, une fois séché, donne le pruneau ?",
+          "choices": [
+            "Le raisin",
+            "L'abricot",
+            "La figue",
+            "La prune"
+          ],
+          "explanation": "Le pruneau est une prune séchée ; celui d'Agen est une spécialité française réputée."
+        }
+      }
+    },
+    {
+      "id": "general_061",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who wrote 'Romeo and Juliet'?",
+          "choices": [
+            "Charles Dickens",
+            "Molière",
+            "William Shakespeare",
+            "Victor Hugo"
+          ],
+          "explanation": "Shakespeare wrote the tragedy around 1595; it is set in Verona, Italy."
+        },
+        "fr": {
+          "text": "Qui a écrit « Roméo et Juliette » ?",
+          "choices": [
+            "Charles Dickens",
+            "Molière",
+            "William Shakespeare",
+            "Victor Hugo"
+          ],
+          "explanation": "Shakespeare a écrit cette tragédie vers 1595 ; elle se déroule à Vérone, en Italie."
+        }
+      }
+    },
+    {
+      "id": "general_062",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In Greek mythology, who is the king of the gods?",
+          "choices": [
+            "Zeus",
+            "Apollo",
+            "Poseidon",
+            "Hades"
+          ],
+          "explanation": "Zeus rules from Mount Olympus and wields the thunderbolt; the Romans called him Jupiter."
+        },
+        "fr": {
+          "text": "Dans la mythologie grecque, qui est le roi des dieux ?",
+          "choices": [
+            "Zeus",
+            "Apollon",
+            "Poséidon",
+            "Hadès"
+          ],
+          "explanation": "Zeus règne depuis l'Olympe et manie la foudre ; les Romains l'appelaient Jupiter."
+        }
+      }
+    },
+    {
+      "id": "general_063",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What does the 'www' in a web address stand for?",
+          "choices": [
+            "World Wide Web",
+            "World Web Wire",
+            "Wide Web World",
+            "Web World Wide"
+          ],
+          "explanation": "Tim Berners-Lee invented the World Wide Web at CERN, near Geneva, in 1989."
+        },
+        "fr": {
+          "text": "Que signifie le « www » d'une adresse web ?",
+          "choices": [
+            "World Wide Web",
+            "World Web Wire",
+            "Wide Web World",
+            "Web World Wide"
+          ],
+          "explanation": "Tim Berners-Lee a inventé le World Wide Web au CERN, près de Genève, en 1989."
+        }
+      }
+    },
+    {
+      "id": "general_064",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which language has the most native speakers in the world?",
+          "choices": [
+            "Mandarin Chinese",
+            "Spanish",
+            "English",
+            "Hindi"
+          ],
+          "explanation": "Mandarin has over 900 million native speakers; English leads only when learners are counted."
+        },
+        "fr": {
+          "text": "Quelle langue compte le plus de locuteurs natifs au monde ?",
+          "choices": [
+            "Le chinois mandarin",
+            "L'espagnol",
+            "L'anglais",
+            "L'hindi"
+          ],
+          "explanation": "Le mandarin a plus de 900 millions de locuteurs natifs ; l'anglais ne passe devant qu'en comptant ceux qui l'apprennent."
+        }
+      }
+    },
+    {
+      "id": "general_065",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which instrument has 88 keys?",
+          "choices": [
+            "Piano",
+            "Accordion",
+            "Organ",
+            "Harpsichord"
+          ],
+          "explanation": "A standard piano has 52 white keys and 36 black keys, covering just over seven octaves."
+        },
+        "fr": {
+          "text": "Quel instrument possède 88 touches ?",
+          "choices": [
+            "Le piano",
+            "L'accordéon",
+            "L'orgue",
+            "Le clavecin"
+          ],
+          "explanation": "Un piano standard a 52 touches blanches et 36 noires, soit un peu plus de sept octaves."
+        }
+      }
+    },
+    {
+      "id": "general_066",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the hardest natural material?",
+          "choices": [
+            "Quartz",
+            "Titanium",
+            "Granite",
+            "Diamond"
+          ],
+          "explanation": "Diamond is pure carbon; it scores 10, the maximum, on the Mohs hardness scale."
+        },
+        "fr": {
+          "text": "Quel est le matériau naturel le plus dur ?",
+          "choices": [
+            "Le quartz",
+            "Le titane",
+            "Le granit",
+            "Le diamant"
+          ],
+          "explanation": "Le diamant est du carbone pur ; il atteint 10, le maximum, sur l'échelle de dureté de Mohs."
+        }
+      }
+    },
+    {
+      "id": "general_067",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which city is the Statue of Liberty?",
+          "choices": [
+            "Boston",
+            "Washington",
+            "New York",
+            "Philadelphia"
+          ],
+          "explanation": "France gave the statue to the US in 1886; Gustave Eiffel designed its internal structure."
+        },
+        "fr": {
+          "text": "Dans quelle ville se trouve la statue de la Liberté ?",
+          "choices": [
+            "Boston",
+            "Washington",
+            "New York",
+            "Philadelphie"
+          ],
+          "explanation": "La France a offert la statue aux États-Unis en 1886 ; Gustave Eiffel a conçu sa structure interne."
+        }
+      }
+    },
+    {
+      "id": "general_068",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many strings does a standard guitar have?",
+          "choices": [
+            "5",
+            "4",
+            "7",
+            "6"
+          ],
+          "explanation": "From lowest to highest they are usually tuned E, A, D, G, B, E."
+        },
+        "fr": {
+          "text": "Combien de cordes a une guitare classique standard ?",
+          "choices": [
+            "5",
+            "4",
+            "7",
+            "6"
+          ],
+          "explanation": "De la plus grave à la plus aiguë, elles sont accordées mi, la, ré, sol, si, mi."
+        }
+      }
+    },
+    {
+      "id": "general_069",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which country gave the world pizza?",
+          "choices": [
+            "United States",
+            "Greece",
+            "France",
+            "Italy"
+          ],
+          "explanation": "Modern pizza was born in Naples; the margherita is said to be named after Queen Margherita in 1889."
+        },
+        "fr": {
+          "text": "De quel pays vient la pizza ?",
+          "choices": [
+            "États-Unis",
+            "Grèce",
+            "France",
+            "Italie"
+          ],
+          "explanation": "La pizza moderne est née à Naples ; la margherita porterait le nom de la reine Marguerite, en 1889."
+        }
+      }
+    },
+    {
+      "id": "general_070",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who wrote 'Les Misérables'?",
+          "choices": [
+            "Honoré de Balzac",
+            "Émile Zola",
+            "Alexandre Dumas",
+            "Victor Hugo"
+          ],
+          "explanation": "Victor Hugo published it in 1862 while in exile on the island of Guernsey."
+        },
+        "fr": {
+          "text": "Qui a écrit « Les Misérables » ?",
+          "choices": [
+            "Honoré de Balzac",
+            "Émile Zola",
+            "Alexandre Dumas",
+            "Victor Hugo"
+          ],
+          "explanation": "Victor Hugo l'a publié en 1862, pendant son exil sur l'île de Guernesey."
+        }
+      }
+    },
+    {
+      "id": "general_071",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the currency of Japan?",
+          "choices": [
+            "Yen",
+            "Ringgit",
+            "Won",
+            "Yuan"
+          ],
+          "explanation": "The yen has been Japan's currency since 1871; the yuan is China's and the won Korea's."
+        },
+        "fr": {
+          "text": "Quelle est la monnaie du Japon ?",
+          "choices": [
+            "Le yen",
+            "Le ringgit",
+            "Le won",
+            "Le yuan"
+          ],
+          "explanation": "Le yen est la monnaie du Japon depuis 1871 ; le yuan est chinois et le won coréen."
+        }
+      }
+    },
+    {
+      "id": "general_072",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which chess piece can only move diagonally?",
+          "choices": [
+            "Bishop",
+            "Rook",
+            "Knight",
+            "King"
+          ],
+          "explanation": "Each bishop stays on the same colour of square for the whole game."
+        },
+        "fr": {
+          "text": "Quelle pièce d'échecs se déplace uniquement en diagonale ?",
+          "choices": [
+            "Le fou",
+            "La tour",
+            "Le cavalier",
+            "Le roi"
+          ],
+          "explanation": "Chaque fou reste sur la même couleur de case pendant toute la partie."
+        }
+      }
+    },
+    {
+      "id": "general_073",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of the famous clock tower in London?",
+          "choices": [
+            "Tower Bridge",
+            "Big Ben",
+            "The Gherkin",
+            "The Shard"
+          ],
+          "explanation": "Big Ben is strictly the great bell; the tower was renamed Elizabeth Tower in 2012."
+        },
+        "fr": {
+          "text": "Comment appelle-t-on la célèbre tour de l'horloge de Londres ?",
+          "choices": [
+            "Tower Bridge",
+            "Big Ben",
+            "The Gherkin",
+            "The Shard"
+          ],
+          "explanation": "Big Ben désigne en fait la grosse cloche ; la tour a été rebaptisée Elizabeth Tower en 2012."
+        }
+      }
+    },
+    {
+      "id": "general_074",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which blood type is known as the universal donor?",
+          "choices": [
+            "A positive",
+            "O negative",
+            "B negative",
+            "AB positive"
+          ],
+          "explanation": "O-negative red cells carry no A, B or Rh antigens, so almost anyone can receive them."
+        },
+        "fr": {
+          "text": "Quel groupe sanguin est appelé « donneur universel » ?",
+          "choices": [
+            "A positif",
+            "O négatif",
+            "B négatif",
+            "AB positif"
+          ],
+          "explanation": "Les globules rouges O négatif ne portent ni antigène A, ni B, ni Rhésus : presque tout le monde peut les recevoir."
+        }
+      }
+    },
+    {
+      "id": "general_075",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which famous detective lives at 221B Baker Street?",
+          "choices": [
+            "Hercule Poirot",
+            "Sherlock Holmes",
+            "Arsène Lupin",
+            "Jules Maigret"
+          ],
+          "explanation": "Arthur Conan Doyle created Sherlock Holmes in 1887; the address now houses a museum."
+        },
+        "fr": {
+          "text": "Quel célèbre détective habite au 221B Baker Street ?",
+          "choices": [
+            "Hercule Poirot",
+            "Sherlock Holmes",
+            "Arsène Lupin",
+            "Jules Maigret"
+          ],
+          "explanation": "Arthur Conan Doyle a créé Sherlock Holmes en 1887 ; l'adresse abrite aujourd'hui un musée."
+        }
+      }
+    },
+    {
+      "id": "general_076",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many zeros are there in one million?",
+          "choices": [
+            "5",
+            "6",
+            "9",
+            "7"
+          ],
+          "explanation": "One million is 1,000,000, or 10 to the power of 6."
+        },
+        "fr": {
+          "text": "Combien de zéros compte un million ?",
+          "choices": [
+            "5",
+            "6",
+            "9",
+            "7"
+          ],
+          "explanation": "Un million s'écrit 1 000 000, soit 10 puissance 6."
+        }
+      }
+    },
+    {
+      "id": "general_077",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which artist cut off part of his own ear in 1888?",
+          "choices": [
+            "Claude Monet",
+            "Edvard Munch",
+            "Vincent van Gogh",
+            "Paul Gauguin"
+          ],
+          "explanation": "Van Gogh did it in Arles after an argument with Gauguin; he later painted himself with a bandaged ear."
+        },
+        "fr": {
+          "text": "Quel peintre s'est tranché une partie de l'oreille en 1888 ?",
+          "choices": [
+            "Claude Monet",
+            "Edvard Munch",
+            "Vincent van Gogh",
+            "Paul Gauguin"
+          ],
+          "explanation": "Van Gogh l'a fait à Arles après une dispute avec Gauguin ; il s'est ensuite peint avec l'oreille bandée."
+        }
+      }
+    },
+    {
+      "id": "general_078",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What does the Latin phrase 'carpe diem' mean?",
+          "choices": [
+            "Seize the day",
+            "Remember you will die",
+            "Know yourself",
+            "I came, I saw, I conquered"
+          ],
+          "explanation": "The phrase comes from the Roman poet Horace, in his Odes (23 BC)."
+        },
+        "fr": {
+          "text": "Que signifie l'expression latine « carpe diem » ?",
+          "choices": [
+            "Cueille le jour",
+            "Souviens-toi que tu vas mourir",
+            "Connais-toi toi-même",
+            "Je suis venu, j'ai vu, j'ai vaincu"
+          ],
+          "explanation": "L'expression vient du poète romain Horace, dans ses Odes (23 av. J.-C.)."
+        }
+      }
+    },
+    {
+      "id": "general_079",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which novel begins with 'Call me Ishmael'?",
+          "choices": [
+            "Treasure Island",
+            "Robinson Crusoe",
+            "Twenty Thousand Leagues Under the Seas",
+            "Moby-Dick"
+          ],
+          "explanation": "Herman Melville's Moby-Dick (1851) tells Captain Ahab's hunt for a white whale."
+        },
+        "fr": {
+          "text": "Quel roman commence par « Appelez-moi Ismaël » ?",
+          "choices": [
+            "L'Île au trésor",
+            "Robinson Crusoé",
+            "Vingt mille lieues sous les mers",
+            "Moby Dick"
+          ],
+          "explanation": "Moby Dick d'Herman Melville (1851) raconte la traque d'une baleine blanche par le capitaine Achab."
+        }
+      }
+    },
+    {
+      "id": "general_080",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which city was the first modern Olympic Games held in 1896?",
+          "choices": [
+            "Paris",
+            "London",
+            "Athens",
+            "Rome"
+          ],
+          "explanation": "Pierre de Coubertin revived the Games in Athens, as a nod to their Greek origins."
+        },
+        "fr": {
+          "text": "Dans quelle ville se sont tenus les premiers Jeux olympiques modernes, en 1896 ?",
+          "choices": [
+            "Paris",
+            "Londres",
+            "Athènes",
+            "Rome"
+          ],
+          "explanation": "Pierre de Coubertin a relancé les Jeux à Athènes, en hommage à leurs origines grecques."
+        }
+      }
+    },
+    {
+      "id": "general_081",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of the writing system used by blind people?",
+          "choices": [
+            "Cuneiform",
+            "Braille",
+            "Semaphore",
+            "Morse"
+          ],
+          "explanation": "Louis Braille, blind since childhood, invented it in France at 15, in 1824."
+        },
+        "fr": {
+          "text": "Comment s'appelle l'écriture tactile utilisée par les personnes aveugles ?",
+          "choices": [
+            "Le cunéiforme",
+            "Le braille",
+            "Le sémaphore",
+            "Le morse"
+          ],
+          "explanation": "Louis Braille, aveugle depuis l'enfance, l'a inventé en France à 15 ans, en 1824."
+        }
+      }
+    },
+    {
+      "id": "general_082",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the plural of 'cheval' in French?",
+          "choices": [
+            "Chevals",
+            "Chevaux",
+            "Chevales",
+            "Chevaus"
+          ],
+          "explanation": "Most French words ending in -al take -aux in the plural; bal, carnaval and festival are exceptions."
+        },
+        "fr": {
+          "text": "Quel est le pluriel de « cheval » ?",
+          "choices": [
+            "Chevals",
+            "Chevaux",
+            "Chevales",
+            "Chevaus"
+          ],
+          "explanation": "La plupart des mots en -al font -aux au pluriel ; bal, carnaval et festival font exception."
+        }
+      }
+    },
+    {
+      "id": "general_083",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Greek letter is used for the ratio of a circle's circumference to its diameter?",
+          "choices": [
+            "Omega (Ω)",
+            "Pi (π)",
+            "Sigma (Σ)",
+            "Delta (Δ)"
+          ],
+          "explanation": "π is about 3.14159; its decimals go on forever without repeating."
+        },
+        "fr": {
+          "text": "Quelle lettre grecque désigne le rapport entre la circonférence d'un cercle et son diamètre ?",
+          "choices": [
+            "Oméga (Ω)",
+            "Pi (π)",
+            "Sigma (Σ)",
+            "Delta (Δ)"
+          ],
+          "explanation": "π vaut environ 3,14159 ; ses décimales continuent à l'infini sans se répéter."
+        }
+      }
+    },
+    {
+      "id": "general_084",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who composed 'The Four Seasons'?",
+          "choices": [
+            "Ludwig van Beethoven",
+            "Wolfgang Amadeus Mozart",
+            "Antonio Vivaldi",
+            "Johann Sebastian Bach"
+          ],
+          "explanation": "Vivaldi, a Venetian priest nicknamed \"the Red Priest\", published these four violin concertos in 1725."
+        },
+        "fr": {
+          "text": "Qui a composé « Les Quatre Saisons » ?",
+          "choices": [
+            "Ludwig van Beethoven",
+            "Wolfgang Amadeus Mozart",
+            "Antonio Vivaldi",
+            "Jean-Sébastien Bach"
+          ],
+          "explanation": "Vivaldi, prêtre vénitien surnommé « le Prêtre roux », a publié ces quatre concertos pour violon en 1725."
+        }
+      }
+    },
+    {
+      "id": "general_085",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which company created the video game character Mario?",
+          "choices": [
+            "Sega",
+            "Sony",
+            "Nintendo",
+            "Atari"
+          ],
+          "explanation": "Shigeru Miyamoto created Mario for Donkey Kong (1981), where he was first called Jumpman."
+        },
+        "fr": {
+          "text": "Quelle entreprise a créé le personnage de jeu vidéo Mario ?",
+          "choices": [
+            "Sega",
+            "Sony",
+            "Nintendo",
+            "Atari"
+          ],
+          "explanation": "Shigeru Miyamoto a créé Mario pour Donkey Kong (1981), où il s'appelait d'abord Jumpman."
+        }
+      }
+    },
+    {
+      "id": "general_086",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the national animal of Scotland?",
+          "choices": [
+            "Lion",
+            "Eagle",
+            "Unicorn",
+            "Stag"
+          ],
+          "explanation": "The unicorn, a symbol of purity and power, appears on Scotland's royal coat of arms."
+        },
+        "fr": {
+          "text": "Quel est l'animal national de l'Écosse ?",
+          "choices": [
+            "Le lion",
+            "L'aigle",
+            "La licorne",
+            "Le cerf"
+          ],
+          "explanation": "La licorne, symbole de pureté et de puissance, figure sur les armoiries royales écossaises."
+        }
+      }
+    },
+    {
+      "id": "general_087",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which architect designed the glass pyramid of the Louvre?",
+          "choices": [
+            "Renzo Piano",
+            "Frank Gehry",
+            "Jean Nouvel",
+            "I. M. Pei"
+          ],
+          "explanation": "The pyramid by Chinese-American architect I. M. Pei opened in 1989 and was controversial at first."
+        },
+        "fr": {
+          "text": "Quel architecte a conçu la pyramide de verre du Louvre ?",
+          "choices": [
+            "Renzo Piano",
+            "Frank Gehry",
+            "Jean Nouvel",
+            "Ieoh Ming Pei"
+          ],
+          "explanation": "La pyramide de l'architecte sino-américain Ieoh Ming Pei a ouvert en 1989, d'abord sous les critiques."
+        }
+      }
+    },
+    {
+      "id": "general_088",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many squares are there on a chessboard?",
+          "choices": [
+            "56",
+            "81",
+            "64",
+            "72"
+          ],
+          "explanation": "A chessboard is an 8 × 8 grid of alternating light and dark squares."
+        },
+        "fr": {
+          "text": "Combien de cases compte un échiquier ?",
+          "choices": [
+            "56",
+            "81",
+            "64",
+            "72"
+          ],
+          "explanation": "Un échiquier est une grille de 8 × 8 cases alternativement claires et foncées."
+        }
+      }
+    },
+    {
+      "id": "general_089",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which year did the euro become cash in France?",
+          "choices": [
+            "1999",
+            "2004",
+            "2002",
+            "2000"
+          ],
+          "explanation": "The euro existed for banks from 1999; coins and notes arrived on 1 January 2002."
+        },
+        "fr": {
+          "text": "En quelle année l'euro est-il arrivé en pièces et billets en France ?",
+          "choices": [
+            "1999",
+            "2004",
+            "2002",
+            "2000"
+          ],
+          "explanation": "L'euro existait pour les banques depuis 1999 ; pièces et billets sont arrivés le 1er janvier 2002."
         }
       }
     }

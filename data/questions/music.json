@@ -19,17 +19,17 @@
             "Dominic Howard",
             "Matt Bellamy"
           ],
-          "explanation": "The correct answer is: Matt Bellamy."
+          "explanation": "Matt Bellamy sings and plays guitar and piano in Muse, formed in Teignmouth, England, in 1994."
         },
         "fr": {
-          "text": "Qui est le premier de Muse ?",
+          "text": "Qui est le chanteur et leader du groupe Muse ?",
           "choices": [
             "Jonny Greenwood",
             "Thom Yorke",
             "Dominic Howard",
             "Matt Bellamy"
           ],
-          "explanation": "La bonne réponse est : Matt Bellamy."
+          "explanation": "Matt Bellamy chante et joue guitare et piano dans Muse, formé à Teignmouth, en Angleterre, en 1994."
         }
       }
     },
@@ -51,17 +51,17 @@
             "Austria",
             "Germany"
           ],
-          "explanation": "The correct answer is: Italy."
+          "explanation": "Bartolomeo Cristofori built the first piano in Florence around 1700."
         },
         "fr": {
-          "text": "De quel pays provient le piano ?",
+          "text": "De quel pays provient le piano ?",
           "choices": [
             "France",
             "Italie",
             "Autriche",
             "Allemagne"
           ],
-          "explanation": "La bonne réponse est: Italie."
+          "explanation": "Bartolomeo Cristofori a construit le premier piano à Florence vers 1700."
         }
       }
     },
@@ -83,17 +83,17 @@
             "Street Lights",
             "Heartless"
           ],
-          "explanation": "The correct answer is: Say You Will."
+          "explanation": "\"Say You Will\" opens 808s & Heartbreak (2008), Kanye's album built around Auto-Tune and grief."
         },
         "fr": {
-          "text": "Quelle est la première piste sur les 808 et Heartbreak de Kanye West ?",
+          "text": "Quel est le premier titre de l'album 808s & Heartbreak de Kanye West ?",
           "choices": [
             "Say You Will",
             "Welcome to Heartbreak",
             "Street Lights",
             "Heartless"
           ],
-          "explanation": "La bonne réponse est: Dites que vous voulez."
+          "explanation": "« Say You Will » ouvre 808s & Heartbreak (2008), l'album de Kanye West construit autour de l'Auto-Tune et du deuil."
         }
       }
     },
@@ -115,17 +115,17 @@
             "2001",
             "2004"
           ],
-          "explanation": "The correct answer is: 2002."
+          "explanation": "Let Go came out in 2002 when Avril Lavigne was 17, with the hits \"Complicated\" and \"Sk8er Boi\"."
         },
         "fr": {
-          "text": "En quelle année est sorti le premier album studio d'Avril Lavigne, Let Go, ?",
+          "text": "En quelle année est sorti Let Go, le premier album studio d'Avril Lavigne ?",
           "choices": [
             "2005",
             "2002",
             "2001",
             "2004"
           ],
-          "explanation": "La bonne réponse est : 2002."
+          "explanation": "Let Go est sorti en 2002, quand Avril Lavigne avait 17 ans, avec les tubes « Complicated » et « Sk8er Boi »."
         }
       }
     },
@@ -147,17 +147,17 @@
             "Lordi",
             "Apocalyptica"
           ],
-          "explanation": "The correct answer is: Sabaton."
+          "explanation": "Sabaton is a Swedish band known for songs about battles; Lordi won Eurovision for Finland in 2006."
         },
         "fr": {
-          "text": "Lequel des groupes de musique suivants n'est pas de Finlande ?",
+          "text": "Lequel de ces groupes n'est PAS finlandais ?",
           "choices": [
             "Sabaton",
             "Waltari",
             "Lordi",
             "Apocalyptica"
           ],
-          "explanation": "La bonne réponse est : Sabaton."
+          "explanation": "Sabaton est un groupe suédois connu pour ses chansons sur les batailles ; Lordi a gagné l'Eurovision pour la Finlande en 2006."
         }
       }
     },
@@ -179,49 +179,17 @@
             "The Low End Theory",
             "Enter The Wu-Tang (36 Chambers)"
           ],
-          "explanation": "The correct answer is: Illmatic."
+          "explanation": "Nas released Illmatic in 1994 at 20; critics hail it as one of the greatest hip-hop albums."
         },
         "fr": {
-          "text": "Quel célèbre album de rap des années 90 est communément appelé \"La Bible de Hip Hop\" ?",
+          "text": "Quel célèbre album de rap des années 90 est surnommé « la Bible du hip-hop » ?",
           "choices": [
             "Illmatic",
             "The Chronic",
             "The Low End Theory",
             "Enter The Wu-Tang (36 Chambers)"
           ],
-          "explanation": "La bonne réponse est : Illmatic."
-        }
-      }
-    },
-    {
-      "id": "music_007",
-      "category": "music",
-      "difficulty": 2,
-      "correct_index": 0,
-      "locales": [
-        "fr",
-        "en"
-      ],
-      "translations": {
-        "en": {
-          "text": "How many copies have Metallica album \"Metallica\" (A.K.A The Black Album) sold worldwide (in Millions of Copies)?",
-          "choices": [
-            "20.5",
-            "25.5",
-            "22.5",
-            "19.5"
-          ],
-          "explanation": "The correct answer is: 20.5."
-        },
-        "fr": {
-          "text": "Combien d'exemplaires ont Metallica album \"Metallica\" (A.K.A The Black Album) vendu dans le monde entier (en millions de copies) ?",
-          "choices": [
-            "20.5",
-            "25.5",
-            "22.5",
-            "19.5"
-          ],
-          "explanation": "La bonne réponse est : 20.5."
+          "explanation": "Nas a sorti Illmatic en 1994, à 20 ans ; la critique le classe parmi les plus grands albums de hip-hop."
         }
       }
     },
@@ -243,17 +211,17 @@
             "AC/DC",
             "Metallica"
           ],
-          "explanation": "The correct answer is: AC/DC."
+          "explanation": "Back in Black (1980), AC/DC's tribute to late singer Bon Scott, is one of the best-selling albums ever."
         },
         "fr": {
-          "text": "Dont les albums comprenaient \"Back in Black\" et \"Ballbreaker\" ?",
+          "text": "Quel groupe a sorti les albums « Back in Black » et « Ballbreaker » ?",
           "choices": [
             "Iron Maiden",
             "Black Sabbath",
             "AC/DC",
             "Metallica"
           ],
-          "explanation": "La bonne réponse est : AC/DC."
+          "explanation": "Back in Black (1980), hommage d'AC/DC à son chanteur disparu Bon Scott, est l'un des albums les plus vendus de l'histoire."
         }
       }
     },
@@ -271,21 +239,21 @@
           "text": "For which civil rights activist did Stevie Wonder write the song 'Happy Birthday' in 1980?",
           "choices": [
             "Booker T. Washington",
-            "Nelson Mandella",
+            "Nelson Mandela",
             "Martin Luther King Jr",
             "Rosa Parks"
           ],
-          "explanation": "The correct answer is: Martin Luther King Jr."
+          "explanation": "Stevie Wonder's song helped campaign for a national holiday for Martin Luther King, created in 1983."
         },
         "fr": {
-          "text": "Pour quel militant des droits civils Stevie Wonder a-t-elle écrit la chanson « Joyeux anniversaire » en 1980 ?",
+          "text": "Pour quel militant des droits civiques Stevie Wonder a-t-il écrit « Happy Birthday » en 1980 ?",
           "choices": [
             "Booker T. Washington",
-            "Nelson Mandella",
+            "Nelson Mandela",
             "Martin Luther King Jr",
             "Rosa Parks"
           ],
-          "explanation": "La bonne réponse est: Martin Luther King Jr."
+          "explanation": "La chanson de Stevie Wonder a soutenu la campagne pour un jour férié en l'honneur de Martin Luther King, créé en 1983."
         }
       }
     },
@@ -300,56 +268,24 @@
       ],
       "translations": {
         "en": {
-          "text": "What song originally performed by The Bee Gees in 1978 had a cover version by Steps 20 years later?",
+          "text": "Which Bee Gees song was covered by Steps in 1998?",
           "choices": [
             "Night Fever",
             "You Should Be Dancing",
             "Stayin' Alive",
             "Tragedy"
           ],
-          "explanation": "The correct answer is: Tragedy."
+          "explanation": "The Bee Gees released \"Tragedy\" in 1979; Steps' 1998 cover reached number one in the UK."
         },
         "fr": {
-          "text": "Quelle chanson jouée à l'origine par The Bee Gees en 1978 avait une version reprise par Steps 20 ans plus tard ?",
+          "text": "Quelle chanson des Bee Gees a été reprise par Steps en 1998 ?",
           "choices": [
             "Night Fever",
             "You Should Be Dancing",
             "Stayin' Alive",
             "Tragedy"
           ],
-          "explanation": "La bonne réponse est : Tragédie."
-        }
-      }
-    },
-    {
-      "id": "music_011",
-      "category": "music",
-      "difficulty": 2,
-      "correct_index": 2,
-      "locales": [
-        "fr",
-        "en"
-      ],
-      "translations": {
-        "en": {
-          "text": "Which song is not by TheFatRat?",
-          "choices": [
-            "Monody",
-            "Windfall",
-            "Ascent",
-            "Infinite Power!"
-          ],
-          "explanation": "The correct answer is: Ascent."
-        },
-        "fr": {
-          "text": "Quelle chanson n'est pas de TheFatRat ?",
-          "choices": [
-            "Monody",
-            "Windfall",
-            "Ascent",
-            "Infinite Power!"
-          ],
-          "explanation": "La bonne réponse est : Ascent."
+          "explanation": "Les Bee Gees ont sorti « Tragedy » en 1979 ; la reprise de Steps (1998) a été numéro un au Royaume-Uni."
         }
       }
     },
@@ -371,49 +307,17 @@
             "18",
             "Play"
           ],
-          "explanation": "The correct answer is: Play."
+          "explanation": "Moby licensed every track of Play (1999) for ads and films, turning it into a global hit."
         },
         "fr": {
-          "text": "Moby, un DJ, chanteur et musicien américain, a remporté un succès mondial pour la sortie en 1999 des albums suivants ?",
+          "text": "Avec quel album sorti en 1999 Moby a-t-il connu un succès mondial ?",
           "choices": [
             "Everything Is Wrong",
             "Moby",
             "18",
             "Play"
           ],
-          "explanation": "La bonne réponse est : Jouer."
-        }
-      }
-    },
-    {
-      "id": "music_013",
-      "category": "music",
-      "difficulty": 3,
-      "correct_index": 2,
-      "locales": [
-        "fr",
-        "en"
-      ],
-      "translations": {
-        "en": {
-          "text": "What album is the song 'New Slang' by The Shins found on?",
-          "choices": [
-            "Wincing The Night Away",
-            "Port Of Morrow",
-            "Oh, Inverted World",
-            "Chutes Too Narrow"
-          ],
-          "explanation": "The correct answer is: Oh, Inverted World."
-        },
-        "fr": {
-          "text": "Sur quel album est la chanson 'New Slang' de The Shins ?",
-          "choices": [
-            "Wincing The Night Away",
-            "Port Of Morrow",
-            "Oh, Inverted World",
-            "Chutes Too Narrow"
-          ],
-          "explanation": "La bonne réponse est : Oh, monde inversé."
+          "explanation": "Moby a placé chaque titre de Play (1999) dans des pubs et des films, ce qui en a fait un succès mondial."
         }
       }
     },
@@ -428,24 +332,24 @@
       ],
       "translations": {
         "en": {
-          "text": "The Who's eponymous line, \"Teenage Wasteland\", appears in which of their songs?",
+          "text": "The line \"Teenage Wasteland\" appears in which song by The Who?",
           "choices": [
             "The Seeker",
             "Won't Get Fooled Again",
             "Baba O' Riley",
             "Pinball Wizard"
           ],
-          "explanation": "The correct answer is: Baba O' Riley."
+          "explanation": "\"Baba O'Riley\" (1971) is often wrongly called \"Teenage Wasteland\" because of its chorus."
         },
         "fr": {
-          "text": "La ligne éponyme de Who, \"Teenage Wasteland\", apparaît dans laquelle de leurs chansons?",
+          "text": "Dans quelle chanson des Who entend-on « Teenage Wasteland » ?",
           "choices": [
             "The Seeker",
             "Won't Get Fooled Again",
             "Baba O' Riley",
             "Pinball Wizard"
           ],
-          "explanation": "La bonne réponse est : Baba O' Riley."
+          "explanation": "« Baba O'Riley » (1971) est souvent appelée à tort « Teenage Wasteland » à cause de son refrain."
         }
       }
     },
@@ -467,17 +371,17 @@
             "Homework",
             "Discovery"
           ],
-          "explanation": "The correct answer is: Discovery."
+          "explanation": "Discovery (2001) also includes \"One More Time\"; Kanye West sampled \"Harder, Better...\" in \"Stronger\"."
         },
         "fr": {
-          "text": "Quel album Daft Punk est la chanson \"Harder, Better, Faster, Stronger\" de ?",
+          "text": "De quel album de Daft Punk est extrait « Harder, Better, Faster, Stronger » ?",
           "choices": [
             "Random Access Memories",
             "Human After All",
             "Homework",
             "Discovery"
           ],
-          "explanation": "La bonne réponse est : Découverte."
+          "explanation": "Discovery (2001) contient aussi « One More Time » ; Kanye West a samplé « Harder, Better... » dans « Stronger »."
         }
       }
     },
@@ -499,17 +403,17 @@
             "Queen",
             "Pink Floyd"
           ],
-          "explanation": "The correct answer is: Queen."
+          "explanation": "Brian May built his own guitar, the Red Special, with his father; he also holds a PhD in astrophysics."
         },
         "fr": {
-          "text": "Brian May était le guitariste pour quel groupe ?",
+          "text": "De quel groupe Brian May était-il le guitariste ?",
           "choices": [
             "The Doors",
             "Rolling Stones",
             "Queen",
             "Pink Floyd"
           ],
-          "explanation": "La bonne réponse est : Reine."
+          "explanation": "Brian May a fabriqué sa guitare, la Red Special, avec son père ; il est aussi docteur en astrophysique."
         }
       }
     },
@@ -531,17 +435,17 @@
             "Vietnam",
             "Japan"
           ],
-          "explanation": "The correct answer is: Japan."
+          "explanation": "Kyary Pamyu Pamyu is a star of Tokyo's colourful Harajuku \"kawaii\" pop culture."
         },
         "fr": {
-          "text": "De quel pays est la chanteuse Kyary Pamyu Pamyu ?",
+          "text": "De quel pays est la chanteuse Kyary Pamyu Pamyu ?",
           "choices": [
             "Corée du Sud",
             "Chine",
             "Viêt Nam",
             "Japon"
           ],
-          "explanation": "La bonne réponse est : Japon."
+          "explanation": "Kyary Pamyu Pamyu est une star de la culture pop « kawaii » et colorée du quartier Harajuku de Tokyo."
         }
       }
     },
@@ -563,17 +467,17 @@
             "Revolver",
             "Abbey Road"
           ],
-          "explanation": "The correct answer is: Revolver."
+          "explanation": "\"Eleanor Rigby\" (1966), backed only by a string octet, appears on Revolver."
         },
         "fr": {
-          "text": "Sur quel album de Beatles trouveriez-vous la chanson 'Eleanor Rigby' ?",
+          "text": "Sur quel album des Beatles trouve-t-on la chanson « Eleanor Rigby » ?",
           "choices": [
             "Rubber Soul",
-            "Help!",
+            "Help !",
             "Revolver",
             "Abbey Road"
           ],
-          "explanation": "La bonne réponse est : Revolver."
+          "explanation": "« Eleanor Rigby » (1966), accompagnée seulement d'un octuor à cordes, figure sur Revolver."
         }
       }
     },
@@ -588,24 +492,24 @@
       ],
       "translations": {
         "en": {
-          "text": "According to the American rapper Nelly, what should you do when its hot in here?",
+          "text": "According to Nelly's 2002 hit, what should you do when it's hot in here?",
           "choices": [
             "Take a cool shower",
             "Drink some water",
             "Take off all your clothes",
             "Go skinny dipping"
           ],
-          "explanation": "The correct answer is: Take off all your clothes."
+          "explanation": "\"Hot in Herre\" (2002) was Nelly's first US number one."
         },
         "fr": {
-          "text": "Selon le rappeur américain Nelly, qu'est-ce que tu dois faire quand il fait chaud ici ?",
+          "text": "Selon le tube de Nelly (2002), que faut-il faire quand il fait chaud ici ?",
           "choices": [
-            "Take a cool shower",
-            "Drink some water",
-            "Take off all your clothes",
-            "Go skinny dipping"
+            "Prendre une douche froide",
+            "Boire de l'eau",
+            "Enlever tous ses vêtements",
+            "Aller se baigner nu"
           ],
-          "explanation": "La bonne réponse est : Enlevez tous vos vêtements."
+          "explanation": "« Hot in Herre » (2002) a été le premier numéro un américain de Nelly."
         }
       }
     },
@@ -620,24 +524,24 @@
       ],
       "translations": {
         "en": {
-          "text": "Which artists' version of the song \"The Tide is High\" came first?",
+          "text": "Which artist's version of \"The Tide Is High\" came first?",
           "choices": [
             "Kardinal Offishall",
             "Atomic Kitten",
             "Blondie",
             "The Paragons"
           ],
-          "explanation": "The correct answer is: The Paragons."
+          "explanation": "Jamaican group The Paragons recorded it in 1967; Blondie made it a worldwide hit in 1980."
         },
         "fr": {
-          "text": "Quelle est la première version de la chanson \"The Tide is High\" ?",
+          "text": "Quelle version de « The Tide Is High » est sortie en premier ?",
           "choices": [
             "Kardinal Offishall",
             "Atomic Kitten",
             "Blondie",
             "The Paragons"
           ],
-          "explanation": "La bonne réponse est : Les Paragons."
+          "explanation": "Le groupe jamaïcain The Paragons l'a enregistrée en 1967 ; Blondie en a fait un tube mondial en 1980."
         }
       }
     },
@@ -659,17 +563,17 @@
             "Get Your Wings",
             "Rocks"
           ],
-          "explanation": "The correct answer is: Toys in the Attic."
+          "explanation": "\"Walk This Way\" (1975) had a second life in 1986 thanks to Run-DMC's rap-rock cover."
         },
         "fr": {
-          "text": "Quel album Aerosmith contenait \"Walk This Way\" ?",
+          "text": "Sur quel album d'Aerosmith figure « Walk This Way » ?",
           "choices": [
             "Draw the Line",
             "Toys in the Attic",
             "Get Your Wings",
             "Rocks"
           ],
-          "explanation": "La bonne réponse est : Jouets dans le grenier."
+          "explanation": "« Walk This Way » (1975) a connu une seconde vie en 1986 grâce à la reprise rap-rock de Run-DMC."
         }
       }
     },
@@ -691,17 +595,17 @@
             "III",
             "V"
           ],
-          "explanation": "The correct answer is: V."
+          "explanation": "V, pronounced \"five\", was Maroon 5's fifth album, featuring \"Sugar\" and \"Maps\"."
         },
         "fr": {
-          "text": "Quel est le nom de l'album sorti en 2014 par le groupe américain Maroon 5 ?",
+          "text": "Quel est le nom de l'album sorti en 2014 par le groupe américain Maroon 5 ?",
           "choices": [
             "IV",
             "X",
             "III",
             "V"
           ],
-          "explanation": "La bonne réponse est : V."
+          "explanation": "V, prononcé « five », était le cinquième album de Maroon 5, avec « Sugar » et « Maps »."
         }
       }
     },
@@ -723,17 +627,17 @@
             "Paris",
             "Vienna"
           ],
-          "explanation": "The correct answer is: Vienna."
+          "explanation": "Ultravox's \"Vienna\" was famously kept from UK number one by the novelty song \"Shaddap You Face\"."
         },
         "fr": {
-          "text": "Quelle capitale européenne donne son nom à une chanson d'Ultravox en 1981 ?",
+          "text": "Quelle capitale européenne a donné son nom à une chanson d'Ultravox en 1981 ?",
           "choices": [
-            "Brussels",
+            "Bruxelles",
             "Berlin",
             "Paris",
-            "Vienna"
+            "Vienne"
           ],
-          "explanation": "La bonne réponse est : Vienne."
+          "explanation": "« Vienna » d'Ultravox a été privée de la première place au Royaume-Uni par la chanson comique « Shaddap You Face »."
         }
       }
     },
@@ -755,17 +659,17 @@
             "James Hetfield",
             "Rob Halford"
           ],
-          "explanation": "The correct answer is: Dave Mustaine."
+          "explanation": "Dave Mustaine founded Megadeth in 1983 after being fired from Metallica."
         },
         "fr": {
-          "text": "Quel est le nom du groupe Megadeth ?",
+          "text": "Comment s'appelle le chanteur et leader du groupe de metal Megadeth ?",
           "choices": [
             "Dave Mustaine",
             "Vince Neil",
             "James Hetfield",
             "Rob Halford"
           ],
-          "explanation": "La bonne réponse est : Dave Mustaine."
+          "explanation": "Dave Mustaine a fondé Megadeth en 1983 après avoir été renvoyé de Metallica."
         }
       }
     },
@@ -787,17 +691,17 @@
             "4",
             "7"
           ],
-          "explanation": "The correct answer is: 4."
+          "explanation": "A seventh chord adds a seventh on top of a triad: root, third, fifth and seventh."
         },
         "fr": {
-          "text": "En théorie musicale, combien de notes sont dans un septième accord ?",
+          "text": "En théorie musicale, combien de notes compte un accord de septième ?",
           "choices": [
             "3",
             "2",
             "4",
             "7"
           ],
-          "explanation": "La bonne réponse est : 4."
+          "explanation": "Un accord de septième ajoute une septième à un accord de trois sons : fondamentale, tierce, quinte et septième."
         }
       }
     },
@@ -819,49 +723,17 @@
             "Shine On You Crazy Diamond",
             "Welcome to the Machine"
           ],
-          "explanation": "The correct answer is: Shine On You Crazy Diamond."
+          "explanation": "Barrett, who left the band in 1968, turned up unrecognisable at the studio while they recorded it in 1975."
         },
         "fr": {
-          "text": "Pink Floyd a fait cette chanson pour leur précédent chanteur Syd Barrett.",
+          "text": "Quelle chanson Pink Floyd a-t-il écrite pour son ancien chanteur Syd Barrett ?",
           "choices": [
             "Wish You Were Here",
             "Have A Cigar",
             "Shine On You Crazy Diamond",
             "Welcome to the Machine"
           ],
-          "explanation": "La bonne réponse est: Shine On You Crazy Diamond."
-        }
-      }
-    },
-    {
-      "id": "music_027",
-      "category": "music",
-      "difficulty": 2,
-      "correct_index": 1,
-      "locales": [
-        "fr",
-        "en"
-      ],
-      "translations": {
-        "en": {
-          "text": "Which Beatle wrote and sang the song \"Why Don't We Do It in the Road\" after being inspired by seeing two monkeys copulating in the street?",
-          "choices": [
-            "George",
-            "Paul",
-            "Ringo",
-            "John"
-          ],
-          "explanation": "The correct answer is: Paul."
-        },
-        "fr": {
-          "text": "Quel Beatle a écrit et chanté la chanson \"Why Don't We Do It in the Road\" après avoir été inspiré en voyant deux singes se copuler dans la rue ?",
-          "choices": [
-            "George",
-            "Paul",
-            "Ringo",
-            "John"
-          ],
-          "explanation": "La bonne réponse est : Paul."
+          "explanation": "Barrett, parti du groupe en 1968, est passé méconnaissable au studio pendant l'enregistrement en 1975."
         }
       }
     },
@@ -883,17 +755,17 @@
             "Atom Willard",
             "Scott Raynor"
           ],
-          "explanation": "The correct answer is: Scott Raynor."
+          "explanation": "Scott Raynor drummed on blink-182's early albums until 1998; Travis Barker then joined."
         },
         "fr": {
-          "text": "Qui était le batteur précédent de clin d'oeil-182 avant Travis Barker ?",
+          "text": "Qui était le batteur de blink-182 avant Travis Barker ?",
           "choices": [
             "Derek Grant",
             "Ilan Rubin",
             "Atom Willard",
             "Scott Raynor"
           ],
-          "explanation": "La bonne réponse est : Scott Raynor."
+          "explanation": "Scott Raynor a joué sur les premiers albums de blink-182 jusqu'en 1998 ; Travis Barker l'a ensuite remplacé."
         }
       }
     },
@@ -915,17 +787,17 @@
             "Toto",
             "Foreigner"
           ],
-          "explanation": "The correct answer is: Toto."
+          "explanation": "\"Africa\" from Toto IV topped the US charts in February 1983."
         },
         "fr": {
-          "text": "Qui a eu un succès 1983 avec la chanson 'Africa'?",
+          "text": "Quel groupe a eu un tube en 1983 avec la chanson « Africa » ?",
           "choices": [
             "Steely Dan",
             "Journey",
             "Toto",
             "Foreigner"
           ],
-          "explanation": "La bonne réponse est : Toto."
+          "explanation": "« Africa », extrait de Toto IV, a été numéro un aux États-Unis en février 1983."
         }
       }
     },
@@ -940,24 +812,24 @@
       ],
       "translations": {
         "en": {
-          "text": "What was the name of the cold-war singer who has a song in Grand Theft Auto IV, and a wall landmark in Moscow for his memorial?",
+          "text": "Which Soviet rock singer has a song in Grand Theft Auto IV and a memorial wall in Moscow?",
           "choices": [
             "Viktor Tsoi",
             "Brian Jones",
             "Vladimir Vysotsky",
             "Jimi Hendrix"
           ],
-          "explanation": "The correct answer is: Viktor Tsoi."
+          "explanation": "Viktor Tsoi, singer of the Soviet band Kino, died in 1990; fans still cover the Tsoi Wall on the Arbat."
         },
         "fr": {
-          "text": "Quel était le nom du chanteur de la guerre froide qui a une chanson dans Grand Theft Auto IV, et un point de repère mural à Moscou pour son mémorial ?",
+          "text": "Quel chanteur de rock soviétique a une chanson dans GTA IV et un mur à sa mémoire à Moscou ?",
           "choices": [
             "Viktor Tsoi",
             "Brian Jones",
             "Vladimir Vysotsky",
             "Jimi Hendrix"
           ],
-          "explanation": "La bonne réponse est : Viktor Tsoi."
+          "explanation": "Viktor Tsoï, chanteur du groupe soviétique Kino, est mort en 1990 ; les fans couvrent toujours le mur Tsoï sur l'Arbat."
         }
       }
     },
@@ -979,17 +851,17 @@
             "Melanie Brown",
             "Victoria Beckham"
           ],
-          "explanation": "The correct answer is: Geri Halliwell."
+          "explanation": "Geri Halliwell got her nickname from her red hair; she left the group in 1998."
         },
         "fr": {
-          "text": "Quel membre du groupe pop britannique \"The Spice Girls\" était connu sous le nom de Ginger Spice ?",
+          "text": "Quelle Spice Girl était surnommée Ginger Spice ?",
           "choices": [
             "Emma Bunton",
             "Geri Halliwell",
             "Melanie Brown",
             "Victoria Beckham"
           ],
-          "explanation": "La bonne réponse est : Geri Halliwell."
+          "explanation": "Geri Halliwell devait son surnom à ses cheveux roux ; elle a quitté le groupe en 1998."
         }
       }
     },
@@ -1011,17 +883,17 @@
             "VIZ Media",
             "Illumination Entertainment"
           ],
-          "explanation": "The correct answer is: Aardman Animations."
+          "explanation": "Aardman, the Wallace and Gromit studio, animated the clip frame by frame; it won nine MTV awards."
         },
         "fr": {
-          "text": "Quelle société a fait l'animation de la vidéo de Peter Gabriel (1986) ?",
+          "text": "Quel studio a réalisé l'animation du clip « Sledgehammer » de Peter Gabriel (1986) ?",
           "choices": [
             "HIT Entertainment",
             "Aardman Animations",
             "VIZ Media",
             "Illumination Entertainment"
           ],
-          "explanation": "La bonne réponse est : Aardman Animations."
+          "explanation": "Aardman, le studio de Wallace et Gromit, a animé le clip image par image ; il a remporté neuf MTV Awards."
         }
       }
     },
@@ -1043,17 +915,17 @@
             "Bon Iver, Bon Iver",
             "22, A Million"
           ],
-          "explanation": "The correct answer is: For Emma, Forever Ago."
+          "explanation": "Justin Vernon recorded it alone in a Wisconsin hunting cabin during winter."
         },
         "fr": {
-          "text": "Quel était le premier album de Bon Iver sorti en 2007 ?",
+          "text": "Quel était le premier album de Bon Iver, sorti en 2007 ?",
           "choices": [
             "For Emma, Forever Ago",
             "Blood Bank EP",
             "Bon Iver, Bon Iver",
             "22, A Million"
           ],
-          "explanation": "La bonne réponse est : Pour Emma, Forever Ago."
+          "explanation": "Justin Vernon l'a enregistré seul, dans une cabane de chasse du Wisconsin, en plein hiver."
         }
       }
     },
@@ -1075,17 +947,17 @@
             "Unfinished Business",
             "Watch the Throne"
           ],
-          "explanation": "The correct answer is: Watch the Throne."
+          "explanation": "Watch the Throne (2011) includes \"Otis\", built on a sample of Otis Redding."
         },
         "fr": {
-          "text": "Quel album collaboratif est sorti par Kanye West et Jay-Z en 2011 ?",
+          "text": "Quel album commun Kanye West et Jay-Z ont-ils sorti en 2011 ?",
           "choices": [
             "Distant Relatives",
-            "Quel temps pour vivre",
+            "What a Time to Be Alive",
             "Unfinished Business",
             "Watch the Throne"
           ],
-          "explanation": "La bonne réponse est : Surveillez le Trône."
+          "explanation": "Watch the Throne (2011) contient « Otis », construit sur un sample d'Otis Redding."
         }
       }
     },
@@ -1107,17 +979,17 @@
             "2000",
             "1995"
           ],
-          "explanation": "The correct answer is: 1997."
+          "explanation": "OK Computer (1997), with \"Paranoid Android\" and \"Karma Police\", is often ranked among the best albums."
         },
         "fr": {
-          "text": "Quand Radiohead a sorti leur album \"OK Computer\" ?",
+          "text": "En quelle année Radiohead a-t-il sorti l'album « OK Computer » ?",
           "choices": [
             "1993",
             "1997",
             "2000",
             "1995"
           ],
-          "explanation": "La bonne réponse est : 1997."
+          "explanation": "OK Computer (1997), avec « Paranoid Android » et « Karma Police », est souvent classé parmi les meilleurs albums."
         }
       }
     },
@@ -1139,49 +1011,17 @@
             "The Continuing Story of Bungalow Bill",
             "Why Don't We Do It in the Road?"
           ],
-          "explanation": "The correct answer is: Being For The Benefit Of Mr. Kite!."
+          "explanation": "\"Being for the Benefit of Mr. Kite!\" is on Sgt. Pepper's Lonely Hearts Club Band (1967)."
         },
         "fr": {
-          "text": "Lequel d'entre eux n'est PAS une chanson sur l'album The Beatles de 1968, aussi connu sous le nom d'album White ?",
+          "text": "Laquelle de ces chansons ne figure PAS sur l'album The Beatles de 1968, dit « l'album blanc » ?",
           "choices": [
             "Everybody's Got Something to Hide Except Me and My Monkey",
-            "Being For The Benefit Of Mr. Kite!",
+            "Being For The Benefit Of Mr. Kite !",
             "The Continuing Story of Bungalow Bill",
-            "Why Don't We Do It in the Road?"
+            "Why Don't We Do It in the Road ?"
           ],
-          "explanation": "La bonne réponse est: Être pour le bénéfice de M. Kite!."
-        }
-      }
-    },
-    {
-      "id": "music_037",
-      "category": "music",
-      "difficulty": 3,
-      "correct_index": 1,
-      "locales": [
-        "fr",
-        "en"
-      ],
-      "translations": {
-        "en": {
-          "text": "\"All the Boys\" by Panic! At the Disco was released as a bonus track on what album?",
-          "choices": [
-            "A Fever You Can't Sweat Out",
-            "Too Weird To Live, Too Rare To Die!",
-            "Death Of A Bachelor",
-            "Vices & Virtues"
-          ],
-          "explanation": "The correct answer is: Too Weird To Live, Too Rare To Die!."
-        },
-        "fr": {
-          "text": "\"Tous les garçons\" par Panic ! Au Disco a été publié en bonus sur quel album?",
-          "choices": [
-            "A Fever You Can't Sweat Out",
-            "Too Weird To Live, Too Rare To Die!",
-            "Death Of A Bachelor",
-            "Vices & Virtues"
-          ],
-          "explanation": "La bonne réponse est: Trop bizarre de vivre, Trop rare de mourir!."
+          "explanation": "« Being for the Benefit of Mr. Kite ! » figure sur Sgt. Pepper's Lonely Hearts Club Band (1967)."
         }
       }
     },
@@ -1203,17 +1043,17 @@
             "Dwayne Carter",
             "Andre Young"
           ],
-          "explanation": "The correct answer is: Aubrey Graham."
+          "explanation": "Aubrey Graham first became known as an actor in the Canadian teen series Degrassi."
         },
         "fr": {
-          "text": "Quel est le vrai nom du rappeur Drake ?",
+          "text": "Quel est le vrai nom du rappeur Drake ?",
           "choices": [
             "Shaun Carter",
             "Aubrey Graham",
             "Dwayne Carter",
             "Andre Young"
           ],
-          "explanation": "La bonne réponse est: Aubrey Graham."
+          "explanation": "Aubrey Graham s'est d'abord fait connaître comme acteur dans la série canadienne Degrassi."
         }
       }
     },
@@ -1235,49 +1075,17 @@
             "The Weeknd",
             "Selena Gomez"
           ],
-          "explanation": "The correct answer is: Justin Bieber."
+          "explanation": "\"Where Are Ü Now\" won the 2016 Grammy for Best Dance Recording."
         },
         "fr": {
-          "text": "Quel chanteur a été présenté dans la chanson 2015 de Jack Ü (Skrillex & Diplo) 'Où sont Ü Now'?",
+          "text": "Quel chanteur figure sur « Where Are Ü Now » (2015) de Jack Ü (Skrillex et Diplo) ?",
           "choices": [
             "Justin Bieber",
             "Ellie Goulding",
             "The Weeknd",
             "Selena Gomez"
           ],
-          "explanation": "La bonne réponse est : Justin Bieber."
-        }
-      }
-    },
-    {
-      "id": "music_040",
-      "category": "music",
-      "difficulty": 2,
-      "correct_index": 1,
-      "locales": [
-        "fr",
-        "en"
-      ],
-      "translations": {
-        "en": {
-          "text": "In the song “The Ultimate Showdown of Ultimate Destiny,” who is the only one to survive the battle?",
-          "choices": [
-            "Godzilla",
-            "Mr. Rogers",
-            "Chuck Norris",
-            "Batman"
-          ],
-          "explanation": "The correct answer is: Mr. Rogers."
-        },
-        "fr": {
-          "text": "Dans la chanson \"The Ultimate Showdown of Ultimate Destiny,\" qui est le seul à survivre à la bataille ?",
-          "choices": [
-            "Godzilla",
-            "Mr. Rogers",
-            "Chuck Norris",
-            "Batman"
-          ],
-          "explanation": "La bonne réponse est : M. Rogers."
+          "explanation": "« Where Are Ü Now » a remporté le Grammy 2016 du meilleur enregistrement dance."
         }
       }
     },
@@ -1299,17 +1107,17 @@
             "Depeche Mode",
             "New Order"
           ],
-          "explanation": "The correct answer is: Duran Duran."
+          "explanation": "Duran Duran, from Birmingham, were stars of the 1980s \"New Romantic\" movement."
         },
         "fr": {
-          "text": "Quel groupe a sorti des chansons comme \"Rio\", \"Girls on Film\" et \"The Reflex\" ?",
+          "text": "Quel groupe a sorti « Rio », « Girls on Film » et « The Reflex » ?",
           "choices": [
             "Duran Duran",
             "The Cure",
             "Depeche Mode",
             "New Order"
           ],
-          "explanation": "La bonne réponse est : Duran Duran."
+          "explanation": "Duran Duran, groupe de Birmingham, était une star du mouvement « New Romantic » des années 1980."
         }
       }
     },
@@ -1331,17 +1139,17 @@
             "Fox",
             "Crab"
           ],
-          "explanation": "The correct answer is: Crab."
+          "explanation": "The Fat of the Land (1997), with \"Firestarter\" and \"Breathe\", shows a crab on its cover."
         },
         "fr": {
-          "text": "Quel animal figure sur la couverture du groupe de musique électronique anglais The Prodigy's album, \"The Fat of the Land\"?",
+          "text": "Quel animal figure sur la pochette de l'album « The Fat of the Land » de The Prodigy ?",
           "choices": [
-            "Elephant",
-            "Tigre",
-            "Fox",
-            "Crab"
+            "Un éléphant",
+            "Un tigre",
+            "Un renard",
+            "Un crabe"
           ],
-          "explanation": "La bonne réponse est : Crabe."
+          "explanation": "The Fat of the Land (1997), avec « Firestarter » et « Breathe », montre un crabe en couverture."
         }
       }
     },
@@ -1363,17 +1171,17 @@
             "Korn",
             "Type O Negative"
           ],
-          "explanation": "The correct answer is: Deftones."
+          "explanation": "Deftones, from Sacramento, broke through with White Pony in 2000."
         },
         "fr": {
-          "text": "Chino Moreno est le chanteur principal de quel groupe de métal alternatif ?",
+          "text": "Chino Moreno est le chanteur principal de quel groupe de métal alternatif ?",
           "choices": [
             "Deftones",
             "Tool",
             "Korn",
             "Type O Negative"
           ],
-          "explanation": "La bonne réponse est : Deftones."
+          "explanation": "Deftones, groupe de Sacramento, a percé avec White Pony en 2000."
         }
       }
     },
@@ -1395,17 +1203,17 @@
             "Wooden Heart",
             "Can't Help Falling in Love"
           ],
-          "explanation": "The correct answer is: Can't Help Falling in Love."
+          "explanation": "UB40's reggae version reached number one in the UK and the US in 1993."
         },
         "fr": {
-          "text": "Quelle chanson précédemment enregistrée par Elvis Presley a été couverte par UB40 avec un beat reggae ?",
+          "text": "Quelle chanson déjà enregistrée par Elvis Presley UB40 a-t-il reprise en version reggae ?",
           "choices": [
             "Jailhouse Rock",
             "In the Ghetto",
             "Wooden Heart",
             "Can't Help Falling in Love"
           ],
-          "explanation": "La bonne réponse est : Ne peut pas aider à tomber amoureux."
+          "explanation": "La version reggae d'UB40 a été numéro un au Royaume-Uni et aux États-Unis en 1993."
         }
       }
     },
@@ -1427,17 +1235,17 @@
             "Andrew Gold",
             "Elton John"
           ],
-          "explanation": "The correct answer is: Andrew Gold."
+          "explanation": "Andrew Gold also wrote \"Thank You for Being a Friend\", the theme of The Golden Girls."
         },
         "fr": {
-          "text": "Qui a eu des succès dans les années 70 avec les chansons \"Lonely Boy\" et \"Never Let Her Slip Away\" ?",
+          "text": "Qui a eu des tubes dans les années 70 avec « Lonely Boy » et « Never Let Her Slip Away » ?",
           "choices": [
             "Barry White",
             "Leo Sayer",
             "Andrew Gold",
             "Elton John"
           ],
-          "explanation": "La bonne réponse est : Andrew Gold."
+          "explanation": "Andrew Gold a aussi écrit « Thank You for Being a Friend », générique des Craquantes."
         }
       }
     },
@@ -1459,17 +1267,17 @@
             "STRFKR",
             "MGMT"
           ],
-          "explanation": "The correct answer is: MGMT."
+          "explanation": "MGMT met at Wesleyan University; \"Kids\" and \"Electric Feel\" made them famous."
         },
         "fr": {
-          "text": "Lequel est le nom d'un groupe de rock psychédélique américain formé en 2002 par Benjamin Goldwasser et Andrew VanWyngarden ?",
+          "text": "Quel groupe de rock psychédélique américain a été formé en 2002 par Benjamin Goldwasser et Andrew VanWyngarden ?",
           "choices": [
             "MSTRKRFT",
             "SBTRKT",
             "STRFKR",
             "MGMT"
           ],
-          "explanation": "La bonne réponse est : MGMT."
+          "explanation": "Les membres de MGMT se sont rencontrés à l'université Wesleyan ; « Kids » et « Electric Feel » les ont rendus célèbres."
         }
       }
     },
@@ -1491,17 +1299,17 @@
             "Eric Lynn Wright",
             "Christopher Wallace"
           ],
-          "explanation": "The correct answer is: Christopher Wallace."
+          "explanation": "Christopher Wallace, also known as Biggie Smalls, was shot dead in 1997 at 24."
         },
         "fr": {
-          "text": "Quel est le vrai nom du rappeur, The Notorious B.I.G ?",
+          "text": "Quel est le vrai nom du rappeur The Notorious B.I.G. ?",
           "choices": [
             "Calvin Cordozar Broadus Jr.",
             "O'Shea Jackson",
             "Eric Lynn Wright",
             "Christopher Wallace"
           ],
-          "explanation": "La bonne réponse est : Christopher Wallace."
+          "explanation": "Christopher Wallace, alias Biggie Smalls, a été abattu en 1997, à 24 ans."
         }
       }
     },
@@ -1516,56 +1324,24 @@
       ],
       "translations": {
         "en": {
-          "text": "The four strings on a violin are the G string, D string, A string, and...",
+          "text": "The four strings of a violin are G, D, A and...",
           "choices": [
-            "C string",
-            "E string",
-            "B string",
-            "F string"
+            "C",
+            "E",
+            "B",
+            "F"
           ],
-          "explanation": "The correct answer is: E string."
+          "explanation": "A violin is tuned in fifths: G, D, A, E — sol, ré, la, mi in French notation."
         },
         "fr": {
-          "text": "Les quatre cordes sur un violon sont la corde G, la corde D, la corde A, et...",
+          "text": "Les quatre cordes du violon sont sol, ré, la et…",
           "choices": [
-            "C string",
-            "E string",
-            "B string",
-            "F string"
+            "Do",
+            "Mi",
+            "Si",
+            "Fa"
           ],
-          "explanation": "La bonne réponse est : Chaîne E."
-        }
-      }
-    },
-    {
-      "id": "music_049",
-      "category": "music",
-      "difficulty": 1,
-      "correct_index": 3,
-      "locales": [
-        "fr",
-        "en"
-      ],
-      "translations": {
-        "en": {
-          "text": "Finish these lyrics from the 2016 song \"Panda\" by Desiigner: \"I got broads in _______\".",
-          "choices": [
-            "Augusta",
-            "Marietta",
-            "Savannah",
-            "Atlanta"
-          ],
-          "explanation": "The correct answer is: Atlanta."
-        },
-        "fr": {
-          "text": "Terminez ces paroles de la chanson 2016 \"Panda\" de Desiigner : \"J'ai eu des filles en       \".",
-          "choices": [
-            "Augusta",
-            "Marietta",
-            "Savannah",
-            "Atlanta"
-          ],
-          "explanation": "La bonne réponse est : Atlanta."
+          "explanation": "Le violon s'accorde en quintes : sol, ré, la, mi (G, D, A, E en notation anglaise)."
         }
       }
     },
@@ -1587,17 +1363,1201 @@
             "Michael Jackson",
             "Pink Floyd"
           ],
-          "explanation": "The correct answer is: The Beatles."
+          "explanation": "The RIAA certifies about 183 million Beatles albums sold in the US, ahead of Garth Brooks."
         },
         "fr": {
-          "text": "Selon la RIAA : Quel artiste a vendu le plus d'albums par million ?",
+          "text": "Selon la RIAA, quel artiste a vendu le plus d'albums aux États-Unis ?",
           "choices": [
             "The Beatles",
             "Elvis Presley",
             "Michael Jackson",
             "Pink Floyd"
           ],
-          "explanation": "La bonne réponse est : Les Beatles."
+          "explanation": "La RIAA certifie environ 183 millions d'albums des Beatles vendus aux États-Unis, devant Garth Brooks."
+        }
+      }
+    },
+    {
+      "id": "music_051",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French singer was nicknamed 'La Môme' and sang 'La Vie en rose'?",
+          "choices": [
+            "Dalida",
+            "Barbara",
+            "Édith Piaf",
+            "Juliette Gréco"
+          ],
+          "explanation": "Édith Piaf wrote the lyrics of \"La Vie en rose\" in 1945; it became her signature song worldwide."
+        },
+        "fr": {
+          "text": "Quelle chanteuse surnommée « la Môme » a chanté « La Vie en rose » ?",
+          "choices": [
+            "Dalida",
+            "Barbara",
+            "Édith Piaf",
+            "Juliette Gréco"
+          ],
+          "explanation": "Édith Piaf a écrit les paroles de « La Vie en rose » en 1945 ; la chanson est devenue son emblème dans le monde entier."
+        }
+      }
+    },
+    {
+      "id": "music_052",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who is known as the 'King of Pop'?",
+          "choices": [
+            "Elvis Presley",
+            "Prince",
+            "Justin Timberlake",
+            "Michael Jackson"
+          ],
+          "explanation": "Michael Jackson's Thriller (1982) is the best-selling album of all time."
+        },
+        "fr": {
+          "text": "Qui est surnommé le « roi de la pop » ?",
+          "choices": [
+            "Elvis Presley",
+            "Prince",
+            "Justin Timberlake",
+            "Michael Jackson"
+          ],
+          "explanation": "Thriller (1982) de Michael Jackson est l'album le plus vendu de tous les temps."
+        }
+      }
+    },
+    {
+      "id": "music_053",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many members were there in The Beatles?",
+          "choices": [
+            "4",
+            "3",
+            "5",
+            "6"
+          ],
+          "explanation": "John, Paul, George and Ringo formed the classic Beatles line-up from 1962 to 1970."
+        },
+        "fr": {
+          "text": "Combien de membres comptaient les Beatles ?",
+          "choices": [
+            "4",
+            "3",
+            "5",
+            "6"
+          ],
+          "explanation": "John, Paul, George et Ringo ont formé les Beatles de 1962 à 1970."
+        }
+      }
+    },
+    {
+      "id": "music_054",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which instrument does a drummer play?",
+          "choices": [
+            "Saxophone",
+            "Keyboard",
+            "Drums",
+            "Bass"
+          ],
+          "explanation": "A drum kit usually combines a bass drum, a snare, toms and cymbals."
+        },
+        "fr": {
+          "text": "De quel instrument joue un batteur ?",
+          "choices": [
+            "Le saxophone",
+            "Le clavier",
+            "La batterie",
+            "La basse"
+          ],
+          "explanation": "Une batterie réunit en général une grosse caisse, une caisse claire, des toms et des cymbales."
+        }
+      }
+    },
+    {
+      "id": "music_055",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Belgian artist sang 'Alors on danse' (2009)?",
+          "choices": [
+            "Jacques Brel",
+            "Lost Frequencies",
+            "Stromae",
+            "Angèle"
+          ],
+          "explanation": "\"Alors on danse\" topped the charts in over a dozen countries; Stromae's name is \"maestro\" with syllables flipped."
+        },
+        "fr": {
+          "text": "Quel artiste belge chante « Alors on danse » (2009) ?",
+          "choices": [
+            "Jacques Brel",
+            "Lost Frequencies",
+            "Stromae",
+            "Angèle"
+          ],
+          "explanation": "« Alors on danse » a été numéro un dans plus de dix pays ; Stromae, c'est « maestro » en verlan."
+        }
+      }
+    },
+    {
+      "id": "music_056",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which singer is known as the 'Queen of Pop'?",
+          "choices": [
+            "Beyoncé",
+            "Madonna",
+            "Mariah Carey",
+            "Britney Spears"
+          ],
+          "explanation": "Madonna is the best-selling female recording artist of all time."
+        },
+        "fr": {
+          "text": "Quelle chanteuse est surnommée la « reine de la pop » ?",
+          "choices": [
+            "Beyoncé",
+            "Madonna",
+            "Mariah Carey",
+            "Britney Spears"
+          ],
+          "explanation": "Madonna est l'artiste féminine qui a vendu le plus de disques de l'histoire."
+        }
+      }
+    },
+    {
+      "id": "music_057",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of the French duo who wore robot helmets?",
+          "choices": [
+            "Cassius",
+            "Daft Punk",
+            "Air",
+            "Justice"
+          ],
+          "explanation": "Thomas Bangalter and Guy-Manuel de Homem-Christo hid behind helmets from 1999 until they split in 2021."
+        },
+        "fr": {
+          "text": "Comment s'appelle le duo français qui portait des casques de robot ?",
+          "choices": [
+            "Cassius",
+            "Daft Punk",
+            "Air",
+            "Justice"
+          ],
+          "explanation": "Thomas Bangalter et Guy-Manuel de Homem-Christo se sont cachés sous des casques de 1999 à leur séparation en 2021."
+        }
+      }
+    },
+    {
+      "id": "music_058",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which singer released the album '21', featuring 'Rolling in the Deep'?",
+          "choices": [
+            "Lana Del Rey",
+            "Amy Winehouse",
+            "Duffy",
+            "Adele"
+          ],
+          "explanation": "Adele named her albums after her age when writing them; 21 (2011) won six Grammys."
+        },
+        "fr": {
+          "text": "Quelle chanteuse a sorti l'album « 21 », avec « Rolling in the Deep » ?",
+          "choices": [
+            "Lana Del Rey",
+            "Amy Winehouse",
+            "Duffy",
+            "Adele"
+          ],
+          "explanation": "Adele nomme ses albums d'après son âge au moment de l'écriture ; 21 (2011) a remporté six Grammys."
+        }
+      }
+    },
+    {
+      "id": "music_059",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which composer continued to write music after becoming deaf?",
+          "choices": [
+            "Claude Debussy",
+            "Frédéric Chopin",
+            "Johann Strauss",
+            "Ludwig van Beethoven"
+          ],
+          "explanation": "Beethoven was almost completely deaf when he wrote his Ninth Symphony (1824)."
+        },
+        "fr": {
+          "text": "Quel compositeur a continué à composer après être devenu sourd ?",
+          "choices": [
+            "Claude Debussy",
+            "Frédéric Chopin",
+            "Johann Strauss",
+            "Ludwig van Beethoven"
+          ],
+          "explanation": "Beethoven était presque totalement sourd quand il a écrit sa Neuvième Symphonie (1824)."
+        }
+      }
+    },
+    {
+      "id": "music_060",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which band sang 'Bohemian Rhapsody'?",
+          "choices": [
+            "The Rolling Stones",
+            "Queen",
+            "The Beatles",
+            "Led Zeppelin"
+          ],
+          "explanation": "Freddie Mercury's six-minute song (1975) mixes ballad, opera and hard rock."
+        },
+        "fr": {
+          "text": "Quel groupe chante « Bohemian Rhapsody » ?",
+          "choices": [
+            "The Rolling Stones",
+            "Queen",
+            "The Beatles",
+            "Led Zeppelin"
+          ],
+          "explanation": "La chanson de six minutes de Freddie Mercury (1975) mêle ballade, opéra et hard rock."
+        }
+      }
+    },
+    {
+      "id": "music_061",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French singer was nicknamed 'the French Elvis'?",
+          "choices": [
+            "Michel Polnareff",
+            "Eddy Mitchell",
+            "Johnny Hallyday",
+            "Claude François"
+          ],
+          "explanation": "Johnny Hallyday sold over 100 million records in almost 60 years of career."
+        },
+        "fr": {
+          "text": "Quel chanteur français était surnommé « l'Elvis français » ?",
+          "choices": [
+            "Michel Polnareff",
+            "Eddy Mitchell",
+            "Johnny Hallyday",
+            "Claude François"
+          ],
+          "explanation": "Johnny Hallyday a vendu plus de 100 millions de disques en près de 60 ans de carrière."
+        }
+      }
+    },
+    {
+      "id": "music_062",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many lines does a musical staff have?",
+          "choices": [
+            "5",
+            "4",
+            "6",
+            "7"
+          ],
+          "explanation": "Notes sit on the five lines of the staff and in the four spaces between them."
+        },
+        "fr": {
+          "text": "Combien de lignes compte une portée musicale ?",
+          "choices": [
+            "5",
+            "4",
+            "6",
+            "7"
+          ],
+          "explanation": "Les notes se placent sur les cinq lignes de la portée et dans les quatre interlignes."
+        }
+      }
+    },
+    {
+      "id": "music_063",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which country is the tango originally from?",
+          "choices": [
+            "Cuba",
+            "Spain",
+            "Brazil",
+            "Argentina"
+          ],
+          "explanation": "The tango was born in the late 19th century in Buenos Aires and Montevideo."
+        },
+        "fr": {
+          "text": "De quel pays est originaire le tango ?",
+          "choices": [
+            "Cuba",
+            "L'Espagne",
+            "Le Brésil",
+            "L'Argentine"
+          ],
+          "explanation": "Le tango est né à la fin du XIXe siècle à Buenos Aires et Montevideo."
+        }
+      }
+    },
+    {
+      "id": "music_064",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which composer wrote 'The Magic Flute'?",
+          "choices": [
+            "Giuseppe Verdi",
+            "Richard Wagner",
+            "Wolfgang Amadeus Mozart",
+            "Joseph Haydn"
+          ],
+          "explanation": "Mozart premiered The Magic Flute in Vienna in 1791, two months before his death."
+        },
+        "fr": {
+          "text": "Quel compositeur a écrit « La Flûte enchantée » ?",
+          "choices": [
+            "Giuseppe Verdi",
+            "Richard Wagner",
+            "Wolfgang Amadeus Mozart",
+            "Joseph Haydn"
+          ],
+          "explanation": "Mozart a créé La Flûte enchantée à Vienne en 1791, deux mois avant sa mort."
+        }
+      }
+    },
+    {
+      "id": "music_065",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which singer won Eurovision 2024 for Switzerland with 'The Code'?",
+          "choices": [
+            "Måneskin",
+            "Duncan Laurence",
+            "Nemo",
+            "Loreen"
+          ],
+          "explanation": "Nemo became the first non-binary winner of Eurovision; Switzerland hosted the 2025 contest in Basel."
+        },
+        "fr": {
+          "text": "Quel artiste a gagné l'Eurovision 2024 pour la Suisse avec « The Code » ?",
+          "choices": [
+            "Måneskin",
+            "Duncan Laurence",
+            "Nemo",
+            "Loreen"
+          ],
+          "explanation": "Nemo est la première personne non binaire à gagner l'Eurovision ; la Suisse a organisé l'édition 2025 à Bâle."
+        }
+      }
+    },
+    {
+      "id": "music_066",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which rapper's real name is Marshall Mathers?",
+          "choices": [
+            "50 Cent",
+            "Eminem",
+            "Snoop Dogg",
+            "Jay-Z"
+          ],
+          "explanation": "Eminem comes from his initials, M&M; his alter ego is Slim Shady."
+        },
+        "fr": {
+          "text": "Quel rappeur s'appelle en réalité Marshall Mathers ?",
+          "choices": [
+            "50 Cent",
+            "Eminem",
+            "Snoop Dogg",
+            "Jay-Z"
+          ],
+          "explanation": "Eminem vient de ses initiales, M&M ; son double s'appelle Slim Shady."
+        }
+      }
+    },
+    {
+      "id": "music_067",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which instrument is Louis Armstrong famous for playing?",
+          "choices": [
+            "Trumpet",
+            "Clarinet",
+            "Saxophone",
+            "Trombone"
+          ],
+          "explanation": "\"Satchmo\" revolutionised jazz with his trumpet solos and gravelly voice."
+        },
+        "fr": {
+          "text": "De quel instrument Louis Armstrong était-il célèbre pour jouer ?",
+          "choices": [
+            "La trompette",
+            "La clarinette",
+            "Le saxophone",
+            "Le trombone"
+          ],
+          "explanation": "« Satchmo » a révolutionné le jazz avec ses solos de trompette et sa voix rocailleuse."
+        }
+      }
+    },
+    {
+      "id": "music_068",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which festival takes place every June 21 in France?",
+          "choices": [
+            "Fête de la Musique",
+            "Francofolies",
+            "Rock en Seine",
+            "Les Vieilles Charrues"
+          ],
+          "explanation": "Created in 1982 by Jack Lang, the Fête de la Musique is now celebrated in over 120 countries."
+        },
+        "fr": {
+          "text": "Quelle fête a lieu chaque 21 juin en France ?",
+          "choices": [
+            "La Fête de la musique",
+            "Les Francofolies",
+            "Rock en Seine",
+            "Les Vieilles Charrues"
+          ],
+          "explanation": "Créée en 1982 par Jack Lang, la Fête de la musique est célébrée aujourd'hui dans plus de 120 pays."
+        }
+      }
+    },
+    {
+      "id": "music_069",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Swedish group won Eurovision 1974 with 'Waterloo'?",
+          "choices": [
+            "Europe",
+            "ABBA",
+            "Roxette",
+            "Ace of Base"
+          ],
+          "explanation": "ABBA's name is made of the first letters of its four members' first names."
+        },
+        "fr": {
+          "text": "Quel groupe suédois a gagné l'Eurovision 1974 avec « Waterloo » ?",
+          "choices": [
+            "Europe",
+            "ABBA",
+            "Roxette",
+            "Ace of Base"
+          ],
+          "explanation": "Le nom d'ABBA est formé des initiales des prénoms de ses quatre membres."
+        }
+      }
+    },
+    {
+      "id": "music_070",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What does 'forte' mean on a music score?",
+          "choices": [
+            "Slow",
+            "Fast",
+            "Loud",
+            "Soft"
+          ],
+          "explanation": "Forte (f) means loud; piano (p) means soft — hence the full name of the piano, the \"pianoforte\"."
+        },
+        "fr": {
+          "text": "Que signifie « forte » sur une partition ?",
+          "choices": [
+            "Lent",
+            "Rapide",
+            "Fort",
+            "Doux"
+          ],
+          "explanation": "Forte (f) signifie fort, piano (p) doux : d'où le nom complet du piano, le « pianoforte »."
+        }
+      }
+    },
+    {
+      "id": "music_071",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which singer is known as 'Queen B' and led Destiny's Child?",
+          "choices": [
+            "Beyoncé",
+            "Rihanna",
+            "Alicia Keys",
+            "Kelly Rowland"
+          ],
+          "explanation": "Beyoncé holds the record for the most Grammy Awards won by any artist."
+        },
+        "fr": {
+          "text": "Quelle chanteuse, surnommée « Queen B », menait les Destiny's Child ?",
+          "choices": [
+            "Beyoncé",
+            "Rihanna",
+            "Alicia Keys",
+            "Kelly Rowland"
+          ],
+          "explanation": "Beyoncé détient le record du plus grand nombre de Grammy Awards remportés par un artiste."
+        }
+      }
+    },
+    {
+      "id": "music_072",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Polish composer wrote mostly for solo piano and lived in Paris?",
+          "choices": [
+            "Franz Liszt",
+            "Sergei Rachmaninoff",
+            "Robert Schumann",
+            "Frédéric Chopin"
+          ],
+          "explanation": "Chopin left Poland at 20 and never returned; he is buried at Père-Lachaise, but his heart is in Warsaw."
+        },
+        "fr": {
+          "text": "Quel compositeur polonais, installé à Paris, a surtout écrit pour piano seul ?",
+          "choices": [
+            "Franz Liszt",
+            "Sergueï Rachmaninov",
+            "Robert Schumann",
+            "Frédéric Chopin"
+          ],
+          "explanation": "Chopin a quitté la Pologne à 20 ans sans jamais y revenir ; il repose au Père-Lachaise, mais son cœur est à Varsovie."
+        }
+      }
+    },
+    {
+      "id": "music_073",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French composer wrote 'Boléro' (1928)?",
+          "choices": [
+            "Maurice Ravel",
+            "Claude Debussy",
+            "Camille Saint-Saëns",
+            "Erik Satie"
+          ],
+          "explanation": "Ravel's Boléro repeats the same melody for about 15 minutes in one long crescendo."
+        },
+        "fr": {
+          "text": "Quel compositeur français a écrit le « Boléro » (1928) ?",
+          "choices": [
+            "Maurice Ravel",
+            "Claude Debussy",
+            "Camille Saint-Saëns",
+            "Erik Satie"
+          ],
+          "explanation": "Le Boléro de Ravel répète la même mélodie pendant environ 15 minutes, en un long crescendo."
+        }
+      }
+    },
+    {
+      "id": "music_074",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which famous rock festival took place in August 1969 near New York?",
+          "choices": [
+            "Isle of Wight",
+            "Altamont",
+            "Woodstock",
+            "Monterey Pop"
+          ],
+          "explanation": "About 400,000 people attended; Jimi Hendrix closed it with his version of the US anthem."
+        },
+        "fr": {
+          "text": "Quel festival mythique a eu lieu en août 1969 près de New York ?",
+          "choices": [
+            "l'île de Wight",
+            "Altamont",
+            "Woodstock",
+            "Monterey Pop"
+          ],
+          "explanation": "Environ 400 000 personnes y ont assisté ; Jimi Hendrix l'a clôturé avec sa version de l'hymne américain."
+        }
+      }
+    },
+    {
+      "id": "music_075",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many symphonies did Beethoven complete?",
+          "choices": [
+            "9",
+            "7",
+            "12",
+            "5"
+          ],
+          "explanation": "The Ninth ends with the \"Ode to Joy\", now the anthem of the European Union."
+        },
+        "fr": {
+          "text": "Combien de symphonies Beethoven a-t-il achevées ?",
+          "choices": [
+            "9",
+            "7",
+            "12",
+            "5"
+          ],
+          "explanation": "La Neuvième s'achève sur l'« Ode à la joie », devenue l'hymne de l'Union européenne."
+        }
+      }
+    },
+    {
+      "id": "music_076",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which singer wrote and sang 'Ne me quitte pas' (1959)?",
+          "choices": [
+            "Jacques Brel",
+            "Georges Brassens",
+            "Charles Aznavour",
+            "Léo Ferré"
+          ],
+          "explanation": "The Belgian Jacques Brel's song has been covered in dozens of languages, including by Nina Simone."
+        },
+        "fr": {
+          "text": "Quel chanteur a écrit et chanté « Ne me quitte pas » (1959) ?",
+          "choices": [
+            "Jacques Brel",
+            "Georges Brassens",
+            "Charles Aznavour",
+            "Léo Ferré"
+          ],
+          "explanation": "La chanson du Belge Jacques Brel a été reprise dans des dizaines de langues, notamment par Nina Simone."
+        }
+      }
+    },
+    {
+      "id": "music_077",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What was the name of Jimi Hendrix's band in 1966-1968?",
+          "choices": [
+            "The Jimi Hendrix Experience",
+            "Band of Gypsys",
+            "Cream",
+            "The Doors"
+          ],
+          "explanation": "Hendrix formed the Experience in London; he died in 1970 at 27."
+        },
+        "fr": {
+          "text": "Comment s'appelait le groupe de Jimi Hendrix en 1966-1968 ?",
+          "choices": [
+            "The Jimi Hendrix Experience",
+            "Band of Gypsys",
+            "Cream",
+            "The Doors"
+          ],
+          "explanation": "Hendrix a formé l'Experience à Londres ; il est mort en 1970, à 27 ans."
+        }
+      }
+    },
+    {
+      "id": "music_078",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What type of instrument is a bassoon?",
+          "choices": [
+            "String",
+            "Percussion",
+            "Brass",
+            "Woodwind"
+          ],
+          "explanation": "The bassoon is a double-reed woodwind; unfolded, its tube would be about 2.5 m long."
+        },
+        "fr": {
+          "text": "À quelle famille d'instruments appartient le basson ?",
+          "choices": [
+            "Les cordes",
+            "Les percussions",
+            "Les cuivres",
+            "Les bois"
+          ],
+          "explanation": "Le basson est un bois à anche double ; déplié, son tube mesurerait environ 2,5 m."
+        }
+      }
+    },
+    {
+      "id": "music_079",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which record label was founded in Detroit by Berry Gordy in 1959?",
+          "choices": [
+            "Motown",
+            "Atlantic",
+            "Sun Records",
+            "Stax"
+          ],
+          "explanation": "Motown, from \"Motor Town\", launched the Supremes, Marvin Gaye and the Jackson 5."
+        },
+        "fr": {
+          "text": "Quel label a été fondé à Détroit par Berry Gordy en 1959 ?",
+          "choices": [
+            "Motown",
+            "Atlantic",
+            "Sun Records",
+            "Stax"
+          ],
+          "explanation": "Motown, pour « Motor Town », a lancé les Supremes, Marvin Gaye et les Jackson 5."
+        }
+      }
+    },
+    {
+      "id": "music_080",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Italian composer wrote the opera 'La Traviata'?",
+          "choices": [
+            "Antonio Vivaldi",
+            "Gioachino Rossini",
+            "Giuseppe Verdi",
+            "Giacomo Puccini"
+          ],
+          "explanation": "Verdi's 1853 opera is based on Alexandre Dumas fils' novel La Dame aux camélias."
+        },
+        "fr": {
+          "text": "Quel compositeur italien a écrit l'opéra « La Traviata » ?",
+          "choices": [
+            "Antonio Vivaldi",
+            "Gioachino Rossini",
+            "Giuseppe Verdi",
+            "Giacomo Puccini"
+          ],
+          "explanation": "L'opéra de Verdi (1853) est tiré de La Dame aux camélias d'Alexandre Dumas fils."
+        }
+      }
+    },
+    {
+      "id": "music_081",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which instrument has pedals, strings and is played by plucking, often in orchestras?",
+          "choices": [
+            "Lute",
+            "Harpsichord",
+            "Zither",
+            "Harp"
+          ],
+          "explanation": "A concert harp has 47 strings and seven pedals that change the pitch of each note."
+        },
+        "fr": {
+          "text": "Quel instrument d'orchestre à cordes pincées possède des pédales ?",
+          "choices": [
+            "Le luth",
+            "Le clavecin",
+            "La cithare",
+            "La harpe"
+          ],
+          "explanation": "Une harpe de concert a 47 cordes et sept pédales qui modifient la hauteur de chaque note."
+        }
+      }
+    },
+    {
+      "id": "music_082",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who composed 'Clair de lune', part of the Suite bergamasque?",
+          "choices": [
+            "Maurice Ravel",
+            "Gabriel Fauré",
+            "Claude Debussy",
+            "Erik Satie"
+          ],
+          "explanation": "Debussy took the title from a poem by Paul Verlaine."
+        },
+        "fr": {
+          "text": "Qui a composé « Clair de lune », extrait de la Suite bergamasque ?",
+          "choices": [
+            "Maurice Ravel",
+            "Gabriel Fauré",
+            "Claude Debussy",
+            "Erik Satie"
+          ],
+          "explanation": "Debussy a emprunté le titre à un poème de Paul Verlaine."
+        }
+      }
+    },
+    {
+      "id": "music_083",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which country does K-pop group BTS come from?",
+          "choices": [
+            "South Korea",
+            "China",
+            "Thailand",
+            "Japan"
+          ],
+          "explanation": "BTS formed in Seoul in 2013; \"Dynamite\" (2020) was their first US number one."
+        },
+        "fr": {
+          "text": "De quel pays vient le groupe de K-pop BTS ?",
+          "choices": [
+            "La Corée du Sud",
+            "La Chine",
+            "La Thaïlande",
+            "Le Japon"
+          ],
+          "explanation": "BTS s'est formé à Séoul en 2013 ; « Dynamite » (2020) a été leur premier numéro un aux États-Unis."
+        }
+      }
+    },
+    {
+      "id": "music_084",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is a group of eight musicians called?",
+          "choices": [
+            "A nonet",
+            "A quartet",
+            "A sextet",
+            "An octet"
+          ],
+          "explanation": "Octet comes from the Latin octo, eight; Schubert and Mendelssohn wrote famous ones."
+        },
+        "fr": {
+          "text": "Comment appelle-t-on un ensemble de huit musiciens ?",
+          "choices": [
+            "Un nonette",
+            "Un quatuor",
+            "Un sextuor",
+            "Un octuor"
+          ],
+          "explanation": "Octuor vient du latin octo, huit ; Schubert et Mendelssohn en ont écrit de célèbres."
+        }
+      }
+    },
+    {
+      "id": "music_085",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which singer recorded 'Non, je ne regrette rien' in 1960?",
+          "choices": [
+            "Françoise Hardy",
+            "Édith Piaf",
+            "Dalida",
+            "Mireille Mathieu"
+          ],
+          "explanation": "Piaf dedicated it to the French Foreign Legion; it later featured in the film Inception."
+        },
+        "fr": {
+          "text": "Quelle chanteuse a enregistré « Non, je ne regrette rien » en 1960 ?",
+          "choices": [
+            "Françoise Hardy",
+            "Édith Piaf",
+            "Dalida",
+            "Mireille Mathieu"
+          ],
+          "explanation": "Piaf l'a dédiée à la Légion étrangère ; on l'entend plus tard dans le film Inception."
+        }
+      }
+    },
+    {
+      "id": "music_086",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which album by Pink Floyd has a prism on its cover?",
+          "choices": [
+            "Animals",
+            "The Wall",
+            "Wish You Were Here",
+            "The Dark Side of the Moon"
+          ],
+          "explanation": "The Dark Side of the Moon (1973) stayed on the US album chart for over 900 weeks."
+        },
+        "fr": {
+          "text": "Quel album de Pink Floyd a un prisme sur sa pochette ?",
+          "choices": [
+            "Animals",
+            "The Wall",
+            "Wish You Were Here",
+            "The Dark Side of the Moon"
+          ],
+          "explanation": "The Dark Side of the Moon (1973) est resté plus de 900 semaines dans le classement américain des albums."
+        }
+      }
+    },
+    {
+      "id": "music_087",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who composed the ballet 'Swan Lake'?",
+          "choices": [
+            "Sergei Prokofiev",
+            "Pyotr Ilyich Tchaikovsky",
+            "Léo Delibes",
+            "Igor Stravinsky"
+          ],
+          "explanation": "Tchaikovsky's first ballet (1877) was poorly received before becoming the most performed in the world."
+        },
+        "fr": {
+          "text": "Qui a composé le ballet « Le Lac des cygnes » ?",
+          "choices": [
+            "Sergueï Prokofiev",
+            "Piotr Ilitch Tchaïkovski",
+            "Léo Delibes",
+            "Igor Stravinsky"
+          ],
+          "explanation": "Le premier ballet de Tchaïkovski (1877) a d'abord été mal reçu avant de devenir le plus joué au monde."
         }
       }
     }

@@ -19,17 +19,17 @@
             "11",
             "12"
           ],
-          "explanation": "A team fields 11 players, including the goalkeeper."
+          "explanation": "Each side fields 11 players, goalkeeper included; a team can play with no fewer than 7."
         },
         "fr": {
-          "text": "Combien de joueurs composent une équipe de football sur le terrain ?",
+          "text": "Combien de joueurs une équipe de football aligne-t-elle sur le terrain ?",
           "choices": [
             "9",
             "10",
             "11",
             "12"
           ],
-          "explanation": "Une équipe aligne 11 joueurs, gardien inclus."
+          "explanation": "Chaque équipe aligne 11 joueurs, gardien compris ; en dessous de 7, le match est arrêté."
         }
       }
     },
@@ -51,17 +51,17 @@
             "United Kingdom",
             "Russia"
           ],
-          "explanation": "The 2016 Summer Olympics were held in Rio de Janeiro, Brazil."
+          "explanation": "Rio de Janeiro hosted the first Olympic Games ever held in South America, in 2016."
         },
         "fr": {
-          "text": "Quel pays a accueilli les Jeux olympiques d'été de 2016 ?",
+          "text": "Quel pays a accueilli les Jeux olympiques d'été de 2016 ?",
           "choices": [
             "Chine",
             "Brésil",
             "Royaume-Uni",
             "Russie"
           ],
-          "explanation": "Les Jeux de 2016 se sont tenus à Rio de Janeiro, au Brésil."
+          "explanation": "Rio de Janeiro a accueilli en 2016 les premiers Jeux olympiques organisés en Amérique du Sud."
         }
       }
     },
@@ -83,17 +83,17 @@
             "Match point",
             "Deuce"
           ],
-          "explanation": "In tennis scoring, 'love' means zero."
+          "explanation": "\"Love\" means zero; one theory links it to the French \"l'œuf\", an egg shaped like a 0."
         },
         "fr": {
-          "text": "Au tennis, que signifie le terme « love » ?",
+          "text": "Au tennis, que signifie le terme « love » ?",
           "choices": [
             "Zéro point",
             "Un service parfait",
             "Balle de match",
             "Égalité"
           ],
-          "explanation": "Dans le score de tennis, « love » signifie zéro."
+          "explanation": "« Love » signifie zéro ; une théorie le relie au français « l'œuf », qui a la forme d'un 0."
         }
       }
     },
@@ -115,17 +115,17 @@
             "40 meters",
             "50 meters"
           ],
-          "explanation": "Olympic pools are 50 meters long."
+          "explanation": "An Olympic pool is 50 m long and 25 m wide, with 10 lanes (8 used in finals)."
         },
         "fr": {
-          "text": "Quelle est la longueur d'un bassin olympique de natation ?",
+          "text": "Quelle est la longueur d'un bassin olympique de natation ?",
           "choices": [
             "25 mètres",
             "33 mètres",
             "40 mètres",
             "50 mètres"
           ],
-          "explanation": "Un bassin olympique mesure 50 mètres."
+          "explanation": "Un bassin olympique mesure 50 m sur 25, avec 10 couloirs (8 utilisés en finale)."
         }
       }
     },
@@ -147,24 +147,24 @@
             "Golf",
             "Rugby"
           ],
-          "explanation": "Birdie and eagle are scoring terms in golf."
+          "explanation": "A birdie is one stroke under par, an eagle two, an albatross three."
         },
         "fr": {
-          "text": "Quel sport utilise les termes « birdie » et « eagle » ?",
+          "text": "Quel sport utilise les termes « birdie » et « eagle » ?",
           "choices": [
             "Cricket",
             "Baseball",
             "Golf",
             "Rugby"
           ],
-          "explanation": "Birdie et eagle sont des termes de score au golf."
+          "explanation": "Un birdie, c'est un coup sous le par, un eagle deux, un albatros trois."
         }
       }
     },
     {
       "id": "sport_006",
       "category": "sport",
-      "difficulty": 2,
+      "difficulty": 1,
       "correct_index": 1,
       "locales": [
         "fr",
@@ -179,24 +179,24 @@
             "5",
             "6"
           ],
-          "explanation": "The four Grand Slams are Australian Open, Roland-Garros, Wimbledon, and US Open."
+          "explanation": "The four Grand Slams are the Australian Open, Roland-Garros, Wimbledon and the US Open."
         },
         "fr": {
-          "text": "Combien y a-t-il de tournois du Grand Chelem en tennis chaque année ?",
+          "text": "Combien y a-t-il de tournois du Grand Chelem au tennis chaque année ?",
           "choices": [
             "3",
             "4",
             "5",
             "6"
           ],
-          "explanation": "Les quatre Grand Chelem sont l'Open d'Australie, Roland-Garros, Wimbledon et l'US Open."
+          "explanation": "Les quatre Grands Chelems sont l'Open d'Australie, Roland-Garros, Wimbledon et l'US Open."
         }
       }
     },
     {
       "id": "sport_007",
       "category": "sport",
-      "difficulty": 3,
+      "difficulty": 2,
       "correct_index": 0,
       "locales": [
         "fr",
@@ -211,17 +211,17 @@
             "Simone Biles",
             "Carl Lewis"
           ],
-          "explanation": "Michael Phelps won 23 Olympic gold medals in swimming."
+          "explanation": "Michael Phelps won 23 Olympic golds and 28 medals in total between 2004 and 2016."
         },
         "fr": {
-          "text": "Quel athlète a remporté le plus de médailles d'or olympiques ?",
+          "text": "Quel athlète a remporté le plus de médailles d'or olympiques ?",
           "choices": [
             "Michael Phelps",
             "Usain Bolt",
             "Simone Biles",
             "Carl Lewis"
           ],
-          "explanation": "Michael Phelps a remporté 23 médailles d'or olympiques en natation."
+          "explanation": "Michael Phelps a remporté 23 titres olympiques et 28 médailles au total entre 2004 et 2016."
         }
       }
     },
@@ -243,17 +243,17 @@
             "Ferrari",
             "Porsche"
           ],
-          "explanation": "The correct answer is: Porsche."
+          "explanation": "Porsche won after the leading Toyota broke down on the final lap in 2016."
         },
         "fr": {
-          "text": "Quel constructeur automobile a remporté les 24 Heures du Mans 2016 ?",
+          "text": "Quel constructeur automobile a remporté les 24 Heures du Mans 2016 ?",
           "choices": [
             "Audi",
             "Toyota",
             "Ferrari",
             "Porsche"
           ],
-          "explanation": "La bonne réponse est : Porsche."
+          "explanation": "Porsche a gagné en 2016 après la panne de la Toyota de tête dans le dernier tour."
         }
       }
     },
@@ -275,17 +275,17 @@
             "Chile",
             "Argentina"
           ],
-          "explanation": "The correct answer is: Chile."
+          "explanation": "Chile beat Argentina on penalties in the final, just as in 2015."
         },
         "fr": {
-          "text": "Quelle équipe de football a remporté la Copa América Centenario 2016 ?",
+          "text": "Quelle équipe de football a remporté la Copa América Centenario 2016 ?",
           "choices": [
             "Colombie",
             "Brésil",
             "Chili",
             "Argentine"
           ],
-          "explanation": "La bonne réponse est : Chili."
+          "explanation": "Le Chili a battu l'Argentine aux tirs au but en finale, comme en 2015."
         }
       }
     },
@@ -302,22 +302,22 @@
         "en": {
           "text": "Who won the UEFA Champions League in 2016?",
           "choices": [
-            "Atletico Madrid",
-            "Manchester City F.C.",
-            "FC Bayern Munich",
-            "Real Madrid C.F."
+            "Atlético Madrid",
+            "Manchester City",
+            "Bayern Munich",
+            "Real Madrid"
           ],
-          "explanation": "The correct answer is: Real Madrid C.F.."
+          "explanation": "Real Madrid beat Atlético on penalties in Milan for their 11th European Cup."
         },
         "fr": {
-          "text": "Qui a remporté la Ligue des Champions de l'UEFA en 2016 ?",
+          "text": "Quel club a remporté la Ligue des champions en 2016 ?",
           "choices": [
-            "Atletico Madrid",
-            "Manchester City F.C.",
-            "FC Bayern Munich",
-            "Real Madrid C.F."
+            "L'Atlético de Madrid",
+            "Manchester City",
+            "Le Bayern Munich",
+            "Le Real Madrid"
           ],
-          "explanation": "La bonne réponse est: Real Madrid C.F.."
+          "explanation": "Le Real Madrid a battu l'Atlético aux tirs au but à Milan, pour sa 11e Coupe d'Europe."
         }
       }
     },
@@ -339,24 +339,24 @@
             "Philadelphia 76ers",
             "Golden State Warriors"
           ],
-          "explanation": "The correct answer is: Los Angeles Lakers."
+          "explanation": "The Lakers have reached the NBA Finals 32 times, more than any other franchise."
         },
         "fr": {
-          "text": "Quelle équipe de basket a participé au plus grand nombre de finales NBA ?",
+          "text": "Quelle équipe de basket a participé au plus grand nombre de finales NBA ?",
           "choices": [
             "Boston Celtics",
             "Los Angeles Lakers",
             "Philadelphia 76ers",
             "Golden State Warriors"
           ],
-          "explanation": "La bonne réponse est : Los Angeles Lakers."
+          "explanation": "Les Lakers ont atteint 32 fois les finales NBA, plus que toute autre franchise."
         }
       }
     },
     {
       "id": "sport_012",
       "category": "sport",
-      "difficulty": 1,
+      "difficulty": 3,
       "correct_index": 2,
       "locales": [
         "fr",
@@ -364,24 +364,24 @@
       ],
       "translations": {
         "en": {
-          "text": "The Rio 2016 Summer Olympics held it's closing ceremony on what date?",
+          "text": "On what date did the Rio 2016 Summer Olympics hold their closing ceremony?",
           "choices": [
             "August 19",
             "August 17",
             "August 21",
             "August 23"
           ],
-          "explanation": "The correct answer is: August 21."
+          "explanation": "The Rio Games ran from 5 to 21 August 2016, closing in the Maracanã stadium."
         },
         "fr": {
-          "text": "À quelle date s'est tenue la cérémonie de clôture des JO d'été de Rio 2016 ?",
+          "text": "À quelle date s'est tenue la cérémonie de clôture des JO d'été de Rio 2016 ?",
           "choices": [
             "19 août",
             "17 août",
             "21 août",
             "23 août"
           ],
-          "explanation": "La bonne réponse est : 21 août."
+          "explanation": "Les Jeux de Rio ont eu lieu du 5 au 21 août 2016, avec une clôture au stade Maracanã."
         }
       }
     },
@@ -403,17 +403,17 @@
             "Japan",
             "USA"
           ],
-          "explanation": "The correct answer is: Qatar."
+          "explanation": "Qatar 2022 was the first World Cup in the Arab world, played in November and December."
         },
         "fr": {
-          "text": "Quel pays a accueilli la Coupe du monde FIFA 2022 ?",
+          "text": "Quel pays a accueilli la Coupe du monde FIFA 2022 ?",
           "choices": [
             "Suisse",
             "Qatar",
             "Japon",
             "États-Unis"
           ],
-          "explanation": "La bonne réponse est : Qatar."
+          "explanation": "Le Qatar 2022 a été la première Coupe du monde dans le monde arabe, disputée en novembre-décembre."
         }
       }
     },
@@ -430,22 +430,22 @@
         "en": {
           "text": "Who won the UEFA Champions League in 2017?",
           "choices": [
-            "Atletico Madrid",
-            "Juventus F.C.",
-            "AS Monaco FC",
-            "Real Madrid C.F."
+            "Atlético Madrid",
+            "Juventus",
+            "AS Monaco",
+            "Real Madrid"
           ],
-          "explanation": "The correct answer is: Real Madrid C.F.."
+          "explanation": "Real Madrid beat Juventus 4-1 in Cardiff and became the first team to retain the title in the Champions League era."
         },
         "fr": {
-          "text": "Qui a remporté la Ligue des Champions de l'UEFA en 2017 ?",
+          "text": "Quel club a remporté la Ligue des champions en 2017 ?",
           "choices": [
-            "Atletico Madrid",
-            "Juventus F.C.",
-            "AS Monaco FC",
-            "Real Madrid C.F."
+            "L'Atlético de Madrid",
+            "La Juventus",
+            "L'AS Monaco",
+            "Le Real Madrid"
           ],
-          "explanation": "La bonne réponse est: Real Madrid C.F.."
+          "explanation": "Le Real Madrid a battu la Juventus 4-1 à Cardiff, premier club à conserver son titre depuis la création de la Ligue des champions."
         }
       }
     },
@@ -467,56 +467,24 @@
             "Minneapolis",
             "San Francisco"
           ],
-          "explanation": "The correct answer is: Minneapolis."
+          "explanation": "The Lakers were founded in Minneapolis, the \"land of 10,000 lakes\", and moved in 1960."
         },
         "fr": {
-          "text": "Quelle ville les Lakers représentaient-ils avant de déménager à Los Angeles?",
+          "text": "Quelle ville les Lakers représentaient-ils avant de s'installer à Los Angeles ?",
           "choices": [
             "Chicago",
             "Philadelphie",
             "Minneapolis",
             "San Francisco"
           ],
-          "explanation": "La bonne réponse est : Minneapolis."
-        }
-      }
-    },
-    {
-      "id": "sport_016",
-      "category": "sport",
-      "difficulty": 2,
-      "correct_index": 3,
-      "locales": [
-        "fr",
-        "en"
-      ],
-      "translations": {
-        "en": {
-          "text": "Which professional wrestler fell from the rafters to his death during a live Pay-Per-View event in 1999?",
-          "choices": [
-            "Chris Benoit",
-            "Al Snow",
-            "Lex Luger",
-            "Owen Hart"
-          ],
-          "explanation": "The correct answer is: Owen Hart."
-        },
-        "fr": {
-          "text": "Quel lutteur professionnel est tombé des chevrons à sa mort lors d'un événement de Pay-Per-View en direct en 1999 ?",
-          "choices": [
-            "Chris Benoit",
-            "Al Snow",
-            "Lex Luger",
-            "Owen Hart"
-          ],
-          "explanation": "La bonne réponse est : Owen Hart."
+          "explanation": "Les Lakers sont nés à Minneapolis, dans le « pays aux 10 000 lacs », et ont déménagé en 1960."
         }
       }
     },
     {
       "id": "sport_017",
       "category": "sport",
-      "difficulty": 3,
+      "difficulty": 2,
       "correct_index": 1,
       "locales": [
         "fr",
@@ -524,31 +492,31 @@
       ],
       "translations": {
         "en": {
-          "text": "Where was the Games of the XXII Olympiad held?",
+          "text": "Where were the Games of the XXII Olympiad (1980) held?",
           "choices": [
             "Barcelona",
             "Moscow",
             "Tokyo",
             "Los Angeles"
           ],
-          "explanation": "The correct answer is: Moscow."
+          "explanation": "The 1980 Moscow Games were boycotted by the United States and about 60 other countries."
         },
         "fr": {
-          "text": "Où ont eu lieu les Jeux de la XXIIe Olympiade ?",
+          "text": "Où se sont tenus les Jeux de la XXIIe olympiade (1980) ?",
           "choices": [
             "Barcelone",
             "Moscou",
             "Tokyo",
             "Los Angeles"
           ],
-          "explanation": "La bonne réponse est : Moscou."
+          "explanation": "Les Jeux de Moscou 1980 ont été boycottés par les États-Unis et une soixantaine d'autres pays."
         }
       }
     },
     {
       "id": "sport_018",
       "category": "sport",
-      "difficulty": 1,
+      "difficulty": 2,
       "correct_index": 2,
       "locales": [
         "fr",
@@ -558,22 +526,22 @@
         "en": {
           "text": "\"Stadium of Light\" is the home stadium for which soccer team?",
           "choices": [
-            "Barcelona FC",
+            "FC Barcelona",
             "Manchester United",
-            "Sunderland FC",
-            "Paris Saints-Germain"
+            "Sunderland AFC",
+            "Paris Saint-Germain"
           ],
-          "explanation": "The correct answer is: Sunderland FC."
+          "explanation": "Sunderland's Stadium of Light opened in 1997 on the site of a former coal mine."
         },
         "fr": {
-          "text": "« Stadium of Light » est le stade d'attache pour quelle équipe de football ?",
+          "text": "Quel club de football joue au « Stadium of Light » ?",
           "choices": [
-            "Barcelona FC",
+            "Le FC Barcelone",
             "Manchester United",
-            "Sunderland FC",
-            "Paris Saints-Germain"
+            "Sunderland",
+            "Le Paris Saint-Germain"
           ],
-          "explanation": "La bonne réponse est : Sunderland FC."
+          "explanation": "Le Stadium of Light de Sunderland a ouvert en 1997 sur le site d'une ancienne mine de charbon."
         }
       }
     },
@@ -595,17 +563,17 @@
             "Nine",
             "Ten"
           ],
-          "explanation": "The correct answer is: Nine."
+          "explanation": "Martina Navratilova won nine Wimbledon singles titles, six of them in a row (1982-1987)."
         },
         "fr": {
-          "text": "Combien de fois Martina Navratilova a-t-elle remporté le Championnat des Singles de Wimbledon ?",
+          "text": "Combien de fois Martina Navratilova a-t-elle remporté Wimbledon en simple ?",
           "choices": [
             "Sept",
             "Huit",
             "Neuf",
             "Dix"
           ],
-          "explanation": "La bonne réponse est : Neuf."
+          "explanation": "Martina Navratilova a remporté neuf fois Wimbledon en simple, dont six fois de suite (1982-1987)."
         }
       }
     },
@@ -620,24 +588,24 @@
       ],
       "translations": {
         "en": {
-          "text": "Who has played the most tournaments on the Brazilian national soccer team?",
+          "text": "Which Brazilian is the only player to appear in three consecutive World Cup finals?",
           "choices": [
             "Cafu",
             "Kaká",
             "Ronaldo",
             "Roberto Carlos"
           ],
-          "explanation": "The correct answer is: Cafu."
+          "explanation": "Cafu played the 1994, 1998 and 2002 finals, lifting the trophy as captain in 2002."
         },
         "fr": {
-          "text": "Qui a joué le plus de tournois dans l'équipe nationale brésilienne de soccer ?",
+          "text": "Quel Brésilien est le seul joueur à avoir disputé trois finales de Coupe du monde consécutives ?",
           "choices": [
             "Cafu",
             "Kaká",
             "Ronaldo",
             "Roberto Carlos"
           ],
-          "explanation": "La bonne réponse est : Cafu."
+          "explanation": "Cafu a disputé les finales de 1994, 1998 et 2002, soulevant le trophée en capitaine en 2002."
         }
       }
     },
@@ -652,24 +620,24 @@
       ],
       "translations": {
         "en": {
-          "text": "Who has played the most tournaments in the German national soccer team?",
+          "text": "Which German player took part in five World Cups, from 1982 to 1998?",
           "choices": [
             "Lothar Matthäus",
             "Miroslav Klose",
             "Oliver Kahn",
             "Philipp Lahm"
           ],
-          "explanation": "The correct answer is: Lothar Matthäus."
+          "explanation": "Lothar Matthäus played five World Cups (1982-1998) and won the 1990 edition as captain."
         },
         "fr": {
-          "text": "Qui a joué le plus de tournois dans l'équipe nationale allemande de soccer ?",
+          "text": "Quel joueur allemand a disputé cinq Coupes du monde, de 1982 à 1998 ?",
           "choices": [
             "Lothar Matthäus",
             "Miroslav Klose",
             "Oliver Kahn",
             "Philipp Lahm"
           ],
-          "explanation": "La bonne réponse est: Lothar Matthäus."
+          "explanation": "Lothar Matthäus a disputé cinq Coupes du monde (1982-1998) et remporté celle de 1990 en capitaine."
         }
       }
     },
@@ -691,24 +659,24 @@
             "Ole Gunnar Solskjær",
             "David Beckham"
           ],
-          "explanation": "The correct answer is: Ole Gunnar Solskjær."
+          "explanation": "United scored twice in stoppage time: Sheringham equalised, then Solskjær won it."
         },
         "fr": {
-          "text": "Qui a marqué le but victorieux dans le temps additionnel de la finale de Ligue des champions 1999 entre Manchester United et le Bayern Munich ?",
+          "text": "Qui a marqué le but victorieux dans le temps additionnel de la finale de Ligue des champions 1999 entre Manchester United et le Bayern Munich ?",
           "choices": [
             "Andy Cole",
             "Dwight Yorke",
             "Ole Gunnar Solskjær",
             "David Beckham"
           ],
-          "explanation": "La bonne réponse est : Ole Gunnar Solskjær."
+          "explanation": "United a marqué deux fois dans le temps additionnel : Sheringham a égalisé, puis Solskjær a donné la victoire."
         }
       }
     },
     {
       "id": "sport_023",
       "category": "sport",
-      "difficulty": 2,
+      "difficulty": 1,
       "correct_index": 1,
       "locales": [
         "fr",
@@ -723,17 +691,17 @@
             "South Korea",
             "Norway"
           ],
-          "explanation": "The correct answer is: Russia."
+          "explanation": "Sochi, a Black Sea resort, hosted Russia's first Winter Olympics in 2014."
         },
         "fr": {
-          "text": "Dans quel pays ont eu lieu les Jeux olympiques d'hiver 2014 dans la ville de Sotchi?",
+          "text": "Dans quel pays se trouve Sotchi, ville hôte des Jeux olympiques d'hiver 2014 ?",
           "choices": [
             "Canada",
             "Russie",
             "Corée du Sud",
             "Norvège"
           ],
-          "explanation": "La bonne réponse est : la Russie."
+          "explanation": "Sotchi, station balnéaire de la mer Noire, a accueilli les premiers JO d'hiver de la Russie en 2014."
         }
       }
     },
@@ -748,24 +716,24 @@
       ],
       "translations": {
         "en": {
-          "text": "Which city features all of their professional sports teams' jersey's with the same color scheme?",
+          "text": "Which city's professional sports teams all wear the same colour scheme?",
           "choices": [
             "Tampa Bay",
             "Seattle",
             "Pittsburgh",
             "New York"
           ],
-          "explanation": "The correct answer is: Pittsburgh."
+          "explanation": "Pittsburgh's Steelers, Pirates and Penguins all wear black and gold, the colours of the city flag."
         },
         "fr": {
-          "text": "Quelle ville possède le maillot de toutes les équipes sportives professionnelles avec le même schéma de couleur ?",
+          "text": "Dans quelle ville toutes les équipes sportives professionnelles portent-elles les mêmes couleurs ?",
           "choices": [
             "Tampa Bay",
             "Seattle",
             "Pittsburgh",
             "New York"
           ],
-          "explanation": "La bonne réponse est : Pittsburgh."
+          "explanation": "Les Steelers, Pirates et Penguins de Pittsburgh portent tous noir et or, les couleurs du drapeau de la ville."
         }
       }
     },
@@ -787,24 +755,24 @@
             "Ronald Ratzenberger",
             "Jules Bianchi"
           ],
-          "explanation": "The correct answer is: Jules Bianchi."
+          "explanation": "Jules Bianchi crashed at Suzuka in 2014 and died in 2015; the Virtual Safety Car came in that year."
         },
         "fr": {
-          "text": "Dans la Formule 1, la voiture de sécurité virtuelle a été introduite à la suite de l'accident mortel de quel conducteur?",
+          "text": "En Formule 1, la voiture de sécurité virtuelle a été créée après l'accident mortel de quel pilote ?",
           "choices": [
             "Ayrton Senna",
             "Gilles Villeneuve",
             "Ronald Ratzenberger",
             "Jules Bianchi"
           ],
-          "explanation": "La bonne réponse est : Jules Bianchi."
+          "explanation": "Jules Bianchi s'est accidenté à Suzuka en 2014 et est mort en 2015 ; la voiture de sécurité virtuelle a été créée cette année-là."
         }
       }
     },
     {
       "id": "sport_026",
       "category": "sport",
-      "difficulty": 2,
+      "difficulty": 3,
       "correct_index": 0,
       "locales": [
         "fr",
@@ -819,17 +787,17 @@
             "Wasps",
             "Harlequins"
           ],
-          "explanation": "The correct answer is: Saints."
+          "explanation": "Northampton Saints, founded in 1880, won the European Cup in 2000."
         },
         "fr": {
-          "text": "Quel est le surnom du club de rugby à XV de Northampton ?",
+          "text": "Quel est le surnom du club de rugby à XV de Northampton ?",
           "choices": [
             "Saints",
             "Saracens",
             "Wasps",
             "Harlequins"
           ],
-          "explanation": "La bonne réponse est: Saints."
+          "explanation": "Les Northampton Saints, fondés en 1880, ont gagné la Coupe d'Europe en 2000."
         }
       }
     },
@@ -851,49 +819,17 @@
             "David Moyes",
             "Louis van Gaal"
           ],
-          "explanation": "The correct answer is: Sir Alex Ferguson."
+          "explanation": "In 26 years at Manchester United, Alex Ferguson won 38 trophies, including 13 league titles."
         },
         "fr": {
-          "text": "Quel manager de football a gagné plus de trophées que n'importe quel autre pendant son mandat au club de football anglais Manchester United ?",
+          "text": "Quel entraîneur a remporté le plus de trophées à la tête de Manchester United ?",
           "choices": [
             "José Mourinho",
             "Sir Alex Ferguson",
             "David Moyes",
             "Louis van Gaal"
           ],
-          "explanation": "La bonne réponse est : Sir Alex Ferguson."
-        }
-      }
-    },
-    {
-      "id": "sport_028",
-      "category": "sport",
-      "difficulty": 2,
-      "correct_index": 3,
-      "locales": [
-        "fr",
-        "en"
-      ],
-      "translations": {
-        "en": {
-          "text": "Josh Mansour is part of what NRL team?",
-          "choices": [
-            "North Queensland Cowboys",
-            "Sydney Roosters",
-            "Melbourne Storm",
-            "Penrith Panthers"
-          ],
-          "explanation": "The correct answer is: Penrith Panthers."
-        },
-        "fr": {
-          "text": "Josh Mansour fait partie de quelle équipe de NRL ?",
-          "choices": [
-            "North Queensland Cowboys",
-            "Sydney Roosters",
-            "Melbourne Storm",
-            "Penrith Panthers"
-          ],
-          "explanation": "La bonne réponse est : Penrith Panthers."
+          "explanation": "En 26 ans à Manchester United, Alex Ferguson a remporté 38 trophées, dont 13 championnats."
         }
       }
     },
@@ -915,17 +851,17 @@
             "Ronaldinho",
             "Pelé"
           ],
-          "explanation": "The correct answer is: Pelé."
+          "explanation": "Pelé won three World Cups (1958, 1962, 1970), a record for a player."
         },
         "fr": {
-          "text": "Edson Arantes do Nascimento est le nom complet de quel joueur de football légendaire ?",
+          "text": "Edson Arantes do Nascimento est le nom complet de quel joueur de football légendaire ?",
           "choices": [
             "Zico",
             "Romário",
             "Ronaldinho",
             "Pelé"
           ],
-          "explanation": "La bonne réponse est : Pelé."
+          "explanation": "Pelé a gagné trois Coupes du monde (1958, 1962, 1970), un record pour un joueur."
         }
       }
     },
@@ -940,24 +876,24 @@
       ],
       "translations": {
         "en": {
-          "text": "Which city did the former NHL team \"The Nordiques\" originiate from?",
+          "text": "Which city did the former NHL team \"The Nordiques\" come from?",
           "choices": [
             "Montreal",
             "New York",
             "Houston",
             "Quebec City"
           ],
-          "explanation": "The correct answer is: Quebec City."
+          "explanation": "The Quebec Nordiques moved to Denver in 1995 and became the Colorado Avalanche."
         },
         "fr": {
-          "text": "De quelle ville est originaire l'ancienne équipe de la LNH \"Les Nordiques\" ?",
+          "text": "De quelle ville venaient les Nordiques, ancienne équipe de la LNH ?",
           "choices": [
             "Montréal",
             "New York",
             "Houston",
             "Québec"
           ],
-          "explanation": "La bonne réponse est : Québec."
+          "explanation": "Les Nordiques de Québec ont déménagé à Denver en 1995 pour devenir l'Avalanche du Colorado."
         }
       }
     },
@@ -979,17 +915,17 @@
             "Flamingo",
             "Eagle"
           ],
-          "explanation": "The correct answer is: Turkey."
+          "explanation": "Three strikes in a row is a \"turkey\"; bowlers once won a real turkey for it."
         },
         "fr": {
-          "text": "Au bowling, quel terme désigne trois strikes consécutifs ?",
+          "text": "Au bowling, comment appelle-t-on trois strikes consécutifs ?",
           "choices": [
             "Turkey",
             "Birdie",
             "Flamingo",
             "Eagle"
           ],
-          "explanation": "La bonne réponse est : Turkey."
+          "explanation": "Trois strikes d'affilée, c'est une « dinde » (turkey) ; les joueurs en gagnaient autrefois une vraie."
         }
       }
     },
@@ -1004,24 +940,24 @@
       ],
       "translations": {
         "en": {
-          "text": "Which year did Jenson Button won his first ever Formula One World Drivers' Championship?",
+          "text": "In which year did Jenson Button win his first Formula One World Drivers' Championship?",
           "choices": [
             "2006",
             "2009",
             "2007",
             "2010"
           ],
-          "explanation": "The correct answer is: 2009."
+          "explanation": "Jenson Button won the 2009 title with Brawn GP, a team that only raced that one season."
         },
         "fr": {
-          "text": "Quelle année a remporté son premier championnat du monde de Formule 1 ?",
+          "text": "En quelle année Jenson Button a-t-il remporté son premier titre de champion du monde de Formule 1 ?",
           "choices": [
             "2006",
             "2009",
             "2007",
             "2010"
           ],
-          "explanation": "La bonne réponse est : 2009."
+          "explanation": "Jenson Button a gagné le titre 2009 avec Brawn GP, une écurie qui n'a couru que cette saison-là."
         }
       }
     },
@@ -1043,24 +979,24 @@
             "Croatia",
             "England"
           ],
-          "explanation": "The correct answer is: France."
+          "explanation": "France beat Croatia 4-2 in Moscow for their second world title, after 1998."
         },
         "fr": {
-          "text": "Quel pays a remporté la Coupe du monde de la FIFA 2018 en Russie ?",
+          "text": "Quel pays a remporté la Coupe du monde de la FIFA 2018 en Russie ?",
           "choices": [
             "France",
             "Belgique",
             "Croatie",
             "Angleterre"
           ],
-          "explanation": "La bonne réponse est la France."
+          "explanation": "La France a battu la Croatie 4-2 à Moscou pour son deuxième titre mondial, après 1998."
         }
       }
     },
     {
       "id": "sport_034",
       "category": "sport",
-      "difficulty": 1,
+      "difficulty": 3,
       "correct_index": 0,
       "locales": [
         "fr",
@@ -1075,17 +1011,17 @@
             "Montreal Impact",
             "Toronto FC"
           ],
-          "explanation": "The correct answer is: Seattle Sounders."
+          "explanation": "Seattle beat Toronto on penalties in the final without a single shot on target in 120 minutes."
         },
         "fr": {
-          "text": "Quelle équipe a remporté la Coupe MLS 2016 ?",
+          "text": "Quelle équipe a remporté la MLS Cup 2016 ?",
           "choices": [
             "Seattle Sounders",
             "Colorado Rapids",
             "Impact de Montréal",
             "Toronto FC"
           ],
-          "explanation": "La bonne réponse est : Seattle Sounders."
+          "explanation": "Seattle a battu Toronto aux tirs au but en finale, sans un seul tir cadré en 120 minutes."
         }
       }
     },
@@ -1100,24 +1036,24 @@
       ],
       "translations": {
         "en": {
-          "text": "In 2016, who won the Formula 1 World Constructor's Championship for the third time in a row?",
+          "text": "In 2016, which team won the Formula 1 Constructors' Championship for the third time in a row?",
           "choices": [
             "Red Bull Racing Renault",
             "Scuderia Ferrari",
             "McLaren Honda",
             "Mercedes-AMG Petronas"
           ],
-          "explanation": "The correct answer is: Mercedes-AMG Petronas."
+          "explanation": "Mercedes won eight constructors' titles in a row, from 2014 to 2021."
         },
         "fr": {
-          "text": "En 2016, qui a remporté le Championnat du Monde de Formule 1 pour la troisième fois consécutive ?",
+          "text": "En 2016, quelle écurie a remporté le championnat du monde des constructeurs de F1 pour la troisième fois d'affilée ?",
           "choices": [
             "Red Bull Racing Renault",
             "Scuderia Ferrari",
             "McLaren Honda",
             "Mercedes-AMG Petronas"
           ],
-          "explanation": "La bonne réponse est : Mercedes-AMG Petronas."
+          "explanation": "Mercedes a remporté huit titres constructeurs d'affilée, de 2014 à 2021."
         }
       }
     },
@@ -1132,31 +1068,31 @@
       ],
       "translations": {
         "en": {
-          "text": "Which player has scored the most goals in the England Premier League (EPL)?",
+          "text": "Which player has scored the most goals in the English Premier League?",
           "choices": [
             "Didier Drogba",
             "Lionel Messi",
             "Wayne Rooney",
             "Alan Shearer"
           ],
-          "explanation": "The correct answer is: Alan Shearer."
+          "explanation": "Alan Shearer scored 260 Premier League goals for Blackburn and Newcastle."
         },
         "fr": {
-          "text": "Quel joueur a marqué le plus de buts en Angleterre Premier League (EPL) ?",
+          "text": "Quel joueur a marqué le plus de buts en Premier League anglaise ?",
           "choices": [
             "Didier Drogba",
             "Lionel Messi",
             "Wayne Rooney",
             "Alan Shearer"
           ],
-          "explanation": "La bonne réponse est : Alan Shearer."
+          "explanation": "Alan Shearer a marqué 260 buts en Premier League pour Blackburn et Newcastle."
         }
       }
     },
     {
       "id": "sport_037",
       "category": "sport",
-      "difficulty": 2,
+      "difficulty": 3,
       "correct_index": 2,
       "locales": [
         "fr",
@@ -1171,17 +1107,17 @@
             "Putney",
             "Vauxhall"
           ],
-          "explanation": "The correct answer is: Putney."
+          "explanation": "The race on the Thames runs about 6.8 km from Putney to Mortlake."
         },
         "fr": {
-          "text": "À quel pont commence la course annuelle Oxford et Cambridge ?",
+          "text": "À quel pont commence la course d'aviron annuelle entre Oxford et Cambridge ?",
           "choices": [
             "Hammersmith",
             "Battersea",
             "Putney",
             "Vauxhall"
           ],
-          "explanation": "La bonne réponse est : Putney."
+          "explanation": "La course sur la Tamise parcourt environ 6,8 km, de Putney à Mortlake."
         }
       }
     },
@@ -1203,17 +1139,17 @@
             "4",
             "1"
           ],
-          "explanation": "The correct answer is: 1."
+          "explanation": "A rouge gives one point when the ball is kicked into the end zone and not returned."
         },
         "fr": {
-          "text": "Dans le football canadien, marquer un rouge vaut combien de points?",
+          "text": "Au football canadien, combien de points vaut un « rouge » (ou « simple ») ?",
           "choices": [
             "3",
             "2",
             "4",
             "1"
           ],
-          "explanation": "La bonne réponse est : 1."
+          "explanation": "Un rouge rapporte un point quand le ballon botté dans la zone d'en-but n'est pas relancé."
         }
       }
     },
@@ -1235,17 +1171,17 @@
             "Slowball",
             "Fastball"
           ],
-          "explanation": "The correct answer is: Fastball."
+          "explanation": "The fastball is the basic pitch; top pitchers throw it at over 160 km/h."
         },
         "fr": {
-          "text": "Quel type de lancer est le plus courant chez les lanceurs de baseball ?",
+          "text": "Quel est le lancer le plus courant au baseball ?",
           "choices": [
-            "Palmball",
-            "Screwball",
-            "Slowball",
-            "Fastball"
+            "La balle palmaire",
+            "La balle tire-bouchon",
+            "La balle lente",
+            "La balle rapide"
           ],
-          "explanation": "La bonne réponse est : Fastball."
+          "explanation": "La balle rapide est le lancer de base ; les meilleurs lanceurs dépassent les 160 km/h."
         }
       }
     },
@@ -1267,17 +1203,17 @@
             "Emerson Fittipaldi",
             "Ayrton Senna"
           ],
-          "explanation": "The correct answer is: Alain Prost."
+          "explanation": "Alain Prost, four-time world champion, earned the nickname for his calculated driving."
         },
         "fr": {
-          "text": "Quelle formule Un chauffeur a été surnommé \"Le Professeur\" ?",
+          "text": "Quel pilote de Formule 1 était surnommé « le Professeur » ?",
           "choices": [
             "Alain Prost",
             "Niki Lauda",
             "Emerson Fittipaldi",
             "Ayrton Senna"
           ],
-          "explanation": "La bonne réponse est : Alain Prost."
+          "explanation": "Alain Prost, quadruple champion du monde, devait ce surnom à son pilotage calculé."
         }
       }
     },
@@ -1299,17 +1235,17 @@
             "Lionel Messi",
             "Thomas Müller"
           ],
-          "explanation": "The correct answer is: James Rodríguez."
+          "explanation": "James Rodríguez scored six goals in 2014, including a famous volley against Uruguay."
         },
         "fr": {
-          "text": "Qui a été le meilleur buteur de la Coupe du monde de FIFA 2014 ?",
+          "text": "Qui a été le meilleur buteur de la Coupe du monde 2014 ?",
           "choices": [
             "James Rodríguez",
             "Neymar",
             "Lionel Messi",
             "Thomas Müller"
           ],
-          "explanation": "La bonne réponse est : James Rodríguez."
+          "explanation": "James Rodríguez a marqué six buts en 2014, dont une célèbre volée contre l'Uruguay."
         }
       }
     },
@@ -1331,17 +1267,17 @@
             "Toronto Wolfpack",
             "Toronto Rock"
           ],
-          "explanation": "The correct answer is: Toronto Marlies."
+          "explanation": "The Toronto Marlies won the AHL's Calder Cup in 2018."
         },
         "fr": {
-          "text": "Quel est le nom de la filiale de l'AHL des Maple Leafs de Toronto?",
+          "text": "Comment s'appelle le club-école de la LAH des Maple Leafs de Toronto ?",
           "choices": [
             "Toronto Argonauts",
             "Toronto Marlies",
             "Toronto Wolfpack",
             "Toronto Rock"
           ],
-          "explanation": "La bonne réponse est : Toronto Marlies."
+          "explanation": "Les Marlies de Toronto ont remporté la coupe Calder de l'AHL en 2018."
         }
       }
     },
@@ -1363,17 +1299,17 @@
             "Bat",
             "Cue"
           ],
-          "explanation": "The correct answer is: Cue."
+          "explanation": "The cue is usually made of ash or maple, with a leather tip chalked before each shot."
         },
         "fr": {
-          "text": "Comment s'appelle l'« outil » utilisé pour frapper la bille blanche au snooker ou au billard ?",
+          "text": "Comment s'appelle l'instrument qui sert à frapper la bille blanche au billard ?",
           "choices": [
             "Raquette",
             "Maillet",
             "Batte",
             "Queue"
           ],
-          "explanation": "La bonne réponse est : Queue."
+          "explanation": "La queue est souvent en frêne ou en érable, avec un procédé en cuir qu'on frotte de craie."
         }
       }
     },
@@ -1395,17 +1331,17 @@
             "Madeira",
             "Terceira"
           ],
-          "explanation": "The correct answer is: Madeira."
+          "explanation": "Cristiano Ronaldo was born in Funchal, Madeira, where the airport now bears his name."
         },
         "fr": {
-          "text": "De quelle île portugaise est le footballeur Cristiano Ronaldo ?",
+          "text": "De quelle île portugaise est le footballeur Cristiano Ronaldo ?",
           "choices": [
             "Santa Maria",
             "Porto Santo",
             "Madère",
             "Terceira"
           ],
-          "explanation": "La bonne réponse est : Madère."
+          "explanation": "Cristiano Ronaldo est né à Funchal, à Madère, dont l'aéroport porte aujourd'hui son nom."
         }
       }
     },
@@ -1427,17 +1363,17 @@
             "Portugal",
             "Brazil"
           ],
-          "explanation": "The correct answer is: West Germany."
+          "explanation": "England beat West Germany 4-2 after extra time at Wembley; Geoff Hurst scored a hat-trick."
         },
         "fr": {
-          "text": "Quelle équipe l'Angleterre a-t-elle battue pour remporter la finale de la Coupe du monde de 1966 ?",
+          "text": "Quelle équipe l'Angleterre a-t-elle battue pour remporter la finale de la Coupe du monde de 1966 ?",
           "choices": [
             "Allemagne de l'Ouest",
             "Union soviétique",
             "Portugal",
             "Brésil"
           ],
-          "explanation": "La bonne réponse est : Allemagne de l'Ouest."
+          "explanation": "L'Angleterre a battu la RFA 4-2 après prolongation à Wembley ; Geoff Hurst a signé un triplé."
         }
       }
     },
@@ -1459,17 +1395,17 @@
             "Michael Stich",
             "Mark Woodforde"
           ],
-          "explanation": "The correct answer is: Peter Fleming."
+          "explanation": "McEnroe and Peter Fleming won seven Grand Slam doubles titles together."
         },
         "fr": {
-          "text": "Avec quel double partenaire John McEnroe a-t-il eu le plus de succès ?",
+          "text": "Avec quel partenaire de double John McEnroe a-t-il connu le plus de succès ?",
           "choices": [
             "Mary Carillo",
             "Peter Fleming",
             "Michael Stich",
             "Mark Woodforde"
           ],
-          "explanation": "La bonne réponse est : Peter Fleming."
+          "explanation": "McEnroe et Peter Fleming ont remporté ensemble sept titres du Grand Chelem en double."
         }
       }
     },
@@ -1484,24 +1420,24 @@
       ],
       "translations": {
         "en": {
-          "text": "Who won NFL Super Bowl LI? (51)",
+          "text": "Who won Super Bowl LI (51)?",
           "choices": [
             "Broncos",
             "Patriots",
             "Eagles",
             "Falcons"
           ],
-          "explanation": "The correct answer is: Patriots."
+          "explanation": "The Patriots came back from 28-3 down to beat the Falcons in the first Super Bowl overtime."
         },
         "fr": {
-          "text": "Qui a gagné le NFL Super Bowl LI? (51)",
+          "text": "Quelle équipe a remporté le Super Bowl LI (51e édition) ?",
           "choices": [
             "Broncos",
             "Patriots",
             "Eagles",
             "Falcons"
           ],
-          "explanation": "La bonne réponse est : Patriots."
+          "explanation": "Les Patriots, menés 28-3, ont battu les Falcons lors de la première prolongation de l'histoire du Super Bowl."
         }
       }
     },
@@ -1523,17 +1459,17 @@
             "Kimi Raikkonen",
             "Daniel Ricciardo"
           ],
-          "explanation": "The correct answer is: Daniel Ricciardo."
+          "explanation": "Ricciardo won in Monaco despite losing about 160 horsepower to an engine problem."
         },
         "fr": {
-          "text": "Qui a remporté le Grand Prix de Monaco 2018 ?",
+          "text": "Qui a remporté le Grand Prix de Monaco 2018 ?",
           "choices": [
             "Sebastian Vettel",
             "Lewis Hamilton",
             "Kimi Raikkonen",
             "Daniel Ricciardo"
           ],
-          "explanation": "La bonne réponse est : Daniel Ricciardo."
+          "explanation": "Ricciardo a gagné à Monaco malgré un problème moteur qui lui a fait perdre environ 160 chevaux."
         }
       }
     },
@@ -1555,17 +1491,17 @@
             "102",
             "62"
           ],
-          "explanation": "The correct answer is: 82."
+          "explanation": "20 sectors × 4 zones (single, double, treble, single) = 80, plus the outer bull and bullseye: 82."
         },
         "fr": {
-          "text": "Combien de zones de notation y a-t-il sur un tableau de fléchettes conventionnel ?",
+          "text": "Combien de zones de points compte une cible de fléchettes classique ?",
           "choices": [
             "42",
             "82",
             "102",
             "62"
           ],
-          "explanation": "La bonne réponse est : 82."
+          "explanation": "20 secteurs × 4 zones (simple, double, triple, simple) = 80, plus le 25 et le centre : 82."
         }
       }
     },
@@ -1587,17 +1523,17 @@
             "Chicago Cubs",
             "Cincinnati Reds"
           ],
-          "explanation": "The correct answer is: Atlanta Braves."
+          "explanation": "The Braves were founded as the Boston Red Stockings in 1871, then moved to Milwaukee and Atlanta."
         },
         "fr": {
-          "text": "Quelle est l'équipe la plus ancienne de Major League Baseball ?",
+          "text": "Quelle est la plus ancienne équipe de la Major League Baseball ?",
           "choices": [
             "Atlanta Braves",
             "St. Louis Cardinals",
             "Chicago Cubs",
             "Cincinnati Reds"
           ],
-          "explanation": "La bonne réponse est : Atlanta Braves."
+          "explanation": "Les Braves sont nés en 1871 sous le nom de Boston Red Stockings, avant Milwaukee puis Atlanta."
         }
       }
     },
@@ -1619,17 +1555,17 @@
             "Nicolae Dobrin",
             "Gheorghe Popescu"
           ],
-          "explanation": "The correct answer is: Gheorghe Hagi."
+          "explanation": "Gheorghe Hagi, \"the Maradona of the Carpathians\", starred for Real Madrid, Barcelona and Galatasaray."
         },
         "fr": {
-          "text": "Qui est considéré comme le meilleur footballeur roumain de tous les temps ?",
+          "text": "Qui est considéré comme le meilleur footballeur roumain de tous les temps ?",
           "choices": [
             "Gheorghe Hagi",
             "Cristian Chivu",
             "Nicolae Dobrin",
             "Gheorghe Popescu"
           ],
-          "explanation": "La bonne réponse est : Gheorghe Hagi."
+          "explanation": "Gheorghe Hagi, « le Maradona des Carpates », a brillé au Real Madrid, au Barça et à Galatasaray."
         }
       }
     },
@@ -1651,17 +1587,17 @@
             "Philadelphia Flyers",
             "Boston Bruins"
           ],
-          "explanation": "The correct answer is: Philadelphia Flyers."
+          "explanation": "The Original Six (1942-1967) were Boston, Chicago, Detroit, Montreal, New York and Toronto."
         },
         "fr": {
-          "text": "Laquelle de ces équipes n'est pas membre de l'ère \"Original Six\" de la LNH ?",
+          "text": "Laquelle de ces équipes ne fait PAS partie des « Original Six » de la LNH ?",
           "choices": [
             "New York Rangers",
             "Toronto Maple Leafs",
             "Philadelphia Flyers",
             "Boston Bruins"
           ],
-          "explanation": "La bonne réponse est : Philadelphia Flyers."
+          "explanation": "Les Six Équipes originales (1942-1967) étaient Boston, Chicago, Détroit, Montréal, New York et Toronto."
         }
       }
     },
@@ -1683,17 +1619,17 @@
             "Cristiano Armando Diego Ronaldo",
             "Cristiano Luis Armando Ronaldo"
           ],
-          "explanation": "The correct answer is: Cristiano Ronaldo dos Santos Aveiro."
+          "explanation": "His first name \"Ronaldo\" was chosen by his father as a tribute to US President Ronald Reagan."
         },
         "fr": {
-          "text": "Quel est le nom complet du footballeur \"Cristiano Ronaldo\" ?",
+          "text": "Quel est le nom complet du footballeur \"Cristiano Ronaldo\" ?",
           "choices": [
             "Cristiano Ronaldo dos Santos Aveiro",
             "Cristiano Ronaldo los Santos Diego",
             "Cristiano Armando Diego Ronaldo",
             "Cristiano Luis Armando Ronaldo"
           ],
-          "explanation": "La bonne réponse est: Cristiano Ronaldo dos Santos Aveiro."
+          "explanation": "Son prénom « Ronaldo » a été choisi par son père en hommage au président américain Ronald Reagan."
         }
       }
     },
@@ -1708,24 +1644,24 @@
       ],
       "translations": {
         "en": {
-          "text": "Which Formula 1 driver switched teams in the middle of the 2017 season?",
+          "text": "Which Formula 1 driver switched teams before the end of the 2017 season?",
           "choices": [
             "Rio Haryanto",
             "Carlos Sainz Jr.",
             "Daniil Kvyat",
             "Jolyon Palmer"
           ],
-          "explanation": "The correct answer is: Carlos Sainz Jr.."
+          "explanation": "Carlos Sainz left Toro Rosso for Renault before the 2017 United States Grand Prix."
         },
         "fr": {
-          "text": "Quel pilote de Formule 1 a changé d'équipe au milieu de la saison 2017 ?",
+          "text": "Quel pilote de Formule 1 a changé d'écurie avant la fin de la saison 2017 ?",
           "choices": [
             "Rio Haryanto",
             "Carlos Sainz Jr.",
             "Daniil Kvyat",
             "Jolyon Palmer"
           ],
-          "explanation": "La bonne réponse est : Carlos Sainz Jr.."
+          "explanation": "Carlos Sainz a quitté Toro Rosso pour Renault avant le Grand Prix des États-Unis 2017."
         }
       }
     },
@@ -1747,17 +1683,17 @@
             "Hartford Bruins",
             "Providence Bruins"
           ],
-          "explanation": "The correct answer is: Providence Bruins."
+          "explanation": "The Providence Bruins, from Rhode Island, have been Boston's farm team since 1992."
         },
         "fr": {
-          "text": "L'équipe affiliée de l'AHL des Bruins de Boston s'appelle quoi ?",
+          "text": "Comment s'appelle le club-école de la LAH des Bruins de Boston ?",
           "choices": [
             "Cambridge Bruins",
             "New Haven Bruins",
             "Hartford Bruins",
             "Providence Bruins"
           ],
-          "explanation": "La bonne réponse est : Providence Bruins."
+          "explanation": "Les Bruins de Providence, dans le Rhode Island, sont l'équipe-école de Boston depuis 1992."
         }
       }
     },
@@ -1779,49 +1715,17 @@
             "Alberta",
             "British Columbia"
           ],
-          "explanation": "The correct answer is: Ontario."
+          "explanation": "Wayne Gretzky, \"The Great One\", was born in Brantford, Ontario, in 1961."
         },
         "fr": {
-          "text": "Le joueur de hockey Wayne Gretzky est né dans quelle province canadienne?",
+          "text": "Dans quelle province canadienne le hockeyeur Wayne Gretzky est-il né ?",
           "choices": [
             "Québec",
             "Ontario",
             "Alberta",
             "Colombie-Britannique"
           ],
-          "explanation": "La bonne réponse est : Ontario."
-        }
-      }
-    },
-    {
-      "id": "sport_057",
-      "category": "sport",
-      "difficulty": 1,
-      "correct_index": 2,
-      "locales": [
-        "fr",
-        "en"
-      ],
-      "translations": {
-        "en": {
-          "text": "In baseball, how many fouls are an out?",
-          "choices": [
-            "3",
-            "2",
-            "0",
-            "5"
-          ],
-          "explanation": "The correct answer is: 0."
-        },
-        "fr": {
-          "text": "Dans le baseball, combien de fautes ?",
-          "choices": [
-            "3",
-            "2",
-            "0",
-            "5"
-          ],
-          "explanation": "La bonne réponse est : 0."
+          "explanation": "Wayne Gretzky, « la Merveille », est né à Brantford, en Ontario, en 1961."
         }
       }
     },
@@ -1843,24 +1747,24 @@
             "Green Bay Packers",
             "Arizona Cardinals"
           ],
-          "explanation": "The correct answer is: Arizona Cardinals."
+          "explanation": "The Cardinals were founded in Chicago in 1898, before moving to St. Louis and then Arizona."
         },
         "fr": {
-          "text": "Quelle est l'équipe la plus ancienne de la NFL ?",
+          "text": "Quelle est la plus ancienne équipe de la NFL ?",
           "choices": [
             "New York Giants",
             "Chicago Bears",
             "Green Bay Packers",
             "Arizona Cardinals"
           ],
-          "explanation": "La bonne réponse est : Arizona Cardinals."
+          "explanation": "Les Cardinals ont été fondés à Chicago en 1898, avant de partir à Saint-Louis puis en Arizona."
         }
       }
     },
     {
       "id": "sport_059",
       "category": "sport",
-      "difficulty": 1,
+      "difficulty": 3,
       "correct_index": 3,
       "locales": [
         "fr",
@@ -1875,17 +1779,785 @@
             "19",
             "25"
           ],
-          "explanation": "The correct answer is: 25."
+          "explanation": "LeBron James scored 25 points in his NBA debut in 2003, straight out of high school."
         },
         "fr": {
-          "text": "Combien de points LeBron James a-t-il marqué dans son premier match NBA ?",
+          "text": "Combien de points LeBron James a-t-il marqués lors de son premier match NBA ?",
           "choices": [
             "41",
             "69",
             "19",
             "25"
           ],
-          "explanation": "La bonne réponse est : 25."
+          "explanation": "LeBron James a marqué 25 points pour ses débuts en NBA en 2003, tout juste sorti du lycée."
+        }
+      }
+    },
+    {
+      "id": "sport_060",
+      "category": "sport",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What colour is the jersey worn by the leader of the Tour de France?",
+          "choices": [
+            "Polka dot",
+            "Yellow",
+            "Green",
+            "White"
+          ],
+          "explanation": "The yellow jersey dates from 1919; its colour came from the yellow paper of the newspaper L'Auto."
+        },
+        "fr": {
+          "text": "De quelle couleur est le maillot du leader du Tour de France ?",
+          "choices": [
+            "À pois",
+            "Jaune",
+            "Vert",
+            "Blanc"
+          ],
+          "explanation": "Le maillot jaune date de 1919 ; sa couleur vient du papier jaune du journal L'Auto, organisateur du Tour."
+        }
+      }
+    },
+    {
+      "id": "sport_061",
+      "category": "sport",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many points is a try worth in rugby union?",
+          "choices": [
+            "4",
+            "5",
+            "7",
+            "3"
+          ],
+          "explanation": "A try has been worth 5 points since 1992; the conversion can add 2 more."
+        },
+        "fr": {
+          "text": "Combien de points vaut un essai au rugby à XV ?",
+          "choices": [
+            "4",
+            "5",
+            "7",
+            "3"
+          ],
+          "explanation": "L'essai vaut 5 points depuis 1992 ; la transformation peut en ajouter 2."
+        }
+      }
+    },
+    {
+      "id": "sport_062",
+      "category": "sport",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which tennis tournament is played on clay in Paris?",
+          "choices": [
+            "Australian Open",
+            "Roland-Garros",
+            "Wimbledon",
+            "US Open"
+          ],
+          "explanation": "Roland-Garros is named after a French aviator; Rafael Nadal won it a record 14 times."
+        },
+        "fr": {
+          "text": "Quel tournoi de tennis se joue sur terre battue à Paris ?",
+          "choices": [
+            "L'Open d'Australie",
+            "Roland-Garros",
+            "Wimbledon",
+            "L'US Open"
+          ],
+          "explanation": "Roland-Garros porte le nom d'un aviateur français ; Rafael Nadal l'a gagné 14 fois, un record."
+        }
+      }
+    },
+    {
+      "id": "sport_063",
+      "category": "sport",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which sport do you perform a slam dunk?",
+          "choices": [
+            "Handball",
+            "Tennis",
+            "Volleyball",
+            "Basketball"
+          ],
+          "explanation": "A dunk means putting the ball through the hoop from above, hands touching the rim."
+        },
+        "fr": {
+          "text": "Dans quel sport réalise-t-on un smash dunk ?",
+          "choices": [
+            "Le handball",
+            "Le tennis",
+            "Le volley-ball",
+            "Le basket-ball"
+          ],
+          "explanation": "Un dunk consiste à enfoncer le ballon dans le panier par le haut, les mains au contact de l'arceau."
+        }
+      }
+    },
+    {
+      "id": "sport_064",
+      "category": "sport",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French footballer scored twice in the 1998 World Cup final?",
+          "choices": [
+            "Thierry Henry",
+            "Youri Djorkaeff",
+            "Emmanuel Petit",
+            "Zinedine Zidane"
+          ],
+          "explanation": "Zidane scored two headers against Brazil; Emmanuel Petit added the third goal (3-0)."
+        },
+        "fr": {
+          "text": "Quel footballeur français a marqué deux fois en finale de la Coupe du monde 1998 ?",
+          "choices": [
+            "Thierry Henry",
+            "Youri Djorkaeff",
+            "Emmanuel Petit",
+            "Zinedine Zidane"
+          ],
+          "explanation": "Zidane a marqué deux fois de la tête contre le Brésil ; Emmanuel Petit a ajouté le troisième but (3-0)."
+        }
+      }
+    },
+    {
+      "id": "sport_065",
+      "category": "sport",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many rings are on the Olympic flag?",
+          "choices": [
+            "4",
+            "5",
+            "7",
+            "6"
+          ],
+          "explanation": "Pierre de Coubertin designed the five interlaced rings in 1913 to represent the inhabited continents."
+        },
+        "fr": {
+          "text": "Combien d'anneaux figurent sur le drapeau olympique ?",
+          "choices": [
+            "4",
+            "5",
+            "7",
+            "6"
+          ],
+          "explanation": "Pierre de Coubertin a dessiné les cinq anneaux entrelacés en 1913 pour représenter les continents habités."
+        }
+      }
+    },
+    {
+      "id": "sport_066",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which city hosted the 2024 Summer Olympics?",
+          "choices": [
+            "London",
+            "Tokyo",
+            "Paris",
+            "Los Angeles"
+          ],
+          "explanation": "Paris hosted the Games for the third time, after 1900 and 1924; the opening ceremony took place on the Seine."
+        },
+        "fr": {
+          "text": "Quelle ville a accueilli les Jeux olympiques d'été de 2024 ?",
+          "choices": [
+            "Londres",
+            "Tokyo",
+            "Paris",
+            "Los Angeles"
+          ],
+          "explanation": "Paris a accueilli les Jeux pour la troisième fois, après 1900 et 1924, avec une cérémonie d'ouverture sur la Seine."
+        }
+      }
+    },
+    {
+      "id": "sport_067",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French swimmer won four individual gold medals at Paris 2024?",
+          "choices": [
+            "Yannick Agnel",
+            "Maxime Grousset",
+            "Florent Manaudou",
+            "Léon Marchand"
+          ],
+          "explanation": "Léon Marchand won the 200 m butterfly and 200 m breaststroke on the same evening, among his four titles."
+        },
+        "fr": {
+          "text": "Quel nageur français a remporté quatre titres individuels aux JO de Paris 2024 ?",
+          "choices": [
+            "Yannick Agnel",
+            "Maxime Grousset",
+            "Florent Manaudou",
+            "Léon Marchand"
+          ],
+          "explanation": "Léon Marchand a notamment gagné le 200 m papillon et le 200 m brasse le même soir, parmi ses quatre titres."
+        }
+      }
+    },
+    {
+      "id": "sport_068",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How long is a marathon?",
+          "choices": [
+            "45.5 km",
+            "42 km",
+            "40 km",
+            "42.195 km"
+          ],
+          "explanation": "The odd distance was set at the 1908 London Olympics to finish in front of the royal box."
+        },
+        "fr": {
+          "text": "Quelle est la distance d'un marathon ?",
+          "choices": [
+            "45,5 km",
+            "42 km",
+            "40 km",
+            "42,195 km"
+          ],
+          "explanation": "Cette distance curieuse vient des JO de Londres 1908, pour arriver devant la loge royale."
+        }
+      }
+    },
+    {
+      "id": "sport_069",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Jamaican sprinter holds the 100 m world record?",
+          "choices": [
+            "Carl Lewis",
+            "Yohan Blake",
+            "Asafa Powell",
+            "Usain Bolt"
+          ],
+          "explanation": "Usain Bolt ran 9.58 seconds in Berlin in 2009, a record still unbeaten."
+        },
+        "fr": {
+          "text": "Quel sprinteur jamaïcain détient le record du monde du 100 m ?",
+          "choices": [
+            "Carl Lewis",
+            "Yohan Blake",
+            "Asafa Powell",
+            "Usain Bolt"
+          ],
+          "explanation": "Usain Bolt a couru en 9,58 secondes à Berlin en 2009, un record toujours invaincu."
+        }
+      }
+    },
+    {
+      "id": "sport_070",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which sport is played at Wimbledon?",
+          "choices": [
+            "Polo",
+            "Golf",
+            "Cricket",
+            "Tennis"
+          ],
+          "explanation": "Wimbledon, first held in 1877, is the oldest tennis tournament in the world; players must wear white."
+        },
+        "fr": {
+          "text": "Quel sport se joue à Wimbledon ?",
+          "choices": [
+            "Le polo",
+            "Le golf",
+            "Le cricket",
+            "Le tennis"
+          ],
+          "explanation": "Wimbledon, créé en 1877, est le plus vieux tournoi de tennis du monde ; les joueurs doivent s'habiller en blanc."
+        }
+      }
+    },
+    {
+      "id": "sport_071",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French judoka has won 11 world titles and three Olympic golds in individual events?",
+          "choices": [
+            "David Douillet",
+            "Clarisse Agbégnénou",
+            "Teddy Riner",
+            "Djamel Bouras"
+          ],
+          "explanation": "Teddy Riner won Olympic gold in 2012, 2016 and 2024, plus team golds in 2021 and 2024."
+        },
+        "fr": {
+          "text": "Quel judoka français compte 11 titres mondiaux et trois titres olympiques en individuel ?",
+          "choices": [
+            "David Douillet",
+            "Clarisse Agbégnénou",
+            "Teddy Riner",
+            "Djamel Bouras"
+          ],
+          "explanation": "Teddy Riner a été champion olympique en 2012, 2016 et 2024, plus deux titres par équipes en 2021 et 2024."
+        }
+      }
+    },
+    {
+      "id": "sport_072",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many players are on the court for one team in handball?",
+          "choices": [
+            "7",
+            "5",
+            "9",
+            "6"
+          ],
+          "explanation": "A handball team fields six outfield players and one goalkeeper."
+        },
+        "fr": {
+          "text": "Combien de joueurs par équipe sont sur le terrain au handball ?",
+          "choices": [
+            "7",
+            "5",
+            "9",
+            "6"
+          ],
+          "explanation": "Une équipe de handball aligne six joueurs de champ et un gardien."
+        }
+      }
+    },
+    {
+      "id": "sport_073",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which country has won the most FIFA World Cups?",
+          "choices": [
+            "Argentina",
+            "Brazil",
+            "Italy",
+            "Germany"
+          ],
+          "explanation": "Brazil has five titles: 1958, 1962, 1970, 1994 and 2002."
+        },
+        "fr": {
+          "text": "Quel pays a remporté le plus de Coupes du monde de football ?",
+          "choices": [
+            "L'Argentine",
+            "Le Brésil",
+            "L'Italie",
+            "L'Allemagne"
+          ],
+          "explanation": "Le Brésil compte cinq titres : 1958, 1962, 1970, 1994 et 2002."
+        }
+      }
+    },
+    {
+      "id": "sport_074",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which sport can you score a 'hole in one'?",
+          "choices": [
+            "Croquet",
+            "Bowling",
+            "Mini-basketball",
+            "Golf"
+          ],
+          "explanation": "A hole in one means sinking the ball with the tee shot, usually on a par 3."
+        },
+        "fr": {
+          "text": "Dans quel sport peut-on réussir un « trou en un » ?",
+          "choices": [
+            "Le croquet",
+            "Le bowling",
+            "Le mini-basket",
+            "Le golf"
+          ],
+          "explanation": "Un trou en un, c'est rentrer la balle dès le coup de départ, en général sur un par 3."
+        }
+      }
+    },
+    {
+      "id": "sport_075",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which tournament do the six best European rugby nations play every year?",
+          "choices": [
+            "Rugby Championship",
+            "Nations Cup",
+            "Heineken Cup",
+            "Six Nations"
+          ],
+          "explanation": "England, France, Ireland, Italy, Scotland and Wales compete; Italy joined in 2000."
+        },
+        "fr": {
+          "text": "Quel tournoi réunit chaque année six grandes nations européennes du rugby ?",
+          "choices": [
+            "Le Rugby Championship",
+            "La Coupe des nations",
+            "La Coupe Heineken",
+            "Le Tournoi des Six Nations"
+          ],
+          "explanation": "Angleterre, France, Irlande, Italie, Écosse et pays de Galles s'affrontent ; l'Italie est arrivée en 2000."
+        }
+      }
+    },
+    {
+      "id": "sport_076",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the maximum break in snooker?",
+          "choices": [
+            "100",
+            "155",
+            "180",
+            "147"
+          ],
+          "explanation": "15 reds with 15 blacks (120) then all six colours (27) give 147."
+        },
+        "fr": {
+          "text": "Quel est le break maximum au snooker ?",
+          "choices": [
+            "100",
+            "155",
+            "180",
+            "147"
+          ],
+          "explanation": "15 rouges suivies de 15 noires (120), puis les six couleurs (27) : 147."
+        }
+      }
+    },
+    {
+      "id": "sport_077",
+      "category": "sport",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who holds the record for most Tour de France stage wins?",
+          "choices": [
+            "Peter Sagan",
+            "Mark Cavendish",
+            "Bernard Hinault",
+            "Eddy Merckx"
+          ],
+          "explanation": "Mark Cavendish won his 35th stage in 2024, breaking a tie with Eddy Merckx."
+        },
+        "fr": {
+          "text": "Qui détient le record de victoires d'étapes sur le Tour de France ?",
+          "choices": [
+            "Peter Sagan",
+            "Mark Cavendish",
+            "Bernard Hinault",
+            "Eddy Merckx"
+          ],
+          "explanation": "Mark Cavendish a remporté sa 35e étape en 2024, dépassant Eddy Merckx."
+        }
+      }
+    },
+    {
+      "id": "sport_078",
+      "category": "sport",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which country won the first Rugby World Cup in 1987?",
+          "choices": [
+            "New Zealand",
+            "Australia",
+            "South Africa",
+            "France"
+          ],
+          "explanation": "The All Blacks beat France 29-9 in the final in Auckland."
+        },
+        "fr": {
+          "text": "Quel pays a remporté la première Coupe du monde de rugby, en 1987 ?",
+          "choices": [
+            "La Nouvelle-Zélande",
+            "L'Australie",
+            "L'Afrique du Sud",
+            "La France"
+          ],
+          "explanation": "Les All Blacks ont battu la France 29-9 en finale à Auckland."
+        }
+      }
+    },
+    {
+      "id": "sport_079",
+      "category": "sport",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which footballer has won the most Ballon d'Or awards?",
+          "choices": [
+            "Johan Cruyff",
+            "Lionel Messi",
+            "Cristiano Ronaldo",
+            "Michel Platini"
+          ],
+          "explanation": "Lionel Messi has won eight Ballons d'Or, the last in 2023; Ronaldo has five."
+        },
+        "fr": {
+          "text": "Quel footballeur a remporté le plus de Ballons d'or ?",
+          "choices": [
+            "Johan Cruyff",
+            "Lionel Messi",
+            "Cristiano Ronaldo",
+            "Michel Platini"
+          ],
+          "explanation": "Lionel Messi a gagné huit Ballons d'or, le dernier en 2023 ; Cristiano Ronaldo en a cinq."
+        }
+      }
+    },
+    {
+      "id": "sport_080",
+      "category": "sport",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which sport is the Stanley Cup awarded?",
+          "choices": [
+            "Lacrosse",
+            "Baseball",
+            "Ice hockey",
+            "American football"
+          ],
+          "explanation": "The Stanley Cup, first awarded in 1893, is the oldest trophy in North American professional sport."
+        },
+        "fr": {
+          "text": "Dans quel sport décerne-t-on la coupe Stanley ?",
+          "choices": [
+            "La crosse",
+            "Le baseball",
+            "Le hockey sur glace",
+            "Le football américain"
+          ],
+          "explanation": "La coupe Stanley, remise depuis 1893, est le plus vieux trophée du sport professionnel nord-américain."
+        }
+      }
+    },
+    {
+      "id": "sport_081",
+      "category": "sport",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which nation has won the most Olympic titles in men's handball?",
+          "choices": [
+            "Germany",
+            "Denmark",
+            "Spain",
+            "France"
+          ],
+          "explanation": "France's \"Experts\" won Olympic gold in 2008, 2012 and 2021."
+        },
+        "fr": {
+          "text": "Quelle nation détient le record de titres olympiques en handball masculin ?",
+          "choices": [
+            "L'Allemagne",
+            "Le Danemark",
+            "L'Espagne",
+            "La France"
+          ],
+          "explanation": "Les « Experts » français ont été champions olympiques en 2008, 2012 et 2021."
+        }
+      }
+    },
+    {
+      "id": "sport_082",
+      "category": "sport",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of the famous 24-hour motor race held every June in France?",
+          "choices": [
+            "Bol d'Or",
+            "Grand Prix de Pau",
+            "24 Hours of Le Mans",
+            "Rallye Monte-Carlo"
+          ],
+          "explanation": "First run in 1923, Le Mans is one of the three races of motorsport's \"Triple Crown\"."
+        },
+        "fr": {
+          "text": "Comment s'appelle la célèbre course automobile de 24 heures disputée chaque juin en France ?",
+          "choices": [
+            "Le Bol d'Or",
+            "Le Grand Prix de Pau",
+            "Les 24 Heures du Mans",
+            "Le Rallye Monte-Carlo"
+          ],
+          "explanation": "Disputées depuis 1923, les 24 Heures du Mans font partie de la « triple couronne » du sport automobile."
+        }
+      }
+    },
+    {
+      "id": "sport_083",
+      "category": "sport",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who was the first gymnast to score a perfect 10 at the Olympics?",
+          "choices": [
+            "Simone Biles",
+            "Mary Lou Retton",
+            "Nadia Comăneci",
+            "Olga Korbut"
+          ],
+          "explanation": "Nadia Comăneci, 14, did it in Montreal in 1976; the scoreboard showed 1.00 as it had no room for 10."
+        },
+        "fr": {
+          "text": "Qui a été la première gymnaste à obtenir un 10 parfait aux Jeux olympiques ?",
+          "choices": [
+            "Simone Biles",
+            "Mary Lou Retton",
+            "Nadia Comăneci",
+            "Olga Korbut"
+          ],
+          "explanation": "Nadia Comăneci, 14 ans, l'a fait à Montréal en 1976 ; le tableau affichait 1.00, faute de place pour un 10."
         }
       }
     }

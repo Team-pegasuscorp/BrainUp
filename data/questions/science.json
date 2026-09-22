@@ -19,17 +19,17 @@
             "Lithium",
             "Lead"
           ],
-          "explanation": "The correct answer is: Magnesium."
+          "explanation": "Magnesium burns at over 3,000 °C with a dazzling white light, once used in camera flashes."
         },
         "fr": {
-          "text": "Brûler lequel de ces métaux produira une flamme blanche éclatante?",
+          "text": "Quel métal brûle en produisant une flamme d'un blanc éclatant ?",
           "choices": [
             "Cuivre",
             "Magnésium",
             "Lithium",
             "Plomb"
           ],
-          "explanation": "La bonne réponse est: Magnésium."
+          "explanation": "Le magnésium brûle à plus de 3 000 °C avec une lumière blanche aveuglante, jadis utilisée pour les flashs photo."
         }
       }
     },
@@ -51,17 +51,17 @@
             "Malus pumila",
             "Malus americana"
           ],
-          "explanation": "The correct answer is: Malus pumila."
+          "explanation": "Malus pumila (also called Malus domestica) is the apple tree grown in orchards worldwide."
         },
         "fr": {
-          "text": "Quel est le nom linnéen du pommier domestique?",
+          "text": "Quel est le nom scientifique du pommier domestique ?",
           "choices": [
             "Pomus domestica",
             "Appelus delectica",
             "Malus pumila",
             "Malus americana"
           ],
-          "explanation": "La bonne réponse est: Malus pumila."
+          "explanation": "Malus pumila (aussi appelé Malus domestica) est le pommier cultivé dans les vergers du monde entier."
         }
       }
     },
@@ -76,24 +76,24 @@
       ],
       "translations": {
         "en": {
-          "text": "Naturally occuring uranium primarily consists of which isotope?",
+          "text": "Naturally occurring uranium mainly consists of which isotope?",
           "choices": [
             "235",
             "239",
             "233",
             "238"
           ],
-          "explanation": "The correct answer is: 238."
+          "explanation": "About 99.3% of natural uranium is uranium-238; nuclear reactors need the rarer uranium-235."
         },
         "fr": {
-          "text": "L'uranium naturel se compose principalement de quel isotope?",
+          "text": "L'uranium naturel se compose principalement de quel isotope ?",
           "choices": [
             "235",
             "239",
             "233",
             "238"
           ],
-          "explanation": "La bonne réponse est : 238."
+          "explanation": "Environ 99,3 % de l'uranium naturel est de l'uranium 238 ; les réacteurs ont besoin du rare uranium 235."
         }
       }
     },
@@ -115,17 +115,17 @@
             "1",
             "5"
           ],
-          "explanation": "The correct answer is: 2."
+          "explanation": "Haumea is named after a Hawaiian goddess and Makemake after the creator god of Easter Island."
         },
         "fr": {
-          "text": "Combien de planètes naines officiellement reconnues dans le système solaire portent le nom de divinités polynésiennes ?",
+          "text": "Combien de planètes naines officielles du Système solaire portent le nom de divinités polynésiennes ?",
           "choices": [
             "2",
             "0",
             "1",
             "5"
           ],
-          "explanation": "La bonne réponse est : 2."
+          "explanation": "Hauméa porte le nom d'une déesse hawaïenne et Makémaké celui du dieu créateur de l'île de Pâques."
         }
       }
     },
@@ -140,24 +140,24 @@
       ],
       "translations": {
         "en": {
-          "text": "The medial meniscus forms which part of what joint in the human body?",
+          "text": "The medial meniscus is part of which joint in the human body?",
           "choices": [
             "Ankle",
             "Shoulder",
             "Elbow",
             "Knee"
           ],
-          "explanation": "The correct answer is: Knee."
+          "explanation": "The menisci are C-shaped cartilage pads that cushion the knee between thigh bone and shin bone."
         },
         "fr": {
-          "text": "Le ménisque médial forme quelle partie du corps humain ?",
+          "text": "Le ménisque médial fait partie de quelle articulation ?",
           "choices": [
             "Cheville",
             "Épaule",
             "Coude",
             "Genou"
           ],
-          "explanation": "La bonne réponse est : Knee."
+          "explanation": "Les ménisques sont des coussinets de cartilage en forme de C qui amortissent le genou entre fémur et tibia."
         }
       }
     },
@@ -179,17 +179,17 @@
             "Ricin",
             "Asbestos"
           ],
-          "explanation": "The correct answer is: Botulinum toxin."
+          "explanation": "A few hundred nanograms of botulinum toxin can kill a person; tiny doses are used as Botox."
         },
         "fr": {
-          "text": "Quelle est la toxine la plus puissante connue?",
+          "text": "Quelle est la toxine la plus puissante connue ?",
           "choices": [
-            "Toxine botulique",
-            "Cyanure",
-            "Ricin",
-            "Asbestos"
+            "La toxine botulique",
+            "Le cyanure",
+            "La ricine",
+            "L'amiante"
           ],
-          "explanation": "La bonne réponse est la toxine botulique."
+          "explanation": "Quelques centaines de nanogrammes de toxine botulique peuvent tuer ; à doses infimes, c'est le Botox."
         }
       }
     },
@@ -211,17 +211,17 @@
             "Contraction of the heart chambers",
             "Closure of the heart valves"
           ],
-          "explanation": "The correct answer is: Closure of the heart valves."
+          "explanation": "The \"lub-dub\" is the sound of the heart valves snapping shut, first the atrioventricular ones, then the arterial ones."
         },
         "fr": {
-          "text": "Qu'est - ce qui provoque un battement de cœur?",
+          "text": "Qu'est-ce qui produit le bruit des battements du cœur ?",
           "choices": [
-            "Relaxation des chambres du cœur",
-            "Sang sortant du cœur",
-            "La contraction des chambres cardiaques",
-            "Fermeture des valves cardiaques"
+            "Le relâchement des cavités du cœur",
+            "Le sang qui sort du cœur",
+            "La contraction des cavités du cœur",
+            "La fermeture des valves cardiaques"
           ],
-          "explanation": "La bonne réponse est : Fermeture des valves cardiaques."
+          "explanation": "Le « poum-tac » est le bruit des valves qui se ferment : d'abord les auriculo-ventriculaires, puis les artérielles."
         }
       }
     },
@@ -236,24 +236,24 @@
       ],
       "translations": {
         "en": {
-          "text": "What is the same in Celsius and Fahrenheit?",
+          "text": "At which temperature do Celsius and Fahrenheit show the same number?",
           "choices": [
             "-39",
             "-40",
             "32",
             "-42"
           ],
-          "explanation": "The correct answer is: -40."
+          "explanation": "The two scales meet at -40: -40 °C is exactly -40 °F."
         },
         "fr": {
-          "text": "Quelle est la même chose à Celsius et Fahrenheit?",
+          "text": "À quelle température les degrés Celsius et Fahrenheit affichent-ils la même valeur ?",
           "choices": [
             "-39",
             "-40",
             "32",
             "-42"
           ],
-          "explanation": "La bonne réponse est : -40."
+          "explanation": "Les deux échelles se croisent à -40 : -40 °C correspond exactement à -40 °F."
         }
       }
     },
@@ -275,17 +275,17 @@
             "Coulomb",
             "Weber"
           ],
-          "explanation": "The correct answer is: Henry."
+          "explanation": "The henry is named after the American physicist Joseph Henry, a pioneer of electromagnetism."
         },
         "fr": {
-          "text": "Quelle est l'unité d'inductance électrique?",
+          "text": "Quelle est l'unité de l'inductance électrique ?",
           "choices": [
             "Mho",
             "Henry",
             "Coulomb",
             "Weber"
           ],
-          "explanation": "La bonne réponse est : Henry."
+          "explanation": "Le henry porte le nom du physicien américain Joseph Henry, pionnier de l'électromagnétisme."
         }
       }
     },
@@ -307,17 +307,17 @@
             "Coulomb",
             "Faraday"
           ],
-          "explanation": "The correct answer is: Candela."
+          "explanation": "The candela, \"candle\" in Latin, is roughly the light of one ordinary candle."
         },
         "fr": {
-          "text": "Quelle est l'unité SI standard pour l'intensité lumineuse?",
+          "text": "Quelle est l'unité SI de l'intensité lumineuse ?",
           "choices": [
             "Candela",
             "Lumen",
             "Coulomb",
             "Faraday"
           ],
-          "explanation": "La bonne réponse est : Candela."
+          "explanation": "La candela, « chandelle » en latin, correspond à peu près à la lumière d'une bougie."
         }
       }
     },
@@ -339,17 +339,17 @@
             "Diplophase",
             "Metaphase"
           ],
-          "explanation": "The correct answer is: Diplophase."
+          "explanation": "Mitosis runs through prophase, metaphase, anaphase and telophase; \"diplophase\" is not one of them."
         },
         "fr": {
-          "text": "Lequel de ces choix n'est pas une des phases de mitose?",
+          "text": "Laquelle de ces phases ne fait PAS partie de la mitose ?",
           "choices": [
             "Télophase",
             "Anaphase",
             "Diplophase",
             "Métaphase"
           ],
-          "explanation": "La bonne réponse est : Diplophase."
+          "explanation": "La mitose passe par la prophase, la métaphase, l'anaphase et la télophase ; la « diplophase » n'en fait pas partie."
         }
       }
     },
@@ -371,49 +371,17 @@
             "2",
             "4"
           ],
-          "explanation": "The correct answer is: 3."
+          "explanation": "The right lung has three lobes; the left has only two, leaving room for the heart."
         },
         "fr": {
-          "text": "Le poumon droit humain a combien de lobes ?",
+          "text": "Le poumon droit humain a combien de lobes ?",
           "choices": [
             "1",
             "3",
             "2",
             "4"
           ],
-          "explanation": "La bonne réponse est : 3."
-        }
-      }
-    },
-    {
-      "id": "science_013",
-      "category": "science",
-      "difficulty": 3,
-      "correct_index": 1,
-      "locales": [
-        "fr",
-        "en"
-      ],
-      "translations": {
-        "en": {
-          "text": "The 'Islets of Langerhans' is found in which human organ?",
-          "choices": [
-            "Kidney",
-            "Pancreas",
-            "Brain",
-            "Liver"
-          ],
-          "explanation": "The correct answer is: Pancreas."
-        },
-        "fr": {
-          "text": "Les îlots de Langerhans se trouvent dans quel organe humain ?",
-          "choices": [
-            "Rein",
-            "Pancréas",
-            "Cerveau",
-            "Foie"
-          ],
-          "explanation": "La bonne réponse est : Pancréas."
+          "explanation": "Le poumon droit a trois lobes ; le gauche n'en a que deux, pour laisser de la place au cœur."
         }
       }
     },
@@ -435,17 +403,17 @@
             "Leg",
             "Arm"
           ],
-          "explanation": "The correct answer is: Leg."
+          "explanation": "The tibia, or shinbone, is the second-longest bone in the body after the femur."
         },
         "fr": {
-          "text": "Le \"Tibia\" se trouve dans quelle partie du corps ?",
+          "text": "Dans quelle partie du corps se trouve le tibia ?",
           "choices": [
             "Tête",
             "Main",
             "Jambe",
             "Bras"
           ],
-          "explanation": "La bonne réponse est : Jambe."
+          "explanation": "Le tibia est le deuxième os le plus long du corps après le fémur."
         }
       }
     },
@@ -467,17 +435,17 @@
             "1",
             "0"
           ],
-          "explanation": "The correct answer is: 1."
+          "explanation": "Earth has a single natural satellite, the Moon, about 384,000 km away."
         },
         "fr": {
-          "text": "Combien de lunes la Terre a-t-elle ?",
+          "text": "Combien de lunes la Terre a-t-elle ?",
           "choices": [
             "3",
             "2",
             "1",
             "0"
           ],
-          "explanation": "La bonne réponse est : 1."
+          "explanation": "La Terre n'a qu'un satellite naturel, la Lune, à environ 384 000 km."
         }
       }
     },
@@ -499,17 +467,17 @@
             "Hypothermia",
             "Hypothyroidism"
           ],
-          "explanation": "The correct answer is: Hypoglycemia."
+          "explanation": "Hypoglycaemia (hypo = below, glykys = sweet) causes shaking, sweating and dizziness."
         },
         "fr": {
-          "text": "Quel est le terme médical pour l'hypoglycémie?",
+          "text": "Quel est le terme médical pour un taux de sucre trop bas dans le sang ?",
           "choices": [
-            "Hypoxia",
-            "Hypoglycemia",
-            "Hypothermia",
-            "Hypothyroidism"
+            "Hypoxie",
+            "Hypoglycémie",
+            "Hypothermie",
+            "Hypothyroïdie"
           ],
-          "explanation": "La bonne réponse est: Hypoglycémie."
+          "explanation": "L'hypoglycémie (hypo = sous, glukus = doux) provoque tremblements, sueurs et vertiges."
         }
       }
     },
@@ -531,17 +499,17 @@
             "The presence or absence of a nucleus",
             "The mode of reproduction"
           ],
-          "explanation": "The correct answer is: The presence or absence of a nucleus."
+          "explanation": "Eukaryotic cells keep their DNA in a nucleus; bacteria, which are prokaryotes, have none."
         },
         "fr": {
-          "text": "La plus grande distinction entre une cellule eucaryotique et une cellule procaryotique est :",
+          "text": "Quelle est la principale différence entre une cellule eucaryote et une cellule procaryote ?",
           "choices": [
-            "Présence ou absence de certains organites",
-            "The overall size",
-            "Présence ou absence de noyau",
+            "La présence ou non de certains organites",
+            "La taille globale",
+            "La présence ou non d'un noyau",
             "Le mode de reproduction"
           ],
-          "explanation": "La bonne réponse est : La présence ou l'absence d'un noyau."
+          "explanation": "Les cellules eucaryotes gardent leur ADN dans un noyau ; les bactéries, procaryotes, n'en ont pas."
         }
       }
     },
@@ -563,17 +531,17 @@
             "Watt",
             "Farad"
           ],
-          "explanation": "The correct answer is: Farad."
+          "explanation": "The farad honours Michael Faraday; one farad is a huge capacitance, so microfarads are common."
         },
         "fr": {
-          "text": "Quelle est l'unité de capacité électrique?",
+          "text": "Quelle est l'unité de la capacité électrique ?",
           "choices": [
             "Gauss",
             "Henry",
             "Watt",
             "Farad"
           ],
-          "explanation": "La bonne réponse est : Farad."
+          "explanation": "Le farad honore Michael Faraday ; un farad est une capacité énorme, on utilise surtout des microfarads."
         }
       }
     },
@@ -595,17 +563,17 @@
             "Gallium",
             "Beryllium"
           ],
-          "explanation": "The correct answer is: Beryllium."
+          "explanation": "Beryllium melts at about 1,287 °C; mercury, caesium and gallium melt at or near room temperature."
         },
         "fr": {
-          "text": "Tous les éléments métalliques suivants sont des liquides à température ambiante ou proche EXCEPT:",
+          "text": "Tous ces métaux sont liquides à température ambiante ou presque, SAUF :",
           "choices": [
-            "Mercury",
-            "Caesium",
-            "Gallium",
-            "Beryllium"
+            "Le mercure",
+            "Le césium",
+            "Le gallium",
+            "Le béryllium"
           ],
-          "explanation": "La bonne réponse est : Béryllium."
+          "explanation": "Le béryllium fond vers 1 287 °C ; le mercure, le césium et le gallium fondent à température ambiante ou presque."
         }
       }
     },
@@ -627,17 +595,17 @@
             "James Watt",
             "Thomas Alva Edison"
           ],
-          "explanation": "The correct answer is: Wilhelm Conrad Röntgen."
+          "explanation": "Röntgen discovered X-rays in 1895 and received the very first Nobel Prize in Physics in 1901."
         },
         "fr": {
-          "text": "Qui a fait la découverte des rayons X ?",
+          "text": "Qui a fait la découverte des rayons X ?",
           "choices": [
             "Wilhelm Conrad Röntgen",
             "Albert Einstein",
             "James Watt",
             "Thomas Alva Edison"
           ],
-          "explanation": "La bonne réponse est : Wilhelm Conrad Röntgen."
+          "explanation": "Röntgen a découvert les rayons X en 1895 et a reçu le tout premier prix Nobel de physique en 1901."
         }
       }
     },
@@ -659,17 +627,17 @@
             "Stomach",
             "Pancreas"
           ],
-          "explanation": "The correct answer is: Pancreas."
+          "explanation": "Insulin is made by the beta cells of the islets of Langerhans, in the pancreas."
         },
         "fr": {
-          "text": "Quelle partie du corps produit de l'insuline?",
+          "text": "Quel organe produit l'insuline ?",
           "choices": [
             "Foie",
             "Rein",
             "Estomac",
             "Pancréas"
           ],
-          "explanation": "La bonne réponse est : Pancréas."
+          "explanation": "L'insuline est produite par les cellules bêta des îlots de Langerhans, dans le pancréas."
         }
       }
     },
@@ -691,17 +659,17 @@
             "Z boson",
             "Graviton"
           ],
-          "explanation": "The correct answer is: Graviton."
+          "explanation": "The graviton would carry gravity, but it is so weakly interacting that no experiment can detect it yet."
         },
         "fr": {
-          "text": "En physique quantique, quelles particules subatomiques théorisées n'ont pas encore été observées?",
+          "text": "Laquelle de ces particules subatomiques théoriques n'a encore jamais été observée ?",
           "choices": [
-            "Gluon",
-            "Tau neutrino",
-            "Z boson",
-            "Graviton"
+            "Le gluon",
+            "Le neutrino tau",
+            "Le boson Z",
+            "Le graviton"
           ],
-          "explanation": "La bonne réponse est : Graviton."
+          "explanation": "Le graviton transmettrait la gravité, mais il interagit si peu qu'aucune expérience ne peut encore le détecter."
         }
       }
     },
@@ -723,17 +691,17 @@
             "Mercury",
             "Mars"
           ],
-          "explanation": "The correct answer is: Mercury."
+          "explanation": "Mercury orbits the Sun in just 88 days; its surface swings from about -180 °C to 430 °C."
         },
         "fr": {
-          "text": "Quelle planète du système solaire est la plus proche du Soleil ?",
+          "text": "Quelle planète du système solaire est la plus proche du Soleil ?",
           "choices": [
-            "Venus",
-            "Earth",
-            "Mercury",
+            "Vénus",
+            "La Terre",
+            "Mercure",
             "Mars"
           ],
-          "explanation": "La bonne réponse est : Mercure."
+          "explanation": "Mercure fait le tour du Soleil en 88 jours ; sa surface passe d'environ -180 °C à 430 °C."
         }
       }
     },
@@ -755,17 +723,17 @@
             "Polaris",
             "Tectonic Plates"
           ],
-          "explanation": "The correct answer is: Foucault Pendulum."
+          "explanation": "In 1851 Léon Foucault hung a pendulum in Paris; its swing slowly rotated as the Earth turned beneath it."
         },
         "fr": {
-          "text": "Lequel d'entre eux est utilisé pour montrer que la Terre tourne sur un axe?",
+          "text": "Quel dispositif permet de montrer que la Terre tourne sur elle-même ?",
           "choices": [
-            "Sundial",
-            "Foucault Pendulum",
-            "Polaris",
-            "Tectonic Plates"
+            "Le cadran solaire",
+            "Le pendule de Foucault",
+            "L'étoile Polaire",
+            "Les plaques tectoniques"
           ],
-          "explanation": "La bonne réponse est : Foucault Pendulum."
+          "explanation": "En 1851, Léon Foucault a suspendu un pendule à Paris ; son plan d'oscillation tournait lentement avec la rotation de la Terre."
         }
       }
     },
@@ -787,17 +755,17 @@
             "Mesosphere",
             "Thermosphere"
           ],
-          "explanation": "The correct answer is: Troposphere."
+          "explanation": "The troposphere, up to about 12 km, holds nearly all our weather."
         },
         "fr": {
-          "text": "Quelle est la couche la plus basse de l'atmosphère terrestre?",
+          "text": "Comment s'appelle la couche la plus basse de l'atmosphère terrestre ?",
           "choices": [
-            "Stratosphere",
-            "Troposphere",
-            "Mesosphere",
-            "Thermosphere"
+            "La stratosphère",
+            "La troposphère",
+            "La mésosphère",
+            "La thermosphère"
           ],
-          "explanation": "La bonne réponse est : Troposphère."
+          "explanation": "La troposphère, jusqu'à environ 12 km d'altitude, contient presque toute la météo."
         }
       }
     },
@@ -812,24 +780,24 @@
       ],
       "translations": {
         "en": {
-          "text": "The Western Lowland Gorilla is scientifically know as?",
+          "text": "What is the scientific name of the western lowland gorilla?",
           "choices": [
             "Gorilla Gorilla Diehli",
             "Gorilla Beringei Beringei",
             "Gorilla Beringei Graueri",
             "Gorilla Gorilla Gorilla"
           ],
-          "explanation": "The correct answer is: Gorilla Gorilla Gorilla."
+          "explanation": "Gorilla gorilla gorilla is the most widespread gorilla subspecies, found in Central Africa."
         },
         "fr": {
-          "text": "Le Western Lowland Gorilla est scientifiquement au courant ?",
+          "text": "Quel est le nom scientifique du gorille des plaines de l'Ouest ?",
           "choices": [
             "Gorilla Gorilla Diehli",
             "Gorilla Beringei Beringei",
             "Gorilla Beringei Graueri",
             "Gorilla Gorilla Gorilla"
           ],
-          "explanation": "La bonne réponse est : Gorilla Gorilla Gorilla."
+          "explanation": "Gorilla gorilla gorilla est la sous-espèce de gorille la plus répandue, en Afrique centrale."
         }
       }
     },
@@ -851,17 +819,17 @@
             "Inductor",
             "Capacitor"
           ],
-          "explanation": "The correct answer is: Transistor."
+          "explanation": "A transistor is active: it can amplify or switch a signal using an external power source."
         },
         "fr": {
-          "text": "Lequel des éléments suivants n'est PAS un composant électrique passif?",
+          "text": "Lequel des éléments suivants n'est PAS un composant électrique passif ?",
           "choices": [
-            "Transistor",
-            "Resistor",
-            "Inductor",
-            "Capacitor"
+            "Le transistor",
+            "La résistance",
+            "La bobine",
+            "Le condensateur"
           ],
-          "explanation": "La bonne réponse est : Transistor."
+          "explanation": "Un transistor est actif : il peut amplifier ou commuter un signal grâce à une source d'énergie externe."
         }
       }
     },
@@ -883,17 +851,17 @@
             "Interphase",
             "Telophase"
           ],
-          "explanation": "The correct answer is: Interphase."
+          "explanation": "Cells spend about 90% of their cycle in interphase, growing and copying their DNA."
         },
         "fr": {
-          "text": "À quel stade de développement la majorité des cellules eucaryotes demeurent-elles pendant la majeure partie de leur vie?",
+          "text": "Dans quelle phase la plupart des cellules eucaryotes passent-elles l'essentiel de leur vie ?",
           "choices": [
-            "Prophase",
-            "Stasis",
-            "Interphase",
-            "Télophase"
+            "La prophase",
+            "La stase",
+            "L'interphase",
+            "La télophase"
           ],
-          "explanation": "La bonne réponse est : Interphase."
+          "explanation": "Les cellules passent environ 90 % de leur cycle en interphase, à grandir et copier leur ADN."
         }
       }
     },
@@ -915,17 +883,17 @@
             "Fahrenheit",
             "Celsius"
           ],
-          "explanation": "The correct answer is: Kelvin."
+          "explanation": "The kelvin starts at absolute zero (-273.15 °C); a change of 1 K equals a change of 1 °C."
         },
         "fr": {
-          "text": "Quelle est l'unité standard SI pour la température?",
+          "text": "Quelle est l'unité SI de la température ?",
           "choices": [
             "Kelvin",
             "Rankine",
             "Fahrenheit",
             "Celsius"
           ],
-          "explanation": "La bonne réponse est : Kelvin."
+          "explanation": "Le kelvin part du zéro absolu (-273,15 °C) ; un écart de 1 K vaut un écart de 1 °C."
         }
       }
     },
@@ -940,24 +908,24 @@
       ],
       "translations": {
         "en": {
-          "text": "Which of the following is the term for \"surgical complications resulting from surgical sponges left inside the patient's body?",
+          "text": "What is the term for a surgical sponge accidentally left inside a patient's body?",
           "choices": [
             "Meupareunia",
             "Jentacular",
             "Gossypiboma",
             "Gongoozler"
           ],
-          "explanation": "The correct answer is: Gossypiboma."
+          "explanation": "\"Gossypiboma\" comes from the Latin gossypium, cotton, and the Swahili boma, place of concealment."
         },
         "fr": {
-          "text": "Lequel des termes suivants est le terme \"complications chirurgicales résultant d'éponges chirurgicales laissées dans le corps du patient?",
+          "text": "Comment appelle-t-on une compresse chirurgicale oubliée dans le corps d'un patient ?",
           "choices": [
-            "Meupareunia",
-            "Jentacular",
-            "Gossypiboma",
+            "Meupareunie",
+            "Jentaculaire",
+            "Gossypibome",
             "Gongoozler"
           ],
-          "explanation": "La bonne réponse est : Gossypiboma."
+          "explanation": "« Gossypibome » vient du latin gossypium, coton, et du swahili boma, lieu de cachette."
         }
       }
     },
@@ -972,24 +940,24 @@
       ],
       "translations": {
         "en": {
-          "text": "71% of the Earth's surface is made up of",
+          "text": "71% of the Earth's surface is covered by...",
           "choices": [
             "Water",
             "Forests",
             "Deserts",
-            "Continents"
+            "Ice"
           ],
-          "explanation": "The correct answer is: Water."
+          "explanation": "Oceans cover about 71% of the Earth; 97% of all water on the planet is salty."
         },
         "fr": {
-          "text": "71% de la surface de la Terre est constituée de",
+          "text": "71 % de la surface de la Terre est recouverte…",
           "choices": [
-            "Water",
-            "Forests",
-            "Deserts",
-            "continents"
+            "D'eau",
+            "De forêts",
+            "De déserts",
+            "De glace"
           ],
-          "explanation": "La bonne réponse est : Eau."
+          "explanation": "Les océans couvrent environ 71 % de la Terre ; 97 % de l'eau de la planète est salée."
         }
       }
     },
@@ -1011,17 +979,17 @@
             "Diamond",
             "Gypsum"
           ],
-          "explanation": "The correct answer is: Talc."
+          "explanation": "Talc, rated 1, can be scratched with a fingernail; diamond tops the scale at 10."
         },
         "fr": {
-          "text": "Quel minéral a le plus faible nombre sur l'échelle Mohs?",
+          "text": "Quel minéral a la valeur la plus basse sur l'échelle de Mohs ?",
           "choices": [
-            "Talc",
-            "Quartz",
-            "Diamond",
-            "Gypsum"
+            "Le talc",
+            "Le quartz",
+            "Le diamant",
+            "Le gypse"
           ],
-          "explanation": "La bonne réponse est : Talc."
+          "explanation": "Le talc, noté 1, se raye à l'ongle ; le diamant est en haut de l'échelle, à 10."
         }
       }
     },
@@ -1043,17 +1011,17 @@
             "Umbilicus",
             "Paxillus"
           ],
-          "explanation": "The correct answer is: Umbilicus."
+          "explanation": "The umbilicus is the scar left by the umbilical cord that fed the baby before birth."
         },
         "fr": {
-          "text": "Le terme médical pour le bouton ventre est lequel de ce qui suit?",
+          "text": "Quel est le terme médical pour le nombril ?",
           "choices": [
-            "Nevus",
-            "Nares",
-            "Umbilicus",
-            "Paxillus"
+            "Le nævus",
+            "Les narines",
+            "L'ombilic",
+            "Le paxille"
           ],
-          "explanation": "La bonne réponse est : Umbricus."
+          "explanation": "L'ombilic est la cicatrice du cordon ombilical qui nourrissait le bébé avant la naissance."
         }
       }
     },
@@ -1075,17 +1043,17 @@
             "Iron",
             "Carbon"
           ],
-          "explanation": "The correct answer is: Boron."
+          "explanation": "Adding boron creates \"holes\" in silicon's crystal, making p-type semiconductors for chips."
         },
         "fr": {
-          "text": "Lequel des éléments suivants est généralement utilisé dans le dopage du silicium semi-conducteur?",
+          "text": "Quel élément sert couramment au dopage du silicium dans les semi-conducteurs ?",
           "choices": [
-            "Boron",
-            "Oxygène",
-            "Fer",
-            "Carbone"
+            "Le bore",
+            "L'oxygène",
+            "Le fer",
+            "Le carbone"
           ],
-          "explanation": "La bonne réponse est : Boron."
+          "explanation": "Ajouter du bore crée des « trous » dans le cristal de silicium : on obtient un semi-conducteur de type P."
         }
       }
     },
@@ -1107,17 +1075,17 @@
             "8",
             "7"
           ],
-          "explanation": "The correct answer is: 8."
+          "explanation": "Since 2006 the Solar System has eight planets; Pluto was reclassified as a dwarf planet."
         },
         "fr": {
-          "text": "Combien de planètes composent notre système solaire ?",
+          "text": "Combien de planètes composent notre système solaire ?",
           "choices": [
             "9",
             "6",
             "8",
             "7"
           ],
-          "explanation": "La bonne réponse est : 8."
+          "explanation": "Depuis 2006, le Système solaire compte huit planètes ; Pluton a été reclassée planète naine."
         }
       }
     },
@@ -1139,17 +1107,17 @@
             "STS-109",
             "STS-107"
           ],
-          "explanation": "The correct answer is: STS-107."
+          "explanation": "Columbia broke up on 1 February 2003 on mission STS-107, killing its seven astronauts."
         },
         "fr": {
-          "text": "Sur quelle mission la navette spatiale Columbia a-t-elle rompu à la rentrée ?",
+          "text": "Lors de quelle mission la navette Columbia s'est-elle désintégrée au retour dans l'atmosphère ?",
           "choices": [
             "STS-61-C",
             "STS-51-L",
             "STS-109",
             "STS-107"
           ],
-          "explanation": "La bonne réponse est : STS-107."
+          "explanation": "Columbia s'est désintégrée le 1er février 2003 lors de la mission STS-107, tuant ses sept astronautes."
         }
       }
     },
@@ -1171,17 +1139,17 @@
             "Skin",
             "Heart"
           ],
-          "explanation": "The correct answer is: Bones."
+          "explanation": "Osteoporosis makes bones porous and fragile; it is most common in older women."
         },
         "fr": {
-          "text": "L'ostéoporose affecte quelle partie du corps ?",
+          "text": "L'ostéoporose affecte quelle partie du corps ?",
           "choices": [
-            "Bones",
-            "Cerveau",
-            "Skin",
-            "Cœur"
+            "Les os",
+            "Le cerveau",
+            "La peau",
+            "Le cœur"
           ],
-          "explanation": "La bonne réponse est : Bones."
+          "explanation": "L'ostéoporose rend les os poreux et fragiles ; elle touche surtout les femmes âgées."
         }
       }
     },
@@ -1203,17 +1171,17 @@
             "4",
             "6"
           ],
-          "explanation": "The correct answer is: 4."
+          "explanation": "Butanol has four alcohol isomers: butan-1-ol, butan-2-ol, isobutanol and tert-butanol."
         },
         "fr": {
-          "text": "En chimie, combien d'isomères le butanol (C4H9OH) a-t-il?",
+          "text": "En chimie, combien d'isomères alcools compte le butanol (C4H9OH) ?",
           "choices": [
             "5",
             "3",
             "4",
             "6"
           ],
-          "explanation": "La bonne réponse est : 4."
+          "explanation": "Le butanol a quatre isomères alcools : butan-1-ol, butan-2-ol, isobutanol et tert-butanol."
         }
       }
     },
@@ -1235,17 +1203,17 @@
             "Ears",
             "Neck"
           ],
-          "explanation": "The correct answer is: Nose."
+          "explanation": "Rhinoplasty comes from the Greek rhis, rhinos, \"nose\"."
         },
         "fr": {
-          "text": "La rhinoplastie est une intervention chirurgicale sur quelle partie du corps humain ?",
+          "text": "La rhinoplastie est une intervention chirurgicale sur quelle partie du corps humain ?",
           "choices": [
-            "Nose",
-            "Chin",
-            "Ears",
-            "Neck"
+            "Le nez",
+            "Le menton",
+            "Les oreilles",
+            "Le cou"
           ],
-          "explanation": "La bonne réponse est : Nez."
+          "explanation": "Rhinoplastie vient du grec rhis, rhinos, « nez »."
         }
       }
     },
@@ -1267,17 +1235,17 @@
             "Clowns",
             "Needles"
           ],
-          "explanation": "The correct answer is: Clowns."
+          "explanation": "Coulrophobia likely comes from the Greek kolobathristes, a performer on stilts."
         },
         "fr": {
-          "text": "La coulrophobie est la peur irrationnelle de quoi ?",
+          "text": "La coulrophobie est la peur irrationnelle de quoi ?",
           "choices": [
-            "Cemeteries",
-            "Tunnels",
-            "Clowns",
-            "Needles"
+            "Des cimetières",
+            "Des tunnels",
+            "Des clowns",
+            "Des aiguilles"
           ],
-          "explanation": "La bonne réponse est : Clowns."
+          "explanation": "Coulrophobie viendrait du grec kolobathristês, un artiste sur échasses."
         }
       }
     },
@@ -1299,17 +1267,17 @@
             "6",
             "3"
           ],
-          "explanation": "The correct answer is: 4."
+          "explanation": "The heart has two atria on top and two ventricles below."
         },
         "fr": {
-          "text": "Le cœur humain a combien de chambres ?",
+          "text": "Combien de cavités compte le cœur humain ?",
           "choices": [
             "4",
             "2",
             "6",
             "3"
           ],
-          "explanation": "La bonne réponse est : 4."
+          "explanation": "Le cœur possède deux oreillettes en haut et deux ventricules en bas."
         }
       }
     },
@@ -1324,24 +1292,24 @@
       ],
       "translations": {
         "en": {
-          "text": "What is the standard SI unit for distance?",
+          "text": "What is the standard SI unit of length?",
           "choices": [
             "Fathom",
             "Angstrom",
             "Foot",
             "Metre"
           ],
-          "explanation": "The correct answer is: Metre."
+          "explanation": "Since 1983 the metre is defined as the distance light travels in 1/299,792,458 of a second."
         },
         "fr": {
-          "text": "Quelle est l'unité SI standard pour la distance?",
+          "text": "Quelle est l'unité SI de longueur ?",
           "choices": [
-            "Fathom",
-            "Angstrom",
-            "Foot",
-            "Metre"
+            "La brasse",
+            "L'ångström",
+            "Le pied",
+            "Le mètre"
           ],
-          "explanation": "La bonne réponse est : Metre."
+          "explanation": "Depuis 1983, le mètre est la distance parcourue par la lumière en 1/299 792 458 de seconde."
         }
       }
     },
@@ -1363,17 +1331,17 @@
             "Nucleus",
             "Golgi apparatus"
           ],
-          "explanation": "The correct answer is: Mitochondria."
+          "explanation": "Mitochondria turn nutrients into ATP, the cell's energy; they have their own DNA."
         },
         "fr": {
-          "text": "Quel organe cellulaire est connu comme \"la puissance de la cellule?\"",
+          "text": "Quel organite est surnommé « la centrale énergétique de la cellule » ?",
           "choices": [
-            "Mitochondria",
-            "Endoplasmic reticulum",
-            "Nucleus",
-            "Appareils Golgi"
+            "La mitochondrie",
+            "Le réticulum endoplasmique",
+            "Le noyau",
+            "L'appareil de Golgi"
           ],
-          "explanation": "La bonne réponse est : Mitochondria."
+          "explanation": "Les mitochondries transforment les nutriments en ATP, l'énergie de la cellule ; elles ont leur propre ADN."
         }
       }
     },
@@ -1388,24 +1356,24 @@
       ],
       "translations": {
         "en": {
-          "text": "Deionized water is water with which of the following removed?",
+          "text": "Deionized water is water with what removed?",
           "choices": [
             "Uncharged atoms",
             "Oxygen",
             "Hydrogen",
-            "Iron"
+            "Ions"
           ],
-          "explanation": "The correct answer is: Iron."
+          "explanation": "Deionised water has had its dissolved ions (calcium, sodium, chloride...) removed."
         },
         "fr": {
-          "text": "L'eau déionisée est l'eau avec laquelle de ce qui suit a été enlevée?",
+          "text": "L'eau déminéralisée (ou déionisée) est une eau dont on a retiré quoi ?",
           "choices": [
-            "Uncharged atoms",
-            "Oxygène",
-            "Hydrogène",
-            "Fer"
+            "Les atomes neutres",
+            "L'oxygène",
+            "L'hydrogène",
+            "Les ions"
           ],
-          "explanation": "La bonne réponse est : Iron."
+          "explanation": "L'eau déminéralisée a été débarrassée de ses ions dissous (calcium, sodium, chlorure...)."
         }
       }
     },
@@ -1427,17 +1395,17 @@
             "Cerebellum",
             "Amygdala"
           ],
-          "explanation": "The correct answer is: Hippocampus."
+          "explanation": "The hippocampus, curled like a seahorse, is key to forming new memories."
         },
         "fr": {
-          "text": "Quelle partie du cerveau prend son nom du grec pour hippocampe ?",
+          "text": "Quelle partie du cerveau tire son nom du mot grec pour « cheval de mer » ?",
           "choices": [
-            "Thalamus",
-            "Hippocampus",
-            "Cerebellum",
-            "Amygdala"
+            "Le thalamus",
+            "L'hippocampe",
+            "Le cervelet",
+            "L'amygdale"
           ],
-          "explanation": "La bonne réponse est : Hippocampus."
+          "explanation": "L'hippocampe, recourbé comme l'animal marin, est essentiel pour former de nouveaux souvenirs."
         }
       }
     },
@@ -1459,17 +1427,17 @@
             "H",
             "Hg"
           ],
-          "explanation": "The correct answer is: He."
+          "explanation": "Helium is the second most abundant element in the universe after hydrogen."
         },
         "fr": {
-          "text": "Quel est le symbole chimique de l'hélium?",
+          "text": "Quel est le symbole chimique de l'hélium ?",
           "choices": [
             "Hs",
             "He",
             "H",
             "Hg"
           ],
-          "explanation": "La bonne réponse est : Lui."
+          "explanation": "L'hélium est le deuxième élément le plus abondant de l'Univers après l'hydrogène."
         }
       }
     },
@@ -1491,17 +1459,17 @@
             "Four",
             "Five"
           ],
-          "explanation": "The correct answer is: Four."
+          "explanation": "There are four laws, numbered from zero to three: the \"zeroth law\" was added after the others."
         },
         "fr": {
-          "text": "Combien y a-t-il de lois de la thermodynamique ?",
+          "text": "Combien y a-t-il de lois de la thermodynamique ?",
           "choices": [
-            "Three",
-            "Two",
-            "Four",
-            "Five"
+            "Trois",
+            "Deux",
+            "Quatre",
+            "Cinq"
           ],
-          "explanation": "La bonne réponse est : Quatre."
+          "explanation": "Il y a quatre lois, numérotées de zéro à trois : le « principe zéro » a été ajouté après les autres."
         }
       }
     },
@@ -1523,17 +1491,17 @@
             "Deoxyribonucleic Acid",
             "Deoxyribogenetic Atoms"
           ],
-          "explanation": "The correct answer is: Deoxyribonucleic Acid."
+          "explanation": "DNA stands for deoxyribonucleic acid; its double helix was described in 1953."
         },
         "fr": {
-          "text": "Qu'est-ce que l'ADN représente ?",
+          "text": "Que signifie le sigle ADN ?",
           "choices": [
-            "Detoxic Acid",
-            "Deoxyribogenetic Acid",
-            "Deoxyribonucleic Acid",
-            "Deoxyribogenetic Atoms"
+            "Acide détoxique",
+            "Acide désoxyribogénétique",
+            "Acide désoxyribonucléique",
+            "Atomes désoxyribogénétiques"
           ],
-          "explanation": "La bonne réponse est : Acide désoxyribonucléique."
+          "explanation": "ADN signifie acide désoxyribonucléique ; sa double hélice a été décrite en 1953."
         }
       }
     },
@@ -1555,17 +1523,17 @@
             "Apollo 10",
             "Apollo 9"
           ],
-          "explanation": "The correct answer is: Apollo 11."
+          "explanation": "Apollo 11 landed on 20 July 1969; Apollo 10 had flown to within 15 km of the surface as a rehearsal."
         },
         "fr": {
-          "text": "Quelle mission Apollo a été la première à atterrir sur la Lune ?",
+          "text": "Quelle mission Apollo a été la première à atterrir sur la Lune ?",
           "choices": [
             "Apollo 11",
             "Apollo 13",
             "Apollo 10",
             "Apollo 9"
           ],
-          "explanation": "La bonne réponse est : Apollo 11."
+          "explanation": "Apollo 11 s'est posé le 20 juillet 1969 ; Apollo 10 était descendu à 15 km de la surface en répétition."
         }
       }
     },
@@ -1587,17 +1555,1041 @@
             "209",
             "203"
           ],
-          "explanation": "The correct answer is: 206."
+          "explanation": "Adults have 206 bones; babies are born with around 300, many of which fuse over time."
         },
         "fr": {
-          "text": "Combien d'os sont dans le corps humain ?",
+          "text": "Combien d'os compte le corps humain adulte ?",
           "choices": [
             "200",
             "206",
             "209",
             "203"
           ],
-          "explanation": "La bonne réponse est : 206."
+          "explanation": "L'adulte a 206 os ; le bébé en a environ 300 à la naissance, dont beaucoup fusionnent ensuite."
+        }
+      }
+    },
+    {
+      "id": "science_051",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What gas do plants absorb from the air for photosynthesis?",
+          "choices": [
+            "Helium",
+            "Nitrogen",
+            "Oxygen",
+            "Carbon dioxide"
+          ],
+          "explanation": "Plants use sunlight to turn CO₂ and water into sugar, releasing oxygen."
+        },
+        "fr": {
+          "text": "Quel gaz les plantes absorbent-elles dans l'air pour la photosynthèse ?",
+          "choices": [
+            "L'hélium",
+            "L'azote",
+            "L'oxygène",
+            "Le dioxyde de carbone"
+          ],
+          "explanation": "Les plantes utilisent la lumière pour transformer le CO₂ et l'eau en sucre, en rejetant de l'oxygène."
+        }
+      }
+    },
+    {
+      "id": "science_052",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the chemical formula of water?",
+          "choices": [
+            "CO₂",
+            "O₂",
+            "H₂O₂",
+            "H₂O"
+          ],
+          "explanation": "A water molecule has two hydrogen atoms bonded to one oxygen atom."
+        },
+        "fr": {
+          "text": "Quelle est la formule chimique de l'eau ?",
+          "choices": [
+            "CO₂",
+            "O₂",
+            "H₂O₂",
+            "H₂O"
+          ],
+          "explanation": "Une molécule d'eau compte deux atomes d'hydrogène liés à un atome d'oxygène."
+        }
+      }
+    },
+    {
+      "id": "science_053",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which planet is known as the Red Planet?",
+          "choices": [
+            "Mars",
+            "Jupiter",
+            "Saturn",
+            "Venus"
+          ],
+          "explanation": "Mars owes its colour to iron oxide — rust — covering its surface."
+        },
+        "fr": {
+          "text": "Quelle planète est surnommée la planète rouge ?",
+          "choices": [
+            "Mars",
+            "Jupiter",
+            "Saturne",
+            "Vénus"
+          ],
+          "explanation": "Mars doit sa couleur à l'oxyde de fer, de la rouille, qui recouvre sa surface."
+        }
+      }
+    },
+    {
+      "id": "science_054",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "At what temperature does water boil at sea level?",
+          "choices": [
+            "100 °C",
+            "90 °C",
+            "80 °C",
+            "120 °C"
+          ],
+          "explanation": "At altitude the air pressure drops, so water boils at a lower temperature, around 70 °C on Everest."
+        },
+        "fr": {
+          "text": "À quelle température l'eau bout-elle au niveau de la mer ?",
+          "choices": [
+            "100 °C",
+            "90 °C",
+            "80 °C",
+            "120 °C"
+          ],
+          "explanation": "En altitude la pression baisse, l'eau bout donc plus tôt : vers 70 °C au sommet de l'Everest."
+        }
+      }
+    },
+    {
+      "id": "science_055",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which organ pumps blood around the body?",
+          "choices": [
+            "The lungs",
+            "The liver",
+            "The kidneys",
+            "The heart"
+          ],
+          "explanation": "The heart beats about 100,000 times a day."
+        },
+        "fr": {
+          "text": "Quel organe fait circuler le sang dans le corps ?",
+          "choices": [
+            "Les poumons",
+            "Le foie",
+            "Les reins",
+            "Le cœur"
+          ],
+          "explanation": "Le cœur bat environ 100 000 fois par jour."
+        }
+      }
+    },
+    {
+      "id": "science_056",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the largest planet in the Solar System?",
+          "choices": [
+            "Earth",
+            "Jupiter",
+            "Saturn",
+            "Neptune"
+          ],
+          "explanation": "More than 1,300 Earths could fit inside Jupiter."
+        },
+        "fr": {
+          "text": "Quelle est la plus grande planète du Système solaire ?",
+          "choices": [
+            "La Terre",
+            "Jupiter",
+            "Saturne",
+            "Neptune"
+          ],
+          "explanation": "Plus de 1 300 Terres pourraient tenir dans Jupiter."
+        }
+      }
+    },
+    {
+      "id": "science_057",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which animal is the largest mammal on Earth?",
+          "choices": [
+            "Blue whale",
+            "Giraffe",
+            "Sperm whale",
+            "African elephant"
+          ],
+          "explanation": "The blue whale can reach 30 m and 150 tonnes: the largest animal that has ever lived."
+        },
+        "fr": {
+          "text": "Quel animal est le plus grand mammifère sur Terre ?",
+          "choices": [
+            "La baleine bleue",
+            "La girafe",
+            "Le cachalot",
+            "L'éléphant d'Afrique"
+          ],
+          "explanation": "La baleine bleue peut atteindre 30 m et 150 tonnes : le plus gros animal ayant jamais existé."
+        }
+      }
+    },
+    {
+      "id": "science_058",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the speed of light in a vacuum, approximately?",
+          "choices": [
+            "30,000 km/s",
+            "300,000 km/s",
+            "3,000 km/s",
+            "3,000,000 km/s"
+          ],
+          "explanation": "Light takes about 8 minutes 20 seconds to travel from the Sun to the Earth."
+        },
+        "fr": {
+          "text": "Quelle est la vitesse approximative de la lumière dans le vide ?",
+          "choices": [
+            "30 000 km/s",
+            "300 000 km/s",
+            "3 000 km/s",
+            "3 000 000 km/s"
+          ],
+          "explanation": "La lumière met environ 8 minutes 20 secondes pour aller du Soleil à la Terre."
+        }
+      }
+    },
+    {
+      "id": "science_059",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which scientist proposed the theory of evolution by natural selection?",
+          "choices": [
+            "Louis Pasteur",
+            "Gregor Mendel",
+            "Isaac Newton",
+            "Charles Darwin"
+          ],
+          "explanation": "Darwin published On the Origin of Species in 1859, inspired partly by his voyage to the Galápagos."
+        },
+        "fr": {
+          "text": "Quel scientifique a proposé la théorie de l'évolution par sélection naturelle ?",
+          "choices": [
+            "Louis Pasteur",
+            "Gregor Mendel",
+            "Isaac Newton",
+            "Charles Darwin"
+          ],
+          "explanation": "Darwin a publié L'Origine des espèces en 1859, inspiré entre autres par son voyage aux Galápagos."
+        }
+      }
+    },
+    {
+      "id": "science_060",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the chemical symbol for gold?",
+          "choices": [
+            "Ag",
+            "Au",
+            "Gd",
+            "Go"
+          ],
+          "explanation": "Au comes from the Latin aurum; Ag, for silver, comes from argentum."
+        },
+        "fr": {
+          "text": "Quel est le symbole chimique de l'or ?",
+          "choices": [
+            "Ag",
+            "Au",
+            "Gd",
+            "Go"
+          ],
+          "explanation": "Au vient du latin aurum ; Ag, pour l'argent, vient d'argentum."
+        }
+      }
+    },
+    {
+      "id": "science_061",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who developed the first rabies vaccine in 1885?",
+          "choices": [
+            "Alexander Fleming",
+            "Edward Jenner",
+            "Louis Pasteur",
+            "Robert Koch"
+          ],
+          "explanation": "Pasteur's first patient was Joseph Meister, a 9-year-old boy bitten by a rabid dog, who survived."
+        },
+        "fr": {
+          "text": "Qui a mis au point le premier vaccin contre la rage, en 1885 ?",
+          "choices": [
+            "Alexander Fleming",
+            "Edward Jenner",
+            "Louis Pasteur",
+            "Robert Koch"
+          ],
+          "explanation": "Le premier patient de Pasteur, Joseph Meister, 9 ans, mordu par un chien enragé, a survécu."
+        }
+      }
+    },
+    {
+      "id": "science_062",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the most abundant gas in Earth's atmosphere?",
+          "choices": [
+            "Argon",
+            "Oxygen",
+            "Carbon dioxide",
+            "Nitrogen"
+          ],
+          "explanation": "Air is about 78% nitrogen and 21% oxygen."
+        },
+        "fr": {
+          "text": "Quel est le gaz le plus abondant dans l'atmosphère terrestre ?",
+          "choices": [
+            "L'argon",
+            "L'oxygène",
+            "Le dioxyde de carbone",
+            "L'azote"
+          ],
+          "explanation": "L'air contient environ 78 % d'azote et 21 % d'oxygène."
+        }
+      }
+    },
+    {
+      "id": "science_063",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who discovered penicillin in 1928?",
+          "choices": [
+            "Joseph Lister",
+            "Louis Pasteur",
+            "Alexander Fleming",
+            "Marie Curie"
+          ],
+          "explanation": "Fleming noticed that a mould had killed bacteria in a dish he had left out during his holidays."
+        },
+        "fr": {
+          "text": "Qui a découvert la pénicilline en 1928 ?",
+          "choices": [
+            "Joseph Lister",
+            "Louis Pasteur",
+            "Alexander Fleming",
+            "Marie Curie"
+          ],
+          "explanation": "Fleming a remarqué qu'une moisissure avait tué les bactéries d'une boîte oubliée pendant ses vacances."
+        }
+      }
+    },
+    {
+      "id": "science_064",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many chromosomes does a typical human cell have?",
+          "choices": [
+            "23",
+            "48",
+            "46",
+            "44"
+          ],
+          "explanation": "Humans have 23 pairs of chromosomes: one set from each parent."
+        },
+        "fr": {
+          "text": "Combien de chromosomes compte une cellule humaine typique ?",
+          "choices": [
+            "23",
+            "48",
+            "46",
+            "44"
+          ],
+          "explanation": "L'être humain a 23 paires de chromosomes : un jeu vient de chaque parent."
+        }
+      }
+    },
+    {
+      "id": "science_065",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What force keeps the planets in orbit around the Sun?",
+          "choices": [
+            "Friction",
+            "Centrifugal force",
+            "Gravity",
+            "Magnetism"
+          ],
+          "explanation": "Newton showed in 1687 that the same gravity makes apples fall and keeps the Moon in orbit."
+        },
+        "fr": {
+          "text": "Quelle force maintient les planètes en orbite autour du Soleil ?",
+          "choices": [
+            "La friction",
+            "La force centrifuge",
+            "La gravitation",
+            "Le magnétisme"
+          ],
+          "explanation": "Newton a montré en 1687 que la même gravitation fait tomber les pommes et garde la Lune en orbite."
+        }
+      }
+    },
+    {
+      "id": "science_066",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the pH of pure water at 25 °C?",
+          "choices": [
+            "0",
+            "7",
+            "5",
+            "14"
+          ],
+          "explanation": "A pH of 7 is neutral; below is acidic, above is basic."
+        },
+        "fr": {
+          "text": "Quel est le pH de l'eau pure à 25 °C ?",
+          "choices": [
+            "0",
+            "7",
+            "5",
+            "14"
+          ],
+          "explanation": "Un pH de 7 est neutre ; en dessous c'est acide, au-dessus basique."
+        }
+      }
+    },
+    {
+      "id": "science_067",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which blood cells fight infections?",
+          "choices": [
+            "White blood cells",
+            "Plasma cells only",
+            "Red blood cells",
+            "Platelets"
+          ],
+          "explanation": "White blood cells, or leukocytes, attack viruses, bacteria and other invaders."
+        },
+        "fr": {
+          "text": "Quelles cellules sanguines combattent les infections ?",
+          "choices": [
+            "Les globules blancs",
+            "Seulement les plasmocytes",
+            "Les globules rouges",
+            "Les plaquettes"
+          ],
+          "explanation": "Les globules blancs, ou leucocytes, s'attaquent aux virus, bactéries et autres intrus."
+        }
+      }
+    },
+    {
+      "id": "science_068",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the closest star to Earth?",
+          "choices": [
+            "Betelgeuse",
+            "The Sun",
+            "Sirius",
+            "Proxima Centauri"
+          ],
+          "explanation": "The Sun is a star; after it comes Proxima Centauri, about 4.2 light-years away."
+        },
+        "fr": {
+          "text": "Quelle est l'étoile la plus proche de la Terre ?",
+          "choices": [
+            "Bételgeuse",
+            "Le Soleil",
+            "Sirius",
+            "Proxima du Centaure"
+          ],
+          "explanation": "Le Soleil est une étoile ; ensuite vient Proxima du Centaure, à environ 4,2 années-lumière."
+        }
+      }
+    },
+    {
+      "id": "science_069",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What does a seismograph measure?",
+          "choices": [
+            "Rainfall",
+            "Wind speed",
+            "Earthquakes",
+            "Air pressure"
+          ],
+          "explanation": "Seismographs record ground vibrations; their data give an earthquake's magnitude."
+        },
+        "fr": {
+          "text": "Que mesure un sismographe ?",
+          "choices": [
+            "Les précipitations",
+            "La vitesse du vent",
+            "Les tremblements de terre",
+            "La pression de l'air"
+          ],
+          "explanation": "Les sismographes enregistrent les vibrations du sol ; leurs données donnent la magnitude d'un séisme."
+        }
+      }
+    },
+    {
+      "id": "science_070",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which element has the atomic number 1?",
+          "choices": [
+            "Carbon",
+            "Helium",
+            "Hydrogen",
+            "Oxygen"
+          ],
+          "explanation": "Hydrogen has a single proton; it makes up about three quarters of the ordinary matter in the universe."
+        },
+        "fr": {
+          "text": "Quel élément a le numéro atomique 1 ?",
+          "choices": [
+            "Le carbone",
+            "L'hélium",
+            "L'hydrogène",
+            "L'oxygène"
+          ],
+          "explanation": "L'hydrogène n'a qu'un proton ; il représente environ trois quarts de la matière ordinaire de l'Univers."
+        }
+      }
+    },
+    {
+      "id": "science_071",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which planet has the most confirmed moons (as of 2025)?",
+          "choices": [
+            "Neptune",
+            "Saturn",
+            "Jupiter",
+            "Uranus"
+          ],
+          "explanation": "In 2025 astronomers announced 128 new moons of Saturn, bringing its total to 274."
+        },
+        "fr": {
+          "text": "Quelle planète compte le plus de lunes confirmées (en 2025) ?",
+          "choices": [
+            "Neptune",
+            "Saturne",
+            "Jupiter",
+            "Uranus"
+          ],
+          "explanation": "En 2025, les astronomes ont annoncé 128 nouvelles lunes de Saturne, portant son total à 274."
+        }
+      }
+    },
+    {
+      "id": "science_072",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the hardest substance in the human body?",
+          "choices": [
+            "Femur bone",
+            "Tooth enamel",
+            "Fingernails",
+            "Skull bone"
+          ],
+          "explanation": "Enamel is about 96% mineral, but it cannot grow back once damaged."
+        },
+        "fr": {
+          "text": "Quelle est la substance la plus dure du corps humain ?",
+          "choices": [
+            "L'os du fémur",
+            "L'émail des dents",
+            "Les ongles",
+            "L'os du crâne"
+          ],
+          "explanation": "L'émail est minéral à environ 96 %, mais il ne se reconstitue pas une fois abîmé."
+        }
+      }
+    },
+    {
+      "id": "science_073",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which scientist formulated the three laws of motion?",
+          "choices": [
+            "Galileo Galilei",
+            "Albert Einstein",
+            "Johannes Kepler",
+            "Isaac Newton"
+          ],
+          "explanation": "Newton set out his laws in the Principia (1687), the foundation of classical mechanics."
+        },
+        "fr": {
+          "text": "Quel scientifique a formulé les trois lois du mouvement ?",
+          "choices": [
+            "Galilée",
+            "Albert Einstein",
+            "Johannes Kepler",
+            "Isaac Newton"
+          ],
+          "explanation": "Newton a énoncé ses lois dans les Principia (1687), fondement de la mécanique classique."
+        }
+      }
+    },
+    {
+      "id": "science_074",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What type of animal is a Komodo dragon?",
+          "choices": [
+            "A turtle",
+            "A snake",
+            "A lizard",
+            "A crocodile"
+          ],
+          "explanation": "The Komodo dragon, up to 3 m long, is the largest living lizard; it lives on a few Indonesian islands."
+        },
+        "fr": {
+          "text": "Quel type d'animal est le dragon de Komodo ?",
+          "choices": [
+            "Une tortue",
+            "Un serpent",
+            "Un lézard",
+            "Un crocodile"
+          ],
+          "explanation": "Le dragon de Komodo, jusqu'à 3 m de long, est le plus grand lézard vivant ; il vit sur quelques îles d'Indonésie."
+        }
+      }
+    },
+    {
+      "id": "science_075",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of the supercontinent that existed about 300 million years ago?",
+          "choices": [
+            "Gondwana",
+            "Pangaea",
+            "Laurasia",
+            "Rodinia"
+          ],
+          "explanation": "Pangaea later split into Laurasia in the north and Gondwana in the south."
+        },
+        "fr": {
+          "text": "Comment s'appelle le supercontinent qui existait il y a environ 300 millions d'années ?",
+          "choices": [
+            "Le Gondwana",
+            "La Pangée",
+            "La Laurasie",
+            "Rodinia"
+          ],
+          "explanation": "La Pangée s'est ensuite scindée en Laurasie au nord et Gondwana au sud."
+        }
+      }
+    },
+    {
+      "id": "science_076",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which vitamin does the skin produce when exposed to sunlight?",
+          "choices": [
+            "Vitamin C",
+            "Vitamin A",
+            "Vitamin B12",
+            "Vitamin D"
+          ],
+          "explanation": "UVB rays turn a cholesterol derivative in the skin into vitamin D, essential for strong bones."
+        },
+        "fr": {
+          "text": "Quelle vitamine la peau fabrique-t-elle au soleil ?",
+          "choices": [
+            "La vitamine C",
+            "La vitamine A",
+            "La vitamine B12",
+            "La vitamine D"
+          ],
+          "explanation": "Les UVB transforment un dérivé du cholestérol de la peau en vitamine D, essentielle aux os."
+        }
+      }
+    },
+    {
+      "id": "science_077",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who published the first periodic table of the elements in 1869?",
+          "choices": [
+            "Antoine Lavoisier",
+            "Niels Bohr",
+            "Dmitri Mendeleev",
+            "John Dalton"
+          ],
+          "explanation": "Mendeleev left gaps for elements not yet discovered and correctly predicted their properties."
+        },
+        "fr": {
+          "text": "Qui a publié le premier tableau périodique des éléments en 1869 ?",
+          "choices": [
+            "Antoine Lavoisier",
+            "Niels Bohr",
+            "Dmitri Mendeleïev",
+            "John Dalton"
+          ],
+          "explanation": "Mendeleïev a laissé des cases vides pour des éléments inconnus et a prédit correctement leurs propriétés."
+        }
+      }
+    },
+    {
+      "id": "science_078",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of the galaxy we live in?",
+          "choices": [
+            "The Large Magellanic Cloud",
+            "Triangulum",
+            "Andromeda",
+            "The Milky Way"
+          ],
+          "explanation": "The Milky Way holds some 100 to 400 billion stars; it will merge with Andromeda in about 4.5 billion years."
+        },
+        "fr": {
+          "text": "Comment s'appelle la galaxie dans laquelle nous vivons ?",
+          "choices": [
+            "Le Grand Nuage de Magellan",
+            "Le Triangle",
+            "Andromède",
+            "La Voie lactée"
+          ],
+          "explanation": "La Voie lactée compte 100 à 400 milliards d'étoiles ; elle fusionnera avec Andromède dans environ 4,5 milliards d'années."
+        }
+      }
+    },
+    {
+      "id": "science_079",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which part of the plant cell carries out photosynthesis?",
+          "choices": [
+            "Chloroplast",
+            "Vacuole",
+            "Cell wall",
+            "Mitochondrion"
+          ],
+          "explanation": "Chloroplasts contain chlorophyll, the green pigment that captures light."
+        },
+        "fr": {
+          "text": "Quelle partie de la cellule végétale réalise la photosynthèse ?",
+          "choices": [
+            "Le chloroplaste",
+            "La vacuole",
+            "La paroi cellulaire",
+            "La mitochondrie"
+          ],
+          "explanation": "Les chloroplastes contiennent la chlorophylle, le pigment vert qui capte la lumière."
+        }
+      }
+    },
+    {
+      "id": "science_080",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is absolute zero on the Celsius scale?",
+          "choices": [
+            "-373.15 °C",
+            "-100 °C",
+            "-459.67 °C",
+            "-273.15 °C"
+          ],
+          "explanation": "At absolute zero particles would have the minimum possible energy; it can be approached but never reached."
+        },
+        "fr": {
+          "text": "À combien de degrés Celsius correspond le zéro absolu ?",
+          "choices": [
+            "-373,15 °C",
+            "-100 °C",
+            "-459,67 °C",
+            "-273,15 °C"
+          ],
+          "explanation": "Au zéro absolu, les particules auraient l'énergie minimale possible ; on peut s'en approcher sans jamais l'atteindre."
+        }
+      }
+    },
+    {
+      "id": "science_081",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which famous equation did Einstein publish in 1905?",
+          "choices": [
+            "a² + b² = c²",
+            "F = ma",
+            "PV = nRT",
+            "E = mc²"
+          ],
+          "explanation": "E = mc² says mass and energy are equivalent; a tiny mass holds an enormous amount of energy."
+        },
+        "fr": {
+          "text": "Quelle célèbre équation Einstein a-t-il publiée en 1905 ?",
+          "choices": [
+            "a² + b² = c²",
+            "F = ma",
+            "PV = nRT",
+            "E = mc²"
+          ],
+          "explanation": "E = mc² dit que masse et énergie sont équivalentes : une toute petite masse contient une énergie énorme."
+        }
+      }
+    },
+    {
+      "id": "science_082",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which organ filters blood to produce urine?",
+          "choices": [
+            "The bladder",
+            "The spleen",
+            "The liver",
+            "The kidneys"
+          ],
+          "explanation": "The kidneys filter about 180 litres of blood plasma a day, but produce only 1 to 2 litres of urine."
+        },
+        "fr": {
+          "text": "Quel organe filtre le sang pour produire l'urine ?",
+          "choices": [
+            "La vessie",
+            "La rate",
+            "Le foie",
+            "Les reins"
+          ],
+          "explanation": "Les reins filtrent environ 180 litres de plasma par jour, mais ne produisent que 1 à 2 litres d'urine."
         }
       }
     }
