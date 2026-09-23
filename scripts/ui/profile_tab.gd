@@ -15,7 +15,6 @@ const ScenePaths = preload("res://scripts/config/scene_paths.gd")
 @onready var sections: VBoxContainer = %Sections
 @onready var scroll: ScrollContainer = %ScrollContainer
 @onready var outer_margin: MarginContainer = %OuterMargin
-@onready var photo_dialog: FileDialog = %PhotoDialog
 @onready var badge_backdrop: ColorRect = %BadgeBackdrop
 @onready var badge_detail_panel: PanelContainer = %BadgeDetailPanel
 @onready var badge_detail_icon: Label = %BadgeDetailIcon
@@ -26,12 +25,15 @@ const ScenePaths = preload("res://scripts/config/scene_paths.gd")
 @onready var edit_panel: PanelContainer = %EditPanel
 @onready var edit_title: Label = %EditTitle
 @onready var pseudo_input: LineEdit = %PseudoInput
-@onready var change_photo_button: Button = %ChangePhotoButton
-@onready var remove_photo_button: Button = %RemovePhotoButton
+@onready var edit_vbox: VBoxContainer = %EditVBox
 @onready var edit_save_button: Button = %EditSaveButton
 @onready var edit_close_button: Button = %EditCloseButton
 
 var _profile_data: Dictionary = {}
+## Avatar picked in the edit panel, applied on save ("" = default avatar).
+var _pending_avatar_id: String = ""
+var _avatar_label: Label
+var _avatar_grid: GridContainer
 var _animated_nodes: Array[Control] = []
 var _xp_bar: ProgressBar
 var _active_tweens: Array[Tween] = []
@@ -75,13 +77,31 @@ func _style_dark_controls() -> void:
 		if label:
 			label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	badge_detail_desc.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+	## The global theme gives LineEdit a white box: use a dark field so the
+	## white text stays readable on the dark edit panel.
 	pseudo_input.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	pseudo_input.add_theme_color_override("font_placeholder_color", UiTokens.PROFILE_TEXT_MUTED)
+	pseudo_input.add_theme_color_override("caret_color", UiTokens.PROFILE_TEXT)
+	pseudo_input.add_theme_stylebox_override("normal", _pseudo_input_style(UiTokens.PROFILE_CARD_BORDER))
+	pseudo_input.add_theme_stylebox_override("focus", _pseudo_input_style(UiTokens.ACCENT_PROFILE))
 	for button in [
-		change_photo_button, remove_photo_button, edit_save_button,
+		edit_save_button,
 		edit_close_button, badge_detail_close,
 	]:
 		_style_profile_button(button, UiTokens.ACCENT_PROFILE)
+
+
+func _pseudo_input_style(border: Color) -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = UiTokens.PROFILE_PAGE_BG
+	style.border_color = border
+	style.set_border_width_all(2)
+	style.set_corner_radius_all(UiTokens.PROFILE_CARD_RADIUS)
+	style.content_margin_left = 14
+	style.content_margin_right = 14
+	style.content_margin_top = 10
+	style.content_margin_bottom = 10
+	return style
 
 
 func refresh() -> void:
@@ -109,9 +129,6 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _wire_events() -> void:
-	change_photo_button.pressed.connect(_on_change_photo_pressed)
-	remove_photo_button.pressed.connect(_on_remove_photo_pressed)
-	photo_dialog.files_selected.connect(_on_photo_selected)
 	edit_save_button.pressed.connect(_on_edit_save_pressed)
 	edit_close_button.pressed.connect(_close_edit_profile)
 	edit_backdrop.gui_input.connect(_on_edit_backdrop_gui_input)
@@ -120,7 +137,7 @@ func _wire_events() -> void:
 	badge_detail_close.pressed.connect(_close_badge_detail)
 	LocaleManager.locale_changed.connect(_on_locale_changed)
 	for button in [
-		change_photo_button, remove_photo_button, edit_save_button,
+		edit_save_button,
 		edit_close_button, badge_detail_close,
 	]:
 		PressScaleUtil.wire(button, self)
@@ -129,8 +146,8 @@ func _wire_events() -> void:
 func _apply_translations() -> void:
 	edit_title.text = tr("UI_PROFILE_EDIT")
 	pseudo_input.placeholder_text = tr("UI_PROFILE_PSEUDO_PLACEHOLDER")
-	change_photo_button.text = tr("UI_PROFILE_CHANGE_PHOTO")
-	remove_photo_button.text = tr("UI_PROFILE_REMOVE_PHOTO")
+	if _avatar_label != null:
+		_avatar_label.text = tr("UI_PROFILE_CHOOSE_AVATAR")
 	edit_save_button.text = tr("UI_PROFILE_SAVE")
 	edit_close_button.text = tr("UI_BACK")
 	badge_detail_close.text = tr("UI_BACK")
@@ -1578,11 +1595,12 @@ func _play_entrance_animation() -> void:
 
 func _open_edit_profile() -> void:
 	pseudo_input.text = str(_profile_data.get("player_name", ""))
-	remove_photo_button.visible = _profile_data.get("has_custom_avatar", false)
+	_pending_avatar_id = SaveManager.profile_avatar_id
+	_ensure_avatar_picker()
+	_sync_avatar_picker()
 	edit_backdrop.visible = true
 	edit_panel.visible = true
 	edit_panel.move_to_front()
-	pseudo_input.grab_focus()
 
 
 func _close_edit_profile() -> void:
@@ -1592,6 +1610,7 @@ func _close_edit_profile() -> void:
 
 func _on_edit_save_pressed() -> void:
 	SaveManager.set_player_name(pseudo_input.text)
+	SaveManager.set_profile_avatar_id(_pending_avatar_id)
 	_close_edit_profile()
 	refresh()
 
@@ -1913,23 +1932,61 @@ func _on_badge_backdrop_gui_input(event: InputEvent) -> void:
 			_close_badge_detail()
 
 
-func _on_change_photo_pressed() -> void:
-	photo_dialog.popup_centered_ratio(0.8)
-
-
-func _on_remove_photo_pressed() -> void:
-	SaveManager.clear_profile_avatar()
-	remove_photo_button.visible = false
-	refresh()
-	_open_edit_profile()
-
-
-func _on_photo_selected(paths: PackedStringArray) -> void:
-	if paths.is_empty():
+## Avatar grid in the edit panel: default avatar first, then the mascots.
+func _ensure_avatar_picker() -> void:
+	if _avatar_grid != null:
 		return
-	if SaveManager.set_profile_avatar_from_file(paths[0]):
-		refresh()
-		_open_edit_profile()
+	_avatar_label = Label.new()
+	_avatar_label.text = tr("UI_PROFILE_CHOOSE_AVATAR")
+	_avatar_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_avatar_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+	_avatar_label.add_theme_font_size_override("font_size", UiScale.font(16))
+	edit_vbox.add_child(_avatar_label)
+	edit_vbox.move_child(_avatar_label, pseudo_input.get_index() + 1)
+
+	_avatar_grid = GridContainer.new()
+	_avatar_grid.columns = 5
+	_avatar_grid.add_theme_constant_override("h_separation", 6)
+	_avatar_grid.add_theme_constant_override("v_separation", 6)
+	_avatar_grid.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	edit_vbox.add_child(_avatar_grid)
+	edit_vbox.move_child(_avatar_grid, _avatar_label.get_index() + 1)
+
+	var ids: Array[String] = [""]
+	ids.append_array(SaveManager.PROFILE_AVATAR_IDS)
+	for avatar_id in ids:
+		var cell := Button.new()
+		cell.custom_minimum_size = Vector2(56, 56)
+		cell.focus_mode = Control.FOCUS_NONE
+		cell.set_meta("avatar_id", avatar_id)
+		var icon := TextureRect.new()
+		icon.texture = SaveManager.avatar_texture_for(avatar_id)
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		icon.offset_left = 5
+		icon.offset_top = 5
+		icon.offset_right = -5
+		icon.offset_bottom = -5
+		cell.add_child(icon)
+		cell.pressed.connect(func() -> void:
+			_pending_avatar_id = avatar_id
+			_sync_avatar_picker()
+		)
+		_avatar_grid.add_child(cell)
+
+
+func _sync_avatar_picker() -> void:
+	for cell in _avatar_grid.get_children():
+		var selected := str(cell.get_meta("avatar_id", "")) == _pending_avatar_id
+		var ring := StyleBoxFlat.new()
+		ring.bg_color = Color(0, 0, 0, 0)
+		ring.set_corner_radius_all(28)
+		ring.set_border_width_all(3 if selected else 0)
+		ring.border_color = UiTokens.ACCENT_PROFILE
+		for state in ["normal", "hover", "pressed", "focus"]:
+			cell.add_theme_stylebox_override(state, ring)
 
 
 func _on_locale_changed(_locale: String) -> void:

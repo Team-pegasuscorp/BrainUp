@@ -7,11 +7,16 @@ const DailyQuestsScript = preload("res://scripts/profile/daily_quests.gd")
 const DailyChallengeScript = preload("res://scripts/profile/daily_challenge.gd")
 
 const SAVE_PATH: String = "user://save.json"
+## Legacy custom photo (before avatars became a fixed set); deleted on reset.
 const PROFILE_AVATAR_PATH: String = "user://profile_avatar.png"
+## Avatars the player can pick, from assets/avatars/demo/.
+const PROFILE_AVATAR_IDS: Array[String] = GameAssets.DEMO_AVATAR_SLUGS
 const DEFAULT_AVATAR_PATH: String = "res://assets/ui/default_avatar.svg"
 const MAX_MATCH_HISTORY: int = 30
 
 var player_name: String = UiTokens.DEFAULT_PLAYER_NAME
+## Chosen avatar id from PROFILE_AVATAR_IDS ("" = default avatar).
+var profile_avatar_id: String = ""
 var preferred_locale: String = ""
 var email: String = ""
 ## True after the player confirms ownership of `email` (mail verification).
@@ -56,6 +61,9 @@ func load_data() -> void:
 		return
 
 	player_name = parsed.get("player_name", player_name)
+	profile_avatar_id = str(parsed.get("profile_avatar_id", ""))
+	if not PROFILE_AVATAR_IDS.has(profile_avatar_id):
+		profile_avatar_id = ""
 	preferred_locale = parsed.get("preferred_locale", preferred_locale)
 	email = str(parsed.get("email", email))
 	email_verified = bool(parsed.get("email_verified", email_verified))
@@ -82,6 +90,7 @@ func load_data() -> void:
 func save_data() -> void:
 	var data := {
 		"player_name": player_name,
+		"profile_avatar_id": profile_avatar_id,
 		"preferred_locale": preferred_locale,
 		"email": email,
 		"email_verified": email_verified,
@@ -161,14 +170,19 @@ func get_xp_progress_ratio() -> float:
 
 
 func has_custom_avatar() -> bool:
-	return FileAccess.file_exists(PROFILE_AVATAR_PATH)
+	return not profile_avatar_id.is_empty()
 
 
 func get_profile_avatar_texture() -> Texture2D:
-	if has_custom_avatar():
-		var image := Image.load_from_file(PROFILE_AVATAR_PATH)
-		if image != null:
-			return ImageTexture.create_from_image(image)
+	return avatar_texture_for(profile_avatar_id)
+
+
+## Texture for an avatar id; "" or an unknown id gives the default avatar.
+func avatar_texture_for(avatar_id: String) -> Texture2D:
+	if PROFILE_AVATAR_IDS.has(avatar_id):
+		var tex := GameAssets.load_texture("res://assets/avatars/demo/%s.png" % avatar_id)
+		if tex != null:
+			return tex
 	if ResourceLoader.exists(DEFAULT_AVATAR_PATH):
 		var imported := load(DEFAULT_AVATAR_PATH) as Texture2D
 		if imported != null:
@@ -180,18 +194,13 @@ func get_profile_avatar_texture() -> Texture2D:
 	return null
 
 
-func set_profile_avatar_from_file(source_path: String) -> bool:
-	var image := Image.new()
-	if image.load(source_path) != OK:
-		return false
-	image.resize(UiTokens.PROFILE_AVATAR_SIZE, UiTokens.PROFILE_AVATAR_SIZE, Image.INTERPOLATE_LANCZOS)
-	if image.save_png(PROFILE_AVATAR_PATH) != OK:
-		return false
+func set_profile_avatar_id(avatar_id: String) -> void:
+	profile_avatar_id = avatar_id if PROFILE_AVATAR_IDS.has(avatar_id) else ""
 	save_data()
-	return true
 
 
 func clear_profile_avatar() -> void:
+	profile_avatar_id = ""
 	if FileAccess.file_exists(PROFILE_AVATAR_PATH):
 		DirAccess.remove_absolute(PROFILE_AVATAR_PATH)
 	save_data()

@@ -32,8 +32,7 @@ UI_PROFILE_TITLE,Player profile,Profil joueur
 UI_PROFILE_PSEUDO,Pseudonym,Pseudo
 UI_PROFILE_PSEUDO_PLACEHOLDER,Enter your name...,Entrez votre pseudo...
 UI_PROFILE_PHOTO,Profile photo,Photo de profil
-UI_PROFILE_CHANGE_PHOTO,Change photo,Changer la photo
-UI_PROFILE_REMOVE_PHOTO,Remove photo,Retirer la photo
+UI_PROFILE_CHOOSE_AVATAR,Choose your avatar,Choisissez votre avatar
 UI_PROFILE_SAVE,Save profile,Enregistrer le profil
 UI_PROFILE_GAMES_PLAYED,Quizzes played,Quiz joués
 UI_PROFILE_WINS,Wins,Victoires
