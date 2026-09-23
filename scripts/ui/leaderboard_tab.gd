@@ -359,8 +359,9 @@ func _make_gap_row(entry: Dictionary) -> Control:
 
 
 func _make_podium(podium: Array) -> Control:
+	## Classic stepped podium: 2nd · 1st · 3rd — same infos as before, on real pedestals.
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 8)
+	row.add_theme_constant_override("separation", 10)
 	row.alignment = BoxContainer.ALIGNMENT_END
 	row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
@@ -372,123 +373,127 @@ func _make_podium(podium: Array) -> Control:
 	if podium.size() >= 3:
 		slots.append(podium[2])
 
-	## Bottom-aligned steps: 1st > 2nd > 3rd. Host clips so the 1st bg cannot spill.
-	var heights := [186.0, 208.0, 164.0]
+	## Pedestal heights (visual steps); 1st is tallest.
+	var step_heights := [92.0, 128.0, 72.0]
 	var places := [2, 1, 3]
 	var accents := [
 		Color(0.75, 0.78, 0.84, 1), ## silver
 		UiTokens.ACCENT_LEADERBOARD, ## gold
 		Color(0.90, 0.58, 0.32, 1), ## bronze
 	]
-	var max_h := 208.0
+	var max_h := 320.0
 	row.custom_minimum_size.y = max_h
 
 	for slot_index in range(slots.size()):
 		var entry: Dictionary = slots[slot_index]
-		var card_h: float = heights[slot_index]
-		var slot := Control.new()
-		slot.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		slot.custom_minimum_size.y = max_h
-		slot.clip_contents = true
+		var place: int = places[slot_index]
+		var accent: Color = accents[slot_index]
+		var step_h: float = step_heights[slot_index]
 
-		var host := Control.new()
-		host.set_anchor(SIDE_LEFT, 0.0)
-		host.set_anchor(SIDE_RIGHT, 1.0)
-		host.set_anchor(SIDE_TOP, 1.0)
-		host.set_anchor(SIDE_BOTTOM, 1.0)
-		host.offset_left = 0.0
-		host.offset_right = 0.0
-		host.offset_top = -card_h
-		host.offset_bottom = 0.0
-		host.clip_contents = true
-		slot.add_child(host)
+		var col := VBoxContainer.new()
+		col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		col.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		col.alignment = BoxContainer.ALIGNMENT_END
+		col.add_theme_constant_override("separation", 8)
+		row.add_child(col)
 
-		var card := _podium_card(
+		col.add_child(_podium_identity(
 			entry,
-			accents[slot_index],
-			int(entry.get("rank", places[slot_index])),
-			places[slot_index]
-		)
-		card.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-		host.add_child(card)
-		row.add_child(slot)
+			accent,
+			int(entry.get("rank", place)),
+			place
+		))
+		col.add_child(_podium_step(place, accent, step_h))
 	return row
 
 
-func _podium_card(
+func _podium_identity(
 	entry: Dictionary,
 	accent: Color,
 	rank: int,
 	place: int
-) -> PanelContainer:
-	var is_first := place == 1
-	var panel := PanelContainer.new()
-	panel.clip_contents = true
-	var style := StyleBoxFlat.new()
-	style.bg_color = UiTokens.LEADERBOARD_CARD_BG_RAISED
-	style.set_corner_radius_all(16)
-	style.set_border_width_all(2 if is_first else 1)
-	style.border_color = Color(accent.r, accent.g, accent.b, 0.85 if is_first else 0.45)
-	match place:
-		1:
-			style.content_margin_left = 8
-			style.content_margin_right = 8
-			style.content_margin_top = 6
-			style.content_margin_bottom = 10
-		2:
-			style.content_margin_left = 6
-			style.content_margin_right = 6
-			style.content_margin_top = 6
-			style.content_margin_bottom = 10
-		_:
-			style.content_margin_left = 6
-			style.content_margin_right = 6
-			style.content_margin_top = 4
-			style.content_margin_bottom = 8
-	panel.add_theme_stylebox_override("panel", style)
-
+) -> Control:
 	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 2)
-	vbox.alignment = BoxContainer.ALIGNMENT_END
-	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	panel.add_child(vbox)
+	vbox.add_theme_constant_override("separation", 4)
+	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
 	var medal := Label.new()
 	medal.text = _rank_medal_icon(rank)
 	medal.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	medal.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	var medal_size := 48 if place == 1 else (40 if place == 2 else 34)
+	var medal_size := 44 if place == 1 else (36 if place == 2 else 32)
 	medal.add_theme_font_size_override("font_size", UiScale.font(medal_size))
 	var emoji_font := UiFonts.emoji_font()
 	if emoji_font != null:
 		medal.add_theme_font_override("font", emoji_font)
 	vbox.add_child(medal)
 
-	var avatar_size := 52.0 if place == 1 else (42.0 if place == 2 else 36.0)
+	var avatar_size := 56.0 if place == 1 else (46.0 if place == 2 else 40.0)
 	vbox.add_child(_entry_avatar(entry, avatar_size, accent))
 
 	var name_label := Label.new()
 	name_label.text = str(entry.get("name", ""))
 	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	name_label.clip_text = true
-	name_label.add_theme_font_size_override("font_size", UiScale.font(UiTokens.PSEUDO_FONT_SIZE))
+	name_label.add_theme_font_size_override(
+		"font_size",
+		UiScale.font(UiTokens.pseudo_font_size(name_label.text))
+	)
 	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	vbox.add_child(name_label)
 
 	var level := Label.new()
 	level.text = "★ %s %d" % [tr("UI_PROFILE_LEVEL_CAPTION"), int(entry.get("level", 1))]
 	level.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	level.add_theme_font_size_override("font_size", UiScale.font(12 if place != 3 else 11))
+	level.add_theme_font_size_override("font_size", UiScale.font(12))
 	level.add_theme_color_override("font_color", Color(0.72, 0.62, 1.0, 1))
 	vbox.add_child(level)
 
 	var score := Label.new()
 	score.text = "🏆 %s" % _format_int(int(entry.get("score", 0)))
 	score.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	score.add_theme_font_size_override("font_size", UiScale.font(26 if place == 1 else (24 if place == 2 else 22)))
+	score.add_theme_font_size_override("font_size", UiScale.font(24 if place == 1 else (22 if place == 2 else 20)))
 	score.add_theme_color_override("font_color", accent)
 	vbox.add_child(score)
-	return panel
+	return vbox
+
+
+func _podium_step(place: int, accent: Color, height: float) -> Control:
+	var step := PanelContainer.new()
+	step.custom_minimum_size.y = height
+	step.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	step.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(accent.r, accent.g, accent.b, 0.92 if place == 1 else 0.78)
+	## Flat top, slightly rounded bottom — reads as a real pedestal.
+	style.corner_radius_top_left = 10
+	style.corner_radius_top_right = 10
+	style.corner_radius_bottom_left = 4
+	style.corner_radius_bottom_right = 4
+	style.set_border_width_all(0)
+	style.shadow_color = Color(accent.r, accent.g, accent.b, 0.35)
+	style.shadow_size = 14 if place == 1 else 10
+	style.shadow_offset = Vector2(0, 4)
+	style.content_margin_left = 4
+	style.content_margin_right = 4
+	style.content_margin_top = 8
+	style.content_margin_bottom = 8
+	## Top highlight edge.
+	style.border_width_top = 2
+	style.border_color = Color(1, 1, 1, 0.35 if place == 1 else 0.22)
+	step.add_theme_stylebox_override("panel", style)
+
+	var place_label := Label.new()
+	place_label.text = str(place)
+	place_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	place_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	place_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	place_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	place_label.add_theme_font_size_override("font_size", UiScale.font(42 if place == 1 else (34 if place == 2 else 28)))
+	place_label.add_theme_color_override("font_color", Color(0.08, 0.06, 0.04, 0.88))
+	step.add_child(place_label)
+	return step
 
 
 func _make_rank_row(entry: Dictionary) -> PanelContainer:
@@ -560,7 +565,10 @@ func _make_rank_row(entry: Dictionary) -> PanelContainer:
 	if is_player:
 		name.text = tr("UI_LEADERBOARD_YOU_NAME").format({"name": name.text})
 	name.clip_text = true
-	name.add_theme_font_size_override("font_size", UiScale.font(UiTokens.PSEUDO_FONT_SIZE))
+	name.add_theme_font_size_override(
+		"font_size",
+		UiScale.font(UiTokens.pseudo_font_size(str(entry.get("name", ""))))
+	)
 	name.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	info.add_child(name)
 

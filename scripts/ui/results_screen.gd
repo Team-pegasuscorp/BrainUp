@@ -65,6 +65,37 @@ func _ready() -> void:
 	LocaleManager.locale_changed.connect(_on_locale_changed)
 	PressScaleUtil.wire(play_again_button, self)
 	PressScaleUtil.wire(menu_button, self)
+	_style_menu_button()
+
+
+## Secondary CTA on the dark results wash: theme Button hover is translucent cyan
+## with dark ink — unreadable here. Keep an opaque glass tile + white label.
+func _style_menu_button() -> void:
+	var normal := _menu_button_style(Color(1, 1, 1, 0.14), Color(1, 1, 1, 0.22))
+	var hover := _menu_button_style(Color(1, 1, 1, 0.24), Color(1, 1, 1, 0.40))
+	var pressed := _menu_button_style(Color(1, 1, 1, 0.18), Color(1, 1, 1, 0.30))
+	menu_button.add_theme_stylebox_override("normal", normal)
+	menu_button.add_theme_stylebox_override("hover", hover)
+	menu_button.add_theme_stylebox_override("pressed", pressed)
+	menu_button.add_theme_stylebox_override("focus", hover)
+	menu_button.add_theme_color_override("font_color", Color(1, 1, 1, 0.95))
+	menu_button.add_theme_color_override("font_hover_color", Color(1, 1, 1, 1))
+	menu_button.add_theme_color_override("font_pressed_color", Color(1, 1, 1, 0.92))
+	menu_button.add_theme_color_override("font_focus_color", Color(1, 1, 1, 1))
+	menu_button.add_theme_font_size_override("font_size", UiScale.font(20))
+
+
+func _menu_button_style(bg: Color, border: Color) -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = bg
+	style.set_border_width_all(1)
+	style.border_color = border
+	style.set_corner_radius_all(20)
+	style.content_margin_left = 18
+	style.content_margin_right = 18
+	style.content_margin_top = 14
+	style.content_margin_bottom = 14
+	return style
 
 
 func _apply_translations() -> void:

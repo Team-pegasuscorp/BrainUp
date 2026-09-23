@@ -38,6 +38,8 @@ const MODES := [
 	[1, "UI_MODE_SURVIVAL", "UI_MODE_SURVIVAL_HINT"],
 	[2, "UI_MODE_TIME_ATTACK", "UI_MODE_TIME_ATTACK_HINT"],
 ]
+## Room inside ScrollContainer so selected-tile neon (shadow_size 20) isn't clipped.
+const TILE_GLOW_PAD := 20
 
 
 func _ready() -> void:
@@ -62,12 +64,23 @@ func _wrap_list_in_scroll() -> void:
 	var scroll := ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
 	column.add_child(scroll)
 	column.move_child(scroll, category_list.get_index())
+
+	## Outer page margin is reduced by the same amount so tile width stays stable.
+	var glow_pad := MarginContainer.new()
+	glow_pad.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	glow_pad.add_theme_constant_override("margin_left", TILE_GLOW_PAD)
+	glow_pad.add_theme_constant_override("margin_right", TILE_GLOW_PAD)
+	glow_pad.add_theme_constant_override("margin_top", TILE_GLOW_PAD)
+	glow_pad.add_theme_constant_override("margin_bottom", TILE_GLOW_PAD)
+	scroll.add_child(glow_pad)
+
 	_scroll_content = VBoxContainer.new()
 	_scroll_content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_scroll_content.add_theme_constant_override("separation", 16)
-	scroll.add_child(_scroll_content)
+	glow_pad.add_child(_scroll_content)
 	category_list.reparent(_scroll_content)
 	category_list.size_flags_vertical = Control.SIZE_FILL
 
@@ -140,9 +153,17 @@ func _apply_embedded_layout() -> void:
 	title_label.add_theme_color_override("font_color", Color(1, 1, 1, 0.95))
 	back_button.visible = false
 	description_label.visible = false
+	## Keep Play above the floating Quiz FAB (shell safe-zone still overlaps that band).
+	var page_margin := $MarginContainer as MarginContainer
+	if page_margin != null:
+		page_margin.add_theme_constant_override(
+			"margin_bottom",
+			8 + int(UiTokens.BOTTOM_NAV_FAB_CLEARANCE * 0.55)
+		)
 
 
 func _apply_translations() -> void:
+	title_label.visible = false
 	title_label.text = tr("UI_CHOOSE_CATEGORY")
 	back_button.text = tr("UI_BACK")
 	start_button.text = tr("UI_PLAY")
@@ -369,6 +390,7 @@ func _open_daily_board() -> void:
 	## Height follows the number of rows (capped) so a short list has no empty space.
 	scroll.custom_minimum_size = Vector2(0, clampf(float(_daily_board.get("entries", []).size()) * 64.0, 90.0, 640.0))
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
 	column.add_child(scroll)
 	var list := VBoxContainer.new()
 	list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -428,7 +450,10 @@ func _make_board_row(entry: Dictionary) -> Control:
 	name_label.text = str(entry.get("display_name", ""))
 	name_label.clip_text = true
 	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	name_label.add_theme_font_size_override("font_size", UiScale.font(20))
+	name_label.add_theme_font_size_override(
+		"font_size",
+		UiScale.font(UiTokens.pseudo_font_size(name_label.text))
+	)
 	name_label.add_theme_color_override("font_color", UiTokens.INK)
 	line.add_child(name_label)
 
@@ -461,10 +486,11 @@ func _make_category_tile(index: int, category: Dictionary) -> Button:
 
 	var margin := MarginContainer.new()
 	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	margin.add_theme_constant_override("margin_left", 6)
-	margin.add_theme_constant_override("margin_top", 8)
-	margin.add_theme_constant_override("margin_right", 12)
-	margin.add_theme_constant_override("margin_bottom", 8)
+	## Balanced inset; left 16 keeps the color bar +10px vs the old 6px inset.
+	margin.add_theme_constant_override("margin_left", 16)
+	margin.add_theme_constant_override("margin_top", 10)
+	margin.add_theme_constant_override("margin_right", 16)
+	margin.add_theme_constant_override("margin_bottom", 10)
 	margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	button.add_child(margin)
 
