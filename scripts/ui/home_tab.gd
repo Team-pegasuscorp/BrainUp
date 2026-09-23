@@ -36,6 +36,7 @@ func _rebuild_cards(snapshot: Dictionary) -> void:
 	content.add_child(_make_last_match_card(snapshot))
 	content.add_child(_make_daily_challenges_card())
 	content.add_child(_make_near_achievements_card(snapshot))
+	content.add_child(_make_news_card())
 
 
 func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
@@ -78,18 +79,26 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 	var info := VBoxContainer.new()
 	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	info.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	info.alignment = BoxContainer.ALIGNMENT_CENTER
 	info.add_theme_constant_override("separation", 6)
 	row.add_child(info)
 
 	var name_label := Label.new()
 	name_label.text = str(snapshot.get("player_name", UiTokens.DEFAULT_PLAYER_NAME))
 	name_label.clip_text = true
-	name_label.add_theme_font_size_override("font_size", UiScale.font(UiTokens.PSEUDO_FONT_SIZE))
+	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	name_label.add_theme_font_size_override(
+		"font_size",
+		UiScale.font(UiTokens.pseudo_font_size(name_label.text, UiTokens.PSEUDO_FONT_SIZE_HOME))
+	)
 	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	info.add_child(name_label)
 
 	var country_row := HBoxContainer.new()
 	country_row.add_theme_constant_override("separation", 6)
+	country_row.alignment = BoxContainer.ALIGNMENT_CENTER
+	country_row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	info.add_child(country_row)
 
 	var country_name := str(snapshot.get("country", "France"))
@@ -118,6 +127,8 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 		tr("UI_PROFILE_LEVEL_CAPTION").to_upper(),
 		str(snapshot.get("level", 1)),
 	]
+	level_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	level_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	level_label.add_theme_font_size_override("font_size", UiScale.font(15))
 	level_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	info.add_child(level_label)
@@ -137,18 +148,29 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 	league_title.text = tr(str(ranking.get("league_key", "UI_LEAGUE_BRONZE"))).to_upper()
 	league_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	league_title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	league_title.add_theme_font_size_override("font_size", UiScale.font(13))
+	league_title.add_theme_font_size_override("font_size", UiScale.font(16))
 	league_title.add_theme_color_override("font_color", UiTokens.ACCENT_HOME)
 	league_col.add_child(league_title)
 
-	var points := Label.new()
-	points.text = "🏆 %s" % _format_int(int(ranking.get("points", 0)))
-	points.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	points.add_theme_font_size_override("font_size", UiScale.font(16))
-	points.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	var points_row := HBoxContainer.new()
+	points_row.add_theme_constant_override("separation", 4)
+	points_row.alignment = BoxContainer.ALIGNMENT_CENTER
+	points_row.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	league_col.add_child(points_row)
+
+	var trophy := Label.new()
+	trophy.text = "🏆"
+	trophy.add_theme_font_size_override("font_size", UiScale.font(18))
 	if emoji_font != null:
-		points.add_theme_font_override("font", emoji_font)
-	league_col.add_child(points)
+		trophy.add_theme_font_override("font", emoji_font)
+	points_row.add_child(trophy)
+
+	var points := Label.new()
+	points.text = _format_int(int(ranking.get("points", 0)))
+	points.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	points.add_theme_font_size_override("font_size", UiScale.font(20))
+	points.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	points_row.add_child(points)
 
 	row.add_child(_summary_divider())
 
@@ -171,7 +193,7 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 	rank_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	rank_caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	rank_caption.add_theme_font_size_override("font_size", UiScale.font(12))
-	rank_caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+	rank_caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	rank_col.add_child(rank_caption)
 
 	row.add_child(_summary_divider())
@@ -187,7 +209,7 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 	streak_value.text = str(snapshot.get("current_win_streak", 0))
 	streak_value.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	streak_value.add_theme_font_size_override("font_size", UiScale.font(18))
-	streak_value.add_theme_color_override("font_color", UiTokens.ACCENT_HOME)
+	streak_value.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	streak_col.add_child(streak_value)
 
 	var streak_caption := Label.new()
@@ -195,7 +217,7 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 	streak_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	streak_caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	streak_caption.add_theme_font_size_override("font_size", UiScale.font(12))
-	streak_caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+	streak_caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	streak_col.add_child(streak_caption)
 
 	return panel
@@ -291,8 +313,79 @@ func _make_near_achievements_card(snapshot: Dictionary) -> PanelContainer:
 	return panel
 
 
+func _make_news_card() -> PanelContainer:
+	## Placeholder for a future news / patch-notes feed (same locked pattern as Best season).
+	var panel := PanelContainer.new()
+	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	panel.custom_minimum_size.y = UiTokens.DASH_SEASON_HEIGHT
+	panel.add_theme_stylebox_override("panel", UiStyle.home_surface(true, 0))
+
+	var margin := _pad(14, 16)
+	margin.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	panel.add_child(margin)
+	var vbox := VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 12)
+	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	margin.add_child(vbox)
+
+	var title := Label.new()
+	title.text = tr("UI_HOME_NEWS").to_upper()
+	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	title.add_theme_font_size_override("font_size", UiScale.font(20))
+	title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	vbox.add_child(title)
+
+	var body := VBoxContainer.new()
+	body.add_theme_constant_override("separation", 10)
+	body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	vbox.add_child(body)
+
+	var top_space := Control.new()
+	top_space.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	top_space.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	body.add_child(top_space)
+
+	var lock := Label.new()
+	lock.text = "🔒"
+	lock.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	lock.add_theme_font_size_override("font_size", UiScale.font(40))
+	var emoji_font := UiFonts.emoji_font()
+	if emoji_font != null:
+		lock.add_theme_font_override("font", emoji_font)
+	body.add_child(lock)
+
+	var caption := Label.new()
+	caption.text = tr("UI_HOME_NEWS_LOCKED")
+	caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	caption.add_theme_font_size_override("font_size", UiScale.font(15))
+	caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+	body.add_child(caption)
+
+	var hint := Label.new()
+	hint.text = tr("UI_HOME_NEWS_COMING_SOON")
+	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	hint.add_theme_font_size_override("font_size", UiScale.font(13))
+	hint.add_theme_color_override("font_color", UiTokens.ACCENT_HOME)
+	body.add_child(hint)
+
+	var bottom_space := Control.new()
+	bottom_space.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	bottom_space.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	body.add_child(bottom_space)
+
+	return panel
+
+
 func _near_achievements(snapshot: Dictionary, limit: int) -> Array:
-	var candidates: Array = []
+	## Demo profile unlocks almost everything — use a fixed “almost there” set.
+	if bool(snapshot.get("is_demo", false)):
+		return _demo_near_achievements().slice(0, limit)
+
+	var in_progress: Array = []
+	var starters: Array = []
 	for row in snapshot.get("achievements", []):
 		if typeof(row) != TYPE_DICTIONARY:
 			continue
@@ -300,54 +393,72 @@ func _near_achievements(snapshot: Dictionary, limit: int) -> Array:
 			continue
 		var current := int(row.get("current", 0))
 		var target := maxi(int(row.get("target", 1)), 1)
-		## Skip binary / untouched badges — only show real progress toward unlock.
-		if current <= 0 or current >= target:
+		if current >= target:
 			continue
-		candidates.append(row)
+		## Binary badges (0/1) with no progress aren't "proche".
+		if current <= 0 and target <= 1:
+			continue
+		if current > 0:
+			in_progress.append(row)
+		else:
+			starters.append(row)
 
-	candidates.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
-		return float(a.get("progress", 0.0)) > float(b.get("progress", 0.0))
-	)
-
-	## Demo polish when nothing is close yet.
-	if candidates.is_empty() and bool(snapshot.get("is_demo", false)):
-		return [
-			{
-				"id": "streak_10",
-				"title_key": "UI_ACH_STREAK_10",
-				"desc_key": "UI_ACH_STREAK_10_DESC",
-				"icon": "10",
-				"accent": Color(0.55, 0.32, 1.0, 1),
-				"current": 7,
-				"target": 10,
-				"progress": 0.7,
-			},
-			{
-				"id": "ten_matches",
-				"title_key": "UI_ACH_TEN_MATCHES",
-				"desc_key": "UI_ACH_TEN_MATCHES_DESC",
-				"icon": "📚",
-				"accent": Color(0.42, 0.361, 1.0, 1),
-				"current": 8,
-				"target": 10,
-				"progress": 0.8,
-			},
-			{
-				"id": "level_5",
-				"title_key": "UI_ACH_LEVEL_5",
-				"desc_key": "UI_ACH_LEVEL_5_DESC",
-				"icon": "🛡️",
-				"accent": Color(0.071, 0.769, 0.722, 1),
-				"current": 4,
-				"target": 5,
-				"progress": 0.8,
-			},
-		]
+	var by_closest := func(a: Dictionary, b: Dictionary) -> bool:
+		var pa := float(a.get("progress", 0.0))
+		var pb := float(b.get("progress", 0.0))
+		if not is_equal_approx(pa, pb):
+			return pa > pb
+		return (int(a.get("target", 1)) - int(a.get("current", 0))) < (
+			int(b.get("target", 1)) - int(b.get("current", 0))
+		)
+	in_progress.sort_custom(by_closest)
+	starters.sort_custom(by_closest)
 
 	var out: Array = []
-	for i in range(mini(candidates.size(), limit)):
-		out.append(candidates[i])
+	for row in in_progress:
+		if out.size() >= limit:
+			break
+		out.append(row)
+	for row in starters:
+		if out.size() >= limit:
+			break
+		out.append(row)
 	return out
+
+
+func _demo_near_achievements() -> Array:
+	return [
+		{
+			"id": "ten_matches",
+			"title_key": "UI_ACH_TEN_MATCHES",
+			"desc_key": "UI_ACH_TEN_MATCHES_DESC",
+			"icon": "📚",
+			"accent": Color(0.42, 0.361, 1.0, 1),
+			"current": 8,
+			"target": 10,
+			"progress": 0.8,
+		},
+		{
+			"id": "level_5",
+			"title_key": "UI_ACH_LEVEL_5",
+			"desc_key": "UI_ACH_LEVEL_5_DESC",
+			"icon": "🛡️",
+			"accent": Color(0.071, 0.769, 0.722, 1),
+			"current": 4,
+			"target": 5,
+			"progress": 0.8,
+		},
+		{
+			"id": "streak_10",
+			"title_key": "UI_ACH_STREAK_10",
+			"desc_key": "UI_ACH_STREAK_10_DESC",
+			"icon": "10",
+			"accent": Color(0.55, 0.32, 1.0, 1),
+			"current": 7,
+			"target": 10,
+			"progress": 0.7,
+		},
+	]
 
 
 func _make_near_achievement_row(data: Dictionary) -> Control:
@@ -631,17 +742,23 @@ func _make_last_match_card(snapshot: Dictionary) -> PanelContainer:
 	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	panel.add_theme_stylebox_override("panel", UiStyle.home_surface(true, 0))
 
-	var margin := _pad(12, 12)
+	var margin := _pad(14, 12)
 	panel.add_child(margin)
 	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 8)
+	vbox.add_theme_constant_override("separation", 12)
 	margin.add_child(vbox)
+
+	var header := HBoxContainer.new()
+	header.add_theme_constant_override("separation", 8)
+	header.alignment = BoxContainer.ALIGNMENT_CENTER
+	vbox.add_child(header)
 
 	var title := Label.new()
 	title.text = tr("UI_HOME_LAST_MATCH").to_upper()
-	title.add_theme_font_size_override("font_size", UiScale.font(18))
+	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	title.add_theme_font_size_override("font_size", UiScale.font(20))
 	title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-	vbox.add_child(title)
+	header.add_child(title)
 
 	var list := VBoxContainer.new()
 	list.add_theme_constant_override("separation", 0)
@@ -731,7 +848,10 @@ func _history_row(row: Dictionary) -> Control:
 	var name_label := Label.new()
 	name_label.text = opponent_name
 	name_label.clip_text = true
-	name_label.add_theme_font_size_override("font_size", UiScale.font(UiTokens.PSEUDO_FONT_SIZE))
+	name_label.add_theme_font_size_override(
+		"font_size",
+		UiScale.font(UiTokens.pseudo_font_size(opponent_name))
+	)
 	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	left.add_child(name_label)
 
@@ -767,7 +887,7 @@ func _history_row(row: Dictionary) -> Control:
 	score.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	score.custom_minimum_size.x = 60
 	score.add_theme_font_size_override("font_size", UiScale.font(19))
-	score.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT if won else loss_color)
+	score.add_theme_color_override("font_color", result_color)
 	mid.add_child(score)
 
 	var right := HBoxContainer.new()

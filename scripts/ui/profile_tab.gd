@@ -239,7 +239,10 @@ func _build_hero() -> PanelContainer:
 
 	var name_label := Label.new()
 	name_label.text = str(_profile_data.get("player_name", UiTokens.DEFAULT_PLAYER_NAME))
-	name_label.add_theme_font_size_override("font_size", UiScale.font(34))
+	name_label.add_theme_font_size_override(
+		"font_size",
+		UiScale.font(UiTokens.pseudo_font_size(name_label.text, UiTokens.PSEUDO_FONT_SIZE_HERO))
+	)
 	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	name_row.add_child(name_label)
 
@@ -254,7 +257,10 @@ func _build_hero() -> PanelContainer:
 
 	var country_row := HBoxContainer.new()
 	country_row.add_theme_constant_override("separation", 6)
-	info.add_child(country_row)
+	var country_wrap := MarginContainer.new()
+	country_wrap.add_theme_constant_override("margin_left", 5)
+	country_wrap.add_child(country_row)
+	info.add_child(country_wrap)
 
 	var country_name := str(_profile_data.get("country", "France"))
 	var flag := str(_profile_data.get("country_flag", ""))
@@ -415,19 +421,27 @@ func _build_hero() -> PanelContainer:
 	var league_icon := GameAssets.make_icon_display(
 		GameAssets.league_texture(str(ranking.get("league_id", "bronze"))),
 		str(ranking.get("league_icon", "🥉")),
-		72.0,
-		64,
+		112.0,
+		96,
 		GameAssets.ROUND_LEAGUE_INSET
 	)
 	league_icon.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	league_col.add_child(league_icon)
+	var league_icon_wrap := MarginContainer.new()
+	league_icon_wrap.add_theme_constant_override("margin_top", -10)
+	league_icon_wrap.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	league_icon_wrap.add_child(league_icon)
+	league_col.add_child(league_icon_wrap)
 
 	var points := Label.new()
 	points.text = "🏆  %s" % _format_int(int(ranking.get("points", 0)))
 	points.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	points.add_theme_font_size_override("font_size", UiScale.font(22))
+	points.add_theme_font_size_override("font_size", UiScale.font(28))
 	points.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-	league_col.add_child(points)
+	var points_wrap := MarginContainer.new()
+	points_wrap.add_theme_constant_override("margin_top", -10)
+	points_wrap.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	points_wrap.add_child(points)
+	league_col.add_child(points_wrap)
 
 	_animated_nodes.append(panel)
 	call_deferred(
@@ -481,10 +495,10 @@ func _fit_hero_mock_proportions(
 	if is_instance_valid(league_title):
 		league_title.add_theme_font_size_override("font_size", UiScale.font(int(clampf(league_w * 0.105, 15.0, 19.0))))
 	if is_instance_valid(league_icon):
-		var league_icon_side := clampf(league_w * 0.55, 64.0, 88.0)
+		var league_icon_side := clampf(league_w * 0.78, 96.0, 128.0)
 		league_icon.custom_minimum_size = Vector2(league_icon_side, league_icon_side)
 	if is_instance_valid(points):
-		points.add_theme_font_size_override("font_size", UiScale.font(int(clampf(league_w * 0.135, 20.0, 26.0))))
+		points.add_theme_font_size_override("font_size", UiScale.font(int(clampf(league_w * 0.165, 26.0, 32.0))))
 
 
 func _build_stats_strip() -> PanelContainer:
@@ -500,13 +514,11 @@ func _build_stats_strip() -> PanelContainer:
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
 	margin.add_child(row)
 
-	var ranking: Dictionary = _profile_data.get("ranking", {})
 	var items := [
 		{"value": _format_int(int(_profile_data.get("games_played", 0))), "label": tr("UI_PROFILE_STAT_GAMES"), "color": Color(0.36, 0.75, 1.0)},
 		{"value": _format_int(int(_profile_data.get("wins", 0))), "label": tr("UI_PROFILE_STAT_WINS"), "color": UiTokens.FEEDBACK_CORRECT},
 		{"value": "%.0f%%" % _profile_data.get("win_rate_percent", 0.0), "label": tr("UI_PROFILE_STAT_WINRATE"), "color": Color(1.0, 0.55, 0.18)},
 		{"value": str(_profile_data.get("best_win_streak", 0)), "label": tr("UI_PROFILE_STAT_STREAK"), "color": Color(1.0, 0.42, 0.28)},
-		{"value": _format_int(int(ranking.get("points", 0))), "label": tr("UI_PROFILE_STAT_RANK"), "color": UiTokens.ACCENT_PROFILE},
 	]
 	for i in range(items.size()):
 		if i > 0:
@@ -1025,7 +1037,10 @@ func _history_row(row: Dictionary) -> Control:
 	var name_label := Label.new()
 	name_label.text = opponent_name
 	name_label.clip_text = true
-	name_label.add_theme_font_size_override("font_size", UiScale.font(UiTokens.PSEUDO_FONT_SIZE))
+	name_label.add_theme_font_size_override(
+		"font_size",
+		UiScale.font(UiTokens.pseudo_font_size(opponent_name))
+	)
 	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	left.add_child(name_label)
 
@@ -1062,8 +1077,8 @@ func _history_row(row: Dictionary) -> Control:
 	score.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	score.custom_minimum_size.x = 60
 	score.add_theme_font_size_override("font_size", UiScale.font(19))
-	## Mock: white score on win, red score on loss.
-	score.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT if won else loss_color)
+	## Win: green label + score; loss: red label + score.
+	score.add_theme_color_override("font_color", result_color)
 	mid.add_child(score)
 
 	## Relative time + chevron (fixed width keeps result column aligned across rows).
@@ -1205,12 +1220,35 @@ func _build_season_tile() -> PanelContainer:
 	var unlocked: bool = bool(season.get("unlocked", false))
 
 	if not unlocked:
-		var root := _tile_body(panel, tr("UI_PROFILE_BEST_SEASON"))
+		## Same typography / spacing as home news locked tile.
+		panel.custom_minimum_size.y = UiTokens.DASH_SEASON_HEIGHT
+		var margin := _pad(14, 16)
+		margin.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		margin.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		panel.add_child(margin)
+		var vbox := VBoxContainer.new()
+		vbox.add_theme_constant_override("separation", 12)
+		vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		margin.add_child(vbox)
+
+		var title := Label.new()
+		title.text = tr("UI_PROFILE_BEST_SEASON").to_upper()
+		title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		title.add_theme_font_size_override("font_size", UiScale.font(20))
+		title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+		vbox.add_child(title)
+
 		var body := VBoxContainer.new()
 		body.add_theme_constant_override("separation", 10)
-		body.alignment = BoxContainer.ALIGNMENT_CENTER
 		body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		root.add_child(body)
+		body.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		vbox.add_child(body)
+
+		var top_space := Control.new()
+		top_space.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		top_space.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		body.add_child(top_space)
 
 		var lock := Label.new()
 		lock.text = "🔒"
@@ -1237,7 +1275,11 @@ func _build_season_tile() -> PanelContainer:
 		hint.add_theme_color_override("font_color", UiTokens.ACCENT_LEADERBOARD)
 		body.add_child(hint)
 
-		_nudge_tile_height(root, 8)
+		var bottom_space := Control.new()
+		bottom_space.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		bottom_space.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		body.add_child(bottom_space)
+
 		_animated_nodes.append(panel)
 		return panel
 
@@ -1259,8 +1301,12 @@ func _build_season_tile() -> PanelContainer:
 	var title := Label.new()
 	title.text = tr("UI_PROFILE_BEST_SEASON").to_upper()
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	title.add_theme_font_size_override("font_size", UiScale.font(18))
+	title.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	title.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	title.add_theme_font_size_override("font_size", UiScale.font(20))
 	title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	title.clip_text = true
+	title.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	header.add_child(title)
 
 	var chip := PanelContainer.new()

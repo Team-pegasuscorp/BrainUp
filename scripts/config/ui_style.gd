@@ -140,6 +140,11 @@ static func settings_chip() -> StyleBoxFlat:
 static func category_tile(accent: Color) -> StyleBoxFlat:
 	var style := card(accent, 22)
 	style.bg_color = Color(1, 1, 1, 1)
+	## Padding is owned by the tile’s inner MarginContainer.
+	style.content_margin_left = 0
+	style.content_margin_top = 0
+	style.content_margin_right = 0
+	style.content_margin_bottom = 0
 	return style
 
 

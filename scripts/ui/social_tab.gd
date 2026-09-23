@@ -93,11 +93,18 @@ func _apply() -> void:
 	_rebuild_content()
 
 
-func _rebuild_content() -> void:
+func _rebuild_content(reset_scroll: bool = false) -> void:
 	_close_friend_detail()
+	var scroll := content.get_parent() as ScrollContainer
+	var prev_scroll := scroll.scroll_vertical if scroll != null else 0
+	## Remove immediately so height (and scroll) don't spike while queue_free waits.
+	var stale: Array[Node] = []
 	for child in content.get_children():
 		if child != message_label:
-			child.queue_free()
+			stale.append(child)
+	for child in stale:
+		content.remove_child(child)
+		child.queue_free()
 	_countdown_label = null
 
 	if _live_state != "idle":
@@ -115,18 +122,56 @@ func _rebuild_content() -> void:
 		content.add_child(_challenge_card())
 
 	if not _status_text.is_empty():
-		var status := Label.new()
-		status.text = _status_text
-		status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		status.add_theme_font_size_override("font_size", UiScale.font(13))
-		status.add_theme_color_override("font_color", UiTokens.INK_MUTED)
-		content.add_child(status)
+		content.add_child(_make_status_label(_status_text))
 
 	message_label.text = tr("UI_SOCIAL_CHALLENGE_HINT")
 	content.move_child(message_label, content.get_child_count() - 1)
+	if scroll != null:
+		if reset_scroll:
+			scroll.scroll_vertical = 0
+		else:
+			call_deferred("_restore_scroll_y", prev_scroll)
+
+
+func _restore_scroll_y(y: int) -> void:
 	var scroll := content.get_parent() as ScrollContainer
 	if scroll != null:
-		scroll.scroll_vertical = 0
+		scroll.scroll_vertical = y
+
+
+func _make_status_label(text: String) -> Label:
+	var status := Label.new()
+	status.set_meta("status_label", true)
+	status.text = text
+	status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	status.add_theme_font_size_override("font_size", UiScale.font(13))
+	status.add_theme_color_override("font_color", UiTokens.INK_MUTED)
+	return status
+
+
+func _show_status(text: String) -> void:
+	## Update status without rebuilding the page (keeps scroll position).
+	_status_text = text
+	var existing: Label = null
+	for child in content.get_children():
+		if child is Label and bool(child.get_meta("status_label", false)):
+			existing = child as Label
+			break
+	if text.is_empty():
+		if existing != null:
+			content.remove_child(existing)
+			existing.queue_free()
+		return
+	if existing != null:
+		existing.text = text
+		return
+	## Insert above the hint message when present.
+	var status := _make_status_label(text)
+	content.add_child(status)
+	if message_label.get_parent() == content:
+		content.move_child(status, message_label.get_index())
+	else:
+		content.move_child(status, content.get_child_count() - 1)
 
 
 func _friends_section() -> PanelContainer:
@@ -459,7 +504,10 @@ func _friend_request_row(request: Dictionary) -> Control:
 	var name_label := Label.new()
 	name_label.text = request_name
 	name_label.clip_text = true
-	name_label.add_theme_font_size_override("font_size", UiScale.font(UiTokens.PSEUDO_FONT_SIZE))
+	name_label.add_theme_font_size_override(
+		"font_size",
+		UiScale.font(UiTokens.pseudo_font_size(request_name))
+	)
 	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	identity.add_child(name_label)
 
@@ -529,7 +577,7 @@ func _remove_friend_request(player_name: String) -> void:
 
 func _on_friend_request_accepted(player_name: String) -> void:
 	_remove_friend_request(player_name)
-	_status_text = tr("UI_SOCIAL_FRIEND_REQUEST_ACCEPTED").format({"name": player_name})
+	_show_status(tr("UI_SOCIAL_FRIEND_REQUEST_ACCEPTED").format({"name": player_name}))
 	if _friend_requests_page != null and _friend_requests_page.visible:
 		_populate_friend_requests_page()
 	_rebuild_content()
@@ -537,7 +585,7 @@ func _on_friend_request_accepted(player_name: String) -> void:
 
 func _on_friend_request_declined(player_name: String) -> void:
 	_remove_friend_request(player_name)
-	_status_text = tr("UI_SOCIAL_FRIEND_REQUEST_DECLINED").format({"name": player_name})
+	_show_status(tr("UI_SOCIAL_FRIEND_REQUEST_DECLINED").format({"name": player_name}))
 	if _friend_requests_page != null and _friend_requests_page.visible:
 		_populate_friend_requests_page()
 	_rebuild_content()
@@ -550,11 +598,11 @@ func _on_search_player_pressed(search: LineEdit) -> void:
 func _on_add_friend_pressed(search: LineEdit) -> void:
 	var player_name := search.text.strip_edges() if search != null else ""
 	if player_name.is_empty():
-		_status_text = tr("UI_SOCIAL_ADD_FRIEND_EMPTY")
+		_show_status(tr("UI_SOCIAL_ADD_FRIEND_EMPTY"))
 	else:
-		_status_text = tr("UI_SOCIAL_ADD_FRIEND_SENT").format({"name": player_name})
-		search.text = ""
-	_rebuild_content()
+		_show_status(tr("UI_SOCIAL_ADD_FRIEND_SENT").format({"name": player_name}))
+		if search != null:
+			search.text = ""
 
 
 func _open_friend_requests_page() -> void:
@@ -742,7 +790,10 @@ func _friend_chip(friend: Dictionary) -> Control:
 	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	name_label.clip_text = true
 	name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	name_label.add_theme_font_size_override("font_size", UiScale.font(UiTokens.PSEUDO_FONT_SIZE))
+	name_label.add_theme_font_size_override(
+		"font_size",
+		UiScale.font(UiTokens.pseudo_font_size(name_label.text))
+	)
 	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	col.add_child(name_label)
 
@@ -1066,7 +1117,10 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 
 	var name_label := Label.new()
 	name_label.text = str(friend.get("name", ""))
-	name_label.add_theme_font_size_override("font_size", UiScale.font(30))
+	name_label.add_theme_font_size_override(
+		"font_size",
+		UiScale.font(UiTokens.pseudo_font_size(name_label.text, UiTokens.PSEUDO_FONT_SIZE_DETAIL))
+	)
 	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	identity.add_child(name_label)
 
@@ -1457,8 +1511,7 @@ func _on_challenge_friend_pressed() -> void:
 		return
 	var friend_name := str(_selected_friend.get("name", ""))
 	_close_friend_detail()
-	_status_text = tr("UI_SOCIAL_FRIEND_CHALLENGE_SENT").format({"name": friend_name})
-	_rebuild_content()
+	_show_status(tr("UI_SOCIAL_FRIEND_CHALLENGE_SENT").format({"name": friend_name}))
 
 
 func _get_friends() -> Array:
@@ -1649,7 +1702,50 @@ func _challenge_category_chip(category: Dictionary) -> Control:
 	hit.pressed.connect(_on_category_pressed.bind(category_id))
 	PressScaleUtil.wire(hit, self)
 	wrap.add_child(hit)
+	wrap.set_meta("category_chip", true)
+	wrap.set_meta("category_id", category_id)
+	wrap.set_meta("accent", accent)
+	wrap.set_meta("disc", disc)
+	wrap.set_meta("icon_display", icon_display)
+	wrap.set_meta("name_label", name_label)
 	return wrap
+
+
+func _apply_category_chip_selection() -> void:
+	_apply_category_chip_selection_in(content)
+
+
+func _apply_category_chip_selection_in(node: Node) -> void:
+	if node is Control and bool(node.get_meta("category_chip", false)):
+		_paint_category_chip(node as Control)
+	for child in node.get_children():
+		_apply_category_chip_selection_in(child)
+
+
+func _paint_category_chip(wrap: Control) -> void:
+	var category_id := str(wrap.get_meta("category_id", ""))
+	var accent: Color = wrap.get_meta("accent")
+	var selected := category_id == _selected_category_id
+	var disc: Panel = wrap.get_meta("disc")
+	var icon_display: Control = wrap.get_meta("icon_display")
+	var name_label: Label = wrap.get_meta("name_label")
+	if disc == null or icon_display == null or name_label == null:
+		return
+	const ICON := 72.0
+	var disc_style := StyleBoxFlat.new()
+	disc_style.bg_color = Color(accent.r, accent.g, accent.b, 0.55 if selected else 0.28)
+	disc_style.set_corner_radius_all(int(ICON * 0.5))
+	disc_style.set_border_width_all(3 if selected else 2)
+	disc_style.border_color = accent if selected else Color(accent.r, accent.g, accent.b, 0.55)
+	if selected:
+		disc_style.shadow_color = Color(accent.r, accent.g, accent.b, 0.35)
+		disc_style.shadow_size = 8
+	disc.add_theme_stylebox_override("panel", disc_style)
+	icon_display.modulate.a = 1.0 if selected else 0.72
+	name_label.add_theme_color_override(
+		"font_color",
+		UiTokens.PROFILE_TEXT if selected else UiTokens.PROFILE_TEXT_MUTED
+	)
 
 
 func _live_search_section() -> PanelContainer:
@@ -1883,47 +1979,46 @@ func _my_score_submitted() -> bool:
 
 
 func _on_category_pressed(category_id: String) -> void:
+	if _selected_category_id == category_id:
+		return
 	_selected_category_id = category_id
-	_rebuild_content()
+	## Update chips in place — full rebuild was resetting scroll to top.
+	_apply_category_chip_selection()
 
 
 func _on_create_pressed() -> void:
 	if _selected_category_id.is_empty():
 		return
-	_status_text = tr("UI_SOCIAL_CREATING")
-	_rebuild_content()
+	_show_status(tr("UI_SOCIAL_CREATING"))
 	NetworkManager.create_challenge(_selected_category_id)
 
 
 func _on_challenge_created(challenge: Dictionary) -> void:
 	_current_challenge = challenge
 	_status_text = ""
-	_rebuild_content()
+	_rebuild_content(true)
 
 
 func _on_challenge_create_failed() -> void:
-	_status_text = tr("UI_SOCIAL_ERROR_OFFLINE")
-	_rebuild_content()
+	_show_status(tr("UI_SOCIAL_ERROR_OFFLINE"))
 
 
 func _on_join_pressed(code_input: LineEdit) -> void:
 	var code := code_input.text.strip_edges().to_upper()
 	if code.is_empty():
 		return
-	_status_text = tr("UI_SOCIAL_JOINING")
-	_rebuild_content()
+	_show_status(tr("UI_SOCIAL_JOINING"))
 	NetworkManager.join_challenge(code)
 
 
 func _on_challenge_joined(challenge: Dictionary) -> void:
 	_current_challenge = challenge
 	_status_text = ""
-	_rebuild_content()
+	_rebuild_content(true)
 
 
 func _on_challenge_join_failed(_error_code: int) -> void:
-	_status_text = tr("UI_SOCIAL_ERROR_JOIN")
-	_rebuild_content()
+	_show_status(tr("UI_SOCIAL_ERROR_JOIN"))
 
 
 func _on_refresh_pressed() -> void:

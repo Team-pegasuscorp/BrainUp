@@ -160,7 +160,7 @@ const DASH_CATEGORY_HEIGHT: float = 455.0
 const DASH_HISTORY_HEIGHT: float = 326.0
 ## Recent achievements — room for 3×2 grid at history-name text scale.
 const DASH_BADGES_HEIGHT: float = 410.0
-const DASH_SEASON_HEIGHT: float = 235.0
+const DASH_SEASON_HEIGHT: float = 180.0
 const DASH_HERO_HEIGHT: float = 225.0
 ## Category level XP: correct answers only. Level 1 needs BASE; each next level × GROWTH.
 ## Ex: 10 → 25 → 63 → …
@@ -169,8 +169,23 @@ const CATEGORY_LEVEL_GROWTH: float = 2.5
 const CATEGORY_LEVEL_MAX: int = 99
 const DEFAULT_PLAYER_NAME: String = "Player"
 const MAX_PLAYER_NAME_LENGTH: int = 24
-## Player / opponent display names (pseudos) — keep 18 until the user changes it.
+## Base pseudo size for list/history rows; long names step down (see pseudo_font_size).
 const PSEUDO_FONT_SIZE: int = 20
+const PSEUDO_FONT_SIZE_MIN: int = 13
+## Larger identity surfaces (home summary / profile hero).
+const PSEUDO_FONT_SIZE_HOME: int = 28
+const PSEUDO_FONT_SIZE_HERO: int = 34
+const PSEUDO_FONT_SIZE_DETAIL: int = 30
+
+
+## Fit a player/opponent/friend pseudo: full `base` up to 8 chars, then shrink.
+static func pseudo_font_size(pseudo: String, base: int = PSEUDO_FONT_SIZE) -> int:
+	var n := pseudo.strip_edges().length()
+	if n <= 0:
+		return base
+	var over := maxi(0, n - 8)
+	var size := base - int(ceil(float(over) / 2.0))
+	return clampi(size, PSEUDO_FONT_SIZE_MIN, base)
 
 const ANSWER_TILE_MIN: float = 140.0
 const ANSWER_TILE_MAX: float = 200.0

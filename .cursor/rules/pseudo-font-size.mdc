@@ -1,23 +1,32 @@
 ---
-description: Player/opponent pseudos are always 20px unless the user changes it.
+description: Player/opponent pseudos use adaptive size from UiTokens.pseudo_font_size.
 globs: scripts/ui/**/*.gd,scripts/config/ui_tokens.gd
 alwaysApply: true
 ---
 
-# Pseudo font size is locked at 20px
+# Pseudo font size adapts to name length
 
-Player names, opponent names, and friend display names (**pseudos**) use **`UiTokens.PSEUDO_FONT_SIZE` (20)** everywhere in the app.
+Player names, opponent names, and friend display names (**pseudos**) use **`UiTokens.pseudo_font_size(name, base)`** everywhere.
+
+## Bases
+
+| Surface | Constant | Default |
+|---------|----------|---------|
+| Lists / history / leaderboard | `PSEUDO_FONT_SIZE` | 20 |
+| Home identity | `PSEUDO_FONT_SIZE_HOME` | 28 |
+| Profile hero | `PSEUDO_FONT_SIZE_HERO` | 34 |
+| Friend detail | `PSEUDO_FONT_SIZE_DETAIL` | 30 |
+
+Floor: `PSEUDO_FONT_SIZE_MIN` (13). Full base size through **8** characters, then −1 px per **2** extra characters.
 
 ## Do
 
-- Use `UiTokens.PSEUDO_FONT_SIZE` for any label that shows a player/opponent/friend pseudo
-- Keep history, friends, leaderboard rows, and similar list tiles on 20
+```gdscript
+UiScale.font(UiTokens.pseudo_font_size(name))
+UiScale.font(UiTokens.pseudo_font_size(name, UiTokens.PSEUDO_FONT_SIZE_HOME))
+```
 
 ## Don’t
 
-- Hardcode another size for a pseudo without an explicit user ask
-- Shrink or grow pseudos to “fix” layout — prefer clipping / internal reflow (see `text-overlap-sizing.mdc`)
-
-## Exception
-
-- Profile **hero** display name may stay larger until the user asks to change it
+- Hardcode a fixed pseudo size
+- Call `UiScale.font(UiTokens.PSEUDO_FONT_SIZE)` alone — always go through `pseudo_font_size`
