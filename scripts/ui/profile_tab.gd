@@ -653,6 +653,17 @@ func _build_categories_tile() -> PanelContainer:
 	return panel
 
 
+func _category_name_label(text: String) -> Label:
+	## Shared size for mastered-categories rows and best-subject tile.
+	var label := Label.new()
+	label.text = text
+	label.clip_text = true
+	label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	label.add_theme_font_size_override("font_size", UiScale.font(18))
+	label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	return label
+
+
 func _mastery_category_icon(category_id: String, icon_text: String, accent: Color) -> Control:
 	## Transparent subject over one UI-owned circular background.
 	var slot := Control.new()
@@ -701,12 +712,8 @@ func _category_mastery_row(row: Dictionary) -> Control:
 	mid.add_theme_constant_override("separation", 5)
 	hbox.add_child(mid)
 
-	var title := Label.new()
-	title.text = str(row.get("name", ""))
+	var title := _category_name_label(str(row.get("name", "")))
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	title.clip_text = true
-	title.add_theme_font_size_override("font_size", UiScale.font(18))
-	title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	mid.add_child(title)
 
 	var bar := ProgressBar.new()
@@ -790,14 +797,10 @@ func _build_best_subject_tile() -> PanelContainer:
 
 	row.add_child(_mastery_category_icon(str(best.get("id", "")), str(best.get("icon", "🧠")), accent))
 
-	var name_label := Label.new()
-	name_label.text = str(best.get("name", ""))
+	var name_label := _category_name_label(str(best.get("name", "")))
 	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	name_label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	name_label.clip_text = true
 	name_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	name_label.add_theme_font_size_override("font_size", UiScale.font(18))
-	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	row.add_child(name_label)
 
 	var pct_col := VBoxContainer.new()

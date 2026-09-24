@@ -139,7 +139,8 @@ static func settings_chip() -> StyleBoxFlat:
 
 static func category_tile(accent: Color) -> StyleBoxFlat:
 	var style := card(accent, 22)
-	style.bg_color = Color(1, 1, 1, 1)
+	## Soft off-white (not pure #FFF) so tiles sit quieter on the Quiz wash.
+	style.bg_color = Color(0.90, 0.92, 0.96, 1)
 	## Padding is owned by the tile’s inner MarginContainer.
 	style.content_margin_left = 0
 	style.content_margin_top = 0
@@ -149,12 +150,13 @@ static func category_tile(accent: Color) -> StyleBoxFlat:
 
 
 static func category_tile_selected(accent: Color) -> StyleBoxFlat:
-	## Stays opaque white: a translucent tint reads as dark on the navy Quiz page.
+	## Opaque soft white: a translucent tint reads as dark on the navy Quiz page.
 	var style := category_tile(accent)
+	style.bg_color = Color(0.94, 0.96, 0.99, 1)
 	style.set_border_width_all(3)
 	style.border_color = accent
-	style.shadow_color = Color(accent.r, accent.g, accent.b, 0.45)
-	style.shadow_size = 20
+	style.shadow_color = Color(accent.r, accent.g, accent.b, 0.22)
+	style.shadow_size = 10
 	return style
 
 

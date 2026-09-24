@@ -18,6 +18,14 @@ const ACCENT_HOME := Color(0.071, 0.769, 0.722, 1)             # teal
 const ACCENT_LEADERBOARD := Color(0.941, 0.706, 0.161, 1)      # gold
 const ACCENT_QUIZ := Color(0.36, 0.75, 1.0, 1)                 # light blue #5CBFFF
 const ACCENT_QUIZ_DEEP := Color(0.18, 0.56, 0.88, 1)           # #2E8FE0
+const ACCENT_MODE_CLASSIC := ACCENT_QUIZ                       # blue
+const ACCENT_MODE_SURVIVAL := Color(1.0, 0.38, 0.42, 1)        # coral — lives
+const ACCENT_MODE_TIME_ATTACK := Color(0.98, 0.72, 0.18, 1)    # amber — race
+const MODE_ACCENTS: Array[Color] = [
+	ACCENT_MODE_CLASSIC,
+	ACCENT_MODE_SURVIVAL,
+	ACCENT_MODE_TIME_ATTACK,
+]
 const ACCENT_SOCIAL := Color(0.91, 0.365, 0.604, 1)            # magenta
 const ACCENT_PROFILE := Color(0.42, 0.361, 1.0, 1)             # violet
 const ACCENT_XP := Color(0.071, 0.769, 0.722, 1)               # cyan progress
@@ -103,9 +111,9 @@ const QUIZ_FAB_PRESS_DURATION: float = 0.08
 const QUIZ_FAB_GLOW_DURATION: float = 1.8
 const QUIZ_FAB_BG := Color(0.004, 0.0, 0.063, 1)             # #010010 solid
 const QUIZ_FAB_BG_INACTIVE := Color(0.02, 0.008, 0.08, 1)     # solid, no wash-through
-const QUIZ_FAB_GLOW_COLOR := Color(1.0, 0.302, 1.0, 0.14)      # #FF4DFF soft glow
-const QUIZ_FAB_GLOW_ALPHA_MIN: float = 0.10
-const QUIZ_FAB_GLOW_ALPHA_MAX: float = 0.22
+const QUIZ_FAB_GLOW_COLOR := Color(1.0, 0.302, 1.0, 0.08)      # #FF4DFF soft glow
+const QUIZ_FAB_GLOW_ALPHA_MIN: float = 0.05
+const QUIZ_FAB_GLOW_ALPHA_MAX: float = 0.12
 const TAB_SWIPE_THRESHOLD: float = 80.0
 const TAB_SWIPE_DRAG_LOCK: float = 14.0
 const TAB_SWIPE_DURATION: float = 0.24

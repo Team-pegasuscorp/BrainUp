@@ -64,6 +64,10 @@ func _apply_page_backgrounds() -> void:
 		var page := pages.get_child(page_index) as Control
 		if page == null:
 			continue
+		## Remove experimental particle overlays if present.
+		var old_particles := page.get_node_or_null("TabPageParticles")
+		if old_particles != null:
+			old_particles.queue_free()
 		if page.has_meta("tab_page_bg"):
 			continue
 		var bg := ColorRect.new()

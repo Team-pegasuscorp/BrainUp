@@ -62,9 +62,9 @@ corner_radius_top_left = 22
 corner_radius_top_right = 22
 corner_radius_bottom_right = 22
 corner_radius_bottom_left = 22
-shadow_color = Color(0.36, 0.75, 1, 0.32)
-shadow_size = 14
-shadow_offset = Vector2(0, 5)
+shadow_color = Color(0.36, 0.75, 1, 0.22)
+shadow_size = 10
+shadow_offset = Vector2(0, 4)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_primary_hover"]
 content_margin_left = 22.0
@@ -76,9 +76,9 @@ corner_radius_top_left = 22
 corner_radius_top_right = 22
 corner_radius_bottom_right = 22
 corner_radius_bottom_left = 22
-shadow_color = Color(0.36, 0.75, 1, 0.4)
-shadow_size = 16
-shadow_offset = Vector2(0, 5)
+shadow_color = Color(0.36, 0.75, 1, 0.28)
+shadow_size = 12
+shadow_offset = Vector2(0, 4)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_primary_pressed"]
 content_margin_left = 22.0

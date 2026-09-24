@@ -38,8 +38,8 @@ const MODES := [
 	[1, "UI_MODE_SURVIVAL", "UI_MODE_SURVIVAL_HINT"],
 	[2, "UI_MODE_TIME_ATTACK", "UI_MODE_TIME_ATTACK_HINT"],
 ]
-## Room inside ScrollContainer so selected-tile neon (shadow_size 20) isn't clipped.
-const TILE_GLOW_PAD := 20
+## Room inside ScrollContainer so selected-tile neon isn't clipped.
+const TILE_GLOW_PAD := 12
 
 
 func _ready() -> void:
@@ -105,7 +105,7 @@ func _build_mode_picker() -> void:
 	_mode_hint = Label.new()
 	_mode_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_mode_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_mode_hint.add_theme_font_size_override("font_size", UiScale.font(14))
+	_mode_hint.add_theme_font_size_override("font_size", UiScale.font(16))
 	_mode_hint.add_theme_color_override("font_color", Color(1, 1, 1, 0.75))
 	column.add_child(_mode_hint)
 	column.move_child(_mode_hint, start_button.get_index())
@@ -117,19 +117,27 @@ func _on_mode_selected(mode: int) -> void:
 
 
 func _refresh_mode_picker() -> void:
-	var accent := UiTokens.ACCENT_QUIZ
 	for entry in MODES:
-		var chip: Button = _mode_buttons[int(entry[0])]
-		var selected := int(entry[0]) == GameManager.selected_mode
+		var mode_id := int(entry[0])
+		var chip: Button = _mode_buttons[mode_id]
+		var selected := mode_id == GameManager.selected_mode
+		var accent: Color = UiTokens.MODE_ACCENTS[mode_id]
 		chip.text = tr(str(entry[1]))
 		for state in ["normal", "hover", "pressed", "focus"]:
-			chip.add_theme_stylebox_override(state, UiStyle.profile_chip(accent, selected))
-		chip.add_theme_color_override("font_color", Color(1, 1, 1, 1.0 if selected else 0.7))
+			var style := UiStyle.profile_chip(accent, selected)
+			if not selected:
+				## Keep each mode’s colour readable even when idle.
+				style.bg_color = Color(accent.r, accent.g, accent.b, 0.10)
+				style.set_border_width_all(1)
+				style.border_color = Color(accent.r, accent.g, accent.b, 0.40)
+			chip.add_theme_stylebox_override(state, style)
+		chip.add_theme_color_override("font_color", Color(1, 1, 1, 1.0 if selected else 0.75))
 		chip.add_theme_color_override("font_hover_color", Color(1, 1, 1, 1))
 		chip.add_theme_color_override("font_pressed_color", Color(1, 1, 1, 1))
-		chip.add_theme_color_override("font_focus_color", Color(1, 1, 1, 1.0 if selected else 0.7))
+		chip.add_theme_color_override("font_focus_color", Color(1, 1, 1, 1.0 if selected else 0.75))
 		if selected:
 			_mode_hint.text = tr(str(entry[2])) + _record_text()
+			_mode_hint.add_theme_color_override("font_color", Color(accent.r, accent.g, accent.b, 0.90))
 
 
 ## " · Record: 1 234 pts (12 ✓)" for survival / time attack in the selected category.
@@ -166,7 +174,7 @@ func _apply_translations() -> void:
 	title_label.visible = false
 	title_label.text = tr("UI_CHOOSE_CATEGORY")
 	back_button.text = tr("UI_BACK")
-	start_button.text = tr("UI_PLAY")
+	start_button.text = tr("UI_PLAY").to_upper()
 	if _mode_hint != null:
 		_refresh_mode_picker()
 
@@ -202,7 +210,9 @@ func _load_categories() -> void:
 ## Shared daily challenge card, pinned above the category list.
 func _setup_daily_card() -> void:
 	_daily_card = PanelContainer.new()
-	_daily_card.add_theme_stylebox_override("panel", UiStyle.card(UiTokens.ACCENT_LEADERBOARD))
+	var daily_style := UiStyle.card(UiTokens.ACCENT_LEADERBOARD)
+	daily_style.bg_color = Color(0.90, 0.92, 0.96, 1)
+	_daily_card.add_theme_stylebox_override("panel", daily_style)
 	_scroll_content.add_child(_daily_card)
 	_scroll_content.move_child(_daily_card, 0)
 	NetworkManager.daily_challenge_received.connect(_on_daily_received)
@@ -343,7 +353,7 @@ func _render_daily() -> void:
 		return
 
 	var play := Button.new()
-	play.text = tr("UI_PLAY")
+	play.text = tr("UI_PLAY").to_upper()
 	play.custom_minimum_size = Vector2(110, 48)
 	play.add_theme_font_size_override("font_size", UiScale.font(20))
 	for slot in ["font_color", "font_hover_color", "font_pressed_color", "font_disabled_color"]:
