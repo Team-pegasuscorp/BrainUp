@@ -123,6 +123,7 @@ func _rebuild_content(reset_scroll: bool = false) -> void:
 
 	if not _status_text.is_empty():
 		content.add_child(_make_status_label(_status_text))
+	ScrollTouch.let_drags_through(content)
 
 	## Hint label kept in the scene tree for rebuild stability, but unused.
 	message_label.text = ""
@@ -748,6 +749,7 @@ func _populate_friend_requests_page() -> void:
 		if typeof(request) != TYPE_DICTIONARY:
 			continue
 		_friend_requests_list.add_child(_friend_request_row(request))
+	ScrollTouch.let_drags_through(_friend_requests_list)
 
 
 func _friend_chip(friend: Dictionary) -> Control:
@@ -1055,6 +1057,7 @@ func _populate_friends_page() -> void:
 		if typeof(friend) != TYPE_DICTIONARY:
 			continue
 		_friends_page_grid.add_child(_friend_chip(friend))
+	ScrollTouch.let_drags_through(_friends_page_grid)
 	call_deferred("_fit_friends_page_grid")
 
 

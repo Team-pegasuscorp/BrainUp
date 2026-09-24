@@ -73,6 +73,7 @@ func _rebuild() -> void:
 		content.add_child(hint)
 	else:
 		NetworkManager.fetch_leaderboard(_selected_filter)
+	ScrollTouch.let_drags_through(content)
 
 
 func _global_snapshot() -> Dictionary:
