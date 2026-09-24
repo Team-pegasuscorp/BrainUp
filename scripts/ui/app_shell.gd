@@ -70,7 +70,8 @@ func _apply_page_backgrounds() -> void:
 		bg.name = "TabPageBackground"
 		bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		bg.color = UiTokens.page_bg_for_tab(tab_id)
+		bg.color = Color.WHITE
+		bg.material = UiTokens.page_bg_material_for_tab(tab_id)
 		page.add_child(bg)
 		page.move_child(bg, 0)
 		page.set_meta("tab_page_bg", true)
@@ -84,8 +85,8 @@ func _sync_shell_background(page_index: int) -> void:
 		shell_background.material = _brand_bg_material
 		shell_background.color = UiTokens.BG_CREAM
 	else:
-		shell_background.material = null
-		shell_background.color = UiTokens.page_bg_for_tab(tab_id)
+		shell_background.color = Color.WHITE
+		shell_background.material = UiTokens.page_bg_material_for_tab(tab_id)
 
 
 func _wire_navigation() -> void:

@@ -744,15 +744,16 @@ func _make_challenge_icon(icon_text: String, accent: Color) -> Control:
 
 
 func _make_last_match_card(snapshot: Dictionary) -> PanelContainer:
-	## Same row layout as profile history tile (accent · avatar · result · time).
+	## Profile “last games” tile, hosted on home (accent · avatar · result · time).
 	var panel := PanelContainer.new()
 	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	panel.custom_minimum_size.y = UiTokens.DASH_HISTORY_HEIGHT
 	panel.add_theme_stylebox_override("panel", UiStyle.home_surface(true, 0))
 
 	var margin := _pad(14, 12)
 	panel.add_child(margin)
 	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 12)
+	vbox.add_theme_constant_override("separation", 8)
 	margin.add_child(vbox)
 
 	var header := HBoxContainer.new()
@@ -761,7 +762,7 @@ func _make_last_match_card(snapshot: Dictionary) -> PanelContainer:
 	vbox.add_child(header)
 
 	var title := Label.new()
-	title.text = tr("UI_HOME_LAST_MATCH").to_upper()
+	title.text = tr("UI_PROFILE_HISTORY_TITLE").to_upper()
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	title.add_theme_font_size_override("font_size", UiScale.font(20))
 	title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
@@ -773,17 +774,36 @@ func _make_last_match_card(snapshot: Dictionary) -> PanelContainer:
 	vbox.add_child(list)
 
 	var history: Array = snapshot.get("history", [])
-	if history.is_empty() or typeof(history[0]) != TYPE_DICTIONARY:
+	if history.is_empty():
 		var empty := Label.new()
-		empty.text = tr("UI_HOME_NO_LAST_MATCH")
+		empty.text = tr("UI_PROFILE_NO_HISTORY")
 		empty.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		empty.add_theme_font_size_override("font_size", UiScale.font(14))
 		empty.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 		list.add_child(empty)
 	else:
-		list.add_child(_history_row(history[0]))
+		var count := 0
+		for row in history:
+			if count >= 4:
+				break
+			if typeof(row) != TYPE_DICTIONARY:
+				continue
+			if count > 0:
+				list.add_child(_history_divider())
+			list.add_child(_history_row(row))
+			count += 1
 
 	return panel
+
+
+func _history_divider() -> Control:
+	## 2px — 1px rules vanish under swipe/scroll subpixel sampling.
+	var line := ColorRect.new()
+	line.custom_minimum_size = Vector2(0, 2)
+	line.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	line.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	line.color = Color(1, 1, 1, 0.14)
+	return line
 
 
 func _history_row(row: Dictionary) -> Control:

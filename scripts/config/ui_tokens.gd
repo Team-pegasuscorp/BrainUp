@@ -152,10 +152,10 @@ const DASH_GUTTER: int = 8
 const DASH_TILE_RADIUS: int = 14
 const DASH_TILE_PAD: int = 10
 const DASH_STAT_HEIGHT: float = 106.0
-const DASH_BEST_SUBJECT_HEIGHT: float = 123.0
-const DASH_WIN_SPLIT_HEIGHT: float = 175.0
-## Tall enough for 6 category rows (icon 54 + gaps + header/padding).
-const DASH_CATEGORY_HEIGHT: float = 455.0
+const DASH_BEST_SUBJECT_HEIGHT: float = 150.0
+const DASH_WIN_SPLIT_HEIGHT: float = 340.0
+## Tall enough for 5 category rows (icon 54 + gaps + header/padding).
+const DASH_CATEGORY_HEIGHT: float = 360.0
 ## Recent matches — snug fit for 4 rows (icon 54 + gaps + header/padding).
 const DASH_HISTORY_HEIGHT: float = 326.0
 ## Recent achievements — room for 3×2 grid at history-name text scale.
@@ -204,8 +204,17 @@ static func accent_for_tab(tab_id: int) -> Color:
 ## Softened tab tint for page canvas (Quiz keeps the brand navy wash).
 static func page_bg_for_tab(tab_id: int) -> Color:
 	var accent := accent_for_tab(tab_id)
-	# Pull toward a light mist so accents stay recognizable but less loud.
-	return accent.lerp(Color(0.94, 0.95, 0.97, 1), 0.72)
+	## Mid-tone of the vertical fondu (top accent mist → brand navy).
+	return BG_CREAM.lerp(accent, 0.18)
+
+
+## ShaderMaterial: soft vertical fondu for tab page / shell backgrounds.
+static func page_bg_material_for_tab(tab_id: int) -> ShaderMaterial:
+	var mat := ShaderMaterial.new()
+	mat.shader = load("res://shaders/tab_page_bg.gdshader") as Shader
+	mat.set_shader_parameter("accent", accent_for_tab(tab_id))
+	mat.set_shader_parameter("deep", BG_CREAM)
+	return mat
 
 
 static func accent_for_category(category_id: String) -> Color:

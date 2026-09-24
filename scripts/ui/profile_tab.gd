@@ -172,8 +172,9 @@ func _rebuild_sections() -> void:
 	UiScale.identity = false
 	UiScale.compact = true
 	sections.add_child(_build_stats_strip())
-	sections.add_child(_build_mastery_mosaic())
-	sections.add_child(_build_history_tile())
+	sections.add_child(_build_categories_tile())
+	sections.add_child(_build_best_subject_tile())
+	sections.add_child(_build_win_distribution_tile())
 	sections.add_child(_build_badges_tile())
 	sections.add_child(_build_season_tile())
 	UiScale.compact = false
@@ -615,50 +616,13 @@ func _stat_icon_cell(value: String, label: String, _color: Color) -> Control:
 	return pad
 
 
-func _build_mastery_mosaic() -> Control:
-	## Mock grid: categories (tall left) | best subject + win split (stacked right).
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", UiTokens.DASH_GUTTER)
-	row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-
-	var cats := _build_categories_tile()
-	cats.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	cats.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	cats.size_flags_stretch_ratio = 1.2
-	row.add_child(cats)
-
-	var right := VBoxContainer.new()
-	right.add_theme_constant_override("separation", UiTokens.DASH_GUTTER)
-	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	right.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	right.size_flags_stretch_ratio = 0.85
-	row.add_child(right)
-
-	var best := _build_best_subject_tile()
-	best.custom_minimum_size.y = UiTokens.DASH_BEST_SUBJECT_HEIGHT
-	best.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	best.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
-	right.add_child(best)
-
-	var dist := _build_win_distribution_tile()
-	dist.custom_minimum_size.y = UiTokens.DASH_WIN_SPLIT_HEIGHT
-	dist.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	dist.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	right.add_child(dist)
-
-	_animated_nodes.append(row)
-	return row
-
-
 func _build_categories_tile() -> PanelContainer:
-	## Header + rows [icon | name/bar | NIVEAU+n | badge] — max 6 visible.
+	## Full-width tile: header + rows [icon | name/bar | NIVEAU+n | badge].
 	var panel := _tile()
 	panel.custom_minimum_size.y = UiTokens.DASH_CATEGORY_HEIGHT
-	panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	var root := _tile_body(panel, tr("UI_PROFILE_CATEGORIES_MASTERED"), true, _open_categories_page)
-	## Extra air between title and category rows.
 	root.add_theme_constant_override("separation", 13)
-	root.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_set_section_title_size(root, 20)
 	var list := VBoxContainer.new()
 	list.add_theme_constant_override("separation", 14)
 	list.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -673,7 +637,7 @@ func _build_categories_tile() -> PanelContainer:
 		return float(a.get("accuracy_percent", 0.0)) > float(b.get("accuracy_percent", 0.0))
 	)
 	var shown := 0
-	const MAX_VISIBLE := 6
+	const MAX_VISIBLE := 5
 	for row in categories:
 		if shown >= MAX_VISIBLE:
 			break
@@ -685,7 +649,7 @@ func _build_categories_tile() -> PanelContainer:
 		shown += 1
 	if shown == 0:
 		list.add_child(_empty(tr("UI_PROFILE_NO_CATEGORIES")))
-	## Avoid double-counting when embedded in the mosaic.
+	_animated_nodes.append(panel)
 	return panel
 
 
@@ -805,18 +769,21 @@ func _category_mastery_row(row: Dictionary) -> Control:
 
 
 func _build_best_subject_tile() -> PanelContainer:
-	## Mock: [icon] name | big % + caption — no level (same icon as categories).
+	## Full-width: [icon] name | big % + caption — same card rhythm as history.
 	var panel := _tile()
+	panel.custom_minimum_size.y = UiTokens.DASH_BEST_SUBJECT_HEIGHT
 	var root := _tile_body(panel, tr("UI_PROFILE_BEST_SUBJECT"))
+	_set_section_title_size(root, 20)
 	root.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	var best: Dictionary = _profile_data.get("best_category", {})
 	if best.is_empty():
 		root.add_child(_empty(tr("UI_PROFILE_NO_CATEGORIES")))
+		_animated_nodes.append(panel)
 		return panel
 
 	var accent := UiTokens.accent_for_category(str(best.get("id", "")))
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 10)
+	row.add_theme_constant_override("separation", 14)
 	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
 	root.add_child(row)
@@ -851,279 +818,153 @@ func _build_best_subject_tile() -> PanelContainer:
 	## Reuse existing i18n template, strip the percent placeholder for the small caption.
 	acc_caption.text = tr("UI_PROFILE_BEST_SUBJECT_ACC").format({"percent": "§"}).replace("§%", "").replace("§", "").strip_edges()
 	acc_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	acc_caption.add_theme_font_size_override("font_size", UiScale.font(10))
+	acc_caption.add_theme_font_size_override("font_size", UiScale.font(12))
 	acc_caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	pct_col.add_child(acc_caption)
 
-	return panel
-
-
-func _build_win_distribution_tile() -> PanelContainer:
-	## Donut pinned under the title; legend below.
-	var panel := _tile()
-	panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	var root := _tile_body(panel, tr("UI_PROFILE_WIN_SPLIT"))
-	root.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	root.add_theme_constant_override("separation", 6)
-
-	var body := VBoxContainer.new()
-	body.add_theme_constant_override("separation", 6)
-	body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	body.alignment = BoxContainer.ALIGNMENT_BEGIN
-	root.add_child(body)
-
-	var donut_wrap := CenterContainer.new()
-	donut_wrap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	donut_wrap.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
-	body.add_child(donut_wrap)
-
-	var donut := ProfileDonutScript.new()
-	donut.custom_minimum_size = Vector2(168, 168)
-	donut.line_width = 34.0
-	donut_wrap.add_child(donut)
-
-	var dist: Array = _profile_data.get("win_distribution", [])
-	var segments: Array = []
-	for row in dist:
-		segments.append({"ratio": row.get("ratio", 0.0), "color": row.get("color", Color.WHITE)})
-	var wins_sub := tr("UI_PROFILE_WINS_COUNT").format({"count": "§"}).replace("§", "").strip_edges()
-	donut.set_segments(segments, str(_profile_data.get("wins", 0)), wins_sub)
-
-	var legend_scroll := ScrollContainer.new()
-	legend_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	legend_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
-	## Fixed legend viewport — extra categories scroll; donut keeps center space.
-	legend_scroll.custom_minimum_size.y = 78
-	legend_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	legend_scroll.size_flags_vertical = Control.SIZE_SHRINK_END
-	body.add_child(legend_scroll)
-
-	var legend := VBoxContainer.new()
-	legend.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	legend.add_theme_constant_override("separation", 5)
-	legend_scroll.add_child(legend)
-	if dist.is_empty():
-		legend.add_child(_empty(tr("UI_PROFILE_NO_CATEGORIES")))
-	else:
-		for row in dist:
-			var line := HBoxContainer.new()
-			line.add_theme_constant_override("separation", 6)
-			line.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-			legend.add_child(line)
-			var dot := Label.new()
-			dot.text = "●"
-			dot.add_theme_font_size_override("font_size", UiScale.font(11))
-			dot.add_theme_color_override("font_color", row.get("color", UiTokens.PROFILE_TEXT))
-			line.add_child(dot)
-			var text := Label.new()
-			text.text = str(row.get("name", ""))
-			text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-			text.clip_text = true
-			text.add_theme_font_size_override("font_size", UiScale.font(12))
-			text.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-			line.add_child(text)
-			var wins_label := Label.new()
-			wins_label.text = _format_int(int(row.get("wins", 0)))
-			wins_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-			wins_label.add_theme_font_size_override("font_size", UiScale.font(12))
-			wins_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
-			var wins_wrap := MarginContainer.new()
-			wins_wrap.add_theme_constant_override("margin_right", 8)
-			wins_wrap.add_child(wins_label)
-			line.add_child(wins_wrap)
-
-	return panel
-
-
-func _build_history_tile() -> PanelContainer:
-	## Mock: 4 compact match rows with accent bar + dividers.
-	var panel := _tile()
-	panel.custom_minimum_size.y = UiTokens.DASH_HISTORY_HEIGHT
-	var root := _tile_body(panel, tr("UI_PROFILE_HISTORY_TITLE"))
-	root.add_theme_constant_override("separation", 8)
-	## Larger title for this tile.
-	var header := root.get_child(0) as HBoxContainer
-	if header != null and header.get_child_count() > 0:
-		var title := header.get_child(0) as Label
-		if title != null:
-			title.add_theme_font_size_override("font_size", UiScale.font(20))
-	var list := VBoxContainer.new()
-	list.add_theme_constant_override("separation", 0)
-	list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	root.add_child(list)
-
-	var history: Array = _profile_data.get("history", [])
-	if history.is_empty():
-		var empty := _empty(tr("UI_PROFILE_NO_HISTORY"))
-		empty.add_theme_font_size_override("font_size", UiScale.font(14))
-		list.add_child(empty)
-	else:
-		var count := 0
-		for row in history:
-			if count >= 4:
-				break
-			if count > 0:
-				list.add_child(_history_divider())
-			list.add_child(_history_row(row))
-			count += 1
 	_animated_nodes.append(panel)
 	return panel
 
 
-func _history_divider() -> Control:
-	## 2px — 1px rules vanish under swipe/scroll subpixel sampling.
-	var line := ColorRect.new()
-	line.custom_minimum_size = Vector2(0, 2)
-	line.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	line.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	line.color = Color(1, 1, 1, 0.14)
-	return line
+func _build_win_distribution_tile() -> PanelContainer:
+	## Centered donut — tap a slice for a category popup (no legend list).
+	var panel := _tile()
+	panel.custom_minimum_size.y = UiTokens.DASH_WIN_SPLIT_HEIGHT
+	var root := _tile_body(panel, tr("UI_PROFILE_WIN_SPLIT"))
+	_set_section_title_size(root, 20)
+	root.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	root.add_theme_constant_override("separation", 10)
+
+	var dist: Array = _profile_data.get("win_distribution", [])
+	if dist.is_empty():
+		root.add_child(_empty(tr("UI_PROFILE_NO_CATEGORIES")))
+		_animated_nodes.append(panel)
+		return panel
+
+	var body := VBoxContainer.new()
+	body.add_theme_constant_override("separation", 10)
+	body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	body.alignment = BoxContainer.ALIGNMENT_CENTER
+	root.add_child(body)
+
+	var donut_wrap := CenterContainer.new()
+	donut_wrap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	body.add_child(donut_wrap)
+
+	var donut := ProfileDonutScript.new()
+	donut.custom_minimum_size = Vector2(220, 220)
+	donut.line_width = 40.0
+	donut_wrap.add_child(donut)
+
+	var segments: Array = []
+	for row in dist:
+		segments.append({
+			"ratio": row.get("ratio", 0.0),
+			"color": row.get("color", Color.WHITE),
+			"name": row.get("name", ""),
+			"wins": row.get("wins", 0),
+			"percent": row.get("percent", 0),
+			"id": row.get("id", ""),
+			"icon": row.get("icon", "🧠"),
+		})
+	var wins_sub := tr("UI_PROFILE_WINS_COUNT").format({"count": "§"}).replace("§", "").strip_edges()
+	donut.set_segments(segments, str(_profile_data.get("wins", 0)), wins_sub)
+
+	var tip := Label.new()
+	tip.text = tr("UI_PROFILE_WIN_SPLIT_HINT")
+	tip.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	tip.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	tip.add_theme_font_size_override("font_size", UiScale.font(12))
+	tip.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+	body.add_child(tip)
+
+	var popup := _make_win_split_popup()
+	popup.visible = false
+	popup.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	body.add_child(popup)
+	donut.segment_clicked.connect(_on_win_split_segment.bind(donut, popup, tip))
+
+	_animated_nodes.append(panel)
+	return panel
 
 
-func _history_row(row: Dictionary) -> Control:
-	var won: bool = row.get("won", false)
-	## Explicit win/loss colours (mock: green victory, red defeat).
-	var win_color := Color(0.20, 0.86, 0.48, 1)
-	var loss_color := Color(0.96, 0.26, 0.32, 1)
-	var result_color := win_color if won else loss_color
-	var cat_accent := UiTokens.accent_for_category(str(row.get("category_id", "")))
+func _make_win_split_popup() -> PanelContainer:
+	var popup := PanelContainer.new()
+	popup.name = "WinSplitPopup"
+	popup.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.10, 0.08, 0.14, 0.96)
+	style.set_corner_radius_all(14)
+	style.set_border_width_all(2)
+	style.border_color = UiTokens.ACCENT_PROFILE
+	style.content_margin_left = 14
+	style.content_margin_right = 14
+	style.content_margin_top = 10
+	style.content_margin_bottom = 10
+	popup.add_theme_stylebox_override("panel", style)
 
-	var row_wrap := MarginContainer.new()
-	row_wrap.add_theme_constant_override("margin_top", 8)
-	row_wrap.add_theme_constant_override("margin_bottom", 8)
-	row_wrap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 10)
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	popup.add_child(row)
 
-	var hbox := HBoxContainer.new()
-	hbox.add_theme_constant_override("separation", 10)
-	hbox.alignment = BoxContainer.ALIGNMENT_CENTER
-	hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	row_wrap.add_child(hbox)
+	var swatch := ColorRect.new()
+	swatch.name = "Swatch"
+	swatch.custom_minimum_size = Vector2(16, 16)
+	swatch.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	row.add_child(swatch)
 
-	## Category accent bar (mock left rail).
-	var bar := Panel.new()
-	bar.custom_minimum_size = Vector2(3, 48)
-	bar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var bar_style := StyleBoxFlat.new()
-	bar_style.bg_color = cat_accent
-	bar_style.set_corner_radius_all(2)
-	bar.add_theme_stylebox_override("panel", bar_style)
-	hbox.add_child(bar)
+	var col := VBoxContainer.new()
+	col.add_theme_constant_override("separation", 2)
+	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(col)
 
-	## Circular avatar (demo portrait when available).
-	var avatar_slot := Control.new()
-	avatar_slot.custom_minimum_size = Vector2(48, 48)
-	avatar_slot.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	avatar_slot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	avatar_slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	hbox.add_child(avatar_slot)
+	var title := Label.new()
+	title.name = "Title"
+	title.clip_text = true
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.add_theme_font_size_override("font_size", UiScale.font(17))
+	title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	col.add_child(title)
 
-	var avatar_bg := Panel.new()
-	avatar_bg.custom_minimum_size = Vector2(48, 48)
-	avatar_bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	avatar_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var av_style := StyleBoxFlat.new()
-	av_style.bg_color = Color(cat_accent.r, cat_accent.g, cat_accent.b, 0.28)
-	av_style.set_corner_radius_all(24)
-	av_style.set_content_margin_all(0)
-	avatar_bg.add_theme_stylebox_override("panel", av_style)
-	avatar_slot.add_child(avatar_bg)
+	var meta := Label.new()
+	meta.name = "Meta"
+	meta.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	meta.add_theme_font_size_override("font_size", UiScale.font(14))
+	meta.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+	col.add_child(meta)
 
-	var initial := Label.new()
-	var opponent_name := str(row.get("opponent", "?"))
-	initial.text = opponent_name[0].to_upper() if not opponent_name.is_empty() else "?"
-	initial.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	initial.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	initial.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	initial.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	initial.add_theme_font_size_override("font_size", UiScale.font(20))
-	initial.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-	avatar_slot.add_child(initial)
-	## Size must be set before wire — otherwise GameAssets falls back to 56px / fails layout.
-	if GameAssets.wire_demo_avatar_to_control(avatar_bg, opponent_name):
-		av_style.bg_color = Color(0, 0, 0, 0)
-		initial.visible = false
+	return popup
 
-	## Name + category.
-	var left := VBoxContainer.new()
-	left.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	left.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	left.add_theme_constant_override("separation", 2)
-	hbox.add_child(left)
 
-	var name_label := Label.new()
-	name_label.text = opponent_name
-	name_label.clip_text = true
-	name_label.add_theme_font_size_override(
-		"font_size",
-		UiScale.font(UiTokens.pseudo_font_size(opponent_name))
-	)
-	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-	left.add_child(name_label)
-
-	var cat := Label.new()
-	cat.text = str(row.get("category_name", ""))
-	cat.clip_text = true
-	cat.add_theme_font_size_override("font_size", UiScale.font(15))
-	cat.add_theme_color_override("font_color", cat_accent)
-	left.add_child(cat)
-
-	## Result then score on one line (aligned across rows).
-	var mid := HBoxContainer.new()
-	mid.add_theme_constant_override("separation", 10)
-	mid.alignment = BoxContainer.ALIGNMENT_CENTER
-	mid.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	mid.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	mid.custom_minimum_size = Vector2(188, 0)
-	hbox.add_child(mid)
-
-	var result := Label.new()
-	result.text = (tr("UI_PROFILE_WIN") if won else tr("UI_PROFILE_LOSS")).to_upper()
-	result.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	result.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	result.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	result.add_theme_font_size_override("font_size", UiScale.font(19))
-	result.add_theme_color_override("font_color", result_color)
-	mid.add_child(result)
-
-	var mine := int(row.get("my_score", row.get("correct_count", 0)))
-	var theirs := int(row.get("opponent_score", maxi(int(row.get("total_count", 0)) - mine, 0)))
-	var score := Label.new()
-	score.text = tr("UI_PROFILE_MATCH_SCORE").format({"mine": mine, "theirs": theirs})
-	score.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	score.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	score.custom_minimum_size.x = 60
-	score.add_theme_font_size_override("font_size", UiScale.font(19))
-	## Win: green label + score; loss: red label + score.
-	score.add_theme_color_override("font_color", result_color)
-	mid.add_child(score)
-
-	## Relative time + chevron (fixed width keeps result column aligned across rows).
-	var right := HBoxContainer.new()
-	right.add_theme_constant_override("separation", 4)
-	right.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	right.size_flags_horizontal = Control.SIZE_SHRINK_END
-	right.custom_minimum_size.x = 118
-	right.alignment = BoxContainer.ALIGNMENT_END
-	hbox.add_child(right)
-
-	var age := Label.new()
-	age.text = _format_age_minutes(int(row.get("age_minutes", int(row.get("age_hours", 0)) * 60)))
-	age.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	age.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	age.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	age.add_theme_font_size_override("font_size", UiScale.font(14))
-	age.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
-	right.add_child(age)
-
-	var chevron := Label.new()
-	chevron.text = ">"
-	chevron.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	chevron.add_theme_font_size_override("font_size", UiScale.font(18))
-	chevron.add_theme_color_override("font_color", UiTokens.PROFILE_TITLE_CAPS)
-	right.add_child(chevron)
-	return row_wrap
+func _on_win_split_segment(index: int, donut: ProfileDonut, popup: PanelContainer, tip: Label) -> void:
+	if donut == null or popup == null:
+		return
+	if index < 0 or index >= donut.segments.size():
+		return
+	var row: Dictionary = donut.segments[index]
+	var style := popup.get_theme_stylebox("panel") as StyleBoxFlat
+	if style != null:
+		style.border_color = row.get("color", UiTokens.ACCENT_PROFILE)
+	var swatch := popup.find_child("Swatch", true, false) as ColorRect
+	if swatch != null:
+		swatch.color = row.get("color", Color.WHITE)
+	var title := popup.find_child("Title", true, false) as Label
+	if title != null:
+		title.text = str(row.get("name", ""))
+	var meta := popup.find_child("Meta", true, false) as Label
+	if meta != null:
+		meta.text = "%s · %d%%" % [
+			tr("UI_PROFILE_WINS_COUNT").format({"count": int(row.get("wins", 0))}),
+			int(row.get("percent", 0)),
+		]
+	if tip != null:
+		tip.visible = false
+	popup.visible = true
+	popup.modulate.a = 0.0
+	var tween := create_tween()
+	tween.tween_property(popup, "modulate:a", 1.0, 0.12)
 
 
 func _build_badges_tile() -> PanelContainer:
@@ -1132,6 +973,7 @@ func _build_badges_tile() -> PanelContainer:
 	panel.custom_minimum_size.y = UiTokens.DASH_BADGES_HEIGHT
 	var root := _tile_body(panel, tr("UI_PROFILE_BADGES_RECENT"), true, _open_achievements_page)
 	root.add_theme_constant_override("separation", 12)
+	_set_section_title_size(root, 20)
 	var grid := GridContainer.new()
 	grid.columns = 3
 	grid.add_theme_constant_override("h_separation", 10)
@@ -1449,6 +1291,18 @@ func _nudge_tile_height(root: VBoxContainer, extra_px: float) -> void:
 	root.add_child(slack)
 
 
+func _set_section_title_size(root: VBoxContainer, size: int) -> void:
+	## `_tile_body` titles default to 18; match history / season at 20.
+	if root.get_child_count() <= 0:
+		return
+	var header := root.get_child(0) as HBoxContainer
+	if header == null or header.get_child_count() <= 0:
+		return
+	var title := header.get_child(0) as Label
+	if title != null:
+		title.add_theme_font_size_override("font_size", UiScale.font(size))
+
+
 func _tile_body(
 	panel: PanelContainer,
 	title_text: String,
@@ -1673,7 +1527,8 @@ func _ensure_achievements_page() -> void:
 
 	var bg := ColorRect.new()
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	bg.color = UiTokens.page_bg_for_tab(ScenePaths.Tab.PROFILE)
+	bg.color = Color.WHITE
+	bg.material = UiTokens.page_bg_material_for_tab(ScenePaths.Tab.PROFILE)
 	bg.mouse_filter = Control.MOUSE_FILTER_STOP
 	_achievements_page.add_child(bg)
 
@@ -1762,7 +1617,8 @@ func _ensure_categories_page() -> void:
 
 	var bg := ColorRect.new()
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	bg.color = UiTokens.page_bg_for_tab(ScenePaths.Tab.PROFILE)
+	bg.color = Color.WHITE
+	bg.material = UiTokens.page_bg_material_for_tab(ScenePaths.Tab.PROFILE)
 	bg.mouse_filter = Control.MOUSE_FILTER_STOP
 	_categories_page.add_child(bg)
 

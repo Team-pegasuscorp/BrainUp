@@ -124,8 +124,9 @@ func _rebuild_content(reset_scroll: bool = false) -> void:
 	if not _status_text.is_empty():
 		content.add_child(_make_status_label(_status_text))
 
-	message_label.text = tr("UI_SOCIAL_CHALLENGE_HINT")
-	content.move_child(message_label, content.get_child_count() - 1)
+	## Hint label kept in the scene tree for rebuild stability, but unused.
+	message_label.text = ""
+	message_label.visible = false
 	if scroll != null:
 		if reset_scroll:
 			scroll.scroll_vertical = 0
@@ -411,21 +412,24 @@ func _player_search_section() -> PanelContainer:
 
 	var add_btn := Button.new()
 	add_btn.focus_mode = Control.FOCUS_NONE
-	add_btn.custom_minimum_size.y = 46
+	add_btn.custom_minimum_size.y = 52
 	add_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	## Same opaque CTA as Create / Join — readable hover on social tiles.
 	var add_style := StyleBoxFlat.new()
-	add_style.bg_color = Color(1, 1, 1, 0.08)
-	add_style.set_corner_radius_all(22)
-	add_style.content_margin_left = 14
-	add_style.content_margin_right = 14
-	add_style.content_margin_top = 10
-	add_style.content_margin_bottom = 10
+	add_style.bg_color = UiTokens.ACCENT_SOCIAL
+	add_style.set_corner_radius_all(16)
+	add_style.content_margin_left = 16
+	add_style.content_margin_right = 16
+	add_style.content_margin_top = 12
+	add_style.content_margin_bottom = 12
 	var add_hover := add_style.duplicate() as StyleBoxFlat
-	add_hover.bg_color = Color(1, 1, 1, 0.12)
+	add_hover.bg_color = UiTokens.ACCENT_SOCIAL.lightened(0.10)
+	var add_pressed := add_style.duplicate() as StyleBoxFlat
+	add_pressed.bg_color = UiTokens.ACCENT_SOCIAL.darkened(0.06)
 	add_btn.add_theme_stylebox_override("normal", add_style)
 	add_btn.add_theme_stylebox_override("hover", add_hover)
-	add_btn.add_theme_stylebox_override("pressed", add_style)
-	add_btn.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+	add_btn.add_theme_stylebox_override("pressed", add_pressed)
+	add_btn.add_theme_stylebox_override("focus", add_hover)
 	add_btn.pressed.connect(_on_add_friend_pressed.bind(search))
 	PressScaleUtil.wire(add_btn, self)
 	vbox.add_child(add_btn)
@@ -437,18 +441,19 @@ func _player_search_section() -> PanelContainer:
 	add_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_btn.add_child(add_row)
 
+	var ink := Color(0.12, 0.06, 0.1, 1)
 	var plus := Label.new()
 	plus.text = "＋"
 	plus.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	plus.add_theme_font_size_override("font_size", UiScale.font(18))
-	plus.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	plus.add_theme_color_override("font_color", ink)
 	add_row.add_child(plus)
 
 	var add_label := Label.new()
 	add_label.text = tr("UI_SOCIAL_ADD_FRIEND").to_upper()
 	add_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_label.add_theme_font_size_override("font_size", UiScale.font(15))
-	add_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	add_label.add_theme_font_size_override("font_size", UiScale.font(18))
+	add_label.add_theme_color_override("font_color", ink)
 	add_row.add_child(add_label)
 	return panel
 
@@ -472,11 +477,12 @@ func _friend_request_row(request: Dictionary) -> Control:
 
 	var accent: Color = request.get("accent", UiTokens.ACCENT_SOCIAL)
 	var request_name := str(request.get("name", ""))
+	const AVATAR := 64.0
 	var avatar := PanelContainer.new()
-	avatar.custom_minimum_size = Vector2(44, 44)
+	avatar.custom_minimum_size = Vector2(AVATAR, AVATAR)
 	var disc := StyleBoxFlat.new()
 	disc.bg_color = Color(accent.r, accent.g, accent.b, 0.5)
-	disc.set_corner_radius_all(22)
+	disc.set_corner_radius_all(int(AVATAR * 0.5))
 	disc.set_border_width_all(2)
 	disc.border_color = accent
 	avatar.add_theme_stylebox_override("panel", disc)
@@ -485,7 +491,7 @@ func _friend_request_row(request: Dictionary) -> Control:
 	initial.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	initial.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	initial.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	initial.add_theme_font_size_override("font_size", UiScale.font(18))
+	initial.add_theme_font_size_override("font_size", UiScale.font(24))
 	initial.add_theme_color_override("font_color", Color.WHITE)
 	avatar.add_child(initial)
 	## Size must be set before wire — otherwise GameAssets falls back to 56px.
@@ -539,14 +545,28 @@ func _friend_request_action_btn(label_text: String, color: Color, callback: Call
 	btn.text = label_text
 	btn.focus_mode = Control.FOCUS_NONE
 	btn.custom_minimum_size = Vector2(48, 48)
-	btn.add_theme_font_size_override("font_size", UiScale.font(24))
+	btn.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	btn.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	btn.clip_text = true
+	btn.add_theme_font_size_override("font_size", UiScale.font(22))
 	btn.add_theme_color_override("font_color", Color.WHITE)
+	btn.add_theme_color_override("font_hover_color", Color.WHITE)
+	btn.add_theme_color_override("font_pressed_color", Color.WHITE)
+	btn.add_theme_constant_override("outline_size", 0)
 	var style := StyleBoxFlat.new()
 	style.bg_color = color
-	style.set_corner_radius_all(24)
+	style.set_corner_radius_all(999)
+	style.content_margin_left = 0
+	style.content_margin_right = 0
+	style.content_margin_top = 0
+	style.content_margin_bottom = 0
+	var hover := style.duplicate() as StyleBoxFlat
+	hover.bg_color = color.lightened(0.08)
+	var pressed := style.duplicate() as StyleBoxFlat
+	pressed.bg_color = color.darkened(0.08)
 	btn.add_theme_stylebox_override("normal", style)
-	btn.add_theme_stylebox_override("hover", style)
-	btn.add_theme_stylebox_override("pressed", style)
+	btn.add_theme_stylebox_override("hover", hover)
+	btn.add_theme_stylebox_override("pressed", pressed)
 	btn.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
 	if callback.is_valid():
 		btn.pressed.connect(callback)
@@ -634,7 +654,8 @@ func _ensure_friend_requests_page() -> void:
 
 	var bg := ColorRect.new()
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	bg.color = UiTokens.page_bg_for_tab(ScenePaths.Tab.SOCIAL)
+	bg.color = Color.WHITE
+	bg.material = UiTokens.page_bg_material_for_tab(ScenePaths.Tab.SOCIAL)
 	bg.mouse_filter = Control.MOUSE_FILTER_STOP
 	_friend_requests_page.add_child(bg)
 
@@ -939,7 +960,8 @@ func _ensure_friends_page() -> void:
 
 	var bg := ColorRect.new()
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	bg.color = UiTokens.page_bg_for_tab(ScenePaths.Tab.SOCIAL)
+	bg.color = Color.WHITE
+	bg.material = UiTokens.page_bg_material_for_tab(ScenePaths.Tab.SOCIAL)
 	bg.mouse_filter = Control.MOUSE_FILTER_STOP
 	_friends_page.add_child(bg)
 
@@ -1612,8 +1634,31 @@ func _create_section() -> PanelContainer:
 		category_row.add_child(_challenge_category_chip(category))
 
 	var create_button := Button.new()
-	create_button.text = tr("UI_SOCIAL_CREATE_BUTTON")
+	create_button.text = tr("UI_SOCIAL_CREATE_BUTTON").to_upper()
 	create_button.focus_mode = Control.FOCUS_NONE
+	create_button.custom_minimum_size.y = 52
+	create_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	## Theme Button hover is translucent cyan + dark ink — unreadable on social tiles.
+	var create_style := StyleBoxFlat.new()
+	create_style.bg_color = UiTokens.ACCENT_SOCIAL
+	create_style.set_corner_radius_all(16)
+	create_style.content_margin_left = 16
+	create_style.content_margin_right = 16
+	create_style.content_margin_top = 12
+	create_style.content_margin_bottom = 12
+	var create_hover := create_style.duplicate() as StyleBoxFlat
+	create_hover.bg_color = UiTokens.ACCENT_SOCIAL.lightened(0.10)
+	var create_pressed := create_style.duplicate() as StyleBoxFlat
+	create_pressed.bg_color = UiTokens.ACCENT_SOCIAL.darkened(0.06)
+	create_button.add_theme_stylebox_override("normal", create_style)
+	create_button.add_theme_stylebox_override("hover", create_hover)
+	create_button.add_theme_stylebox_override("pressed", create_pressed)
+	create_button.add_theme_stylebox_override("focus", create_hover)
+	create_button.add_theme_color_override("font_color", Color(0.12, 0.06, 0.1, 1))
+	create_button.add_theme_color_override("font_hover_color", Color(0.12, 0.06, 0.1, 1))
+	create_button.add_theme_color_override("font_pressed_color", Color(0.12, 0.06, 0.1, 1))
+	create_button.add_theme_color_override("font_focus_color", Color(0.12, 0.06, 0.1, 1))
+	create_button.add_theme_font_size_override("font_size", UiScale.font(18))
 	create_button.pressed.connect(_on_create_pressed)
 	PressScaleUtil.wire(create_button, self)
 	vbox.add_child(create_button)
@@ -1895,8 +1940,32 @@ func _join_section() -> PanelContainer:
 	row.add_child(code_input)
 
 	var join_button := Button.new()
-	join_button.text = tr("UI_SOCIAL_JOIN_BUTTON")
+	join_button.text = tr("UI_SOCIAL_JOIN_BUTTON").to_upper()
+	join_button.focus_mode = Control.FOCUS_NONE
+	join_button.custom_minimum_size = Vector2(120, 52)
+	## Same opaque CTA as Create — theme hover is unreadable on social tiles.
+	var join_style := StyleBoxFlat.new()
+	join_style.bg_color = UiTokens.ACCENT_SOCIAL
+	join_style.set_corner_radius_all(16)
+	join_style.content_margin_left = 16
+	join_style.content_margin_right = 16
+	join_style.content_margin_top = 12
+	join_style.content_margin_bottom = 12
+	var join_hover := join_style.duplicate() as StyleBoxFlat
+	join_hover.bg_color = UiTokens.ACCENT_SOCIAL.lightened(0.10)
+	var join_pressed := join_style.duplicate() as StyleBoxFlat
+	join_pressed.bg_color = UiTokens.ACCENT_SOCIAL.darkened(0.06)
+	join_button.add_theme_stylebox_override("normal", join_style)
+	join_button.add_theme_stylebox_override("hover", join_hover)
+	join_button.add_theme_stylebox_override("pressed", join_pressed)
+	join_button.add_theme_stylebox_override("focus", join_hover)
+	join_button.add_theme_color_override("font_color", Color(0.12, 0.06, 0.1, 1))
+	join_button.add_theme_color_override("font_hover_color", Color(0.12, 0.06, 0.1, 1))
+	join_button.add_theme_color_override("font_pressed_color", Color(0.12, 0.06, 0.1, 1))
+	join_button.add_theme_color_override("font_focus_color", Color(0.12, 0.06, 0.1, 1))
+	join_button.add_theme_font_size_override("font_size", UiScale.font(18))
 	join_button.pressed.connect(_on_join_pressed.bind(code_input))
+	PressScaleUtil.wire(join_button, self)
 	row.add_child(join_button)
 
 	return panel

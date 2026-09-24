@@ -12,33 +12,42 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_profile_tab")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
-unique_name_in_owner = true
+[node name="PageMargin" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 10
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PageMargin"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 3
 
-[node name="ContentVBox" type="VBoxContainer" parent="ScrollContainer"]
+[node name="ContentVBox" type="VBoxContainer" parent="PageMargin/ScrollContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 0
 
-[node name="OuterMargin" type="MarginContainer" parent="ScrollContainer/ContentVBox"]
+[node name="OuterMargin" type="MarginContainer" parent="PageMargin/ScrollContainer/ContentVBox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
+theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_bottom = 0
 
-[node name="Sections" type="VBoxContainer" parent="ScrollContainer/ContentVBox/OuterMargin"]
+[node name="Sections" type="VBoxContainer" parent="PageMargin/ScrollContainer/ContentVBox/OuterMargin"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
