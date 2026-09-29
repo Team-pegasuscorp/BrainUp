@@ -109,15 +109,33 @@ func _scope_card_bg(raised: bool = false) -> Color:
 
 
 func _tint_page_for_scope() -> void:
-	## Soft wash shift so Général (gold) and Amis (copper) read apart.
+	## Soft wash shift so Général (gold) and Amis (copper) read apart —
+	## page canvas and the shell gap around the floating header.
+	var accent := _scope_accent()
 	var bg := get_node_or_null("TabPageBackground") as ColorRect
-	if bg == null:
+	if bg != null:
+		var mat := ShaderMaterial.new()
+		mat.shader = load("res://shaders/tab_page_bg.gdshader") as Shader
+		mat.set_shader_parameter("accent", accent)
+		mat.set_shader_parameter("deep", UiTokens.BG_CREAM)
+		bg.material = mat
+	_tint_shell_around_header(accent)
+
+
+func _tint_shell_around_header(accent: Color) -> void:
+	## Header shell margins show the app-shell Background through; keep it in sync.
+	var scene := get_tree().current_scene
+	if scene == null:
+		return
+	var shell_bg := scene.get_node_or_null("Background") as ColorRect
+	if shell_bg == null:
 		return
 	var mat := ShaderMaterial.new()
 	mat.shader = load("res://shaders/tab_page_bg.gdshader") as Shader
-	mat.set_shader_parameter("accent", _scope_accent())
+	mat.set_shader_parameter("accent", accent)
 	mat.set_shader_parameter("deep", UiTokens.BG_CREAM)
-	bg.material = mat
+	shell_bg.color = Color.WHITE
+	shell_bg.material = mat
 
 
 func _scope_toggle() -> Control:
@@ -396,7 +414,7 @@ func _podium_identity(
 		medal.add_theme_font_override("font", emoji_font)
 	vbox.add_child(medal)
 
-	var avatar_size := 80.0 if place == 1 else (68.0 if place == 2 else 60.0)
+	var avatar_size := 100.0 if place == 1 else (86.0 if place == 2 else 78.0)
 	vbox.add_child(_entry_avatar(entry, avatar_size, accent))
 
 	var name_label := Label.new()
@@ -497,7 +515,7 @@ func _make_rank_row(entry: Dictionary) -> PanelContainer:
 	style.set_corner_radius_all(16 if is_player else 14)
 	panel.add_theme_stylebox_override("panel", style)
 	if is_player:
-		panel.custom_minimum_size.y = 96
+		panel.custom_minimum_size.y = 112
 
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 12 if is_player else 10)
@@ -507,7 +525,7 @@ func _make_rank_row(entry: Dictionary) -> PanelContainer:
 	if is_player:
 		## Left accent rail — same language as match-history accent bars.
 		var bar := Panel.new()
-		bar.custom_minimum_size = Vector2(5, 64)
+		bar.custom_minimum_size = Vector2(5, 80)
 		bar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		var bar_style := StyleBoxFlat.new()
@@ -556,7 +574,7 @@ func _make_rank_row(entry: Dictionary) -> PanelContainer:
 		)
 		rank_slot.add_child(rank_label)
 
-	row.add_child(_entry_avatar(entry, 64.0 if is_player else 44.0, accent))
+	row.add_child(_entry_avatar(entry, 80.0 if is_player else 58.0, accent))
 
 	var info := VBoxContainer.new()
 	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
