@@ -2560,6 +2560,2246 @@
           "explanation": "Le premier ballet de Tchaïkovski (1877) a d'abord été mal reçu avant de devenir le plus joué au monde."
         }
       }
+    },
+    {
+      "id": "music_088",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which small four-string instrument is associated with Hawaii?",
+          "choices": [
+            "The ukulele",
+            "The mandolin",
+            "The banjo",
+            "The balalaika"
+          ],
+          "explanation": "The ukulele, derived from Portuguese instruments, became a symbol of Hawaii."
+        },
+        "fr": {
+          "text": "Quel instrument à cordes a quatre cordes et une petite taille, venu d'Hawaï ?",
+          "choices": [
+            "Le ukulélé",
+            "La mandoline",
+            "Le banjo",
+            "La balalaïka"
+          ],
+          "explanation": "Le ukulélé, dérivé d'instruments portugais, est devenu emblématique d'Hawaï."
+        }
+      }
+    },
+    {
+      "id": "music_089",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which percussion instrument has bars struck with mallets?",
+          "choices": [
+            "The drum",
+            "The cymbal",
+            "The triangle",
+            "The xylophone"
+          ],
+          "explanation": "Each wooden bar of the xylophone plays a different note."
+        },
+        "fr": {
+          "text": "Quel instrument de percussion est composé de lames que l'on frappe avec des baguettes ?",
+          "choices": [
+            "Le tambour",
+            "La cymbale",
+            "Le triangle",
+            "Le xylophone"
+          ],
+          "explanation": "Chaque lame du xylophone, en bois, produit une note différente."
+        }
+      }
+    },
+    {
+      "id": "music_090",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which American singer is nicknamed 'the King' of rock'n'roll?",
+          "choices": [
+            "Chuck Berry",
+            "Elvis Presley",
+            "Little Richard",
+            "Johnny Cash"
+          ],
+          "explanation": "Elvis Presley, star of 'Jailhouse Rock', is nicknamed 'The King'."
+        },
+        "fr": {
+          "text": "Quel chanteur américain est surnommé « le King » du rock'n'roll ?",
+          "choices": [
+            "Chuck Berry",
+            "Elvis Presley",
+            "Little Richard",
+            "Johnny Cash"
+          ],
+          "explanation": "Elvis Presley, star de « Jailhouse Rock », est surnommé « The King »."
+        }
+      }
+    },
+    {
+      "id": "music_091",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which British band was founded in Liverpool by John Lennon and Paul McCartney?",
+          "choices": [
+            "The Rolling Stones",
+            "Queen",
+            "The Beatles",
+            "Oasis"
+          ],
+          "explanation": "The Beatles, formed in Liverpool in 1960, are the best-selling band in history."
+        },
+        "fr": {
+          "text": "Quel groupe britannique a été fondé à Liverpool par John Lennon et Paul McCartney ?",
+          "choices": [
+            "Les Rolling Stones",
+            "Queen",
+            "Les Beatles",
+            "Oasis"
+          ],
+          "explanation": "Les Beatles, formés à Liverpool en 1960, sont le groupe le plus vendu de l'histoire."
+        }
+      }
+    },
+    {
+      "id": "music_092",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which American singer released 'Shake It Off' in 2014?",
+          "choices": [
+            "Katy Perry",
+            "Ariana Grande",
+            "Taylor Swift",
+            "Lady Gaga"
+          ],
+          "explanation": "'Shake It Off' comes from Taylor Swift's album '1989'."
+        },
+        "fr": {
+          "text": "Quelle chanteuse américaine a sorti « Shake It Off » en 2014 ?",
+          "choices": [
+            "Katy Perry",
+            "Ariana Grande",
+            "Taylor Swift",
+            "Lady Gaga"
+          ],
+          "explanation": "« Shake It Off » est extrait de l'album « 1989 » de Taylor Swift."
+        }
+      }
+    },
+    {
+      "id": "music_093",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which brass instrument has a slide?",
+          "choices": [
+            "The trumpet",
+            "The trombone",
+            "The tuba",
+            "The horn"
+          ],
+          "explanation": "The trombone changes pitch with its slide rather than with valves."
+        },
+        "fr": {
+          "text": "Quel instrument à vent est en cuivre et possède une coulisse ?",
+          "choices": [
+            "La trompette",
+            "Le trombone",
+            "Le tuba",
+            "Le cor"
+          ],
+          "explanation": "Le trombone change de note grâce à sa coulisse plutôt qu'avec des pistons."
+        }
+      }
+    },
+    {
+      "id": "music_094",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which British singer sang 'Shape of You'?",
+          "choices": [
+            "Ed Sheeran",
+            "Sam Smith",
+            "Harry Styles",
+            "Lewis Capaldi"
+          ],
+          "explanation": "Ed Sheeran's 'Shape of You' (2017) became one of Spotify's most-streamed songs."
+        },
+        "fr": {
+          "text": "Quel chanteur britannique a chanté « Shape of You » ?",
+          "choices": [
+            "Ed Sheeran",
+            "Sam Smith",
+            "Harry Styles",
+            "Lewis Capaldi"
+          ],
+          "explanation": "« Shape of You » (2017) d'Ed Sheeran a été l'un des titres les plus écoutés de Spotify."
+        }
+      }
+    },
+    {
+      "id": "music_095",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many notes are in the C major scale (not repeating C)?",
+          "choices": [
+            "5",
+            "8",
+            "12",
+            "7"
+          ],
+          "explanation": "C, D, E, F, G, A, B: the major scale has seven notes."
+        },
+        "fr": {
+          "text": "Combien de notes compte la gamme de do majeur (sans répéter le do) ?",
+          "choices": [
+            "5",
+            "8",
+            "12",
+            "7"
+          ],
+          "explanation": "Do, ré, mi, fa, sol, la, si : la gamme majeure compte sept notes."
+        }
+      }
+    },
+    {
+      "id": "music_096",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which instrument is played with a bow?",
+          "choices": [
+            "The guitar",
+            "The banjo",
+            "The ukulele",
+            "The cello"
+          ],
+          "explanation": "The cello, like the violin, is played by drawing a bow across the strings."
+        },
+        "fr": {
+          "text": "Quel instrument joue-t-on avec un archet ?",
+          "choices": [
+            "La guitare",
+            "Le banjo",
+            "Le ukulélé",
+            "Le violoncelle"
+          ],
+          "explanation": "Le violoncelle, comme le violon, se joue en frottant les cordes avec un archet."
+        }
+      }
+    },
+    {
+      "id": "music_097",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French singer sang 'Je te promets' and 'Allumer le feu'?",
+          "choices": [
+            "Johnny Hallyday",
+            "Michel Sardou",
+            "Florent Pagny",
+            "Eddy Mitchell"
+          ],
+          "explanation": "Both hits belong to Johnny Hallyday, who died in 2017."
+        },
+        "fr": {
+          "text": "Quel chanteur français a chanté « Je te promets » et « Allumer le feu » ?",
+          "choices": [
+            "Johnny Hallyday",
+            "Michel Sardou",
+            "Florent Pagny",
+            "Eddy Mitchell"
+          ],
+          "explanation": "Ces deux tubes font partie du répertoire de Johnny Hallyday, disparu en 2017."
+        }
+      }
+    },
+    {
+      "id": "music_098",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which country does reggae come from?",
+          "choices": [
+            "Cuba",
+            "Brazil",
+            "Jamaica",
+            "Trinidad and Tobago"
+          ],
+          "explanation": "Reggae was born in Jamaica in the late 1960s; Bob Marley took it worldwide."
+        },
+        "fr": {
+          "text": "De quel pays vient le reggae ?",
+          "choices": [
+            "Cuba",
+            "Le Brésil",
+            "La Jamaïque",
+            "Trinité-et-Tobago"
+          ],
+          "explanation": "Le reggae est né en Jamaïque à la fin des années 1960 ; Bob Marley l'a rendu mondial."
+        }
+      }
+    },
+    {
+      "id": "music_099",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Jamaican singer sang 'No Woman, No Cry'?",
+          "choices": [
+            "Peter Tosh",
+            "Bob Marley",
+            "Jimmy Cliff",
+            "Shaggy"
+          ],
+          "explanation": "Bob Marley and the Wailers made 'No Woman, No Cry' famous in its 1975 live version."
+        },
+        "fr": {
+          "text": "Quel chanteur jamaïcain a chanté « No Woman, No Cry » ?",
+          "choices": [
+            "Peter Tosh",
+            "Bob Marley",
+            "Jimmy Cliff",
+            "Shaggy"
+          ],
+          "explanation": "Bob Marley et les Wailers ont rendu célèbre « No Woman, No Cry » dans sa version live de 1975."
+        }
+      }
+    },
+    {
+      "id": "music_100",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which K-pop girl group sang 'How You Like That'?",
+          "choices": [
+            "Twice",
+            "Blackpink",
+            "Red Velvet",
+            "Aespa"
+          ],
+          "explanation": "Blackpink, formed by YG Entertainment in 2016, released 'How You Like That' in 2020."
+        },
+        "fr": {
+          "text": "Quel groupe de K-pop féminin a chanté « How You Like That » ?",
+          "choices": [
+            "Twice",
+            "Blackpink",
+            "Red Velvet",
+            "Aespa"
+          ],
+          "explanation": "Blackpink, formé par YG Entertainment en 2016, a sorti « How You Like That » en 2020."
+        }
+      }
+    },
+    {
+      "id": "music_101",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which instrument is linked to Scotland and has an air bag?",
+          "choices": [
+            "The accordion",
+            "The biniou",
+            "The bagpipes",
+            "The harmonica"
+          ],
+          "explanation": "The Scottish bagpipes have a bag the player fills with air to feed the pipes."
+        },
+        "fr": {
+          "text": "Quel instrument est associé aux Écossais et possède une poche d'air ?",
+          "choices": [
+            "L'accordéon",
+            "Le biniou",
+            "La cornemuse",
+            "L'harmonica"
+          ],
+          "explanation": "La cornemuse écossaise a un sac que le musicien gonfle pour alimenter ses tuyaux."
+        }
+      }
+    },
+    {
+      "id": "music_102",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which singer released 'Bad Guy' in 2019?",
+          "choices": [
+            "Dua Lipa",
+            "Olivia Rodrigo",
+            "Lorde",
+            "Billie Eilish"
+          ],
+          "explanation": "'Bad Guy', co-written with her brother Finneas, reached number one in the US."
+        },
+        "fr": {
+          "text": "Quelle chanteuse a sorti « Bad Guy » en 2019 ?",
+          "choices": [
+            "Dua Lipa",
+            "Olivia Rodrigo",
+            "Lorde",
+            "Billie Eilish"
+          ],
+          "explanation": "« Bad Guy », coécrit avec son frère Finneas, a été numéro un aux États-Unis."
+        }
+      }
+    },
+    {
+      "id": "music_103",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is a DJ's main tool for mixing vinyl records?",
+          "choices": [
+            "Turntables",
+            "A synthesizer",
+            "A drum machine",
+            "A theremin"
+          ],
+          "explanation": "The DJ blends and scratches records on two turntables connected to a mixer."
+        },
+        "fr": {
+          "text": "Quel est l'instrument principal d'un DJ pour mixer des vinyles ?",
+          "choices": [
+            "Les platines",
+            "Le synthétiseur",
+            "La boîte à rythmes",
+            "Le théremine"
+          ],
+          "explanation": "Le DJ enchaîne et scratche les disques sur deux platines reliées à une table de mixage."
+        }
+      }
+    },
+    {
+      "id": "music_104",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which British singer was the frontman of Queen?",
+          "choices": [
+            "Mick Jagger",
+            "Elton John",
+            "David Bowie",
+            "Freddie Mercury"
+          ],
+          "explanation": "Freddie Mercury, the voice of 'Bohemian Rhapsody', died in 1991."
+        },
+        "fr": {
+          "text": "Quel chanteur britannique était le leader du groupe Queen ?",
+          "choices": [
+            "Mick Jagger",
+            "Elton John",
+            "David Bowie",
+            "Freddie Mercury"
+          ],
+          "explanation": "Freddie Mercury, voix de « Bohemian Rhapsody », est mort en 1991."
+        }
+      }
+    },
+    {
+      "id": "music_105",
+      "category": "music",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the person who directs an orchestra called?",
+          "choices": [
+            "The soloist",
+            "The conductor",
+            "The concertmaster",
+            "The composer"
+          ],
+          "explanation": "The conductor sets the tempo and dynamics, often with a baton."
+        },
+        "fr": {
+          "text": "Comment s'appelle la personne qui dirige un orchestre ?",
+          "choices": [
+            "Le soliste",
+            "Le chef d'orchestre",
+            "Le premier violon",
+            "Le compositeur"
+          ],
+          "explanation": "Le chef d'orchestre donne le tempo et les nuances, souvent à l'aide d'une baguette."
+        }
+      }
+    },
+    {
+      "id": "music_106",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which German composer wrote 'Messiah', with its famous 'Hallelujah' chorus?",
+          "choices": [
+            "Johann Sebastian Bach",
+            "Georg Philipp Telemann",
+            "George Frideric Handel",
+            "Felix Mendelssohn"
+          ],
+          "explanation": "Handel wrote 'Messiah' in 1741, in London, in barely three weeks."
+        },
+        "fr": {
+          "text": "Quel compositeur allemand a écrit « Le Messie », avec son célèbre « Alléluia » ?",
+          "choices": [
+            "Jean-Sébastien Bach",
+            "Georg Philipp Telemann",
+            "Georg Friedrich Haendel",
+            "Felix Mendelssohn"
+          ],
+          "explanation": "Haendel a composé « Le Messie » en 1741, à Londres, en à peine trois semaines."
+        }
+      }
+    },
+    {
+      "id": "music_107",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Michael Jackson album is the best-selling of all time?",
+          "choices": [
+            "Thriller",
+            "Bad",
+            "Off the Wall",
+            "Dangerous"
+          ],
+          "explanation": "'Thriller' (1982) has sold around 70 million copies worldwide."
+        },
+        "fr": {
+          "text": "Quel album de Michael Jackson est le plus vendu de l'histoire ?",
+          "choices": [
+            "Thriller",
+            "Bad",
+            "Off the Wall",
+            "Dangerous"
+          ],
+          "explanation": "« Thriller » (1982) s'est vendu à environ 70 millions d'exemplaires dans le monde."
+        }
+      }
+    },
+    {
+      "id": "music_108",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which rock band released 'Smells Like Teen Spirit'?",
+          "choices": [
+            "Pearl Jam",
+            "Nirvana",
+            "Soundgarden",
+            "Foo Fighters"
+          ],
+          "explanation": "Nirvana's song, from 'Nevermind' (1991), launched the grunge wave."
+        },
+        "fr": {
+          "text": "Quel groupe de rock a sorti « Smells Like Teen Spirit » ?",
+          "choices": [
+            "Pearl Jam",
+            "Nirvana",
+            "Soundgarden",
+            "Foo Fighters"
+          ],
+          "explanation": "Le titre de Nirvana, extrait de « Nevermind » (1991), a lancé la vague grunge."
+        }
+      }
+    },
+    {
+      "id": "music_109",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French singer sang 'Désenchantée'?",
+          "choices": [
+            "Mylène Farmer",
+            "Patricia Kaas",
+            "Vanessa Paradis",
+            "Jeanne Mas"
+          ],
+          "explanation": "'Désenchantée' (1991) is one of Mylène Farmer's biggest hits."
+        },
+        "fr": {
+          "text": "Quelle chanteuse française a chanté « Désenchantée » ?",
+          "choices": [
+            "Mylène Farmer",
+            "Patricia Kaas",
+            "Vanessa Paradis",
+            "Jeanne Mas"
+          ],
+          "explanation": "« Désenchantée » (1991) est l'un des plus grands succès de Mylène Farmer."
+        }
+      }
+    },
+    {
+      "id": "music_110",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French rapper released the album 'Civilisation' in 2021?",
+          "choices": [
+            "Nekfeu",
+            "Booba",
+            "Damso",
+            "Orelsan"
+          ],
+          "explanation": "Orelsan's 'Civilisation' includes the song 'L'odeur de l'essence'."
+        },
+        "fr": {
+          "text": "Quel rappeur français a sorti l'album « Civilisation » en 2021 ?",
+          "choices": [
+            "Nekfeu",
+            "Booba",
+            "Damso",
+            "Orelsan"
+          ],
+          "explanation": "« Civilisation » d'Orelsan contient notamment « L'odeur de l'essence »."
+        }
+      }
+    },
+    {
+      "id": "music_111",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Irish band is fronted by the singer Bono?",
+          "choices": [
+            "The Cranberries",
+            "The Script",
+            "U2",
+            "Thin Lizzy"
+          ],
+          "explanation": "U2, formed in Dublin in 1976, released 'The Joshua Tree' in 1987."
+        },
+        "fr": {
+          "text": "Quel groupe irlandais est mené par le chanteur Bono ?",
+          "choices": [
+            "The Cranberries",
+            "The Script",
+            "U2",
+            "Thin Lizzy"
+          ],
+          "explanation": "U2, formé à Dublin en 1976, a sorti « The Joshua Tree » en 1987."
+        }
+      }
+    },
+    {
+      "id": "music_112",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which instrument did Jimi Hendrix mainly play?",
+          "choices": [
+            "Bass",
+            "Electric guitar",
+            "Saxophone",
+            "Hammond organ"
+          ],
+          "explanation": "Jimi Hendrix is often seen as the greatest guitarist in rock history."
+        },
+        "fr": {
+          "text": "Quel instrument jouait principalement Jimi Hendrix ?",
+          "choices": [
+            "La basse",
+            "La guitare électrique",
+            "Le saxophone",
+            "L'orgue Hammond"
+          ],
+          "explanation": "Jimi Hendrix est souvent considéré comme le plus grand guitariste de l'histoire du rock."
+        }
+      }
+    },
+    {
+      "id": "music_113",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is Lady Gaga's real first name?",
+          "choices": [
+            "Stefani",
+            "Alecia",
+            "Robyn",
+            "Katheryn"
+          ],
+          "explanation": "Lady Gaga is Stefani Germanotta; Alecia is P!nk, Robyn is Rihanna, Katheryn is Katy Perry."
+        },
+        "fr": {
+          "text": "Quel est le vrai prénom de Lady Gaga ?",
+          "choices": [
+            "Stefani",
+            "Alecia",
+            "Robyn",
+            "Katheryn"
+          ],
+          "explanation": "Lady Gaga s'appelle Stefani Germanotta ; Alecia est P!nk, Robyn est Rihanna, Katheryn est Katy Perry."
+        }
+      }
+    },
+    {
+      "id": "music_114",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which British band released 'Wonderwall' in 1995?",
+          "choices": [
+            "Blur",
+            "Pulp",
+            "Oasis",
+            "Radiohead"
+          ],
+          "explanation": "'Wonderwall' appears on Oasis's album '(What's the Story) Morning Glory?'."
+        },
+        "fr": {
+          "text": "Quel groupe britannique a sorti « Wonderwall » en 1995 ?",
+          "choices": [
+            "Blur",
+            "Pulp",
+            "Oasis",
+            "Radiohead"
+          ],
+          "explanation": "« Wonderwall » figure sur l'album « (What's the Story) Morning Glory? » d'Oasis."
+        }
+      }
+    },
+    {
+      "id": "music_115",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Barbadian singer sang 'Umbrella'?",
+          "choices": [
+            "Beyoncé",
+            "Nicki Minaj",
+            "Shakira",
+            "Rihanna"
+          ],
+          "explanation": "'Umbrella' (2007), featuring Jay-Z, launched Rihanna's global career."
+        },
+        "fr": {
+          "text": "Quelle chanteuse barbadienne a chanté « Umbrella » ?",
+          "choices": [
+            "Beyoncé",
+            "Nicki Minaj",
+            "Shakira",
+            "Rihanna"
+          ],
+          "explanation": "« Umbrella » (2007), avec Jay-Z, a lancé la carrière mondiale de Rihanna."
+        }
+      }
+    },
+    {
+      "id": "music_116",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which German composer wrote the 'Brandenburg Concertos'?",
+          "choices": [
+            "George Frideric Handel",
+            "Johannes Brahms",
+            "Richard Wagner",
+            "Johann Sebastian Bach"
+          ],
+          "explanation": "Bach dedicated these six concertos to the Margrave of Brandenburg in 1721."
+        },
+        "fr": {
+          "text": "Quel compositeur allemand a écrit les « Concertos brandebourgeois » ?",
+          "choices": [
+            "Georg Friedrich Haendel",
+            "Johannes Brahms",
+            "Richard Wagner",
+            "Jean-Sébastien Bach"
+          ],
+          "explanation": "Bach a dédié ces six concertos au margrave de Brandebourg en 1721."
+        }
+      }
+    },
+    {
+      "id": "music_117",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French singer sang 'La Bohème'?",
+          "choices": [
+            "Gilbert Bécaud",
+            "Serge Gainsbourg",
+            "Charles Aznavour",
+            "Yves Montand"
+          ],
+          "explanation": "'La Bohème' (1965) recalls a painter's youth in Montmartre."
+        },
+        "fr": {
+          "text": "Quel chanteur français a chanté « La Bohème » ?",
+          "choices": [
+            "Gilbert Bécaud",
+            "Serge Gainsbourg",
+            "Charles Aznavour",
+            "Yves Montand"
+          ],
+          "explanation": "« La Bohème » (1965) évoque la jeunesse d'un peintre à Montmartre."
+        }
+      }
+    },
+    {
+      "id": "music_118",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French electronic duo released 'Random Access Memories' in 2013?",
+          "choices": [
+            "Justice",
+            "Daft Punk",
+            "Air",
+            "Cassius"
+          ],
+          "explanation": "This Daft Punk album, featuring 'Get Lucky', won the Grammy for Album of the Year."
+        },
+        "fr": {
+          "text": "Quel duo de musique électronique français a sorti « Random Access Memories » en 2013 ?",
+          "choices": [
+            "Justice",
+            "Daft Punk",
+            "Air",
+            "Cassius"
+          ],
+          "explanation": "Cet album de Daft Punk, avec « Get Lucky », a gagné le Grammy de l'album de l'année."
+        }
+      }
+    },
+    {
+      "id": "music_119",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which music style is linked to New Orleans and Louis Armstrong?",
+          "choices": [
+            "Jazz",
+            "Country",
+            "Delta blues",
+            "Soul"
+          ],
+          "explanation": "Jazz was born in New Orleans in the early 20th century."
+        },
+        "fr": {
+          "text": "Quel style musical est associé à La Nouvelle-Orléans et à Louis Armstrong ?",
+          "choices": [
+            "Le jazz",
+            "La country",
+            "Le blues du Delta",
+            "La soul"
+          ],
+          "explanation": "Le jazz est né à La Nouvelle-Orléans au début du XXe siècle."
+        }
+      }
+    },
+    {
+      "id": "music_120",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which British rock band released 'Stairway to Heaven'?",
+          "choices": [
+            "Deep Purple",
+            "Led Zeppelin",
+            "Black Sabbath",
+            "The Who"
+          ],
+          "explanation": "'Stairway to Heaven' (1971) appears on Led Zeppelin's fourth album."
+        },
+        "fr": {
+          "text": "Quel groupe de rock britannique a sorti « Stairway to Heaven » ?",
+          "choices": [
+            "Deep Purple",
+            "Led Zeppelin",
+            "Black Sabbath",
+            "The Who"
+          ],
+          "explanation": "« Stairway to Heaven » (1971) figure sur le quatrième album de Led Zeppelin."
+        }
+      }
+    },
+    {
+      "id": "music_121",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which country shares with Sweden the record for Eurovision wins?",
+          "choices": [
+            "Ireland",
+            "United Kingdom",
+            "France",
+            "Israel"
+          ],
+          "explanation": "Ireland and Sweden share the record of seven Eurovision wins."
+        },
+        "fr": {
+          "text": "Quel pays partage avec la Suède le record de victoires à l'Eurovision ?",
+          "choices": [
+            "L'Irlande",
+            "Le Royaume-Uni",
+            "La France",
+            "Israël"
+          ],
+          "explanation": "L'Irlande et la Suède partagent le record de sept victoires à l'Eurovision."
+        }
+      }
+    },
+    {
+      "id": "music_122",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the highest female voice type called?",
+          "choices": [
+            "Alto",
+            "Mezzo-soprano",
+            "Soprano",
+            "Contralto"
+          ],
+          "explanation": "From low to high, female voices range from contralto to soprano, via alto and mezzo."
+        },
+        "fr": {
+          "text": "Comment appelle-t-on une voix féminine la plus aiguë ?",
+          "choices": [
+            "Alto",
+            "Mezzo-soprano",
+            "Soprano",
+            "Contralto"
+          ],
+          "explanation": "Du grave à l'aigu, les voix féminines vont du contralto au soprano, en passant par l'alto et le mezzo."
+        }
+      }
+    },
+    {
+      "id": "music_123",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which American rapper released the album 'To Pimp a Butterfly'?",
+          "choices": [
+            "J. Cole",
+            "Kanye West",
+            "Travis Scott",
+            "Kendrick Lamar"
+          ],
+          "explanation": "Kendrick Lamar's 'To Pimp a Butterfly' (2015) blends rap, jazz and funk."
+        },
+        "fr": {
+          "text": "Quel rappeur américain a sorti l'album « To Pimp a Butterfly » ?",
+          "choices": [
+            "J. Cole",
+            "Kanye West",
+            "Travis Scott",
+            "Kendrick Lamar"
+          ],
+          "explanation": "« To Pimp a Butterfly » (2015) de Kendrick Lamar mêle rap, jazz et funk."
+        }
+      }
+    },
+    {
+      "id": "music_124",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Russian composer wrote 'The Nutcracker'?",
+          "choices": [
+            "Rachmaninoff",
+            "Stravinsky",
+            "Prokofiev",
+            "Tchaikovsky"
+          ],
+          "explanation": "Tchaikovsky composed the ballet 'The Nutcracker' in 1892."
+        },
+        "fr": {
+          "text": "Quel compositeur russe a écrit « Casse-Noisette » ?",
+          "choices": [
+            "Rachmaninov",
+            "Stravinsky",
+            "Prokofiev",
+            "Tchaïkovski"
+          ],
+          "explanation": "Tchaïkovski a composé le ballet « Casse-Noisette » en 1892."
+        }
+      }
+    },
+    {
+      "id": "music_125",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which British singer is known for 'Rocket Man' and 'Your Song'?",
+          "choices": [
+            "Rod Stewart",
+            "Elton John",
+            "George Michael",
+            "Phil Collins"
+          ],
+          "explanation": "Elton John wrote most of his hits with lyricist Bernie Taupin."
+        },
+        "fr": {
+          "text": "Quel chanteur britannique est connu pour « Rocket Man » et « Your Song » ?",
+          "choices": [
+            "Rod Stewart",
+            "Elton John",
+            "George Michael",
+            "Phil Collins"
+          ],
+          "explanation": "Elton John a écrit la plupart de ses tubes avec le parolier Bernie Taupin."
+        }
+      }
+    },
+    {
+      "id": "music_126",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Australian rock band sings 'Highway to Hell'?",
+          "choices": [
+            "AC/DC",
+            "INXS",
+            "Midnight Oil",
+            "Men at Work"
+          ],
+          "explanation": "'Highway to Hell' (1979) was AC/DC's last album with singer Bon Scott."
+        },
+        "fr": {
+          "text": "Quel groupe de rock australien chante « Highway to Hell » ?",
+          "choices": [
+            "AC/DC",
+            "INXS",
+            "Midnight Oil",
+            "Men at Work"
+          ],
+          "explanation": "« Highway to Hell » (1979) est le dernier album d'AC/DC avec le chanteur Bon Scott."
+        }
+      }
+    },
+    {
+      "id": "music_127",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which singer is nicknamed 'the Boss'?",
+          "choices": [
+            "Bob Dylan",
+            "Tom Petty",
+            "Bruce Springsteen",
+            "Neil Young"
+          ],
+          "explanation": "Bruce Springsteen, who wrote 'Born in the U.S.A.', is known as 'The Boss'."
+        },
+        "fr": {
+          "text": "Quel chanteur est surnommé « le Boss » ?",
+          "choices": [
+            "Bob Dylan",
+            "Tom Petty",
+            "Bruce Springsteen",
+            "Neil Young"
+          ],
+          "explanation": "Bruce Springsteen, auteur de « Born in the U.S.A. », est surnommé « The Boss »."
+        }
+      }
+    },
+    {
+      "id": "music_128",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which singer received the Nobel Prize in Literature in 2016?",
+          "choices": [
+            "Leonard Cohen",
+            "Paul Simon",
+            "Bob Dylan",
+            "Bruce Springsteen"
+          ],
+          "explanation": "Bob Dylan was honoured for creating 'new poetic expressions' in American song."
+        },
+        "fr": {
+          "text": "Quel chanteur a reçu le prix Nobel de littérature en 2016 ?",
+          "choices": [
+            "Leonard Cohen",
+            "Paul Simon",
+            "Bob Dylan",
+            "Bruce Springsteen"
+          ],
+          "explanation": "Bob Dylan a été récompensé pour avoir créé « de nouvelles expressions poétiques » dans la chanson américaine."
+        }
+      }
+    },
+    {
+      "id": "music_129",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Colombian singer sang 'Hips Don't Lie'?",
+          "choices": [
+            "Jennifer Lopez",
+            "Karol G",
+            "Gloria Estefan",
+            "Shakira"
+          ],
+          "explanation": "'Hips Don't Lie' (2006), with Wyclef Jean, is one of Shakira's biggest hits."
+        },
+        "fr": {
+          "text": "Quelle chanteuse colombienne a chanté « Hips Don't Lie » ?",
+          "choices": [
+            "Jennifer Lopez",
+            "Karol G",
+            "Gloria Estefan",
+            "Shakira"
+          ],
+          "explanation": "« Hips Don't Lie » (2006), avec Wyclef Jean, est l'un des plus grands succès de Shakira."
+        }
+      }
+    },
+    {
+      "id": "music_130",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French band sang 'L'Aventurier' in 1982?",
+          "choices": [
+            "Indochine",
+            "Téléphone",
+            "Noir Désir",
+            "Trust"
+          ],
+          "explanation": "'L'Aventurier', inspired by Bob Morane, launched Indochine's career."
+        },
+        "fr": {
+          "text": "Quel groupe français a chanté « L'Aventurier » en 1982 ?",
+          "choices": [
+            "Indochine",
+            "Téléphone",
+            "Noir Désir",
+            "Trust"
+          ],
+          "explanation": "« L'Aventurier », inspiré de Bob Morane, a lancé la carrière d'Indochine."
+        }
+      }
+    },
+    {
+      "id": "music_131",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many musicians are in a quartet?",
+          "choices": [
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "explanation": "A classical string quartet has two violins, a viola and a cello."
+        },
+        "fr": {
+          "text": "Combien de musiciens compte un quatuor ?",
+          "choices": [
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "explanation": "Un quatuor à cordes classique réunit deux violons, un alto et un violoncelle."
+        }
+      }
+    },
+    {
+      "id": "music_132",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which singer released 'Blinding Lights' in 2019?",
+          "choices": [
+            "Bruno Mars",
+            "Drake",
+            "Post Malone",
+            "The Weeknd"
+          ],
+          "explanation": "'Blinding Lights' spent a year in the US top 10, a record."
+        },
+        "fr": {
+          "text": "Quel chanteur a sorti « Blinding Lights » en 2019 ?",
+          "choices": [
+            "Bruno Mars",
+            "Drake",
+            "Post Malone",
+            "The Weeknd"
+          ],
+          "explanation": "« Blinding Lights » est resté un an dans le top 10 américain, un record."
+        }
+      }
+    },
+    {
+      "id": "music_133",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which band sang 'Hotel California'?",
+          "choices": [
+            "Fleetwood Mac",
+            "The Doors",
+            "Eagles",
+            "Lynyrd Skynyrd"
+          ],
+          "explanation": "The Eagles' 'Hotel California' (1976) is famous for its long closing guitar solo."
+        },
+        "fr": {
+          "text": "Quel groupe a chanté « Hotel California » ?",
+          "choices": [
+            "Fleetwood Mac",
+            "The Doors",
+            "Eagles",
+            "Lynyrd Skynyrd"
+          ],
+          "explanation": "« Hotel California » (1976) des Eagles est célèbre pour son long solo de guitare final."
+        }
+      }
+    },
+    {
+      "id": "music_134",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What symbol at the start of a staff shows the pitch of the notes?",
+          "choices": [
+            "The flat",
+            "The clef",
+            "The time signature",
+            "The rest"
+          ],
+          "explanation": "The treble, bass or C clef shows which note sits on each line."
+        },
+        "fr": {
+          "text": "Quel est le symbole placé au début d'une portée pour indiquer la hauteur des notes ?",
+          "choices": [
+            "Le bémol",
+            "La clé",
+            "La mesure",
+            "Le soupir"
+          ],
+          "explanation": "La clé de sol, de fa ou d'ut indique quelle note correspond à chaque ligne."
+        }
+      }
+    },
+    {
+      "id": "music_135",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Canadian singer sang 'My Heart Will Go On' for the film 'Titanic'?",
+          "choices": [
+            "Céline Dion",
+            "Shania Twain",
+            "Alanis Morissette",
+            "Avril Lavigne"
+          ],
+          "explanation": "'My Heart Will Go On' (1997) won the Oscar for Best Original Song."
+        },
+        "fr": {
+          "text": "Quelle chanteuse canadienne a chanté « My Heart Will Go On » pour le film « Titanic » ?",
+          "choices": [
+            "Céline Dion",
+            "Shania Twain",
+            "Alanis Morissette",
+            "Avril Lavigne"
+          ],
+          "explanation": "« My Heart Will Go On » (1997) a remporté l'Oscar de la meilleure chanson originale."
+        }
+      }
+    },
+    {
+      "id": "music_136",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which American singer released 'Uptown Funk' with Mark Ronson?",
+          "choices": [
+            "Pharrell Williams",
+            "Justin Timberlake",
+            "Bruno Mars",
+            "Usher"
+          ],
+          "explanation": "'Uptown Funk' (2014) spent 14 weeks at number one in the US."
+        },
+        "fr": {
+          "text": "Quel chanteur américain a sorti « Uptown Funk » avec Mark Ronson ?",
+          "choices": [
+            "Pharrell Williams",
+            "Justin Timberlake",
+            "Bruno Mars",
+            "Usher"
+          ],
+          "explanation": "« Uptown Funk » (2014) est resté 14 semaines numéro un aux États-Unis."
+        }
+      }
+    },
+    {
+      "id": "music_137",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which singer released 'Happy' in 2013 for the film 'Despicable Me 2'?",
+          "choices": [
+            "Bruno Mars",
+            "Robin Thicke",
+            "Will.i.am",
+            "Pharrell Williams"
+          ],
+          "explanation": "Pharrell Williams's 'Happy' was nominated for the Oscar for Best Original Song."
+        },
+        "fr": {
+          "text": "Quel chanteur a sorti « Happy » en 2013 pour le film « Moi, moche et méchant 2 » ?",
+          "choices": [
+            "Bruno Mars",
+            "Robin Thicke",
+            "Will.i.am",
+            "Pharrell Williams"
+          ],
+          "explanation": "« Happy » de Pharrell Williams a été nommé à l'Oscar de la meilleure chanson originale."
+        }
+      }
+    },
+    {
+      "id": "music_138",
+      "category": "music",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Belgian singer released 'Balance ton quoi' in 2019?",
+          "choices": [
+            "Clara Luciani",
+            "Angèle",
+            "Pomme",
+            "Louane"
+          ],
+          "explanation": "Angèle's 'Balance ton quoi' takes on sexism with humour."
+        },
+        "fr": {
+          "text": "Quelle chanteuse belge a sorti « Balance ton quoi » en 2019 ?",
+          "choices": [
+            "Clara Luciani",
+            "Angèle",
+            "Pomme",
+            "Louane"
+          ],
+          "explanation": "« Balance ton quoi » d'Angèle dénonce le sexisme avec humour."
+        }
+      }
+    },
+    {
+      "id": "music_139",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which orchestral instrument is the lowest of the bowed strings?",
+          "choices": [
+            "The double bass",
+            "The cello",
+            "The viola",
+            "The viola da gamba"
+          ],
+          "explanation": "From highest to lowest: violin, viola, cello and double bass."
+        },
+        "fr": {
+          "text": "Quel instrument d'orchestre est le plus grave de la famille des cordes frottées ?",
+          "choices": [
+            "La contrebasse",
+            "Le violoncelle",
+            "L'alto",
+            "La viole de gambe"
+          ],
+          "explanation": "Du plus aigu au plus grave : violon, alto, violoncelle et contrebasse."
+        }
+      }
+    },
+    {
+      "id": "music_140",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Austrian composer died in 1791 leaving his 'Requiem' unfinished?",
+          "choices": [
+            "Mozart",
+            "Haydn",
+            "Schubert",
+            "Salieri"
+          ],
+          "explanation": "Mozart died in December 1791; his pupil Süssmayr completed the 'Requiem'."
+        },
+        "fr": {
+          "text": "Quel compositeur autrichien est mort en laissant son « Requiem » inachevé en 1791 ?",
+          "choices": [
+            "Mozart",
+            "Haydn",
+            "Schubert",
+            "Salieri"
+          ],
+          "explanation": "Mozart est mort en décembre 1791 ; son élève Süssmayr a achevé le « Requiem »."
+        }
+      }
+    },
+    {
+      "id": "music_141",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which German composer wrote the opera cycle 'The Ring of the Nibelung'?",
+          "choices": [
+            "Richard Strauss",
+            "Carl Maria von Weber",
+            "Richard Wagner",
+            "Robert Schumann"
+          ],
+          "explanation": "Wagner's Ring cycle has four operas, including 'The Valkyrie'."
+        },
+        "fr": {
+          "text": "Quel compositeur allemand a écrit le cycle d'opéras « L'Anneau du Nibelung » ?",
+          "choices": [
+            "Richard Strauss",
+            "Carl Maria von Weber",
+            "Richard Wagner",
+            "Robert Schumann"
+          ],
+          "explanation": "La Tétralogie de Wagner réunit quatre opéras, dont « La Walkyrie »."
+        }
+      }
+    },
+    {
+      "id": "music_142",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French singer wrote 'Le Poinçonneur des Lilas'?",
+          "choices": [
+            "Georges Brassens",
+            "Boris Vian",
+            "Léo Ferré",
+            "Serge Gainsbourg"
+          ],
+          "explanation": "'Le Poinçonneur des Lilas' (1958) was Serge Gainsbourg's first hit."
+        },
+        "fr": {
+          "text": "Quel chanteur français a écrit « Le Poinçonneur des Lilas » ?",
+          "choices": [
+            "Georges Brassens",
+            "Boris Vian",
+            "Léo Ferré",
+            "Serge Gainsbourg"
+          ],
+          "explanation": "« Le Poinçonneur des Lilas » (1958) a été le premier succès de Serge Gainsbourg."
+        }
+      }
+    },
+    {
+      "id": "music_143",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How long is John Cage's silent piece '4′33″'?",
+          "choices": [
+            "3 minutes 44 seconds",
+            "4 minutes 33 seconds",
+            "33 seconds",
+            "4 hours 33"
+          ],
+          "explanation": "In '4′33″' (1952) the performer plays no notes: the music is the ambient sound."
+        },
+        "fr": {
+          "text": "Combien de temps dure le morceau « 4′33″ » de John Cage, entièrement silencieux ?",
+          "choices": [
+            "3 minutes 44 secondes",
+            "4 minutes 33 secondes",
+            "33 secondes",
+            "4 heures 33"
+          ],
+          "explanation": "Dans « 4′33″ » (1952), l'interprète ne joue aucune note : la musique est le bruit ambiant."
+        }
+      }
+    },
+    {
+      "id": "music_144",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Baroque keyboard instrument plucks its strings instead of striking them?",
+          "choices": [
+            "The fortepiano",
+            "The clavichord",
+            "The organ",
+            "The harpsichord"
+          ],
+          "explanation": "The harpsichord plucks its strings with plectra; the clavichord strikes them with tangents."
+        },
+        "fr": {
+          "text": "Quel instrument à clavier de l'époque baroque pince les cordes au lieu de les frapper ?",
+          "choices": [
+            "Le pianoforte",
+            "Le clavicorde",
+            "L'orgue",
+            "Le clavecin"
+          ],
+          "explanation": "Le clavecin pince ses cordes avec des becs ; le clavicorde les frappe avec des tangentes."
+        }
+      }
+    },
+    {
+      "id": "music_145",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which American metal band released 'Master of Puppets' in 1986?",
+          "choices": [
+            "Metallica",
+            "Slayer",
+            "Megadeth",
+            "Anthrax"
+          ],
+          "explanation": "'Master of Puppets' is Metallica's third album and the last with bassist Cliff Burton."
+        },
+        "fr": {
+          "text": "Quel groupe de metal américain a sorti « Master of Puppets » en 1986 ?",
+          "choices": [
+            "Metallica",
+            "Slayer",
+            "Megadeth",
+            "Anthrax"
+          ],
+          "explanation": "« Master of Puppets » est le troisième album de Metallica, le dernier avec le bassiste Cliff Burton."
+        }
+      }
+    },
+    {
+      "id": "music_146",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which composer wrote 'The Carnival of the Animals'?",
+          "choices": [
+            "Georges Bizet",
+            "Gabriel Fauré",
+            "Camille Saint-Saëns",
+            "Paul Dukas"
+          ],
+          "explanation": "Saint-Saëns wrote this humorous suite in 1886; it includes 'The Swan'."
+        },
+        "fr": {
+          "text": "Quel compositeur a écrit « Le Carnaval des animaux » ?",
+          "choices": [
+            "Georges Bizet",
+            "Gabriel Fauré",
+            "Camille Saint-Saëns",
+            "Paul Dukas"
+          ],
+          "explanation": "Saint-Saëns a composé cette suite humoristique en 1886 ; elle contient « Le Cygne »."
+        }
+      }
+    },
+    {
+      "id": "music_147",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Bizet opera is set in Seville?",
+          "choices": [
+            "The Pearl Fishers",
+            "Carmen",
+            "Don Carlos",
+            "The Barber of Seville"
+          ],
+          "explanation": "Bizet's 'Carmen' (1875) follows a Seville cigarette girl; 'The Barber of Seville' is by Rossini."
+        },
+        "fr": {
+          "text": "Quel opéra de Bizet se déroule à Séville ?",
+          "choices": [
+            "Les Pêcheurs de perles",
+            "Carmen",
+            "Don Carlos",
+            "Le Barbier de Séville"
+          ],
+          "explanation": "« Carmen » (1875) de Bizet suit une cigarière sévillane ; « Le Barbier de Séville » est de Rossini."
+        }
+      }
+    },
+    {
+      "id": "music_148",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which UK nation is the Glastonbury Festival held?",
+          "choices": [
+            "Scotland",
+            "England",
+            "Wales",
+            "Northern Ireland"
+          ],
+          "explanation": "The Glastonbury Festival has been held in Somerset, England, since 1970."
+        },
+        "fr": {
+          "text": "Dans quelle nation du Royaume-Uni se tient le festival de Glastonbury ?",
+          "choices": [
+            "L'Écosse",
+            "L'Angleterre",
+            "Le pays de Galles",
+            "L'Irlande du Nord"
+          ],
+          "explanation": "Le festival de Glastonbury a lieu dans le Somerset, en Angleterre, depuis 1970."
+        }
+      }
+    },
+    {
+      "id": "music_149",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which instrument did jazz musician Miles Davis play?",
+          "choices": [
+            "Saxophone",
+            "Piano",
+            "Double bass",
+            "Trumpet"
+          ],
+          "explanation": "Trumpeter Miles Davis recorded 'Kind of Blue' (1959), the best-selling jazz album."
+        },
+        "fr": {
+          "text": "Quel instrument jouait le jazzman Miles Davis ?",
+          "choices": [
+            "Le saxophone",
+            "Le piano",
+            "La contrebasse",
+            "La trompette"
+          ],
+          "explanation": "Miles Davis, trompettiste, a enregistré « Kind of Blue » (1959), l'album de jazz le plus vendu."
+        }
+      }
+    },
+    {
+      "id": "music_150",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which German band is seen as a pioneer of electronic music with 'Autobahn'?",
+          "choices": [
+            "Rammstein",
+            "Scorpions",
+            "Kraftwerk",
+            "Tangerine Dream"
+          ],
+          "explanation": "Kraftwerk, founded in Düsseldorf in 1970, released 'Autobahn' in 1974."
+        },
+        "fr": {
+          "text": "Quel groupe allemand est considéré comme pionnier de la musique électronique avec « Autobahn » ?",
+          "choices": [
+            "Rammstein",
+            "Scorpions",
+            "Kraftwerk",
+            "Tangerine Dream"
+          ],
+          "explanation": "Kraftwerk, fondé à Düsseldorf en 1970, a sorti « Autobahn » en 1974."
+        }
+      }
+    },
+    {
+      "id": "music_151",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many musicians does a typical symphony orchestra have?",
+          "choices": [
+            "Between 70 and 100",
+            "Between 10 and 20",
+            "Between 30 and 40",
+            "More than 200"
+          ],
+          "explanation": "A symphony orchestra usually has 70 to 100 players; a chamber orchestra has far fewer."
+        },
+        "fr": {
+          "text": "Combien de musiciens compte un orchestre symphonique typique ?",
+          "choices": [
+            "Entre 70 et 100",
+            "Entre 10 et 20",
+            "Entre 30 et 40",
+            "Plus de 200"
+          ],
+          "explanation": "Un orchestre symphonique réunit généralement de 70 à 100 musiciens ; un orchestre de chambre en a bien moins."
+        }
+      }
+    },
+    {
+      "id": "music_152",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Greek opera singer was nicknamed 'La Divina'?",
+          "choices": [
+            "Renata Tebaldi",
+            "Maria Callas",
+            "Montserrat Caballé",
+            "Joan Sutherland"
+          ],
+          "explanation": "Maria Callas, a soprano born in New York to Greek parents, dominated 1950s opera."
+        },
+        "fr": {
+          "text": "Quelle chanteuse d'opéra grecque était surnommée « La Divina » ?",
+          "choices": [
+            "Renata Tebaldi",
+            "Maria Callas",
+            "Montserrat Caballé",
+            "Joan Sutherland"
+          ],
+          "explanation": "Maria Callas, soprano née à New York de parents grecs, a marqué l'opéra des années 1950."
+        }
+      }
+    },
+    {
+      "id": "music_153",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What tempo does 'andante' indicate?",
+          "choices": [
+            "Very fast",
+            "Very slow",
+            "Lively and fast",
+            "At a walking pace"
+          ],
+          "explanation": "Andante means 'walking': a moderate tempo, between adagio and allegro."
+        },
+        "fr": {
+          "text": "Quel est le tempo indiqué par « andante » ?",
+          "choices": [
+            "Très rapide",
+            "Très lent",
+            "Joyeux et rapide",
+            "Allant, modéré"
+          ],
+          "explanation": "Andante signifie « en marchant » : un tempo modéré, entre adagio et allegro."
+        }
+      }
+    },
+    {
+      "id": "music_154",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which composer wrote the 'Ode to Joy', now the European anthem?",
+          "choices": [
+            "Ludwig van Beethoven",
+            "Joseph Haydn",
+            "Franz Schubert",
+            "Johannes Brahms"
+          ],
+          "explanation": "The European anthem uses the finale of Beethoven's 9th symphony, set to a poem by Schiller."
+        },
+        "fr": {
+          "text": "Quel compositeur a écrit « L'Hymne à la joie », devenu l'hymne européen ?",
+          "choices": [
+            "Ludwig van Beethoven",
+            "Joseph Haydn",
+            "Franz Schubert",
+            "Johannes Brahms"
+          ],
+          "explanation": "L'hymne européen reprend le finale de la 9e symphonie de Beethoven, sur un poème de Schiller."
+        }
+      }
+    },
+    {
+      "id": "music_155",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which progressive rock band released 'The Wall' in 1979?",
+          "choices": [
+            "Genesis",
+            "Yes",
+            "Pink Floyd",
+            "King Crimson"
+          ],
+          "explanation": "Pink Floyd's 'The Wall' includes 'Another Brick in the Wall (Part II)'."
+        },
+        "fr": {
+          "text": "Quel groupe de rock progressif a sorti « The Wall » en 1979 ?",
+          "choices": [
+            "Genesis",
+            "Yes",
+            "Pink Floyd",
+            "King Crimson"
+          ],
+          "explanation": "« The Wall » de Pink Floyd contient « Another Brick in the Wall (Part II) »."
+        }
+      }
+    },
+    {
+      "id": "music_156",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the eight-note interval between two Cs called?",
+          "choices": [
+            "A fifth",
+            "A third",
+            "An octave",
+            "A seventh"
+          ],
+          "explanation": "An octave separates two notes of the same name, with the frequency doubling."
+        },
+        "fr": {
+          "text": "Comment s'appelle l'intervalle de huit notes entre deux do ?",
+          "choices": [
+            "Une quinte",
+            "Une tierce",
+            "Une octave",
+            "Une septième"
+          ],
+          "explanation": "L'octave sépare deux notes de même nom dont la fréquence double."
+        }
+      }
+    },
+    {
+      "id": "music_157",
+      "category": "music",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French singer wrote 'Les Copains d'abord'?",
+          "choices": [
+            "Jacques Brel",
+            "Léo Ferré",
+            "Renaud",
+            "Georges Brassens"
+          ],
+          "explanation": "Brassens wrote 'Les Copains d'abord' (1964) for the film 'Les Copains'."
+        },
+        "fr": {
+          "text": "Quel chanteur français a écrit « Les Copains d'abord » ?",
+          "choices": [
+            "Jacques Brel",
+            "Léo Ferré",
+            "Renaud",
+            "Georges Brassens"
+          ],
+          "explanation": "« Les Copains d'abord » (1964) a été écrite par Brassens pour le film « Les Copains »."
+        }
+      }
     }
   ]
 }

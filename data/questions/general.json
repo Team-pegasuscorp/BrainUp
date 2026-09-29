@@ -2560,6 +2560,2278 @@
           "explanation": "L'euro existait pour les banques depuis 1999 ; pièces et billets sont arrivés le 1er janvier 2002."
         }
       }
+    },
+    {
+      "id": "general_090",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many days are there in a week?",
+          "choices": [
+            "7",
+            "5",
+            "6",
+            "10"
+          ],
+          "explanation": "The seven-day week dates back to antiquity, linked to the seven bodies visible to the naked eye."
+        },
+        "fr": {
+          "text": "Combien de jours compte une semaine ?",
+          "choices": [
+            "7",
+            "5",
+            "6",
+            "10"
+          ],
+          "explanation": "La semaine de sept jours vient de l'Antiquité, liée aux sept astres visibles à l'œil nu."
+        }
+      }
+    },
+    {
+      "id": "general_091",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the opposite of 'hot'?",
+          "choices": [
+            "Warm",
+            "Scorching",
+            "Mild",
+            "Cold"
+          ],
+          "explanation": "'Cold' is the antonym of 'hot'; 'warm' is somewhere in between."
+        },
+        "fr": {
+          "text": "Quel est le contraire de « chaud » ?",
+          "choices": [
+            "Tiède",
+            "Brûlant",
+            "Doux",
+            "Froid"
+          ],
+          "explanation": "« Froid » est l'antonyme de « chaud » ; « tiède » est un état intermédiaire."
+        }
+      }
+    },
+    {
+      "id": "general_092",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many months have 31 days?",
+          "choices": [
+            "6",
+            "7",
+            "5",
+            "8"
+          ],
+          "explanation": "January, March, May, July, August, October and December have 31 days."
+        },
+        "fr": {
+          "text": "Combien de mois ont 31 jours dans une année ?",
+          "choices": [
+            "6",
+            "7",
+            "5",
+            "8"
+          ],
+          "explanation": "Janvier, mars, mai, juillet, août, octobre et décembre ont 31 jours."
+        }
+      }
+    },
+    {
+      "id": "general_093",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the main cheese on a Margherita pizza?",
+          "choices": [
+            "Parmesan",
+            "Gorgonzola",
+            "Mozzarella",
+            "Ricotta"
+          ],
+          "explanation": "The Margherita combines tomato, mozzarella and basil, the colours of the Italian flag."
+        },
+        "fr": {
+          "text": "Quel est le fromage principal d'une pizza margherita ?",
+          "choices": [
+            "Le parmesan",
+            "Le gorgonzola",
+            "La mozzarella",
+            "La ricotta"
+          ],
+          "explanation": "La margherita associe tomate, mozzarella et basilic, aux couleurs du drapeau italien."
+        }
+      }
+    },
+    {
+      "id": "general_094",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In Perrault's tale, what does Little Red Riding Hood bring her grandmother?",
+          "choices": [
+            "A basket of apples",
+            "A cake and a little pot of butter",
+            "A bunch of flowers",
+            "A cherry pie"
+          ],
+          "explanation": "In Perrault's version, she brings 'a cake and a little pot of butter'."
+        },
+        "fr": {
+          "text": "Dans le conte, qu'est-ce que le Petit Chaperon rouge apporte à sa grand-mère ?",
+          "choices": [
+            "Un panier de pommes",
+            "Une galette et un petit pot de beurre",
+            "Un bouquet de fleurs",
+            "Une tarte aux cerises"
+          ],
+          "explanation": "Chez Perrault, elle apporte « une galette et un petit pot de beurre »."
+        }
+      }
+    },
+    {
+      "id": "general_095",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What colour do you get by mixing red and white?",
+          "choices": [
+            "Orange",
+            "Purple",
+            "Pink",
+            "Brown"
+          ],
+          "explanation": "Adding white lightens a colour: red becomes pink."
+        },
+        "fr": {
+          "text": "Quelle est la couleur obtenue en mélangeant du rouge et du blanc ?",
+          "choices": [
+            "Orange",
+            "Violet",
+            "Rose",
+            "Marron"
+          ],
+          "explanation": "Ajouter du blanc à une couleur l'éclaircit : le rouge devient rose."
+        }
+      }
+    },
+    {
+      "id": "general_096",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which animal is the symbol of France?",
+          "choices": [
+            "The rooster",
+            "The eagle",
+            "The lion",
+            "The bear"
+          ],
+          "explanation": "The Gallic rooster comes from a Latin pun: gallus means both 'rooster' and 'Gaul'."
+        },
+        "fr": {
+          "text": "Quel animal est le symbole de la France ?",
+          "choices": [
+            "Le coq",
+            "L'aigle",
+            "Le lion",
+            "L'ours"
+          ],
+          "explanation": "Le coq gaulois vient d'un jeu de mots latin : gallus signifie à la fois « coq » et « Gaulois »."
+        }
+      }
+    },
+    {
+      "id": "general_097",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many seconds are there in an hour?",
+          "choices": [
+            "360",
+            "600",
+            "6,000",
+            "3,600"
+          ],
+          "explanation": "An hour has 60 minutes of 60 seconds each, so 3,600 seconds."
+        },
+        "fr": {
+          "text": "Combien de secondes y a-t-il dans une heure ?",
+          "choices": [
+            "360",
+            "600",
+            "6 000",
+            "3 600"
+          ],
+          "explanation": "Une heure compte 60 minutes de 60 secondes, soit 3 600 secondes."
+        }
+      }
+    },
+    {
+      "id": "general_098",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which storybook character's nose grows when he lies?",
+          "choices": [
+            "Peter Pan",
+            "Tom Thumb",
+            "Pinocchio",
+            "Geppetto"
+          ],
+          "explanation": "Pinocchio, the puppet carved by Geppetto, was created by Carlo Collodi in 1881."
+        },
+        "fr": {
+          "text": "Quel personnage de conte a un nez qui s'allonge quand il ment ?",
+          "choices": [
+            "Peter Pan",
+            "Le Petit Poucet",
+            "Pinocchio",
+            "Gepetto"
+          ],
+          "explanation": "Pinocchio, pantin sculpté par Geppetto, a été créé par Carlo Collodi en 1881."
+        }
+      }
+    },
+    {
+      "id": "general_099",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which country was IKEA founded?",
+          "choices": [
+            "Sweden",
+            "Denmark",
+            "Norway",
+            "Finland"
+          ],
+          "explanation": "IKEA was founded in 1943 in Sweden by Ingvar Kamprad."
+        },
+        "fr": {
+          "text": "Dans quel pays est née la marque de meubles IKEA ?",
+          "choices": [
+            "La Suède",
+            "Le Danemark",
+            "La Norvège",
+            "La Finlande"
+          ],
+          "explanation": "IKEA a été fondée en 1943 en Suède par Ingvar Kamprad."
+        }
+      }
+    },
+    {
+      "id": "general_100",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which crescent-shaped French pastry is eaten at breakfast?",
+          "choices": [
+            "The pain au chocolat",
+            "The croissant",
+            "The éclair",
+            "The apple turnover"
+          ],
+          "explanation": "The croissant, a buttery laminated pastry, is a French breakfast classic."
+        },
+        "fr": {
+          "text": "Quelle pâtisserie française en forme de croissant de lune se mange au petit-déjeuner ?",
+          "choices": [
+            "Le pain au chocolat",
+            "Le croissant",
+            "L'éclair",
+            "Le chausson aux pommes"
+          ],
+          "explanation": "Le croissant, pâte feuilletée au beurre, est un classique du petit-déjeuner français."
+        }
+      }
+    },
+    {
+      "id": "general_101",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many players take part in a game of chess?",
+          "choices": [
+            "3",
+            "4",
+            "6",
+            "2"
+          ],
+          "explanation": "Chess is played by two people, one with white and one with black."
+        },
+        "fr": {
+          "text": "Combien de joueurs s'affrontent dans une partie d'échecs ?",
+          "choices": [
+            "3",
+            "4",
+            "6",
+            "2"
+          ],
+          "explanation": "Les échecs opposent deux joueurs, l'un avec les blancs, l'autre avec les noirs."
+        }
+      }
+    },
+    {
+      "id": "general_102",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In French, what is the feminine of 'acteur' (actor)?",
+          "choices": [
+            "Acteuse",
+            "Actrisse",
+            "Actrine",
+            "Actrice"
+          ],
+          "explanation": "French nouns ending in -teur often take -trice in the feminine: acteur, actrice."
+        },
+        "fr": {
+          "text": "Quel est le féminin de « acteur » ?",
+          "choices": [
+            "Acteuse",
+            "Actrisse",
+            "Actrine",
+            "Actrice"
+          ],
+          "explanation": "Les noms en -teur font souvent leur féminin en -trice : acteur, actrice."
+        }
+      }
+    },
+    {
+      "id": "general_103",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "On which day is France's national day celebrated?",
+          "choices": [
+            "1 May",
+            "14 July",
+            "11 November",
+            "8 May"
+          ],
+          "explanation": "14 July commemorates the storming of the Bastille (1789) and the Fête de la Fédération (1790)."
+        },
+        "fr": {
+          "text": "Quel jour de l'année célèbre-t-on la fête nationale française ?",
+          "choices": [
+            "Le 1er mai",
+            "Le 14 juillet",
+            "Le 11 novembre",
+            "Le 8 mai"
+          ],
+          "explanation": "Le 14 juillet commémore la prise de la Bastille (1789) et la fête de la Fédération (1790)."
+        }
+      }
+    },
+    {
+      "id": "general_104",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which orange vegetable is said to be good for eyesight?",
+          "choices": [
+            "The pumpkin",
+            "The sweet potato",
+            "The carrot",
+            "The pepper"
+          ],
+          "explanation": "Carrots are rich in beta-carotene, which the body turns into vitamin A."
+        },
+        "fr": {
+          "text": "Quel légume orange est réputé bon pour la vue ?",
+          "choices": [
+            "Le potiron",
+            "La patate douce",
+            "La carotte",
+            "Le poivron"
+          ],
+          "explanation": "La carotte est riche en bêta-carotène, que le corps transforme en vitamine A."
+        }
+      }
+    },
+    {
+      "id": "general_105",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many pawns does each player start a game of chess with?",
+          "choices": [
+            "8",
+            "6",
+            "10",
+            "12"
+          ],
+          "explanation": "Each side starts with eight pawns on the second rank."
+        },
+        "fr": {
+          "text": "Combien de pions chaque joueur a-t-il au début d'une partie d'échecs ?",
+          "choices": [
+            "8",
+            "6",
+            "10",
+            "12"
+          ],
+          "explanation": "Chaque camp commence avec huit pions sur la deuxième rangée."
+        }
+      }
+    },
+    {
+      "id": "general_106",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Christian holiday is associated with chocolate eggs?",
+          "choices": [
+            "Easter",
+            "Christmas",
+            "All Saints' Day",
+            "Pentecost"
+          ],
+          "explanation": "At Easter, tradition says the bells or the bunny bring chocolate eggs."
+        },
+        "fr": {
+          "text": "Quelle fête chrétienne est associée aux œufs en chocolat ?",
+          "choices": [
+            "Pâques",
+            "Noël",
+            "La Toussaint",
+            "La Pentecôte"
+          ],
+          "explanation": "À Pâques, la tradition veut que les cloches ou le lapin apportent des œufs en chocolat."
+        }
+      }
+    },
+    {
+      "id": "general_107",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which social network, known for short vertical videos, was launched by ByteDance?",
+          "choices": [
+            "Snapchat",
+            "Pinterest",
+            "Twitch",
+            "TikTok"
+          ],
+          "explanation": "TikTok, owned by China's ByteDance, launched internationally in 2017."
+        },
+        "fr": {
+          "text": "Quel réseau social est connu pour ses vidéos courtes et verticales, lancé par ByteDance ?",
+          "choices": [
+            "Snapchat",
+            "Pinterest",
+            "Twitch",
+            "TikTok"
+          ],
+          "explanation": "TikTok, propriété du groupe chinois ByteDance, a été lancé à l'international en 2017."
+        }
+      }
+    },
+    {
+      "id": "general_108",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which fruit is traditionally linked to Isaac Newton and gravity?",
+          "choices": [
+            "The pear",
+            "The apple",
+            "The orange",
+            "The cherry"
+          ],
+          "explanation": "Legend says a falling apple inspired Newton's thinking about gravity."
+        },
+        "fr": {
+          "text": "Quel fruit est traditionnellement associé à Isaac Newton et à la gravité ?",
+          "choices": [
+            "La poire",
+            "La pomme",
+            "L'orange",
+            "La cerise"
+          ],
+          "explanation": "Selon la légende, la chute d'une pomme aurait inspiré à Newton sa réflexion sur la gravité."
+        }
+      }
+    },
+    {
+      "id": "general_109",
+      "category": "general",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which pot is a traditional Savoyard fondue made?",
+          "choices": [
+            "A wok",
+            "A pressure cooker",
+            "A caquelon",
+            "A frying pan"
+          ],
+          "explanation": "The caquelon, often earthenware or cast iron, keeps the melted cheese warm."
+        },
+        "fr": {
+          "text": "Dans quel ustensile prépare-t-on traditionnellement une fondue savoyarde ?",
+          "choices": [
+            "Un wok",
+            "Une cocotte-minute",
+            "Un caquelon",
+            "Une poêle"
+          ],
+          "explanation": "Le caquelon, souvent en terre cuite ou en fonte, garde le fromage fondu au chaud."
+        }
+      }
+    },
+    {
+      "id": "general_110",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who wrote 'The Little Prince'?",
+          "choices": [
+            "Jules Verne",
+            "Albert Camus",
+            "Antoine de Saint-Exupéry",
+            "Marcel Pagnol"
+          ],
+          "explanation": "'The Little Prince' (1943) is one of the most translated books in the world."
+        },
+        "fr": {
+          "text": "Qui a écrit « Le Petit Prince » ?",
+          "choices": [
+            "Jules Verne",
+            "Albert Camus",
+            "Antoine de Saint-Exupéry",
+            "Marcel Pagnol"
+          ],
+          "explanation": "« Le Petit Prince » (1943) est l'un des livres les plus traduits au monde."
+        }
+      }
+    },
+    {
+      "id": "general_111",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In Greek mythology, which hero performed twelve labours?",
+          "choices": [
+            "Perseus",
+            "Heracles",
+            "Theseus",
+            "Achilles"
+          ],
+          "explanation": "Heracles (Hercules to the Romans) defeated the Nemean lion and the Lernaean Hydra, among others."
+        },
+        "fr": {
+          "text": "Dans la mythologie grecque, quel héros a accompli douze travaux ?",
+          "choices": [
+            "Persée",
+            "Héraclès",
+            "Thésée",
+            "Achille"
+          ],
+          "explanation": "Héraclès (Hercule chez les Romains) a notamment vaincu le lion de Némée et l'hydre de Lerne."
+        }
+      }
+    },
+    {
+      "id": "general_112",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who painted 'The Starry Night' (1889)?",
+          "choices": [
+            "Claude Monet",
+            "Paul Gauguin",
+            "Edvard Munch",
+            "Vincent van Gogh"
+          ],
+          "explanation": "Van Gogh painted 'The Starry Night' from his room at the asylum in Saint-Rémy-de-Provence."
+        },
+        "fr": {
+          "text": "Qui a peint « La Nuit étoilée » (1889) ?",
+          "choices": [
+            "Claude Monet",
+            "Paul Gauguin",
+            "Edvard Munch",
+            "Vincent van Gogh"
+          ],
+          "explanation": "Van Gogh a peint « La Nuit étoilée » depuis sa chambre de l'asile de Saint-Rémy-de-Provence."
+        }
+      }
+    },
+    {
+      "id": "general_113",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French writer imagined 'Journey to the Centre of the Earth'?",
+          "choices": [
+            "Jules Verne",
+            "Alexandre Dumas",
+            "Émile Zola",
+            "Guy de Maupassant"
+          ],
+          "explanation": "Jules Verne published 'Journey to the Centre of the Earth' in 1864."
+        },
+        "fr": {
+          "text": "Quel écrivain français a imaginé le « Voyage au centre de la Terre » ?",
+          "choices": [
+            "Jules Verne",
+            "Alexandre Dumas",
+            "Émile Zola",
+            "Guy de Maupassant"
+          ],
+          "explanation": "Jules Verne a publié « Voyage au centre de la Terre » en 1864."
+        }
+      }
+    },
+    {
+      "id": "general_114",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Roman god corresponds to the Greek Zeus?",
+          "choices": [
+            "Jupiter",
+            "Mars",
+            "Neptune",
+            "Apollo"
+          ],
+          "explanation": "Jupiter is king of the Roman gods; Neptune matches Poseidon and Mars matches Ares."
+        },
+        "fr": {
+          "text": "Quel dieu romain correspond au Zeus grec ?",
+          "choices": [
+            "Jupiter",
+            "Mars",
+            "Neptune",
+            "Apollon"
+          ],
+          "explanation": "Jupiter est le roi des dieux romains ; Neptune correspond à Poséidon et Mars à Arès."
+        }
+      }
+    },
+    {
+      "id": "general_115",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who sculpted 'The Thinker'?",
+          "choices": [
+            "Camille Claudel",
+            "Michelangelo",
+            "Auguste Rodin",
+            "Aristide Maillol"
+          ],
+          "explanation": "'The Thinker' was originally part of Rodin's 'Gates of Hell'."
+        },
+        "fr": {
+          "text": "Qui a sculpté « Le Penseur » ?",
+          "choices": [
+            "Camille Claudel",
+            "Michel-Ange",
+            "Auguste Rodin",
+            "Aristide Maillol"
+          ],
+          "explanation": "« Le Penseur » faisait à l'origine partie de « La Porte de l'Enfer » de Rodin."
+        }
+      }
+    },
+    {
+      "id": "general_116",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the official language of Brazil?",
+          "choices": [
+            "Spanish",
+            "Brazilian",
+            "Italian",
+            "Portuguese"
+          ],
+          "explanation": "Brazil, a former Portuguese colony, is the largest Portuguese-speaking country in the world."
+        },
+        "fr": {
+          "text": "Quelle est la langue officielle du Brésil ?",
+          "choices": [
+            "L'espagnol",
+            "Le brésilien",
+            "L'italien",
+            "Le portugais"
+          ],
+          "explanation": "Le Brésil, ancienne colonie portugaise, est le plus grand pays lusophone du monde."
+        }
+      }
+    },
+    {
+      "id": "general_117",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which author created Hercule Poirot?",
+          "choices": [
+            "Arthur Conan Doyle",
+            "Agatha Christie",
+            "Georges Simenon",
+            "Maurice Leblanc"
+          ],
+          "explanation": "Agatha Christie first introduced the Belgian detective in 1920."
+        },
+        "fr": {
+          "text": "Quel auteur a créé le personnage d'Hercule Poirot ?",
+          "choices": [
+            "Arthur Conan Doyle",
+            "Agatha Christie",
+            "Georges Simenon",
+            "Maurice Leblanc"
+          ],
+          "explanation": "Agatha Christie a fait apparaître le détective belge pour la première fois en 1920."
+        }
+      }
+    },
+    {
+      "id": "general_118",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which gentleman thief was created by Maurice Leblanc?",
+          "choices": [
+            "Fantômas",
+            "Arsène Lupin",
+            "Rocambole",
+            "Vidocq"
+          ],
+          "explanation": "Arsène Lupin first appeared in 1905; he inspired Netflix's 'Lupin'."
+        },
+        "fr": {
+          "text": "Quel gentleman cambrioleur a été créé par Maurice Leblanc ?",
+          "choices": [
+            "Fantômas",
+            "Arsène Lupin",
+            "Rocambole",
+            "Vidocq"
+          ],
+          "explanation": "Arsène Lupin est apparu en 1905 ; il a inspiré la série « Lupin » de Netflix."
+        }
+      }
+    },
+    {
+      "id": "general_119",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Spanish dish is made with rice, saffron and often seafood?",
+          "choices": [
+            "Gazpacho",
+            "Tortilla",
+            "Churros",
+            "Paella"
+          ],
+          "explanation": "Paella comes from the Valencia region."
+        },
+        "fr": {
+          "text": "Quel est le plat espagnol à base de riz, de safran et souvent de fruits de mer ?",
+          "choices": [
+            "Le gaspacho",
+            "La tortilla",
+            "Les churros",
+            "La paella"
+          ],
+          "explanation": "La paella est originaire de la région de Valence."
+        }
+      }
+    },
+    {
+      "id": "general_120",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which art movement is named after Monet's painting 'Impression, Sunrise'?",
+          "choices": [
+            "Cubism",
+            "Fauvism",
+            "Impressionism",
+            "Surrealism"
+          ],
+          "explanation": "A critic mocked this 1872 painting by calling the painters 'Impressionists'; the name stuck."
+        },
+        "fr": {
+          "text": "Quel mouvement pictural doit son nom à un tableau de Monet, « Impression, soleil levant » ?",
+          "choices": [
+            "Le cubisme",
+            "Le fauvisme",
+            "L'impressionnisme",
+            "Le surréalisme"
+          ],
+          "explanation": "Un critique a moqué ce tableau de 1872 en parlant d'« impressionnistes » ; le nom est resté."
+        }
+      }
+    },
+    {
+      "id": "general_121",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which company created the iPhone?",
+          "choices": [
+            "Apple",
+            "Samsung",
+            "Google",
+            "Nokia"
+          ],
+          "explanation": "Steve Jobs unveiled the first iPhone in January 2007."
+        },
+        "fr": {
+          "text": "Quelle entreprise a créé l'iPhone ?",
+          "choices": [
+            "Apple",
+            "Samsung",
+            "Google",
+            "Nokia"
+          ],
+          "explanation": "Steve Jobs a présenté le premier iPhone en janvier 2007."
+        }
+      }
+    },
+    {
+      "id": "general_122",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the currency of the United Kingdom called?",
+          "choices": [
+            "The euro",
+            "The dollar",
+            "The pound sterling",
+            "The crown"
+          ],
+          "explanation": "The pound sterling is one of the oldest currencies still in use."
+        },
+        "fr": {
+          "text": "Quel est le nom de la monnaie du Royaume-Uni ?",
+          "choices": [
+            "L'euro",
+            "Le dollar",
+            "La livre sterling",
+            "La couronne"
+          ],
+          "explanation": "La livre sterling est l'une des plus anciennes monnaies encore utilisées."
+        }
+      }
+    },
+    {
+      "id": "general_123",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who wrote 'The Three Musketeers'?",
+          "choices": [
+            "Victor Hugo",
+            "Alexandre Dumas",
+            "Honoré de Balzac",
+            "Stendhal"
+          ],
+          "explanation": "Dumas published the novel in 1844; d'Artagnan joins Athos, Porthos and Aramis."
+        },
+        "fr": {
+          "text": "Qui a écrit « Les Trois Mousquetaires » ?",
+          "choices": [
+            "Victor Hugo",
+            "Alexandre Dumas",
+            "Honoré de Balzac",
+            "Stendhal"
+          ],
+          "explanation": "Dumas a publié le roman en 1844 ; d'Artagnan y rejoint Athos, Porthos et Aramis."
+        }
+      }
+    },
+    {
+      "id": "general_124",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Roman numeral stands for 50?",
+          "choices": [
+            "L",
+            "C",
+            "V",
+            "D"
+          ],
+          "explanation": "In Roman numerals: I = 1, V = 5, X = 10, L = 50, C = 100, D = 500, M = 1,000."
+        },
+        "fr": {
+          "text": "Quel est le nombre romain qui correspond à 50 ?",
+          "choices": [
+            "L",
+            "C",
+            "V",
+            "D"
+          ],
+          "explanation": "En chiffres romains : I = 1, V = 5, X = 10, L = 50, C = 100, D = 500, M = 1 000."
+        }
+      }
+    },
+    {
+      "id": "general_125",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In Norse mythology, which god wields the hammer Mjölnir?",
+          "choices": [
+            "Odin",
+            "Loki",
+            "Freyr",
+            "Thor"
+          ],
+          "explanation": "Thor, god of thunder, is the son of Odin."
+        },
+        "fr": {
+          "text": "Dans la mythologie nordique, quel dieu manie le marteau Mjöllnir ?",
+          "choices": [
+            "Odin",
+            "Loki",
+            "Freyr",
+            "Thor"
+          ],
+          "explanation": "Thor, dieu du tonnerre, est le fils d'Odin."
+        }
+      }
+    },
+    {
+      "id": "general_126",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Paris museum is the world's largest art museum by area?",
+          "choices": [
+            "The Musée d'Orsay",
+            "The Centre Pompidou",
+            "The Louvre",
+            "The Musée Rodin"
+          ],
+          "explanation": "The Louvre, a former royal palace, houses the 'Mona Lisa' and the 'Venus de Milo', among others."
+        },
+        "fr": {
+          "text": "Quel est le plus grand musée d'art du monde par la surface, situé à Paris ?",
+          "choices": [
+            "Le musée d'Orsay",
+            "Le centre Pompidou",
+            "Le Louvre",
+            "Le musée Rodin"
+          ],
+          "explanation": "Le Louvre, ancien palais royal, abrite notamment « La Joconde » et la « Vénus de Milo »."
+        }
+      }
+    },
+    {
+      "id": "general_127",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French chef was named 'Chef of the Century' by Gault et Millau in 1989?",
+          "choices": [
+            "Joël Robuchon",
+            "Alain Ducasse",
+            "Auguste Escoffier",
+            "Paul Bocuse"
+          ],
+          "explanation": "Paul Bocuse was named 'Chef of the Century' by the Gault et Millau guide in 1989."
+        },
+        "fr": {
+          "text": "Quel chef français a été désigné « cuisinier du siècle » en 1989 ?",
+          "choices": [
+            "Joël Robuchon",
+            "Alain Ducasse",
+            "Auguste Escoffier",
+            "Paul Bocuse"
+          ],
+          "explanation": "Paul Bocuse a été désigné « cuisinier du siècle » par le guide Gault et Millau en 1989."
+        }
+      }
+    },
+    {
+      "id": "general_128",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is a word that reads the same both ways, like 'kayak', called?",
+          "choices": [
+            "A palindrome",
+            "An anagram",
+            "A homonym",
+            "An oxymoron"
+          ],
+          "explanation": "'Kayak', 'radar' and 'level' are palindromes."
+        },
+        "fr": {
+          "text": "Quel est le mot pour un texte qui se lit de la même façon dans les deux sens, comme « kayak » ?",
+          "choices": [
+            "Un palindrome",
+            "Un anagramme",
+            "Un homonyme",
+            "Un oxymore"
+          ],
+          "explanation": "« Kayak », « radar » ou « Esope reste ici et se repose » sont des palindromes."
+        }
+      }
+    },
+    {
+      "id": "general_129",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which board game is about buying streets and stations?",
+          "choices": [
+            "Cluedo",
+            "Monopoly",
+            "Scrabble",
+            "Risk"
+          ],
+          "explanation": "In the French edition of Monopoly, the most expensive street is Rue de la Paix."
+        },
+        "fr": {
+          "text": "Quel jeu de société consiste à acheter des rues et des gares ?",
+          "choices": [
+            "Le Cluedo",
+            "Le Monopoly",
+            "Le Scrabble",
+            "Risk"
+          ],
+          "explanation": "Dans la version française du Monopoly, la rue la plus chère est la rue de la Paix."
+        }
+      }
+    },
+    {
+      "id": "general_130",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which city is Leonardo da Vinci's 'The Last Supper'?",
+          "choices": [
+            "Milan",
+            "Florence",
+            "Rome",
+            "Venice"
+          ],
+          "explanation": "'The Last Supper' is painted on a wall of the refectory of Santa Maria delle Grazie in Milan."
+        },
+        "fr": {
+          "text": "Dans quelle ville se trouve « La Cène » de Léonard de Vinci ?",
+          "choices": [
+            "Milan",
+            "Florence",
+            "Rome",
+            "Venise"
+          ],
+          "explanation": "« La Cène » est peinte sur un mur du réfectoire de Santa Maria delle Grazie, à Milan."
+        }
+      }
+    },
+    {
+      "id": "general_131",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which bird holding an olive branch is a symbol of peace?",
+          "choices": [
+            "The swan",
+            "The dove",
+            "The eagle",
+            "The pelican"
+          ],
+          "explanation": "Picasso popularised the peace dove with a 1949 poster."
+        },
+        "fr": {
+          "text": "Quel est le symbole de la paix représenté par un oiseau tenant un rameau d'olivier ?",
+          "choices": [
+            "Le cygne",
+            "La colombe",
+            "L'aigle",
+            "Le pélican"
+          ],
+          "explanation": "Picasso a popularisé la colombe de la paix avec une affiche de 1949."
+        }
+      }
+    },
+    {
+      "id": "general_132",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which language is mainly spoken in Quebec?",
+          "choices": [
+            "English",
+            "Gaelic",
+            "French",
+            "Spanish"
+          ],
+          "explanation": "French is Quebec's only official language."
+        },
+        "fr": {
+          "text": "Quelle langue parle-t-on principalement au Québec ?",
+          "choices": [
+            "L'anglais",
+            "Le gaélique",
+            "Le français",
+            "L'espagnol"
+          ],
+          "explanation": "Le français est la seule langue officielle du Québec."
+        }
+      }
+    },
+    {
+      "id": "general_133",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who founded Microsoft with Paul Allen?",
+          "choices": [
+            "Steve Jobs",
+            "Larry Page",
+            "Mark Zuckerberg",
+            "Bill Gates"
+          ],
+          "explanation": "Bill Gates and Paul Allen founded Microsoft in 1975."
+        },
+        "fr": {
+          "text": "Quel est le nom du créateur de Microsoft avec Paul Allen ?",
+          "choices": [
+            "Steve Jobs",
+            "Larry Page",
+            "Mark Zuckerberg",
+            "Bill Gates"
+          ],
+          "explanation": "Bill Gates et Paul Allen ont fondé Microsoft en 1975."
+        }
+      }
+    },
+    {
+      "id": "general_134",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who wrote 'The Lord of the Rings'?",
+          "choices": [
+            "C. S. Lewis",
+            "J. R. R. Tolkien",
+            "George R. R. Martin",
+            "Terry Pratchett"
+          ],
+          "explanation": "Tolkien, an Oxford professor, published the trilogy in 1954-1955."
+        },
+        "fr": {
+          "text": "Quel auteur a écrit « Le Seigneur des anneaux » ?",
+          "choices": [
+            "C. S. Lewis",
+            "J. R. R. Tolkien",
+            "George R. R. Martin",
+            "Terry Pratchett"
+          ],
+          "explanation": "Tolkien, professeur à Oxford, a publié la trilogie en 1954-1955."
+        }
+      }
+    },
+    {
+      "id": "general_135",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which traditional Japanese drink is made from fermented rice?",
+          "choices": [
+            "Sake",
+            "Soju",
+            "Matcha",
+            "Mirin"
+          ],
+          "explanation": "Sake is a rice alcohol; soju is Korean and matcha is powdered green tea."
+        },
+        "fr": {
+          "text": "Quelle est la boisson traditionnelle japonaise à base de riz fermenté ?",
+          "choices": [
+            "Le saké",
+            "Le soju",
+            "Le matcha",
+            "Le mirin"
+          ],
+          "explanation": "Le saké est un alcool de riz ; le soju est coréen et le matcha est un thé vert en poudre."
+        }
+      }
+    },
+    {
+      "id": "general_136",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many faces does a standard die have?",
+          "choices": [
+            "4",
+            "8",
+            "12",
+            "6"
+          ],
+          "explanation": "On a standard die, opposite faces always add up to 7."
+        },
+        "fr": {
+          "text": "Combien de faces a un dé classique ?",
+          "choices": [
+            "4",
+            "8",
+            "12",
+            "6"
+          ],
+          "explanation": "Sur un dé classique, la somme des faces opposées fait toujours 7."
+        }
+      }
+    },
+    {
+      "id": "general_137",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Spanish painter co-founded Cubism?",
+          "choices": [
+            "Salvador Dalí",
+            "Joan Miró",
+            "Pablo Picasso",
+            "Francisco de Goya"
+          ],
+          "explanation": "Picasso founded Cubism with Georges Braque around 1907-1908."
+        },
+        "fr": {
+          "text": "Quel peintre espagnol est l'un des fondateurs du cubisme ?",
+          "choices": [
+            "Salvador Dalí",
+            "Joan Miró",
+            "Pablo Picasso",
+            "Francisco de Goya"
+          ],
+          "explanation": "Picasso a fondé le cubisme avec Georges Braque vers 1907-1908."
+        }
+      }
+    },
+    {
+      "id": "general_138",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is Apple's voice assistant called?",
+          "choices": [
+            "Alexa",
+            "Siri",
+            "Cortana",
+            "Bixby"
+          ],
+          "explanation": "Siri arrived with the iPhone 4S in 2011; Alexa is Amazon's."
+        },
+        "fr": {
+          "text": "Quel est le nom de l'assistant vocal d'Apple ?",
+          "choices": [
+            "Alexa",
+            "Siri",
+            "Cortana",
+            "Bixby"
+          ],
+          "explanation": "Siri est arrivé avec l'iPhone 4S en 2011 ; Alexa est celui d'Amazon."
+        }
+      }
+    },
+    {
+      "id": "general_139",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the three-headed monster guarding the Underworld in Greek mythology?",
+          "choices": [
+            "The Chimera",
+            "The Hydra",
+            "The Minotaur",
+            "Cerberus"
+          ],
+          "explanation": "Cerberus, a three-headed dog, stops the dead from leaving the Underworld."
+        },
+        "fr": {
+          "text": "Quel est le nom du monstre à trois têtes qui garde les Enfers dans la mythologie grecque ?",
+          "choices": [
+            "La Chimère",
+            "L'Hydre",
+            "Le Minotaure",
+            "Cerbère"
+          ],
+          "explanation": "Cerbère, chien à trois têtes, empêche les morts de quitter les Enfers."
+        }
+      }
+    },
+    {
+      "id": "general_140",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who wrote the 'Fables', including 'The Crow and the Fox'?",
+          "choices": [
+            "Jean de La Fontaine",
+            "Charles Perrault",
+            "Molière",
+            "Aesop"
+          ],
+          "explanation": "La Fontaine published his fables between 1668 and 1694, drawing partly on Aesop."
+        },
+        "fr": {
+          "text": "Qui a écrit « Les Fables », dont « Le Corbeau et le Renard » ?",
+          "choices": [
+            "Jean de La Fontaine",
+            "Charles Perrault",
+            "Molière",
+            "Ésope"
+          ],
+          "explanation": "La Fontaine a publié ses fables entre 1668 et 1694, en s'inspirant notamment d'Ésope."
+        }
+      }
+    },
+    {
+      "id": "general_141",
+      "category": "general",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French playwright wrote 'The Imaginary Invalid'?",
+          "choices": [
+            "Racine",
+            "Corneille",
+            "Molière",
+            "Marivaux"
+          ],
+          "explanation": "Molière died in 1673 shortly after playing Argan in 'The Imaginary Invalid'."
+        },
+        "fr": {
+          "text": "Quel dramaturge français a écrit « Le Malade imaginaire » ?",
+          "choices": [
+            "Racine",
+            "Corneille",
+            "Molière",
+            "Marivaux"
+          ],
+          "explanation": "Molière est mort en 1673 peu après avoir joué Argan dans « Le Malade imaginaire »."
+        }
+      }
+    },
+    {
+      "id": "general_142",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What does 'UNESCO' stand for?",
+          "choices": [
+            "Union of Nations for Economic and Scientific Cooperation",
+            "Universal Network for Education, Science and Culture",
+            "United Nations Environmental and Social Council",
+            "United Nations Educational, Scientific and Cultural Organization"
+          ],
+          "explanation": "UNESCO, founded in 1945, is based in Paris and manages the World Heritage list."
+        },
+        "fr": {
+          "text": "Que signifie le sigle « UNESCO » dans sa forme française ?",
+          "choices": [
+            "Union des nations pour l'échange scientifique et commercial",
+            "Organisation universelle pour l'enseignement et la santé",
+            "Union européenne pour la science et la culture",
+            "Organisation des Nations unies pour l'éducation, la science et la culture"
+          ],
+          "explanation": "L'UNESCO, créée en 1945, a son siège à Paris et gère la liste du patrimoine mondial."
+        }
+      }
+    },
+    {
+      "id": "general_143",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which writer, author of 'The Stranger', won the 1957 Nobel Prize in Literature?",
+          "choices": [
+            "Jean-Paul Sartre",
+            "Albert Camus",
+            "André Gide",
+            "François Mauriac"
+          ],
+          "explanation": "Albert Camus won the Nobel at 44; Sartre turned it down in 1964."
+        },
+        "fr": {
+          "text": "Quel écrivain a obtenu le prix Nobel de littérature en 1957, auteur de « L'Étranger » ?",
+          "choices": [
+            "Jean-Paul Sartre",
+            "Albert Camus",
+            "André Gide",
+            "François Mauriac"
+          ],
+          "explanation": "Albert Camus a reçu le Nobel à 44 ans ; Sartre l'a refusé en 1964."
+        }
+      }
+    },
+    {
+      "id": "general_144",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many pieces does each side start a chess game with?",
+          "choices": [
+            "12",
+            "14",
+            "16",
+            "18"
+          ],
+          "explanation": "Each player has 8 pawns, 2 rooks, 2 knights, 2 bishops, a queen and a king."
+        },
+        "fr": {
+          "text": "Combien de pièces compte chaque camp au début d'une partie d'échecs ?",
+          "choices": [
+            "12",
+            "14",
+            "16",
+            "18"
+          ],
+          "explanation": "Chaque joueur a 8 pions, 2 tours, 2 cavaliers, 2 fous, une dame et un roi."
+        }
+      }
+    },
+    {
+      "id": "general_145",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which alphabet is used to write Russian?",
+          "choices": [
+            "Cyrillic",
+            "Greek",
+            "Glagolitic",
+            "Latin"
+          ],
+          "explanation": "The Cyrillic alphabet, born in the 9th century, is also used for Bulgarian, Serbian and Ukrainian."
+        },
+        "fr": {
+          "text": "Quel alphabet est utilisé pour écrire le russe ?",
+          "choices": [
+            "Le cyrillique",
+            "Le grec",
+            "Le glagolitique",
+            "Le latin"
+          ],
+          "explanation": "L'alphabet cyrillique, né au IXe siècle, sert aussi au bulgare, au serbe et à l'ukrainien."
+        }
+      }
+    },
+    {
+      "id": "general_146",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of the Hindu festival of lights?",
+          "choices": [
+            "Holi",
+            "Navratri",
+            "Pongal",
+            "Diwali"
+          ],
+          "explanation": "Diwali celebrates the victory of light over darkness; Holi is the festival of colours."
+        },
+        "fr": {
+          "text": "Quel est le nom de la fête hindoue des lumières ?",
+          "choices": [
+            "Holi",
+            "Navratri",
+            "Pongal",
+            "Diwali"
+          ],
+          "explanation": "Diwali célèbre la victoire de la lumière sur les ténèbres ; Holi est la fête des couleurs."
+        }
+      }
+    },
+    {
+      "id": "general_147",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which architect designed Barcelona's Sagrada Família?",
+          "choices": [
+            "Le Corbusier",
+            "Antoni Gaudí",
+            "Santiago Calatrava",
+            "Ricardo Bofill"
+          ],
+          "explanation": "Gaudí worked on it from 1883 until his death in 1926; the basilica is still being built."
+        },
+        "fr": {
+          "text": "Quel architecte a conçu la Sagrada Família de Barcelone ?",
+          "choices": [
+            "Le Corbusier",
+            "Antoni Gaudí",
+            "Santiago Calatrava",
+            "Ricardo Bofill"
+          ],
+          "explanation": "Gaudí y a travaillé de 1883 à sa mort en 1926 ; la basilique est toujours en chantier."
+        }
+      }
+    },
+    {
+      "id": "general_148",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of Jason's ship in Greek mythology?",
+          "choices": [
+            "The Argo",
+            "The Odyssey",
+            "The Pegasus",
+            "The Triton"
+          ],
+          "explanation": "Jason and the Argonauts sailed the Argo in search of the Golden Fleece."
+        },
+        "fr": {
+          "text": "Quel est le nom du navire de Jason dans la mythologie grecque ?",
+          "choices": [
+            "L'Argo",
+            "L'Odyssée",
+            "Le Pégase",
+            "Le Triton"
+          ],
+          "explanation": "Jason et les Argonautes ont navigué à bord de l'Argo à la recherche de la Toison d'or."
+        }
+      }
+    },
+    {
+      "id": "general_149",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which city is the Prado Museum?",
+          "choices": [
+            "Barcelona",
+            "Seville",
+            "Madrid",
+            "Lisbon"
+          ],
+          "explanation": "The Prado holds Velázquez's 'Las Meninas' and many works by Goya, among others."
+        },
+        "fr": {
+          "text": "Dans quelle ville se trouve le musée du Prado ?",
+          "choices": [
+            "Barcelone",
+            "Séville",
+            "Madrid",
+            "Lisbonne"
+          ],
+          "explanation": "Le Prado abrite notamment « Les Ménines » de Vélasquez et de nombreuses œuvres de Goya."
+        }
+      }
+    },
+    {
+      "id": "general_150",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Russian writer wrote 'War and Peace'?",
+          "choices": [
+            "Fyodor Dostoevsky",
+            "Anton Chekhov",
+            "Ivan Turgenev",
+            "Leo Tolstoy"
+          ],
+          "explanation": "'War and Peace' (1865-1869) follows several families during the Napoleonic Wars."
+        },
+        "fr": {
+          "text": "Quel écrivain russe a écrit « Guerre et Paix » ?",
+          "choices": [
+            "Fiodor Dostoïevski",
+            "Anton Tchekhov",
+            "Ivan Tourgueniev",
+            "Léon Tolstoï"
+          ],
+          "explanation": "« Guerre et Paix » (1865-1869) suit plusieurs familles pendant les guerres napoléoniennes."
+        }
+      }
+    },
+    {
+      "id": "general_151",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the main ingredient of hummus?",
+          "choices": [
+            "Lentils",
+            "Chickpeas",
+            "Broad beans",
+            "White beans"
+          ],
+          "explanation": "Hummus blends chickpeas, tahini (sesame paste), lemon and garlic."
+        },
+        "fr": {
+          "text": "Quel est l'ingrédient principal du houmous ?",
+          "choices": [
+            "Les lentilles",
+            "Les pois chiches",
+            "Les fèves",
+            "Les haricots blancs"
+          ],
+          "explanation": "Le houmous mélange pois chiches, tahini (crème de sésame), citron et ail."
+        }
+      }
+    },
+    {
+      "id": "general_152",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who painted 'The Scream'?",
+          "choices": [
+            "Egon Schiele",
+            "Gustav Klimt",
+            "Edvard Munch",
+            "Wassily Kandinsky"
+          ],
+          "explanation": "Norwegian painter Edvard Munch made several versions from 1893 onward."
+        },
+        "fr": {
+          "text": "Qui a peint « Le Cri » ?",
+          "choices": [
+            "Egon Schiele",
+            "Gustav Klimt",
+            "Edvard Munch",
+            "Wassily Kandinsky"
+          ],
+          "explanation": "Le peintre norvégien Edvard Munch en a réalisé plusieurs versions à partir de 1893."
+        }
+      }
+    },
+    {
+      "id": "general_153",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which language is most widely spoken in Switzerland?",
+          "choices": [
+            "German",
+            "French",
+            "Italian",
+            "Romansh"
+          ],
+          "explanation": "About 60% of Swiss people speak German (or Swiss German) as their main language."
+        },
+        "fr": {
+          "text": "Quelle est la langue la plus parlée en Suisse ?",
+          "choices": [
+            "L'allemand",
+            "Le français",
+            "L'italien",
+            "Le romanche"
+          ],
+          "explanation": "Environ 60 % des Suisses parlent allemand (ou suisse allemand) comme langue principale."
+        }
+      }
+    },
+    {
+      "id": "general_154",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Greek philosopher tutored Alexander the Great?",
+          "choices": [
+            "Plato",
+            "Socrates",
+            "Aristotle",
+            "Diogenes"
+          ],
+          "explanation": "Aristotle became Alexander's tutor from 343 BC."
+        },
+        "fr": {
+          "text": "Quel philosophe grec a été le maître d'Alexandre le Grand ?",
+          "choices": [
+            "Platon",
+            "Socrate",
+            "Aristote",
+            "Diogène"
+          ],
+          "explanation": "Aristote a été le précepteur d'Alexandre à partir de 343 av. J.-C."
+        }
+      }
+    },
+    {
+      "id": "general_155",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many squares are in a standard sudoku grid?",
+          "choices": [
+            "81",
+            "64",
+            "72",
+            "100"
+          ],
+          "explanation": "A standard grid is 9 × 9 squares, split into nine 3 × 3 boxes."
+        },
+        "fr": {
+          "text": "Combien de cases compte une grille de sudoku classique ?",
+          "choices": [
+            "81",
+            "64",
+            "72",
+            "100"
+          ],
+          "explanation": "Une grille classique fait 9 × 9 cases, divisées en neuf carrés de 3 × 3."
+        }
+      }
+    },
+    {
+      "id": "general_156",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is France's highest honour called?",
+          "choices": [
+            "The National Order of Merit",
+            "The Legion of Honour",
+            "The Military Medal",
+            "The Academic Palms"
+          ],
+          "explanation": "The Legion of Honour was created by Napoleon Bonaparte in 1802."
+        },
+        "fr": {
+          "text": "Quel est le nom de la plus haute distinction honorifique française ?",
+          "choices": [
+            "L'ordre national du Mérite",
+            "La Légion d'honneur",
+            "La médaille militaire",
+            "Les Palmes académiques"
+          ],
+          "explanation": "La Légion d'honneur a été créée par Napoléon Bonaparte en 1802."
+        }
+      }
+    },
+    {
+      "id": "general_157",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which British author wrote 'Nineteen Eighty-Four'?",
+          "choices": [
+            "Aldous Huxley",
+            "H. G. Wells",
+            "Ray Bradbury",
+            "George Orwell"
+          ],
+          "explanation": "Published in 1949, 'Nineteen Eighty-Four' coined the phrase 'Big Brother'."
+        },
+        "fr": {
+          "text": "Quel auteur britannique a écrit « 1984 » ?",
+          "choices": [
+            "Aldous Huxley",
+            "H. G. Wells",
+            "Ray Bradbury",
+            "George Orwell"
+          ],
+          "explanation": "Publié en 1949, « 1984 » a inventé l'expression « Big Brother »."
+        }
+      }
+    },
+    {
+      "id": "general_158",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Greek muse presides over history?",
+          "choices": [
+            "Calliope",
+            "Terpsichore",
+            "Urania",
+            "Clio"
+          ],
+          "explanation": "Clio is the muse of history; Terpsichore of dance and Urania of astronomy."
+        },
+        "fr": {
+          "text": "Quelle muse de la mythologie grecque préside à l'histoire ?",
+          "choices": [
+            "Calliope",
+            "Terpsichore",
+            "Uranie",
+            "Clio"
+          ],
+          "explanation": "Clio est la muse de l'histoire ; Terpsichore celle de la danse et Uranie celle de l'astronomie."
+        }
+      }
+    },
+    {
+      "id": "general_159",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many letters are in the Greek alphabet?",
+          "choices": [
+            "22",
+            "26",
+            "24",
+            "28"
+          ],
+          "explanation": "The Greek alphabet has 24 letters, from alpha to omega."
+        },
+        "fr": {
+          "text": "Combien de lettres compte l'alphabet grec ?",
+          "choices": [
+            "22",
+            "26",
+            "24",
+            "28"
+          ],
+          "explanation": "L'alphabet grec compte 24 lettres, d'alpha à oméga."
+        }
+      }
+    },
+    {
+      "id": "general_160",
+      "category": "general",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Renaissance artist painted the Sistine Chapel ceiling?",
+          "choices": [
+            "Michelangelo",
+            "Raphael",
+            "Leonardo da Vinci",
+            "Botticelli"
+          ],
+          "explanation": "Michelangelo painted the ceiling from 1508 to 1512, then 'The Last Judgement' from 1536 to 1541."
+        },
+        "fr": {
+          "text": "Quel peintre de la Renaissance a réalisé les fresques du plafond de la chapelle Sixtine ?",
+          "choices": [
+            "Michel-Ange",
+            "Raphaël",
+            "Léonard de Vinci",
+            "Botticelli"
+          ],
+          "explanation": "Michel-Ange a peint le plafond entre 1508 et 1512, puis « Le Jugement dernier » de 1536 à 1541."
+        }
+      }
     }
   ]
 }

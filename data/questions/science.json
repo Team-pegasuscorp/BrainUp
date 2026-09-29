@@ -2592,6 +2592,2214 @@
           "explanation": "Les reins filtrent environ 180 litres de plasma par jour, mais ne produisent que 1 à 2 litres d'urine."
         }
       }
+    },
+    {
+      "id": "science_083",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the chemical symbol for oxygen?",
+          "choices": [
+            "Ox",
+            "Og",
+            "O",
+            "Oy"
+          ],
+          "explanation": "Oxygen has the symbol O and atomic number 8."
+        },
+        "fr": {
+          "text": "Quel est le symbole chimique de l'oxygène ?",
+          "choices": [
+            "Ox",
+            "Og",
+            "O",
+            "Oy"
+          ],
+          "explanation": "L'oxygène a pour symbole O et pour numéro atomique 8."
+        }
+      }
+    },
+    {
+      "id": "science_084",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many legs does an insect have?",
+          "choices": [
+            "8",
+            "4",
+            "10",
+            "6"
+          ],
+          "explanation": "Insects have six legs; spiders, which are arachnids, have eight."
+        },
+        "fr": {
+          "text": "Combien de pattes a un insecte ?",
+          "choices": [
+            "8",
+            "4",
+            "10",
+            "6"
+          ],
+          "explanation": "Les insectes ont six pattes ; les araignées, qui sont des arachnides, en ont huit."
+        }
+      }
+    },
+    {
+      "id": "science_085",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which is the smallest planet in the Solar System?",
+          "choices": [
+            "Mercury",
+            "Mars",
+            "Venus",
+            "Pluto"
+          ],
+          "explanation": "Mercury is the smallest planet; Pluto, smaller still, is a dwarf planet."
+        },
+        "fr": {
+          "text": "Quelle planète est la plus petite du Système solaire ?",
+          "choices": [
+            "Mercure",
+            "Mars",
+            "Vénus",
+            "Pluton"
+          ],
+          "explanation": "Mercure est la plus petite planète ; Pluton, plus petite encore, est une planète naine."
+        }
+      }
+    },
+    {
+      "id": "science_086",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "At what temperature does water freeze at sea level?",
+          "choices": [
+            "-10 °C",
+            "0 °C",
+            "4 °C",
+            "32 °C"
+          ],
+          "explanation": "Pure water freezes at 0 °C, or 32 °F, at normal atmospheric pressure."
+        },
+        "fr": {
+          "text": "À quelle température l'eau gèle-t-elle au niveau de la mer ?",
+          "choices": [
+            "-10 °C",
+            "0 °C",
+            "4 °C",
+            "32 °C"
+          ],
+          "explanation": "L'eau pure gèle à 0 °C, soit 32 °F, à la pression atmosphérique normale."
+        }
+      }
+    },
+    {
+      "id": "science_087",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which organ lets us breathe?",
+          "choices": [
+            "The liver",
+            "The lungs",
+            "The stomach",
+            "The kidneys"
+          ],
+          "explanation": "The lungs bring oxygen into the blood and remove carbon dioxide."
+        },
+        "fr": {
+          "text": "Quel organe permet de respirer ?",
+          "choices": [
+            "Le foie",
+            "Les poumons",
+            "L'estomac",
+            "Les reins"
+          ],
+          "explanation": "Les poumons font entrer l'oxygène dans le sang et rejettent le dioxyde de carbone."
+        }
+      }
+    },
+    {
+      "id": "science_088",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which of these animals is a mammal?",
+          "choices": [
+            "The shark",
+            "The tuna",
+            "The dolphin",
+            "The octopus"
+          ],
+          "explanation": "Dolphins breathe air and nurse their young: they are marine mammals."
+        },
+        "fr": {
+          "text": "Quel animal est un mammifère ?",
+          "choices": [
+            "Le requin",
+            "Le thon",
+            "Le dauphin",
+            "La pieuvre"
+          ],
+          "explanation": "Le dauphin respire de l'air et allaite ses petits : c'est un mammifère marin."
+        }
+      }
+    },
+    {
+      "id": "science_089",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many colours are traditionally counted in a rainbow?",
+          "choices": [
+            "5",
+            "6",
+            "9",
+            "7"
+          ],
+          "explanation": "Since Newton, seven colours are counted: red, orange, yellow, green, blue, indigo and violet."
+        },
+        "fr": {
+          "text": "Combien de couleurs compte traditionnellement un arc-en-ciel ?",
+          "choices": [
+            "5",
+            "6",
+            "9",
+            "7"
+          ],
+          "explanation": "Depuis Newton, on distingue sept couleurs : rouge, orange, jaune, vert, bleu, indigo et violet."
+        }
+      }
+    },
+    {
+      "id": "science_090",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which sense is linked to the tongue?",
+          "choices": [
+            "Taste",
+            "Smell",
+            "Touch",
+            "Hearing"
+          ],
+          "explanation": "Taste buds on the tongue sense sweet, salty, sour, bitter and umami."
+        },
+        "fr": {
+          "text": "Quel sens est lié à la langue ?",
+          "choices": [
+            "Le goût",
+            "L'odorat",
+            "Le toucher",
+            "L'ouïe"
+          ],
+          "explanation": "Les papilles de la langue perçoivent le sucré, le salé, l'acide, l'amer et l'umami."
+        }
+      }
+    },
+    {
+      "id": "science_091",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What do you call an animal that eats only plants?",
+          "choices": [
+            "A carnivore",
+            "An omnivore",
+            "A herbivore",
+            "An insectivore"
+          ],
+          "explanation": "Herbivores, such as cows or rabbits, feed on plants."
+        },
+        "fr": {
+          "text": "Comment appelle-t-on un animal qui ne mange que des plantes ?",
+          "choices": [
+            "Un carnivore",
+            "Un omnivore",
+            "Un herbivore",
+            "Un insectivore"
+          ],
+          "explanation": "Les herbivores, comme la vache ou le lapin, se nourrissent de végétaux."
+        }
+      }
+    },
+    {
+      "id": "science_092",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What state of matter is ice?",
+          "choices": [
+            "Solid",
+            "Liquid",
+            "Gas",
+            "Plasma"
+          ],
+          "explanation": "Ice is water in solid form; steam is its gaseous form."
+        },
+        "fr": {
+          "text": "Quel est l'état de l'eau sous forme de glace ?",
+          "choices": [
+            "Solide",
+            "Liquide",
+            "Gazeux",
+            "Plasma"
+          ],
+          "explanation": "La glace est de l'eau à l'état solide ; la vapeur est son état gazeux."
+        }
+      }
+    },
+    {
+      "id": "science_093",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which natural satellite orbits the Earth?",
+          "choices": [
+            "Phobos",
+            "The Moon",
+            "Titan",
+            "Europa"
+          ],
+          "explanation": "The Moon orbits the Earth in about 27 days."
+        },
+        "fr": {
+          "text": "Quel satellite naturel tourne autour de la Terre ?",
+          "choices": [
+            "Phobos",
+            "La Lune",
+            "Titan",
+            "Europe"
+          ],
+          "explanation": "La Lune fait le tour de la Terre en environ 27 jours."
+        }
+      }
+    },
+    {
+      "id": "science_094",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What colour is chlorophyll?",
+          "choices": [
+            "Red",
+            "Yellow",
+            "Blue",
+            "Green"
+          ],
+          "explanation": "Chlorophyll absorbs red and blue light and reflects green, which is why leaves are green."
+        },
+        "fr": {
+          "text": "De quelle couleur est la chlorophylle ?",
+          "choices": [
+            "Rouge",
+            "Jaune",
+            "Bleue",
+            "Verte"
+          ],
+          "explanation": "La chlorophylle absorbe le rouge et le bleu et renvoie le vert, d'où la couleur des feuilles."
+        }
+      }
+    },
+    {
+      "id": "science_095",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which instrument is used to observe the stars?",
+          "choices": [
+            "The microscope",
+            "The periscope",
+            "The stethoscope",
+            "The telescope"
+          ],
+          "explanation": "A telescope gathers light from distant objects; a microscope magnifies tiny ones."
+        },
+        "fr": {
+          "text": "Quel instrument sert à observer les étoiles ?",
+          "choices": [
+            "Le microscope",
+            "Le périscope",
+            "Le stéthoscope",
+            "Le télescope"
+          ],
+          "explanation": "Le télescope collecte la lumière des objets lointains ; le microscope grossit les objets minuscules."
+        }
+      }
+    },
+    {
+      "id": "science_096",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many teeth does an adult have, wisdom teeth included?",
+          "choices": [
+            "28",
+            "32",
+            "30",
+            "36"
+          ],
+          "explanation": "An adult has 32 teeth with the four wisdom teeth, 28 without them."
+        },
+        "fr": {
+          "text": "Combien de dents a un adulte, dents de sagesse comprises ?",
+          "choices": [
+            "28",
+            "32",
+            "30",
+            "36"
+          ],
+          "explanation": "Un adulte a 32 dents avec les quatre dents de sagesse, 28 sans elles."
+        }
+      }
+    },
+    {
+      "id": "science_097",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which organ filters air and lets us smell?",
+          "choices": [
+            "The nose",
+            "The mouth",
+            "The ears",
+            "The throat"
+          ],
+          "explanation": "Hairs and mucus in the nose filter the air; its olfactory receptors pick up smells."
+        },
+        "fr": {
+          "text": "Quel organe filtre l'air et permet de sentir les odeurs ?",
+          "choices": [
+            "Le nez",
+            "La bouche",
+            "Les oreilles",
+            "La gorge"
+          ],
+          "explanation": "Les poils et le mucus du nez filtrent l'air ; ses récepteurs olfactifs captent les odeurs."
+        }
+      }
+    },
+    {
+      "id": "science_098",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which gas do we breathe in to live?",
+          "choices": [
+            "Helium",
+            "Carbon dioxide",
+            "Oxygen",
+            "Hydrogen"
+          ],
+          "explanation": "Our cells use oxygen to produce energy."
+        },
+        "fr": {
+          "text": "Quel gaz respirons-nous pour vivre ?",
+          "choices": [
+            "L'hélium",
+            "Le dioxyde de carbone",
+            "L'oxygène",
+            "L'hydrogène"
+          ],
+          "explanation": "Nos cellules utilisent l'oxygène pour produire de l'énergie."
+        }
+      }
+    },
+    {
+      "id": "science_099",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which animal lays eggs yet nurses its young?",
+          "choices": [
+            "The kangaroo",
+            "The bat",
+            "The platypus",
+            "The beaver"
+          ],
+          "explanation": "The platypus is one of the few egg-laying mammals, along with echidnas."
+        },
+        "fr": {
+          "text": "Quel animal pond des œufs et allaite ses petits ?",
+          "choices": [
+            "Le kangourou",
+            "La chauve-souris",
+            "L'ornithorynque",
+            "Le castor"
+          ],
+          "explanation": "L'ornithorynque est l'un des rares mammifères ovipares, avec les échidnés."
+        }
+      }
+    },
+    {
+      "id": "science_100",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How long does the Earth take to go around the Sun?",
+          "choices": [
+            "24 hours",
+            "About 365 days",
+            "30 days",
+            "About 1,000 days"
+          ],
+          "explanation": "The Earth completes its orbit in about 365.25 days, hence leap years."
+        },
+        "fr": {
+          "text": "Combien de temps met la Terre pour faire le tour du Soleil ?",
+          "choices": [
+            "24 heures",
+            "Environ 365 jours",
+            "30 jours",
+            "Environ 1 000 jours"
+          ],
+          "explanation": "La Terre boucle son orbite en environ 365,25 jours, d'où les années bissextiles."
+        }
+      }
+    },
+    {
+      "id": "science_101",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the chemical symbol for iron?",
+          "choices": [
+            "Fe",
+            "Fr",
+            "Ir",
+            "F"
+          ],
+          "explanation": "Fe comes from the Latin ferrum; F is fluorine and Fr is francium."
+        },
+        "fr": {
+          "text": "Quel est le symbole chimique du fer ?",
+          "choices": [
+            "Fe",
+            "Fr",
+            "Ir",
+            "F"
+          ],
+          "explanation": "Fe vient du latin ferrum ; F est le fluor et Fr le francium."
+        }
+      }
+    },
+    {
+      "id": "science_102",
+      "category": "science",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which group of animals has feathers?",
+          "choices": [
+            "Reptiles",
+            "Amphibians",
+            "Fish",
+            "Birds"
+          ],
+          "explanation": "Feathers are unique to birds, inherited from certain dinosaurs."
+        },
+        "fr": {
+          "text": "Quel groupe d'animaux a des plumes ?",
+          "choices": [
+            "Les reptiles",
+            "Les amphibiens",
+            "Les poissons",
+            "Les oiseaux"
+          ],
+          "explanation": "Les plumes sont propres aux oiseaux, héritées de certains dinosaures."
+        }
+      }
+    },
+    {
+      "id": "science_103",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which planet has the most visible rings?",
+          "choices": [
+            "Jupiter",
+            "Saturn",
+            "Uranus",
+            "Neptune"
+          ],
+          "explanation": "All the gas giants have rings, but Saturn's are by far the brightest."
+        },
+        "fr": {
+          "text": "Quelle planète possède les anneaux les plus visibles ?",
+          "choices": [
+            "Jupiter",
+            "Saturne",
+            "Uranus",
+            "Neptune"
+          ],
+          "explanation": "Toutes les géantes gazeuses ont des anneaux, mais ceux de Saturne sont de loin les plus brillants."
+        }
+      }
+    },
+    {
+      "id": "science_104",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the chemical symbol for sodium?",
+          "choices": [
+            "So",
+            "Sd",
+            "S",
+            "Na"
+          ],
+          "explanation": "Na comes from natrium, sodium's Latin name; S is sulphur."
+        },
+        "fr": {
+          "text": "Quel est le symbole chimique du sodium ?",
+          "choices": [
+            "So",
+            "Sd",
+            "S",
+            "Na"
+          ],
+          "explanation": "Na vient de natrium, le nom latin du sodium ; S est le soufre."
+        }
+      }
+    },
+    {
+      "id": "science_105",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which physicist formulated the theory of relativity?",
+          "choices": [
+            "Isaac Newton",
+            "Niels Bohr",
+            "Albert Einstein",
+            "Max Planck"
+          ],
+          "explanation": "Einstein published special relativity in 1905 and general relativity in 1915."
+        },
+        "fr": {
+          "text": "Quel physicien a formulé la théorie de la relativité ?",
+          "choices": [
+            "Isaac Newton",
+            "Niels Bohr",
+            "Albert Einstein",
+            "Max Planck"
+          ],
+          "explanation": "Einstein a publié la relativité restreinte en 1905 et la relativité générale en 1915."
+        }
+      }
+    },
+    {
+      "id": "science_106",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the longest bone in the human body?",
+          "choices": [
+            "The femur",
+            "The tibia",
+            "The humerus",
+            "The fibula"
+          ],
+          "explanation": "The femur, the thigh bone, is about a quarter of a person's height."
+        },
+        "fr": {
+          "text": "Quel est l'os le plus long du corps humain ?",
+          "choices": [
+            "Le fémur",
+            "Le tibia",
+            "L'humérus",
+            "Le péroné"
+          ],
+          "explanation": "Le fémur, os de la cuisse, représente environ un quart de la taille d'une personne."
+        }
+      }
+    },
+    {
+      "id": "science_107",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How long does sunlight take to reach the Earth?",
+          "choices": [
+            "About 8 minutes",
+            "About 8 seconds",
+            "About 1 hour",
+            "About 1 day"
+          ],
+          "explanation": "Light crosses the 150 million km from the Sun in about 8 min 20 s."
+        },
+        "fr": {
+          "text": "Combien de temps la lumière du Soleil met-elle pour atteindre la Terre ?",
+          "choices": [
+            "Environ 8 minutes",
+            "Environ 8 secondes",
+            "Environ 1 heure",
+            "Environ 1 jour"
+          ],
+          "explanation": "La lumière parcourt les 150 millions de km qui nous séparent du Soleil en 8 min 20 s environ."
+        }
+      }
+    },
+    {
+      "id": "science_108",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the most abundant chemical element in the Universe?",
+          "choices": [
+            "Helium",
+            "Oxygen",
+            "Hydrogen",
+            "Carbon"
+          ],
+          "explanation": "Hydrogen makes up about three quarters of the Universe's ordinary matter."
+        },
+        "fr": {
+          "text": "Quel est l'élément chimique le plus abondant dans l'Univers ?",
+          "choices": [
+            "L'hélium",
+            "L'oxygène",
+            "L'hydrogène",
+            "Le carbone"
+          ],
+          "explanation": "L'hydrogène représente environ les trois quarts de la matière ordinaire de l'Univers."
+        }
+      }
+    },
+    {
+      "id": "science_109",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which gas is mainly responsible for the human-made greenhouse effect?",
+          "choices": [
+            "Oxygen",
+            "Nitrogen",
+            "Argon",
+            "Carbon dioxide"
+          ],
+          "explanation": "CO₂ from fossil fuels is the main greenhouse gas released by humans."
+        },
+        "fr": {
+          "text": "Quel gaz est principalement responsable de l'effet de serre d'origine humaine ?",
+          "choices": [
+            "L'oxygène",
+            "L'azote",
+            "L'argon",
+            "Le dioxyde de carbone"
+          ],
+          "explanation": "Le CO₂ issu des combustibles fossiles est le principal gaz à effet de serre émis par l'homme."
+        }
+      }
+    },
+    {
+      "id": "science_110",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which scientist discovered natural radioactivity in 1896?",
+          "choices": [
+            "Pierre Curie",
+            "Henri Becquerel",
+            "Ernest Rutherford",
+            "Wilhelm Röntgen"
+          ],
+          "explanation": "Henri Becquerel found that uranium salts exposed a photographic plate."
+        },
+        "fr": {
+          "text": "Quel scientifique a découvert la radioactivité naturelle en 1896 ?",
+          "choices": [
+            "Pierre Curie",
+            "Henri Becquerel",
+            "Ernest Rutherford",
+            "Wilhelm Röntgen"
+          ],
+          "explanation": "Henri Becquerel a découvert que des sels d'uranium impressionnaient une plaque photographique."
+        }
+      }
+    },
+    {
+      "id": "science_111",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the unit of electrical power?",
+          "choices": [
+            "The volt",
+            "The watt",
+            "The ampere",
+            "The ohm"
+          ],
+          "explanation": "The watt measures power; the volt measures voltage, the ampere current and the ohm resistance."
+        },
+        "fr": {
+          "text": "Quelle est l'unité de la puissance électrique ?",
+          "choices": [
+            "Le volt",
+            "Le watt",
+            "L'ampère",
+            "L'ohm"
+          ],
+          "explanation": "Le watt mesure la puissance ; le volt la tension, l'ampère l'intensité et l'ohm la résistance."
+        }
+      }
+    },
+    {
+      "id": "science_112",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which type of rock forms from cooled magma?",
+          "choices": [
+            "Sedimentary rock",
+            "Metamorphic rock",
+            "Igneous rock",
+            "Limestone"
+          ],
+          "explanation": "Granite and basalt are igneous rocks formed as magma cools."
+        },
+        "fr": {
+          "text": "Quel type de roche se forme à partir du magma refroidi ?",
+          "choices": [
+            "La roche sédimentaire",
+            "La roche métamorphique",
+            "La roche magmatique",
+            "La roche calcaire"
+          ],
+          "explanation": "Le granite et le basalte sont des roches magmatiques issues du refroidissement du magma."
+        }
+      }
+    },
+    {
+      "id": "science_113",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of Saturn's largest moon?",
+          "choices": [
+            "Titan",
+            "Enceladus",
+            "Rhea",
+            "Iapetus"
+          ],
+          "explanation": "Titan is the only moon in the Solar System with a thick atmosphere."
+        },
+        "fr": {
+          "text": "Quel est le nom de la plus grande lune de Saturne ?",
+          "choices": [
+            "Titan",
+            "Encelade",
+            "Rhéa",
+            "Japet"
+          ],
+          "explanation": "Titan est la seule lune du Système solaire dotée d'une atmosphère épaisse."
+        }
+      }
+    },
+    {
+      "id": "science_114",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which gland is called the 'master gland' of the endocrine system?",
+          "choices": [
+            "The thyroid",
+            "The adrenal glands",
+            "The thymus",
+            "The pituitary gland"
+          ],
+          "explanation": "The pituitary, at the base of the brain, controls many other glands."
+        },
+        "fr": {
+          "text": "Quelle glande est surnommée la « glande maîtresse » du système endocrinien ?",
+          "choices": [
+            "La thyroïde",
+            "Les surrénales",
+            "Le thymus",
+            "L'hypophyse"
+          ],
+          "explanation": "L'hypophyse, à la base du cerveau, commande de nombreuses autres glandes."
+        }
+      }
+    },
+    {
+      "id": "science_115",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which metal conducts electricity best?",
+          "choices": [
+            "Copper",
+            "Gold",
+            "Aluminium",
+            "Silver"
+          ],
+          "explanation": "Silver conducts better than copper, but copper is far cheaper, so it is used in cables."
+        },
+        "fr": {
+          "text": "Quel est le métal le plus conducteur d'électricité ?",
+          "choices": [
+            "Le cuivre",
+            "L'or",
+            "L'aluminium",
+            "L'argent"
+          ],
+          "explanation": "L'argent conduit mieux que le cuivre, mais le cuivre est bien moins cher, d'où son usage dans les câbles."
+        }
+      }
+    },
+    {
+      "id": "science_116",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the chemical formula of table salt?",
+          "choices": [
+            "KCl",
+            "NaCl",
+            "NaOH",
+            "CaCO₃"
+          ],
+          "explanation": "Table salt is sodium chloride: NaCl."
+        },
+        "fr": {
+          "text": "Quelle est la formule chimique du sel de table ?",
+          "choices": [
+            "KCl",
+            "NaCl",
+            "NaOH",
+            "CaCO₃"
+          ],
+          "explanation": "Le sel de table est du chlorure de sodium : NaCl."
+        }
+      }
+    },
+    {
+      "id": "science_117",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which inventor patented the telephone in 1876?",
+          "choices": [
+            "Alexander Graham Bell",
+            "Thomas Edison",
+            "Nikola Tesla",
+            "Guglielmo Marconi"
+          ],
+          "explanation": "Bell patented the telephone in 1876, a few hours ahead of Elisha Gray."
+        },
+        "fr": {
+          "text": "Quel inventeur a déposé le brevet du téléphone en 1876 ?",
+          "choices": [
+            "Alexander Graham Bell",
+            "Thomas Edison",
+            "Nikola Tesla",
+            "Guglielmo Marconi"
+          ],
+          "explanation": "Graham Bell a breveté le téléphone en 1876, quelques heures avant Elisha Gray."
+        }
+      }
+    },
+    {
+      "id": "science_118",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many pairs of chromosomes do humans have?",
+          "choices": [
+            "21",
+            "24",
+            "23",
+            "46"
+          ],
+          "explanation": "Humans have 23 pairs of chromosomes, 46 in total."
+        },
+        "fr": {
+          "text": "Combien de paires de chromosomes possède l'être humain ?",
+          "choices": [
+            "21",
+            "24",
+            "23",
+            "46"
+          ],
+          "explanation": "L'être humain possède 23 paires de chromosomes, soit 46 au total."
+        }
+      }
+    },
+    {
+      "id": "science_119",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which blood type is known as the 'universal recipient'?",
+          "choices": [
+            "O negative",
+            "A positive",
+            "AB positive",
+            "B negative"
+          ],
+          "explanation": "People with AB positive blood can receive red cells from every group."
+        },
+        "fr": {
+          "text": "Quel groupe sanguin est dit « receveur universel » ?",
+          "choices": [
+            "O négatif",
+            "A positif",
+            "AB positif",
+            "B négatif"
+          ],
+          "explanation": "Les personnes AB positif peuvent recevoir des globules rouges de tous les groupes."
+        }
+      }
+    },
+    {
+      "id": "science_120",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which planet has a day longer than its year?",
+          "choices": [
+            "Venus",
+            "Mercury",
+            "Mars",
+            "Uranus"
+          ],
+          "explanation": "Venus spins once every 243 Earth days but orbits the Sun in 225 days."
+        },
+        "fr": {
+          "text": "Quelle planète a une journée plus longue que son année ?",
+          "choices": [
+            "Vénus",
+            "Mercure",
+            "Mars",
+            "Uranus"
+          ],
+          "explanation": "Vénus tourne sur elle-même en 243 jours terrestres mais fait le tour du Soleil en 225 jours."
+        }
+      }
+    },
+    {
+      "id": "science_121",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the change from solid directly to gas called?",
+          "choices": [
+            "Melting",
+            "Sublimation",
+            "Condensation",
+            "Evaporation"
+          ],
+          "explanation": "Dry ice (solid CO₂) sublimates: it turns straight into gas."
+        },
+        "fr": {
+          "text": "Comment s'appelle le changement d'état du solide directement au gaz ?",
+          "choices": [
+            "La fusion",
+            "La sublimation",
+            "La condensation",
+            "L'évaporation"
+          ],
+          "explanation": "La neige carbonique (CO₂ solide) se sublime : elle passe directement à l'état gazeux."
+        }
+      }
+    },
+    {
+      "id": "science_122",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the molecule that carries oxygen in the blood?",
+          "choices": [
+            "Insulin",
+            "Keratin",
+            "Collagen",
+            "Haemoglobin"
+          ],
+          "explanation": "Iron-rich haemoglobin gives red blood cells their colour."
+        },
+        "fr": {
+          "text": "Quel est le nom de la molécule qui transporte l'oxygène dans le sang ?",
+          "choices": [
+            "L'insuline",
+            "La kératine",
+            "Le collagène",
+            "L'hémoglobine"
+          ],
+          "explanation": "L'hémoglobine, riche en fer, donne leur couleur rouge aux globules rouges."
+        }
+      }
+    },
+    {
+      "id": "science_123",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the fastest land animal?",
+          "choices": [
+            "The lion",
+            "The cheetah",
+            "The antelope",
+            "The greyhound"
+          ],
+          "explanation": "The cheetah can top 100 km/h over short distances."
+        },
+        "fr": {
+          "text": "Quel animal terrestre est le plus rapide ?",
+          "choices": [
+            "Le lion",
+            "Le guépard",
+            "L'antilope",
+            "Le lévrier"
+          ],
+          "explanation": "Le guépard peut dépasser 100 km/h sur de courtes distances."
+        }
+      }
+    },
+    {
+      "id": "science_124",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the chemical symbol for silver?",
+          "choices": [
+            "Ar",
+            "Au",
+            "Ag",
+            "Sr"
+          ],
+          "explanation": "Ag comes from the Latin argentum; Au is gold and Ar is argon."
+        },
+        "fr": {
+          "text": "Quel est le symbole chimique de l'argent (métal) ?",
+          "choices": [
+            "Ar",
+            "Au",
+            "Ag",
+            "Sr"
+          ],
+          "explanation": "Ag vient du latin argentum ; Au est l'or et Ar l'argon."
+        }
+      }
+    },
+    {
+      "id": "science_125",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What are animals like frogs, living both in water and on land, called?",
+          "choices": [
+            "Reptiles",
+            "Crustaceans",
+            "Molluscs",
+            "Amphibians"
+          ],
+          "explanation": "Amphibians, like frogs, often go through an aquatic larval stage."
+        },
+        "fr": {
+          "text": "Comment appelle-t-on les animaux capables de vivre dans l'eau et sur terre, comme la grenouille ?",
+          "choices": [
+            "Les reptiles",
+            "Les crustacés",
+            "Les mollusques",
+            "Les amphibiens"
+          ],
+          "explanation": "Les amphibiens, comme les grenouilles, passent souvent par un stade larvaire aquatique."
+        }
+      }
+    },
+    {
+      "id": "science_126",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which part of the eye gives eyes their colour?",
+          "choices": [
+            "The iris",
+            "The pupil",
+            "The retina",
+            "The cornea"
+          ],
+          "explanation": "The iris is the coloured muscle that adjusts the size of the pupil."
+        },
+        "fr": {
+          "text": "Quelle partie de l'œil donne sa couleur aux yeux ?",
+          "choices": [
+            "L'iris",
+            "La pupille",
+            "La rétine",
+            "La cornée"
+          ],
+          "explanation": "L'iris est le muscle coloré qui règle l'ouverture de la pupille."
+        }
+      }
+    },
+    {
+      "id": "science_127",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which space probe is the most distant human-made object?",
+          "choices": [
+            "Pioneer 10",
+            "New Horizons",
+            "Voyager 1",
+            "Voyager 2"
+          ],
+          "explanation": "Launched in 1977, Voyager 1 left the heliosphere in 2012 and keeps moving away."
+        },
+        "fr": {
+          "text": "Quelle sonde spatiale est l'objet humain le plus éloigné de la Terre ?",
+          "choices": [
+            "Pioneer 10",
+            "New Horizons",
+            "Voyager 1",
+            "Voyager 2"
+          ],
+          "explanation": "Lancée en 1977, Voyager 1 a quitté l'héliosphère en 2012 et s'éloigne toujours."
+        }
+      }
+    },
+    {
+      "id": "science_128",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the force that resists motion between two surfaces called?",
+          "choices": [
+            "Friction",
+            "Thrust",
+            "Lift",
+            "Inertia"
+          ],
+          "explanation": "Friction slows a sliding object and turns its energy into heat."
+        },
+        "fr": {
+          "text": "Quel est le nom de la force qui s'oppose au mouvement entre deux surfaces ?",
+          "choices": [
+            "Le frottement",
+            "La poussée",
+            "La portance",
+            "L'inertie"
+          ],
+          "explanation": "Le frottement ralentit un objet qui glisse et transforme son énergie en chaleur."
+        }
+      }
+    },
+    {
+      "id": "science_129",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which organ produces bile?",
+          "choices": [
+            "The gallbladder",
+            "The pancreas",
+            "The spleen",
+            "The liver"
+          ],
+          "explanation": "The liver makes bile; the gallbladder only stores it."
+        },
+        "fr": {
+          "text": "Quel organe produit la bile ?",
+          "choices": [
+            "La vésicule biliaire",
+            "Le pancréas",
+            "La rate",
+            "Le foie"
+          ],
+          "explanation": "Le foie fabrique la bile ; la vésicule biliaire ne fait que la stocker."
+        }
+      }
+    },
+    {
+      "id": "science_130",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which is the hottest planet in the Solar System?",
+          "choices": [
+            "Mercury",
+            "Venus",
+            "Mars",
+            "Jupiter"
+          ],
+          "explanation": "Thanks to an extreme greenhouse effect, Venus exceeds 460 °C, hotter than Mercury though Mercury is closer to the Sun."
+        },
+        "fr": {
+          "text": "Quelle est la planète la plus chaude du Système solaire ?",
+          "choices": [
+            "Mercure",
+            "Vénus",
+            "Mars",
+            "Jupiter"
+          ],
+          "explanation": "Grâce à son effet de serre extrême, Vénus dépasse 460 °C, plus que Mercure pourtant plus proche du Soleil."
+        }
+      }
+    },
+    {
+      "id": "science_131",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the main organ of the nervous system?",
+          "choices": [
+            "The brain",
+            "The bone marrow",
+            "The heart",
+            "The liver"
+          ],
+          "explanation": "The brain contains about 86 billion neurons."
+        },
+        "fr": {
+          "text": "Quel est l'organe principal du système nerveux ?",
+          "choices": [
+            "Le cerveau",
+            "La moelle osseuse",
+            "Le cœur",
+            "Le foie"
+          ],
+          "explanation": "Le cerveau contient environ 86 milliards de neurones."
+        }
+      }
+    },
+    {
+      "id": "science_132",
+      "category": "science",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What colour does universal pH paper turn in an acid?",
+          "choices": [
+            "Dark blue",
+            "Green",
+            "Purple",
+            "Red or orange"
+          ],
+          "explanation": "On pH paper, acids turn red-orange, neutral solutions green and bases blue-purple."
+        },
+        "fr": {
+          "text": "Quelle est la couleur d'une solution acide avec le papier pH universel ?",
+          "choices": [
+            "Bleu foncé",
+            "Vert",
+            "Violet",
+            "Rouge ou orange"
+          ],
+          "explanation": "Sur le papier pH, les acides virent au rouge-orange, les solutions neutres au vert et les bases au bleu-violet."
+        }
+      }
+    },
+    {
+      "id": "science_133",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the only metal that is liquid at room temperature?",
+          "choices": [
+            "Gallium",
+            "Mercury",
+            "Caesium",
+            "Lead"
+          ],
+          "explanation": "Mercury melts at -39 °C; gallium and caesium melt just above 28 °C."
+        },
+        "fr": {
+          "text": "Quel est le seul métal liquide à température ambiante ?",
+          "choices": [
+            "Le gallium",
+            "Le mercure",
+            "Le césium",
+            "Le plomb"
+          ],
+          "explanation": "Le mercure fond à -39 °C ; le gallium et le césium fondent un peu au-dessus de 28 °C."
+        }
+      }
+    },
+    {
+      "id": "science_134",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the atomic number of carbon?",
+          "choices": [
+            "12",
+            "8",
+            "6",
+            "4"
+          ],
+          "explanation": "Carbon has 6 protons; its most common isotope, carbon-12, also has 6 neutrons."
+        },
+        "fr": {
+          "text": "Quel est le numéro atomique du carbone ?",
+          "choices": [
+            "12",
+            "8",
+            "6",
+            "4"
+          ],
+          "explanation": "Le carbone possède 6 protons ; son isotope le plus courant, le carbone 12, a aussi 6 neutrons."
+        }
+      }
+    },
+    {
+      "id": "science_135",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which particle carries a negative electric charge?",
+          "choices": [
+            "The proton",
+            "The neutron",
+            "The photon",
+            "The electron"
+          ],
+          "explanation": "The electron is negatively charged, the proton positively; the neutron is neutral."
+        },
+        "fr": {
+          "text": "Quelle particule porte une charge électrique négative ?",
+          "choices": [
+            "Le proton",
+            "Le neutron",
+            "Le photon",
+            "L'électron"
+          ],
+          "explanation": "L'électron est chargé négativement, le proton positivement ; le neutron est neutre."
+        }
+      }
+    },
+    {
+      "id": "science_136",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which scientist discovered DNA's double-helix structure with Francis Crick?",
+          "choices": [
+            "Linus Pauling",
+            "Gregor Mendel",
+            "James Watson",
+            "Louis Pasteur"
+          ],
+          "explanation": "Watson and Crick published the model in 1953, helped by Rosalind Franklin's X-ray images."
+        },
+        "fr": {
+          "text": "Quel scientifique a découvert la structure en double hélice de l'ADN avec Francis Crick ?",
+          "choices": [
+            "Linus Pauling",
+            "Gregor Mendel",
+            "James Watson",
+            "Louis Pasteur"
+          ],
+          "explanation": "Watson et Crick ont publié le modèle en 1953, grâce notamment aux clichés de Rosalind Franklin."
+        }
+      }
+    },
+    {
+      "id": "science_137",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who is the only woman to win Nobel Prizes in two different sciences?",
+          "choices": [
+            "Irène Joliot-Curie",
+            "Marie Curie",
+            "Dorothy Hodgkin",
+            "Rosalind Franklin"
+          ],
+          "explanation": "Marie Curie won the Nobel Prize in Physics in 1903 and in Chemistry in 1911."
+        },
+        "fr": {
+          "text": "Quelle est la seule femme à avoir reçu deux prix Nobel dans deux sciences différentes ?",
+          "choices": [
+            "Irène Joliot-Curie",
+            "Marie Curie",
+            "Dorothy Hodgkin",
+            "Rosalind Franklin"
+          ],
+          "explanation": "Marie Curie a reçu le Nobel de physique en 1903 et celui de chimie en 1911."
+        }
+      }
+    },
+    {
+      "id": "science_138",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the process by which a cell divides into two identical cells?",
+          "choices": [
+            "Mitosis",
+            "Meiosis",
+            "Osmosis",
+            "Glycolysis"
+          ],
+          "explanation": "Mitosis produces two identical cells; meiosis produces sex cells."
+        },
+        "fr": {
+          "text": "Comment s'appelle le processus par lequel une cellule se divise en deux cellules identiques ?",
+          "choices": [
+            "La mitose",
+            "La méiose",
+            "L'osmose",
+            "La glycolyse"
+          ],
+          "explanation": "La mitose produit deux cellules identiques ; la méiose produit les cellules sexuelles."
+        }
+      }
+    },
+    {
+      "id": "science_139",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which planet is farthest from the Sun?",
+          "choices": [
+            "Uranus",
+            "Pluto",
+            "Saturn",
+            "Neptune"
+          ],
+          "explanation": "Since Pluto was reclassified as a dwarf planet (2006), Neptune is the farthest planet."
+        },
+        "fr": {
+          "text": "Quelle est la planète la plus éloignée du Soleil ?",
+          "choices": [
+            "Uranus",
+            "Pluton",
+            "Saturne",
+            "Neptune"
+          ],
+          "explanation": "Depuis que Pluton est classée planète naine (2006), Neptune est la planète la plus lointaine."
+        }
+      }
+    },
+    {
+      "id": "science_140",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which noble gas is used in red-orange glowing signs?",
+          "choices": [
+            "Argon",
+            "Krypton",
+            "Neon",
+            "Xenon"
+          ],
+          "explanation": "Neon gives off a typical red-orange glow when an electric current passes through it."
+        },
+        "fr": {
+          "text": "Quel gaz noble est utilisé dans les enseignes lumineuses rouges-orangées ?",
+          "choices": [
+            "L'argon",
+            "Le krypton",
+            "Le néon",
+            "Le xénon"
+          ],
+          "explanation": "Le néon émet une lueur rouge-orangée caractéristique quand il est traversé par un courant."
+        }
+      }
+    },
+    {
+      "id": "science_141",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the largest known volcano in the Solar System?",
+          "choices": [
+            "Mauna Kea",
+            "Olympus Mons",
+            "Maxwell Montes",
+            "Tharsis Tholus"
+          ],
+          "explanation": "Olympus Mons, on Mars, rises about 22 km above the surrounding plains."
+        },
+        "fr": {
+          "text": "Quel est le nom du plus grand volcan connu du Système solaire ?",
+          "choices": [
+            "Mauna Kea",
+            "Olympus Mons",
+            "Maxwell Montes",
+            "Tharsis Tholus"
+          ],
+          "explanation": "Olympus Mons, sur Mars, s'élève à environ 22 km au-dessus des plaines environnantes."
+        }
+      }
+    },
+    {
+      "id": "science_142",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which scientist classified living things with binomial names (genus and species)?",
+          "choices": [
+            "Carl Linnaeus",
+            "Charles Darwin",
+            "Jean-Baptiste Lamarck",
+            "Georges Cuvier"
+          ],
+          "explanation": "Linnaeus spread two-part names such as Homo sapiens in the 18th century."
+        },
+        "fr": {
+          "text": "Quel scientifique a classé les êtres vivants avec la nomenclature binomiale (genre et espèce) ?",
+          "choices": [
+            "Carl von Linné",
+            "Charles Darwin",
+            "Jean-Baptiste de Lamarck",
+            "Georges Cuvier"
+          ],
+          "explanation": "Linné a généralisé au XVIIIe siècle les noms en deux parties, comme Homo sapiens."
+        }
+      }
+    },
+    {
+      "id": "science_143",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the unit of frequency?",
+          "choices": [
+            "The hertz",
+            "The joule",
+            "The pascal",
+            "The newton"
+          ],
+          "explanation": "One hertz is one cycle per second; the joule measures energy and the pascal pressure."
+        },
+        "fr": {
+          "text": "Quelle est l'unité de mesure de la fréquence ?",
+          "choices": [
+            "Le hertz",
+            "Le joule",
+            "Le pascal",
+            "Le newton"
+          ],
+          "explanation": "Un hertz correspond à un cycle par seconde ; le joule mesure l'énergie et le pascal la pression."
+        }
+      }
+    },
+    {
+      "id": "science_144",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the most abundant element in the Earth's crust?",
+          "choices": [
+            "Silicon",
+            "Iron",
+            "Oxygen",
+            "Aluminium"
+          ],
+          "explanation": "Oxygen makes up nearly half of the crust's mass, mostly in silicates."
+        },
+        "fr": {
+          "text": "Quel est l'élément le plus abondant dans la croûte terrestre ?",
+          "choices": [
+            "Le silicium",
+            "Le fer",
+            "L'oxygène",
+            "L'aluminium"
+          ],
+          "explanation": "L'oxygène représente près de la moitié de la masse de la croûte, surtout dans les silicates."
+        }
+      }
+    },
+    {
+      "id": "science_145",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the boundary around a black hole beyond which nothing can escape called?",
+          "choices": [
+            "The singularity",
+            "The event horizon",
+            "The Hill sphere",
+            "The Roche limit"
+          ],
+          "explanation": "Beyond the event horizon, not even light can escape."
+        },
+        "fr": {
+          "text": "Comment s'appelle la limite autour d'un trou noir au-delà de laquelle rien ne s'échappe ?",
+          "choices": [
+            "La singularité",
+            "L'horizon des événements",
+            "La sphère de Hill",
+            "La limite de Roche"
+          ],
+          "explanation": "Au-delà de l'horizon des événements, même la lumière ne peut plus s'échapper."
+        }
+      }
+    },
+    {
+      "id": "science_146",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the smallest bone in the human body?",
+          "choices": [
+            "The malleus",
+            "The incus",
+            "The coccyx",
+            "The stapes"
+          ],
+          "explanation": "The stapes, in the middle ear, is about 3 mm long."
+        },
+        "fr": {
+          "text": "Quel est le plus petit os du corps humain ?",
+          "choices": [
+            "Le marteau",
+            "L'enclume",
+            "Le coccyx",
+            "L'étrier"
+          ],
+          "explanation": "L'étrier, dans l'oreille moyenne, mesure environ 3 mm."
+        }
+      }
+    },
+    {
+      "id": "science_147",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French naturalist proposed a theory of evolution before Darwin?",
+          "choices": [
+            "Georges Cuvier",
+            "Buffon",
+            "Louis Pasteur",
+            "Jean-Baptiste Lamarck"
+          ],
+          "explanation": "Lamarck published his theory of the transformation of species in 1809, the year Darwin was born."
+        },
+        "fr": {
+          "text": "Quel naturaliste français a proposé une théorie de l'évolution avant Darwin ?",
+          "choices": [
+            "Georges Cuvier",
+            "Buffon",
+            "Louis Pasteur",
+            "Jean-Baptiste de Lamarck"
+          ],
+          "explanation": "Lamarck a publié sa théorie de la transformation des espèces en 1809, l'année de naissance de Darwin."
+        }
+      }
+    },
+    {
+      "id": "science_148",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which law states that a gas's pressure is inversely proportional to its volume at constant temperature?",
+          "choices": [
+            "Charles's law",
+            "Boyle's law",
+            "Ohm's law",
+            "Avogadro's law"
+          ],
+          "explanation": "At constant temperature, the product of a gas's pressure and volume stays the same."
+        },
+        "fr": {
+          "text": "Quelle loi dit que la pression d'un gaz est inversement proportionnelle à son volume à température constante ?",
+          "choices": [
+            "La loi de Charles",
+            "La loi de Boyle-Mariotte",
+            "La loi d'Ohm",
+            "La loi d'Avogadro"
+          ],
+          "explanation": "À température constante, le produit pression × volume d'un gaz reste constant."
+        }
+      }
+    },
+    {
+      "id": "science_149",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which astronomer proposed a heliocentric model in the 16th century?",
+          "choices": [
+            "Nicolaus Copernicus",
+            "Ptolemy",
+            "Tycho Brahe",
+            "Edwin Hubble"
+          ],
+          "explanation": "Copernicus published his Sun-centred model in 1543."
+        },
+        "fr": {
+          "text": "Quel astronome a proposé un modèle héliocentrique au XVIe siècle ?",
+          "choices": [
+            "Nicolas Copernic",
+            "Ptolémée",
+            "Tycho Brahe",
+            "Edwin Hubble"
+          ],
+          "explanation": "Copernic a publié son modèle, avec le Soleil au centre, en 1543."
+        }
+      }
+    },
+    {
+      "id": "science_150",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which layer of the atmosphere contains the ozone layer?",
+          "choices": [
+            "The troposphere",
+            "The mesosphere",
+            "The stratosphere",
+            "The thermosphere"
+          ],
+          "explanation": "The ozone layer lies in the stratosphere, roughly 15 to 35 km up."
+        },
+        "fr": {
+          "text": "Quel est le nom de la couche d'atmosphère qui contient la couche d'ozone ?",
+          "choices": [
+            "La troposphère",
+            "La mésosphère",
+            "La stratosphère",
+            "La thermosphère"
+          ],
+          "explanation": "La couche d'ozone se trouve dans la stratosphère, entre 15 et 35 km d'altitude environ."
+        }
+      }
+    },
+    {
+      "id": "science_151",
+      "category": "science",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which physicist discovered the atomic nucleus in 1911?",
+          "choices": [
+            "Niels Bohr",
+            "J. J. Thomson",
+            "Ernest Rutherford",
+            "Enrico Fermi"
+          ],
+          "explanation": "Rutherford's gold foil experiment revealed a tiny, dense nucleus."
+        },
+        "fr": {
+          "text": "Quel physicien a découvert le noyau atomique en 1911 ?",
+          "choices": [
+            "Niels Bohr",
+            "J. J. Thomson",
+            "Ernest Rutherford",
+            "Enrico Fermi"
+          ],
+          "explanation": "L'expérience de la feuille d'or de Rutherford a révélé un noyau minuscule et dense."
+        }
+      }
     }
   ]
 }

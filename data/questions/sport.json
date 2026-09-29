@@ -2560,6 +2560,2278 @@
           "explanation": "Nadia Comăneci, 14 ans, l'a fait à Montréal en 1976 ; le tableau affichait 1.00, faute de place pour un 10."
         }
       }
+    },
+    {
+      "id": "sport_084",
+      "category": "sport",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many players does a basketball team have on the court?",
+          "choices": [
+            "6",
+            "7",
+            "4",
+            "5"
+          ],
+          "explanation": "In basketball, each team has five players on the court at the same time."
+        },
+        "fr": {
+          "text": "Combien de joueurs une équipe de basket-ball a-t-elle sur le terrain ?",
+          "choices": [
+            "6",
+            "7",
+            "4",
+            "5"
+          ],
+          "explanation": "Au basket-ball, chaque équipe aligne cinq joueurs en même temps sur le terrain."
+        }
+      }
+    },
+    {
+      "id": "sport_085",
+      "category": "sport",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In tennis, what is a winning serve the opponent does not touch called?",
+          "choices": [
+            "A let",
+            "An ace",
+            "A lob",
+            "A smash"
+          ],
+          "explanation": "An ace is a serve so well placed that the receiver cannot even touch the ball."
+        },
+        "fr": {
+          "text": "Au tennis, comment appelle-t-on un service gagnant que l'adversaire ne touche pas ?",
+          "choices": [
+            "Un let",
+            "Un ace",
+            "Un lob",
+            "Un smash"
+          ],
+          "explanation": "Un ace est un service si bien placé que le relanceur ne parvient même pas à toucher la balle."
+        }
+      }
+    },
+    {
+      "id": "sport_086",
+      "category": "sport",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which sport is a shuttlecock used?",
+          "choices": [
+            "Badminton",
+            "Squash",
+            "Table tennis",
+            "Padel"
+          ],
+          "explanation": "Badminton is played with a light racket and a shuttlecock, traditionally made of feathers."
+        },
+        "fr": {
+          "text": "Dans quel sport utilise-t-on un volant ?",
+          "choices": [
+            "Le badminton",
+            "Le squash",
+            "Le tennis de table",
+            "Le padel"
+          ],
+          "explanation": "Le badminton se joue avec une raquette légère et un volant, traditionnellement fait de plumes."
+        }
+      }
+    },
+    {
+      "id": "sport_087",
+      "category": "sport",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many players does a volleyball team have on the court?",
+          "choices": [
+            "5",
+            "7",
+            "6",
+            "8"
+          ],
+          "explanation": "In indoor volleyball, each team has six players on the court."
+        },
+        "fr": {
+          "text": "Combien de joueurs compte une équipe de volley-ball sur le terrain ?",
+          "choices": [
+            "5",
+            "7",
+            "6",
+            "8"
+          ],
+          "explanation": "Au volley-ball en salle, chaque équipe a six joueurs sur le terrain."
+        }
+      }
+    },
+    {
+      "id": "sport_088",
+      "category": "sport",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which sport is practised on a tatami, in a gi with a coloured belt?",
+          "choices": [
+            "Fencing",
+            "Judo",
+            "Greco-Roman wrestling",
+            "Boxing"
+          ],
+          "explanation": "Judo is practised on a tatami; the colour of the belt shows the judoka's grade."
+        },
+        "fr": {
+          "text": "Quel sport pratique-t-on sur un tatami, avec un kimono et une ceinture de couleur ?",
+          "choices": [
+            "L'escrime",
+            "Le judo",
+            "La lutte gréco-romaine",
+            "La boxe"
+          ],
+          "explanation": "Le judo se pratique sur un tatami ; la couleur de la ceinture indique le niveau du judoka."
+        }
+      }
+    },
+    {
+      "id": "sport_089",
+      "category": "sport",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In football, how long does a regulation match last, excluding stoppage time?",
+          "choices": [
+            "80 minutes",
+            "100 minutes",
+            "90 minutes",
+            "120 minutes"
+          ],
+          "explanation": "A football match is played in two halves of 45 minutes, making 90 minutes."
+        },
+        "fr": {
+          "text": "Au football, combien de temps dure un match réglementaire, hors arrêts de jeu ?",
+          "choices": [
+            "80 minutes",
+            "100 minutes",
+            "90 minutes",
+            "120 minutes"
+          ],
+          "explanation": "Un match de football se joue en deux mi-temps de 45 minutes, soit 90 minutes."
+        }
+      }
+    },
+    {
+      "id": "sport_090",
+      "category": "sport",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which sport do players try to score a touchdown?",
+          "choices": [
+            "American football",
+            "Rugby league",
+            "Baseball",
+            "Cricket"
+          ],
+          "explanation": "The touchdown, worth 6 points, is the main way to score in American football."
+        },
+        "fr": {
+          "text": "Dans quel sport les joueurs cherchent-ils à marquer un « touchdown » ?",
+          "choices": [
+            "Le football américain",
+            "Le rugby à XIII",
+            "Le baseball",
+            "Le cricket"
+          ],
+          "explanation": "Le touchdown, qui vaut 6 points, est l'action de marquer du football américain."
+        }
+      }
+    },
+    {
+      "id": "sport_091",
+      "category": "sport",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many points is a basket scored from behind the three-point line worth?",
+          "choices": [
+            "2",
+            "4",
+            "1",
+            "3"
+          ],
+          "explanation": "As the name says, a shot made from behind the three-point line is worth three points."
+        },
+        "fr": {
+          "text": "Combien de points vaut un panier marqué derrière la ligne à trois points au basket ?",
+          "choices": [
+            "2",
+            "4",
+            "1",
+            "3"
+          ],
+          "explanation": "Comme son nom l'indique, un tir réussi derrière la ligne à trois points rapporte trois points."
+        }
+      }
+    },
+    {
+      "id": "sport_092",
+      "category": "sport",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which country is the home of sumo?",
+          "choices": [
+            "China",
+            "Japan",
+            "South Korea",
+            "Mongolia"
+          ],
+          "explanation": "Sumo is Japan's traditional wrestling, linked to Shinto rituals."
+        },
+        "fr": {
+          "text": "Quel pays est le berceau du sumo ?",
+          "choices": [
+            "La Chine",
+            "Le Japon",
+            "La Corée du Sud",
+            "La Mongolie"
+          ],
+          "explanation": "Le sumo est la lutte traditionnelle japonaise, liée à des rites shinto."
+        }
+      }
+    },
+    {
+      "id": "sport_093",
+      "category": "sport",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In golf, what is the expected number of strokes to finish a hole called?",
+          "choices": [
+            "Bogey",
+            "Birdie",
+            "Par",
+            "Handicap"
+          ],
+          "explanation": "Par is the reference number of strokes for a hole; a bogey is one more, a birdie one fewer."
+        },
+        "fr": {
+          "text": "Au golf, quel est le nom du nombre de coups prévus pour finir un trou ?",
+          "choices": [
+            "Le bogey",
+            "Le birdie",
+            "Le par",
+            "Le handicap"
+          ],
+          "explanation": "Le par est le nombre de coups de référence pour un trou ; un bogey est un coup de plus, un birdie un coup de moins."
+        }
+      }
+    },
+    {
+      "id": "sport_094",
+      "category": "sport",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which sport are the foil, épée and sabre used?",
+          "choices": [
+            "Fencing",
+            "Kendo",
+            "Pentathlon",
+            "Biathlon"
+          ],
+          "explanation": "The foil, épée and sabre are the three weapons of Olympic fencing."
+        },
+        "fr": {
+          "text": "Dans quel sport s'affrontent un fleuret, une épée et un sabre ?",
+          "choices": [
+            "L'escrime",
+            "Le kendo",
+            "Le pentathlon",
+            "Le biathlon"
+          ],
+          "explanation": "Le fleuret, l'épée et le sabre sont les trois armes de l'escrime olympique."
+        }
+      }
+    },
+    {
+      "id": "sport_095",
+      "category": "sport",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which sport combines cross-country skiing and rifle shooting?",
+          "choices": [
+            "Nordic combined",
+            "Triathlon",
+            "Skeleton",
+            "Biathlon"
+          ],
+          "explanation": "Biathlon alternates cross-country skiing with rifle shooting, standing and prone."
+        },
+        "fr": {
+          "text": "Quel sport combine ski de fond et tir à la carabine ?",
+          "choices": [
+            "Le combiné nordique",
+            "Le triathlon",
+            "Le skeleton",
+            "Le biathlon"
+          ],
+          "explanation": "Le biathlon alterne ski de fond et tir à la carabine, debout et couché."
+        }
+      }
+    },
+    {
+      "id": "sport_096",
+      "category": "sport",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In rugby, what shape is the ball?",
+          "choices": [
+            "Round",
+            "Square",
+            "Oval",
+            "Hexagonal"
+          ],
+          "explanation": "The rugby ball is oval, which makes its bounces unpredictable."
+        },
+        "fr": {
+          "text": "Au rugby, de quelle forme est le ballon ?",
+          "choices": [
+            "Rond",
+            "Carré",
+            "Ovale",
+            "Hexagonal"
+          ],
+          "explanation": "Le ballon de rugby est ovale, ce qui rend ses rebonds imprévisibles."
+        }
+      }
+    },
+    {
+      "id": "sport_097",
+      "category": "sport",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which cycling race traditionally finishes on the Champs-Élysées?",
+          "choices": [
+            "Paris-Roubaix",
+            "The Tour de France",
+            "The Giro",
+            "The Vuelta"
+          ],
+          "explanation": "Since 1975 the Tour de France has almost always finished on the Champs-Élysées in Paris."
+        },
+        "fr": {
+          "text": "Quelle course cycliste se termine traditionnellement sur les Champs-Élysées ?",
+          "choices": [
+            "Paris-Roubaix",
+            "Le Tour de France",
+            "Le Giro",
+            "La Vuelta"
+          ],
+          "explanation": "Depuis 1975, le Tour de France s'achève presque toujours sur les Champs-Élysées à Paris."
+        }
+      }
+    },
+    {
+      "id": "sport_098",
+      "category": "sport",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In table tennis, how many points is a game played to?",
+          "choices": [
+            "11",
+            "15",
+            "21",
+            "10"
+          ],
+          "explanation": "Since 2001, a table tennis game is won at 11 points, with a two-point lead."
+        },
+        "fr": {
+          "text": "Au tennis de table, en combien de points se joue un set ?",
+          "choices": [
+            "11",
+            "15",
+            "21",
+            "10"
+          ],
+          "explanation": "Depuis 2001, un set de tennis de table se gagne en 11 points, avec deux points d'écart."
+        }
+      }
+    },
+    {
+      "id": "sport_099",
+      "category": "sport",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which sport is played on ice with a stick and a puck?",
+          "choices": [
+            "Curling",
+            "Bandy",
+            "Speed skating",
+            "Ice hockey"
+          ],
+          "explanation": "In ice hockey, players hit a rubber puck with a stick."
+        },
+        "fr": {
+          "text": "Quel sport se pratique avec une crosse et un palet sur la glace ?",
+          "choices": [
+            "Le curling",
+            "Le bandy",
+            "Le patinage de vitesse",
+            "Le hockey sur glace"
+          ],
+          "explanation": "Au hockey sur glace, les joueurs frappent un palet en caoutchouc avec une crosse."
+        }
+      }
+    },
+    {
+      "id": "sport_100",
+      "category": "sport",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In football, what does the referee show to send a player off?",
+          "choices": [
+            "A yellow card",
+            "A white card",
+            "A red card",
+            "A blue card"
+          ],
+          "explanation": "A red card means the player is sent off at once; a yellow card is a warning."
+        },
+        "fr": {
+          "text": "Au football, que montre l'arbitre pour expulser un joueur ?",
+          "choices": [
+            "Un carton jaune",
+            "Un carton blanc",
+            "Un carton rouge",
+            "Un carton bleu"
+          ],
+          "explanation": "Le carton rouge entraîne l'exclusion immédiate du joueur ; le jaune est un avertissement."
+        }
+      }
+    },
+    {
+      "id": "sport_101",
+      "category": "sport",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many holes are there on a standard golf course?",
+          "choices": [
+            "9",
+            "12",
+            "24",
+            "18"
+          ],
+          "explanation": "A full golf course has 18 holes; some small courses have only 9."
+        },
+        "fr": {
+          "text": "Combien de trous compte un parcours de golf standard ?",
+          "choices": [
+            "9",
+            "12",
+            "24",
+            "18"
+          ],
+          "explanation": "Un parcours de golf complet compte 18 trous ; certains petits parcours n'en ont que 9."
+        }
+      }
+    },
+    {
+      "id": "sport_102",
+      "category": "sport",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which board sport is done standing on a board driven by a sail?",
+          "choices": [
+            "Windsurfing",
+            "Surfing",
+            "Wakeboarding",
+            "Skimboarding"
+          ],
+          "explanation": "In windsurfing, the rider holds a rig (mast and sail) attached to the board."
+        },
+        "fr": {
+          "text": "Quel sport de glisse se pratique debout sur une planche tirée par une voile ?",
+          "choices": [
+            "La planche à voile",
+            "Le surf",
+            "Le wakeboard",
+            "Le skimboard"
+          ],
+          "explanation": "En planche à voile, le pratiquant tient un gréement (mât et voile) fixé à sa planche."
+        }
+      }
+    },
+    {
+      "id": "sport_103",
+      "category": "sport",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In baseball, how many bases must a runner touch to score a run?",
+          "choices": [
+            "3",
+            "4",
+            "5",
+            "2"
+          ],
+          "explanation": "The runner must go through first, second and third base and then return to home plate."
+        },
+        "fr": {
+          "text": "Au baseball, combien de bases faut-il toucher pour marquer un point ?",
+          "choices": [
+            "3",
+            "4",
+            "5",
+            "2"
+          ],
+          "explanation": "Le coureur doit passer par la première, la deuxième et la troisième base puis revenir au marbre."
+        }
+      }
+    },
+    {
+      "id": "sport_104",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which city hosted the 2012 Summer Olympics?",
+          "choices": [
+            "Beijing",
+            "Rio de Janeiro",
+            "Madrid",
+            "London"
+          ],
+          "explanation": "London was the first city to host the Summer Games three times (1908, 1948, 2012)."
+        },
+        "fr": {
+          "text": "Quelle ville a accueilli les Jeux olympiques d'été de 2012 ?",
+          "choices": [
+            "Pékin",
+            "Rio de Janeiro",
+            "Madrid",
+            "Londres"
+          ],
+          "explanation": "Londres est la première ville à avoir organisé les Jeux d'été trois fois (1908, 1948, 2012)."
+        }
+      }
+    },
+    {
+      "id": "sport_105",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which tennis player won the French Open 14 times?",
+          "choices": [
+            "Novak Djokovic",
+            "Roger Federer",
+            "Rafael Nadal",
+            "Björn Borg"
+          ],
+          "explanation": "Rafael Nadal won the French Open 14 times between 2005 and 2022, an all-time record."
+        },
+        "fr": {
+          "text": "Quel joueur de tennis a remporté 14 fois Roland-Garros ?",
+          "choices": [
+            "Novak Djokovic",
+            "Roger Federer",
+            "Rafael Nadal",
+            "Björn Borg"
+          ],
+          "explanation": "Rafael Nadal a gagné Roland-Garros 14 fois entre 2005 et 2022, un record absolu."
+        }
+      }
+    },
+    {
+      "id": "sport_106",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which country won the Euro 2016 football tournament?",
+          "choices": [
+            "Portugal",
+            "France",
+            "Germany",
+            "Spain"
+          ],
+          "explanation": "Portugal beat France 1-0 after extra time in the final at the Stade de France."
+        },
+        "fr": {
+          "text": "Quel pays a remporté l'Euro de football 2016 ?",
+          "choices": [
+            "Le Portugal",
+            "La France",
+            "L'Allemagne",
+            "L'Espagne"
+          ],
+          "explanation": "Le Portugal a battu la France 1-0 après prolongation en finale, au Stade de France."
+        }
+      }
+    },
+    {
+      "id": "sport_107",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many players does a rugby union team have on the pitch?",
+          "choices": [
+            "13",
+            "15",
+            "11",
+            "7"
+          ],
+          "explanation": "Rugby union is played with fifteen players per team, hence the name 'XV'."
+        },
+        "fr": {
+          "text": "Combien de joueurs une équipe de rugby à XV compte-t-elle sur le terrain ?",
+          "choices": [
+            "13",
+            "15",
+            "11",
+            "7"
+          ],
+          "explanation": "Comme son nom l'indique, le rugby à XV se joue à quinze joueurs par équipe."
+        }
+      }
+    },
+    {
+      "id": "sport_108",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In curling, what is the circular target on the ice called?",
+          "choices": [
+            "The ring",
+            "The nest",
+            "The house",
+            "The yard"
+          ],
+          "explanation": "The curling target is called the house; its centre is the button."
+        },
+        "fr": {
+          "text": "Au curling, comment s'appelle la cible circulaire dessinée sur la glace ?",
+          "choices": [
+            "Le rond",
+            "Le nid",
+            "La maison",
+            "Le jardin"
+          ],
+          "explanation": "La cible du curling s'appelle la maison ; son centre est le bouton."
+        }
+      }
+    },
+    {
+      "id": "sport_109",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the only sport ever played on the Moon?",
+          "choices": [
+            "Baseball",
+            "Golf",
+            "Tennis",
+            "Football"
+          ],
+          "explanation": "In 1971 astronaut Alan Shepard (Apollo 14) hit golf balls on the Moon."
+        },
+        "fr": {
+          "text": "Quel est le seul sport pratiqué sur la Lune ?",
+          "choices": [
+            "Le baseball",
+            "Le golf",
+            "Le tennis",
+            "Le football"
+          ],
+          "explanation": "En 1971, l'astronaute Alan Shepard (Apollo 14) a frappé des balles de golf sur la Lune."
+        }
+      }
+    },
+    {
+      "id": "sport_110",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which country won the 2019 Rugby World Cup?",
+          "choices": [
+            "England",
+            "New Zealand",
+            "Wales",
+            "South Africa"
+          ],
+          "explanation": "The Springboks beat England 32-12 in the final in Japan."
+        },
+        "fr": {
+          "text": "Quel pays a remporté la Coupe du monde de rugby 2019 ?",
+          "choices": [
+            "L'Angleterre",
+            "La Nouvelle-Zélande",
+            "Le pays de Galles",
+            "L'Afrique du Sud"
+          ],
+          "explanation": "Les Springboks ont battu l'Angleterre 32-12 en finale au Japon."
+        }
+      }
+    },
+    {
+      "id": "sport_111",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many sets must a man win to take a Grand Slam match?",
+          "choices": [
+            "3",
+            "2",
+            "4",
+            "5"
+          ],
+          "explanation": "At Grand Slams, men play best of five sets, so three sets are needed to win."
+        },
+        "fr": {
+          "text": "Combien de sets faut-il gagner pour remporter un match masculin en Grand Chelem ?",
+          "choices": [
+            "3",
+            "2",
+            "4",
+            "5"
+          ],
+          "explanation": "En Grand Chelem, les hommes jouent au meilleur des cinq sets : il faut en gagner trois."
+        }
+      }
+    },
+    {
+      "id": "sport_112",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the regulation height of a basketball hoop?",
+          "choices": [
+            "3.05 m",
+            "2.75 m",
+            "3.50 m",
+            "2.90 m"
+          ],
+          "explanation": "The rim is set at 10 feet, which is 3.05 m above the floor."
+        },
+        "fr": {
+          "text": "Quelle est la hauteur réglementaire d'un panier de basket ?",
+          "choices": [
+            "3,05 m",
+            "2,75 m",
+            "3,50 m",
+            "2,90 m"
+          ],
+          "explanation": "L'arceau est placé à 10 pieds, soit 3,05 m du sol."
+        }
+      }
+    },
+    {
+      "id": "sport_113",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which American swimmer won four Olympic golds in Rio in 2016?",
+          "choices": [
+            "Simone Manuel",
+            "Missy Franklin",
+            "Katinka Hosszú",
+            "Katie Ledecky"
+          ],
+          "explanation": "Katie Ledecky won the 200, 400 and 800 m freestyle and the 4 × 200 m relay in Rio."
+        },
+        "fr": {
+          "text": "Quelle nageuse américaine a remporté quatre titres olympiques à Rio en 2016 ?",
+          "choices": [
+            "Simone Manuel",
+            "Missy Franklin",
+            "Katinka Hosszú",
+            "Katie Ledecky"
+          ],
+          "explanation": "Katie Ledecky a gagné le 200, le 400, le 800 m nage libre et le relais 4 × 200 m à Rio."
+        }
+      }
+    },
+    {
+      "id": "sport_114",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In judo, what is the score that ends the fight at once called?",
+          "choices": [
+            "Waza-ari",
+            "Ippon",
+            "Yuko",
+            "Shido"
+          ],
+          "explanation": "Ippon is the perfect win in judo; shido, on the other hand, is a penalty."
+        },
+        "fr": {
+          "text": "Au judo, comment s'appelle le point qui met fin immédiatement au combat ?",
+          "choices": [
+            "Waza-ari",
+            "Ippon",
+            "Yuko",
+            "Shido"
+          ],
+          "explanation": "L'ippon est la victoire parfaite au judo ; le shido, lui, est une pénalité."
+        }
+      }
+    },
+    {
+      "id": "sport_115",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Italian club is nicknamed 'the Old Lady'?",
+          "choices": [
+            "AC Milan",
+            "Inter Milan",
+            "Juventus",
+            "AS Roma"
+          ],
+          "explanation": "Juventus of Turin is nicknamed 'La Vecchia Signora', the Old Lady."
+        },
+        "fr": {
+          "text": "Quel club italien est surnommé la « Vieille Dame » ?",
+          "choices": [
+            "L'AC Milan",
+            "L'Inter Milan",
+            "La Juventus",
+            "L'AS Roma"
+          ],
+          "explanation": "La Juventus de Turin est surnommée la « Vecchia Signora », la Vieille Dame."
+        }
+      }
+    },
+    {
+      "id": "sport_116",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Formula 1 Grand Prix is raced through the streets of a principality?",
+          "choices": [
+            "Baku",
+            "Singapore",
+            "Las Vegas",
+            "Monaco"
+          ],
+          "explanation": "The Monaco Grand Prix has been raced through the streets of Monte Carlo since 1929."
+        },
+        "fr": {
+          "text": "Dans quelle ville se dispute le Grand Prix de F1 dans les rues d'une principauté ?",
+          "choices": [
+            "Bakou",
+            "Singapour",
+            "Las Vegas",
+            "Monaco"
+          ],
+          "explanation": "Le Grand Prix de Monaco se court depuis 1929 dans les rues de Monte-Carlo."
+        }
+      }
+    },
+    {
+      "id": "sport_117",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which driver won seven F1 world titles with McLaren and Mercedes?",
+          "choices": [
+            "Sebastian Vettel",
+            "Lewis Hamilton",
+            "Fernando Alonso",
+            "Max Verstappen"
+          ],
+          "explanation": "Lewis Hamilton won in 2008 with McLaren and then six times with Mercedes (2014-2020)."
+        },
+        "fr": {
+          "text": "Quel pilote a remporté sept titres de champion du monde de F1 avec Mercedes et McLaren ?",
+          "choices": [
+            "Sebastian Vettel",
+            "Lewis Hamilton",
+            "Fernando Alonso",
+            "Max Verstappen"
+          ],
+          "explanation": "Lewis Hamilton a été sacré en 2008 avec McLaren puis six fois avec Mercedes (2014-2020)."
+        }
+      }
+    },
+    {
+      "id": "sport_118",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How long does a round last in men's professional boxing?",
+          "choices": [
+            "2 minutes",
+            "4 minutes",
+            "3 minutes",
+            "5 minutes"
+          ],
+          "explanation": "In men's professional boxing each round lasts three minutes, followed by one minute of rest."
+        },
+        "fr": {
+          "text": "Combien de temps dure un round en boxe professionnelle masculine ?",
+          "choices": [
+            "2 minutes",
+            "4 minutes",
+            "3 minutes",
+            "5 minutes"
+          ],
+          "explanation": "En boxe professionnelle masculine, chaque round dure trois minutes, suivi d'une minute de repos."
+        }
+      }
+    },
+    {
+      "id": "sport_119",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which country hosted the 2014 FIFA World Cup?",
+          "choices": [
+            "Brazil",
+            "South Africa",
+            "Germany",
+            "Russia"
+          ],
+          "explanation": "The 2014 World Cup was held in Brazil; Germany won it."
+        },
+        "fr": {
+          "text": "Quel pays a accueilli la Coupe du monde de football 2014 ?",
+          "choices": [
+            "Le Brésil",
+            "L'Afrique du Sud",
+            "L'Allemagne",
+            "La Russie"
+          ],
+          "explanation": "La Coupe du monde 2014 s'est jouée au Brésil ; l'Allemagne l'a remportée."
+        }
+      }
+    },
+    {
+      "id": "sport_120",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In cricket, how many players are on a team?",
+          "choices": [
+            "9",
+            "11",
+            "13",
+            "15"
+          ],
+          "explanation": "A cricket team fields eleven players, as in football."
+        },
+        "fr": {
+          "text": "Au cricket, combien de joueurs compte une équipe ?",
+          "choices": [
+            "9",
+            "11",
+            "13",
+            "15"
+          ],
+          "explanation": "Une équipe de cricket aligne onze joueurs, comme au football."
+        }
+      }
+    },
+    {
+      "id": "sport_121",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the trophy given to the NBA champions called?",
+          "choices": [
+            "The Stanley Cup",
+            "The Vince Lombardi Trophy",
+            "The Commissioner's Trophy",
+            "The Larry O'Brien Trophy"
+          ],
+          "explanation": "The NBA champion receives the Larry O'Brien Trophy; the Vince Lombardi Trophy goes to the Super Bowl winner."
+        },
+        "fr": {
+          "text": "Quel est le nom du trophée remis au vainqueur du championnat de NBA ?",
+          "choices": [
+            "La coupe Stanley",
+            "Le trophée Vince Lombardi",
+            "La Commissioner's Trophy",
+            "Le trophée Larry O'Brien"
+          ],
+          "explanation": "Le champion NBA reçoit le trophée Larry O'Brien ; le trophée Vince Lombardi récompense le Super Bowl."
+        }
+      }
+    },
+    {
+      "id": "sport_122",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In athletics, how many events make up the decathlon?",
+          "choices": [
+            "10",
+            "7",
+            "5",
+            "12"
+          ],
+          "explanation": "The men's decathlon has ten events over two days; the women's heptathlon has seven."
+        },
+        "fr": {
+          "text": "En athlétisme, combien d'épreuves compte le décathlon ?",
+          "choices": [
+            "10",
+            "7",
+            "5",
+            "12"
+          ],
+          "explanation": "Le décathlon masculin réunit dix épreuves sur deux jours ; l'heptathlon féminin en compte sept."
+        }
+      }
+    },
+    {
+      "id": "sport_123",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which country won the most gold medals at the Beijing 2008 Olympics?",
+          "choices": [
+            "United States",
+            "Russia",
+            "China",
+            "United Kingdom"
+          ],
+          "explanation": "As host nation, China topped the table with 48 gold medals."
+        },
+        "fr": {
+          "text": "Quel pays a remporté le plus de médailles d'or aux JO de Pékin 2008 ?",
+          "choices": [
+            "Les États-Unis",
+            "La Russie",
+            "La Chine",
+            "Le Royaume-Uni"
+          ],
+          "explanation": "Pays hôte, la Chine a terminé en tête avec 48 médailles d'or."
+        }
+      }
+    },
+    {
+      "id": "sport_124",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which sport is an oval ball thrown forward by hand as a pass?",
+          "choices": [
+            "Rugby union",
+            "Rugby league",
+            "American football",
+            "Australian rules football"
+          ],
+          "explanation": "In rugby the pass must go backwards; American football allows the forward pass."
+        },
+        "fr": {
+          "text": "Quel sport se joue avec une balle ovale lancée à la main vers l'avant pour faire des passes ?",
+          "choices": [
+            "Le rugby à XV",
+            "Le rugby à XIII",
+            "Le football américain",
+            "Le football australien"
+          ],
+          "explanation": "Au rugby, la passe doit aller vers l'arrière ; le football américain autorise la passe en avant."
+        }
+      }
+    },
+    {
+      "id": "sport_125",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the men's national team tennis competition called?",
+          "choices": [
+            "The Hopman Cup",
+            "The Laver Cup",
+            "The Billie Jean King Cup",
+            "The Davis Cup"
+          ],
+          "explanation": "The Davis Cup, founded in 1900, pits men's national teams; the Billie Jean King Cup is the women's equivalent."
+        },
+        "fr": {
+          "text": "Comment s'appelle le tournoi de tennis par équipes nationales masculines ?",
+          "choices": [
+            "La Coupe Hopman",
+            "La Laver Cup",
+            "La Billie Jean King Cup",
+            "La Coupe Davis"
+          ],
+          "explanation": "La Coupe Davis, créée en 1900, oppose des équipes nationales masculines ; la Billie Jean King Cup est son équivalent féminin."
+        }
+      }
+    },
+    {
+      "id": "sport_126",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which sport does Simone Biles excel?",
+          "choices": [
+            "Athletics",
+            "Gymnastics",
+            "Swimming",
+            "Figure skating"
+          ],
+          "explanation": "Simone Biles is the most decorated gymnast in world championship history."
+        },
+        "fr": {
+          "text": "Dans quel sport s'illustre Simone Biles ?",
+          "choices": [
+            "L'athlétisme",
+            "La gymnastique",
+            "La natation",
+            "Le patinage artistique"
+          ],
+          "explanation": "Simone Biles est la gymnaste la plus titrée de l'histoire aux championnats du monde."
+        }
+      }
+    },
+    {
+      "id": "sport_127",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which country invented modern handball?",
+          "choices": [
+            "Denmark",
+            "France",
+            "Norway",
+            "Spain"
+          ],
+          "explanation": "The first rules of modern handball were written in Denmark at the end of the 19th century."
+        },
+        "fr": {
+          "text": "Quel pays a inventé le handball moderne ?",
+          "choices": [
+            "Le Danemark",
+            "La France",
+            "La Norvège",
+            "L'Espagne"
+          ],
+          "explanation": "Les premières règles du handball moderne ont été écrites au Danemark à la fin du XIXe siècle."
+        }
+      }
+    },
+    {
+      "id": "sport_128",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In tennis, what is the score of 40-40 called?",
+          "choices": [
+            "Advantage",
+            "Love game",
+            "Tie-break",
+            "Deuce"
+          ],
+          "explanation": "At 40-40 the score is 'deuce': a player then needs two points in a row to win the game."
+        },
+        "fr": {
+          "text": "Au tennis, comment appelle-t-on le score de 40-40 ?",
+          "choices": [
+            "Avantage",
+            "Jeu blanc",
+            "Tie-break",
+            "Égalité"
+          ],
+          "explanation": "À 40-40, on annonce « égalité » : il faut ensuite marquer deux points d'affilée pour gagner le jeu."
+        }
+      }
+    },
+    {
+      "id": "sport_129",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which club won the Champions League in 2023?",
+          "choices": [
+            "Real Madrid",
+            "Manchester City",
+            "Inter Milan",
+            "Bayern Munich"
+          ],
+          "explanation": "Manchester City beat Inter Milan 1-0 in Istanbul to win its first European Cup."
+        },
+        "fr": {
+          "text": "Quel club a remporté la Ligue des champions en 2023 ?",
+          "choices": [
+            "Le Real Madrid",
+            "Manchester City",
+            "L'Inter Milan",
+            "Le Bayern Munich"
+          ],
+          "explanation": "Manchester City a battu l'Inter Milan 1-0 à Istanbul pour gagner sa première C1."
+        }
+      }
+    },
+    {
+      "id": "sport_130",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How long is a standard outdoor athletics track?",
+          "choices": [
+            "400 m",
+            "200 m",
+            "300 m",
+            "500 m"
+          ],
+          "explanation": "One lap of an outdoor athletics track measures 400 m in the inside lane."
+        },
+        "fr": {
+          "text": "Quelle est la distance d'une piste d'athlétisme standard en plein air ?",
+          "choices": [
+            "400 m",
+            "200 m",
+            "300 m",
+            "500 m"
+          ],
+          "explanation": "Un tour de piste d'athlétisme en extérieur mesure 400 m à la corde."
+        }
+      }
+    },
+    {
+      "id": "sport_131",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which country has won the most Cricket World Cups?",
+          "choices": [
+            "India",
+            "England",
+            "Australia",
+            "Pakistan"
+          ],
+          "explanation": "Australia has won six ODI Cricket World Cups, a record."
+        },
+        "fr": {
+          "text": "Quel pays domine historiquement le cricket en ayant gagné le plus de Coupes du monde ?",
+          "choices": [
+            "L'Inde",
+            "L'Angleterre",
+            "L'Australie",
+            "Le Pakistan"
+          ],
+          "explanation": "L'Australie a remporté six Coupes du monde de cricket en format ODI, un record."
+        }
+      }
+    },
+    {
+      "id": "sport_132",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In rugby union, how many points is a successful conversion worth?",
+          "choices": [
+            "3",
+            "1",
+            "5",
+            "2"
+          ],
+          "explanation": "After a try, a successful conversion adds two more points."
+        },
+        "fr": {
+          "text": "Au rugby, combien de points vaut une transformation réussie ?",
+          "choices": [
+            "3",
+            "1",
+            "5",
+            "2"
+          ],
+          "explanation": "Après un essai, la transformation réussie rapporte deux points supplémentaires."
+        }
+      }
+    },
+    {
+      "id": "sport_133",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which American skier holds the record for alpine skiing World Cup wins?",
+          "choices": [
+            "Lindsey Vonn",
+            "Mikaela Shiffrin",
+            "Anja Pärson",
+            "Petra Vlhová"
+          ],
+          "explanation": "Mikaela Shiffrin broke Ingemar Stenmark's record in 2023 and has more than 100 wins."
+        },
+        "fr": {
+          "text": "Quelle skieuse américaine détient le record de victoires en Coupe du monde de ski alpin ?",
+          "choices": [
+            "Lindsey Vonn",
+            "Mikaela Shiffrin",
+            "Anja Pärson",
+            "Petra Vlhová"
+          ],
+          "explanation": "Mikaela Shiffrin a dépassé en 2023 le record d'Ingemar Stenmark et compte plus de 100 victoires."
+        }
+      }
+    },
+    {
+      "id": "sport_134",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which event do athletes use a pole to clear a bar?",
+          "choices": [
+            "Pole vault",
+            "High jump",
+            "Triple jump",
+            "Long jump"
+          ],
+          "explanation": "In the pole vault, the athlete bends a flexible pole to rise over the bar."
+        },
+        "fr": {
+          "text": "Dans quel sport les athlètes utilisent-ils une perche pour franchir une barre ?",
+          "choices": [
+            "Le saut à la perche",
+            "Le saut en hauteur",
+            "Le triple saut",
+            "Le saut en longueur"
+          ],
+          "explanation": "Au saut à la perche, l'athlète plie une perche flexible pour s'élever au-dessus de la barre."
+        }
+      }
+    },
+    {
+      "id": "sport_135",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Swedish pole vaulter has broken the world record many times since 2020?",
+          "choices": [
+            "Renaud Lavillenie",
+            "Sergey Bubka",
+            "Armand Duplantis",
+            "Sam Kendricks"
+          ],
+          "explanation": "Armand 'Mondo' Duplantis keeps raising the world record, now above 6.20 m."
+        },
+        "fr": {
+          "text": "Quel perchiste suédois a battu le record du monde à de nombreuses reprises depuis 2020 ?",
+          "choices": [
+            "Renaud Lavillenie",
+            "Sergueï Bubka",
+            "Armand Duplantis",
+            "Sam Kendricks"
+          ],
+          "explanation": "Armand « Mondo » Duplantis améliore régulièrement le record du monde, passé au-dessus de 6,20 m."
+        }
+      }
+    },
+    {
+      "id": "sport_136",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In football, how far from the goal is a penalty kick taken?",
+          "choices": [
+            "9 metres",
+            "16 metres",
+            "11 metres",
+            "13 metres"
+          ],
+          "explanation": "The penalty spot is 11 metres (12 yards) from the goal line."
+        },
+        "fr": {
+          "text": "Au football, à quelle distance du but se tire un penalty ?",
+          "choices": [
+            "9 mètres",
+            "16 mètres",
+            "11 mètres",
+            "13 mètres"
+          ],
+          "explanation": "Le point de penalty est situé à 11 mètres (12 yards) de la ligne de but."
+        }
+      }
+    },
+    {
+      "id": "sport_137",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which country won the 2022 FIFA World Cup?",
+          "choices": [
+            "Argentina",
+            "France",
+            "Brazil",
+            "Croatia"
+          ],
+          "explanation": "Lionel Messi's Argentina beat France on penalties after a 3-3 draw."
+        },
+        "fr": {
+          "text": "Quel pays a remporté la Coupe du monde de football 2022 ?",
+          "choices": [
+            "L'Argentine",
+            "La France",
+            "Le Brésil",
+            "La Croatie"
+          ],
+          "explanation": "L'Argentine de Lionel Messi a battu la France aux tirs au but après un 3-3."
+        }
+      }
+    },
+    {
+      "id": "sport_138",
+      "category": "sport",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which year did France win its first FIFA World Cup?",
+          "choices": [
+            "1984",
+            "1998",
+            "2006",
+            "1986"
+          ],
+          "explanation": "France won its first World Cup at home, beating Brazil 3-0 in 1998."
+        },
+        "fr": {
+          "text": "En quelle année la France a-t-elle remporté sa première Coupe du monde de football ?",
+          "choices": [
+            "1984",
+            "1998",
+            "2006",
+            "1986"
+          ],
+          "explanation": "La France a gagné sa première Coupe du monde à domicile, en battant le Brésil 3-0 en 1998."
+        }
+      }
+    },
+    {
+      "id": "sport_139",
+      "category": "sport",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which boxer was called Cassius Clay before changing his name?",
+          "choices": [
+            "Joe Frazier",
+            "George Foreman",
+            "Sugar Ray Leonard",
+            "Muhammad Ali"
+          ],
+          "explanation": "Cassius Clay took the name Muhammad Ali in 1964, after converting to Islam."
+        },
+        "fr": {
+          "text": "Quel boxeur s'appelait Cassius Clay avant de changer de nom ?",
+          "choices": [
+            "Joe Frazier",
+            "George Foreman",
+            "Sugar Ray Leonard",
+            "Mohamed Ali"
+          ],
+          "explanation": "Cassius Clay a pris le nom de Mohamed Ali en 1964, après sa conversion à l'islam."
+        }
+      }
+    },
+    {
+      "id": "sport_140",
+      "category": "sport",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many players does a water polo team have in the pool, including the goalkeeper?",
+          "choices": [
+            "7",
+            "6",
+            "5",
+            "8"
+          ],
+          "explanation": "Each water polo team has six field players and one goalkeeper in the pool."
+        },
+        "fr": {
+          "text": "Combien de joueurs compte une équipe de water-polo dans l'eau, gardien compris ?",
+          "choices": [
+            "7",
+            "6",
+            "5",
+            "8"
+          ],
+          "explanation": "Chaque équipe de water-polo a six joueurs de champ et un gardien dans l'eau."
+        }
+      }
+    },
+    {
+      "id": "sport_141",
+      "category": "sport",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which country won the first Six Nations Championship in 2000?",
+          "choices": [
+            "France",
+            "Wales",
+            "Ireland",
+            "England"
+          ],
+          "explanation": "England won the first Six Nations, the year Italy joined the tournament."
+        },
+        "fr": {
+          "text": "Quel pays a remporté le premier Tournoi des Six Nations en 2000 ?",
+          "choices": [
+            "La France",
+            "Le pays de Galles",
+            "L'Irlande",
+            "L'Angleterre"
+          ],
+          "explanation": "L'Angleterre a gagné le premier Six Nations, l'année de l'entrée de l'Italie dans le tournoi."
+        }
+      }
+    },
+    {
+      "id": "sport_142",
+      "category": "sport",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Ethiopian runner won the 1960 Olympic marathon in Rome barefoot?",
+          "choices": [
+            "Haile Gebreselassie",
+            "Abebe Bikila",
+            "Kenenisa Bekele",
+            "Mamo Wolde"
+          ],
+          "explanation": "Abebe Bikila won the 1960 Rome marathon barefoot, then won again in 1964."
+        },
+        "fr": {
+          "text": "Quel coureur éthiopien a gagné le marathon olympique de Rome en 1960 pieds nus ?",
+          "choices": [
+            "Haile Gebreselassie",
+            "Abebe Bikila",
+            "Kenenisa Bekele",
+            "Mamo Wolde"
+          ],
+          "explanation": "Abebe Bikila a remporté le marathon de Rome 1960 pieds nus, puis a de nouveau gagné en 1964."
+        }
+      }
+    },
+    {
+      "id": "sport_143",
+      "category": "sport",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In snooker, how many points is the black ball worth?",
+          "choices": [
+            "6",
+            "5",
+            "7",
+            "8"
+          ],
+          "explanation": "In snooker the black is worth 7 points, the pink 6, the blue 5 and the brown 4."
+        },
+        "fr": {
+          "text": "Au snooker, combien de points vaut la bille noire ?",
+          "choices": [
+            "6",
+            "5",
+            "7",
+            "8"
+          ],
+          "explanation": "Au snooker, la noire vaut 7 points, la rose 6, la bleue 5 et la marron 4."
+        }
+      }
+    },
+    {
+      "id": "sport_144",
+      "category": "sport",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which town is the velodrome where Paris-Roubaix finishes?",
+          "choices": [
+            "Lille",
+            "Compiègne",
+            "Valenciennes",
+            "Roubaix"
+          ],
+          "explanation": "Paris-Roubaix, the 'Hell of the North', finishes on the track of the Roubaix velodrome."
+        },
+        "fr": {
+          "text": "Dans quelle ville se trouve le vélodrome qui marque l'arrivée de Paris-Roubaix ?",
+          "choices": [
+            "Lille",
+            "Compiègne",
+            "Valenciennes",
+            "Roubaix"
+          ],
+          "explanation": "Paris-Roubaix, l'« Enfer du Nord », se termine sur la piste du vélodrome de Roubaix."
+        }
+      }
+    },
+    {
+      "id": "sport_145",
+      "category": "sport",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which player won 23 Grand Slam singles titles in the Open Era?",
+          "choices": [
+            "Steffi Graf",
+            "Serena Williams",
+            "Martina Navratilova",
+            "Chris Evert"
+          ],
+          "explanation": "Serena Williams won 23 Grand Slam singles titles, the Open Era record."
+        },
+        "fr": {
+          "text": "Quelle joueuse a remporté 23 titres du Grand Chelem en simple à l'ère Open ?",
+          "choices": [
+            "Steffi Graf",
+            "Serena Williams",
+            "Martina Navratilova",
+            "Chris Evert"
+          ],
+          "explanation": "Serena Williams a gagné 23 titres du Grand Chelem en simple, record de l'ère Open."
+        }
+      }
+    },
+    {
+      "id": "sport_146",
+      "category": "sport",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which year was the first Tour de France held?",
+          "choices": [
+            "1903",
+            "1896",
+            "1910",
+            "1920"
+          ],
+          "explanation": "The first Tour de France was organised in 1903 by the newspaper L'Auto; Maurice Garin won it."
+        },
+        "fr": {
+          "text": "En quelle année le premier Tour de France a-t-il eu lieu ?",
+          "choices": [
+            "1903",
+            "1896",
+            "1910",
+            "1920"
+          ],
+          "explanation": "Le premier Tour de France a été organisé en 1903 par le journal L'Auto ; Maurice Garin l'a gagné."
+        }
+      }
+    },
+    {
+      "id": "sport_147",
+      "category": "sport",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which American long jumper set a world record of 8.90 m in 1968?",
+          "choices": [
+            "Carl Lewis",
+            "Jesse Owens",
+            "Bob Beamon",
+            "Mike Powell"
+          ],
+          "explanation": "Bob Beamon jumped 8.90 m in Mexico City in 1968; his record stood until 1991."
+        },
+        "fr": {
+          "text": "Quel sauteur américain a établi en 1968 un record du monde de longueur à 8,90 m ?",
+          "choices": [
+            "Carl Lewis",
+            "Jesse Owens",
+            "Bob Beamon",
+            "Mike Powell"
+          ],
+          "explanation": "Bob Beamon a sauté 8,90 m à Mexico en 1968 ; son record a tenu jusqu'en 1991."
+        }
+      }
+    },
+    {
+      "id": "sport_148",
+      "category": "sport",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the regulation weight of the men's shot in the shot put?",
+          "choices": [
+            "7.26 kg",
+            "5 kg",
+            "6 kg",
+            "8.5 kg"
+          ],
+          "explanation": "The men's shot weighs 7.26 kg (16 pounds); the women's shot weighs 4 kg."
+        },
+        "fr": {
+          "text": "Quel est le poids réglementaire d'un poids masculin au lancer du poids ?",
+          "choices": [
+            "7,26 kg",
+            "5 kg",
+            "6 kg",
+            "8,5 kg"
+          ],
+          "explanation": "Le poids masculin pèse 7,26 kg (16 livres) ; le poids féminin pèse 4 kg."
+        }
+      }
+    },
+    {
+      "id": "sport_149",
+      "category": "sport",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which country won the first FIFA World Cup in 1930?",
+          "choices": [
+            "Argentina",
+            "Brazil",
+            "Uruguay",
+            "Italy"
+          ],
+          "explanation": "Host nation Uruguay beat Argentina 4-2 in the final of the first World Cup."
+        },
+        "fr": {
+          "text": "Quel pays a gagné la première Coupe du monde de football, en 1930 ?",
+          "choices": [
+            "L'Argentine",
+            "Le Brésil",
+            "L'Uruguay",
+            "L'Italie"
+          ],
+          "explanation": "L'Uruguay, pays hôte, a battu l'Argentine 4-2 en finale de la première Coupe du monde."
+        }
+      }
+    },
+    {
+      "id": "sport_150",
+      "category": "sport",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In golf, what is a hole completed three strokes under par called?",
+          "choices": [
+            "An eagle",
+            "An albatross",
+            "A condor",
+            "A birdie"
+          ],
+          "explanation": "A birdie is -1, an eagle -2 and an albatross -3; the condor (-4) is extremely rare."
+        },
+        "fr": {
+          "text": "Au golf, comment appelle-t-on un trou réussi en trois coups de moins que le par ?",
+          "choices": [
+            "Un eagle",
+            "Un albatros",
+            "Un condor",
+            "Un birdie"
+          ],
+          "explanation": "Un birdie est à -1, un eagle à -2 et un albatros à -3 ; le condor (-4) est rarissime."
+        }
+      }
+    },
+    {
+      "id": "sport_151",
+      "category": "sport",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Formula 1 team is the oldest still competing?",
+          "choices": [
+            "McLaren",
+            "Williams",
+            "Mercedes",
+            "Ferrari"
+          ],
+          "explanation": "Ferrari has raced in the F1 world championship since its first season, in 1950."
+        },
+        "fr": {
+          "text": "Quelle écurie de F1 est la plus ancienne encore engagée en championnat ?",
+          "choices": [
+            "McLaren",
+            "Williams",
+            "Mercedes",
+            "Ferrari"
+          ],
+          "explanation": "Ferrari participe au championnat du monde de F1 depuis sa première saison, en 1950."
+        }
+      }
+    },
+    {
+      "id": "sport_152",
+      "category": "sport",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many times was Michael Schumacher F1 world champion?",
+          "choices": [
+            "5",
+            "7",
+            "6",
+            "4"
+          ],
+          "explanation": "Michael Schumacher won seven titles: 1994 and 1995 with Benetton, then 2000 to 2004 with Ferrari."
+        },
+        "fr": {
+          "text": "Combien de fois Michael Schumacher a-t-il été champion du monde de F1 ?",
+          "choices": [
+            "5",
+            "7",
+            "6",
+            "4"
+          ],
+          "explanation": "Michael Schumacher a remporté sept titres, en 1994 et 1995 avec Benetton puis de 2000 à 2004 avec Ferrari."
+        }
+      }
+    },
+    {
+      "id": "sport_153",
+      "category": "sport",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the Japanese martial art practised with a bamboo sword called?",
+          "choices": [
+            "Aikido",
+            "Karate",
+            "Kyudo",
+            "Kendo"
+          ],
+          "explanation": "Kendo is Japanese fencing with a bamboo sword (shinai); kyudo is archery."
+        },
+        "fr": {
+          "text": "Quel est le nom japonais de l'art martial pratiqué avec un sabre en bambou ?",
+          "choices": [
+            "L'aïkido",
+            "Le karaté",
+            "Le kyudo",
+            "Le kendo"
+          ],
+          "explanation": "Le kendo est l'escrime japonaise au sabre de bambou (shinai) ; le kyudo est le tir à l'arc."
+        }
+      }
+    },
+    {
+      "id": "sport_154",
+      "category": "sport",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which hockey player is nicknamed 'The Great One'?",
+          "choices": [
+            "Mario Lemieux",
+            "Gordie Howe",
+            "Wayne Gretzky",
+            "Bobby Orr"
+          ],
+          "explanation": "Wayne Gretzky, known as 'The Great One', holds many NHL records."
+        },
+        "fr": {
+          "text": "Quel joueur de hockey est surnommé « la Merveille » (The Great One) ?",
+          "choices": [
+            "Mario Lemieux",
+            "Gordie Howe",
+            "Wayne Gretzky",
+            "Bobby Orr"
+          ],
+          "explanation": "Wayne Gretzky, surnommé « The Great One », détient de nombreux records de la LNH."
+        }
+      }
     }
   ]
 }
