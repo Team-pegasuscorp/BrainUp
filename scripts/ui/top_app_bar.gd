@@ -18,11 +18,13 @@ const PressScaleUtil = preload("res://scripts/ui/press_scale.gd")
 
 
 var _base_top_pad: int = 0
+var _margin_wash: ColorRect
 
 
 func _ready() -> void:
 	clip_contents = false
 	custom_minimum_size.y = UiTokens.HEADER_SHELL_HEIGHT
+	_ensure_margin_wash()
 	shell_margin.add_theme_constant_override("margin_left", UiTokens.HEADER_SHELL_MARGIN_H)
 	shell_margin.add_theme_constant_override("margin_right", UiTokens.HEADER_SHELL_MARGIN_H)
 	shell_margin.add_theme_constant_override("margin_top", UiTokens.HEADER_SHELL_MARGIN_TOP)
@@ -54,6 +56,38 @@ func _apply_safe_area() -> void:
 	custom_minimum_size.y = UiTokens.HEADER_SHELL_HEIGHT + SafeArea.top
 	bar.custom_minimum_size.y = UiTokens.HEADER_BANNER_HEIGHT + SafeArea.top
 	bar_margin.add_theme_constant_override("margin_top", _base_top_pad + int(SafeArea.top))
+
+
+func _ensure_margin_wash() -> void:
+	if _margin_wash != null and is_instance_valid(_margin_wash):
+		return
+	_margin_wash = ColorRect.new()
+	_margin_wash.name = "MarginWash"
+	_margin_wash.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_margin_wash.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_margin_wash.visible = false
+	add_child(_margin_wash)
+	move_child(_margin_wash, 0)
+
+
+## Tint only the gap around the floating header bar (not the app shell / Quiz canvas).
+func set_margin_wash(accent: Color = Color(0, 0, 0, 0)) -> void:
+	_ensure_margin_wash()
+	if accent.a < 0.02:
+		_margin_wash.visible = false
+		_margin_wash.material = null
+		return
+	var mat := ShaderMaterial.new()
+	mat.shader = load("res://shaders/tab_page_bg.gdshader") as Shader
+	mat.set_shader_parameter("accent", accent)
+	mat.set_shader_parameter("deep", UiTokens.BG_CREAM)
+	_margin_wash.color = Color.WHITE
+	_margin_wash.material = mat
+	_margin_wash.visible = true
+
+
+func clear_margin_wash() -> void:
+	set_margin_wash()
 
 
 func _configure_brand_row() -> void:

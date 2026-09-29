@@ -109,8 +109,7 @@ func _scope_card_bg(raised: bool = false) -> Color:
 
 
 func _tint_page_for_scope() -> void:
-	## Soft wash shift so Général (gold) and Amis (copper) read apart —
-	## page canvas and the shell gap around the floating header.
+	## Soft wash shift so Général (gold) and Amis (copper) read apart.
 	var accent := _scope_accent()
 	var bg := get_node_or_null("TabPageBackground") as ColorRect
 	if bg != null:
@@ -119,23 +118,17 @@ func _tint_page_for_scope() -> void:
 		mat.set_shader_parameter("accent", accent)
 		mat.set_shader_parameter("deep", UiTokens.BG_CREAM)
 		bg.material = mat
-	_tint_shell_around_header(accent)
+	## Only the header margin gap — never the full shell (Quiz uses that canvas).
+	var top_bar := _find_top_app_bar()
+	if top_bar != null:
+		top_bar.set_margin_wash(accent)
 
 
-func _tint_shell_around_header(accent: Color) -> void:
-	## Header shell margins show the app-shell Background through; keep it in sync.
+func _find_top_app_bar() -> TopAppBar:
 	var scene := get_tree().current_scene
 	if scene == null:
-		return
-	var shell_bg := scene.get_node_or_null("Background") as ColorRect
-	if shell_bg == null:
-		return
-	var mat := ShaderMaterial.new()
-	mat.shader = load("res://shaders/tab_page_bg.gdshader") as Shader
-	mat.set_shader_parameter("accent", accent)
-	mat.set_shader_parameter("deep", UiTokens.BG_CREAM)
-	shell_bg.color = Color.WHITE
-	shell_bg.material = mat
+		return null
+	return scene.find_child("TopAppBar", true, false) as TopAppBar
 
 
 func _scope_toggle() -> Control:

@@ -207,6 +207,10 @@ func _notify_tab_shown(page_index: int) -> void:
 	if page_index < 0 or page_index >= pages.get_child_count():
 		return
 	var page := pages.get_child(page_index)
+	var tab_id: int = ScenePaths.tab_for_page_index(page_index)
+	## Leaderboard owns header-margin wash for Général / Amis; clear elsewhere.
+	if tab_id != ScenePaths.Tab.LEADERBOARD:
+		top_app_bar.clear_margin_wash()
 	if page.has_method("on_tab_shown"):
 		page.call("on_tab_shown")
 
