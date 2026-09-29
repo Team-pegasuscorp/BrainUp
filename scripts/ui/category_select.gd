@@ -44,6 +44,7 @@ const MODES := [
 ]
 ## Room inside ScrollContainer so selected-tile neon isn't clipped.
 const TILE_GLOW_PAD := 12
+const PRIMARY_CATEGORY_ID := "general"
 
 
 func _ready() -> void:
@@ -95,7 +96,7 @@ func _build_mode_picker() -> void:
 
 	_mode_section_label = Label.new()
 	_mode_section_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_mode_section_label.add_theme_font_size_override("font_size", UiScale.font(13))
+	_mode_section_label.add_theme_font_size_override("font_size", UiScale.font(18))
 	_mode_section_label.add_theme_color_override("font_color", Color(1, 1, 1, 0.55))
 	column.add_child(_mode_section_label)
 	column.move_child(_mode_section_label, start_button.get_index())
@@ -136,7 +137,7 @@ func _build_mode_picker() -> void:
 		var name_label := Label.new()
 		name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		name_label.add_theme_font_size_override("font_size", UiScale.font(14))
+		name_label.add_theme_font_size_override("font_size", UiScale.font(17))
 		col.add_child(name_label)
 		_mode_name_labels[mode_id] = name_label
 
@@ -272,6 +273,7 @@ func refresh() -> void:
 
 func _load_categories() -> void:
 	categories = QuestionLoaderScript.get_categories(LocaleManager.get_content_locale())
+	_pin_primary_category()
 	for child in category_list.get_children():
 		child.queue_free()
 	_tile_buttons.clear()
@@ -287,8 +289,24 @@ func _load_categories() -> void:
 		category_list.add_child(tile)
 		_tile_buttons.append(tile)
 
-	_selected_index = clampi(_selected_index, 0, categories.size() - 1)
+	_selected_index = _primary_category_index()
 	_on_category_selected(_selected_index)
+
+
+func _pin_primary_category() -> void:
+	for i in range(categories.size()):
+		if str(categories[i].get("id", "")) == PRIMARY_CATEGORY_ID:
+			var primary: Dictionary = categories[i]
+			categories.remove_at(i)
+			categories.insert(0, primary)
+			return
+
+
+func _primary_category_index() -> int:
+	for i in range(categories.size()):
+		if str(categories[i].get("id", "")) == PRIMARY_CATEGORY_ID:
+			return i
+	return 0
 
 
 ## Shared daily challenge card, pinned above the category list.
@@ -575,15 +593,15 @@ func _on_daily_play_pressed() -> void:
 func _make_category_tile(index: int, category: Dictionary) -> Button:
 	var category_id := str(category.get("id", ""))
 	var accent := UiTokens.accent_for_category(category_id)
+	var featured := category_id == PRIMARY_CATEGORY_ID
 	var button := Button.new()
-	button.custom_minimum_size.y = 78
+	button.custom_minimum_size.y = 96 if featured else 78
 	button.text = ""
 	button.pressed.connect(_on_category_selected.bind(index))
 	PressScaleUtil.wire(button, self)
 
 	var margin := MarginContainer.new()
 	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	## Balanced inset; left 16 keeps the color bar +10px vs the old 6px inset.
 	margin.add_theme_constant_override("margin_left", 16)
 	margin.add_theme_constant_override("margin_top", 10)
 	margin.add_theme_constant_override("margin_right", 16)
@@ -598,14 +616,8 @@ func _make_category_tile(index: int, category: Dictionary) -> Button:
 	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	margin.add_child(row)
 
-	var swatch := ColorRect.new()
-	swatch.custom_minimum_size = Vector2(10, 0)
-	swatch.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	swatch.color = accent
-	swatch.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	row.add_child(swatch)
-
-	row.add_child(GameAssets.make_circular_icon_display(GameAssets.category_texture(category_id), "🧠", 56.0))
+	var icon_size := 64.0 if featured else 56.0
+	row.add_child(GameAssets.make_circular_icon_display(GameAssets.category_texture(category_id), "🧠", icon_size))
 
 	var labels := VBoxContainer.new()
 	labels.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -616,19 +628,21 @@ func _make_category_tile(index: int, category: Dictionary) -> Button:
 
 	var name_label := Label.new()
 	name_label.text = str(category.get("name", category_id))
-	name_label.add_theme_font_size_override("font_size", UiScale.font(22))
+	name_label.add_theme_font_size_override("font_size", UiScale.font(26 if featured else 22))
 	name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	labels.add_child(name_label)
 
 	var desc := Label.new()
 	desc.text = str(category.get("description", ""))
 	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	desc.add_theme_font_size_override("font_size", UiScale.font(13))
-	desc.add_theme_color_override("font_color", UiTokens.INK_MUTED)
+	desc.add_theme_font_size_override("font_size", UiScale.font(14 if featured else 13))
+	## Darker than INK_MUTED so descriptions stay readable on pastel tile fills.
+	desc.add_theme_color_override("font_color", Color(0.26, 0.28, 0.32, 1))
 	desc.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	labels.add_child(desc)
 
 	button.set_meta("accent", accent)
+	button.set_meta("featured", featured)
 	button.set_meta("name_label", name_label)
 	button.set_meta("desc_label", desc)
 	return button
@@ -644,23 +658,25 @@ func _on_category_selected(index: int) -> void:
 	for tile_index in range(_tile_buttons.size()):
 		var tile := _tile_buttons[tile_index]
 		var accent: Color = tile.get_meta("accent")
+		var featured: bool = tile.get_meta("featured", false)
 		var selected := tile_index == index
-		tile.add_theme_stylebox_override(
-			"normal",
-			UiStyle.category_tile_selected(accent) if selected else UiStyle.category_tile(accent)
-		)
-		tile.add_theme_stylebox_override(
-			"hover",
-			UiStyle.category_tile_selected(accent) if selected else UiStyle.category_tile(accent)
-		)
+		var style: StyleBoxFlat
+		if featured:
+			style = UiStyle.category_tile_featured(accent, selected)
+		elif selected:
+			style = UiStyle.category_tile_selected(accent)
+		else:
+			style = UiStyle.category_tile(accent)
+		tile.add_theme_stylebox_override("normal", style)
+		tile.add_theme_stylebox_override("hover", style)
 		tile.add_theme_stylebox_override(
 			"pressed",
-			UiStyle.category_tile_selected(accent)
+			UiStyle.category_tile_featured(accent, true) if featured else UiStyle.category_tile_selected(accent)
 		)
 		var name_label: Label = tile.get_meta("name_label")
 		var desc_label: Label = tile.get_meta("desc_label")
 		name_label.add_theme_color_override("font_color", UiTokens.INK)
-		desc_label.add_theme_color_override("font_color", UiTokens.INK_MUTED)
+		desc_label.add_theme_color_override("font_color", Color(0.26, 0.28, 0.32, 1))
 
 
 func _on_start_pressed() -> void:

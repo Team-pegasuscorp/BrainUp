@@ -58,11 +58,11 @@ const BRAND_ORANGE := ACCENT_QUIZ
 const HEADER_BANNER_BG := BRAND_BG
 const HEADER_BANNER_FG := TEXT_ON_ACCENT
 const HEADER_BANNER_HEIGHT: float = 112.0
-const HEADER_SHELL_HEIGHT: float = 112.0
-const HEADER_SHELL_MARGIN_H: int = 0
-const HEADER_SHELL_MARGIN_TOP: int = 0
-const HEADER_SHELL_MARGIN_BOTTOM: int = 0
-const HEADER_BAR_RADIUS: int = 0
+const HEADER_SHELL_MARGIN_H: int = 12
+const HEADER_SHELL_MARGIN_TOP: int = 8
+const HEADER_SHELL_MARGIN_BOTTOM: int = 6
+const HEADER_SHELL_HEIGHT: float = HEADER_BANNER_HEIGHT + float(HEADER_SHELL_MARGIN_TOP + HEADER_SHELL_MARGIN_BOTTOM)
+const HEADER_BAR_RADIUS: int = 28
 const HEADER_LOGO_SIZE: float = 80.0
 const HEADER_WORDMARK_WIDTH: float = 280.0
 const HEADER_WORDMARK_HEIGHT: float = 64.0
@@ -168,9 +168,9 @@ const DASH_STAT_HEIGHT: float = 106.0
 const DASH_BEST_SUBJECT_HEIGHT: float = 150.0
 const DASH_WIN_SPLIT_HEIGHT: float = 340.0
 ## Tall enough for 5 category rows (icon 54 + gaps + header/padding).
-const DASH_CATEGORY_HEIGHT: float = 360.0
+const DASH_CATEGORY_HEIGHT: float = 420.0
 ## Recent matches — snug fit for 4 rows (icon 54 + gaps + header/padding).
-const DASH_HISTORY_HEIGHT: float = 326.0
+const DASH_HISTORY_HEIGHT: float = 420.0
 ## Recent achievements — room for 3×2 grid at history-name text scale.
 const DASH_BADGES_HEIGHT: float = 410.0
 const DASH_SEASON_HEIGHT: float = 180.0

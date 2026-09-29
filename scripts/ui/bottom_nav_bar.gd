@@ -36,9 +36,12 @@ const _LABEL_KEYS := {
 	ScenePaths.Tab.PROFILE: "UI_TAB_PROFILE",
 }
 
+var _nav_label_font: Font
+
 
 func _ready() -> void:
 	clip_contents = false
+	_nav_label_font = _make_nav_label_font()
 	## Root / shell must not steal hits in the FAB float zone above the white dock.
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var dock_shell := get_node_or_null("DockShell") as MarginContainer
@@ -147,6 +150,8 @@ func _make_secondary_tab(page_index: int, tab_id: int) -> Control:
 	var label := Label.new()
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	if _nav_label_font != null:
+		label.add_theme_font_override("font", _nav_label_font)
 	column.add_child(label)
 	_tab_labels.append(label)
 
@@ -209,6 +214,8 @@ func _make_quiz_fab(page_index: int) -> Control:
 	_quiz_label.add_theme_font_size_override("font_size", UiScale.font(UiTokens.QUIZ_FAB_LABEL_SIZE))
 	_quiz_label.add_theme_color_override("font_color", Color.WHITE)
 	_quiz_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	if _nav_label_font != null:
+		_quiz_label.add_theme_font_override("font", _nav_label_font)
 	column.add_child(_quiz_label)
 
 	_quiz_button = Button.new()
@@ -366,6 +373,15 @@ func _tween_pill_alpha(alpha: float, animate: bool) -> void:
 func _on_nav_resized() -> void:
 	_center_quiz_fab()
 	_move_active_pill(false)
+
+
+func _make_nav_label_font() -> Font:
+	## Slightly heavier labels so Accueil / Classement / … read clearer on the dock.
+	var font := SystemFont.new()
+	font.font_names = PackedStringArray(["Segoe UI", "Arial", "sans-serif"])
+	font.font_weight = 700
+	font.allow_system_fallback = true
+	return font
 
 
 func _apply_translations() -> void:

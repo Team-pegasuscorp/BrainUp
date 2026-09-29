@@ -118,45 +118,64 @@ static func header_bar() -> StyleBoxFlat:
 	var style := StyleBoxFlat.new()
 	style.bg_color = UiTokens.HEADER_BANNER_BG
 	style.set_border_width_all(0)
-	style.set_corner_radius_all(0)
-	style.shadow_color = Color(0.0, 0.0, 0.04, 0.35)
-	style.shadow_size = 10
-	style.shadow_offset = Vector2(0, 3)
+	style.set_corner_radius_all(UiTokens.HEADER_BAR_RADIUS)
+	style.shadow_color = Color(0.0, 0.0, 0.04, 0.40)
+	style.shadow_size = 14
+	style.shadow_offset = Vector2(0, 4)
+	style.anti_aliasing = true
 	return style
 
 
 static func settings_chip() -> StyleBoxFlat:
 	var style := StyleBoxFlat.new()
 	var radius := int(round(UiTokens.HEADER_SETTINGS_SIZE * 0.5))
-	style.bg_color = Color(1, 1, 1, 1)
+	style.bg_color = Color(1, 1, 1, 0.12)
 	style.set_corner_radius_all(radius)
 	style.set_content_margin_all(0)
-	style.shadow_color = UiTokens.CARD_SHADOW
-	style.shadow_size = 8
-	style.shadow_offset = Vector2(0, 0)
+	style.set_border_width_all(1)
+	style.border_color = Color(1, 1, 1, 0.18)
+	style.shadow_color = Color(0, 0, 0, 0.25)
+	style.shadow_size = 6
+	style.shadow_offset = Vector2(0, 2)
+	style.anti_aliasing = true
 	return style
 
 
 static func category_tile(accent: Color) -> StyleBoxFlat:
 	var style := card(accent, 22)
-	## Soft off-white (not pure #FFF) so tiles sit quieter on the Quiz wash.
-	style.bg_color = Color(0.90, 0.92, 0.96, 1)
+	## Soft pastel of the category accent across the whole tile.
+	style.bg_color = accent.lerp(Color(0.96, 0.97, 0.99, 1.0), 0.70)
 	## Padding is owned by the tile’s inner MarginContainer.
 	style.content_margin_left = 0
 	style.content_margin_top = 0
 	style.content_margin_right = 0
 	style.content_margin_bottom = 0
+	style.set_border_width_all(1)
+	style.border_color = Color(accent.r, accent.g, accent.b, 0.28)
+	style.shadow_color = Color(accent.r, accent.g, accent.b, 0.16)
+	style.shadow_size = 10
 	return style
 
 
 static func category_tile_selected(accent: Color) -> StyleBoxFlat:
-	## Opaque soft white: a translucent tint reads as dark on the navy Quiz page.
 	var style := category_tile(accent)
-	style.bg_color = Color(0.94, 0.96, 0.99, 1)
+	## Stronger wash + solid accent rim when selected.
+	style.bg_color = accent.lerp(Color(0.98, 0.98, 1.0, 1.0), 0.52)
 	style.set_border_width_all(3)
 	style.border_color = accent
-	style.shadow_color = Color(accent.r, accent.g, accent.b, 0.22)
-	style.shadow_size = 10
+	style.shadow_color = Color(accent.r, accent.g, accent.b, 0.28)
+	style.shadow_size = 12
+	return style
+
+
+static func category_tile_featured(accent: Color, selected: bool = false) -> StyleBoxFlat:
+	## Primary category: clean white fill so it stands out among pastel tiles.
+	var style := category_tile(accent)
+	style.bg_color = Color(1, 1, 1, 1)
+	style.set_border_width_all(3 if selected else 2)
+	style.border_color = accent
+	style.shadow_color = Color(accent.r, accent.g, accent.b, 0.32 if selected else 0.20)
+	style.shadow_size = 16 if selected else 12
 	return style
 
 

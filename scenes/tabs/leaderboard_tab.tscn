@@ -25,14 +25,27 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Scroll" type="ScrollContainer" parent="MarginContainer"]
+[node name="PageColumn" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 14
+
+[node name="ScopeHost" type="VBoxContainer" parent="MarginContainer/PageColumn"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="Scroll" type="ScrollContainer" parent="MarginContainer/PageColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 3
 
-[node name="Content" type="VBoxContainer" parent="MarginContainer/Scroll"]
+[node name="Content" type="VBoxContainer" parent="MarginContainer/PageColumn/Scroll"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3

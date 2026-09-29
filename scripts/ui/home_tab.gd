@@ -41,25 +41,34 @@ func _rebuild_cards(snapshot: Dictionary) -> void:
 
 
 func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
-	## Avatar · identity · league | rank | streak (separated columns).
+	## Identity first (avatar + pseudo), then league + streak mini-tiles.
 	var panel := PanelContainer.new()
 	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	panel.custom_minimum_size.y = 168
+	panel.custom_minimum_size.y = 220
 	panel.add_theme_stylebox_override("panel", UiStyle.home_surface(true, 0))
 
-	var margin := _pad(14, 14)
+	var margin := _pad(16, 14)
 	panel.add_child(margin)
 
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 12)
+	row.add_theme_constant_override("separation", 20)
 	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
 	margin.add_child(row)
 
+	## —— Identity block (hero of the tile) ——
+	var identity := HBoxContainer.new()
+	identity.add_theme_constant_override("separation", 14)
+	identity.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	identity.size_flags_stretch_ratio = 1.4
+	identity.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	identity.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.add_child(identity)
+
 	var avatar_wrap := Control.new()
-	avatar_wrap.custom_minimum_size = Vector2(108, 108)
+	avatar_wrap.custom_minimum_size = Vector2(148, 148)
 	avatar_wrap.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	row.add_child(avatar_wrap)
+	identity.add_child(avatar_wrap)
 
 	var avatar := CircularAvatarScript.new()
 	avatar.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -67,7 +76,7 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 	avatar.ring_color = UiTokens.ACCENT_PROFILE
 	avatar.ring_color_mid = UiTokens.ACCENT_SOCIAL
 	avatar.ring_color_secondary = UiTokens.PROFILE_AVATAR_RING
-	avatar.ring_width = 3.0
+	avatar.ring_width = 3.5
 	avatar.ring_gap = 2.0
 	avatar.fill_color = UiTokens.HOME_CARD_BG_RAISED
 	if bool(snapshot.get("is_online", false)):
@@ -82,86 +91,112 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 	info.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	info.alignment = BoxContainer.ALIGNMENT_CENTER
 	info.add_theme_constant_override("separation", 6)
-	row.add_child(info)
+	identity.add_child(info)
 
 	var name_label := Label.new()
 	name_label.text = str(snapshot.get("player_name", UiTokens.DEFAULT_PLAYER_NAME))
 	name_label.clip_text = true
-	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	name_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	name_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	name_label.add_theme_font_size_override(
 		"font_size",
-		UiScale.font(UiTokens.pseudo_font_size(name_label.text, UiTokens.PSEUDO_FONT_SIZE_HOME))
+		UiScale.font(UiTokens.pseudo_font_size(name_label.text, UiTokens.PSEUDO_FONT_SIZE_HOME + 6))
 	)
-	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	name_label.add_theme_color_override("font_color", Color(1, 1, 1, 0.98))
 	info.add_child(name_label)
 
 	var country_row := HBoxContainer.new()
-	country_row.add_theme_constant_override("separation", 6)
-	country_row.alignment = BoxContainer.ALIGNMENT_CENTER
-	country_row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	country_row.add_theme_constant_override("separation", 8)
+	country_row.alignment = BoxContainer.ALIGNMENT_BEGIN
+	country_row.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	info.add_child(country_row)
 
 	var country_name := str(snapshot.get("country", "France"))
-	var flag := str(snapshot.get("country_flag", ""))
+	var flag := str(snapshot.get("country_flag", "")).strip_edges()
 	if flag.is_empty():
 		flag = CountryFlags.emoji_for(country_name)
 
+	## Clip the flag slot: Noto Color Emoji often leaves a thin leftover mark after flags.
+	var flag_slot := Control.new()
+	var flag_px := float(UiScale.font(24))
+	flag_slot.custom_minimum_size = Vector2(flag_px * 1.2, flag_px * 1.15)
+	flag_slot.clip_contents = true
+	flag_slot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	flag_slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	country_row.add_child(flag_slot)
+
 	var flag_label := Label.new()
 	flag_label.text = flag
-	flag_label.add_theme_font_size_override("font_size", UiScale.font(20))
+	flag_label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	flag_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	flag_label.add_theme_font_size_override("font_size", UiScale.font(22))
 	var emoji_font := UiFonts.emoji_font()
 	if emoji_font != null:
 		flag_label.add_theme_font_override("font", emoji_font)
 	else:
 		flag_label.add_theme_font_override("font", UiFonts.text_with_emoji())
-	country_row.add_child(flag_label)
+	flag_slot.add_child(flag_label)
 
 	var country := Label.new()
 	country.text = country_name
-	country.add_theme_font_size_override("font_size", UiScale.font(16))
+	country.clip_text = true
+	country.add_theme_font_size_override("font_size", UiScale.font(18))
 	country.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	country_row.add_child(country)
 
-	var level_label := Label.new()
-	level_label.text = "%s %s" % [
-		tr("UI_PROFILE_LEVEL_CAPTION").to_upper(),
-		str(snapshot.get("level", 1)),
-	]
-	level_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	level_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	level_label.add_theme_font_size_override("font_size", UiScale.font(15))
-	level_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-	info.add_child(level_label)
+	## Level under the flag.
+	var level_row := HBoxContainer.new()
+	level_row.add_theme_constant_override("separation", 6)
+	level_row.alignment = BoxContainer.ALIGNMENT_BEGIN
+	level_row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	info.add_child(level_row)
+
+	var level_caption := Label.new()
+	level_caption.text = tr("UI_PROFILE_LEVEL_CAPTION").to_upper()
+	level_caption.add_theme_font_size_override("font_size", UiScale.font(14))
+	level_caption.add_theme_color_override("font_color", UiTokens.PROFILE_TITLE_CAPS)
+	level_row.add_child(level_caption)
+
+	var level_num := Label.new()
+	level_num.text = str(snapshot.get("level", 1))
+	level_num.add_theme_font_size_override("font_size", UiScale.font(26))
+	level_num.add_theme_color_override("font_color", Color(1, 1, 1, 0.95))
+	level_row.add_child(level_num)
 
 	var ranking: Dictionary = snapshot.get("ranking", {})
 
-	row.add_child(_summary_divider())
+	## —— League + streak as mini tiles ——
+	var stats := HBoxContainer.new()
+	stats.add_theme_constant_override("separation", 16)
+	stats.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	stats.size_flags_stretch_ratio = 1.0
+	stats.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	stats.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.add_child(stats)
 
-	var league_col := VBoxContainer.new()
-	league_col.alignment = BoxContainer.ALIGNMENT_CENTER
-	league_col.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	league_col.custom_minimum_size.x = 96
-	league_col.add_theme_constant_override("separation", 6)
-	row.add_child(league_col)
+	var league_tile := _summary_stat_tile()
+	stats.add_child(league_tile)
+	var league_body := league_tile.get_child(0) as VBoxContainer
 
 	var league_title := Label.new()
 	league_title.text = tr(str(ranking.get("league_key", "UI_LEAGUE_BRONZE"))).to_upper()
 	league_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	league_title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	league_title.add_theme_font_size_override("font_size", UiScale.font(16))
+	league_title.add_theme_font_size_override("font_size", UiScale.font(15))
 	league_title.add_theme_color_override("font_color", UiTokens.ACCENT_HOME)
-	league_col.add_child(league_title)
+	league_body.add_child(league_title)
 
 	var points_row := HBoxContainer.new()
 	points_row.add_theme_constant_override("separation", 4)
 	points_row.alignment = BoxContainer.ALIGNMENT_CENTER
 	points_row.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	league_col.add_child(points_row)
+	league_body.add_child(points_row)
 
 	var trophy := Label.new()
 	trophy.text = "🏆"
-	trophy.add_theme_font_size_override("font_size", UiScale.font(18))
+	trophy.add_theme_font_size_override("font_size", UiScale.font(20))
 	if emoji_font != null:
 		trophy.add_theme_font_override("font", emoji_font)
 	points_row.add_child(trophy)
@@ -169,50 +204,21 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 	var points := Label.new()
 	points.text = _format_int(int(ranking.get("points", 0)))
 	points.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	points.add_theme_font_size_override("font_size", UiScale.font(20))
+	points.add_theme_font_size_override("font_size", UiScale.font(22))
 	points.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	points_row.add_child(points)
 
-	row.add_child(_summary_divider())
-
-	var rank_col := VBoxContainer.new()
-	rank_col.alignment = BoxContainer.ALIGNMENT_CENTER
-	rank_col.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	rank_col.custom_minimum_size.x = 88
-	rank_col.add_theme_constant_override("separation", 4)
-	row.add_child(rank_col)
-
-	var rank_value := Label.new()
-	rank_value.text = "#%s" % _format_int(int(ranking.get("rank", 0)))
-	rank_value.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	rank_value.add_theme_font_size_override("font_size", UiScale.font(18))
-	rank_value.add_theme_color_override("font_color", UiTokens.ACCENT_LEADERBOARD)
-	rank_col.add_child(rank_value)
-
-	var rank_caption := Label.new()
-	rank_caption.text = tr("UI_HOME_RANK")
-	rank_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	rank_caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	rank_caption.add_theme_font_size_override("font_size", UiScale.font(12))
-	rank_caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-	rank_col.add_child(rank_caption)
-
-	row.add_child(_summary_divider())
-
-	var streak_col := VBoxContainer.new()
-	streak_col.alignment = BoxContainer.ALIGNMENT_CENTER
-	streak_col.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	streak_col.custom_minimum_size.x = 88
-	streak_col.add_theme_constant_override("separation", 4)
-	row.add_child(streak_col)
+	var streak_tile := _summary_stat_tile()
+	stats.add_child(streak_tile)
+	var streak_body := streak_tile.get_child(0) as VBoxContainer
 
 	var streak_value := Label.new()
 	## Consecutive days played: the habit the home screen should push.
 	streak_value.text = str(snapshot.get("day_streak", 0))
 	streak_value.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	streak_value.add_theme_font_size_override("font_size", UiScale.font(18))
+	streak_value.add_theme_font_size_override("font_size", UiScale.font(24))
 	streak_value.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-	streak_col.add_child(streak_value)
+	streak_body.add_child(streak_value)
 
 	var streak_caption := Label.new()
 	## Streak alive but nothing played yet today: nudge before it breaks at midnight.
@@ -220,55 +226,76 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 	streak_caption.text = tr("UI_HOME_DAY_STREAK_RISK" if at_risk else "UI_HOME_DAY_STREAK")
 	streak_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	streak_caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	streak_caption.add_theme_font_size_override("font_size", UiScale.font(12))
+	streak_caption.add_theme_font_size_override("font_size", UiScale.font(13))
 	streak_caption.add_theme_color_override(
 		"font_color",
-		Color(1.0, 0.62, 0.20) if at_risk else UiTokens.PROFILE_TEXT
+		Color(1.0, 0.62, 0.20) if at_risk else UiTokens.PROFILE_TEXT_MUTED
 	)
-	streak_col.add_child(streak_caption)
+	streak_body.add_child(streak_caption)
 
 	return panel
 
 
-func _summary_divider() -> Control:
-	var wrap := CenterContainer.new()
-	wrap.custom_minimum_size = Vector2(12, 0)
-	wrap.size_flags_horizontal = 0
-	wrap.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	wrap.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var line := Panel.new()
-	line.custom_minimum_size = Vector2(2, 96)
-	line.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	line.mouse_filter = Control.MOUSE_FILTER_IGNORE
+func _summary_stat_tile() -> PanelContainer:
+	var tile := PanelContainer.new()
+	tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	tile.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	tile.custom_minimum_size = Vector2(108, 96)
 	var style := StyleBoxFlat.new()
-	style.bg_color = Color(1, 1, 1, 0.18)
-	style.set_corner_radius_all(1)
-	line.add_theme_stylebox_override("panel", style)
-	wrap.add_child(line)
-	return wrap
+	style.bg_color = Color(1, 1, 1, 0.08)
+	style.set_border_width_all(1)
+	style.border_color = Color(1, 1, 1, 0.14)
+	style.set_corner_radius_all(16)
+	style.shadow_size = 0
+	style.shadow_color = Color(0, 0, 0, 0)
+	style.set_content_margin_all(10)
+	tile.add_theme_stylebox_override("panel", style)
+	var body := VBoxContainer.new()
+	body.alignment = BoxContainer.ALIGNMENT_CENTER
+	body.add_theme_constant_override("separation", 6)
+	body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	tile.add_child(body)
+	return tile
 
 
 func _make_daily_challenges_card() -> PanelContainer:
+	## Featured home block — stronger wash so daily quests read as the day’s call to action.
 	var panel := PanelContainer.new()
 	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	panel.add_theme_stylebox_override("panel", UiStyle.home_surface(true, 0))
+	var style := UiStyle.home_surface(true, 0)
+	style.bg_color = Color(0.075, 0.255, 0.245, 1)
+	style.set_border_width_all(2)
+	style.border_color = Color(UiTokens.ACCENT_HOME.r, UiTokens.ACCENT_HOME.g, UiTokens.ACCENT_HOME.b, 0.55)
+	style.shadow_color = Color(UiTokens.ACCENT_HOME.r, UiTokens.ACCENT_HOME.g, UiTokens.ACCENT_HOME.b, 0.38)
+	style.shadow_size = 18
+	style.shadow_offset = Vector2(0, 5)
+	panel.add_theme_stylebox_override("panel", style)
 
-	var margin := _pad(14, 12)
+	var margin := _pad(16, 16)
 	panel.add_child(margin)
 	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 12)
+	vbox.add_theme_constant_override("separation", 14)
 	margin.add_child(vbox)
 
 	var header := HBoxContainer.new()
-	header.add_theme_constant_override("separation", 8)
+	header.add_theme_constant_override("separation", 10)
 	header.alignment = BoxContainer.ALIGNMENT_CENTER
 	vbox.add_child(header)
+
+	var fire := Label.new()
+	fire.text = "🔥"
+	fire.add_theme_font_size_override("font_size", UiScale.font(26))
+	var emoji_font := UiFonts.emoji_font()
+	if emoji_font != null:
+		fire.add_theme_font_override("font", emoji_font)
+	header.add_child(fire)
 
 	var title := Label.new()
 	title.text = tr("UI_HOME_DAILY_CHALLENGES").to_upper()
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	title.add_theme_font_size_override("font_size", UiScale.font(20))
-	title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	title.add_theme_color_override("font_color", Color(1, 1, 1, 0.98))
 	header.add_child(title)
 
 	var seconds := DailyQuests.seconds_until_reset()
@@ -276,14 +303,56 @@ func _make_daily_challenges_card() -> PanelContainer:
 	reset.text = tr("UI_DAILY_RESET_IN").format({
 		"time": "%dh%02d" % [int(seconds / 3600.0), int((seconds % 3600) / 60.0)],
 	})
-	reset.add_theme_font_size_override("font_size", UiScale.font(14))
-	reset.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+	reset.add_theme_font_size_override("font_size", UiScale.font(15))
+	reset.add_theme_color_override("font_color", UiTokens.ACCENT_HOME)
 	header.add_child(reset)
 
+	var quest_index := 0
 	for row in DailyQuests.get_quests(LocaleManager.get_content_locale()):
-		vbox.add_child(_make_daily_challenge_row(row))
+		vbox.add_child(_make_daily_challenge_featured_row(row, quest_index))
+		quest_index += 1
 
 	return panel
+
+
+## Soft but clearly distinct pastels for home inset rows (défis / succès).
+const _HOME_SUBTILE_WASH := [
+	Color(0.42, 0.82, 0.78, 1), ## teal
+	Color(0.98, 0.72, 0.38, 1), ## amber
+	Color(0.62, 0.58, 0.95, 1), ## violet
+]
+
+
+func _make_home_subtile(
+	content: Control,
+	slot: int = 0,
+	accent_override: Color = Color(0, 0, 0, 0),
+	softness: float = 0.72
+) -> PanelContainer:
+	var wash: Color
+	if accent_override.a > 0.02:
+		## Achievement / result tint: very light pastel of the accent.
+		wash = accent_override
+	else:
+		wash = _HOME_SUBTILE_WASH[slot % _HOME_SUBTILE_WASH.size()]
+	var tile := PanelContainer.new()
+	tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var style := StyleBoxFlat.new()
+	style.bg_color = wash.lerp(Color(0.97, 0.98, 0.99, 1.0), softness)
+	style.set_corner_radius_all(14)
+	style.set_border_width_all(1)
+	style.border_color = Color(wash.r, wash.g, wash.b, 0.28 if softness > 0.8 else 0.40)
+	style.content_margin_left = 12
+	style.content_margin_right = 12
+	style.content_margin_top = 10
+	style.content_margin_bottom = 10
+	tile.add_theme_stylebox_override("panel", style)
+	tile.add_child(content)
+	return tile
+
+
+func _make_daily_challenge_featured_row(data: Dictionary, slot: int = 0) -> PanelContainer:
+	return _make_home_subtile(_make_daily_challenge_row(data), slot)
 
 
 func _make_near_achievements_card(snapshot: Dictionary) -> PanelContainer:
@@ -315,7 +384,10 @@ func _make_near_achievements_card(snapshot: Dictionary) -> PanelContainer:
 		vbox.add_child(_empty_line(tr("UI_HOME_NEAR_ACHIEVEMENTS_EMPTY")))
 	else:
 		for row in near:
-			vbox.add_child(_make_near_achievement_row(row))
+			var accent: Color = row.get("accent", UiTokens.ACCENT_HOME)
+			if typeof(accent) != TYPE_COLOR:
+				accent = UiTokens.ACCENT_HOME
+			vbox.add_child(_make_home_subtile(_make_near_achievement_row(row), -1, accent))
 
 	return panel
 
@@ -515,14 +587,14 @@ func _make_near_achievement_row(data: Dictionary) -> Control:
 	title.text = tr(str(data.get("title_key", "")))
 	title.clip_text = true
 	title.add_theme_font_size_override("font_size", UiScale.font(18))
-	title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	title.add_theme_color_override("font_color", UiTokens.INK)
 	mid.add_child(title)
 
 	var desc := Label.new()
 	desc.text = tr(str(data.get("desc_key", "")))
 	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	desc.add_theme_font_size_override("font_size", UiScale.font(16))
-	desc.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+	desc.add_theme_color_override("font_color", Color(0.28, 0.30, 0.34, 1))
 	mid.add_child(desc)
 
 	var progress_row := HBoxContainer.new()
@@ -540,7 +612,7 @@ func _make_near_achievement_row(data: Dictionary) -> Control:
 		"target": target,
 	})
 	ratio_label.add_theme_font_size_override("font_size", UiScale.font(15))
-	ratio_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	ratio_label.add_theme_color_override("font_color", UiTokens.INK)
 	progress_row.add_child(ratio_label)
 
 	var bar := ProgressBar.new()
@@ -571,7 +643,7 @@ func _make_near_achievement_row(data: Dictionary) -> Control:
 	var remaining := Label.new()
 	remaining.text = tr("UI_HOME_NEAR_REMAINING").format({"n": maxi(target - current, 0)})
 	remaining.add_theme_font_size_override("font_size", UiScale.font(15))
-	remaining.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	remaining.add_theme_color_override("font_color", UiTokens.INK)
 	remaining_row.add_child(remaining)
 
 	return row
@@ -602,15 +674,15 @@ func _make_daily_challenge_row(data: Dictionary) -> Control:
 	var title := Label.new()
 	title.text = str(data.get("title", ""))
 	title.clip_text = true
-	title.add_theme_font_size_override("font_size", UiScale.font(18))
-	title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	title.add_theme_font_size_override("font_size", UiScale.font(20))
+	title.add_theme_color_override("font_color", UiTokens.INK)
 	mid.add_child(title)
 
 	var desc := Label.new()
 	desc.text = str(data.get("desc", ""))
 	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	desc.add_theme_font_size_override("font_size", UiScale.font(16))
-	desc.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+	desc.add_theme_color_override("font_color", Color(0.28, 0.30, 0.34, 1))
 	mid.add_child(desc)
 
 	var progress_row := HBoxContainer.new()
@@ -628,17 +700,17 @@ func _make_daily_challenge_row(data: Dictionary) -> Control:
 		"target": target,
 	})
 	ratio_label.add_theme_font_size_override("font_size", UiScale.font(15))
-	ratio_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	ratio_label.add_theme_color_override("font_color", UiTokens.INK)
 	progress_row.add_child(ratio_label)
 
 	var bar := ProgressBar.new()
-	bar.custom_minimum_size = Vector2(0, 8)
+	bar.custom_minimum_size = Vector2(0, 10)
 	bar.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	bar.max_value = 1.0
 	bar.value = clampf(float(current) / float(target), 0.0, 1.0)
 	bar.show_percentage = false
 	bar.add_theme_stylebox_override("background", UiStyle.progress_bg())
-	var fill := UiStyle.progress_fill(UiTokens.ACCENT_HOME)
+	var fill := UiStyle.progress_fill(data.get("accent", UiTokens.ACCENT_HOME))
 	fill.set_corner_radius_all(6)
 	bar.add_theme_stylebox_override("fill", fill)
 	progress_row.add_child(bar)
@@ -674,7 +746,7 @@ func _make_xp_badge(xp_amount: int) -> Control:
 	var xp := Label.new()
 	xp.text = tr("UI_HOME_DAILY_CHALLENGE_XP").format({"xp": xp_amount})
 	xp.add_theme_font_size_override("font_size", UiScale.font(15))
-	xp.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	xp.add_theme_color_override("font_color", UiTokens.INK)
 	xp_row.add_child(xp)
 	return xp_row
 
@@ -753,7 +825,7 @@ func _make_last_match_card(snapshot: Dictionary) -> PanelContainer:
 	var margin := _pad(14, 12)
 	panel.add_child(margin)
 	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 8)
+	vbox.add_theme_constant_override("separation", 10)
 	margin.add_child(vbox)
 
 	var header := HBoxContainer.new()
@@ -769,7 +841,7 @@ func _make_last_match_card(snapshot: Dictionary) -> PanelContainer:
 	header.add_child(title)
 
 	var list := VBoxContainer.new()
-	list.add_theme_constant_override("separation", 0)
+	list.add_theme_constant_override("separation", 10)
 	list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	vbox.add_child(list)
 
@@ -788,9 +860,9 @@ func _make_last_match_card(snapshot: Dictionary) -> PanelContainer:
 				break
 			if typeof(row) != TYPE_DICTIONARY:
 				continue
-			if count > 0:
-				list.add_child(_history_divider())
-			list.add_child(_history_row(row))
+			var won: bool = bool(row.get("won", false))
+			var wash := Color(0.20, 0.86, 0.48, 1) if won else Color(0.96, 0.26, 0.32, 1)
+			list.add_child(_make_home_subtile(_history_row(row), -1, wash, 0.78))
 			count += 1
 
 	return panel
@@ -808,14 +880,19 @@ func _history_divider() -> Control:
 
 func _history_row(row: Dictionary) -> Control:
 	var won: bool = row.get("won", false)
+	## Saturated accents for the thin bar; darker ink for labels on pastel tiles.
 	var win_color := Color(0.20, 0.86, 0.48, 1)
 	var loss_color := Color(0.96, 0.26, 0.32, 1)
-	var result_color := win_color if won else loss_color
+	var result_color := (
+		Color(0.06, 0.42, 0.26, 1) if won else Color(0.68, 0.10, 0.16, 1)
+	)
 	var cat_accent := UiTokens.accent_for_category(str(row.get("category_id", "")))
+	var ink := Color(0.10, 0.12, 0.15, 1)
+	var ink_muted := Color(0.28, 0.30, 0.34, 1)
 
 	var row_wrap := MarginContainer.new()
-	row_wrap.add_theme_constant_override("margin_top", 8)
-	row_wrap.add_theme_constant_override("margin_bottom", 8)
+	row_wrap.add_theme_constant_override("margin_top", 0)
+	row_wrap.add_theme_constant_override("margin_bottom", 0)
 	row_wrap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
 	var hbox := HBoxContainer.new()
@@ -829,7 +906,7 @@ func _history_row(row: Dictionary) -> Control:
 	bar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var bar_style := StyleBoxFlat.new()
-	bar_style.bg_color = cat_accent
+	bar_style.bg_color = win_color if won else loss_color
 	bar_style.set_corner_radius_all(2)
 	bar.add_theme_stylebox_override("panel", bar_style)
 	hbox.add_child(bar)
@@ -860,7 +937,7 @@ func _history_row(row: Dictionary) -> Control:
 	initial.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	initial.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	initial.add_theme_font_size_override("font_size", UiScale.font(20))
-	initial.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	initial.add_theme_color_override("font_color", ink)
 	avatar_slot.add_child(initial)
 	if GameAssets.wire_demo_avatar_to_control(avatar_bg, opponent_name):
 		av_style.bg_color = Color(0, 0, 0, 0)
@@ -879,14 +956,14 @@ func _history_row(row: Dictionary) -> Control:
 		"font_size",
 		UiScale.font(UiTokens.pseudo_font_size(opponent_name))
 	)
-	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	name_label.add_theme_color_override("font_color", ink)
 	left.add_child(name_label)
 
 	var cat := Label.new()
 	cat.text = str(row.get("category_name", ""))
 	cat.clip_text = true
 	cat.add_theme_font_size_override("font_size", UiScale.font(15))
-	cat.add_theme_color_override("font_color", cat_accent)
+	cat.add_theme_color_override("font_color", ink_muted)
 	left.add_child(cat)
 
 	var mid := HBoxContainer.new()
@@ -931,7 +1008,7 @@ func _history_row(row: Dictionary) -> Control:
 	age.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	age.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	age.add_theme_font_size_override("font_size", UiScale.font(14))
-	age.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+	age.add_theme_color_override("font_color", ink_muted)
 	right.add_child(age)
 	return row_wrap
 

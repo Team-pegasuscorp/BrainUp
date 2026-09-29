@@ -228,6 +228,7 @@ UI_PROFILE_EDIT,Edit profile,Modifier le profil
 UI_PROFILE_EMAIL_VERIFIED,Email verified,Adresse e-mail vérifiée
 UI_PROFILE_XP_TO_NEXT,{xp} XP to next level,{xp} XP avant le prochain niveau
 UI_PROFILE_LEVEL_CAPTION,Level,Niveau
+UI_PROFILE_ACCURACY_CAPTION,Accuracy,Précision
 UI_PROFILE_NEXT_LEVEL,Next level: {xp} XP,Prochain niveau : {xp} XP
 UI_PROFILE_XP_LABEL,XP,XP
 UI_PROFILE_LEAGUE,League,Ligue
@@ -237,12 +238,12 @@ UI_PROFILE_STAT_WINRATE,Winrate,Winrate
 UI_PROFILE_STAT_STREAK,Max streak,Série max
 UI_PROFILE_STAT_RANK,Ranking,Classement
 UI_PROFILE_RANKING_TITLE,Ranking points,Points de classement
-UI_PROFILE_CATEGORIES_MASTERED,Mastered categories,Catégories maîtrisées
+UI_PROFILE_CATEGORIES_MASTERED,Categories,Catégories
 UI_PROFILE_CATEGORIES_ALL,All categories,Toutes les catégories
 UI_PROFILE_BEST_SUBJECT,Best subject,Meilleur sujet
 UI_PROFILE_BEST_SUBJECT_ACC,{percent}% correct answers,{percent}% de bonnes réponses
 UI_SOCIAL_BEST_CATEGORY,Best category,Meilleure catégorie
-UI_PROFILE_WIN_SPLIT,Wins breakdown,Répartitions des victoires
+UI_PROFILE_WIN_SPLIT,Wins,Victoires
 UI_PROFILE_WIN_SPLIT_HINT,Tap a slice to see the category,Touchez une part pour voir la catégorie
 UI_PROFILE_WINS_COUNT,{count} wins,{count} victoires
 UI_PROFILE_WIN,Win,Victoire

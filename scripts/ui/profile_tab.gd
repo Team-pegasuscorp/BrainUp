@@ -172,9 +172,8 @@ func _rebuild_sections() -> void:
 	UiScale.identity = false
 	UiScale.compact = true
 	sections.add_child(_build_stats_strip())
-	sections.add_child(_build_categories_tile())
-	sections.add_child(_build_best_subject_tile())
 	sections.add_child(_build_win_distribution_tile())
+	sections.add_child(_build_categories_tile())
 	sections.add_child(_build_badges_tile())
 	sections.add_child(_build_season_tile())
 	UiScale.compact = false
@@ -195,7 +194,7 @@ func _track_tween(tween: Tween) -> Tween:
 
 func _build_hero() -> PanelContainer:
 	## Mock layout: avatar | identity+XP | divider | league column (~1/4 width).
-	var panel := _tile(UiTokens.ACCENT_PROFILE, true)
+	var panel := _tile()
 	panel.custom_minimum_size.y = UiTokens.DASH_HERO_HEIGHT
 	var margin := _pad(16, 16)
 	panel.add_child(margin)
@@ -303,66 +302,49 @@ func _build_hero() -> PanelContainer:
 	country.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	country_row.add_child(country)
 
-	var spacer := Control.new()
-	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	spacer.custom_minimum_size.y = 6
-	info.add_child(spacer)
-
-	var bottom := HBoxContainer.new()
-	bottom.add_theme_constant_override("separation", 14)
-	bottom.size_flags_vertical = Control.SIZE_SHRINK_END
-	bottom.alignment = BoxContainer.ALIGNMENT_CENTER
-	info.add_child(bottom)
-
-	## Level column: caption + number (number centered under "NIVEAU")
-	var level_col := VBoxContainer.new()
-	level_col.add_theme_constant_override("separation", 0)
-	level_col.alignment = BoxContainer.ALIGNMENT_CENTER
-	level_col.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	## Level block under the flag — caption left of the number.
+	var level_row := HBoxContainer.new()
+	level_row.add_theme_constant_override("separation", 8)
+	level_row.alignment = BoxContainer.ALIGNMENT_CENTER
+	level_row.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	var level_wrap := MarginContainer.new()
 	level_wrap.add_theme_constant_override("margin_left", 5)
-	level_wrap.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	level_wrap.add_child(level_col)
-	bottom.add_child(level_wrap)
+	level_wrap.add_theme_constant_override("margin_top", 4)
+	level_wrap.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	level_wrap.add_child(level_row)
+	info.add_child(level_wrap)
 
 	var level_caption := Label.new()
 	level_caption.text = tr("UI_PROFILE_LEVEL_CAPTION").to_upper()
-	level_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	level_caption.add_theme_font_size_override("font_size", UiScale.font(14))
+	level_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	level_caption.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	level_caption.add_theme_font_size_override("font_size", UiScale.font(16))
 	level_caption.add_theme_color_override("font_color", UiTokens.PROFILE_TITLE_CAPS)
-	level_col.add_child(level_caption)
+	level_row.add_child(level_caption)
 
 	var level_num := Label.new()
 	level_num.text = str(_profile_data.get("level", 1))
-	level_num.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	level_num.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	level_num.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	level_num.add_theme_font_size_override("font_size", UiScale.font(34))
 	level_num.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-	## Keep a readable gap under the larger "NIVEAU" caption.
-	var level_num_wrap := MarginContainer.new()
-	level_num_wrap.add_theme_constant_override("margin_top", -2)
-	level_num_wrap.add_child(level_num)
-	level_col.add_child(level_num_wrap)
+	level_row.add_child(level_num)
 
-	## Keep XP block slightly nudged right of the level column.
-	var xp_nudge := Control.new()
-	xp_nudge.custom_minimum_size.x = 10
-	xp_nudge.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	bottom.add_child(xp_nudge)
-
-	## XP column: label, bar, next level — centered with level block.
+	## XP block under the level.
 	var xp_col := VBoxContainer.new()
 	xp_col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	xp_col.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	xp_col.add_theme_constant_override("separation", 5)
-	xp_col.alignment = BoxContainer.ALIGNMENT_CENTER
-	bottom.add_child(xp_col)
+	xp_col.alignment = BoxContainer.ALIGNMENT_BEGIN
+	var xp_wrap := MarginContainer.new()
+	xp_wrap.add_theme_constant_override("margin_left", 5)
+	xp_wrap.add_theme_constant_override("margin_top", 6)
+	xp_wrap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	xp_wrap.add_child(xp_col)
+	info.add_child(xp_wrap)
 
 	var xp_line := HBoxContainer.new()
 	xp_line.add_theme_constant_override("separation", 6)
-	var xp_line_wrap := MarginContainer.new()
-	xp_line_wrap.add_theme_constant_override("margin_top", -5)
-	xp_line_wrap.add_child(xp_line)
-	xp_col.add_child(xp_line_wrap)
+	xp_col.add_child(xp_line)
 
 	var xp_tag := Label.new()
 	xp_tag.text = tr("UI_PROFILE_XP_LABEL")
@@ -380,9 +362,8 @@ func _build_hero() -> PanelContainer:
 	xp_line.add_child(xp_values)
 
 	_xp_bar = ProgressBar.new()
-	## Shorter bar (length), keep a readable thickness.
-	_xp_bar.custom_minimum_size = Vector2(148, 12)
-	_xp_bar.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	_xp_bar.custom_minimum_size = Vector2(0, 12)
+	_xp_bar.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_xp_bar.max_value = 1.0
 	_xp_bar.value = 0.0
 	_xp_bar.show_percentage = false
@@ -521,14 +502,14 @@ func _fit_hero_mock_proportions(
 
 
 func _build_stats_strip() -> PanelContainer:
-	## Mock: icon left + value/label right, thin vertical dividers.
+	## Four inset sub-tiles (games / wins / winrate / streak) instead of divider rules.
 	## Height only (user-requested) — never change tile/page width here.
 	var panel := _tile()
 	panel.custom_minimum_size.y = UiTokens.DASH_STAT_HEIGHT
-	var margin := _pad(10, 14)
+	var margin := _pad(10, 12)
 	panel.add_child(margin)
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 0)
+	row.add_theme_constant_override("separation", 8)
 	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
 	margin.add_child(row)
@@ -539,32 +520,29 @@ func _build_stats_strip() -> PanelContainer:
 		{"value": "%.0f%%" % _profile_data.get("win_rate_percent", 0.0), "label": tr("UI_PROFILE_STAT_WINRATE"), "color": Color(1.0, 0.55, 0.18)},
 		{"value": str(_profile_data.get("best_win_streak", 0)), "label": tr("UI_PROFILE_STAT_STREAK"), "color": Color(1.0, 0.42, 0.28)},
 	]
-	for i in range(items.size()):
-		if i > 0:
-			row.add_child(_stat_strip_divider())
-		var item: Dictionary = items[i]
-		row.add_child(_stat_icon_cell(str(item.value), str(item.label), item.color))
+	for item in items:
+		row.add_child(_stat_subtile(str(item.value), str(item.label), item.color as Color))
 
 	_animated_nodes.append(panel)
 	return panel
 
 
-func _stat_strip_divider() -> Control:
-	## Non-expanding vertical rule between each stat (mock).
-	var wrap := CenterContainer.new()
-	wrap.custom_minimum_size = Vector2(14, 69)
-	wrap.size_flags_horizontal = 0 ## SIZE_FILL only — never expand/shrink away.
-	wrap.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	wrap.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var line := Panel.new()
-	line.custom_minimum_size = Vector2(2, 65)
-	line.mouse_filter = Control.MOUSE_FILTER_IGNORE
+func _stat_subtile(value: String, label: String, accent: Color) -> PanelContainer:
+	var tile := PanelContainer.new()
+	tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	tile.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	var style := StyleBoxFlat.new()
-	style.bg_color = Color(1, 1, 1, 0.22)
-	style.set_corner_radius_all(1)
-	line.add_theme_stylebox_override("panel", style)
-	wrap.add_child(line)
-	return wrap
+	style.bg_color = UiTokens.PROFILE_CARD_BG.lerp(accent, 0.22)
+	style.set_corner_radius_all(14)
+	style.set_border_width_all(1)
+	style.border_color = Color(accent.r, accent.g, accent.b, 0.32)
+	style.content_margin_left = 4
+	style.content_margin_right = 4
+	style.content_margin_top = 6
+	style.content_margin_bottom = 6
+	tile.add_theme_stylebox_override("panel", style)
+	tile.add_child(_stat_icon_cell(value, label, accent))
+	return tile
 
 
 func _stat_icon_cell(value: String, label: String, _color: Color) -> Control:
@@ -620,11 +598,11 @@ func _build_categories_tile() -> PanelContainer:
 	## Full-width tile: header + rows [icon | name/bar | NIVEAU+n | badge].
 	var panel := _tile()
 	panel.custom_minimum_size.y = UiTokens.DASH_CATEGORY_HEIGHT
-	var root := _tile_body(panel, tr("UI_PROFILE_CATEGORIES_MASTERED"), true, _open_categories_page)
+	var root := _tile_body(panel, _categories_section_title(), true, _open_categories_page)
 	root.add_theme_constant_override("separation", 13)
 	_set_section_title_size(root, 20)
 	var list := VBoxContainer.new()
-	list.add_theme_constant_override("separation", 14)
+	list.add_theme_constant_override("separation", 10)
 	list.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	root.add_child(list)
 
@@ -645,12 +623,24 @@ func _build_categories_tile() -> PanelContainer:
 			continue
 		if int(row.get("games_played", 0)) <= 0 and not _profile_data.get("is_demo", false):
 			continue
-		list.add_child(_category_mastery_row(row))
+		list.add_child(_category_mastery_subtile(row))
 		shown += 1
 	if shown == 0:
 		list.add_child(_empty(tr("UI_PROFILE_NO_CATEGORIES")))
 	_animated_nodes.append(panel)
 	return panel
+
+
+func _categories_section_title() -> String:
+	var translated := tr("UI_PROFILE_CATEGORIES_MASTERED")
+	## Prefer short title even if .translation still has the old “maîtrisées” string.
+	if (
+		translated == "UI_PROFILE_CATEGORIES_MASTERED"
+		or translated.contains("maîtris")
+		or translated.to_lower().contains("mastered")
+	):
+		return "Catégories" if LocaleManager.current_locale == "fr" else "Categories"
+	return translated
 
 
 func _category_name_label(text: String) -> Label:
@@ -696,6 +686,26 @@ func _mastery_category_icon(category_id: String, icon_text: String, accent: Colo
 	return slot
 
 
+func _category_mastery_subtile(row: Dictionary) -> PanelContainer:
+	## Inset chip per category — fill tinted with the category accent.
+	var accent := UiTokens.accent_for_category(str(row.get("id", "")))
+	var tile := PanelContainer.new()
+	tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var style := StyleBoxFlat.new()
+	## Soft accent wash so white profile text stays readable.
+	style.bg_color = UiTokens.PROFILE_CARD_BG.lerp(accent, 0.22)
+	style.set_corner_radius_all(14)
+	style.set_border_width_all(1)
+	style.border_color = Color(accent.r, accent.g, accent.b, 0.32)
+	style.content_margin_left = 10
+	style.content_margin_right = 10
+	style.content_margin_top = 8
+	style.content_margin_bottom = 8
+	tile.add_theme_stylebox_override("panel", style)
+	tile.add_child(_category_mastery_row(row))
+	return tile
+
+
 func _category_mastery_row(row: Dictionary) -> Control:
 	var accent := UiTokens.accent_for_category(str(row.get("id", "")))
 	var hbox := HBoxContainer.new()
@@ -720,7 +730,8 @@ func _category_mastery_row(row: Dictionary) -> Control:
 	bar.custom_minimum_size = Vector2(0, 8)
 	bar.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	bar.max_value = 1.0
-	bar.value = float(row.get("mastery_progress", 0.0))
+	var accuracy := clampf(float(row.get("accuracy_percent", 0.0)), 0.0, 100.0)
+	bar.value = accuracy / 100.0
 	bar.show_percentage = false
 	bar.add_theme_stylebox_override("background", UiStyle.profile_progress_bg())
 	var fill := UiStyle.progress_fill(accent)
@@ -728,32 +739,35 @@ func _category_mastery_row(row: Dictionary) -> Control:
 	bar.add_theme_stylebox_override("fill", fill)
 	mid.add_child(bar)
 
-	## Level column: small "NIVEAU" over large accent number (mock right block).
-	var level_col := VBoxContainer.new()
-	level_col.alignment = BoxContainer.ALIGNMENT_CENTER
-	level_col.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	level_col.add_theme_constant_override("separation", 0)
-	level_col.custom_minimum_size.x = 52
-	hbox.add_child(level_col)
+	## Accuracy column: small caption over large accent %.
+	var acc_col := VBoxContainer.new()
+	acc_col.alignment = BoxContainer.ALIGNMENT_CENTER
+	acc_col.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	acc_col.add_theme_constant_override("separation", 0)
+	acc_col.custom_minimum_size.x = 56
+	hbox.add_child(acc_col)
 
-	var level_caption := Label.new()
-	level_caption.text = tr("UI_PROFILE_LEVEL_CAPTION").to_upper()
-	level_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	level_caption.add_theme_font_size_override("font_size", UiScale.font(9))
-	level_caption.add_theme_color_override("font_color", UiTokens.PROFILE_TITLE_CAPS)
-	level_col.add_child(level_caption)
+	var acc_caption := Label.new()
+	var acc_caption_text := tr("UI_PROFILE_ACCURACY_CAPTION")
+	if acc_caption_text == "UI_PROFILE_ACCURACY_CAPTION":
+		acc_caption_text = "Précision" if LocaleManager.current_locale == "fr" else "Accuracy"
+	acc_caption.text = acc_caption_text.to_upper()
+	acc_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	acc_caption.add_theme_font_size_override("font_size", UiScale.font(9))
+	acc_caption.add_theme_color_override("font_color", UiTokens.PROFILE_TITLE_CAPS)
+	acc_col.add_child(acc_caption)
 
-	var level_num := Label.new()
-	level_num.text = str(row.get("display_level", row.get("mastery_level", 1)))
-	level_num.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	level_num.add_theme_font_size_override("font_size", UiScale.font(20))
-	level_num.add_theme_color_override("font_color", accent)
-	var level_num_wrap := MarginContainer.new()
-	level_num_wrap.add_theme_constant_override("margin_top", -2)
-	level_num_wrap.add_child(level_num)
-	level_col.add_child(level_num_wrap)
+	var acc_num := Label.new()
+	acc_num.text = "%.0f%%" % accuracy
+	acc_num.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	acc_num.add_theme_font_size_override("font_size", UiScale.font(18))
+	acc_num.add_theme_color_override("font_color", accent)
+	var acc_num_wrap := MarginContainer.new()
+	acc_num_wrap.add_theme_constant_override("margin_top", -2)
+	acc_num_wrap.add_child(acc_num)
+	acc_col.add_child(acc_num_wrap)
 
-	## Rank badge — only gold / silver / bronze (top 3); spacer keeps levels aligned.
+	## Rank badge — only gold / silver / bronze (top 3); spacer keeps columns aligned.
 	var medal_kind := str(row.get("medal", "none"))
 	if medal_kind != "none":
 		var medal := Label.new()
@@ -773,60 +787,6 @@ func _category_mastery_row(row: Dictionary) -> Control:
 		medal_slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		hbox.add_child(medal_slot)
 	return hbox
-
-
-func _build_best_subject_tile() -> PanelContainer:
-	## Full-width: [icon] name | big % + caption — same card rhythm as history.
-	var panel := _tile()
-	panel.custom_minimum_size.y = UiTokens.DASH_BEST_SUBJECT_HEIGHT
-	var root := _tile_body(panel, tr("UI_PROFILE_BEST_SUBJECT"))
-	_set_section_title_size(root, 20)
-	root.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	var best: Dictionary = _profile_data.get("best_category", {})
-	if best.is_empty():
-		root.add_child(_empty(tr("UI_PROFILE_NO_CATEGORIES")))
-		_animated_nodes.append(panel)
-		return panel
-
-	var accent := UiTokens.accent_for_category(str(best.get("id", "")))
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 14)
-	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	row.alignment = BoxContainer.ALIGNMENT_CENTER
-	root.add_child(row)
-
-	row.add_child(_mastery_category_icon(str(best.get("id", "")), str(best.get("icon", "🧠")), accent))
-
-	var name_label := _category_name_label(str(best.get("name", "")))
-	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	name_label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	name_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	row.add_child(name_label)
-
-	var pct_col := VBoxContainer.new()
-	pct_col.alignment = BoxContainer.ALIGNMENT_CENTER
-	pct_col.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	pct_col.add_theme_constant_override("separation", 0)
-	row.add_child(pct_col)
-
-	var pct_value := "%.0f" % float(best.get("accuracy_percent", 0.0))
-	var pct := Label.new()
-	pct.text = "%s%%" % pct_value
-	pct.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	pct.add_theme_font_size_override("font_size", UiScale.font(28))
-	pct.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-	pct_col.add_child(pct)
-
-	var acc_caption := Label.new()
-	## Reuse existing i18n template, strip the percent placeholder for the small caption.
-	acc_caption.text = tr("UI_PROFILE_BEST_SUBJECT_ACC").format({"percent": "§"}).replace("§%", "").replace("§", "").strip_edges()
-	acc_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	acc_caption.add_theme_font_size_override("font_size", UiScale.font(12))
-	acc_caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
-	pct_col.add_child(acc_caption)
-
-	_animated_nodes.append(panel)
-	return panel
 
 
 func _build_win_distribution_tile() -> PanelContainer:
@@ -1078,7 +1038,7 @@ func _badge_cell(achievement: Dictionary) -> Control:
 
 func _build_season_tile() -> PanelContainer:
 	## Locked until seasons ship; demo previews the mock unlocked layout.
-	var panel := _tile(UiTokens.ACCENT_LEADERBOARD, true)
+	var panel := _tile()
 	var season: Dictionary = _profile_data.get("season", {})
 	var unlocked: bool = bool(season.get("unlocked", false))
 
@@ -1729,7 +1689,7 @@ func _populate_categories_page() -> void:
 	for row in categories:
 		if typeof(row) != TYPE_DICTIONARY:
 			continue
-		_categories_list.add_child(_category_mastery_row(row))
+		_categories_list.add_child(_category_mastery_subtile(row))
 		shown += 1
 	if shown == 0:
 		_categories_list.add_child(_empty(tr("UI_PROFILE_NO_CATEGORIES")))

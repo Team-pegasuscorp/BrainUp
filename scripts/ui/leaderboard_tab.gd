@@ -10,6 +10,7 @@ const UiFonts = preload("res://scripts/config/ui_fonts.gd")
 
 @onready var scroll: ScrollContainer = %Scroll
 @onready var content: VBoxContainer = %Content
+@onready var scope_host: VBoxContainer = %ScopeHost
 
 var _scope: String = "general" ## general | friends
 var _selected_filter: String = "all"
@@ -39,11 +40,15 @@ func _rebuild() -> void:
 		var child := content.get_child(0)
 		content.remove_child(child)
 		child.free()
+	while scope_host.get_child_count() > 0:
+		var scope_child := scope_host.get_child(0)
+		scope_host.remove_child(scope_child)
+		scope_child.free()
 
 	var global_snap := _global_snapshot()
 	var friends_snap := LeaderboardSnapshot.build_friends(LocaleManager.get_content_locale())
 
-	content.add_child(_scope_toggle())
+	scope_host.add_child(_scope_toggle())
 	_tint_page_for_scope()
 
 	if _scope == "friends":
