@@ -411,6 +411,7 @@ static func _build_achievements(data: Dictionary) -> Array:
 		"has_perfect_round": data.get("has_perfect_round", SaveManager.has_perfect_round),
 		"level": data.get("level", 1),
 		"categories_played": _count_categories_played_from_data(data),
+		"category_correct": _category_correct_from_data(data),
 		"accuracy_percent": data.get("accuracy_percent", 0.0),
 	}
 	var rows: Array = []
@@ -469,6 +470,14 @@ static func _build_daily_goal(data: Dictionary) -> Dictionary:
 		"remaining": maxi(DAILY_GOAL_TARGET - played_today, 0),
 		"progress": clampf(float(played_today) / float(DAILY_GOAL_TARGET), 0.0, 1.0),
 	}
+
+
+static func _category_correct_from_data(data: Dictionary) -> Dictionary:
+	var result := {}
+	for row in data.get("categories", []):
+		if typeof(row) == TYPE_DICTIONARY:
+			result[str(row.get("id", ""))] = int(row.get("total_correct", 0))
+	return result
 
 
 static func _count_categories_played_from_data(data: Dictionary) -> int:

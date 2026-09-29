@@ -425,10 +425,12 @@ func get_achievement_stats() -> Dictionary:
 	var questions := 0
 	var correct := 0
 	var categories_played := 0
+	var category_correct := {}
 	for category_id in category_stats.keys():
 		var stats: Dictionary = category_stats[category_id]
 		questions += int(stats.get("total_questions", 0))
 		correct += int(stats.get("total_correct", 0))
+		category_correct[category_id] = int(stats.get("total_correct", 0))
 		if int(stats.get("games_played", 0)) > 0:
 			categories_played += 1
 	return {
@@ -440,6 +442,7 @@ func get_achievement_stats() -> Dictionary:
 		"has_perfect_round": has_perfect_round,
 		"level": level,
 		"categories_played": categories_played,
+		"category_correct": category_correct,
 		"accuracy_percent": 0.0 if questions <= 0 else float(correct) / float(questions) * 100.0,
 	}
 

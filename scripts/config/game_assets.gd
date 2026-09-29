@@ -91,6 +91,9 @@ static func category_texture(category_id: String) -> Texture2D:
 
 
 static func badge_texture(achievement_id: String) -> Texture2D:
+	## Category specialists have no badge art of their own: show the category picture.
+	if achievement_id.begins_with("specialist_") and not FileAccess.file_exists(badge_path(achievement_id)):
+		return category_texture(achievement_id.trim_prefix("specialist_"))
 	return load_texture(badge_path(achievement_id))
 
 

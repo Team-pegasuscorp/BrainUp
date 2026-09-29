@@ -1,8 +1,44 @@
 class_name AchievementsCatalog
 extends RefCounted
 
+## One "specialist" achievement per category, reached at category level 3.
+const SPECIALIST_PREFIX := "specialist_"
+const SPECIALIST_CATEGORY_LEVEL := 3
+## Fixed order so the achievement list does not move when categories.json changes.
+const SPECIALIST_CATEGORIES: Array[String] = [
+	"general", "sport", "cinema", "history", "music", "geography", "science", "television",
+]
+
 
 static func all() -> Array[Dictionary]:
+	var result := _base()
+	result.append_array(_specialists())
+	return result
+
+
+static func _specialists() -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	for category_id in SPECIALIST_CATEGORIES:
+		var key := "UI_ACH_SPECIALIST_%s" % category_id.to_upper()
+		result.append({
+			"id": SPECIALIST_PREFIX + category_id,
+			"title_key": key,
+			"desc_key": key + "_DESC",
+			"icon": ProfileSnapshot.category_icon(category_id),
+			"accent": UiTokens.accent_for_category(category_id),
+		})
+	return result
+
+
+## Correct answers needed in a category to reach SPECIALIST_CATEGORY_LEVEL (35).
+static func specialist_target() -> int:
+	var total := 0
+	for level in range(1, SPECIALIST_CATEGORY_LEVEL):
+		total += ProfileSnapshot.category_corrects_to_complete_level(level)
+	return total
+
+
+static func _base() -> Array[Dictionary]:
 	## Progression ladder first (profile tile shows the first 6), then advanced milestones.
 	return [
 		{
@@ -204,6 +240,10 @@ static func is_unlocked(achievement_id: String, stats: Dictionary) -> bool:
 
 ## Returns { current, target } for progress bars (target always >= 1).
 static func progress_for(achievement_id: String, stats: Dictionary) -> Dictionary:
+	if achievement_id.begins_with(SPECIALIST_PREFIX):
+		var category_id := achievement_id.trim_prefix(SPECIALIST_PREFIX)
+		var per_category: Dictionary = stats.get("category_correct", {})
+		return _clamp_progress(int(per_category.get(category_id, 0)), specialist_target())
 	match achievement_id:
 		"streak_10":
 			return _clamp_progress(int(stats.get("best_win_streak", 0)), 10)

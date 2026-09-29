@@ -3,6 +3,8 @@ extends RefCounted
 
 const QUESTIONS_DIR: String = "res://data/questions/"
 const CATEGORIES_PATH: String = "res://data/categories.json"
+## "Culture générale" plays every category: its own questions plus all the others.
+const MIXED_CATEGORY_ID: String = "general"
 
 
 static func get_categories(locale: String) -> Array[Dictionary]:
@@ -68,6 +70,19 @@ static func load_daily_questions(
 
 
 static func _load_localized(category_id: String, locale: String) -> Array[Dictionary]:
+	if category_id != MIXED_CATEGORY_ID:
+		return _load_localized_file(category_id, locale)
+	var parsed: Variant = _load_json(CATEGORIES_PATH)
+	var ids: Array = parsed.keys() if typeof(parsed) == TYPE_DICTIONARY else [MIXED_CATEGORY_ID]
+	## Sorted so seeded modes (daily, 1v1 challenges) build the same pool everywhere.
+	ids.sort()
+	var mixed: Array[Dictionary] = []
+	for id in ids:
+		mixed.append_array(_load_localized_file(str(id), locale))
+	return mixed
+
+
+static func _load_localized_file(category_id: String, locale: String) -> Array[Dictionary]:
 	var path: String = "%s%s.json" % [QUESTIONS_DIR, category_id]
 	var parsed: Variant = _load_json(path)
 	if typeof(parsed) != TYPE_DICTIONARY:

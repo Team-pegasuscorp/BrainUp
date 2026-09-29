@@ -1040,6 +1040,11 @@ func _badge_cell(achievement: Dictionary) -> Control:
 	desc.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	col.add_child(desc)
 
+	## The column is anchored, not a container child: grow the cell when wrapped text needs it.
+	col.minimum_size_changed.connect(func() -> void:
+		button.custom_minimum_size.y = maxf(156.0, col.get_combined_minimum_size().y)
+	)
+
 	button.pressed.connect(_on_badge_pressed.bind(achievement))
 	PressScaleUtil.wire(button, self)
 	return button
