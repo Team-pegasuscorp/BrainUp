@@ -96,7 +96,7 @@ func _build_mode_picker() -> void:
 
 	_mode_section_label = Label.new()
 	_mode_section_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_mode_section_label.add_theme_font_size_override("font_size", UiScale.font(18))
+	_mode_section_label.add_theme_font_size_override("font_size", UiScale.font(20))
 	_mode_section_label.add_theme_color_override("font_color", Color(1, 1, 1, 0.55))
 	column.add_child(_mode_section_label)
 	column.move_child(_mode_section_label, start_button.get_index())
@@ -144,7 +144,7 @@ func _build_mode_picker() -> void:
 	_mode_hint = Label.new()
 	_mode_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_mode_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_mode_hint.add_theme_font_size_override("font_size", UiScale.font(16))
+	_mode_hint.add_theme_font_size_override("font_size", UiScale.font(18))
 	_mode_hint.add_theme_color_override("font_color", Color(1, 1, 1, 0.75))
 	column.add_child(_mode_hint)
 	column.move_child(_mode_hint, start_button.get_index())
@@ -312,7 +312,7 @@ func _primary_category_index() -> int:
 ## Shared daily challenge card, pinned above the category list.
 func _setup_daily_card() -> void:
 	_daily_card = PanelContainer.new()
-	var daily_style := UiStyle.card(UiTokens.ACCENT_LEADERBOARD)
+	var daily_style := UiStyle.card(UiTokens.PODIUM_GOLD)
 	daily_style.bg_color = Color(0.90, 0.92, 0.96, 1)
 	_daily_card.add_theme_stylebox_override("panel", daily_style)
 	_scroll_content.add_child(_daily_card)
@@ -412,7 +412,7 @@ func _render_daily() -> void:
 			}),
 		]
 	tag.add_theme_font_size_override("font_size", UiScale.font(14))
-	tag.add_theme_color_override("font_color", UiTokens.ACCENT_LEADERBOARD)
+	tag.add_theme_color_override("font_color", UiTokens.PODIUM_GOLD)
 	labels.add_child(tag)
 
 	var name_label := Label.new()
@@ -449,7 +449,7 @@ func _render_daily() -> void:
 			board.add_theme_color_override(slot, UiTokens.INK)
 		var outline := UiStyle.filled(Color(1, 1, 1, 1), 24)
 		outline.set_border_width_all(3)
-		outline.border_color = UiTokens.ACCENT_LEADERBOARD
+		outline.border_color = UiTokens.PODIUM_GOLD
 		for state in ["normal", "hover", "pressed", "focus"]:
 			board.add_theme_stylebox_override(state, outline)
 		PressScaleUtil.wire(board, self)
@@ -463,7 +463,7 @@ func _render_daily() -> void:
 	play.add_theme_font_size_override("font_size", UiScale.font(20))
 	for slot in ["font_color", "font_hover_color", "font_pressed_color", "font_disabled_color"]:
 		play.add_theme_color_override(slot, UiTokens.INK)
-	var style := UiStyle.filled(UiTokens.ACCENT_LEADERBOARD, 24)
+	var style := UiStyle.filled(UiTokens.PODIUM_GOLD, 24)
 	for state in ["normal", "hover", "pressed", "focus", "disabled"]:
 		play.add_theme_stylebox_override(state, style)
 	play.disabled = not known or _daily_fetching
@@ -488,7 +488,7 @@ func _open_daily_board() -> void:
 	_board_overlay.add_child(center)
 	var panel := PanelContainer.new()
 	panel.custom_minimum_size = Vector2(620, 0)
-	panel.add_theme_stylebox_override("panel", UiStyle.card(UiTokens.ACCENT_LEADERBOARD))
+	panel.add_theme_stylebox_override("panel", UiStyle.card(UiTokens.PODIUM_GOLD))
 	center.add_child(panel)
 	var column := VBoxContainer.new()
 	column.add_theme_constant_override("separation", 12)
@@ -540,14 +540,14 @@ func _open_daily_board() -> void:
 func _make_board_row(entry: Dictionary) -> Control:
 	var mine := str(entry.get("player_id", "")) == NetworkManager.player_id
 	var row := PanelContainer.new()
-	var box := UiStyle.filled(Color(UiTokens.ACCENT_LEADERBOARD, 0.22) if mine else Color(0.95, 0.96, 0.98, 1), 16)
+	var box := UiStyle.filled(Color(UiTokens.PODIUM_GOLD, 0.22) if mine else Color(0.95, 0.96, 0.98, 1), 16)
 	box.content_margin_left = 16
 	box.content_margin_right = 16
 	box.content_margin_top = 10
 	box.content_margin_bottom = 10
 	if mine:
 		box.set_border_width_all(2)
-		box.border_color = UiTokens.ACCENT_LEADERBOARD
+		box.border_color = UiTokens.PODIUM_GOLD
 	row.add_theme_stylebox_override("panel", box)
 	var line := HBoxContainer.new()
 	line.add_theme_constant_override("separation", 14)
@@ -575,7 +575,7 @@ func _make_board_row(entry: Dictionary) -> Control:
 	var score := Label.new()
 	score.text = "%d" % int(entry.get("score", 0))
 	score.add_theme_font_size_override("font_size", UiScale.font(22))
-	score.add_theme_color_override("font_color", UiTokens.ACCENT_LEADERBOARD)
+	score.add_theme_color_override("font_color", UiTokens.PODIUM_GOLD)
 	line.add_child(score)
 	return row
 
@@ -675,8 +675,12 @@ func _on_category_selected(index: int) -> void:
 		)
 		var name_label: Label = tile.get_meta("name_label")
 		var desc_label: Label = tile.get_meta("desc_label")
-		name_label.add_theme_color_override("font_color", UiTokens.INK)
-		desc_label.add_theme_color_override("font_color", Color(0.26, 0.28, 0.32, 1))
+		if selected:
+			name_label.add_theme_color_override("font_color", accent.darkened(0.18))
+			desc_label.add_theme_color_override("font_color", Color(0.24, 0.26, 0.30, 1))
+		else:
+			name_label.add_theme_color_override("font_color", UiTokens.INK)
+			desc_label.add_theme_color_override("font_color", Color(0.26, 0.28, 0.32, 1))
 
 
 func _on_start_pressed() -> void:

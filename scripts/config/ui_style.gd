@@ -143,39 +143,40 @@ static func settings_chip() -> StyleBoxFlat:
 
 static func category_tile(accent: Color) -> StyleBoxFlat:
 	var style := card(accent, 22)
-	## Soft pastel of the category accent across the whole tile.
-	style.bg_color = accent.lerp(Color(0.96, 0.97, 0.99, 1.0), 0.70)
+	## Same pastel wash as home `_make_home_subtile` (softness 0.72).
+	style.bg_color = accent.lerp(Color(0.97, 0.98, 0.99, 1.0), 0.72)
 	## Padding is owned by the tile’s inner MarginContainer.
 	style.content_margin_left = 0
 	style.content_margin_top = 0
 	style.content_margin_right = 0
 	style.content_margin_bottom = 0
 	style.set_border_width_all(1)
-	style.border_color = Color(accent.r, accent.g, accent.b, 0.28)
-	style.shadow_color = Color(accent.r, accent.g, accent.b, 0.16)
-	style.shadow_size = 10
+	style.border_color = Color(accent.r, accent.g, accent.b, 0.40)
+	style.shadow_size = 0
 	return style
 
 
 static func category_tile_selected(accent: Color) -> StyleBoxFlat:
 	var style := category_tile(accent)
-	## Stronger wash + solid accent rim when selected.
-	style.bg_color = accent.lerp(Color(0.98, 0.98, 1.0, 1.0), 0.52)
+	## Clear but restrained selection cue.
+	style.bg_color = accent.lerp(Color(0.97, 0.98, 0.99, 1.0), 0.50)
 	style.set_border_width_all(3)
 	style.border_color = accent
 	style.shadow_color = Color(accent.r, accent.g, accent.b, 0.28)
-	style.shadow_size = 12
+	style.shadow_size = 10
+	style.shadow_offset = Vector2(0, 2)
 	return style
 
 
 static func category_tile_featured(accent: Color, selected: bool = false) -> StyleBoxFlat:
-	## Primary category: clean white fill so it stands out among pastel tiles.
+	## Primary category: white at rest; same selected treatment as other tiles.
+	if selected:
+		return category_tile_selected(accent)
 	var style := category_tile(accent)
 	style.bg_color = Color(1, 1, 1, 1)
-	style.set_border_width_all(3 if selected else 2)
+	style.set_border_width_all(2)
 	style.border_color = accent
-	style.shadow_color = Color(accent.r, accent.g, accent.b, 0.32 if selected else 0.20)
-	style.shadow_size = 16 if selected else 12
+	style.shadow_size = 0
 	return style
 
 

@@ -381,31 +381,32 @@ func _build_hero() -> PanelContainer:
 	next_xp.add_theme_color_override("font_color", UiTokens.PROFILE_TITLE_CAPS)
 	xp_col.add_child(next_xp)
 
-	## Divider + league column (~1/4 width), no nested card.
-	## Fixed non-shrinking rule (ColorRect+EXPAND can collapse to invisible).
-	var divider_wrap := CenterContainer.new()
-	divider_wrap.custom_minimum_size = Vector2(14, 0)
-	divider_wrap.size_flags_horizontal = 0
-	divider_wrap.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	divider_wrap.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	row.add_child(divider_wrap)
-	var divider := Panel.new()
-	divider.custom_minimum_size = Vector2(2, 168)
-	divider.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	divider.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var divider_style := StyleBoxFlat.new()
-	divider_style.bg_color = Color(1, 1, 1, 0.22)
-	divider_style.set_corner_radius_all(1)
-	divider.add_theme_stylebox_override("panel", divider_style)
-	divider_wrap.add_child(divider)
-
+	## League column in an inset subtile (replaces the vertical divider).
 	var ranking: Dictionary = _profile_data.get("ranking", {})
+	var league_tile := PanelContainer.new()
+	league_tile.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	league_tile.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	## Soft blue-violet wash — a bit bluer than ACCENT_PROFILE.
+	var league_accent := Color(0.38, 0.52, 0.98, 1)
+	var league_style := StyleBoxFlat.new()
+	## Lighter pastel so dark ink stays crisp.
+	league_style.bg_color = league_accent.lerp(Color(0.97, 0.98, 0.99, 1.0), 0.80)
+	league_style.set_corner_radius_all(16)
+	league_style.set_border_width_all(1)
+	league_style.border_color = Color(league_accent.r, league_accent.g, league_accent.b, 0.40)
+	league_style.content_margin_left = 10
+	league_style.content_margin_right = 10
+	league_style.content_margin_top = 10
+	league_style.content_margin_bottom = 10
+	league_tile.add_theme_stylebox_override("panel", league_style)
+	row.add_child(league_tile)
+
 	var league_col := VBoxContainer.new()
 	league_col.alignment = BoxContainer.ALIGNMENT_CENTER
 	league_col.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	league_col.custom_minimum_size.x = 150
 	league_col.add_theme_constant_override("separation", 12)
-	row.add_child(league_col)
+	league_tile.add_child(league_col)
 
 	var league_title := Label.new()
 	league_title.text = (
@@ -414,7 +415,8 @@ func _build_hero() -> PanelContainer:
 	league_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	league_title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	league_title.add_theme_font_size_override("font_size", UiScale.font(16))
-	league_title.add_theme_color_override("font_color", UiTokens.ACCENT_PROFILE)
+	## Dark ink on light pastel — same readability as home / stats subtiles.
+	league_title.add_theme_color_override("font_color", UiTokens.INK)
 	league_col.add_child(league_title)
 
 	## Icon follows trophy league tier (not a fixed diamond).
@@ -436,7 +438,7 @@ func _build_hero() -> PanelContainer:
 	points.text = "🏆  %s" % _format_int(int(ranking.get("points", 0)))
 	points.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	points.add_theme_font_size_override("font_size", UiScale.font(28))
-	points.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	points.add_theme_color_override("font_color", UiTokens.INK)
 	var points_wrap := MarginContainer.new()
 	points_wrap.add_theme_constant_override("margin_top", -10)
 	points_wrap.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
@@ -515,10 +517,10 @@ func _build_stats_strip() -> PanelContainer:
 	margin.add_child(row)
 
 	var items := [
-		{"value": _format_int(int(_profile_data.get("games_played", 0))), "label": tr("UI_PROFILE_STAT_GAMES"), "color": Color(0.36, 0.75, 1.0)},
-		{"value": _format_int(int(_profile_data.get("wins", 0))), "label": tr("UI_PROFILE_STAT_WINS"), "color": UiTokens.FEEDBACK_CORRECT},
-		{"value": "%.0f%%" % _profile_data.get("win_rate_percent", 0.0), "label": tr("UI_PROFILE_STAT_WINRATE"), "color": Color(1.0, 0.55, 0.18)},
-		{"value": str(_profile_data.get("best_win_streak", 0)), "label": tr("UI_PROFILE_STAT_STREAK"), "color": Color(1.0, 0.42, 0.28)},
+		{"value": _format_int(int(_profile_data.get("games_played", 0))), "label": tr("UI_PROFILE_STAT_GAMES"), "color": Color(0.42, 0.78, 1.0)},
+		{"value": _format_int(int(_profile_data.get("wins", 0))), "label": tr("UI_PROFILE_STAT_WINS"), "color": Color(0.32, 0.88, 0.62)},
+		{"value": "%.0f%%" % _profile_data.get("win_rate_percent", 0.0), "label": tr("UI_PROFILE_STAT_WINRATE"), "color": Color(1.0, 0.72, 0.28)},
+		{"value": str(_profile_data.get("best_win_streak", 0)), "label": tr("UI_PROFILE_STAT_STREAK"), "color": Color(1.0, 0.48, 0.42)},
 	]
 	for item in items:
 		row.add_child(_stat_subtile(str(item.value), str(item.label), item.color as Color))
@@ -531,11 +533,13 @@ func _stat_subtile(value: String, label: String, accent: Color) -> PanelContaine
 	var tile := PanelContainer.new()
 	tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tile.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	## Same pastel wash recipe as home `_make_home_subtile` (softness 0.72).
+	var softness := 0.72
 	var style := StyleBoxFlat.new()
-	style.bg_color = UiTokens.PROFILE_CARD_BG.lerp(accent, 0.22)
+	style.bg_color = accent.lerp(Color(0.97, 0.98, 0.99, 1.0), softness)
 	style.set_corner_radius_all(14)
 	style.set_border_width_all(1)
-	style.border_color = Color(accent.r, accent.g, accent.b, 0.32)
+	style.border_color = Color(accent.r, accent.g, accent.b, 0.40)
 	style.content_margin_left = 4
 	style.content_margin_right = 4
 	style.content_margin_top = 6
@@ -574,7 +578,8 @@ func _stat_icon_cell(value: String, label: String, _color: Color) -> Control:
 	value_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	value_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	value_label.add_theme_font_size_override("font_size", UiScale.font(26))
-	value_label.add_theme_color_override("font_color", Color(1, 1, 1, 1))
+	## Dark ink on light pastel — same as home subtiles.
+	value_label.add_theme_color_override("font_color", UiTokens.INK)
 	top_lift.add_child(value_label)
 
 	var caption := Label.new()
@@ -582,7 +587,7 @@ func _stat_icon_cell(value: String, label: String, _color: Color) -> Control:
 	caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	caption.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	caption.add_theme_font_size_override("font_size", UiScale.font(16))
-	caption.add_theme_color_override("font_color", Color(0.62, 0.66, 0.78, 1))
+	caption.add_theme_color_override("font_color", Color(0.28, 0.30, 0.34, 1))
 	caption.clip_text = true
 	var caption_wrap := MarginContainer.new()
 	caption_wrap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -644,13 +649,13 @@ func _categories_section_title() -> String:
 
 
 func _category_name_label(text: String) -> Label:
-	## Shared size for mastered-categories rows and best-subject tile.
+	## Shared size for mastered-categories rows (light pastel subtiles).
 	var label := Label.new()
 	label.text = text
 	label.clip_text = true
 	label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	label.add_theme_font_size_override("font_size", UiScale.font(18))
-	label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	label.add_theme_color_override("font_color", UiTokens.INK)
 	return label
 
 
@@ -687,16 +692,16 @@ func _mastery_category_icon(category_id: String, icon_text: String, accent: Colo
 
 
 func _category_mastery_subtile(row: Dictionary) -> PanelContainer:
-	## Inset chip per category — fill tinted with the category accent.
+	## Same pastel wash as home `_make_home_subtile` (softness 0.72).
 	var accent := UiTokens.accent_for_category(str(row.get("id", "")))
 	var tile := PanelContainer.new()
 	tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var softness := 0.72
 	var style := StyleBoxFlat.new()
-	## Soft accent wash so white profile text stays readable.
-	style.bg_color = UiTokens.PROFILE_CARD_BG.lerp(accent, 0.22)
+	style.bg_color = accent.lerp(Color(0.97, 0.98, 0.99, 1.0), softness)
 	style.set_corner_radius_all(14)
 	style.set_border_width_all(1)
-	style.border_color = Color(accent.r, accent.g, accent.b, 0.32)
+	style.border_color = Color(accent.r, accent.g, accent.b, 0.40)
 	style.content_margin_left = 10
 	style.content_margin_right = 10
 	style.content_margin_top = 8
@@ -733,7 +738,11 @@ func _category_mastery_row(row: Dictionary) -> Control:
 	var accuracy := clampf(float(row.get("accuracy_percent", 0.0)), 0.0, 100.0)
 	bar.value = accuracy / 100.0
 	bar.show_percentage = false
-	bar.add_theme_stylebox_override("background", UiStyle.profile_progress_bg())
+	## Soft dark track readable on light pastel chips.
+	var track := StyleBoxFlat.new()
+	track.bg_color = Color(0, 0, 0, 0.10)
+	track.set_corner_radius_all(8)
+	bar.add_theme_stylebox_override("background", track)
 	var fill := UiStyle.progress_fill(accent)
 	fill.set_corner_radius_all(5)
 	bar.add_theme_stylebox_override("fill", fill)
@@ -754,7 +763,7 @@ func _category_mastery_row(row: Dictionary) -> Control:
 	acc_caption.text = acc_caption_text.to_upper()
 	acc_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	acc_caption.add_theme_font_size_override("font_size", UiScale.font(9))
-	acc_caption.add_theme_color_override("font_color", UiTokens.PROFILE_TITLE_CAPS)
+	acc_caption.add_theme_color_override("font_color", Color(0.28, 0.30, 0.34, 1))
 	acc_col.add_child(acc_caption)
 
 	var acc_num := Label.new()

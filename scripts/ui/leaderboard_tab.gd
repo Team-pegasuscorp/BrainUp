@@ -109,7 +109,7 @@ func _scope_card_bg(raised: bool = false) -> Color:
 
 
 func _tint_page_for_scope() -> void:
-	## Soft wash shift so Général (gold) and Amis (copper) read apart.
+	## Soft wash shift so Général (lime) and Amis (olive) read apart.
 	var accent := _scope_accent()
 	var bg := get_node_or_null("TabPageBackground") as ColorRect
 	if bg != null:
@@ -357,7 +357,7 @@ func _make_podium(podium: Array) -> Control:
 	var places := [2, 1, 3]
 	var accents := [
 		Color(0.75, 0.78, 0.84, 1), ## silver
-		UiTokens.ACCENT_LEADERBOARD, ## gold — 1st place always
+		UiTokens.PODIUM_GOLD, ## classic gold — 1st place (not page champagne)
 		Color(0.90, 0.58, 0.32, 1), ## bronze
 	]
 	var max_h := 360.0
