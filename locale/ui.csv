@@ -314,6 +314,22 @@ UI_ACH_DAYS_7,Regular,Habitué
 UI_ACH_DAYS_7_DESC,Play 7 days in a row.,Jouez 7 jours d'affilée.
 UI_ACH_DAYS_30,Unstoppable,Inarrêtable
 UI_ACH_DAYS_30_DESC,Play 30 days in a row.,Jouez 30 jours d'affilée.
+UI_ACH_SPECIALIST_GENERAL,General Knowledge specialist,Spécialiste Culture générale
+UI_ACH_SPECIALIST_GENERAL_DESC,35 correct answers in General Knowledge.,35 bonnes réponses en Culture générale.
+UI_ACH_SPECIALIST_SPORT,Sports specialist,Spécialiste Sport
+UI_ACH_SPECIALIST_SPORT_DESC,35 correct answers in Sports.,35 bonnes réponses en Sport.
+UI_ACH_SPECIALIST_CINEMA,Cinema specialist,Spécialiste Cinéma
+UI_ACH_SPECIALIST_CINEMA_DESC,35 correct answers in Cinema.,35 bonnes réponses en Cinéma.
+UI_ACH_SPECIALIST_HISTORY,History specialist,Spécialiste Histoire
+UI_ACH_SPECIALIST_HISTORY_DESC,35 correct answers in History.,35 bonnes réponses en Histoire.
+UI_ACH_SPECIALIST_MUSIC,Music specialist,Spécialiste Musique
+UI_ACH_SPECIALIST_MUSIC_DESC,35 correct answers in Music.,35 bonnes réponses en Musique.
+UI_ACH_SPECIALIST_GEOGRAPHY,Geography specialist,Spécialiste Géographie
+UI_ACH_SPECIALIST_GEOGRAPHY_DESC,35 correct answers in Geography.,35 bonnes réponses en Géographie.
+UI_ACH_SPECIALIST_SCIENCE,Science specialist,Spécialiste Sciences
+UI_ACH_SPECIALIST_SCIENCE_DESC,35 correct answers in Science.,35 bonnes réponses en Sciences.
+UI_ACH_SPECIALIST_TELEVISION,Television specialist,Spécialiste Télévision
+UI_ACH_SPECIALIST_TELEVISION_DESC,35 correct answers in Television.,35 bonnes réponses en Télévision.
 UI_EXPLANATION_TITLE,DID YOU KNOW?,LE SAVAIS-TU ?
 UI_EXPLANATION_TAP,Tap to continue,Touche pour continuer
 UI_MODE_PICKER_TITLE,Game mode,Mode de jeu

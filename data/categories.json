@@ -89,11 +89,11 @@
     "translations": {
       "en": {
         "name": "General Knowledge",
-        "description": "A bit of everything."
+        "description": "Every category mixed together."
       },
       "fr": {
         "name": "Culture générale",
-        "description": "Un peu de tout."
+        "description": "Toutes les catégories mélangées."
       }
     }
   },
