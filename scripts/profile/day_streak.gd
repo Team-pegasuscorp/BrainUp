@@ -6,11 +6,11 @@ const DailyQuestsScript = preload("res://scripts/profile/daily_quests.gd")
 ## Consecutive days with at least one finished round (any mode), on the phone's
 ## local calendar like the daily quests. Missing a whole day resets it to 1.
 
-## Bonus XP for keeping the streak alive: grows each day up to a cap.
-const DAILY_XP_STEP := 5
-const DAILY_XP_CAP := 50
-## One-off bonus when the streak reaches these lengths.
-const MILESTONES := {3: 50, 7: 150, 14: 250, 30: 500, 60: 800, 100: 1500}
+## Small daily drip for coming back — kept low so levels don't spike from habit alone.
+const DAILY_XP_STEP := 3
+const DAILY_XP_CAP := 25
+## One-off bumps at milestones (fraction of an early level, not a full level dump).
+const MILESTONES := {3: 25, 7: 50, 14: 75, 30: 100, 60: 150, 100: 200}
 
 
 static func today_key() -> String:

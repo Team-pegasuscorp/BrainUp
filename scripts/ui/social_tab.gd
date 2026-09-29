@@ -14,10 +14,13 @@ const GameAssets = preload("res://scripts/config/game_assets.gd")
 var _categories: Array[Dictionary] = []
 var _selected_category_id: String = ""
 var _current_challenge: Dictionary = {}
+## Friend key for the open challenge (H2H counter; no trophies).
+var _challenge_friend_key: String = ""
 var _status_text: String = ""
 
 var _live_state: String = "idle" # idle | searching | question | over
 var _live_opponent_name: String = ""
+var _live_opponent_trophies: int = -1
 var _live_my_score: int = 0
 var _live_opponent_score: int = 0
 var _live_question: Dictionary = {}
@@ -55,6 +58,7 @@ func _ready() -> void:
 	NetworkManager.live_reveal.connect(_on_live_reveal)
 	NetworkManager.live_match_over.connect(_on_live_match_over)
 	NetworkManager.live_error.connect(_on_live_error)
+	NetworkManager.live_search_range_changed.connect(_on_live_search_range_changed)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -1194,10 +1198,10 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 		UiTokens.PROFILE_TEXT
 	))
 	stats.add_child(_friend_stat_tile(
-		"🏆",
-		UiTokens.FEEDBACK_CORRECT,
-		tr("UI_PROFILE_STAT_WINS").to_upper(),
-		str(int(friend.get("wins", 0))),
+		"⚔️",
+		UiTokens.ACCENT_SOCIAL,
+		tr("UI_SOCIAL_FRIEND_H2H").to_upper(),
+		_friend_h2h_label(friend),
 		"",
 		UiTokens.PROFILE_TEXT
 	))
@@ -1534,9 +1538,22 @@ func _presence_label(presence: String) -> String:
 func _on_challenge_friend_pressed() -> void:
 	if _selected_friend.is_empty():
 		return
+	_challenge_friend_key = _friend_rivalry_key(_selected_friend)
 	var friend_name := str(_selected_friend.get("name", ""))
 	_close_friend_detail()
 	_show_status(tr("UI_SOCIAL_FRIEND_CHALLENGE_SENT").format({"name": friend_name}))
+
+
+func _friend_rivalry_key(friend: Dictionary) -> String:
+	var id := str(friend.get("id", "")).strip_edges()
+	if not id.is_empty():
+		return id
+	return str(friend.get("name", "")).strip_edges().to_lower()
+
+
+func _friend_h2h_label(friend: Dictionary) -> String:
+	var row := SaveManager.get_friend_rivalry(_friend_rivalry_key(friend))
+	return "%d-%d" % [int(row.get("wins", 0)), int(row.get("losses", 0))]
 
 
 func _get_friends() -> Array:
@@ -1829,7 +1846,11 @@ func _live_section() -> PanelContainer:
 	match _live_state:
 		"searching":
 			var label := Label.new()
-			label.text = tr("UI_SOCIAL_LIVE_SEARCHING")
+			var range_cups := NetworkManager.live_trophy_range
+			var searching := tr("UI_SOCIAL_LIVE_SEARCHING_RANGE").format({"range": range_cups})
+			if searching.begins_with("UI_SOCIAL_"):
+				searching = tr("UI_SOCIAL_LIVE_SEARCHING") + " (±%d 🏆)" % range_cups
+			label.text = searching
 			label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 			vbox.add_child(label)
 			var cancel_button := Button.new()
@@ -1912,6 +1933,34 @@ func _build_live_over_view(vbox: VBoxContainer) -> void:
 	label.add_theme_font_size_override("font_size", UiScale.font(18))
 	label.add_theme_color_override("font_color", UiTokens.ACCENT_SOCIAL)
 	vbox.add_child(label)
+
+	## Clash-style settle as soon as the live match ends.
+	## Prefer opponent cups from match_over, else the value cached at match_found.
+	var match_id := "live:%s" % str(_live_over_data.get("match_id", "%d-%d" % [my_score, opponent_score]))
+	var opp_cups := _live_opponent_trophies_from(_live_over_data)
+	if opp_cups < 0:
+		opp_cups = _live_opponent_trophies
+	var delta := SaveManager.settle_versus_trophies(match_id, my_score, opponent_score, opp_cups)
+	if delta != 0:
+		var cups := Label.new()
+		var sign := "+" if delta > 0 else ""
+		var line := "%s%d 🏆" % [sign, delta]
+		var streak_bonus := SaveManager.last_trophy_streak_bonus
+		if streak_bonus > 0:
+			var bonus_label := tr("UI_TROPHY_STREAK_BONUS").format({"streak": SaveManager.versus_win_streak})
+			if bonus_label.begins_with("UI_TROPHY_"):
+				bonus_label = "streak x%d" % SaveManager.versus_win_streak
+			line += "  ·  +%d (%s)" % [streak_bonus, bonus_label]
+		var consolation := SaveManager.last_trophy_loss_consolation
+		if consolation > 0:
+			var cons_label := tr("UI_TROPHY_LOSS_CONSOLATION")
+			if cons_label.begins_with("UI_TROPHY_"):
+				cons_label = "keep going" if LocaleManager.current_locale != "fr" else "courage"
+			line += "  ·  +%d (%s)" % [consolation, cons_label]
+		cups.text = line
+		cups.add_theme_font_size_override("font_size", UiScale.font(16))
+		cups.add_theme_color_override("font_color", UiTokens.PODIUM_GOLD)
+		vbox.add_child(cups)
 
 	var close_button := Button.new()
 	close_button.text = tr("UI_SOCIAL_LIVE_CLOSE")
@@ -2034,7 +2083,25 @@ func _make_result_label() -> Label:
 		key = "UI_SOCIAL_RESULT_LOSS"
 	elif my_score == opponent_score:
 		key = "UI_SOCIAL_RESULT_TIE"
-	label.text = tr(key).format({"my_score": my_score, "opponent_score": opponent_score})
+	var text := tr(key).format({"my_score": my_score, "opponent_score": opponent_score})
+	## Ensure H2H is recorded (idempotent) then show the running tally.
+	_record_friend_challenge_if_needed()
+	var friend_key := _challenge_friend_key
+	if friend_key.is_empty():
+		var code := str(_current_challenge.get("code", ""))
+		var theirs := str(
+			_current_challenge.get("opponent_id" if is_challenger else "challenger_id", "")
+		).strip_edges()
+		friend_key = theirs if not theirs.is_empty() else ("challenge:%s" % code)
+	var h2h := SaveManager.get_friend_rivalry(friend_key)
+	var h2h_caption := tr("UI_SOCIAL_FRIEND_H2H_SCORE").format({
+		"wins": int(h2h.get("wins", 0)),
+		"losses": int(h2h.get("losses", 0)),
+	})
+	if h2h_caption.begins_with("UI_SOCIAL_"):
+		h2h_caption = "H2H %d-%d" % [int(h2h.get("wins", 0)), int(h2h.get("losses", 0))]
+	text += "  ·  " + h2h_caption
+	label.text = text
 	label.add_theme_font_size_override("font_size", UiScale.font(15))
 	label.add_theme_color_override("font_color", UiTokens.ACCENT_SOCIAL)
 	return label
@@ -2099,7 +2166,28 @@ func _on_refresh_pressed() -> void:
 
 func _on_challenge_fetched(challenge: Dictionary) -> void:
 	_current_challenge = challenge
+	_record_friend_challenge_if_needed()
 	_rebuild_content()
+
+
+func _record_friend_challenge_if_needed() -> void:
+	## Casual friend challenges: H2H + XP only — never Clash trophies (anti-farm).
+	if str(_current_challenge.get("status", "")) != "completed":
+		return
+	var code := str(_current_challenge.get("code", ""))
+	if code.is_empty():
+		return
+	var is_challenger := _is_challenger()
+	var my_score: int = int(_current_challenge.get("challenger_score" if is_challenger else "opponent_score", 0))
+	var opponent_score: int = int(_current_challenge.get("opponent_score" if is_challenger else "challenger_score", 0))
+	var friend_key := _challenge_friend_key
+	if friend_key.is_empty():
+		## Fallback: other player's id from payload, else challenge code namespace.
+		var theirs := str(
+			_current_challenge.get("opponent_id" if is_challenger else "challenger_id", "")
+		).strip_edges()
+		friend_key = theirs if not theirs.is_empty() else ("challenge:%s" % code)
+	SaveManager.record_friend_rivalry(friend_key, my_score, opponent_score, code)
 
 
 func _on_challenge_fetch_failed(_code: String) -> void:
@@ -2113,6 +2201,7 @@ func _on_copy_code_pressed(code: String) -> void:
 
 func _on_new_challenge_pressed() -> void:
 	_current_challenge = {}
+	_challenge_friend_key = ""
 	_rebuild_content()
 
 
@@ -2135,16 +2224,33 @@ func _on_live_search_pressed() -> void:
 	NetworkManager.start_live_matchmaking(_selected_category_id)
 
 
+func _on_live_search_range_changed(_trophy_range: int) -> void:
+	if _live_state == "searching":
+		_rebuild_content()
+
+
 func _on_live_cancel_pressed() -> void:
 	NetworkManager.stop_live_matchmaking()
 	_live_state = "idle"
+	_live_opponent_trophies = -1
 	_rebuild_content()
 
 
 func _on_live_match_found(data: Dictionary) -> void:
 	_live_opponent_name = str(data.get("opponent_name", ""))
+	_live_opponent_trophies = _live_opponent_trophies_from(data)
 	_live_my_score = 0
 	_live_opponent_score = 0
+
+
+func _live_opponent_trophies_from(data: Dictionary) -> int:
+	## Server contract: top-level opponent_trophies, or nested under opponent {}.
+	if data.has("opponent_trophies"):
+		return maxi(int(data.get("opponent_trophies", -1)), -1)
+	var nested: Variant = data.get("opponent", {})
+	if typeof(nested) == TYPE_DICTIONARY and nested.has("trophies"):
+		return maxi(int(nested.get("trophies", -1)), -1)
+	return -1
 
 
 func _on_live_question(data: Dictionary) -> void:
@@ -2174,12 +2280,16 @@ func _on_live_reveal(data: Dictionary) -> void:
 
 func _on_live_match_over(data: Dictionary) -> void:
 	_live_over_data = data
+	var cups := _live_opponent_trophies_from(data)
+	if cups >= 0:
+		_live_opponent_trophies = cups
 	_live_state = "over"
 	_rebuild_content()
 
 
 func _on_live_error(_reason: String) -> void:
 	_live_state = "idle"
+	_live_opponent_trophies = -1
 	_status_text = tr("UI_SOCIAL_ERROR_OFFLINE")
 	_rebuild_content()
 
@@ -2187,6 +2297,7 @@ func _on_live_error(_reason: String) -> void:
 func _on_live_close_pressed() -> void:
 	_live_state = "idle"
 	_live_over_data = {}
+	_live_opponent_trophies = -1
 	_rebuild_content()
 
 

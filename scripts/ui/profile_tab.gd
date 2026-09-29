@@ -1052,7 +1052,7 @@ func _build_season_tile() -> PanelContainer:
 	var unlocked: bool = bool(season.get("unlocked", false))
 
 	if not unlocked:
-		## Same typography / spacing as home news locked tile.
+		## Same typography / spacing as home locked season tile.
 		panel.custom_minimum_size.y = UiTokens.DASH_SEASON_HEIGHT
 		var margin := _pad(14, 16)
 		margin.size_flags_horizontal = Control.SIZE_EXPAND_FILL

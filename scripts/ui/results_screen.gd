@@ -427,6 +427,15 @@ func _apply_outcome_texts() -> void:
 		"xp": int(day_streak.get("xp", 0)),
 	})
 	_xp_gain_label.text = tr("UI_RESULTS_XP_GAINED").format({"xp": int(summary.get("xp_gained", 0))})
+	var trophies_gained := int(summary.get("trophies_gained", 0))
+	if trophies_gained != 0:
+		var sign := "+" if trophies_gained > 0 else ""
+		_xp_gain_label.text += "  ·  %s%d 🏆" % [sign, trophies_gained]
+	elif bool(summary.get("friend_challenge", false)):
+		var casual := tr("UI_RESULTS_FRIEND_NO_TROPHIES")
+		if casual.begins_with("UI_RESULTS_"):
+			casual = "No trophies (friend challenge)" if LocaleManager.current_locale != "fr" else "Pas de trophées (défi ami)"
+		_xp_gain_label.text += "  ·  " + casual
 
 	var leveled_up := int(summary.get("level_after", 1)) > int(summary.get("level_before", 1))
 	_level_label.text = tr("UI_RESULTS_LEVEL").format({"level": int(summary.get("level_before", 1))})

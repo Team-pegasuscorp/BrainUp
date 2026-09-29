@@ -46,10 +46,13 @@ static func _from_save(locale: String) -> Dictionary:
 		## Social profiles will override this from presence / friends API later.
 		"is_online": true,
 		"level": SaveManager.level,
-		"xp": SaveManager.xp,
+		"xp": SaveManager.get_xp_in_current_level(),
 		"xp_to_next": SaveManager.get_xp_for_next_level(),
 		"xp_progress": SaveManager.get_xp_progress_ratio(),
-		"xp_remaining": maxi(SaveManager.get_xp_for_next_level() - SaveManager.xp, 0),
+		"xp_remaining": maxi(
+			SaveManager.get_xp_for_next_level() - SaveManager.get_xp_in_current_level(),
+			0
+		),
 		"rank_title_key": PlayerRanks.title_for_level(SaveManager.level),
 		"avatar_texture": SaveManager.get_profile_avatar_texture(),
 		"has_custom_avatar": SaveManager.has_custom_avatar(),
@@ -65,6 +68,7 @@ static func _from_save(locale: String) -> Dictionary:
 		"day_streak": DayStreak.current(),
 		"best_day_streak": SaveManager.best_day_streak,
 		"best_score": _best_score(),
+		"trophies": SaveManager.trophies,
 		"categories": _build_categories(locale),
 		"history": _build_history(locale),
 		"is_demo": false,
@@ -120,6 +124,7 @@ static func _merge_demo(base: Dictionary, locale: String) -> Dictionary:
 	demo["day_streak"] = 12
 	demo["best_day_streak"] = 23
 	demo["best_score"] = 980
+	demo["trophies"] = 2845
 	demo["has_perfect_round"] = false
 	demo["country"] = "France"
 	demo["country_flag"] = CountryFlags.emoji_for("France")
@@ -431,13 +436,13 @@ static func _build_achievements(data: Dictionary) -> Array:
 static func _build_ranking(data: Dictionary, locale: String) -> Dictionary:
 	var board := LeaderboardSnapshot.build("all", locale)
 	var rank := int(board.get("player_rank", 0))
-	var points := int(data.get("best_score", 0))
+	## Real trophy bank (challenge gains); demo keeps a fixed showcase total.
+	var points := int(data.get("trophies", data.get("best_score", 0)))
 	if data.get("is_demo", false):
 		rank = 184
-		points = 2845
+		points = int(data.get("trophies", 2845))
 	elif rank <= 0:
 		rank = maxi(1, 220 - int(data.get("level", 1)) * 3)
-		points = maxi(points, int(data.get("wins", 0)) * 12)
 	var weekly_delta := 23 if data.get("is_demo", false) else clampi(int(data.get("current_win_streak", 0)) * 3, -18, 42)
 	## League badge follows trophy count (thresholds still provisional).
 	var league: Dictionary = TrophyLeagues.for_trophies(points)
@@ -546,7 +551,7 @@ static func _build_season(data: Dictionary) -> Dictionary:
 	var ranking: Dictionary = data.get("ranking", {})
 	var wins := int(data.get("wins", 0))
 	var rate := float(data.get("win_rate_percent", 0.0))
-	var points := int(ranking.get("points", data.get("best_score", 0)))
+	var points := int(ranking.get("points", data.get("trophies", data.get("best_score", 0))))
 	var season := {
 		"unlocked": false,
 		"number": maxi(1, int(data.get("level", 1) / 8) + 1),

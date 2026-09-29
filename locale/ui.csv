@@ -91,8 +91,8 @@ UI_HOME_NEAR_ACHIEVEMENTS,Almost unlocked,Succès proches
 UI_HOME_NEAR_ACHIEVEMENTS_EMPTY,Play a few rounds to get close to new badges.,Joue quelques parties pour approcher de nouveaux succès.
 UI_HOME_NEAR_REMAINING,{n} left,Plus que {n}
 UI_HOME_NEWS,News,Actualités
-UI_HOME_NEWS_LOCKED,News are not available yet.,Les actualités ne sont pas encore disponibles.
-UI_HOME_NEWS_COMING_SOON,Coming soon,Bientôt disponible
+UI_NEWS_POPUP_BODY,"Welcome back! News and patch notes will appear here.","Bon retour ! Les actualités et notes de version apparaîtront ici."
+UI_NEWS_POPUP_DISMISS,Got it,Compris
 UI_SOCIAL_CHALLENGE_HINT,Ready for a challenge,Prêt pour un défi
 UI_SOCIAL_FRIENDS,Friends,Amis
 UI_SOCIAL_FRIENDS_EMPTY,No friends yet. Add players as you meet them.,Aucun ami pour l'instant. Ajoute des joueurs au fur et à mesure.
@@ -133,6 +133,7 @@ UI_SOCIAL_ERROR_JOIN,Could not join this challenge - check the code,Impossible d
 UI_SOCIAL_LIVE_TITLE,Live match,Match en direct
 UI_SOCIAL_LIVE_SEARCH,Find an opponent,Chercher un adversaire
 UI_SOCIAL_LIVE_SEARCHING,Searching for an opponent...,Recherche d'un adversaire...
+UI_SOCIAL_LIVE_SEARCHING_RANGE,Searching… ±{range} 🏆,Recherche… ±{range} 🏆
 UI_SOCIAL_LIVE_CANCEL,Cancel,Annuler
 UI_SOCIAL_LIVE_HEADER,vs {opponent} - you {my_score} / them {opponent_score},vs {opponent} - toi {my_score} / lui {opponent_score}
 UI_SOCIAL_LIVE_POINTS,+{points} points,+{points} points
@@ -270,6 +271,13 @@ UI_RESULTS_DEFEAT,DEFEAT,DÉFAITE
 UI_RESULTS_VICTORY_SUB,Well played!,Bien joué !
 UI_RESULTS_DEFEAT_SUB,"Keep going, you'll get it next time.","Continuez, ce sera pour la prochaine."
 UI_RESULTS_XP_GAINED,+{xp} XP,+{xp} XP
+UI_RESULTS_TROPHIES_GAINED,+{trophies} 🏆,+{trophies} 🏆
+UI_RESULTS_TROPHIES_PENDING,🏆 pending vs opponent,🏆 en attente de l'adversaire
+UI_RESULTS_FRIEND_NO_TROPHIES,No trophies (friend challenge),Pas de trophées (défi ami)
+UI_SOCIAL_FRIEND_H2H,Vs you,Vs toi
+UI_SOCIAL_FRIEND_H2H_SCORE,H2H {wins}-{losses},Face-à-face {wins}-{losses}
+UI_TROPHY_STREAK_BONUS,streak x{streak},série x{streak}
+UI_TROPHY_LOSS_CONSOLATION,keep going,courage
 UI_RESULTS_LEVEL,Level {level},Niveau {level}
 UI_RESULTS_LEVEL_UP,Level up! Level {level},Niveau supérieur ! Niveau {level}
 UI_RESULTS_XP_PROGRESS,{current} / {needed} XP,{current} / {needed} XP

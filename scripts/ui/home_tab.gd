@@ -36,7 +36,6 @@ func _rebuild_cards(snapshot: Dictionary) -> void:
 	content.add_child(_make_daily_challenges_card())
 	content.add_child(_make_near_achievements_card(snapshot))
 	content.add_child(_make_last_match_card(snapshot))
-	content.add_child(_make_news_card())
 	ScrollTouch.let_drags_through(content)
 
 
@@ -393,72 +392,6 @@ func _make_near_achievements_card(snapshot: Dictionary) -> PanelContainer:
 			if typeof(accent) != TYPE_COLOR:
 				accent = UiTokens.ACCENT_HOME
 			vbox.add_child(_make_home_subtile(_make_near_achievement_row(row), -1, accent))
-
-	return panel
-
-
-func _make_news_card() -> PanelContainer:
-	## Placeholder for a future news / patch-notes feed (same locked pattern as Best season).
-	var panel := PanelContainer.new()
-	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	panel.custom_minimum_size.y = UiTokens.DASH_SEASON_HEIGHT
-	panel.add_theme_stylebox_override("panel", UiStyle.home_surface(true, 0))
-
-	var margin := _pad(14, 16)
-	margin.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	panel.add_child(margin)
-	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 12)
-	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	margin.add_child(vbox)
-
-	var title := Label.new()
-	title.text = tr("UI_HOME_NEWS").to_upper()
-	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	title.add_theme_font_size_override("font_size", UiScale.font(20))
-	title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-	vbox.add_child(title)
-
-	var body := VBoxContainer.new()
-	body.add_theme_constant_override("separation", 10)
-	body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	vbox.add_child(body)
-
-	var top_space := Control.new()
-	top_space.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	top_space.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	body.add_child(top_space)
-
-	var lock := Label.new()
-	lock.text = "🔒"
-	lock.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	lock.add_theme_font_size_override("font_size", UiScale.font(40))
-	var emoji_font := UiFonts.emoji_font()
-	if emoji_font != null:
-		lock.add_theme_font_override("font", emoji_font)
-	body.add_child(lock)
-
-	var caption := Label.new()
-	caption.text = tr("UI_HOME_NEWS_LOCKED")
-	caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	caption.add_theme_font_size_override("font_size", UiScale.font(15))
-	caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
-	body.add_child(caption)
-
-	var hint := Label.new()
-	hint.text = tr("UI_HOME_NEWS_COMING_SOON")
-	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	hint.add_theme_font_size_override("font_size", UiScale.font(13))
-	hint.add_theme_color_override("font_color", UiTokens.ACCENT_HOME)
-	body.add_child(hint)
-
-	var bottom_space := Control.new()
-	bottom_space.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	bottom_space.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	body.add_child(bottom_space)
 
 	return panel
 

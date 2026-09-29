@@ -4,6 +4,7 @@ const UiTokens = preload("res://scripts/config/ui_tokens.gd")
 const ScenePaths = preload("res://scripts/config/scene_paths.gd")
 const PressScaleUtil = preload("res://scripts/ui/press_scale.gd")
 const UiStyle = preload("res://scripts/config/ui_style.gd")
+const NewsPopupPolicy = preload("res://scripts/profile/news_popup_policy.gd")
 
 @onready var top_app_bar: TopAppBar = %TopAppBar
 @onready var tab_swipe: TabSwipeContainer = %TabSwipeContainer
@@ -21,6 +22,11 @@ var volume_slider: HSlider
 @onready var main_column: VBoxContainer = $MainColumn
 
 var _brand_bg_material: Material
+var _news_backdrop: ColorRect
+var _news_panel: PanelContainer
+var _news_title: Label
+var _news_body: Label
+var _news_dismiss: Button
 
 
 func _ready() -> void:
@@ -32,6 +38,7 @@ func _ready() -> void:
 	tab_swipe.animation_duration = UiTokens.TAB_SWIPE_DURATION
 	_configure_chrome()
 	_build_sound_settings()
+	_build_news_popup()
 	_apply_page_backgrounds()
 	_apply_translations()
 	_setup_language_option()
@@ -52,6 +59,7 @@ func _ready() -> void:
 	bottom_nav.set_active_tab(initial_page)
 	_sync_shell_background(initial_page)
 	_notify_tab_shown(initial_page)
+	call_deferred("_maybe_show_news_on_launch")
 
 
 func _apply_page_backgrounds() -> void:
@@ -106,11 +114,14 @@ func _connect_settings() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not settings_panel.visible:
-		return
 	if event.is_action_pressed("ui_cancel"):
-		_close_settings()
-		get_viewport().set_input_as_handled()
+		if _news_panel != null and _news_panel.visible:
+			_close_news_popup()
+			get_viewport().set_input_as_handled()
+			return
+		if settings_panel.visible:
+			_close_settings()
+			get_viewport().set_input_as_handled()
 
 
 ## Sound on/off and volume, inserted above the Back button.
@@ -178,6 +189,103 @@ func _apply_translations() -> void:
 	volume_label.text = tr("UI_SETTINGS_VOLUME")
 	language_label.text = tr("UI_LANGUAGE")
 	close_settings_button.text = tr("UI_BACK")
+	if _news_title != null:
+		_news_title.text = tr("UI_HOME_NEWS")
+	if _news_body != null:
+		_news_body.text = tr("UI_NEWS_POPUP_BODY")
+	if _news_dismiss != null:
+		_news_dismiss.text = tr("UI_NEWS_POPUP_DISMISS")
+
+
+func _build_news_popup() -> void:
+	_news_backdrop = ColorRect.new()
+	_news_backdrop.name = "NewsBackdrop"
+	_news_backdrop.visible = false
+	_news_backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_news_backdrop.mouse_filter = Control.MOUSE_FILTER_STOP
+	_news_backdrop.color = Color(0.12, 0.13, 0.15, 0.36)
+	_news_backdrop.gui_input.connect(_on_news_backdrop_gui_input)
+	add_child(_news_backdrop)
+
+	_news_panel = PanelContainer.new()
+	_news_panel.name = "NewsPanel"
+	_news_panel.visible = false
+	_news_panel.set_anchors_preset(Control.PRESET_CENTER)
+	_news_panel.offset_left = -168.0
+	_news_panel.offset_top = -150.0
+	_news_panel.offset_right = 168.0
+	_news_panel.offset_bottom = 150.0
+	_news_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	_news_panel.grow_vertical = Control.GROW_DIRECTION_BOTH
+	_news_panel.add_theme_stylebox_override("panel", UiStyle.card(UiTokens.ACCENT_HOME))
+	add_child(_news_panel)
+
+	var margin := MarginContainer.new()
+	margin.add_theme_constant_override("margin_left", 22)
+	margin.add_theme_constant_override("margin_top", 22)
+	margin.add_theme_constant_override("margin_right", 22)
+	margin.add_theme_constant_override("margin_bottom", 22)
+	_news_panel.add_child(margin)
+
+	var vbox := VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 14)
+	margin.add_child(vbox)
+
+	_news_title = Label.new()
+	_news_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_news_title.add_theme_font_size_override("font_size", UiScale.font(22))
+	_news_title.add_theme_color_override("font_color", UiTokens.INK)
+	vbox.add_child(_news_title)
+
+	_news_body = Label.new()
+	_news_body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_news_body.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_news_body.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_news_body.add_theme_font_size_override("font_size", UiScale.font(15))
+	_news_body.add_theme_color_override("font_color", UiTokens.INK_MUTED)
+	vbox.add_child(_news_body)
+
+	_news_dismiss = Button.new()
+	_news_dismiss.focus_mode = Control.FOCUS_ALL
+	vbox.add_child(_news_dismiss)
+	PressScaleUtil.wire(_news_dismiss, self)
+	_news_dismiss.pressed.connect(_on_news_dismiss_pressed)
+
+
+func _maybe_show_news_on_launch() -> void:
+	if not NewsPopupPolicy.should_show_on_launch():
+		return
+	_open_news_popup()
+	NewsPopupPolicy.mark_shown()
+
+
+func _open_news_popup() -> void:
+	if settings_panel.visible:
+		_close_settings()
+	tab_swipe.set_input_enabled(false)
+	_news_backdrop.visible = true
+	_news_panel.visible = true
+	_news_backdrop.move_to_front()
+	_news_panel.move_to_front()
+	_news_dismiss.grab_focus()
+
+
+func _close_news_popup() -> void:
+	_news_backdrop.visible = false
+	_news_panel.visible = false
+	if not settings_panel.visible:
+		tab_swipe.set_input_enabled(true)
+
+
+func _on_news_backdrop_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		var mouse_event := event as InputEventMouseButton
+		if mouse_event.pressed and mouse_event.button_index == MOUSE_BUTTON_LEFT:
+			_close_news_popup()
+
+
+func _on_news_dismiss_pressed() -> void:
+	_close_news_popup()
 
 
 func _setup_language_option() -> void:
@@ -220,6 +328,8 @@ func _on_settings_pressed() -> void:
 
 
 func _open_settings() -> void:
+	if _news_panel != null and _news_panel.visible:
+		_close_news_popup()
 	tab_swipe.set_input_enabled(false)
 	settings_backdrop.visible = true
 	settings_panel.visible = true

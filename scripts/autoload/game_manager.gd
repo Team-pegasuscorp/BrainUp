@@ -155,6 +155,10 @@ func finish_round() -> Dictionary:
 		mode_key(),
 		0 if is_classic else MODE_XP_CAP,
 	)
+	## Friend challenges: XP only + H2H counter (no trophies — anti-farm).
+	## Live ranked: Clash trophies settle when both scores are known.
+	var is_challenge := not active_challenge_code.is_empty()
+	var trophies_gained := 0
 	var is_daily := not active_daily_date.is_empty()
 	if is_daily:
 		xp_gained += SaveManager.record_daily_challenge(active_daily_date, score, correct_count, questions.size(), max_combo)
@@ -182,6 +186,10 @@ func finish_round() -> Dictionary:
 		"average_time": average_time,
 		"won": won,
 		"xp_gained": xp_gained,
+		"trophies_gained": trophies_gained,
+		"trophies_total": SaveManager.trophies,
+		"trophies_pending": false,
+		"friend_challenge": is_challenge,
 		"level_before": int(progress_before.get("level", 1)),
 		"level_after": int(progress_after.get("level", 1)),
 		"xp_before": int(progress_before.get("xp", 0)),
@@ -190,6 +198,7 @@ func finish_round() -> Dictionary:
 		"xp_needed_after": int(progress_after.get("xp_needed", 100)),
 		"new_achievements": new_achievements,
 		"is_daily": is_daily,
+		"is_challenge": is_challenge,
 		"day_streak": day_streak,
 	}
 

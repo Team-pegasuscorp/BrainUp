@@ -5,6 +5,7 @@ const QuestionLoaderScript = preload("res://scripts/quiz/question_loader.gd")
 const AchievementsCatalogScript = preload("res://scripts/profile/achievements_catalog.gd")
 const DailyQuestsScript = preload("res://scripts/profile/daily_quests.gd")
 const DailyChallengeScript = preload("res://scripts/profile/daily_challenge.gd")
+const TrophySystemScript = preload("res://scripts/profile/trophy_system.gd")
 
 const SAVE_PATH: String = "user://save.json"
 ## Legacy custom photo (before avatars became a fixed set); deleted on reset.
@@ -13,6 +14,9 @@ const PROFILE_AVATAR_PATH: String = "user://profile_avatar.png"
 const PROFILE_AVATAR_IDS: Array[String] = GameAssets.DEMO_AVATAR_SLUGS
 const DEFAULT_AVATAR_PATH: String = "res://assets/ui/default_avatar.svg"
 const MAX_MATCH_HISTORY: int = 30
+## Global player level: exponential XP bar (1→2 = 100; growth tuned softer than ×2.5).
+const XP_LEVEL_BASE: int = 100
+const XP_LEVEL_GROWTH: float = 2.15
 
 var player_name: String = UiTokens.DEFAULT_PLAYER_NAME
 ## Chosen avatar id from PROFILE_AVATAR_IDS ("" = default avatar).
@@ -22,6 +26,7 @@ var email: String = ""
 ## True after the player confirms ownership of `email` (mail verification).
 var email_verified: bool = false
 var level: int = 1
+## Lifetime XP earned (never decreases on level-up).
 var xp: int = 0
 var category_stats: Dictionary = {}
 var leaderboard_rivals: Array = []
@@ -35,6 +40,22 @@ var day_streak: int = 0
 var best_day_streak: int = 0
 var last_play_day: String = ""
 var has_perfect_round: bool = false
+## Competitive trophies (versus matches) — drives league badge.
+var trophies: int = 0
+## Consecutive versus wins (resets on loss / draw). Used for streak cup bonuses.
+var versus_win_streak: int = 0
+## Consecutive versus losses (resets on win / draw). Consolation at 5.
+var versus_loss_streak: int = 0
+## Last settle breakdown (for UI); not persisted.
+var last_trophy_match_delta: int = 0
+var last_trophy_streak_bonus: int = 0
+var last_trophy_loss_consolation: int = 0
+var last_settled_trophy_match_id: String = ""
+## Challenge codes already settled for competitive trophies (live only).
+var settled_trophy_matches: Array = []
+## Head-to-head vs friends: { friend_key: {wins, losses, draws, settled: [match_ids]} }.
+## Friend challenges never award trophies (anti-farm); only this counter + XP.
+var friend_rivalries: Dictionary = {}
 var daily_state: Dictionary = {}
 var daily_challenge_result: Dictionary = {}
 ## Best survival / time-attack runs: { mode: { category: {score, correct} } }.
@@ -69,6 +90,9 @@ func load_data() -> void:
 	email_verified = bool(parsed.get("email_verified", email_verified))
 	level = int(parsed.get("level", level))
 	xp = int(parsed.get("xp", xp))
+	if not bool(parsed.get("xp_is_total", false)):
+		xp = _total_xp_to_reach_level(level) + xp
+	_sync_level_from_total_xp()
 	category_stats = parsed.get("category_stats", category_stats)
 	leaderboard_rivals = parsed.get("leaderboard_rivals", leaderboard_rivals)
 	match_history = parsed.get("match_history", match_history)
@@ -80,6 +104,17 @@ func load_data() -> void:
 	best_day_streak = int(parsed.get("best_day_streak", best_day_streak))
 	last_play_day = str(parsed.get("last_play_day", last_play_day))
 	has_perfect_round = bool(parsed.get("has_perfect_round", has_perfect_round))
+	if parsed.has("trophies"):
+		trophies = maxi(int(parsed.get("trophies", 0)), 0)
+	else:
+		## One-shot migrate: former UI used best_score as fake trophies.
+		trophies = _best_score_global()
+	versus_win_streak = maxi(int(parsed.get("versus_win_streak", 0)), 0)
+	versus_loss_streak = maxi(int(parsed.get("versus_loss_streak", 0)), 0)
+	var settled_raw: Variant = parsed.get("settled_trophy_matches", [])
+	settled_trophy_matches = settled_raw if typeof(settled_raw) == TYPE_ARRAY else []
+	var rivalries_raw: Variant = parsed.get("friend_rivalries", {})
+	friend_rivalries = rivalries_raw if typeof(rivalries_raw) == TYPE_DICTIONARY else {}
 	daily_state = parsed.get("daily_state", daily_state)
 	daily_challenge_result = parsed.get("daily_challenge_result", daily_challenge_result)
 	mode_records = parsed.get("mode_records", mode_records)
@@ -96,6 +131,7 @@ func save_data() -> void:
 		"email_verified": email_verified,
 		"level": level,
 		"xp": xp,
+		"xp_is_total": true,
 		"category_stats": category_stats,
 		"leaderboard_rivals": leaderboard_rivals,
 		"match_history": match_history,
@@ -107,6 +143,11 @@ func save_data() -> void:
 		"best_day_streak": best_day_streak,
 		"last_play_day": last_play_day,
 		"has_perfect_round": has_perfect_round,
+		"trophies": trophies,
+		"versus_win_streak": versus_win_streak,
+		"versus_loss_streak": versus_loss_streak,
+		"settled_trophy_matches": settled_trophy_matches,
+		"friend_rivalries": friend_rivalries,
 		"daily_state": daily_state,
 		"daily_challenge_result": daily_challenge_result,
 		"mode_records": mode_records,
@@ -162,11 +203,15 @@ func get_xp_for_next_level() -> int:
 	return _xp_for_next_level()
 
 
+func get_xp_in_current_level() -> int:
+	return maxi(0, xp - _total_xp_to_reach_level(level))
+
+
 func get_xp_progress_ratio() -> float:
 	var needed := _xp_for_next_level()
 	if needed <= 0:
 		return 0.0
-	return clampf(float(xp) / float(needed), 0.0, 1.0)
+	return clampf(float(get_xp_in_current_level()) / float(needed), 0.0, 1.0)
 
 
 func has_custom_avatar() -> bool:
@@ -267,6 +312,98 @@ func record_match_result(
 	return gained_xp
 
 
+## Clash-style settle for a finished 1v1. Returns total signed delta incl. streak bonus
+## (0 if already settled / invalid). Opponent trophies unknown → equal baseline.
+func settle_versus_trophies(
+	match_id: String,
+	my_score: int,
+	opponent_score: int,
+	opponent_trophies: int = -1
+) -> int:
+	var id := str(match_id).strip_edges()
+	if id.is_empty():
+		return 0
+	## Idempotent: same match can be queried again for UI without wiping the breakdown.
+	if settled_trophy_matches.has(id):
+		if id == last_settled_trophy_match_id:
+			return last_trophy_match_delta + last_trophy_streak_bonus + last_trophy_loss_consolation
+		return 0
+	var opp_cups := opponent_trophies if opponent_trophies >= 0 else trophies
+	var match_delta := TrophySystemScript.calculate_delta(trophies, opp_cups, my_score, opponent_score)
+	last_trophy_match_delta = match_delta
+	last_trophy_streak_bonus = 0
+	last_trophy_loss_consolation = 0
+
+	if my_score > opponent_score:
+		versus_win_streak += 1
+		versus_loss_streak = 0
+		last_trophy_streak_bonus = TrophySystemScript.streak_bonus(versus_win_streak)
+	elif my_score < opponent_score:
+		versus_win_streak = 0
+		versus_loss_streak += 1
+		last_trophy_loss_consolation = TrophySystemScript.loss_streak_consolation(versus_loss_streak)
+	else:
+		## Draw breaks both streaks.
+		versus_win_streak = 0
+		versus_loss_streak = 0
+
+	var total := match_delta + last_trophy_streak_bonus + last_trophy_loss_consolation
+	trophies = maxi(trophies + total, 0)
+	settled_trophy_matches.append(id)
+	last_settled_trophy_match_id = id
+	while settled_trophy_matches.size() > 80:
+		settled_trophy_matches.pop_front()
+	save_data()
+	return total
+
+
+## Friend-challenge H2H (no trophies). Idempotent per match_id.
+func record_friend_rivalry(
+	friend_key: String,
+	my_score: int,
+	opponent_score: int,
+	match_id: String
+) -> Dictionary:
+	var key := str(friend_key).strip_edges()
+	var id := str(match_id).strip_edges()
+	if key.is_empty() or id.is_empty():
+		return get_friend_rivalry(key)
+	var row: Dictionary = get_friend_rivalry(key)
+	var settled: Array = row.get("settled", [])
+	if typeof(settled) != TYPE_ARRAY:
+		settled = []
+	if settled.has(id):
+		return row
+	if my_score > opponent_score:
+		row["wins"] = int(row.get("wins", 0)) + 1
+	elif my_score < opponent_score:
+		row["losses"] = int(row.get("losses", 0)) + 1
+	else:
+		row["draws"] = int(row.get("draws", 0)) + 1
+	settled.append(id)
+	while settled.size() > 40:
+		settled.pop_front()
+	row["settled"] = settled
+	friend_rivalries[key] = row
+	save_data()
+	return row
+
+
+func get_friend_rivalry(friend_key: String) -> Dictionary:
+	var key := str(friend_key).strip_edges()
+	if key.is_empty():
+		return {"wins": 0, "losses": 0, "draws": 0, "settled": []}
+	var raw: Variant = friend_rivalries.get(key, {})
+	if typeof(raw) != TYPE_DICTIONARY:
+		return {"wins": 0, "losses": 0, "draws": 0, "settled": []}
+	return {
+		"wins": int(raw.get("wins", 0)),
+		"losses": int(raw.get("losses", 0)),
+		"draws": int(raw.get("draws", 0)),
+		"settled": raw.get("settled", []),
+	}
+
+
 ## Level, XP bar and unlocked achievement ids at this instant.
 ## Taken before and after a match so the results screen can show what changed.
 func capture_progress() -> Dictionary:
@@ -278,7 +415,7 @@ func capture_progress() -> Dictionary:
 			unlocked.append(achievement_id)
 	return {
 		"level": level,
-		"xp": xp,
+		"xp": get_xp_in_current_level(),
 		"xp_needed": _xp_for_next_level(),
 		"unlocked": unlocked,
 	}
@@ -359,10 +496,10 @@ func is_match_won(correct_count: int, total_count: int) -> bool:
 
 
 func add_xp(amount: int) -> void:
+	if amount <= 0:
+		return
 	xp += amount
-	while xp >= _xp_for_next_level():
-		xp -= _xp_for_next_level()
-		level += 1
+	_sync_level_from_total_xp()
 
 
 func get_category_stats(category_id: String) -> Dictionary:
@@ -427,5 +564,23 @@ func _rival_names() -> Array[String]:
 	return ["Lucas", "Emma", "Noah", "Léa", "Hugo", "Chloé", "Adam", "Sarah", "Maya"]
 
 
+func _xp_cost_for_level(from_level: int) -> int:
+	return maxi(1, int(round(float(XP_LEVEL_BASE) * pow(XP_LEVEL_GROWTH, from_level - 1))))
+
+
 func _xp_for_next_level() -> int:
-	return 100 + (level - 1) * 25
+	return _xp_cost_for_level(level)
+
+
+func _total_xp_to_reach_level(target_level: int) -> int:
+	var total := 0
+	for n in range(1, maxi(target_level, 1)):
+		total += _xp_cost_for_level(n)
+	return total
+
+
+func _sync_level_from_total_xp() -> void:
+	var lvl := 1
+	while xp >= _total_xp_to_reach_level(lvl + 1):
+		lvl += 1
+	level = lvl

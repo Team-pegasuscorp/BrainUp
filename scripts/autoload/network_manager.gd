@@ -14,6 +14,7 @@ signal live_question(data: Dictionary)
 signal live_reveal(data: Dictionary)
 signal live_match_over(data: Dictionary)
 signal live_error(reason: String)
+signal live_search_range_changed(trophy_range: int)
 signal daily_challenge_received(data: Dictionary)
 signal daily_challenge_failed
 signal daily_result_submitted(data: Dictionary)
@@ -24,6 +25,7 @@ signal daily_leaderboard_failed
 ## Swap this for the Hetzner domain once the backend is migrated (Phase 7).
 const BASE_URL: String = "http://127.0.0.1:8000"
 const DEVICE_ID_PATH: String = "user://device_id.txt"
+const LiveMatchmakingScript = preload("res://scripts/profile/live_matchmaking.gd")
 
 var player_id: String = ""
 
@@ -42,6 +44,12 @@ var last_daily_result: Dictionary = {}
 
 var _live_socket: WebSocketPeer = null
 var _live_pending_join: Variant = null
+## Trophy-first queue: start narrow, widen if no opponent.
+var _live_searching: bool = false
+var _live_trophy_range: int = LiveMatchmakingScript.initial_range()
+var _live_widen_elapsed: float = 0.0
+## Public mirror for UI (searching label).
+var live_trophy_range: int = LiveMatchmakingScript.initial_range()
 
 
 func _process(_delta: float) -> void:
@@ -55,11 +63,14 @@ func _process(_delta: float) -> void:
 		if _live_pending_join != null:
 			_live_socket.send_text(JSON.stringify(_live_pending_join))
 			_live_pending_join = null
+		if _live_searching:
+			_tick_live_widen(_delta)
 		while _live_socket != null and _live_socket.get_available_packet_count() > 0:
 			_handle_live_message(_live_socket.get_packet().get_string_from_utf8())
 	elif state == WebSocketPeer.STATE_CLOSED:
 		_live_socket = null
 		_live_pending_join = null
+		_live_searching = false
 		live_error.emit("disconnected")
 
 
@@ -76,12 +87,21 @@ func start_live_matchmaking(category: String) -> void:
 		live_error.emit("connect_failed")
 		return
 
+	_live_trophy_range = LiveMatchmakingScript.initial_range()
+	live_trophy_range = _live_trophy_range
+	_live_widen_elapsed = 0.0
+	_live_searching = true
+	## Prefer opponents near our trophy count; server must honor `trophy_range`
+	## and `widen_search` (see docs/LIVE_MATCHMAKING_TROPHIES.md).
 	_live_pending_join = {
 		"type": "join_queue",
 		"player_id": player_id,
 		"category": category,
 		"locale": LocaleManager.get_content_locale(),
+		"trophies": SaveManager.trophies,
+		"trophy_range": _live_trophy_range,
 	}
+	live_search_range_changed.emit(_live_trophy_range)
 
 
 func send_live_answer(index: int, selected_index: int) -> void:
@@ -95,10 +115,32 @@ func send_live_answer(index: int, selected_index: int) -> void:
 
 
 func stop_live_matchmaking() -> void:
+	_live_searching = false
+	_live_widen_elapsed = 0.0
 	if _live_socket != null:
 		_live_socket.close()
 		_live_socket = null
 	_live_pending_join = null
+
+
+func _tick_live_widen(delta: float) -> void:
+	if LiveMatchmakingScript.is_max_range(_live_trophy_range):
+		return
+	_live_widen_elapsed += delta
+	if _live_widen_elapsed < LiveMatchmakingScript.STEP_SECONDS:
+		return
+	_live_widen_elapsed = 0.0
+	var next_range := LiveMatchmakingScript.next_range(_live_trophy_range)
+	if next_range == _live_trophy_range:
+		return
+	_live_trophy_range = next_range
+	live_trophy_range = _live_trophy_range
+	_live_socket.send_text(JSON.stringify({
+		"type": "widen_search",
+		"trophies": SaveManager.trophies,
+		"trophy_range": _live_trophy_range,
+	}))
+	live_search_range_changed.emit(_live_trophy_range)
 
 
 func _handle_live_message(raw: String) -> void:
@@ -108,6 +150,7 @@ func _handle_live_message(raw: String) -> void:
 
 	match str(parsed.get("type", "")):
 		"match_found":
+			_live_searching = false
 			live_match_found.emit(parsed)
 		"question":
 			live_question.emit(parsed)
