@@ -16,6 +16,7 @@ const TEXT_ON_ACCENT := Color(1, 1, 1, 1)
 
 const ACCENT_HOME := Color(0.071, 0.769, 0.722, 1)             # teal
 const ACCENT_LEADERBOARD := Color(0.941, 0.706, 0.161, 1)      # gold
+const ACCENT_LEADERBOARD_FRIENDS := Color(0.96, 0.58, 0.30, 1) # warm copper — friends scope
 const ACCENT_QUIZ := Color(0.36, 0.75, 1.0, 1)                 # light blue #5CBFFF
 const ACCENT_QUIZ_DEEP := Color(0.18, 0.56, 0.88, 1)           # #2E8FE0
 const ACCENT_MODE_CLASSIC := ACCENT_QUIZ                       # blue
@@ -145,6 +146,10 @@ const HOME_CARD_BORDER := Color(0.071, 0.769, 0.722, 0.28)
 const LEADERBOARD_CARD_BG := Color(0.38, 0.28, 0.08, 1)       # deep gold
 const LEADERBOARD_CARD_BG_RAISED := Color(0.46, 0.34, 0.10, 1)
 const LEADERBOARD_CARD_BORDER := Color(0.941, 0.706, 0.161, 0.30)
+## Friends board — same warm family, shifted toward copper.
+const LEADERBOARD_FRIENDS_CARD_BG := Color(0.34, 0.20, 0.10, 1)
+const LEADERBOARD_FRIENDS_CARD_BG_RAISED := Color(0.42, 0.26, 0.13, 1)
+const LEADERBOARD_FRIENDS_CARD_BORDER := Color(0.96, 0.58, 0.30, 0.32)
 const PROFILE_TEXT := Color(1, 1, 1, 1)
 const PROFILE_TEXT_MUTED := Color(0.62, 0.66, 0.78, 1)
 const PROFILE_TITLE_CAPS := Color(0.55, 0.58, 0.70, 1)

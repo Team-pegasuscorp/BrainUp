@@ -8,6 +8,7 @@ const PressScaleUtil = preload("res://scripts/ui/press_scale.gd")
 const UiTokens = preload("res://scripts/config/ui_tokens.gd")
 const UiStyle = preload("res://scripts/config/ui_style.gd")
 const DailyChallenge = preload("res://scripts/profile/daily_challenge.gd")
+const UiFonts = preload("res://scripts/config/ui_fonts.gd")
 
 @export var embedded_mode: bool = false
 
@@ -30,13 +31,16 @@ var _daily_resubmitted: bool = false
 var _board_overlay: Control
 var _scroll_content: VBoxContainer
 var _mode_buttons: Dictionary = {}
+var _mode_icon_labels: Dictionary = {} ## mode_id -> Label
+var _mode_name_labels: Dictionary = {} ## mode_id -> Label
 var _mode_hint: Label
+var _mode_section_label: Label
 
-## Mode chips, in display order: [mode, label key, hint key].
+## Mode chips: [mode, label key, hint key, icon].
 const MODES := [
-	[0, "UI_MODE_CLASSIC", "UI_MODE_CLASSIC_HINT"],
-	[1, "UI_MODE_SURVIVAL", "UI_MODE_SURVIVAL_HINT"],
-	[2, "UI_MODE_TIME_ATTACK", "UI_MODE_TIME_ATTACK_HINT"],
+	[0, "UI_MODE_CLASSIC", "UI_MODE_CLASSIC_HINT", "🎯"],
+	[1, "UI_MODE_SURVIVAL", "UI_MODE_SURVIVAL_HINT", "❤️"],
+	[2, "UI_MODE_TIME_ATTACK", "UI_MODE_TIME_ATTACK_HINT", "⏱️"],
 ]
 ## Room inside ScrollContainer so selected-tile neon isn't clipped.
 const TILE_GLOW_PAD := 12
@@ -88,19 +92,53 @@ func _wrap_list_in_scroll() -> void:
 ## Mode chips and a hint line (rules + personal record), pinned above Play.
 func _build_mode_picker() -> void:
 	var column := start_button.get_parent()
+
+	_mode_section_label = Label.new()
+	_mode_section_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_mode_section_label.add_theme_font_size_override("font_size", UiScale.font(13))
+	_mode_section_label.add_theme_color_override("font_color", Color(1, 1, 1, 0.55))
+	column.add_child(_mode_section_label)
+	column.move_child(_mode_section_label, start_button.get_index())
+
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 8)
+	row.add_theme_constant_override("separation", 10)
 	column.add_child(row)
 	column.move_child(row, start_button.get_index())
 	for entry in MODES:
+		var mode_id := int(entry[0])
 		var chip := Button.new()
 		chip.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		chip.custom_minimum_size.y = 44
-		chip.add_theme_font_size_override("font_size", UiScale.font(15))
-		chip.pressed.connect(_on_mode_selected.bind(int(entry[0])))
+		chip.custom_minimum_size.y = 72
+		chip.focus_mode = Control.FOCUS_NONE
+		chip.pressed.connect(_on_mode_selected.bind(mode_id))
 		PressScaleUtil.wire(chip, self)
 		row.add_child(chip)
-		_mode_buttons[int(entry[0])] = chip
+		_mode_buttons[mode_id] = chip
+
+		var col := VBoxContainer.new()
+		col.alignment = BoxContainer.ALIGNMENT_CENTER
+		col.add_theme_constant_override("separation", 4)
+		col.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		col.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		chip.add_child(col)
+
+		var icon := Label.new()
+		icon.text = str(entry[3])
+		icon.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		icon.add_theme_font_size_override("font_size", UiScale.font(26))
+		var emoji_font := UiFonts.emoji_font()
+		if emoji_font != null:
+			icon.add_theme_font_override("font", emoji_font)
+		col.add_child(icon)
+		_mode_icon_labels[mode_id] = icon
+
+		var name_label := Label.new()
+		name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		name_label.add_theme_font_size_override("font_size", UiScale.font(14))
+		col.add_child(name_label)
+		_mode_name_labels[mode_id] = name_label
 
 	_mode_hint = Label.new()
 	_mode_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -117,27 +155,73 @@ func _on_mode_selected(mode: int) -> void:
 
 
 func _refresh_mode_picker() -> void:
+	if _mode_section_label != null:
+		_mode_section_label.text = tr("UI_MODE_PICKER_TITLE").to_upper()
 	for entry in MODES:
 		var mode_id := int(entry[0])
 		var chip: Button = _mode_buttons[mode_id]
 		var selected := mode_id == GameManager.selected_mode
 		var accent: Color = UiTokens.MODE_ACCENTS[mode_id]
-		chip.text = tr(str(entry[1]))
+		var name_label: Label = _mode_name_labels[mode_id]
+		name_label.text = tr(str(entry[1]))
 		for state in ["normal", "hover", "pressed", "focus"]:
-			var style := UiStyle.profile_chip(accent, selected)
-			if not selected:
-				## Keep each mode’s colour readable even when idle.
-				style.bg_color = Color(accent.r, accent.g, accent.b, 0.10)
-				style.set_border_width_all(1)
-				style.border_color = Color(accent.r, accent.g, accent.b, 0.40)
-			chip.add_theme_stylebox_override(state, style)
-		chip.add_theme_color_override("font_color", Color(1, 1, 1, 1.0 if selected else 0.75))
-		chip.add_theme_color_override("font_hover_color", Color(1, 1, 1, 1))
-		chip.add_theme_color_override("font_pressed_color", Color(1, 1, 1, 1))
-		chip.add_theme_color_override("font_focus_color", Color(1, 1, 1, 1.0 if selected else 0.75))
+			chip.add_theme_stylebox_override(state, _mode_chip_style(accent, selected))
+		## Hide default button caption — labels are owned by the inner VBox.
+		chip.text = ""
+		chip.add_theme_color_override("font_color", Color(0, 0, 0, 0))
+		chip.add_theme_color_override("font_hover_color", Color(0, 0, 0, 0))
+		chip.add_theme_color_override("font_pressed_color", Color(0, 0, 0, 0))
+		chip.add_theme_color_override("font_focus_color", Color(0, 0, 0, 0))
+		name_label.add_theme_color_override(
+			"font_color",
+			Color(0.08, 0.06, 0.12, 1) if selected else Color(1, 1, 1, 0.88)
+		)
 		if selected:
 			_mode_hint.text = tr(str(entry[2])) + _record_text()
-			_mode_hint.add_theme_color_override("font_color", Color(accent.r, accent.g, accent.b, 0.90))
+			_mode_hint.add_theme_color_override("font_color", Color(accent.r, accent.g, accent.b, 0.95))
+	_sync_play_button_to_mode()
+
+
+func _mode_chip_style(accent: Color, selected: bool) -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	if selected:
+		style.bg_color = accent
+		style.set_border_width_all(3)
+		style.border_color = Color(1, 1, 1, 0.92)
+		style.shadow_color = Color(accent.r, accent.g, accent.b, 0.45)
+		style.shadow_size = 12
+	else:
+		style.bg_color = Color(accent.r, accent.g, accent.b, 0.16)
+		style.set_border_width_all(2)
+		style.border_color = Color(accent.r, accent.g, accent.b, 0.55)
+		style.shadow_color = Color(accent.r, accent.g, accent.b, 0.12)
+		style.shadow_size = 4
+	style.set_corner_radius_all(16)
+	style.content_margin_left = 8
+	style.content_margin_right = 8
+	style.content_margin_top = 10
+	style.content_margin_bottom = 10
+	style.shadow_offset = Vector2(0, 3)
+	return style
+
+
+func _sync_play_button_to_mode() -> void:
+	var accent: Color = UiTokens.MODE_ACCENTS[GameManager.selected_mode]
+	var deep := accent.darkened(0.22)
+	var hover := accent.lightened(0.12)
+	for state_accent in [
+		["normal", accent],
+		["hover", hover],
+		["focus", hover],
+		["pressed", deep],
+	]:
+		var style := UiStyle.filled(state_accent[1] as Color, 22)
+		style.shadow_color = Color(accent.r, accent.g, accent.b, 0.28 if state_accent[0] != "pressed" else 0.12)
+		style.shadow_size = 10
+		style.shadow_offset = Vector2(0, 4)
+		start_button.add_theme_stylebox_override(str(state_accent[0]), style)
+	for slot in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color"]:
+		start_button.add_theme_color_override(slot, Color(0.08, 0.06, 0.12, 1))
 
 
 ## " · Record: 1 234 pts (12 ✓)" for survival / time attack in the selected category.
@@ -275,6 +359,8 @@ func _render_daily() -> void:
 	_daily_card.add_child(margin)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 14)
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	margin.add_child(row)
 
 	var category_id := str(_daily.get("category_id", ""))
@@ -293,6 +379,7 @@ func _render_daily() -> void:
 
 	var labels := VBoxContainer.new()
 	labels.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	labels.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	labels.alignment = BoxContainer.ALIGNMENT_CENTER
 	row.add_child(labels)
 
@@ -506,11 +593,14 @@ func _make_category_tile(index: int, category: Dictionary) -> Button:
 
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 14)
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	margin.add_child(row)
 
 	var swatch := ColorRect.new()
 	swatch.custom_minimum_size = Vector2(10, 0)
+	swatch.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	swatch.color = accent
 	swatch.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	row.add_child(swatch)
@@ -519,6 +609,7 @@ func _make_category_tile(index: int, category: Dictionary) -> Button:
 
 	var labels := VBoxContainer.new()
 	labels.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	labels.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	labels.alignment = BoxContainer.ALIGNMENT_CENTER
 	labels.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	row.add_child(labels)

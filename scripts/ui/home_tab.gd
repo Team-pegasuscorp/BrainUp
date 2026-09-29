@@ -33,9 +33,9 @@ func _rebuild_cards(snapshot: Dictionary) -> void:
 		child.queue_free()
 
 	content.add_child(_make_profile_summary_card(snapshot))
-	content.add_child(_make_last_match_card(snapshot))
 	content.add_child(_make_daily_challenges_card())
 	content.add_child(_make_near_achievements_card(snapshot))
+	content.add_child(_make_last_match_card(snapshot))
 	content.add_child(_make_news_card())
 	ScrollTouch.let_drags_through(content)
 
@@ -933,13 +933,6 @@ func _history_row(row: Dictionary) -> Control:
 	age.add_theme_font_size_override("font_size", UiScale.font(14))
 	age.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	right.add_child(age)
-
-	var chevron := Label.new()
-	chevron.text = ">"
-	chevron.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	chevron.add_theme_font_size_override("font_size", UiScale.font(18))
-	chevron.add_theme_color_override("font_color", UiTokens.PROFILE_TITLE_CAPS)
-	right.add_child(chevron)
 	return row_wrap
 
 

@@ -315,6 +315,7 @@ UI_ACH_DAYS_30,Unstoppable,Inarrêtable
 UI_ACH_DAYS_30_DESC,Play 30 days in a row.,Jouez 30 jours d'affilée.
 UI_EXPLANATION_TITLE,DID YOU KNOW?,LE SAVAIS-TU ?
 UI_EXPLANATION_TAP,Tap to continue,Touche pour continuer
+UI_MODE_PICKER_TITLE,Game mode,Mode de jeu
 UI_MODE_CLASSIC,Classic,Classique
 UI_MODE_SURVIVAL,Survival,Survie
 UI_MODE_TIME_ATTACK,Time attack,Chrono

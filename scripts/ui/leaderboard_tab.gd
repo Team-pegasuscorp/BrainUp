@@ -44,6 +44,7 @@ func _rebuild() -> void:
 	var friends_snap := LeaderboardSnapshot.build_friends(LocaleManager.get_content_locale())
 
 	content.add_child(_scope_toggle())
+	_tint_page_for_scope()
 
 	if _scope == "friends":
 		content.add_child(_board_section(
@@ -54,7 +55,6 @@ func _rebuild() -> void:
 			false
 		))
 	else:
-		content.add_child(_category_sub_toggle())
 		content.add_child(_board_section(
 			tr("UI_LEADERBOARD_GENERAL_TITLE"),
 			"🌐",
@@ -87,6 +87,34 @@ func _global_snapshot() -> Dictionary:
 	return local_snap
 
 
+func _scope_accent() -> Color:
+	return (
+		UiTokens.ACCENT_LEADERBOARD_FRIENDS if _scope == "friends"
+		else UiTokens.ACCENT_LEADERBOARD
+	)
+
+
+func _scope_card_bg(raised: bool = false) -> Color:
+	if _scope == "friends":
+		return (
+			UiTokens.LEADERBOARD_FRIENDS_CARD_BG_RAISED if raised
+			else UiTokens.LEADERBOARD_FRIENDS_CARD_BG
+		)
+	return UiTokens.LEADERBOARD_CARD_BG_RAISED if raised else UiTokens.LEADERBOARD_CARD_BG
+
+
+func _tint_page_for_scope() -> void:
+	## Soft wash shift so Général (gold) and Amis (copper) read apart.
+	var bg := get_node_or_null("TabPageBackground") as ColorRect
+	if bg == null:
+		return
+	var mat := ShaderMaterial.new()
+	mat.shader = load("res://shaders/tab_page_bg.gdshader") as Shader
+	mat.set_shader_parameter("accent", _scope_accent())
+	mat.set_shader_parameter("deep", UiTokens.BG_CREAM)
+	bg.material = mat
+
+
 func _scope_toggle() -> Control:
 	var panel := _toggle_track(24, 5)
 	var row := HBoxContainer.new()
@@ -97,6 +125,7 @@ func _scope_toggle() -> Control:
 		"🌐",
 		tr("UI_LEADERBOARD_SCOPE_GENERAL"),
 		_scope == "general",
+		UiTokens.ACCENT_LEADERBOARD,
 		54,
 		22,
 		19,
@@ -106,6 +135,7 @@ func _scope_toggle() -> Control:
 		"👤",
 		tr("UI_LEADERBOARD_SCOPE_FRIENDS"),
 		_scope == "friends",
+		UiTokens.ACCENT_LEADERBOARD_FRIENDS,
 		54,
 		22,
 		19,
@@ -118,90 +148,16 @@ func _scope_toggle() -> Control:
 	return panel
 
 
-func _category_sub_toggle() -> Control:
-	var panel := _toggle_track(26, 8)
-	const ICON := 64.0
-
-	var scroll_row := ScrollContainer.new()
-	scroll_row.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
-	scroll_row.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	scroll_row.custom_minimum_size.y = ICON + 6.0
-	panel.add_child(scroll_row)
-
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 12)
-	row.alignment = BoxContainer.ALIGNMENT_CENTER
-	scroll_row.add_child(row)
-
-	for filter_data in LeaderboardSnapshot.available_filters(LocaleManager.get_content_locale()):
-		if typeof(filter_data) != TYPE_DICTIONARY:
-			continue
-		var filter_id := str(filter_data.get("id", ""))
-		if filter_id.is_empty():
-			continue
-		var tip := tr("UI_LEADERBOARD_MODE_ALL") if filter_id == "all" else str(filter_data.get("label", filter_id))
-		row.add_child(_category_icon_chip(filter_id, ICON, tip))
-	return panel
-
-
-func _category_icon_chip(filter_id: String, size_px: float, tooltip: String) -> Button:
-	var selected := _selected_filter == filter_id
-	var accent := (
-		UiTokens.ACCENT_LEADERBOARD if filter_id == "all"
-		else UiTokens.accent_for_category(filter_id)
-	)
-	var btn := Button.new()
-	btn.focus_mode = Control.FOCUS_NONE
-	btn.custom_minimum_size = Vector2(size_px, size_px)
-	btn.tooltip_text = tooltip
-	btn.pressed.connect(_on_category_filter_pressed.bind(filter_id))
-	PressScaleUtil.wire(btn, self)
-
-	var chip := StyleBoxFlat.new()
-	if selected:
-		chip.bg_color = Color(accent.r, accent.g, accent.b, 0.95)
-		chip.set_border_width_all(3)
-		chip.border_color = Color(1, 1, 1, 0.9)
-		chip.shadow_color = Color(accent.r, accent.g, accent.b, 0.4)
-		chip.shadow_size = 10
-	else:
-		chip.bg_color = Color(1, 1, 1, 0.08)
-		chip.set_border_width_all(2)
-		chip.border_color = Color(accent.r, accent.g, accent.b, 0.4)
-	chip.set_corner_radius_all(int(size_px * 0.5))
-	chip.content_margin_left = 0
-	chip.content_margin_right = 0
-	chip.content_margin_top = 0
-	chip.content_margin_bottom = 0
-	btn.add_theme_stylebox_override("normal", chip)
-	btn.add_theme_stylebox_override("hover", chip)
-	btn.add_theme_stylebox_override("pressed", chip)
-	btn.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
-	btn.add_theme_color_override("font_color", Color(0, 0, 0, 0))
-	btn.add_theme_color_override("font_hover_color", Color(0, 0, 0, 0))
-	btn.add_theme_color_override("font_pressed_color", Color(0, 0, 0, 0))
-
-	var emoji := "🏆" if filter_id == "all" else ProfileSnapshot._category_icon(filter_id)
-	var icon := GameAssets.make_circular_icon_display(
-		null if filter_id == "all" else GameAssets.category_texture(filter_id),
-		emoji,
-		size_px,
-		int(size_px * 0.58),
-		0.82
-	)
-	icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	btn.add_child(icon)
-	return btn
-
-
 func _toggle_track(radius: int, pad: int) -> PanelContainer:
 	var panel := PanelContainer.new()
 	var style := StyleBoxFlat.new()
-	style.bg_color = UiTokens.LEADERBOARD_CARD_BG
+	style.bg_color = _scope_card_bg(false)
 	style.set_corner_radius_all(radius)
 	style.set_border_width_all(1)
-	style.border_color = UiTokens.LEADERBOARD_CARD_BORDER
+	style.border_color = (
+		UiTokens.LEADERBOARD_FRIENDS_CARD_BORDER if _scope == "friends"
+		else UiTokens.LEADERBOARD_CARD_BORDER
+	)
 	style.content_margin_left = pad
 	style.content_margin_right = pad
 	style.content_margin_top = pad
@@ -214,6 +170,7 @@ func _pill_chip(
 	icon_text: String,
 	label_text: String,
 	selected: bool,
+	accent: Color,
 	height: float,
 	icon_size: int,
 	label_size: int,
@@ -228,9 +185,11 @@ func _pill_chip(
 
 	var chip := StyleBoxFlat.new()
 	if selected:
-		chip.bg_color = UiTokens.ACCENT_LEADERBOARD
+		chip.bg_color = accent
 	else:
-		chip.bg_color = Color(1, 1, 1, 0.06)
+		chip.bg_color = Color(accent.r, accent.g, accent.b, 0.14)
+		chip.set_border_width_all(1)
+		chip.border_color = Color(accent.r, accent.g, accent.b, 0.35)
 	chip.set_corner_radius_all(int(height * 0.37))
 	chip.content_margin_left = 14
 	chip.content_margin_right = 14
@@ -280,7 +239,10 @@ func _board_section(
 	show_title: bool = true
 ) -> Control:
 	var panel := PanelContainer.new()
-	panel.add_theme_stylebox_override("panel", UiStyle.leaderboard_surface(false, 14))
+	panel.add_theme_stylebox_override(
+		"panel",
+		UiStyle.leaderboard_surface(false, 14, _scope == "friends")
+	)
 
 	var vbox := VBoxContainer.new()
 	vbox.add_theme_constant_override("separation", 12)
@@ -319,7 +281,7 @@ func _board_section(
 		rank_hint.text = tr("UI_LEADERBOARD_YOUR_RANK").format({"rank": player_rank})
 		rank_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		rank_hint.add_theme_font_size_override("font_size", UiScale.font(22))
-		rank_hint.add_theme_color_override("font_color", UiTokens.ACCENT_LEADERBOARD)
+		rank_hint.add_theme_color_override("font_color", _scope_accent())
 		vbox.add_child(rank_hint)
 
 	var list := VBoxContainer.new()
@@ -379,10 +341,10 @@ func _make_podium(podium: Array) -> Control:
 	var places := [2, 1, 3]
 	var accents := [
 		Color(0.75, 0.78, 0.84, 1), ## silver
-		UiTokens.ACCENT_LEADERBOARD, ## gold
+		UiTokens.ACCENT_LEADERBOARD, ## gold — 1st place always
 		Color(0.90, 0.58, 0.32, 1), ## bronze
 	]
-	var max_h := 320.0
+	var max_h := 360.0
 	row.custom_minimum_size.y = max_h
 
 	for slot_index in range(slots.size()):
@@ -422,14 +384,14 @@ func _podium_identity(
 	var medal := Label.new()
 	medal.text = _rank_medal_icon(rank)
 	medal.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	var medal_size := 44 if place == 1 else (36 if place == 2 else 32)
+	var medal_size := 58 if place == 1 else (50 if place == 2 else 44)
 	medal.add_theme_font_size_override("font_size", UiScale.font(medal_size))
 	var emoji_font := UiFonts.emoji_font()
 	if emoji_font != null:
 		medal.add_theme_font_override("font", emoji_font)
 	vbox.add_child(medal)
 
-	var avatar_size := 56.0 if place == 1 else (46.0 if place == 2 else 40.0)
+	var avatar_size := 80.0 if place == 1 else (68.0 if place == 2 else 60.0)
 	vbox.add_child(_entry_avatar(entry, avatar_size, accent))
 
 	var name_label := Label.new()
@@ -444,7 +406,7 @@ func _podium_identity(
 	)
 	name_label.add_theme_color_override(
 		"font_color",
-		UiTokens.ACCENT_LEADERBOARD if bool(entry.get("is_player", false)) else UiTokens.PROFILE_TEXT
+		_scope_accent() if bool(entry.get("is_player", false)) else UiTokens.PROFILE_TEXT
 	)
 	vbox.add_child(name_label)
 
@@ -458,7 +420,7 @@ func _podium_identity(
 	var score := Label.new()
 	score.text = "🏆 %s" % _format_int(int(entry.get("score", 0)))
 	score.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	score.add_theme_font_size_override("font_size", UiScale.font(24 if place == 1 else (22 if place == 2 else 20)))
+	score.add_theme_font_size_override("font_size", UiScale.font(28 if place == 1 else (24 if place == 2 else 22)))
 	score.add_theme_color_override("font_color", accent)
 	vbox.add_child(score)
 	return vbox
@@ -505,56 +467,53 @@ func _podium_step(place: int, accent: Color, height: float) -> Control:
 func _make_rank_row(entry: Dictionary) -> PanelContainer:
 	var is_player: bool = bool(entry.get("is_player", false))
 	var rank := int(entry.get("rank", 0))
+	var accent := _scope_accent()
 	var panel := PanelContainer.new()
 	var style := StyleBoxFlat.new()
 	if is_player:
-		## Featured “you” tile — dark card + gold frame (readable, not gold-on-gold).
-		style.bg_color = UiTokens.LEADERBOARD_CARD_BG_RAISED.darkened(0.08)
-		style.set_border_width_all(2)
-		style.border_color = UiTokens.ACCENT_LEADERBOARD
-		style.shadow_color = Color(
-			UiTokens.ACCENT_LEADERBOARD.r,
-			UiTokens.ACCENT_LEADERBOARD.g,
-			UiTokens.ACCENT_LEADERBOARD.b,
-			0.18
-		)
-		style.shadow_size = 6
-		style.shadow_offset = Vector2(0, 2)
-		style.content_margin_left = 12
-		style.content_margin_right = 12
-		style.content_margin_top = 12
-		style.content_margin_bottom = 12
+		## Featured “you” tile — larger + dark card + scope-accent frame.
+		style.bg_color = _scope_card_bg(true).darkened(0.08)
+		style.set_border_width_all(3)
+		style.border_color = accent
+		style.shadow_color = Color(accent.r, accent.g, accent.b, 0.22)
+		style.shadow_size = 8
+		style.shadow_offset = Vector2(0, 3)
+		style.content_margin_left = 14
+		style.content_margin_right = 14
+		style.content_margin_top = 14
+		style.content_margin_bottom = 14
 	else:
-		style.bg_color = UiTokens.LEADERBOARD_CARD_BG_RAISED.lightened(0.06)
+		style.bg_color = _scope_card_bg(true).lightened(0.06)
 		style.set_border_width_all(0)
 		style.content_margin_left = 10
 		style.content_margin_right = 10
 		style.content_margin_top = 9
 		style.content_margin_bottom = 9
-	style.set_corner_radius_all(14)
+	style.set_corner_radius_all(16 if is_player else 14)
 	panel.add_theme_stylebox_override("panel", style)
 	if is_player:
-		panel.custom_minimum_size.y = 72
+		panel.custom_minimum_size.y = 96
 
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 10)
+	row.add_theme_constant_override("separation", 12 if is_player else 10)
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
 	panel.add_child(row)
 
 	if is_player:
-		## Left gold rail — same language as match-history accent bars.
+		## Left accent rail — same language as match-history accent bars.
 		var bar := Panel.new()
-		bar.custom_minimum_size = Vector2(4, 48)
+		bar.custom_minimum_size = Vector2(5, 64)
 		bar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		var bar_style := StyleBoxFlat.new()
-		bar_style.bg_color = UiTokens.ACCENT_LEADERBOARD
-		bar_style.set_corner_radius_all(2)
+		bar_style.bg_color = accent
+		bar_style.set_corner_radius_all(3)
 		bar.add_theme_stylebox_override("panel", bar_style)
 		row.add_child(bar)
 
+	var rank_slot_size := 58.0 if is_player else 48.0
 	var rank_slot := Control.new()
-	rank_slot.custom_minimum_size = Vector2(48, 48)
+	rank_slot.custom_minimum_size = Vector2(rank_slot_size, rank_slot_size)
 	rank_slot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	row.add_child(rank_slot)
 
@@ -564,7 +523,7 @@ func _make_rank_row(entry: Dictionary) -> PanelContainer:
 		medal.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		medal.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		medal.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-		medal.add_theme_font_size_override("font_size", UiScale.font(42))
+		medal.add_theme_font_size_override("font_size", UiScale.font(48 if is_player else 42))
 		var emoji_font := UiFonts.emoji_font()
 		if emoji_font != null:
 			medal.add_theme_font_override("font", emoji_font)
@@ -574,10 +533,10 @@ func _make_rank_row(entry: Dictionary) -> PanelContainer:
 		rank_disc.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		var rd := StyleBoxFlat.new()
 		if is_player:
-			rd.bg_color = UiTokens.ACCENT_LEADERBOARD
+			rd.bg_color = accent
 		else:
 			rd.bg_color = Color(1, 1, 1, 0.10)
-		rd.set_corner_radius_all(16)
+		rd.set_corner_radius_all(int(rank_slot_size * 0.34))
 		rank_disc.add_theme_stylebox_override("panel", rd)
 		rank_slot.add_child(rank_disc)
 		var rank_label := Label.new()
@@ -585,18 +544,18 @@ func _make_rank_row(entry: Dictionary) -> PanelContainer:
 		rank_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		rank_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		rank_label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-		rank_label.add_theme_font_size_override("font_size", UiScale.font(14 if is_player else 13))
+		rank_label.add_theme_font_size_override("font_size", UiScale.font(18 if is_player else 13))
 		rank_label.add_theme_color_override(
 			"font_color",
 			Color(0.10, 0.08, 0.04, 1) if is_player else UiTokens.PROFILE_TEXT
 		)
 		rank_slot.add_child(rank_label)
 
-	row.add_child(_entry_avatar(entry, 48.0 if is_player else 44.0, UiTokens.ACCENT_LEADERBOARD))
+	row.add_child(_entry_avatar(entry, 64.0 if is_player else 44.0, accent))
 
 	var info := VBoxContainer.new()
 	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	info.add_theme_constant_override("separation", 2)
+	info.add_theme_constant_override("separation", 3 if is_player else 2)
 	row.add_child(info)
 
 	var name := Label.new()
@@ -606,14 +565,17 @@ func _make_rank_row(entry: Dictionary) -> PanelContainer:
 	name.clip_text = true
 	name.add_theme_font_size_override(
 		"font_size",
-		UiScale.font(UiTokens.pseudo_font_size(str(entry.get("name", "")), UiTokens.PSEUDO_FONT_SIZE + (2 if is_player else 0)))
+		UiScale.font(UiTokens.pseudo_font_size(
+			str(entry.get("name", "")),
+			UiTokens.PSEUDO_FONT_SIZE + (6 if is_player else 0)
+		))
 	)
 	name.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	info.add_child(name)
 
 	var level := Label.new()
 	level.text = "★ %s %d" % [tr("UI_PROFILE_LEVEL_CAPTION"), int(entry.get("level", 1))]
-	level.add_theme_font_size_override("font_size", UiScale.font(12))
+	level.add_theme_font_size_override("font_size", UiScale.font(14 if is_player else 12))
 	level.add_theme_color_override(
 		"font_color",
 		UiTokens.PROFILE_TEXT_MUTED if is_player else Color(0.72, 0.62, 1.0, 1)
@@ -622,8 +584,8 @@ func _make_rank_row(entry: Dictionary) -> PanelContainer:
 
 	var score := Label.new()
 	score.text = "🏆 %s" % _format_int(int(entry.get("score", 0)))
-	score.add_theme_font_size_override("font_size", UiScale.font(26 if is_player else 24))
-	score.add_theme_color_override("font_color", UiTokens.ACCENT_LEADERBOARD)
+	score.add_theme_font_size_override("font_size", UiScale.font(30 if is_player else 24))
+	score.add_theme_color_override("font_color", accent)
 	row.add_child(score)
 	return panel
 
@@ -711,13 +673,6 @@ func _on_scope_pressed(scope_id: String) -> void:
 	if _scope == scope_id:
 		return
 	_scope = scope_id
-	_rebuild()
-
-
-func _on_category_filter_pressed(filter_id: String) -> void:
-	if _selected_filter == filter_id:
-		return
-	_selected_filter = filter_id
 	_rebuild()
 
 

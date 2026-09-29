@@ -211,12 +211,20 @@ static func home_surface(raised: bool = false, pad: int = 10) -> StyleBoxFlat:
 	return style
 
 
-static func leaderboard_surface(raised: bool = false, pad: int = 10) -> StyleBoxFlat:
-	## Dark gold tiles tuned to Leaderboard's gold page wash.
-	var style := profile_card(UiTokens.ACCENT_LEADERBOARD, raised)
-	style.bg_color = UiTokens.LEADERBOARD_CARD_BG_RAISED if raised else UiTokens.LEADERBOARD_CARD_BG
-	style.border_color = UiTokens.LEADERBOARD_CARD_BORDER
-	style.shadow_color = Color(UiTokens.ACCENT_LEADERBOARD.r, UiTokens.ACCENT_LEADERBOARD.g, UiTokens.ACCENT_LEADERBOARD.b, 0.22)
+static func leaderboard_surface(raised: bool = false, pad: int = 10, friends: bool = false) -> StyleBoxFlat:
+	## Dark gold tiles; friends scope shifts toward warm copper.
+	var accent := UiTokens.ACCENT_LEADERBOARD_FRIENDS if friends else UiTokens.ACCENT_LEADERBOARD
+	var style := profile_card(accent, raised)
+	if friends:
+		style.bg_color = (
+			UiTokens.LEADERBOARD_FRIENDS_CARD_BG_RAISED if raised
+			else UiTokens.LEADERBOARD_FRIENDS_CARD_BG
+		)
+		style.border_color = UiTokens.LEADERBOARD_FRIENDS_CARD_BORDER
+	else:
+		style.bg_color = UiTokens.LEADERBOARD_CARD_BG_RAISED if raised else UiTokens.LEADERBOARD_CARD_BG
+		style.border_color = UiTokens.LEADERBOARD_CARD_BORDER
+	style.shadow_color = Color(accent.r, accent.g, accent.b, 0.22)
 	style.shadow_size = 12 if raised else 9
 	style.set_content_margin_all(pad)
 	return style
