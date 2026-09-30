@@ -376,6 +376,7 @@ UI_SHOP_NOT_ENOUGH,Not enough coins,Pas assez de pièces
 UI_SHOP_CANCEL,Cancel,Annuler
 UI_SHOP_KIND_AVATAR,Avatar,Avatar
 UI_SHOP_KIND_FRAME,Frame,Cadre
+UI_SHOP_KIND_BANNER,Banner,Bannière
 UI_SHOP_LOCKER_HINT,Pick a slot then tap an item to equip it.,Choisis un emplacement puis touche un article pour l'équiper.
 UI_SHOP_DEFAULT_AVATAR,Default,Par défaut
 UI_SHOP_STARTER,Starter,De base

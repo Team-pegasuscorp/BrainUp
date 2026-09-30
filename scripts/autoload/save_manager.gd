@@ -1,5 +1,8 @@
 extends Node
 
+## Avatar, frame or banner changed (the server copy must be refreshed).
+signal cosmetics_changed
+
 const UiTokens = preload("res://scripts/config/ui_tokens.gd")
 const QuestionLoaderScript = preload("res://scripts/quiz/question_loader.gd")
 const AchievementsCatalogScript = preload("res://scripts/profile/achievements_catalog.gd")
@@ -65,6 +68,7 @@ var mode_records: Dictionary = {}
 var coins: int = ShopCatalog.DEMO_START_COINS if ShopCatalog.SHOW_DEMO_ITEMS else 0
 var owned_items: Array = []
 var equipped_frame: String = ""
+var equipped_banner: String = ""
 var sound_enabled: bool = true
 var sound_volume: float = 0.8
 
@@ -93,6 +97,9 @@ func load_data() -> void:
 	equipped_frame = str(parsed.get("equipped_frame", ""))
 	if not is_item_owned(equipped_frame):
 		equipped_frame = ""
+	equipped_banner = str(parsed.get("equipped_banner", ""))
+	if not is_item_owned(equipped_banner):
+		equipped_banner = ""
 	profile_avatar_id = str(parsed.get("profile_avatar_id", ""))
 	if not can_use_avatar(profile_avatar_id):
 		profile_avatar_id = ""
@@ -165,6 +172,7 @@ func save_data() -> void:
 		"coins": coins,
 		"owned_items": owned_items,
 		"equipped_frame": equipped_frame,
+		"equipped_banner": equipped_banner,
 		"sound_enabled": sound_enabled,
 		"sound_volume": sound_volume,
 	}
@@ -259,8 +267,11 @@ func avatar_texture_for(avatar_id: String) -> Texture2D:
 
 
 func set_profile_avatar_id(avatar_id: String) -> void:
+	var previous := profile_avatar_id
 	profile_avatar_id = avatar_id if can_use_avatar(avatar_id) else ""
 	save_data()
+	if profile_avatar_id != previous:
+		cosmetics_changed.emit()
 
 
 ## Free starter avatars, or a shop avatar the player bought.
@@ -298,6 +309,15 @@ func get_equipped_frame() -> String:
 	return equipped_frame if not equipped_frame.is_empty() else ShopCatalog.default_frame_id()
 
 
+func get_equipped_banner() -> String:
+	return equipped_banner if not equipped_banner.is_empty() else ShopCatalog.default_banner_id()
+
+
+## What other players see (sent to the server, see NetworkManager).
+func get_cosmetics() -> Dictionary:
+	return {"avatar": profile_avatar_id, "frame": get_equipped_frame(), "banner": get_equipped_banner()}
+
+
 func equip_item(item_id: String) -> void:
 	if not is_item_owned(item_id):
 		return
@@ -305,6 +325,11 @@ func equip_item(item_id: String) -> void:
 		ShopCatalog.KIND_FRAME:
 			equipped_frame = item_id
 			save_data()
+			cosmetics_changed.emit()
+		ShopCatalog.KIND_BANNER:
+			equipped_banner = item_id
+			save_data()
+			cosmetics_changed.emit()
 		ShopCatalog.KIND_AVATAR:
 			set_profile_avatar_id(item_id)
 

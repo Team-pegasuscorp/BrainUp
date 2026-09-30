@@ -494,26 +494,32 @@ func _make_rank_row(entry: Dictionary) -> PanelContainer:
 		style.shadow_color = Color(accent.r, accent.g, accent.b, 0.22)
 		style.shadow_size = 8
 		style.shadow_offset = Vector2(0, 3)
-		style.content_margin_left = 14
-		style.content_margin_right = 14
-		style.content_margin_top = 14
-		style.content_margin_bottom = 14
 	else:
 		style.bg_color = _scope_card_bg(true).lightened(0.06)
 		style.set_border_width_all(0)
-		style.content_margin_left = 10
-		style.content_margin_right = 10
-		style.content_margin_top = 9
-		style.content_margin_bottom = 9
 	style.set_corner_radius_all(16 if is_player else 14)
 	panel.add_theme_stylebox_override("panel", style)
 	if is_player:
 		panel.custom_minimum_size.y = 112
 
+	## The player's banner fills the card, dimmed so the row stays readable.
+	var cosmetics: Dictionary = entry.get("cosmetics", {})
+	var banner := CosmeticsView.banner(str(cosmetics.get("banner", "")), Vector2.ZERO, 16 if is_player else 14)
+	banner.modulate = Color(0.62, 0.62, 0.68)
+	panel.add_child(banner)
+
+	var pad := MarginContainer.new()
+	pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pad.add_theme_constant_override("margin_left", 14 if is_player else 10)
+	pad.add_theme_constant_override("margin_right", 14 if is_player else 10)
+	pad.add_theme_constant_override("margin_top", 14 if is_player else 9)
+	pad.add_theme_constant_override("margin_bottom", 14 if is_player else 9)
+	panel.add_child(pad)
+
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 12 if is_player else 10)
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
-	panel.add_child(row)
+	pad.add_child(row)
 
 	if is_player:
 		## Left accent rail — same language as match-history accent bars.
@@ -619,6 +625,13 @@ func _rank_medal_icon(rank: int) -> String:
 
 
 func _entry_avatar(entry: Dictionary, size_px: float, accent: Color) -> Control:
+	## Framed avatar from the player's look (server, local or demo; see _pack_board).
+	var cosmetics: Variant = entry.get("cosmetics")
+	if typeof(cosmetics) == TYPE_DICTIONARY:
+		var framed := CosmeticsView.avatar(cosmetics, size_px)
+		framed.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		return framed
+
 	var wrap := Control.new()
 	wrap.custom_minimum_size = Vector2(size_px, size_px)
 	wrap.size_flags_vertical = Control.SIZE_SHRINK_CENTER
@@ -722,6 +735,7 @@ func _snapshot_from_online(entries: Array) -> Dictionary:
 			"is_player": is_player,
 			"rank": int(raw.get("rank", 0)),
 			"country": "FR",
+			"cosmetics": raw.get("cosmetics", {}),
 		})
 	return LeaderboardSnapshot._pack_board(built, _selected_filter)
 

@@ -37,6 +37,9 @@ var _challenge_result_request: HTTPRequest
 var _daily_request: HTTPRequest
 var _daily_result_request: HTTPRequest
 var _daily_board_request: HTTPRequest
+var _cosmetics_request: HTTPRequest
+## Another look change arrived while a sync was in flight: send again after it.
+var _cosmetics_dirty: bool = false
 
 ## Server's answer to today's submission ({rank, score, ...}); lets the results
 ## screen show the rank even if the reply lands before the screen is up.
@@ -173,6 +176,8 @@ func _ready() -> void:
 	_daily_request = _make_request_node()
 	_daily_result_request = _make_request_node()
 	_daily_board_request = _make_request_node()
+	_cosmetics_request = _make_request_node()
+	SaveManager.cosmetics_changed.connect(_sync_cosmetics)
 	_register_player()
 
 
@@ -372,7 +377,11 @@ func submit_challenge_result(code: String, score: int, correct_count: int) -> vo
 
 func _register_player() -> void:
 	var device_id := _load_or_create_device_id()
-	var payload := {"device_id": device_id, "display_name": SaveManager.player_name}
+	var payload := {
+		"device_id": device_id,
+		"display_name": SaveManager.player_name,
+		"cosmetics": SaveManager.get_cosmetics(),
+	}
 	var sent := _players_request.request(
 		"%s/players" % BASE_URL,
 		["Content-Type: application/json"],
@@ -395,6 +404,30 @@ func _register_player() -> void:
 	player_id = str(parsed.get("id", ""))
 	if not player_id.is_empty():
 		player_ready.emit(player_id)
+
+
+## Re-sends the look through the same upsert as registration (keyed by device id).
+func _sync_cosmetics() -> void:
+	if _cosmetics_request.get_http_client_status() != HTTPClient.STATUS_DISCONNECTED:
+		_cosmetics_dirty = true
+		return
+	var payload := {
+		"device_id": _load_or_create_device_id(),
+		"display_name": SaveManager.player_name,
+		"cosmetics": SaveManager.get_cosmetics(),
+	}
+	var sent := _cosmetics_request.request(
+		"%s/players" % BASE_URL,
+		["Content-Type: application/json"],
+		HTTPClient.METHOD_POST,
+		JSON.stringify(payload)
+	)
+	if sent != OK:
+		return
+	await _cosmetics_request.request_completed
+	if _cosmetics_dirty:
+		_cosmetics_dirty = false
+		_sync_cosmetics()
 
 
 func _make_request_node() -> HTTPRequest:

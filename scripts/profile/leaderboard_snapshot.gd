@@ -70,6 +70,13 @@ static func available_filters(locale: String) -> Array[Dictionary]:
 
 
 static func _pack_board(entries: Array[Dictionary], filter: String) -> Dictionary:
+	## Look shown on each row: server value when known, else the local player's own
+	## look, else a stable made-up one for demo / local rivals.
+	for entry in entries:
+		if bool(entry.get("is_player", false)):
+			entry["cosmetics"] = SaveManager.get_cosmetics()
+		elif typeof(entry.get("cosmetics")) != TYPE_DICTIONARY:
+			entry["cosmetics"] = ShopCatalog.demo_cosmetics_for(str(entry.get("name", "")))
 	entries.sort_custom(_sort_entries)
 	for index in range(entries.size()):
 		entries[index]["rank"] = index + 1

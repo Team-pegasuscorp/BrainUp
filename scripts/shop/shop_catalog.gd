@@ -14,6 +14,7 @@ const DEMO_START_COINS := 2000
 
 const KIND_AVATAR := "avatar"
 const KIND_FRAME := "frame"
+const KIND_BANNER := "banner"
 const RARITIES: Array[String] = ["common", "rare", "epic", "legendary"]
 const RARITY_COLORS := {
 	"common": Color(0.36, 0.55, 0.78, 1),
@@ -58,10 +59,31 @@ static func store_items() -> Array[Dictionary]:
 
 
 static func default_frame_id() -> String:
-	for item in items_of_kind(KIND_FRAME):
+	return _default_id(KIND_FRAME)
+
+
+static func default_banner_id() -> String:
+	return _default_id(KIND_BANNER)
+
+
+static func _default_id(kind: String) -> String:
+	for item in items_of_kind(kind):
 		if bool(item.get("default", false)):
 			return str(item["id"])
 	return ""
+
+
+## Stable made-up look for demo / offline players (same name = same outfit).
+static func demo_cosmetics_for(seed_name: String) -> Dictionary:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash(seed_name)
+	var frames: Array[Dictionary] = items_of_kind(KIND_FRAME)
+	var banners: Array[Dictionary] = items_of_kind(KIND_BANNER)
+	return {
+		"avatar": GameAssets.demo_avatar_slug_for(seed_name),
+		"frame": str(frames[rng.randi() % frames.size()].get("id", "")) if not frames.is_empty() else "",
+		"banner": str(banners[rng.randi() % banners.size()].get("id", "")) if not banners.is_empty() else "",
+	}
 
 
 static func display_name(item: Dictionary) -> String:

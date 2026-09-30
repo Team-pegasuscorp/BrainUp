@@ -21,6 +21,8 @@ var _status_text: String = ""
 var _live_state: String = "idle" # idle | searching | question | over
 var _live_opponent_name: String = ""
 var _live_opponent_trophies: int = -1
+## Opponent's look from match_found {avatar, frame, banner}.
+var _live_opponent_cosmetics: Dictionary = {}
 var _live_my_score: int = 0
 var _live_opponent_score: int = 0
 var _live_question: Dictionary = {}
@@ -1866,15 +1868,7 @@ func _live_section() -> PanelContainer:
 
 
 func _build_live_question_view(vbox: VBoxContainer) -> void:
-	var header := Label.new()
-	header.text = tr("UI_SOCIAL_LIVE_HEADER").format({
-		"opponent": _live_opponent_name,
-		"my_score": _live_my_score,
-		"opponent_score": _live_opponent_score,
-	})
-	header.add_theme_font_size_override("font_size", UiScale.font(14))
-	header.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
-	vbox.add_child(header)
+	vbox.add_child(_live_face_off(str(_live_my_score), str(_live_opponent_score)))
 
 	_countdown_label = Label.new()
 	_countdown_label.text = "%d" % ceili(_live_countdown)
@@ -1917,10 +1911,22 @@ func _build_live_question_view(vbox: VBoxContainer) -> void:
 		vbox.add_child(points_label)
 
 
+## Me vs opponent, each with banner, framed avatar and current score.
+func _live_face_off(my_value: String, opponent_value: String, my_highlight: Color = Color(0, 0, 0, 0)) -> Control:
+	return CosmeticsView.face_off(
+		SaveManager.player_name, SaveManager.get_cosmetics(), my_value,
+		_live_opponent_name, _live_opponent_cosmetics, opponent_value,
+		640.0, my_highlight
+	)
+
+
 func _build_live_over_view(vbox: VBoxContainer) -> void:
 	var won: bool = bool(_live_over_data.get("won", false))
 	var my_score: int = int(_live_over_data.get("your_score", 0))
 	var opponent_score: int = int(_live_over_data.get("opponent_score", 0))
+	vbox.add_child(_live_face_off(
+		str(my_score), str(opponent_score), UiTokens.PODIUM_GOLD if won else Color(0, 0, 0, 0)
+	))
 
 	var key := "UI_SOCIAL_RESULT_LOSS"
 	if won:
@@ -2239,6 +2245,8 @@ func _on_live_cancel_pressed() -> void:
 func _on_live_match_found(data: Dictionary) -> void:
 	_live_opponent_name = str(data.get("opponent_name", ""))
 	_live_opponent_trophies = _live_opponent_trophies_from(data)
+	var cosmetics: Variant = data.get("opponent_cosmetics", {})
+	_live_opponent_cosmetics = cosmetics if typeof(cosmetics) == TYPE_DICTIONARY else {}
 	_live_my_score = 0
 	_live_opponent_score = 0
 

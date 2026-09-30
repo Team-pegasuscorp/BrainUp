@@ -298,15 +298,26 @@ func _make_store_card(item: Dictionary, card_size: Vector2, art_size: float) -> 
 
 func _build_locker() -> void:
 	## Stage: the player's animal with the equipped frame, on a small pedestal.
+	## The equipped banner is the stage background, as other players will see it.
 	var stage := PanelContainer.new()
-	var stage_style := UiStyle.profile_surface(ACCENT, true, 18)
+	var stage_style := StyleBoxFlat.new()
+	stage_style.bg_color = Color(0, 0, 0, 0)
+	stage_style.set_corner_radius_all(22)
+	stage_style.shadow_color = Color(0, 0, 0, 0.3)
+	stage_style.shadow_size = 12
 	stage.add_theme_stylebox_override("panel", stage_style)
 	_content.add_child(stage)
+	stage.add_child(CosmeticsView.banner(SaveManager.get_equipped_banner(), Vector2.ZERO, 22))
+
+	var stage_margin := MarginContainer.new()
+	for side in ["left", "right", "top", "bottom"]:
+		stage_margin.add_theme_constant_override("margin_" + side, 18)
+	stage.add_child(stage_margin)
 
 	var stage_col := VBoxContainer.new()
 	stage_col.alignment = BoxContainer.ALIGNMENT_CENTER
 	stage_col.add_theme_constant_override("separation", 10)
-	stage.add_child(stage_col)
+	stage_margin.add_child(stage_col)
 
 	var hero_box := CenterContainer.new()
 	stage_col.add_child(hero_box)
@@ -327,6 +338,8 @@ func _build_locker() -> void:
 	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	name_label.add_theme_font_size_override("font_size", UiScale.font(24))
 	name_label.add_theme_color_override("font_color", Color.WHITE)
+	name_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.55))
+	name_label.add_theme_constant_override("outline_size", 5)
 	stage_col.add_child(name_label)
 
 	## Slots: which part of the look the grid below edits.
@@ -335,8 +348,10 @@ func _build_locker() -> void:
 	_content.add_child(slots)
 	var avatar_item := _locker_entry_for_avatar(SaveManager.profile_avatar_id)
 	var frame_item := ShopCatalog.get_item(SaveManager.get_equipped_frame())
+	var banner_item := ShopCatalog.get_item(SaveManager.get_equipped_banner())
 	slots.add_child(_make_slot(ShopCatalog.KIND_AVATAR, "UI_SHOP_KIND_AVATAR", avatar_item))
 	slots.add_child(_make_slot(ShopCatalog.KIND_FRAME, "UI_SHOP_KIND_FRAME", frame_item))
+	slots.add_child(_make_slot(ShopCatalog.KIND_BANNER, "UI_SHOP_KIND_BANNER", banner_item))
 
 	var hint := Label.new()
 	hint.text = tr("UI_SHOP_LOCKER_HINT")
@@ -359,7 +374,7 @@ func _make_slot(kind: String, title_key: String, item: Dictionary) -> Control:
 	var selected := kind == _locker_slot
 	var slot := Button.new()
 	slot.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	slot.custom_minimum_size.y = 112
+	slot.custom_minimum_size.y = 168
 	slot.focus_mode = Control.FOCUS_NONE
 	var style := UiStyle.profile_surface(ACCENT if selected else Color(0, 0, 0, 0), selected, 10)
 	if selected:
@@ -369,30 +384,27 @@ func _make_slot(kind: String, title_key: String, item: Dictionary) -> Control:
 		slot.add_theme_stylebox_override(state, style)
 	slot.pressed.connect(_on_slot_pressed.bind(kind))
 
-	var row := HBoxContainer.new()
-	row.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT, Control.PRESET_MODE_MINSIZE, 12)
-	row.add_theme_constant_override("separation", 12)
-	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	slot.add_child(row)
+	var texts := VBoxContainer.new()
+	texts.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT, Control.PRESET_MODE_MINSIZE, 10)
+	texts.alignment = BoxContainer.ALIGNMENT_CENTER
+	texts.add_theme_constant_override("separation", 4)
+	texts.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	slot.add_child(texts)
 	var preview_box := CenterContainer.new()
 	preview_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	row.add_child(preview_box)
-	preview_box.add_child(_item_preview(item, 80))
-
-	var texts := VBoxContainer.new()
-	texts.alignment = BoxContainer.ALIGNMENT_CENTER
-	texts.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	texts.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	row.add_child(texts)
+	texts.add_child(preview_box)
+	preview_box.add_child(_item_preview(item, 72))
 	var title := Label.new()
 	title.text = tr(title_key).to_upper()
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.add_theme_font_size_override("font_size", UiScale.font(13))
 	title.add_theme_color_override("font_color", ACCENT if selected else UiTokens.PROFILE_TITLE_CAPS)
 	texts.add_child(title)
 	var value := Label.new()
 	value.text = _entry_name(item)
-	value.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	value.add_theme_font_size_override("font_size", UiScale.font(16))
+	value.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	value.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	value.add_theme_font_size_override("font_size", UiScale.font(15))
 	value.add_theme_color_override("font_color", Color.WHITE)
 	texts.add_child(value)
 	return slot
@@ -474,8 +486,11 @@ func _locker_entry_for_avatar(avatar_id: String) -> Dictionary:
 
 func _is_equipped(entry: Dictionary) -> bool:
 	var item_id := str(entry.get("id", ""))
-	if str(entry.get("kind", "")) == ShopCatalog.KIND_FRAME:
-		return item_id == SaveManager.get_equipped_frame()
+	match str(entry.get("kind", "")):
+		ShopCatalog.KIND_FRAME:
+			return item_id == SaveManager.get_equipped_frame()
+		ShopCatalog.KIND_BANNER:
+			return item_id == SaveManager.get_equipped_banner()
 	return item_id == SaveManager.profile_avatar_id
 
 
@@ -652,6 +667,8 @@ func _item_preview(item: Dictionary, side: float) -> Control:
 	var kind := str(item.get("kind", ""))
 	if kind == ShopCatalog.KIND_FRAME:
 		return _player_avatar(side, str(item.get("id", "")))
+	if kind == ShopCatalog.KIND_BANNER:
+		return _banner_preview(str(item.get("id", "")), side)
 	var avatar := _new_avatar(side)
 	if bool(item.get("starter", false)):
 		avatar.set_avatar(SaveManager.avatar_texture_for(str(item.get("id", ""))))
@@ -659,6 +676,17 @@ func _item_preview(item: Dictionary, side: float) -> Control:
 		avatar.set_avatar(ShopCatalog.avatar_texture(item))
 	ShopCatalog.apply_frame(avatar, SaveManager.get_equipped_frame())
 	return avatar
+
+
+## A banner with the player's small framed avatar on it (wider than tall).
+func _banner_preview(banner_id: String, side: float) -> Control:
+	var view := CosmeticsView.banner(banner_id, Vector2(side * 1.5, side), int(clampf(side * 0.14, 8.0, 20.0)))
+	var center := CenterContainer.new()
+	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	center.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	view.add_child(center)
+	center.add_child(_player_avatar(side * 0.62, SaveManager.get_equipped_frame()))
+	return view
 
 
 func _player_avatar(side: float, frame_id: String) -> Control:
@@ -716,7 +744,12 @@ func _empty_card() -> Control:
 
 
 func _kind_text(item: Dictionary) -> String:
-	var kind_key := "UI_SHOP_KIND_FRAME" if str(item.get("kind", "")) == ShopCatalog.KIND_FRAME else "UI_SHOP_KIND_AVATAR"
+	var kind_key := "UI_SHOP_KIND_AVATAR"
+	match str(item.get("kind", "")):
+		ShopCatalog.KIND_FRAME:
+			kind_key = "UI_SHOP_KIND_FRAME"
+		ShopCatalog.KIND_BANNER:
+			kind_key = "UI_SHOP_KIND_BANNER"
 	return "%s · %s" % [tr(kind_key), tr(ShopCatalog.rarity_key(item))]
 
 
