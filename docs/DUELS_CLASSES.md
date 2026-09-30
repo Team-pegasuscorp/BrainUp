@@ -5,12 +5,13 @@
 
 ## Parcours joueur
 
-1. Onglet Quiz : Classique, Survie ou Chrono, puis **Jouer** (`category_select.gd`, `_duel_only`).
+1. Onglet Quiz en tuiles (`category_select.gd`, `_build_duel_tiles`) : bandeau de rang (ligue, trophées, prochaine ligue), une tuile par mode (toucher = recherche d'adversaire), puis la tuile Défi du jour.
 2. Écran `scenes/game/live_match.tscn` (`scripts/ui/live_match_screen.gd`) :
    - **Recherche** : carte du joueur, fenêtre ±X 🏆 qui s'élargit ; un bot prend la place après 20 s.
    - **Draft** : face-à-face (bannières, avatars, cadres), 3 catégories, 8 s pour voter.
      Même vote → cette catégorie ; votes différents → la roue tire entre les deux ; aucun vote → au hasard.
-   - **Match** : bandeau des deux joueurs (score + vies ou horloge), question, 4 réponses.
+   - **Match** : bandeau des deux joueurs (score, vies ou horloge, « A répondu ! »), carte question animée, tuiles A–D qui apparaissent l'une après l'autre. À la révélation : bonne réponse en vert, mauvais choix qui tremble, avatar de chaque joueur posé sur sa tuile, scores qui défilent.
+   - **LE SAVAIS-TU ?** (Classique ; Survie seulement après une erreur ; jamais en Chrono) : la carte affiche l'explication avec une jauge de lecture ; toucher = « prêt », on passe à la suite quand les deux sont prêts ou à la fin de la jauge.
    - **Résultat** : victoire / défaite / égalité, trophées **du serveur**, XP, Rejouer / Retour.
 3. Le Défi du jour reste en haut de l'onglet (solo partagé, inchangé).
 
@@ -30,6 +31,7 @@ Survie et Chrono plafonnent le combo à 10 (comme le solo). Les trois modes comp
 - Serveur → `match_found {mode, draft: {choices, time_limit} | null, opponent_name, opponent_trophies, opponent_cosmetics, lives, clock, …}`
 - Client → `draft_vote {category}` · Serveur → `draft_result {category, your_vote, opponent_vote}` puis `match_start {mode, category}`
 - `question` / `answer` / `reveal` comme avant ; `reveal.your_result` porte `lives` (Survie) ou `clock` (Chrono).
+- Modes synchronisés : `opponent_answered {index}` dès que l'autre a répondu ; `reveal` porte `explanation` et `read_time` (4 à 10 s selon la longueur, 0 = pas d'explication). Le serveur attend 1,5 s (couleurs) puis jusqu'à `read_time` ; client → `ready {index}`, serveur → `opponent_ready {index}` ; les deux prêts = question suivante.
 - Chrono seulement : `opponent_progress {score, correct_count, answered, clock}` et `player_done` quand ton horloge est à 0.
 - `match_over {mode, category, your_score, opponent_score, your_correct, your_answered, won, draw, trophy_delta, trophies, win_streak, loss_streak, …}`
 
