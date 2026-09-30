@@ -6,6 +6,7 @@ from fastapi import FastAPI, HTTPException, Query, WebSocket
 from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError
 
+import battle_pass
 import bots
 import leaderboard_bots
 from db import engine
@@ -23,6 +24,9 @@ from schemas import (
     LeaderboardEntry,
     Match,
     MatchSubmit,
+    PassClaim,
+    PassPremium,
+    PassQuest,
     Player,
     PlayerRegister,
 )
@@ -208,6 +212,8 @@ def submit_daily_result(payload: DailyResultSubmit):
                 ),
                 {**payload.model_dump(), "day": today, "category": category_id},
             ).first()
+            ## Only the first result of the day pays pass XP.
+            pass_xp = battle_pass.record_daily(conn, str(payload.player_id)) if inserted is not None else 0
             row = conn.execute(
                 text(f"SELECT * FROM ({DAILY_RANKED}) ranked WHERE player_id = :player_id"),
                 {"day": today, "player_id": payload.player_id},
@@ -223,7 +229,52 @@ def submit_daily_result(payload: DailyResultSubmit):
         "total_count": payload.total_count,
         "rank": row["rank"],
         "already_played": inserted is None,
+        "pass_xp": pass_xp,
     }
+
+
+# --- Battle pass ---------------------------------------------------------------
+# Writes are keyed by device_id (like registration), so nobody can claim for another player.
+
+def _player_for_device(conn, device_id: str) -> str:
+    row = conn.execute(text("SELECT id FROM players WHERE device_id = :d"), {"d": device_id}).first()
+    if row is None:
+        raise HTTPException(status_code=404, detail="player not found")
+    return str(row[0])
+
+
+@app.get("/pass")
+def pass_state(device_id: str = Query(min_length=1, max_length=128)):
+    with engine.begin() as conn:
+        return battle_pass.state(conn, _player_for_device(conn, device_id))
+
+
+@app.post("/pass/claim")
+def pass_claim(payload: PassClaim):
+    with engine.begin() as conn:
+        player_id = _player_for_device(conn, payload.device_id)
+        try:
+            reward = battle_pass.claim_reward(conn, player_id, payload.tier, payload.track)
+        except ValueError as error:
+            raise HTTPException(status_code=409, detail=str(error))
+    return {"tier": payload.tier, "track": payload.track, "reward": reward}
+
+
+@app.post("/pass/quest")
+def pass_quest(payload: PassQuest):
+    with engine.begin() as conn:
+        player_id = _player_for_device(conn, payload.device_id)
+        gained = battle_pass.claim_quest(conn, player_id, payload.quest_id)
+    return {"pass_xp": gained}
+
+
+@app.post("/pass/premium")
+def pass_premium(payload: PassPremium):
+    with engine.begin() as conn:
+        player_id = _player_for_device(conn, payload.device_id)
+        if not battle_pass.unlock_premium(conn, player_id, payload.receipt):
+            raise HTTPException(status_code=402, detail="purchase not verified")
+        return battle_pass.state(conn, player_id)
 
 
 @app.get("/daily-challenge/leaderboard", response_model=DailyLeaderboard)

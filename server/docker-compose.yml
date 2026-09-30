@@ -22,6 +22,8 @@ services:
     restart: unless-stopped
     environment:
       DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-quizz}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-quizz}
+      ## 1 = the battle pass premium unlocks with the test receipt "dev" (development only).
+      PASS_DEV_UNLOCK: ${PASS_DEV_UNLOCK:-0}
     ports:
       - "8000:8000"
     depends_on:

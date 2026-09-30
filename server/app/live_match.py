@@ -7,6 +7,7 @@ from dataclasses import dataclass, field
 from fastapi import WebSocket, WebSocketDisconnect
 from sqlalchemy import text
 
+import battle_pass
 import bots
 import question_bank
 import trophies
@@ -457,6 +458,10 @@ class LiveMatch:
                     outcome=self._outcome(player, opponent),
                 )
                 settled[player.player_id] = result
+                result["pass_xp"] = battle_pass.record_duel(
+                    conn, player.player_id, self.mode,
+                    self._outcome(player, opponent) > 0, player.correct_count,
+                )
                 conn.execute(
                     text(
                         """
@@ -504,6 +509,7 @@ class LiveMatch:
                 "trophies": result["trophies"],
                 "win_streak": result["win_streak"],
                 "loss_streak": result["loss_streak"],
+                "pass_xp": result["pass_xp"],
             })
         self.completed.set()
 

@@ -1,9 +1,9 @@
 # Faire tourner le serveur BrainUp sous Windows
 
-Ce dossier est une copie du dépôt `brainup-backend` (branche `test-boutique`, commit `91386e4`, 30/09/2026).
+Ce dossier est une copie du dépôt `brainup-backend` (branche `test-boutique`, commit `fe00e79`, 30/09/2026).
 Il contient l'API (FastAPI, Python) et la base PostgreSQL : comptes par appareil, classements,
-défi du jour, défis 1v1, duels classés en direct (Classique / Survie / Chrono, draft de catégorie),
-cosmétiques partagés.
+défi du jour, défis 1v1, duels classés en direct (Classique / Survie / Chrono, draft de catégorie,
+explications après chaque question), cosmétiques partagés, passe de combat (saison 1).
 
 Godot ignore ce dossier (fichier `.gdignore`) : il n'entre ni dans le projet ni dans l'APK.
 
@@ -23,6 +23,8 @@ Rien à installer côté Python ni PostgreSQL : Docker fait tout.
    notepad .env
    ```
    Mettre un mot de passe de ton choix sur la ligne `POSTGRES_PASSWORD=`.
+   Pour tester le passe de combat sur ton PC, mettre aussi `PASS_DEV_UNLOCK=1` : le jeu affiche alors
+   « Débloquer le premium (test) » (à ne **jamais** activer sur un vrai serveur).
 3. Démarrer :
    ```powershell
    docker compose up -d --build
@@ -42,11 +44,14 @@ Commandes utiles :
 ### Mettre à jour une base existante
 
 Les fichiers `db\init\*.sql` ne s'exécutent **qu'au tout premier démarrage** (base vide).
-Si un nouveau fichier SQL arrive plus tard (ex. `007_cosmetics.sql`), l'appliquer à la main :
+Si un nouveau fichier SQL arrive plus tard, l'appliquer à la main. Pour une base créée avec la
+version précédente de ce dossier (sans le passe de combat) :
 
 ```powershell
-Get-Content db\init\007_cosmetics.sql | docker compose exec -T postgres psql -U quizz -d quizz
+Get-Content db\init\008_battle_pass.sql | docker compose exec -T postgres psql -U quizz -d quizz
 ```
+
+(Pour une base encore plus ancienne, appliquer aussi `007_cosmetics.sql` avant.)
 
 (Ou repartir de zéro avec `docker compose down -v`, si les données de test ne comptent pas.)
 
@@ -73,6 +78,7 @@ Get-Content db\init\007_cosmetics.sql | docker compose exec -T postgres psql -U 
    .\.venv\Scripts\Activate.ps1
    pip install -r app\requirements.txt
    $env:DATABASE_URL = "postgresql+psycopg://quizz:MOTDEPASSE@localhost:5432/quizz"
+   $env:PASS_DEV_UNLOCK = "1"   # facultatif : premium du passe débloquable en test
    cd app
    uvicorn main:app --host 0.0.0.0 --port 8000
    ```
@@ -104,6 +110,7 @@ Avec le serveur lancé :
 pip install websockets
 python tools\test_live_modes.py     # un duel par mode contre le bot + un draft à deux (~3 min)
 python tools\test_live_cosmetics.py
+python tools\test_battle_pass.py    # XP, quêtes, récompenses, premium de test (option A, -p quizz-backend, PASS_DEV_UNLOCK=1)
 ```
 
 `tools\test_live_trophies.py` lit la base via `docker exec quizz-backend-postgres-1` : il ne marche qu'avec
@@ -113,5 +120,5 @@ l'option A, en démarrant sous ce nom de projet : `docker compose -p quizz-backe
 
 - `README.md` : routes de l'API, défi du jour, trophées, bots.
 - Côté jeu : `docs/MULTIPLAYER_PLAN.md`, et sur la branche `test-boutique` `docs/DUELS_CLASSES.md`
-  (duels classés, draft, protocole). Le jeu de `main` utilise encore l'ancien match en direct à
+  (duels classés, draft, protocole) et `docs/PASSE_DE_COMBAT.md` (règles et routes du passe). Le jeu de `main` utilise encore l'ancien match en direct à
   catégorie fixe : le serveur le comprend toujours.

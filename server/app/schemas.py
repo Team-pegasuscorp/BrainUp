@@ -73,6 +73,23 @@ class DailyResultSubmit(BaseModel):
     max_combo: int = Field(ge=0)
 
 
+class PassClaim(BaseModel):
+    device_id: str = Field(min_length=1, max_length=128)
+    tier: int = Field(ge=1, le=200)
+    track: str = Field(pattern=r"^(free|premium)$")
+
+
+class PassQuest(BaseModel):
+    device_id: str = Field(min_length=1, max_length=128)
+    quest_id: str = Field(min_length=1, max_length=40)
+
+
+class PassPremium(BaseModel):
+    device_id: str = Field(min_length=1, max_length=128)
+    ## Google Play purchase token once billing is wired; "dev" on a development server.
+    receipt: str = Field(min_length=1, max_length=4096)
+
+
 class DailyResult(BaseModel):
     date: str
     category_id: str
@@ -82,6 +99,8 @@ class DailyResult(BaseModel):
     rank: int
     # True when a result for today already existed: the first play is the one kept.
     already_played: bool
+    ## Battle pass XP earned by this result (0 when already played or no season).
+    pass_xp: int = 0
 
 
 class DailyLeaderboardEntry(BaseModel):
