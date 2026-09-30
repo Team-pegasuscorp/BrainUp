@@ -267,11 +267,16 @@ func _build_shop_page() -> void:
 
 
 func _open_shop() -> void:
+	open_shop_tab(ShopPage.TAB_STORE)
+
+
+## Opens the shop on a given tab ("store", "pass", "locker"); used by the Quiz tab strip.
+func open_shop_tab(tab: String) -> void:
 	if settings_panel.visible:
 		_close_settings()
 	top_app_bar.release_settings_focus()
 	tab_swipe.set_input_enabled(false)
-	_shop_page.open()
+	_shop_page.open(tab)
 
 
 ## Avatar / frame may have changed in the locker: redraw the visible tab.

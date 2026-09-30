@@ -23,6 +23,11 @@ signal live_player_done(data: Dictionary)
 ## Synced modes: the opponent answered (not what) / tapped "ready" after the explanation.
 signal live_opponent_answered(data: Dictionary)
 signal live_opponent_ready(data: Dictionary)
+## Battle pass (server state; see brainup-backend app/battle_pass.py).
+signal pass_received(state: Dictionary)
+signal pass_failed
+signal pass_reward_claimed(result: Dictionary)
+signal pass_claim_failed(reason: String)
 signal live_search_range_changed(trophy_range: int)
 signal daily_challenge_received(data: Dictionary)
 signal daily_challenge_failed
@@ -47,6 +52,12 @@ var _daily_request: HTTPRequest
 var _daily_result_request: HTTPRequest
 var _daily_board_request: HTTPRequest
 var _cosmetics_request: HTTPRequest
+var _pass_request: HTTPRequest
+var _pass_write_request: HTTPRequest
+## Last pass state received (empty until the first fetch).
+var pass_state: Dictionary = {}
+## A fetch was asked while another was running: fetch again right after it.
+var _pass_refetch: bool = false
 ## Another look change arrived while a sync was in flight: send again after it.
 var _cosmetics_dirty: bool = false
 
@@ -216,6 +227,8 @@ func _ready() -> void:
 	_daily_result_request = _make_request_node()
 	_daily_board_request = _make_request_node()
 	_cosmetics_request = _make_request_node()
+	_pass_request = _make_request_node()
+	_pass_write_request = _make_request_node()
 	SaveManager.cosmetics_changed.connect(_sync_cosmetics)
 	_register_player()
 
@@ -443,6 +456,67 @@ func _register_player() -> void:
 	player_id = str(parsed.get("id", ""))
 	if not player_id.is_empty():
 		player_ready.emit(player_id)
+
+
+func fetch_pass() -> void:
+	if _pass_request.get_http_client_status() != HTTPClient.STATUS_DISCONNECTED:
+		_pass_refetch = true
+		return
+	var url := "%s/pass?device_id=%s" % [BASE_URL, _load_or_create_device_id().uri_encode()]
+	if _pass_request.request(url) != OK:
+		pass_failed.emit()
+		return
+	var result: Array = await _pass_request.request_completed
+	var parsed: Variant = JSON.parse_string((result[3] as PackedByteArray).get_string_from_utf8())
+	if int(result[1]) != 200 or typeof(parsed) != TYPE_DICTIONARY:
+		pass_failed.emit()
+		return
+	pass_state = parsed
+	pass_received.emit(pass_state)
+	if _pass_refetch:
+		_pass_refetch = false
+		fetch_pass()
+
+
+## Claims one reached tier; the reward is applied to the local inventory, then the
+## state is refreshed.
+func claim_pass_reward(tier: int, track: String) -> void:
+	var body := {"device_id": _load_or_create_device_id(), "tier": tier, "track": track}
+	var parsed: Variant = await _pass_post("/pass/claim", body)
+	if typeof(parsed) != TYPE_DICTIONARY or not parsed.has("reward"):
+		pass_claim_failed.emit(str(parsed.get("detail", "offline")) if typeof(parsed) == TYPE_DICTIONARY else "offline")
+		return
+	SaveManager.apply_pass_reward(parsed["reward"])
+	pass_reward_claimed.emit(parsed)
+	fetch_pass()
+
+
+## A daily quest was claimed on the phone: the server pays pass XP (3 a day at most).
+func claim_pass_quest(quest_id: String) -> void:
+	await _pass_post("/pass/quest", {"device_id": _load_or_create_device_id(), "quest_id": quest_id})
+
+
+## TODO(billing): send the Google Play purchase token. "dev" only works on a development
+## server (PASS_DEV_UNLOCK=1).
+func unlock_pass_premium(receipt: String) -> void:
+	var parsed: Variant = await _pass_post("/pass/premium", {"device_id": _load_or_create_device_id(), "receipt": receipt})
+	if typeof(parsed) == TYPE_DICTIONARY and parsed.has("premium"):
+		pass_state = parsed
+		pass_received.emit(pass_state)
+	else:
+		pass_claim_failed.emit("premium")
+
+
+func _pass_post(path: String, body: Dictionary) -> Variant:
+	while _pass_write_request.get_http_client_status() != HTTPClient.STATUS_DISCONNECTED:
+		await get_tree().process_frame
+	var sent := _pass_write_request.request(
+		BASE_URL + path, ["Content-Type: application/json"], HTTPClient.METHOD_POST, JSON.stringify(body)
+	)
+	if sent != OK:
+		return null
+	var result: Array = await _pass_write_request.request_completed
+	return JSON.parse_string((result[3] as PackedByteArray).get_string_from_utf8())
 
 
 ## Re-sends the look through the same upsert as registration (keyed by device id).

@@ -421,3 +421,30 @@ UI_DUEL_TILE_SURVIVAL_HINT,3 lives each. Last one standing.,3 vies chacun. Le de
 UI_DUEL_TILE_TIME_ATTACK_HINT,"60 s each, at your own pace.","60 s chacun, à ton rythme."
 UI_DUEL_TILE_PLAY,Find an opponent,Trouver un adversaire
 UI_DUEL_NEXT_LEAGUE,{trophies} 🏆 to {league},Encore {trophies} 🏆 pour {league}
+UI_PASS_TAB,Pass,Passe
+UI_PASS_LOADING,Loading the pass…,Chargement du passe…
+UI_PASS_NO_SEASON,No season right now. The next one is coming soon!,Pas de saison en cours. La prochaine arrive bientôt !
+UI_PASS_TIER,Tier,Palier
+UI_PASS_WEEK_DAYS,Week {week} · {days} days left,Semaine {week} · encore {days} jours
+UI_PASS_XP_TO_NEXT,{xp} / {need} XP to tier {next},{xp} / {need} XP vers le palier {next}
+UI_PASS_MAXED,Pass complete!,Passe terminé !
+UI_PASS_PREMIUM_ACTIVE,Premium pass active,Passe premium actif
+UI_PASS_UNLOCK_DEV,Unlock premium (test),Débloquer le premium (test)
+UI_PASS_UNLOCK_SOON,Premium: coming soon on Google Play,Premium : bientôt sur Google Play
+UI_PASS_REWARDS,Rewards,Récompenses
+UI_PASS_WEEKLY,Week {week} challenges,Défis de la semaine {week}
+UI_PASS_CLAIM,Claim!,Récupérer !
+UI_PASS_CLAIMED,Claimed,Récupéré
+UI_PASS_PREMIUM,Premium,Premium
+UI_PASS_COINS,Coins,Pièces
+UI_PASS_JOKER,Joker,Joker
+UI_PASS_CH_DUELS_PLAYED,Play {n} ranked duels,Joue {n} duels classés
+UI_PASS_CH_DUELS_WON,Win {n} ranked duels,Gagne {n} duels classés
+UI_PASS_CH_MODE_PLAYED,Play {n} {mode} duels,Joue {n} duels en {mode}
+UI_PASS_CH_MODE_WON,Win {n} {mode} duels,Gagne {n} duels en {mode}
+UI_PASS_CH_CORRECT_ANSWERS,Give {n} right answers in duels,Donne {n} bonnes réponses en duel
+UI_PASS_CH_DAILY_PLAYED,Play the daily challenge {n} times,Joue {n} fois le défi du jour
+UI_PASS_XP_LEGEND,"Pass XP: duel +{duel} (+{win} if you win) · daily challenge +{daily} · daily quest +{quest} (up to {quests} a day) · weekly challenges.","XP du passe : duel +{duel} (+{win} si victoire) · défi du jour +{daily} · quête du jour +{quest} ({quests} par jour max) · défis de la semaine."
+UI_PASS_STRIP,Battle pass · tier {tier},Passe de combat · palier {tier}
+UI_DUEL_PASS_XP,+{xp} pass XP,+{xp} XP de passe
+UI_PASS_CLAIM_ALL,Claim all ({n}),Tout récupérer ({n})

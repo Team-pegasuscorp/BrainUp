@@ -18,6 +18,10 @@ const COIN_FILL := Color(0.97, 0.78, 0.26, 1)
 const COIN_EDGE := Color(0.78, 0.52, 0.08, 1)
 const TAB_STORE := "store"
 const TAB_LOCKER := "locker"
+const TAB_PASS := "pass"
+const PASS_GOLD := Color(1.0, 0.78, 0.2, 1)
+const PASS_FREE := Color(0.36, 0.75, 1.0, 1)
+const PASS_COLUMN_WIDTH := 150.0
 const PAGE_WIDTH := 680.0
 
 var _tab: String = TAB_STORE
@@ -77,10 +81,17 @@ func _ready() -> void:
 	SafeArea.changed.connect(_apply_safe_area)
 	_apply_safe_area()
 	LocaleManager.locale_changed.connect(func(_locale: String) -> void: _rebuild())
+	NetworkManager.pass_received.connect(func(_state: Dictionary) -> void:
+		if visible and _tab == TAB_PASS:
+			_rebuild()
+	)
+	NetworkManager.pass_reward_claimed.connect(func(_result: Dictionary) -> void: AudioManager.play("correct"))
+	NetworkManager.pass_claim_failed.connect(func(_reason: String) -> void: AudioManager.play("wrong"))
 
 
 func open(tab: String = TAB_STORE) -> void:
 	_tab = tab
+	NetworkManager.fetch_pass()
 	_close_detail()
 	_rebuild()
 	visible = true
@@ -144,7 +155,7 @@ func _build_header() -> Control:
 func _build_tabs() -> Control:
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 10)
-	for tab in [TAB_STORE, TAB_LOCKER]:
+	for tab in [TAB_STORE, TAB_PASS, TAB_LOCKER]:
 		var button := Button.new()
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		button.custom_minimum_size.y = 56
@@ -160,7 +171,7 @@ func _style_tabs() -> void:
 	for tab in _tab_buttons:
 		var button: Button = _tab_buttons[tab]
 		var active: bool = tab == _tab
-		button.text = tr("UI_SHOP_STORE" if tab == TAB_STORE else "UI_SHOP_LOCKER").to_upper()
+		button.text = tr({TAB_STORE: "UI_SHOP_STORE", TAB_PASS: "UI_PASS_TAB", TAB_LOCKER: "UI_SHOP_LOCKER"}[tab]).to_upper()
 		var style := UiStyle.filled(ACCENT if active else Color(0.05, 0.04, 0.12, 0.45), 18)
 		for state in ["normal", "hover", "pressed", "focus"]:
 			button.add_theme_stylebox_override(state, style)
@@ -184,11 +195,412 @@ func _rebuild() -> void:
 	_style_tabs()
 	for child in _content.get_children():
 		child.queue_free()
-	if _tab == TAB_LOCKER:
-		_build_locker()
-	else:
-		_build_store()
+	match _tab:
+		TAB_LOCKER:
+			_build_locker()
+		TAB_PASS:
+			_build_pass()
+		_:
+			_build_store()
 	ScrollTouch.let_drags_through(_content)
+
+
+# --- Passe de combat ------------------------------------------------------------
+
+func _build_pass() -> void:
+	var state: Dictionary = NetworkManager.pass_state
+	if state.is_empty():
+		_content.add_child(_pass_message("UI_PASS_LOADING"))
+		NetworkManager.fetch_pass()
+		return
+	if not bool(state.get("active", false)):
+		_content.add_child(_pass_message("UI_PASS_NO_SEASON"))
+		return
+	_content.add_child(_pass_header(state))
+	_content.add_child(_section_label("UI_PASS_REWARDS"))
+	_content.add_child(_pass_track(state))
+	_content.add_child(_section_label_text(tr("UI_PASS_WEEKLY").format({"week": int(state.get("week", 1))})))
+	for challenge in state.get("weekly", []):
+		_content.add_child(_pass_challenge_row(challenge))
+	_content.add_child(_pass_xp_legend(state))
+
+
+func _pass_message(key: String) -> Control:
+	var label := Label.new()
+	label.text = tr(key)
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	label.custom_minimum_size.y = 200
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.add_theme_font_size_override("font_size", UiScale.font(18))
+	label.add_theme_color_override("font_color", Color(1, 1, 1, 0.8))
+	return label
+
+
+## Season name, days left, current tier, XP inside the tier and the premium state.
+func _pass_header(state: Dictionary) -> Control:
+	var tier := int(state.get("tier", 0))
+	var tier_xp := int(state.get("tier_xp", 800))
+	var xp := int(state.get("xp", 0))
+	var max_tier := (state.get("tiers", []) as Array).size()
+	var premium := bool(state.get("premium", false))
+
+	var card := PanelContainer.new()
+	var style := UiStyle.filled(Color(0.16, 0.10, 0.30, 1), 24)
+	style.set_border_width_all(3)
+	style.border_color = PASS_GOLD if premium else Color(1, 1, 1, 0.18)
+	style.set_content_margin_all(18)
+	style.shadow_color = Color(PASS_GOLD.r, PASS_GOLD.g, PASS_GOLD.b, 0.35 if premium else 0.1)
+	style.shadow_size = 14
+	card.add_theme_stylebox_override("panel", style)
+	var column := VBoxContainer.new()
+	column.add_theme_constant_override("separation", 10)
+	card.add_child(column)
+
+	var top := HBoxContainer.new()
+	top.add_theme_constant_override("separation", 14)
+	column.add_child(top)
+	var badge := PanelContainer.new()
+	badge.custom_minimum_size = Vector2(96, 96)
+	badge.add_theme_stylebox_override("panel", UiStyle.filled(PASS_GOLD if premium else Color(1, 1, 1, 0.12), 48))
+	top.add_child(badge)
+	var badge_col := VBoxContainer.new()
+	badge_col.alignment = BoxContainer.ALIGNMENT_CENTER
+	badge.add_child(badge_col)
+	var badge_caption := Label.new()
+	badge_caption.text = tr("UI_PASS_TIER").to_upper()
+	badge_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	badge_caption.add_theme_font_size_override("font_size", UiScale.font(12))
+	badge_caption.add_theme_color_override("font_color", UiTokens.INK if premium else Color(1, 1, 1, 0.7))
+	badge_col.add_child(badge_caption)
+	var badge_value := Label.new()
+	badge_value.text = str(tier)
+	badge_value.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	badge_value.add_theme_font_size_override("font_size", UiScale.font(34))
+	badge_value.add_theme_color_override("font_color", UiTokens.INK if premium else Color.WHITE)
+	badge_col.add_child(badge_value)
+
+	var info := VBoxContainer.new()
+	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	info.alignment = BoxContainer.ALIGNMENT_CENTER
+	info.add_theme_constant_override("separation", 4)
+	top.add_child(info)
+	var names: Dictionary = state.get("name", {})
+	var title := Label.new()
+	title.text = str(names.get(str(LocaleManager.current_locale).substr(0, 2), names.get("en", "")))
+	title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	title.add_theme_font_size_override("font_size", UiScale.font(24))
+	title.add_theme_color_override("font_color", Color.WHITE)
+	info.add_child(title)
+	var when := Label.new()
+	when.text = tr("UI_PASS_WEEK_DAYS").format({"week": int(state.get("week", 1)), "days": int(state.get("days_left", 0))})
+	when.add_theme_font_size_override("font_size", UiScale.font(14))
+	when.add_theme_color_override("font_color", Color(1, 1, 1, 0.7))
+	info.add_child(when)
+
+	var bar := ProgressBar.new()
+	bar.show_percentage = false
+	bar.custom_minimum_size.y = 16
+	bar.max_value = float(tier_xp)
+	bar.value = float(tier_xp) if tier >= max_tier else float(xp % tier_xp)
+	bar.add_theme_stylebox_override("background", UiStyle.progress_bg())
+	bar.add_theme_stylebox_override("fill", UiStyle.progress_fill(PASS_GOLD))
+	column.add_child(bar)
+	var xp_line := Label.new()
+	xp_line.text = tr("UI_PASS_MAXED") if tier >= max_tier else tr("UI_PASS_XP_TO_NEXT").format({
+		"xp": xp % tier_xp, "need": tier_xp, "next": tier + 1,
+	})
+	xp_line.add_theme_font_size_override("font_size", UiScale.font(15))
+	xp_line.add_theme_color_override("font_color", Color(1, 1, 1, 0.8))
+	column.add_child(xp_line)
+
+	var waiting := _pass_claimables(state)
+	if not waiting.is_empty():
+		var claim_all := Button.new()
+		claim_all.custom_minimum_size.y = 56
+		claim_all.focus_mode = Control.FOCUS_NONE
+		claim_all.text = tr("UI_PASS_CLAIM_ALL").format({"n": waiting.size()})
+		claim_all.add_theme_font_size_override("font_size", UiScale.font(18))
+		var claim_style := UiStyle.filled(UiTokens.FEEDBACK_CORRECT, 20)
+		for button_state in ["normal", "hover", "pressed", "focus", "disabled"]:
+			claim_all.add_theme_stylebox_override(button_state, claim_style)
+		for key in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color", "font_disabled_color"]:
+			claim_all.add_theme_color_override(key, Color.WHITE)
+		claim_all.pressed.connect(func() -> void:
+			claim_all.disabled = true
+			_claim_all(waiting)
+		)
+		PressScaleUtil.wire(claim_all, self)
+		column.add_child(claim_all)
+
+	if premium:
+		var owned := Label.new()
+		owned.text = "★ " + tr("UI_PASS_PREMIUM_ACTIVE")
+		owned.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		owned.add_theme_font_size_override("font_size", UiScale.font(17))
+		owned.add_theme_color_override("font_color", PASS_GOLD)
+		column.add_child(owned)
+	else:
+		var unlock := Button.new()
+		unlock.custom_minimum_size.y = 60
+		unlock.focus_mode = Control.FOCUS_NONE
+		unlock.add_theme_font_size_override("font_size", UiScale.font(19))
+		var dev := bool(state.get("dev_unlock", false))
+		unlock.text = tr("UI_PASS_UNLOCK_DEV") if dev else tr("UI_PASS_UNLOCK_SOON")
+		unlock.disabled = not dev
+		var fill := UiStyle.filled(PASS_GOLD, 20)
+		for button_state in ["normal", "hover", "pressed", "focus"]:
+			unlock.add_theme_stylebox_override(button_state, fill)
+		unlock.add_theme_stylebox_override("disabled", UiStyle.filled(Color(1, 1, 1, 0.12), 20))
+		for key in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color"]:
+			unlock.add_theme_color_override(key, UiTokens.INK)
+		unlock.add_theme_color_override("font_disabled_color", Color(1, 1, 1, 0.7))
+		unlock.pressed.connect(func() -> void: NetworkManager.unlock_pass_premium("dev"))
+		PressScaleUtil.wire(unlock, self)
+		column.add_child(unlock)
+	return card
+
+
+## Horizontal track: one column per tier, premium reward on top, free reward below.
+func _pass_track(state: Dictionary) -> Control:
+	var scroll := ScrollContainer.new()
+	scroll.custom_minimum_size.y = 470
+	scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 10)
+	scroll.add_child(row)
+
+	var tier := int(state.get("tier", 0))
+	var premium := bool(state.get("premium", false))
+	var claimed: Dictionary = state.get("claimed", {})
+	for entry in state.get("tiers", []):
+		var number := int(entry.get("tier", 0))
+		var column := VBoxContainer.new()
+		column.custom_minimum_size.x = PASS_COLUMN_WIDTH
+		column.add_theme_constant_override("separation", 8)
+		row.add_child(column)
+		var reached := number <= tier
+		var head := Label.new()
+		head.text = str(number)
+		head.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		head.add_theme_font_size_override("font_size", UiScale.font(18))
+		head.add_theme_color_override("font_color", PASS_GOLD if reached else Color(1, 1, 1, 0.45))
+		column.add_child(head)
+		column.add_child(_pass_reward_tile(entry.get("premium"), number, "premium",
+			reached and premium, (claimed.get("premium", []) as Array).has(float(number)) or (claimed.get("premium", []) as Array).has(number), not premium))
+		column.add_child(_pass_reward_tile(entry.get("free"), number, "free",
+			reached, (claimed.get("free", []) as Array).has(float(number)) or (claimed.get("free", []) as Array).has(number), false))
+
+	## Start on the first reward waiting to be claimed, else on the current tier.
+	var focus_tier := tier
+	var claimables := _pass_claimables(state)
+	if not claimables.is_empty():
+		focus_tier = int(claimables[0][0])
+	var target_x := maxf(float(focus_tier - 1) * (PASS_COLUMN_WIDTH + 10.0) - 40.0, 0.0)
+	scroll.ready.connect(func() -> void:
+		await get_tree().process_frame
+		scroll.scroll_horizontal = int(target_x)
+	)
+	return scroll
+
+
+func _pass_reward_tile(reward: Variant, tier: int, track: String, claimable_now: bool, claimed: bool, locked: bool) -> Control:
+	var accent := PASS_GOLD if track == "premium" else PASS_FREE
+	var tile := Button.new()
+	tile.custom_minimum_size = Vector2(PASS_COLUMN_WIDTH, 200)
+	tile.focus_mode = Control.FOCUS_NONE
+	var has_reward := typeof(reward) == TYPE_DICTIONARY
+	var ready_to_claim := has_reward and claimable_now and not claimed
+	var style := UiStyle.filled(Color(accent.r, accent.g, accent.b, 0.30 if ready_to_claim else 0.12), 18)
+	style.set_border_width_all(3 if ready_to_claim else 1)
+	style.border_color = accent if ready_to_claim else Color(accent.r, accent.g, accent.b, 0.35)
+	if ready_to_claim:
+		style.shadow_color = Color(accent.r, accent.g, accent.b, 0.5)
+		style.shadow_size = 12
+	for button_state in ["normal", "hover", "pressed", "focus", "disabled"]:
+		tile.add_theme_stylebox_override(button_state, style)
+	tile.disabled = not ready_to_claim
+	if ready_to_claim:
+		tile.pressed.connect(_on_pass_claim.bind(tier, track))
+
+	var column := VBoxContainer.new()
+	column.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT, Control.PRESET_MODE_MINSIZE, 8)
+	column.alignment = BoxContainer.ALIGNMENT_CENTER
+	column.add_theme_constant_override("separation", 4)
+	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	tile.add_child(column)
+	if not has_reward:
+		return tile
+	var art := CenterContainer.new()
+	art.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	column.add_child(art)
+	art.add_child(_pass_reward_art(reward))
+	var caption := Label.new()
+	caption.text = _pass_reward_name(reward)
+	caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	caption.add_theme_font_size_override("font_size", UiScale.font(13))
+	caption.add_theme_color_override("font_color", Color.WHITE)
+	column.add_child(caption)
+	var status := Label.new()
+	status.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	status.add_theme_font_size_override("font_size", UiScale.font(13))
+	if claimed:
+		status.text = "✓ " + tr("UI_PASS_CLAIMED")
+		status.add_theme_color_override("font_color", UiTokens.FEEDBACK_CORRECT)
+	elif ready_to_claim:
+		status.text = tr("UI_PASS_CLAIM")
+		status.add_theme_color_override("font_color", accent)
+	elif locked:
+		status.text = "🔒 " + tr("UI_PASS_PREMIUM")
+		status.add_theme_color_override("font_color", Color(1, 1, 1, 0.55))
+	column.add_child(status)
+	if claimed or (not ready_to_claim):
+		art.modulate.a = 0.55 if not claimed else 0.8
+	return tile
+
+
+func _pass_reward_art(reward: Dictionary) -> Control:
+	match str(reward.get("type", "")):
+		"coins":
+			var row := HBoxContainer.new()
+			row.alignment = BoxContainer.ALIGNMENT_CENTER
+			row.add_theme_constant_override("separation", 6)
+			row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			row.add_child(_make_coin(34))
+			var amount := Label.new()
+			amount.text = str(int(reward.get("amount", 0)))
+			amount.add_theme_font_size_override("font_size", UiScale.font(24))
+			amount.add_theme_color_override("font_color", Color.WHITE)
+			row.add_child(amount)
+			return row
+		"joker":
+			var joker := PanelContainer.new()
+			joker.custom_minimum_size = Vector2(84, 84)
+			joker.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			joker.add_theme_stylebox_override("panel", UiStyle.filled(Color(0.55, 0.32, 0.95, 1), 42))
+			var label := Label.new()
+			label.text = "50/50" if str(reward.get("id", "")) == "joker_5050" else "+5 s"
+			label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+			label.add_theme_font_size_override("font_size", UiScale.font(20))
+			label.add_theme_color_override("font_color", Color.WHITE)
+			joker.add_child(label)
+			return joker
+		"item":
+			var item := ShopCatalog.get_item(str(reward.get("id", "")))
+			if not item.is_empty():
+				return _item_preview(item, 88)
+	return Control.new()
+
+
+func _pass_reward_name(reward: Dictionary) -> String:
+	match str(reward.get("type", "")):
+		"coins":
+			return tr("UI_PASS_COINS")
+		"joker":
+			var count := int(reward.get("amount", 1))
+			return tr("UI_PASS_JOKER") + (" ×%d" % count if count > 1 else "")
+		"item":
+			return ShopCatalog.display_name(ShopCatalog.get_item(str(reward.get("id", ""))))
+	return ""
+
+
+## [[tier, track], …] reached, not yet claimed (premium only once unlocked).
+func _pass_claimables(state: Dictionary) -> Array:
+	var out := []
+	var tier := int(state.get("tier", 0))
+	var premium := bool(state.get("premium", false))
+	var claimed: Dictionary = state.get("claimed", {})
+	for entry in state.get("tiers", []):
+		var number := int(entry.get("tier", 0))
+		if number > tier:
+			break
+		for track in ["free", "premium"]:
+			if typeof(entry.get(track)) != TYPE_DICTIONARY or (track == "premium" and not premium):
+				continue
+			var done: Array = claimed.get(track, [])
+			if not (done.has(number) or done.has(float(number))):
+				out.append([number, track])
+	return out
+
+
+func _claim_all(waiting: Array) -> void:
+	for pair in waiting:
+		await NetworkManager.claim_pass_reward(int(pair[0]), str(pair[1]))
+
+
+func _on_pass_claim(tier: int, track: String) -> void:
+	AudioManager.play("click")
+	NetworkManager.claim_pass_reward(tier, track)
+
+
+func _pass_challenge_row(challenge: Dictionary) -> Control:
+	var target := int(challenge.get("target", 1))
+	var progress := int(challenge.get("progress", 0))
+	var done := progress >= target
+	var card := PanelContainer.new()
+	card.add_theme_stylebox_override("panel", UiStyle.profile_surface(UiTokens.FEEDBACK_CORRECT if done else Color(0, 0, 0, 0), false, 14))
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 12)
+	card.add_child(row)
+	var info := VBoxContainer.new()
+	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	info.add_theme_constant_override("separation", 6)
+	row.add_child(info)
+	var label := Label.new()
+	label.text = _challenge_text(challenge)
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	label.add_theme_font_size_override("font_size", UiScale.font(16))
+	label.add_theme_color_override("font_color", Color.WHITE)
+	info.add_child(label)
+	var bar := ProgressBar.new()
+	bar.show_percentage = false
+	bar.custom_minimum_size.y = 10
+	bar.max_value = float(target)
+	bar.value = float(progress)
+	bar.add_theme_stylebox_override("background", UiStyle.progress_bg())
+	bar.add_theme_stylebox_override("fill", UiStyle.progress_fill(UiTokens.FEEDBACK_CORRECT if done else PASS_GOLD))
+	info.add_child(bar)
+	var right := Label.new()
+	right.text = "✓" if done else "%d / %d\n+%d XP" % [progress, target, int(challenge.get("xp", 0))]
+	right.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	right.add_theme_font_size_override("font_size", UiScale.font(14 if not done else 26))
+	right.add_theme_color_override("font_color", UiTokens.FEEDBACK_CORRECT if done else PASS_GOLD)
+	row.add_child(right)
+	return card
+
+
+func _challenge_text(challenge: Dictionary) -> String:
+	var mode_names := {"classic": tr("UI_MODE_CLASSIC"), "survival": tr("UI_MODE_SURVIVAL"), "time_attack": tr("UI_MODE_TIME_ATTACK")}
+	var key := "UI_PASS_CH_" + str(challenge.get("type", "")).to_upper()
+	return tr(key).format({
+		"n": int(challenge.get("target", 1)),
+		"mode": str(mode_names.get(str(challenge.get("mode", "")), "")),
+	})
+
+
+func _pass_xp_legend(state: Dictionary) -> Control:
+	var rules: Dictionary = state.get("xp_rules", {})
+	var label := Label.new()
+	label.text = tr("UI_PASS_XP_LEGEND").format({
+		"duel": int(rules.get("duel", 0)), "win": int(rules.get("duel_win_bonus", 0)),
+		"daily": int(rules.get("daily", 0)), "quest": int(rules.get("quest", 0)),
+		"quests": int(rules.get("quests_per_day", 0)),
+	})
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	label.add_theme_font_size_override("font_size", UiScale.font(14))
+	label.add_theme_color_override("font_color", Color(1, 1, 1, 0.65))
+	return label
+
+
+func _section_label_text(text: String) -> Label:
+	var label := Label.new()
+	label.text = text.to_upper()
+	label.add_theme_font_size_override("font_size", UiScale.font(16))
+	label.add_theme_color_override("font_color", Color(1, 1, 1, 0.8))
+	return label
 
 
 # --- Boutique ---------------------------------------------------------------

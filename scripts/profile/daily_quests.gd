@@ -115,6 +115,7 @@ static func claim(quest_id: String, locale: String) -> int:
 		SaveManager.daily_state["claimed"][quest_id] = true
 		SaveManager.add_xp(int(row["xp"]))
 		SaveManager.save_data()
+		NetworkManager.claim_pass_quest(quest_id)
 		return int(row["xp"])
 	return 0
 

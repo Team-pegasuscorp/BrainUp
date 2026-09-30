@@ -808,6 +808,12 @@ func _build_over() -> void:
 	if bonus > 0:
 		_body.add_child(_subtitle(tr("UI_DUEL_STREAK_BONUS").format({"bonus": bonus})))
 	_body.add_child(_subtitle("+%d XP" % _xp_gained))
+	var pass_xp := int(_over.get("pass_xp", 0))
+	if pass_xp > 0:
+		var pass_line := _title(tr("UI_DUEL_PASS_XP").format({"xp": pass_xp}), 20)
+		pass_line.add_theme_color_override("font_color", Color(1.0, 0.78, 0.2, 1))
+		_body.add_child(pass_line)
+		NetworkManager.fetch_pass()
 
 	var again := _button(tr("UI_DUEL_PLAY_AGAIN"), _accent, UiTokens.INK)
 	again.pressed.connect(_start_search)

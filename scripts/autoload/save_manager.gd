@@ -71,6 +71,8 @@ var coins: int = ShopCatalog.DEMO_START_COINS if ShopCatalog.SHOW_DEMO_ITEMS els
 var owned_items: Array = []
 var equipped_frame: String = ""
 var equipped_banner: String = ""
+## Jokers won in the battle pass: {joker_id: count}.
+var jokers: Dictionary = {}
 var sound_enabled: bool = true
 var sound_volume: float = 0.8
 
@@ -99,6 +101,8 @@ func load_data() -> void:
 	equipped_frame = str(parsed.get("equipped_frame", ""))
 	if not is_item_owned(equipped_frame):
 		equipped_frame = ""
+	var jokers_raw: Variant = parsed.get("jokers", {})
+	jokers = jokers_raw if typeof(jokers_raw) == TYPE_DICTIONARY else {}
 	equipped_banner = str(parsed.get("equipped_banner", ""))
 	if not is_item_owned(equipped_banner):
 		equipped_banner = ""
@@ -175,6 +179,7 @@ func save_data() -> void:
 		"owned_items": owned_items,
 		"equipped_frame": equipped_frame,
 		"equipped_banner": equipped_banner,
+		"jokers": jokers,
 		"sound_enabled": sound_enabled,
 		"sound_volume": sound_volume,
 	}
@@ -289,7 +294,25 @@ func is_item_owned(item_id: String) -> bool:
 	var item := ShopCatalog.get_item(item_id)
 	if item.is_empty():
 		return false
+	## Pass exclusives cost nothing but are only owned once won.
+	if str(item.get("source", "")) == "pass":
+		return owned_items.has(item_id)
 	return int(item.get("price", 0)) <= 0 or owned_items.has(item_id)
+
+
+## Applies a battle pass reward sent by the server (coins, item or joker).
+func apply_pass_reward(reward: Dictionary) -> void:
+	match str(reward.get("type", "")):
+		"coins":
+			coins += maxi(int(reward.get("amount", 0)), 0)
+		"item":
+			var item_id := str(reward.get("id", ""))
+			if not item_id.is_empty() and not owned_items.has(item_id):
+				owned_items.append(item_id)
+		"joker":
+			var joker_id := str(reward.get("id", ""))
+			jokers[joker_id] = int(jokers.get(joker_id, 0)) + maxi(int(reward.get("amount", 1)), 1)
+	save_data()
 
 
 ## Local purchase. Returns false if unknown, already owned or too expensive.

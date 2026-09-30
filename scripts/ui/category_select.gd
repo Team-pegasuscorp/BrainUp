@@ -300,6 +300,7 @@ func _build_duel_tiles() -> void:
 	_scroll_content.move_child(_duel_tiles, 0)
 
 	_duel_tiles.add_child(_rank_strip())
+	_duel_tiles.add_child(_pass_strip())
 	_duel_tiles.add_child(_section_title(tr("UI_DUEL_TILES_TITLE")))
 	_duel_tiles.add_child(_mode_tile(GameManager.Mode.CLASSIC, 250.0, true))
 	var row := HBoxContainer.new()
@@ -384,6 +385,64 @@ func _rank_strip() -> Control:
 		hint.add_theme_color_override("font_color", Color(1, 1, 1, 0.6))
 		info.add_child(hint)
 	return panel
+
+
+## Battle pass progress; a tap opens the Pass tab of the shop.
+func _pass_strip() -> Control:
+	var state: Dictionary = NetworkManager.pass_state
+	if state.is_empty():
+		NetworkManager.fetch_pass()
+		if not NetworkManager.pass_received.is_connected(_on_pass_state):
+			NetworkManager.pass_received.connect(_on_pass_state)
+	var button := Button.new()
+	button.custom_minimum_size.y = 84
+	button.focus_mode = Control.FOCUS_NONE
+	var gold := Color(1.0, 0.78, 0.2, 1)
+	var style := UiStyle.filled(Color(0.16, 0.10, 0.30, 1), 22)
+	style.set_border_width_all(2)
+	style.border_color = gold if bool(state.get("premium", false)) else Color(gold.r, gold.g, gold.b, 0.45)
+	for button_state in ["normal", "hover", "pressed", "focus"]:
+		button.add_theme_stylebox_override(button_state, style)
+	button.pressed.connect(func() -> void:
+		var shell := get_tree().current_scene
+		if shell != null and shell.has_method("open_shop_tab"):
+			shell.call("open_shop_tab", "pass")
+	)
+	PressScaleUtil.wire(button, self)
+	var pad := MarginContainer.new()
+	pad.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	for side in ["left", "right", "top", "bottom"]:
+		pad.add_theme_constant_override("margin_" + side, 14)
+	button.add_child(pad)
+	var column := VBoxContainer.new()
+	column.alignment = BoxContainer.ALIGNMENT_CENTER
+	column.add_theme_constant_override("separation", 6)
+	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pad.add_child(column)
+	var title := Label.new()
+	var active := bool(state.get("active", false))
+	title.text = (tr("UI_PASS_STRIP").format({"tier": int(state.get("tier", 0))}) if active else tr("UI_PASS_TAB")) + "  ›"
+	title.add_theme_font_size_override("font_size", UiScale.font(18))
+	title.add_theme_color_override("font_color", gold)
+	column.add_child(title)
+	if active:
+		var tier_xp := int(state.get("tier_xp", 800))
+		var bar := ProgressBar.new()
+		bar.show_percentage = false
+		bar.custom_minimum_size.y = 10
+		bar.max_value = float(tier_xp)
+		bar.value = float(int(state.get("xp", 0)) % tier_xp)
+		bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		bar.add_theme_stylebox_override("background", UiStyle.progress_bg())
+		bar.add_theme_stylebox_override("fill", UiStyle.progress_fill(gold))
+		column.add_child(bar)
+	return button
+
+
+func _on_pass_state(_state: Dictionary) -> void:
+	if _duel_only and is_inside_tree():
+		_build_duel_tiles()
 
 
 ## Big coloured tile for one duel mode; a tap goes straight to matchmaking.
