@@ -263,7 +263,7 @@ func _build_shop_page() -> void:
 	_shop_page = ShopPage.new()
 	_shop_page.name = "ShopPage"
 	add_child(_shop_page)
-	_shop_page.closed.connect(func() -> void: tab_swipe.set_input_enabled(true))
+	_shop_page.closed.connect(_on_shop_closed)
 
 
 func _open_shop() -> void:
@@ -272,6 +272,12 @@ func _open_shop() -> void:
 	top_app_bar.release_settings_focus()
 	tab_swipe.set_input_enabled(false)
 	_shop_page.open()
+
+
+## Avatar / frame may have changed in the locker: redraw the visible tab.
+func _on_shop_closed() -> void:
+	tab_swipe.set_input_enabled(true)
+	_notify_tab_shown(tab_swipe.get_tab())
 
 
 func _maybe_show_news_on_launch() -> void:

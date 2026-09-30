@@ -60,6 +60,11 @@ var daily_state: Dictionary = {}
 var daily_challenge_result: Dictionary = {}
 ## Best survival / time-attack runs: { mode: { category: {score, correct} } }.
 var mode_records: Dictionary = {}
+## Shop: soft currency, bought item ids and the equipped frame (see ShopCatalog).
+## Local only for now — the server must own these before real purchases.
+var coins: int = ShopCatalog.DEMO_START_COINS if ShopCatalog.SHOW_DEMO_ITEMS else 0
+var owned_items: Array = []
+var equipped_frame: String = ""
 var sound_enabled: bool = true
 var sound_volume: float = 0.8
 
@@ -82,8 +87,14 @@ func load_data() -> void:
 		return
 
 	player_name = parsed.get("player_name", player_name)
+	var owned_raw: Variant = parsed.get("owned_items", [])
+	owned_items = owned_raw if typeof(owned_raw) == TYPE_ARRAY else []
+	coins = maxi(int(parsed.get("coins", coins)), 0)
+	equipped_frame = str(parsed.get("equipped_frame", ""))
+	if not is_item_owned(equipped_frame):
+		equipped_frame = ""
 	profile_avatar_id = str(parsed.get("profile_avatar_id", ""))
-	if not PROFILE_AVATAR_IDS.has(profile_avatar_id):
+	if not can_use_avatar(profile_avatar_id):
 		profile_avatar_id = ""
 	preferred_locale = parsed.get("preferred_locale", preferred_locale)
 	email = str(parsed.get("email", email))
@@ -151,6 +162,9 @@ func save_data() -> void:
 		"daily_state": daily_state,
 		"daily_challenge_result": daily_challenge_result,
 		"mode_records": mode_records,
+		"coins": coins,
+		"owned_items": owned_items,
+		"equipped_frame": equipped_frame,
 		"sound_enabled": sound_enabled,
 		"sound_volume": sound_volume,
 	}
@@ -224,6 +238,11 @@ func get_profile_avatar_texture() -> Texture2D:
 
 ## Texture for an avatar id; "" or an unknown id gives the default avatar.
 func avatar_texture_for(avatar_id: String) -> Texture2D:
+	var shop_item := ShopCatalog.get_item(avatar_id)
+	if str(shop_item.get("kind", "")) == ShopCatalog.KIND_AVATAR:
+		var shop_tex := ShopCatalog.avatar_texture(shop_item)
+		if shop_tex != null:
+			return shop_tex
 	if PROFILE_AVATAR_IDS.has(avatar_id):
 		var tex := GameAssets.load_texture("res://assets/avatars/demo/%s.png" % avatar_id)
 		if tex != null:
@@ -240,8 +259,54 @@ func avatar_texture_for(avatar_id: String) -> Texture2D:
 
 
 func set_profile_avatar_id(avatar_id: String) -> void:
-	profile_avatar_id = avatar_id if PROFILE_AVATAR_IDS.has(avatar_id) else ""
+	profile_avatar_id = avatar_id if can_use_avatar(avatar_id) else ""
 	save_data()
+
+
+## Free starter avatars, or a shop avatar the player bought.
+func can_use_avatar(avatar_id: String) -> bool:
+	return PROFILE_AVATAR_IDS.has(avatar_id) or (
+		str(ShopCatalog.get_item(avatar_id).get("kind", "")) == ShopCatalog.KIND_AVATAR
+		and is_item_owned(avatar_id)
+	)
+
+
+## Free catalogue items (price 0) count as owned.
+func is_item_owned(item_id: String) -> bool:
+	var item := ShopCatalog.get_item(item_id)
+	if item.is_empty():
+		return false
+	return int(item.get("price", 0)) <= 0 or owned_items.has(item_id)
+
+
+## Local purchase. Returns false if unknown, already owned or too expensive.
+## TODO(server): move to a backend route once coins are earned server-side.
+func buy_item(item_id: String) -> bool:
+	var item := ShopCatalog.get_item(item_id)
+	if item.is_empty() or is_item_owned(item_id):
+		return false
+	var price := int(item.get("price", 0))
+	if coins < price:
+		return false
+	coins -= price
+	owned_items.append(item_id)
+	save_data()
+	return true
+
+
+func get_equipped_frame() -> String:
+	return equipped_frame if not equipped_frame.is_empty() else ShopCatalog.default_frame_id()
+
+
+func equip_item(item_id: String) -> void:
+	if not is_item_owned(item_id):
+		return
+	match str(ShopCatalog.get_item(item_id).get("kind", "")):
+		ShopCatalog.KIND_FRAME:
+			equipped_frame = item_id
+			save_data()
+		ShopCatalog.KIND_AVATAR:
+			set_profile_avatar_id(item_id)
 
 
 func clear_profile_avatar() -> void:

@@ -213,11 +213,8 @@ func _build_hero() -> PanelContainer:
 	var avatar := CircularAvatarScript.new()
 	avatar.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	avatar.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	## Mock gradient ring: violet → magenta → orange + glow.
-	avatar.ring_color = UiTokens.ACCENT_PROFILE
-	avatar.ring_color_mid = UiTokens.ACCENT_SOCIAL
-	avatar.ring_color_secondary = UiTokens.PROFILE_AVATAR_RING
-	avatar.ring_width = 3.5
+	## Ring = the frame equipped in the shop locker.
+	ShopCatalog.apply_frame(avatar, SaveManager.get_equipped_frame())
 	avatar.ring_gap = 2.5
 	avatar.fill_color = UiTokens.PROFILE_CARD_BG_RAISED
 	## Presence pill: green only when the user is connected (social-ready).
@@ -491,7 +488,9 @@ func _fit_hero_mock_proportions(
 		league_col.custom_minimum_size.x = league_w
 	if is_instance_valid(avatar) and avatar is CircularAvatarScript:
 		var circ := avatar as CircularAvatarScript
-		circ.ring_width = clampf(avatar_side * 0.022, 3.0, 4.5)
+		## Thicker frames (epic / legendary) keep their extra width.
+		var frame_scale := float(ShopCatalog.get_item(SaveManager.get_equipped_frame()).get("width", 3.5)) / 3.5
+		circ.ring_width = clampf(avatar_side * 0.022, 3.0, 4.5) * frame_scale
 		circ.ring_gap = clampf(avatar_side * 0.016, 2.0, 3.5)
 		circ.queue_redraw()
 	if is_instance_valid(league_title):

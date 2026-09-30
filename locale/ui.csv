@@ -362,8 +362,24 @@ UI_SHARE_STREAK,🔥 {days} days in a row,🔥 {days} jours d'affilée
 UI_SHARE_CHALLENGE,Can you beat me on BrainUp?,Tu fais mieux sur BrainUp ?
 UI_SHARE_MESSAGE,I scored {score} points in {category}!,J'ai fait {score} points en {category} !
 UI_SHOP,Shop,Boutique
-UI_SHOP_SUBTITLE,Customize your profile.,Personnalise ton profil.
-UI_SHOP_AVATARS,Avatars,Avatars
-UI_SHOP_FRAMES,Frames,Cadres
 UI_SHOP_EMPTY,Coming soon,Bientôt disponible
 UI_SHOP_EMPTY_HINT,The first items are on their way.,Les premiers articles arrivent bientôt.
+UI_SHOP_STORE,Shop,Boutique
+UI_SHOP_LOCKER,Locker,Casier
+UI_SHOP_FEATURED,Featured,À la une
+UI_SHOP_ITEMS,Items,Articles
+UI_SHOP_BUY,Buy,Acheter
+UI_SHOP_EQUIP,Equip,Équiper
+UI_SHOP_EQUIPPED,Equipped,Équipé
+UI_SHOP_OWNED,Owned,Possédé
+UI_SHOP_NOT_ENOUGH,Not enough coins,Pas assez de pièces
+UI_SHOP_CANCEL,Cancel,Annuler
+UI_SHOP_KIND_AVATAR,Avatar,Avatar
+UI_SHOP_KIND_FRAME,Frame,Cadre
+UI_SHOP_LOCKER_HINT,Pick a slot then tap an item to equip it.,Choisis un emplacement puis touche un article pour l'équiper.
+UI_SHOP_DEFAULT_AVATAR,Default,Par défaut
+UI_SHOP_STARTER,Starter,De base
+UI_RARITY_COMMON,Common,Commun
+UI_RARITY_RARE,Rare,Rare
+UI_RARITY_EPIC,Epic,Épique
+UI_RARITY_LEGENDARY,Legendary,Légendaire

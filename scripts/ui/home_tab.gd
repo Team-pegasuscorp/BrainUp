@@ -72,10 +72,8 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 	var avatar := CircularAvatarScript.new()
 	avatar.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	avatar.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	avatar.ring_color = UiTokens.ACCENT_PROFILE
-	avatar.ring_color_mid = UiTokens.ACCENT_SOCIAL
-	avatar.ring_color_secondary = UiTokens.PROFILE_AVATAR_RING
-	avatar.ring_width = 3.5
+	## Ring = the frame equipped in the shop locker.
+	ShopCatalog.apply_frame(avatar, SaveManager.get_equipped_frame())
 	avatar.ring_gap = 2.0
 	avatar.fill_color = UiTokens.HOME_CARD_BG_RAISED
 	if bool(snapshot.get("is_online", false)):
