@@ -2,6 +2,7 @@ class_name TopAppBar
 extends Control
 
 signal settings_pressed
+signal shop_pressed
 
 const UiTokens = preload("res://scripts/config/ui_tokens.gd")
 const UiStyle = preload("res://scripts/config/ui_style.gd")
@@ -17,6 +18,7 @@ const PressScaleUtil = preload("res://scripts/ui/press_scale.gd")
 @onready var settings_button: Button = %SettingsButton
 
 
+var shop_button: Button
 var _base_top_pad: int = 0
 var _margin_wash: ColorRect
 
@@ -43,9 +45,11 @@ func _ready() -> void:
 	_configure_wordmark()
 	_configure_title()
 	_configure_settings_button()
+	_build_shop_button()
 	_apply_translations()
 	LocaleManager.locale_changed.connect(_on_locale_changed)
 	PressScaleUtil.wire(settings_button, self)
+	PressScaleUtil.wire(shop_button, self)
 	_base_top_pad = bar_margin.get_theme_constant("margin_top")
 	SafeArea.changed.connect(_apply_safe_area)
 	_apply_safe_area()
@@ -169,12 +173,39 @@ func _configure_settings_button() -> void:
 		settings_button.pressed.connect(_on_settings_pressed)
 
 
+## Same flat white tile as the settings cog, placed just before it.
+func _build_shop_button() -> void:
+	shop_button = Button.new()
+	shop_button.name = "ShopButton"
+	settings_button.get_parent().add_child(shop_button)
+	settings_button.get_parent().move_child(shop_button, settings_button.get_index())
+	shop_button.custom_minimum_size = Vector2.ONE * UiTokens.HEADER_SETTINGS_SIZE
+	shop_button.text = ""
+	shop_button.flat = true
+	shop_button.expand_icon = true
+	shop_button.icon = load(UiTokens.APP_SHOP_ICON_PATH)
+	shop_button.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	shop_button.vertical_icon_alignment = VERTICAL_ALIGNMENT_CENTER
+	shop_button.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	shop_button.focus_mode = Control.FOCUS_ALL
+	shop_button.add_theme_constant_override("icon_max_width", UiTokens.HEADER_SETTINGS_ICON_SIZE - 4)
+	shop_button.add_theme_color_override("icon_normal_color", Color.WHITE)
+	shop_button.add_theme_color_override("icon_hover_color", Color(1, 1, 1, 0.85))
+	shop_button.add_theme_color_override("icon_pressed_color", Color(1, 1, 1, 0.7))
+	var empty := StyleBoxEmpty.new()
+	for state in ["normal", "hover", "pressed", "focus"]:
+		shop_button.add_theme_stylebox_override(state, empty)
+	shop_button.pressed.connect(func() -> void: shop_pressed.emit())
+
+
 func _apply_translations() -> void:
 	settings_button.tooltip_text = tr("UI_SETTINGS")
+	shop_button.tooltip_text = tr("UI_SHOP")
 
 
 func release_settings_focus() -> void:
 	settings_button.release_focus()
+	shop_button.release_focus()
 
 
 func _on_settings_pressed() -> void:

@@ -77,6 +77,7 @@ const HEADER_SIDE_PADDING: float = 26.0
 const APP_LOGO_PATH := "res://assets/ui/logo_app.png"
 const APP_WORDMARK_PATH := "res://assets/ui/brainup_wordmark.png"
 const APP_SETTINGS_ICON_PATH := "res://assets/ui/icon_settings.png"
+const APP_SHOP_ICON_PATH := "res://assets/ui/icon_shop.svg"
 
 const BOTTOM_NAV_HEIGHT: float = 96.0
 ## Full chrome height (dock + FAB lift zone above the white pill).

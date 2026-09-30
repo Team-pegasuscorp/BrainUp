@@ -27,6 +27,7 @@ var _news_panel: PanelContainer
 var _news_title: Label
 var _news_body: Label
 var _news_dismiss: Button
+var _shop_page: ShopPage
 
 
 func _ready() -> void:
@@ -39,6 +40,7 @@ func _ready() -> void:
 	_configure_chrome()
 	_build_sound_settings()
 	_build_news_popup()
+	_build_shop_page()
 	_apply_page_backgrounds()
 	_apply_translations()
 	_setup_language_option()
@@ -108,6 +110,7 @@ func _wire_navigation() -> void:
 
 func _connect_settings() -> void:
 	top_app_bar.settings_pressed.connect(_on_settings_pressed)
+	top_app_bar.shop_pressed.connect(_open_shop)
 	settings_backdrop.gui_input.connect(_on_settings_backdrop_gui_input)
 	close_settings_button.pressed.connect(_on_close_settings_pressed)
 	language_option.item_selected.connect(_on_language_selected)
@@ -121,6 +124,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			return
 		if settings_panel.visible:
 			_close_settings()
+			get_viewport().set_input_as_handled()
+			return
+		if _shop_page.visible:
+			_shop_page.close()
 			get_viewport().set_input_as_handled()
 
 
@@ -250,6 +257,21 @@ func _build_news_popup() -> void:
 	vbox.add_child(_news_dismiss)
 	PressScaleUtil.wire(_news_dismiss, self)
 	_news_dismiss.pressed.connect(_on_news_dismiss_pressed)
+
+
+func _build_shop_page() -> void:
+	_shop_page = ShopPage.new()
+	_shop_page.name = "ShopPage"
+	add_child(_shop_page)
+	_shop_page.closed.connect(func() -> void: tab_swipe.set_input_enabled(true))
+
+
+func _open_shop() -> void:
+	if settings_panel.visible:
+		_close_settings()
+	top_app_bar.release_settings_focus()
+	tab_swipe.set_input_enabled(false)
+	_shop_page.open()
 
 
 func _maybe_show_news_on_launch() -> void:

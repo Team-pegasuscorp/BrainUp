@@ -361,3 +361,9 @@ UI_SHARE_COMBO,combo x{combo},combo x{combo}
 UI_SHARE_STREAK,🔥 {days} days in a row,🔥 {days} jours d'affilée
 UI_SHARE_CHALLENGE,Can you beat me on BrainUp?,Tu fais mieux sur BrainUp ?
 UI_SHARE_MESSAGE,I scored {score} points in {category}!,J'ai fait {score} points en {category} !
+UI_SHOP,Shop,Boutique
+UI_SHOP_SUBTITLE,Customize your profile.,Personnalise ton profil.
+UI_SHOP_AVATARS,Avatars,Avatars
+UI_SHOP_FRAMES,Frames,Cadres
+UI_SHOP_EMPTY,Coming soon,Bientôt disponible
+UI_SHOP_EMPTY_HINT,The first items are on their way.,Les premiers articles arrivent bientôt.
