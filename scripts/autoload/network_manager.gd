@@ -20,6 +20,9 @@ signal live_draft_result(data: Dictionary)
 signal live_match_start(data: Dictionary)
 signal live_opponent_progress(data: Dictionary)
 signal live_player_done(data: Dictionary)
+## Synced modes: the opponent answered (not what) / tapped "ready" after the explanation.
+signal live_opponent_answered(data: Dictionary)
+signal live_opponent_ready(data: Dictionary)
 signal live_search_range_changed(trophy_range: int)
 signal daily_challenge_received(data: Dictionary)
 signal daily_challenge_failed
@@ -128,6 +131,13 @@ func send_live_answer(index: int, selected_index: int) -> void:
 	}))
 
 
+## Done reading the explanation of question `index` (the server moves on when both are).
+func send_live_ready(index: int) -> void:
+	if _live_socket == null:
+		return
+	_live_socket.send_text(JSON.stringify({"type": "ready", "index": index}))
+
+
 func send_draft_vote(category: String) -> void:
 	if _live_socket == null:
 		return
@@ -184,6 +194,10 @@ func _handle_live_message(raw: String) -> void:
 			live_opponent_progress.emit(parsed)
 		"player_done":
 			live_player_done.emit(parsed)
+		"opponent_answered":
+			live_opponent_answered.emit(parsed)
+		"opponent_ready":
+			live_opponent_ready.emit(parsed)
 		"match_over":
 			live_match_over.emit(parsed)
 			stop_live_matchmaking()

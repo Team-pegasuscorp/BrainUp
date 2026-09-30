@@ -40,6 +40,8 @@ var _mode_icon_labels: Dictionary = {} ## mode_id -> Label
 var _mode_name_labels: Dictionary = {} ## mode_id -> Label
 var _mode_hint: Label
 var _mode_section_label: Label
+var _mode_row: HBoxContainer
+var _duel_tiles: VBoxContainer
 
 ## Mode chips: [mode, label key, hint key, icon].
 const MODES := [
@@ -60,6 +62,8 @@ func _ready() -> void:
 	_load_categories()
 	if embedded_mode:
 		_setup_daily_card()
+	if _duel_only:
+		_build_duel_tiles()
 	back_button.pressed.connect(_on_back_pressed)
 	start_button.pressed.connect(_on_start_pressed)
 	LocaleManager.locale_changed.connect(_on_locale_changed)
@@ -110,6 +114,7 @@ func _build_mode_picker() -> void:
 	row.add_theme_constant_override("separation", 10)
 	column.add_child(row)
 	column.move_child(row, start_button.get_index())
+	_mode_row = row
 	for entry in MODES:
 		var mode_id := int(entry[0])
 		var chip := Button.new()
@@ -275,6 +280,216 @@ func refresh() -> void:
 	_load_categories()
 	if _daily_card != null:
 		_render_daily()
+	if _duel_only:
+		_build_duel_tiles()
+
+
+# --- Duel tiles (Quiz tab) --------------------------------------------------
+
+## Rank strip, one tile per duel mode (tap = search an opponent), then the daily
+## challenge tile. Replaces the old mode chips + Play button.
+func _build_duel_tiles() -> void:
+	for node in [_mode_section_label, _mode_row, _mode_hint, start_button]:
+		if node != null:
+			node.visible = false
+	if _duel_tiles != null and is_instance_valid(_duel_tiles):
+		_duel_tiles.queue_free()
+	_duel_tiles = VBoxContainer.new()
+	_duel_tiles.add_theme_constant_override("separation", 14)
+	_scroll_content.add_child(_duel_tiles)
+	_scroll_content.move_child(_duel_tiles, 0)
+
+	_duel_tiles.add_child(_rank_strip())
+	_duel_tiles.add_child(_section_title(tr("UI_DUEL_TILES_TITLE")))
+	_duel_tiles.add_child(_mode_tile(GameManager.Mode.CLASSIC, 250.0, true))
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 14)
+	_duel_tiles.add_child(row)
+	row.add_child(_mode_tile(GameManager.Mode.SURVIVAL, 250.0, false))
+	row.add_child(_mode_tile(GameManager.Mode.TIME_ATTACK, 250.0, false))
+	_duel_tiles.add_child(_section_title(tr("UI_DAILY_CHALLENGE_TITLE")))
+
+	if _daily_card != null:
+		## The daily card becomes the last tile, under the modes.
+		_scroll_content.move_child(_daily_card, _scroll_content.get_child_count() - 1)
+		var daily_style := UiStyle.filled(Color(0.97, 0.95, 0.88, 1), 24)
+		daily_style.set_border_width_all(3)
+		daily_style.border_color = UiTokens.PODIUM_GOLD
+		daily_style.shadow_color = Color(UiTokens.PODIUM_GOLD.r, UiTokens.PODIUM_GOLD.g, UiTokens.PODIUM_GOLD.b, 0.3)
+		daily_style.shadow_size = 12
+		daily_style.set_content_margin_all(16)
+		_daily_card.custom_minimum_size.y = 130
+		_daily_card.add_theme_stylebox_override("panel", daily_style)
+	ScrollTouch.let_drags_through(_duel_tiles)
+
+
+func _section_title(text: String) -> Label:
+	var label := Label.new()
+	label.text = text.to_upper()
+	label.add_theme_font_size_override("font_size", UiScale.font(16))
+	label.add_theme_color_override("font_color", Color(1, 1, 1, 0.6))
+	return label
+
+
+## League badge, trophies and the way to the next league.
+func _rank_strip() -> Control:
+	var trophies := SaveManager.trophies
+	var league := TrophyLeagues.for_trophies(trophies)
+	var next_min := -1
+	var next_key := ""
+	for tier in TrophyLeagues.TIERS:
+		if int(tier.get("min_trophies", 0)) > trophies:
+			next_min = int(tier["min_trophies"])
+			next_key = str(tier.get("title_key", ""))
+			break
+
+	var panel := PanelContainer.new()
+	var style := UiStyle.filled(Color(1, 1, 1, 0.07), 22)
+	style.set_content_margin_all(14)
+	style.set_border_width_all(1)
+	style.border_color = Color(1, 1, 1, 0.12)
+	panel.add_theme_stylebox_override("panel", style)
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 14)
+	panel.add_child(row)
+	var icon := TextureRect.new()
+	icon.custom_minimum_size = Vector2(76, 76)
+	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	icon.texture = GameAssets.load_texture("res://assets/leagues/%s.png" % str(league.get("id", "bronze")))
+	row.add_child(icon)
+	var info := VBoxContainer.new()
+	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	info.alignment = BoxContainer.ALIGNMENT_CENTER
+	info.add_theme_constant_override("separation", 6)
+	row.add_child(info)
+	var title := Label.new()
+	title.text = "%s  ·  🏆 %d" % [tr(str(league.get("title_key", ""))), trophies]
+	title.add_theme_font_size_override("font_size", UiScale.font(22))
+	title.add_theme_color_override("font_color", Color.WHITE)
+	info.add_child(title)
+	if next_min > 0:
+		var floor_min := int(league.get("min_trophies", 0))
+		var bar := ProgressBar.new()
+		bar.show_percentage = false
+		bar.custom_minimum_size.y = 10
+		bar.max_value = float(next_min - floor_min)
+		bar.value = float(trophies - floor_min)
+		bar.add_theme_stylebox_override("background", UiStyle.progress_bg())
+		bar.add_theme_stylebox_override("fill", UiStyle.progress_fill(UiTokens.PODIUM_GOLD))
+		info.add_child(bar)
+		var hint := Label.new()
+		hint.text = tr("UI_DUEL_NEXT_LEAGUE").format({"league": tr(next_key), "trophies": next_min - trophies})
+		hint.add_theme_font_size_override("font_size", UiScale.font(14))
+		hint.add_theme_color_override("font_color", Color(1, 1, 1, 0.6))
+		info.add_child(hint)
+	return panel
+
+
+## Big coloured tile for one duel mode; a tap goes straight to matchmaking.
+func _mode_tile(mode: int, height: float, wide: bool) -> Button:
+	var entry: Array = MODES[mode]
+	var accent: Color = UiTokens.MODE_ACCENTS[mode]
+	var tile := Button.new()
+	tile.custom_minimum_size.y = height
+	tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	tile.focus_mode = Control.FOCUS_NONE
+	var style := UiStyle.filled(accent.darkened(0.35), 26)
+	style.set_border_width_all(3)
+	style.border_color = accent.lightened(0.2)
+	style.shadow_color = Color(accent.r, accent.g, accent.b, 0.35)
+	style.shadow_size = 14
+	style.shadow_offset = Vector2(0, 5)
+	var pressed := style.duplicate() as StyleBoxFlat
+	pressed.bg_color = accent.darkened(0.45)
+	for state in ["normal", "hover", "focus"]:
+		tile.add_theme_stylebox_override(state, style)
+	tile.add_theme_stylebox_override("pressed", pressed)
+	tile.pressed.connect(_on_mode_tile_pressed.bind(mode))
+	PressScaleUtil.wire(tile, self)
+
+	## Soft glow in the top corner, like a light on the card. It lives in a rounded
+	## face (inside the border) that clips it, so nothing spills past the corners.
+	var face := Panel.new()
+	face.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT, Control.PRESET_MODE_MINSIZE, 3)
+	face.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	face.clip_children = CanvasItem.CLIP_CHILDREN_AND_DRAW
+	face.add_theme_stylebox_override("panel", UiStyle.filled(accent.darkened(0.35), 23))
+	tile.add_child(face)
+	var glow := TextureRect.new()
+	glow.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	glow.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	glow.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	glow.stretch_mode = TextureRect.STRETCH_SCALE
+	var gradient := Gradient.new()
+	gradient.set_color(0, Color(accent.lightened(0.3), 0.55))
+	gradient.set_color(1, Color(accent, 0.0))
+	var glow_tex := GradientTexture2D.new()
+	glow_tex.gradient = gradient
+	glow_tex.fill = GradientTexture2D.FILL_RADIAL
+	glow_tex.fill_from = Vector2(0.85, 0.15)
+	glow_tex.fill_to = Vector2(0.2, 1.0)
+	glow.texture = glow_tex
+	face.add_child(glow)
+
+	var emoji_font := UiFonts.emoji_font()
+	var big_icon := Label.new()
+	big_icon.text = str(entry[3])
+	big_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	big_icon.modulate.a = 0.9
+	big_icon.add_theme_font_size_override("font_size", UiScale.font(76 if wide else 58))
+	if emoji_font != null:
+		big_icon.add_theme_font_override("font", emoji_font)
+	big_icon.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
+	big_icon.offset_left = -(150.0 if wide else 110.0)
+	big_icon.offset_top = 18.0
+	tile.add_child(big_icon)
+
+	var pad := MarginContainer.new()
+	pad.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	for side in ["left", "right", "top", "bottom"]:
+		pad.add_theme_constant_override("margin_" + side, 20)
+	tile.add_child(pad)
+	var column := VBoxContainer.new()
+	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	column.add_theme_constant_override("separation", 6)
+	pad.add_child(column)
+	var chip := Label.new()
+	chip.text = tr("UI_DUEL_RANKED_CHIP").to_upper()
+	chip.add_theme_font_size_override("font_size", UiScale.font(13))
+	chip.add_theme_color_override("font_color", accent.lightened(0.5))
+	column.add_child(chip)
+	var spacer := Control.new()
+	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	spacer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	column.add_child(spacer)
+	var name_label := Label.new()
+	name_label.text = tr(str(entry[1])).to_upper()
+	name_label.add_theme_font_size_override("font_size", UiScale.font(34 if wide else 26))
+	name_label.add_theme_color_override("font_color", Color.WHITE)
+	name_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.35))
+	name_label.add_theme_constant_override("outline_size", 6)
+	column.add_child(name_label)
+	var hint := Label.new()
+	hint.text = tr(str(entry[2]).replace("UI_MODE_", "UI_DUEL_TILE_"))
+	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	hint.add_theme_font_size_override("font_size", UiScale.font(15))
+	hint.add_theme_color_override("font_color", Color(1, 1, 1, 0.85))
+	column.add_child(hint)
+	var play := Label.new()
+	play.text = tr("UI_DUEL_TILE_PLAY") + "  ›"
+	play.add_theme_font_size_override("font_size", UiScale.font(17))
+	play.add_theme_color_override("font_color", accent.lightened(0.55))
+	column.add_child(play)
+	return tile
+
+
+func _on_mode_tile_pressed(mode: int) -> void:
+	GameManager.selected_mode = mode
+	AudioManager.play("click")
+	GameManager.shell_tab_index = ScenePaths.Tab.QUIZ
+	get_tree().change_scene_to_file(ScenePaths.LIVE_MATCH)
 
 
 func _load_categories() -> void:

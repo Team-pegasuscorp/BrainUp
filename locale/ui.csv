@@ -407,3 +407,17 @@ UI_DUEL_STREAK_BONUS,Streak bonus included: +{bonus} 🏆,Bonus de série compri
 UI_DUEL_PLAY_AGAIN,Play again,Rejouer
 UI_DUEL_ERROR_OFFLINE,Can't reach the server. Check your connection.,Impossible de joindre le serveur. Vérifie ta connexion.
 UI_DUEL_ERROR_ABORTED,The match was cancelled.,Le match a été annulé.
+UI_DUEL_TAP_READY,Tap when you're done reading,Touche quand tu as fini de lire
+UI_DUEL_WAITING_NAME,Waiting for {name}…,En attente de {name}…
+UI_DUEL_OPPONENT_ANSWERED,Answered!,A répondu !
+UI_DUEL_OPPONENT_READY,Ready!,Prêt !
+UI_DUEL_OPPONENT_READY_TAP,{name} is ready · tap to go on,{name} est prêt · touche pour continuer
+UI_DUEL_QUESTION_OF,Question {n} / {total},Question {n} / {total}
+UI_DUEL_QUESTION_N,Question {n},Question {n}
+UI_DUEL_TILES_TITLE,Ranked duels,Duels classés
+UI_DUEL_RANKED_CHIP,🏆 Ranked · 1 vs 1,🏆 Classé · 1 contre 1
+UI_DUEL_TILE_CLASSIC_HINT,"7 questions, 10 s each. Most points wins.","7 questions, 10 s chacune. Le plus de points gagne."
+UI_DUEL_TILE_SURVIVAL_HINT,3 lives each. Last one standing.,3 vies chacun. Le dernier debout.
+UI_DUEL_TILE_TIME_ATTACK_HINT,"60 s each, at your own pace.","60 s chacun, à ton rythme."
+UI_DUEL_TILE_PLAY,Find an opponent,Trouver un adversaire
+UI_DUEL_NEXT_LEAGUE,{trophies} 🏆 to {league},Encore {trophies} 🏆 pour {league}
