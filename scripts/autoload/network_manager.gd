@@ -14,6 +14,12 @@ signal live_question(data: Dictionary)
 signal live_reveal(data: Dictionary)
 signal live_match_over(data: Dictionary)
 signal live_error(reason: String)
+## Ranked duel flow (mode queue): draft result, start of play, opponent's live score
+## in time attack, and "your clock ran out, waiting for the opponent".
+signal live_draft_result(data: Dictionary)
+signal live_match_start(data: Dictionary)
+signal live_opponent_progress(data: Dictionary)
+signal live_player_done(data: Dictionary)
 signal live_search_range_changed(trophy_range: int)
 signal daily_challenge_received(data: Dictionary)
 signal daily_challenge_failed
@@ -77,7 +83,9 @@ func _process(_delta: float) -> void:
 		live_error.emit("disconnected")
 
 
-func start_live_matchmaking(category: String) -> void:
+## `mode` ("classic", "survival", "time_attack") queues a ranked duel whose category
+## is drafted after pairing; without it the old fixed-category classic match is used.
+func start_live_matchmaking(category: String, mode: String = "") -> void:
 	if player_id.is_empty():
 		live_error.emit("no_player")
 		return
@@ -99,11 +107,14 @@ func start_live_matchmaking(category: String) -> void:
 	_live_pending_join = {
 		"type": "join_queue",
 		"player_id": player_id,
-		"category": category,
 		"locale": LocaleManager.get_content_locale(),
 		"trophies": SaveManager.trophies,
 		"trophy_range": _live_trophy_range,
 	}
+	if mode.is_empty():
+		_live_pending_join["category"] = category
+	else:
+		_live_pending_join["mode"] = mode
 	live_search_range_changed.emit(_live_trophy_range)
 
 
@@ -115,6 +126,12 @@ func send_live_answer(index: int, selected_index: int) -> void:
 		"index": index,
 		"selected_index": selected_index,
 	}))
+
+
+func send_draft_vote(category: String) -> void:
+	if _live_socket == null:
+		return
+	_live_socket.send_text(JSON.stringify({"type": "draft_vote", "category": category}))
 
 
 func stop_live_matchmaking() -> void:
@@ -159,6 +176,14 @@ func _handle_live_message(raw: String) -> void:
 			live_question.emit(parsed)
 		"reveal":
 			live_reveal.emit(parsed)
+		"draft_result":
+			live_draft_result.emit(parsed)
+		"match_start":
+			live_match_start.emit(parsed)
+		"opponent_progress":
+			live_opponent_progress.emit(parsed)
+		"player_done":
+			live_player_done.emit(parsed)
 		"match_over":
 			live_match_over.emit(parsed)
 			stop_live_matchmaking()

@@ -20,6 +20,8 @@ const MAX_MATCH_HISTORY: int = 30
 ## Global player level: exponential XP bar (1→2 = 100; growth tuned softer than ×2.5).
 const XP_LEVEL_BASE: int = 100
 const XP_LEVEL_GROWTH: float = 2.15
+## Extra XP for winning a ranked duel.
+const DUEL_WIN_XP: int = 30
 
 var player_name: String = UiTokens.DEFAULT_PLAYER_NAME
 ## Chosen avatar id from PROFILE_AVATAR_IDS ("" = default avatar).
@@ -397,6 +399,68 @@ func record_match_result(
 	var gained_xp: int = correct_count * 10 + score / 10
 	if xp_cap > 0:
 		gained_xp = mini(gained_xp, xp_cap)
+	add_xp(gained_xp)
+	save_data()
+	return gained_xp
+
+
+## Ranked duel finished (server match_over): the server decides the winner and the
+## trophies, the client keeps its stats, history, quests and XP in step.
+## Returns the XP gained (win bonus included).
+func record_duel_result(summary: Dictionary) -> int:
+	var category_id := str(summary.get("category", ""))
+	var mode := str(summary.get("mode", "classic"))
+	var score := int(summary.get("your_score", 0))
+	var correct_count := int(summary.get("your_correct", 0))
+	var total_count := int(summary.get("your_answered", 0))
+	var max_combo := int(summary.get("your_max_combo", 0))
+	var won := bool(summary.get("won", false))
+	var draw := bool(summary.get("draw", false))
+
+	var stats: Dictionary = category_stats.get(category_id, {
+		"games_played": 0, "best_score": 0, "total_correct": 0, "total_questions": 0,
+	})
+	stats["games_played"] = int(stats.get("games_played", 0)) + 1
+	stats["best_score"] = max(int(stats.get("best_score", 0)), score)
+	stats["total_correct"] = int(stats.get("total_correct", 0)) + correct_count
+	stats["total_questions"] = int(stats.get("total_questions", 0)) + total_count
+	category_stats[category_id] = stats
+
+	if won:
+		wins += 1
+		current_win_streak += 1
+		best_win_streak = max(best_win_streak, current_win_streak)
+	elif not draw:
+		losses += 1
+		current_win_streak = 0
+	if total_count > 0 and correct_count >= total_count:
+		has_perfect_round = true
+
+	## Server values win over the local ladder (the client copy is display only).
+	if summary.has("trophies"):
+		trophies = maxi(int(summary.get("trophies", trophies)), 0)
+	versus_win_streak = maxi(int(summary.get("win_streak", versus_win_streak)), 0)
+	versus_loss_streak = maxi(int(summary.get("loss_streak", versus_loss_streak)), 0)
+
+	_prepend_match_history({
+		"category_id": category_id,
+		"score": score,
+		"correct_count": correct_count,
+		"total_count": total_count,
+		"max_combo": max_combo,
+		"won": won,
+		"mode": mode,
+		"opponent": str(summary.get("opponent_name", "")),
+		"trophy_delta": int(summary.get("trophy_delta", 0)),
+		"played_at": int(Time.get_unix_time_from_system()),
+	})
+	DailyQuestsScript.record_match(category_id, won, correct_count, max_combo, false, true)
+
+	var gained_xp: int = correct_count * 10 + score / 10
+	if mode != "classic":
+		gained_xp = mini(gained_xp, GameManager.MODE_XP_CAP)
+	if won:
+		gained_xp += DUEL_WIN_XP
 	add_xp(gained_xp)
 	save_data()
 	return gained_xp

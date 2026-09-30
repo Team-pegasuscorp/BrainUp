@@ -11,6 +11,11 @@ const DailyChallenge = preload("res://scripts/profile/daily_challenge.gd")
 const UiFonts = preload("res://scripts/config/ui_fonts.gd")
 
 @export var embedded_mode: bool = false
+## The Quiz tab only launches ranked duels: pick a mode, Play searches an opponent and
+## the category is drafted in the match. The standalone scene keeps the old solo list.
+var _duel_only: bool:
+	get:
+		return embedded_mode
 
 @onready var background: ColorRect = $Background
 @onready var title_label: Label = %TitleLabel
@@ -178,7 +183,8 @@ func _refresh_mode_picker() -> void:
 			Color(0.08, 0.06, 0.12, 1) if selected else Color(1, 1, 1, 0.88)
 		)
 		if selected:
-			_mode_hint.text = tr(str(entry[2])) + _record_text()
+			var hint_key := str(entry[2]).replace("UI_MODE_", "UI_DUEL_") if _duel_only else str(entry[2])
+			_mode_hint.text = tr(hint_key) + _record_text()
 			_mode_hint.add_theme_color_override("font_color", Color(accent.r, accent.g, accent.b, 0.95))
 	_sync_play_button_to_mode()
 
@@ -227,7 +233,7 @@ func _sync_play_button_to_mode() -> void:
 
 ## " · Record: 1 234 pts (12 ✓)" for survival / time attack in the selected category.
 func _record_text() -> String:
-	if GameManager.selected_mode == GameManager.Mode.CLASSIC:
+	if _duel_only or GameManager.selected_mode == GameManager.Mode.CLASSIC:
 		return ""
 	if _selected_index < 0 or _selected_index >= categories.size():
 		return ""
@@ -283,6 +289,11 @@ func _load_categories() -> void:
 		start_button.disabled = true
 		return
 
+	category_list.visible = not _duel_only
+	if _duel_only:
+		start_button.disabled = false
+		_refresh_mode_picker()
+		return
 	for index in range(categories.size()):
 		var category: Dictionary = categories[index]
 		var tile := _make_category_tile(index, category)
@@ -684,6 +695,10 @@ func _on_category_selected(index: int) -> void:
 
 
 func _on_start_pressed() -> void:
+	if _duel_only:
+		GameManager.shell_tab_index = ScenePaths.Tab.QUIZ
+		get_tree().change_scene_to_file(ScenePaths.LIVE_MATCH)
+		return
 	if _selected_index < 0 or _selected_index >= categories.size():
 		return
 	var category_id: String = str(categories[_selected_index].get("id", ""))

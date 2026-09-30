@@ -23,6 +23,7 @@ const TAB_SCENES: Dictionary = {
 const APP_SHELL := "res://scenes/app_shell.tscn"
 const CATEGORY_SELECT := "res://scenes/category_select.tscn"
 const QUIZ_GAME := "res://scenes/game/quiz_game.tscn"
+const LIVE_MATCH := "res://scenes/game/live_match.tscn"
 const RESULTS := "res://scenes/results/results_screen.tscn"
 
 

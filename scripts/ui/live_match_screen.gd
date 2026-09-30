@@ -1,0 +1,721 @@
+extends Control
+
+## Ranked duel, full screen: search → category draft → questions → result.
+## The server runs the match (see brainup-backend app/live_match.py); this screen only
+## shows its messages and sends votes / answers. Mode comes from GameManager.selected_mode.
+
+const ScenePaths = preload("res://scripts/config/scene_paths.gd")
+const UiTokens = preload("res://scripts/config/ui_tokens.gd")
+const UiStyle = preload("res://scripts/config/ui_style.gd")
+const UiFonts = preload("res://scripts/config/ui_fonts.gd")
+const PressScaleUtil = preload("res://scripts/ui/press_scale.gd")
+const QuestionLoaderScript = preload("res://scripts/quiz/question_loader.gd")
+
+const PAGE_WIDTH := 680.0
+const ROULETTE_SECONDS := 2.2
+
+enum State { SEARCHING, DRAFT, PLAYING, WAITING, OVER, ERROR }
+
+var _state: State = State.SEARCHING
+var _mode: String = "classic"
+var _accent: Color = UiTokens.ACCENT_QUIZ
+var _category_names: Dictionary = {}
+
+var _found: Dictionary = {}
+var _opponent_name: String = ""
+var _opponent_cosmetics: Dictionary = {}
+var _opponent_trophies: int = 0
+var _category: String = ""
+var _my_score: int = 0
+var _opponent_score: int = 0
+var _my_lives: int = 0
+var _opponent_lives: int = 0
+var _my_clock: float = 0.0
+var _opponent_clock: float = 0.0
+
+var _search_elapsed: float = 0.0
+var _draft_left: float = 0.0
+var _draft_vote: String = ""
+var _draft_tiles: Dictionary = {}
+var _question: Dictionary = {}
+var _question_left: float = 0.0
+var _question_limit: float = 10.0
+var _answered_index: int = -1
+var _revealed: bool = false
+var _over: Dictionary = {}
+var _xp_gained: int = 0
+var _error_key: String = ""
+
+var _margin: MarginContainer
+var _body: VBoxContainer
+var _search_label: Label
+var _timer_fill: Panel
+var _timer_track: Panel
+var _answer_buttons: Array[Button] = []
+var _my_score_label: Label
+var _opponent_score_label: Label
+var _my_status_label: Label
+var _opponent_status_label: Label
+var _feedback_label: Label
+
+
+func _ready() -> void:
+	_mode = str(GameManager.MODE_KEYS.get(GameManager.selected_mode, "classic"))
+	_accent = UiTokens.MODE_ACCENTS[GameManager.selected_mode]
+	for category in QuestionLoaderScript.get_categories(LocaleManager.get_content_locale()):
+		_category_names[str(category.get("id", ""))] = str(category.get("name", ""))
+
+	var bg := ColorRect.new()
+	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	bg.color = Color.WHITE
+	var mat := ShaderMaterial.new()
+	mat.shader = load("res://shaders/tab_page_bg.gdshader") as Shader
+	mat.set_shader_parameter("accent", _accent)
+	mat.set_shader_parameter("deep", UiTokens.BG_CREAM)
+	bg.material = mat
+	add_child(bg)
+
+	_margin = MarginContainer.new()
+	_margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	add_child(_margin)
+	_body = VBoxContainer.new()
+	_body.add_theme_constant_override("separation", 18)
+	_margin.add_child(_body)
+	SafeArea.changed.connect(_apply_safe_area)
+	_apply_safe_area()
+
+	NetworkManager.live_match_found.connect(_on_match_found)
+	NetworkManager.live_draft_result.connect(_on_draft_result)
+	NetworkManager.live_match_start.connect(_on_match_start)
+	NetworkManager.live_question.connect(_on_question)
+	NetworkManager.live_reveal.connect(_on_reveal)
+	NetworkManager.live_opponent_progress.connect(_on_opponent_progress)
+	NetworkManager.live_player_done.connect(_on_player_done)
+	NetworkManager.live_match_over.connect(_on_match_over)
+	NetworkManager.live_error.connect(_on_error)
+	NetworkManager.live_search_range_changed.connect(func(_r: int) -> void: _update_search_label())
+	_start_search()
+
+
+func _apply_safe_area() -> void:
+	_margin.add_theme_constant_override("margin_left", 20)
+	_margin.add_theme_constant_override("margin_right", 20)
+	_margin.add_theme_constant_override("margin_top", 20 + int(SafeArea.top))
+	_margin.add_theme_constant_override("margin_bottom", 20 + int(SafeArea.bottom))
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel") and _state in [State.SEARCHING, State.OVER, State.ERROR]:
+		_leave()
+		get_viewport().set_input_as_handled()
+
+
+func _process(delta: float) -> void:
+	match _state:
+		State.SEARCHING:
+			_search_elapsed += delta
+			_update_search_label()
+		State.DRAFT:
+			if _draft_left > 0.0:
+				_draft_left = maxf(_draft_left - delta, 0.0)
+				_set_timer_ratio(_draft_left / float((_found.get("draft", {}) as Dictionary).get("time_limit", 8.0)))
+		State.PLAYING:
+			if not _revealed and _question_left > 0.0:
+				_question_left = maxf(_question_left - delta, 0.0)
+				_set_timer_ratio(_question_left / maxf(_question_limit, 0.01))
+				if _mode == "time_attack":
+					## One clock for the whole run: it only runs while a question is open.
+					_my_clock = _question_left
+					_refresh_header()
+
+
+# --- Flow -------------------------------------------------------------------
+
+func _start_search() -> void:
+	_state = State.SEARCHING
+	_search_elapsed = 0.0
+	_found = {}
+	_over = {}
+	_category = ""
+	_my_score = 0
+	_opponent_score = 0
+	NetworkManager.start_live_matchmaking("", _mode)
+	_build_search()
+
+
+func _leave() -> void:
+	NetworkManager.stop_live_matchmaking()
+	GameManager.shell_tab_index = ScenePaths.Tab.QUIZ
+	get_tree().change_scene_to_file(ScenePaths.APP_SHELL)
+
+
+func _on_match_found(data: Dictionary) -> void:
+	_found = data
+	_opponent_name = str(data.get("opponent_name", "?"))
+	var cosmetics: Variant = data.get("opponent_cosmetics", {})
+	_opponent_cosmetics = cosmetics if typeof(cosmetics) == TYPE_DICTIONARY else {}
+	_opponent_trophies = int(data.get("opponent_trophies", 0))
+	_my_lives = int(data.get("lives", 0))
+	_opponent_lives = _my_lives
+	_my_clock = float(data.get("clock", 0.0))
+	_opponent_clock = _my_clock
+	_category = str(data.get("category", ""))
+	AudioManager.play("correct")
+	var draft: Variant = data.get("draft")
+	if typeof(draft) == TYPE_DICTIONARY and not (draft.get("choices", []) as Array).is_empty():
+		_state = State.DRAFT
+		_draft_vote = ""
+		_draft_left = float(draft.get("time_limit", 8.0))
+		_build_draft(draft.get("choices", []))
+
+
+func _on_draft_vote(category_id: String) -> void:
+	if _state != State.DRAFT or not _draft_vote.is_empty():
+		return
+	_draft_vote = category_id
+	AudioManager.play("click")
+	NetworkManager.send_draft_vote(category_id)
+	_style_draft_tiles(category_id, "", "")
+	_feedback("UI_DUEL_DRAFT_WAITING")
+
+
+## Roulette over the voted tiles (or all three), landing on the server's pick.
+func _on_draft_result(data: Dictionary) -> void:
+	_category = str(data.get("category", ""))
+	_draft_left = 0.0
+	var mine := str(data.get("your_vote", ""))
+	var theirs := str(data.get("opponent_vote", ""))
+	var pool: Array[String] = []
+	for vote in [mine, theirs]:
+		if not vote.is_empty() and not pool.has(vote):
+			pool.append(vote)
+	if pool.size() < 2:
+		pool.clear()
+		for key in _draft_tiles.keys():
+			pool.append(str(key))
+	var steps := 12 if pool.size() > 1 else 1
+	var tween := create_tween()
+	for step in range(steps):
+		var shown: String = pool[step % pool.size()] if step < steps - 1 else _category
+		tween.tween_callback(func() -> void:
+			_style_draft_tiles(shown, mine, theirs)
+			AudioManager.play("click")
+		)
+		tween.tween_interval(ROULETTE_SECONDS / float(steps) * (0.6 + float(step) / float(steps)))
+	tween.tween_callback(func() -> void:
+		_style_draft_tiles(_category, mine, theirs)
+		AudioManager.play("correct")
+		_feedback_text(tr("UI_DUEL_DRAFT_RESULT").format({"category": _category_name(_category)}))
+	)
+
+
+func _on_match_start(data: Dictionary) -> void:
+	_category = str(data.get("category", _category))
+
+
+func _on_question(data: Dictionary) -> void:
+	_question = data
+	_revealed = false
+	_answered_index = -1
+	_question_limit = float(data.get("time_limit", 10.0))
+	_question_left = _question_limit
+	if _mode == "time_attack":
+		_my_clock = float(data.get("clock", _question_limit))
+		_question_left = _my_clock
+		_question_limit = float(_found.get("clock", 60.0))
+	if _state != State.PLAYING:
+		_state = State.PLAYING
+		_build_playing()
+	_show_question()
+
+
+func _on_answer_pressed(index: int) -> void:
+	if _state != State.PLAYING or _revealed or _answered_index >= 0:
+		return
+	_answered_index = index
+	NetworkManager.send_live_answer(int(_question.get("index", 0)), index)
+	for i in range(_answer_buttons.size()):
+		_answer_buttons[i].disabled = true
+		_style_answer(_answer_buttons[i], "picked" if i == index else "idle")
+
+
+func _on_reveal(data: Dictionary) -> void:
+	if _state != State.PLAYING:
+		return
+	_revealed = true
+	var correct := int(data.get("correct_index", -1))
+	var mine: Dictionary = data.get("your_result", {})
+	var theirs: Variant = data.get("opponent_result")
+	var picked := int(mine.get("selected_index", -1))
+	for i in range(_answer_buttons.size()):
+		_answer_buttons[i].disabled = true
+		if i == correct:
+			_style_answer(_answer_buttons[i], "correct")
+		elif i == picked:
+			_style_answer(_answer_buttons[i], "wrong")
+		else:
+			_style_answer(_answer_buttons[i], "idle")
+	var is_correct := bool(mine.get("is_correct", false))
+	AudioManager.play("correct" if is_correct else "wrong")
+	_my_score = int(mine.get("score", _my_score))
+	if mine.has("lives"):
+		_my_lives = int(mine["lives"])
+	if mine.has("clock"):
+		_my_clock = float(mine["clock"])
+	if typeof(theirs) == TYPE_DICTIONARY:
+		_opponent_score = int(theirs.get("score", _opponent_score))
+		if theirs.has("lives"):
+			_opponent_lives = int(theirs["lives"])
+		_opponent_status_label.text = "✓" if bool(theirs.get("is_correct", false)) else "✗"
+		_opponent_status_label.add_theme_color_override(
+			"font_color", UiTokens.FEEDBACK_CORRECT if bool(theirs.get("is_correct", false)) else UiTokens.FEEDBACK_WRONG
+		)
+	var points := int(mine.get("points", 0))
+	_feedback_text("+%d" % points if points > 0 else (tr("UI_DUEL_TIMEOUT") if picked < 0 else tr("UI_DUEL_WRONG")))
+	_refresh_header()
+
+
+func _on_opponent_progress(data: Dictionary) -> void:
+	_opponent_score = int(data.get("score", _opponent_score))
+	_opponent_clock = float(data.get("clock", _opponent_clock))
+	if _state == State.PLAYING or _state == State.WAITING:
+		_refresh_header()
+
+
+func _on_player_done(_data: Dictionary) -> void:
+	_state = State.WAITING
+	_set_timer_ratio(0.0)
+	for button in _answer_buttons:
+		button.disabled = true
+	_feedback("UI_DUEL_WAITING_OPPONENT")
+
+
+func _on_match_over(data: Dictionary) -> void:
+	data["opponent_name"] = _opponent_name
+	_over = data
+	_my_score = int(data.get("your_score", _my_score))
+	_opponent_score = int(data.get("opponent_score", _opponent_score))
+	_xp_gained = SaveManager.record_duel_result(data)
+	var streak: Dictionary = DayStreak.record_play()
+	if int(streak.get("xp", 0)) > 0:
+		SaveManager.add_xp(int(streak["xp"]))
+		_xp_gained += int(streak["xp"])
+		SaveManager.save_data()
+	_state = State.OVER
+	AudioManager.play("correct" if bool(data.get("won", false)) else "wrong")
+	_build_over()
+
+
+func _on_error(reason: String) -> void:
+	if _state == State.OVER:
+		return
+	_state = State.ERROR
+	_error_key = "UI_DUEL_ERROR_ABORTED" if reason == "aborted" else "UI_DUEL_ERROR_OFFLINE"
+	_build_error()
+
+
+# --- Screens ----------------------------------------------------------------
+
+func _clear() -> void:
+	for child in _body.get_children():
+		child.queue_free()
+	_answer_buttons.clear()
+	_draft_tiles.clear()
+	_timer_fill = null
+	_feedback_label = null
+
+
+func _build_search() -> void:
+	_clear()
+	_body.alignment = BoxContainer.ALIGNMENT_CENTER
+	_body.add_child(_title(tr("UI_DUEL_SEARCHING"), 30))
+	_body.add_child(_subtitle(_mode_name()))
+	var card_box := CenterContainer.new()
+	_body.add_child(card_box)
+	card_box.add_child(CosmeticsView.player_card(
+		SaveManager.player_name, SaveManager.get_cosmetics(), "🏆 %d" % SaveManager.trophies, 320.0
+	))
+	_search_label = _subtitle("")
+	_body.add_child(_search_label)
+	_update_search_label()
+	var cancel := _button(tr("UI_DUEL_CANCEL"), Color(1, 1, 1, 0.14), Color.WHITE)
+	cancel.pressed.connect(_leave)
+	_body.add_child(cancel)
+
+
+func _update_search_label() -> void:
+	if _search_label == null or not is_instance_valid(_search_label):
+		return
+	var dots := ".".repeat(1 + int(_search_elapsed * 2.0) % 3)
+	_search_label.text = "%s  ±%d 🏆  ·  %d s%s" % [
+		tr("UI_DUEL_SEARCH_RANGE"), NetworkManager.live_trophy_range, int(_search_elapsed), dots
+	]
+
+
+func _build_draft(choices: Array) -> void:
+	_clear()
+	_body.alignment = BoxContainer.ALIGNMENT_BEGIN
+	_body.add_child(_face_off("🏆 %d" % SaveManager.trophies, "🏆 %d" % _opponent_trophies))
+	_body.add_child(_title(tr("UI_DUEL_DRAFT_TITLE"), 26))
+	_body.add_child(_subtitle(tr("UI_DUEL_DRAFT_HINT")))
+	_body.add_child(_timer_bar())
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 12)
+	_body.add_child(row)
+	var width := (PAGE_WIDTH - 24.0) / 3.0
+	for raw in choices:
+		var category_id := str(raw)
+		var tile := Button.new()
+		tile.custom_minimum_size = Vector2(width, 230)
+		tile.focus_mode = Control.FOCUS_NONE
+		tile.pressed.connect(_on_draft_vote.bind(category_id))
+		var column := VBoxContainer.new()
+		column.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT, Control.PRESET_MODE_MINSIZE, 10)
+		column.alignment = BoxContainer.ALIGNMENT_CENTER
+		column.add_theme_constant_override("separation", 8)
+		column.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		tile.add_child(column)
+		var icon := TextureRect.new()
+		icon.custom_minimum_size = Vector2(110, 110)
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		icon.texture = GameAssets.category_texture(category_id)
+		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		column.add_child(icon)
+		var name_label := Label.new()
+		name_label.text = _category_name(category_id)
+		name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		name_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		name_label.add_theme_font_size_override("font_size", UiScale.font(17))
+		name_label.add_theme_color_override("font_color", Color.WHITE)
+		column.add_child(name_label)
+		var votes := Label.new()
+		votes.name = "Votes"
+		votes.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		votes.add_theme_font_size_override("font_size", UiScale.font(13))
+		votes.add_theme_color_override("font_color", Color(1, 1, 1, 0.9))
+		column.add_child(votes)
+		row.add_child(tile)
+		_draft_tiles[category_id] = tile
+	_feedback_label = _subtitle("")
+	_body.add_child(_feedback_label)
+	_style_draft_tiles("", "", "")
+
+
+func _style_draft_tiles(highlight: String, mine: String, theirs: String) -> void:
+	for key in _draft_tiles:
+		var category_id := str(key)
+		var tile: Button = _draft_tiles[key]
+		var accent := UiTokens.accent_for_category(category_id)
+		var lit := category_id == highlight
+		var style := UiStyle.filled(accent.darkened(0.15) if lit else Color(accent.r, accent.g, accent.b, 0.22), 20)
+		style.set_border_width_all(4 if lit else 2)
+		style.border_color = Color.WHITE if lit else Color(accent.r, accent.g, accent.b, 0.6)
+		style.shadow_color = Color(accent.r, accent.g, accent.b, 0.5 if lit else 0.1)
+		style.shadow_size = 16 if lit else 4
+		for state in ["normal", "hover", "pressed", "focus", "disabled"]:
+			tile.add_theme_stylebox_override(state, style)
+		tile.disabled = not _draft_vote.is_empty() or _draft_left <= 0.0
+		var votes := tile.find_child("Votes", true, false) as Label
+		if votes != null:
+			var tags: Array[String] = []
+			if category_id == mine:
+				tags.append(tr("UI_DUEL_VOTE_YOU"))
+			if category_id == theirs:
+				tags.append(tr("UI_DUEL_VOTE_OPPONENT"))
+			votes.text = " · ".join(tags)
+
+
+func _build_playing() -> void:
+	_clear()
+	_body.alignment = BoxContainer.ALIGNMENT_BEGIN
+	_body.add_child(_duel_header())
+	var category := _subtitle("%s · %s" % [_category_name(_category), _mode_name()])
+	_body.add_child(category)
+	_body.add_child(_timer_bar())
+
+	var card := PanelContainer.new()
+	card.add_theme_stylebox_override("panel", UiStyle.profile_surface(_accent, true, 22))
+	card.custom_minimum_size.y = 200
+	_body.add_child(card)
+	var question_label := Label.new()
+	question_label.name = "QuestionText"
+	question_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	question_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	question_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	question_label.add_theme_font_size_override("font_size", UiScale.font(24))
+	question_label.add_theme_color_override("font_color", Color.WHITE)
+	card.add_child(question_label)
+
+	for i in range(4):
+		var button := Button.new()
+		button.custom_minimum_size.y = 84
+		button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		button.focus_mode = Control.FOCUS_NONE
+		button.add_theme_font_size_override("font_size", UiScale.font(19))
+		button.pressed.connect(_on_answer_pressed.bind(i))
+		_body.add_child(button)
+		_answer_buttons.append(button)
+	_feedback_label = _title("", 24)
+	_body.add_child(_feedback_label)
+	_refresh_header()
+
+
+func _show_question() -> void:
+	var question_label := _body.find_child("QuestionText", true, false) as Label
+	if question_label != null:
+		question_label.text = str(_question.get("text", ""))
+	var choices: Array = _question.get("choices", [])
+	for i in range(_answer_buttons.size()):
+		var button := _answer_buttons[i]
+		button.text = str(choices[i]) if i < choices.size() else ""
+		button.disabled = i >= choices.size()
+		_style_answer(button, "idle")
+	if _opponent_status_label != null and _mode != "time_attack":
+		_opponent_status_label.text = ""
+	if _feedback_label != null:
+		_feedback_label.text = ""
+	_set_timer_ratio(_question_left / maxf(_question_limit, 0.01))
+
+
+## Compact face-off for the match: avatar, name, score and lives / clock per side.
+func _duel_header() -> Control:
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 10)
+	var mine := _header_side(SaveManager.player_name, SaveManager.get_cosmetics(), false)
+	var theirs := _header_side(_opponent_name, _opponent_cosmetics, true)
+	_my_score_label = mine.get_meta("score")
+	_my_status_label = mine.get_meta("status")
+	_opponent_score_label = theirs.get_meta("score")
+	_opponent_status_label = theirs.get_meta("status")
+	row.add_child(mine)
+	var vs := Label.new()
+	vs.text = "VS"
+	vs.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	vs.size_flags_vertical = Control.SIZE_FILL
+	vs.add_theme_font_size_override("font_size", UiScale.font(20))
+	vs.add_theme_color_override("font_color", UiTokens.PODIUM_GOLD)
+	row.add_child(vs)
+	row.add_child(theirs)
+	return row
+
+
+func _header_side(display_name: String, cosmetics: Dictionary, mirrored: bool) -> Control:
+	var card := PanelContainer.new()
+	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var clear := StyleBoxFlat.new()
+	clear.bg_color = Color(0, 0, 0, 0)
+	card.add_theme_stylebox_override("panel", clear)
+	var back := CosmeticsView.banner(str(cosmetics.get("banner", "")), Vector2(0, 104), 16)
+	back.modulate = Color(0.75, 0.75, 0.8)
+	card.add_child(back)
+	var pad := MarginContainer.new()
+	for side in ["left", "right", "top", "bottom"]:
+		pad.add_theme_constant_override("margin_" + side, 10)
+	card.add_child(pad)
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 10)
+	row.alignment = BoxContainer.ALIGNMENT_END if mirrored else BoxContainer.ALIGNMENT_BEGIN
+	pad.add_child(row)
+	var avatar := CosmeticsView.avatar(cosmetics, 76)
+	var info := VBoxContainer.new()
+	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	info.alignment = BoxContainer.ALIGNMENT_CENTER
+	var align := HORIZONTAL_ALIGNMENT_RIGHT if mirrored else HORIZONTAL_ALIGNMENT_LEFT
+	var name_label := Label.new()
+	name_label.text = display_name
+	name_label.horizontal_alignment = align
+	name_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	name_label.add_theme_font_size_override("font_size", UiScale.font(15))
+	name_label.add_theme_color_override("font_color", Color.WHITE)
+	info.add_child(name_label)
+	var score := Label.new()
+	score.horizontal_alignment = align
+	score.add_theme_font_size_override("font_size", UiScale.font(26))
+	score.add_theme_color_override("font_color", Color.WHITE)
+	score.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.5))
+	score.add_theme_constant_override("outline_size", 4)
+	info.add_child(score)
+	var status := Label.new()
+	status.horizontal_alignment = align
+	status.add_theme_font_size_override("font_size", UiScale.font(15))
+	status.add_theme_color_override("font_color", Color.WHITE)
+	## Hearts need the emoji font; the time attack clock stays in the text font (digits).
+	var emoji_font := UiFonts.emoji_font()
+	if emoji_font != null and _mode == "survival":
+		status.add_theme_font_override("font", emoji_font)
+	info.add_child(status)
+	if mirrored:
+		row.add_child(info)
+		row.add_child(avatar)
+	else:
+		row.add_child(avatar)
+		row.add_child(info)
+	card.set_meta("score", score)
+	card.set_meta("status", status)
+	return card
+
+
+func _refresh_header() -> void:
+	if _my_score_label == null or not is_instance_valid(_my_score_label):
+		return
+	_my_score_label.text = str(_my_score)
+	_opponent_score_label.text = str(_opponent_score)
+	match _mode:
+		"survival":
+			_my_status_label.text = _hearts(_my_lives)
+			_opponent_status_label.text = _hearts(_opponent_lives)
+		"time_attack":
+			_my_status_label.text = "%d s" % ceili(_my_clock)
+			_opponent_status_label.text = "%d s" % ceili(_opponent_clock)
+
+
+func _hearts(lives: int) -> String:
+	var total := int(_found.get("lives", 3))
+	return "❤️".repeat(maxi(lives, 0)) + "🖤".repeat(maxi(total - maxi(lives, 0), 0))
+
+
+func _build_over() -> void:
+	_clear()
+	_body.alignment = BoxContainer.ALIGNMENT_CENTER
+	var won := bool(_over.get("won", false))
+	var draw := bool(_over.get("draw", false))
+	var key := "UI_DUEL_DRAW" if draw else ("UI_DUEL_WIN" if won else "UI_DUEL_LOSS")
+	var title := _title(tr(key), 42)
+	title.add_theme_color_override("font_color", UiTokens.PODIUM_GOLD if won else Color.WHITE)
+	_body.add_child(title)
+	_body.add_child(_subtitle("%s · %s" % [_category_name(_category), _mode_name()]))
+	_body.add_child(_face_off(
+		str(_my_score), str(_opponent_score), UiTokens.PODIUM_GOLD if won else Color(0, 0, 0, 0)
+	))
+
+	var delta := int(_over.get("trophy_delta", 0))
+	var cups := _title("%s%d 🏆   ·   %s %d" % [
+		"+" if delta > 0 else "", delta, tr("UI_DUEL_TOTAL"), int(_over.get("trophies", SaveManager.trophies))
+	], 26)
+	cups.add_theme_color_override("font_color", UiTokens.FEEDBACK_CORRECT if delta > 0 else (UiTokens.FEEDBACK_WRONG if delta < 0 else Color.WHITE))
+	_body.add_child(cups)
+	var bonus := int(_over.get("trophy_streak_bonus", 0)) + int(_over.get("trophy_loss_consolation", 0))
+	if bonus > 0:
+		_body.add_child(_subtitle(tr("UI_DUEL_STREAK_BONUS").format({"bonus": bonus})))
+	_body.add_child(_subtitle("+%d XP" % _xp_gained))
+
+	var again := _button(tr("UI_DUEL_PLAY_AGAIN"), _accent, UiTokens.INK)
+	again.pressed.connect(_start_search)
+	_body.add_child(again)
+	var back := _button(tr("UI_BACK"), Color(1, 1, 1, 0.14), Color.WHITE)
+	back.pressed.connect(_leave)
+	_body.add_child(back)
+
+
+func _build_error() -> void:
+	_clear()
+	_body.alignment = BoxContainer.ALIGNMENT_CENTER
+	_body.add_child(_title(tr(_error_key), 24))
+	var again := _button(tr("UI_DUEL_PLAY_AGAIN"), _accent, UiTokens.INK)
+	again.pressed.connect(_start_search)
+	_body.add_child(again)
+	var back := _button(tr("UI_BACK"), Color(1, 1, 1, 0.14), Color.WHITE)
+	back.pressed.connect(_leave)
+	_body.add_child(back)
+
+
+# --- Building blocks --------------------------------------------------------
+
+func _face_off(my_value: String, opponent_value: String, highlight: Color = Color(0, 0, 0, 0)) -> Control:
+	return CosmeticsView.face_off(
+		SaveManager.player_name, SaveManager.get_cosmetics(), my_value,
+		_opponent_name, _opponent_cosmetics, opponent_value,
+		PAGE_WIDTH, highlight
+	)
+
+
+func _timer_bar() -> Control:
+	_timer_track = Panel.new()
+	_timer_track.custom_minimum_size.y = 14
+	_timer_track.add_theme_stylebox_override("panel", UiStyle.filled(Color(1, 1, 1, 0.14), 7))
+	_timer_fill = Panel.new()
+	_timer_fill.add_theme_stylebox_override("panel", UiStyle.filled(_accent, 7))
+	_timer_fill.set_anchors_preset(Control.PRESET_LEFT_WIDE)
+	_timer_track.add_child(_timer_fill)
+	_set_timer_ratio(1.0)
+	return _timer_track
+
+
+func _set_timer_ratio(ratio: float) -> void:
+	if _timer_fill == null or not is_instance_valid(_timer_fill):
+		return
+	_timer_fill.anchor_right = clampf(ratio, 0.0, 1.0)
+	_timer_fill.offset_right = 0
+
+
+func _style_answer(button: Button, look: String) -> void:
+	var fill := Color(1, 1, 1, 0.94)
+	var ink := UiTokens.INK
+	match look:
+		"picked":
+			fill = _accent
+		"correct":
+			fill = UiTokens.FEEDBACK_CORRECT
+			ink = Color.WHITE
+		"wrong":
+			fill = UiTokens.FEEDBACK_WRONG
+			ink = Color.WHITE
+	var style := UiStyle.filled(fill, 20)
+	for state in ["normal", "hover", "pressed", "focus", "disabled"]:
+		button.add_theme_stylebox_override(state, style)
+	for key in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color", "font_disabled_color"]:
+		button.add_theme_color_override(key, ink)
+
+
+func _feedback(key: String) -> void:
+	_feedback_text(tr(key))
+
+
+func _feedback_text(text: String) -> void:
+	if _feedback_label != null and is_instance_valid(_feedback_label):
+		_feedback_label.text = text
+
+
+func _title(text: String, size: int) -> Label:
+	var label := Label.new()
+	label.text = text
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	label.add_theme_font_size_override("font_size", UiScale.font(size))
+	label.add_theme_color_override("font_color", Color.WHITE)
+	return label
+
+
+func _subtitle(text: String) -> Label:
+	var label := _title(text, 17)
+	label.add_theme_color_override("font_color", Color(1, 1, 1, 0.78))
+	return label
+
+
+func _button(text: String, fill: Color, ink: Color) -> Button:
+	var button := Button.new()
+	button.text = text
+	button.custom_minimum_size.y = 68
+	button.focus_mode = Control.FOCUS_NONE
+	button.add_theme_font_size_override("font_size", UiScale.font(20))
+	for state in ["normal", "hover", "pressed", "focus"]:
+		button.add_theme_stylebox_override(state, UiStyle.filled(fill, 22))
+	for key in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color"]:
+		button.add_theme_color_override(key, ink)
+	PressScaleUtil.wire(button, self)
+	return button
+
+
+func _mode_name() -> String:
+	match _mode:
+		"survival":
+			return tr("UI_MODE_SURVIVAL")
+		"time_attack":
+			return tr("UI_MODE_TIME_ATTACK")
+	return tr("UI_MODE_CLASSIC")
+
+
+func _category_name(category_id: String) -> String:
+	return str(_category_names.get(category_id, category_id))

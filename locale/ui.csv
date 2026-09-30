@@ -384,3 +384,26 @@ UI_RARITY_COMMON,Common,Commun
 UI_RARITY_RARE,Rare,Rare
 UI_RARITY_EPIC,Epic,Épique
 UI_RARITY_LEGENDARY,Legendary,Légendaire
+UI_DUEL_CLASSIC_HINT,"Ranked duel: 7 questions, 10 s each, the most points wins.","Duel classé : 7 questions de 10 s, le plus de points gagne."
+UI_DUEL_SURVIVAL_HINT,"Ranked duel: same questions, 3 lives each. Last one standing wins.","Duel classé : mêmes questions, 3 vies chacun. Le dernier debout gagne."
+UI_DUEL_TIME_ATTACK_HINT,"Ranked duel: 60 s each, as many points as you can. A mistake costs 5 s.","Duel classé : 60 s chacun, un maximum de points. Une erreur coûte 5 s."
+UI_DUEL_SEARCHING,Looking for an opponent,Recherche d'un adversaire
+UI_DUEL_SEARCH_RANGE,Range,Écart
+UI_DUEL_CANCEL,Cancel,Annuler
+UI_DUEL_DRAFT_TITLE,Vote for the category,Vote pour la catégorie
+UI_DUEL_DRAFT_HINT,"Same pick: it's played. Different picks: the wheel decides.","Même choix : on la joue. Choix différents : la roue décide."
+UI_DUEL_DRAFT_WAITING,Waiting for your opponent…,En attente de l'adversaire…
+UI_DUEL_DRAFT_RESULT,Category: {category},Catégorie : {category}
+UI_DUEL_VOTE_YOU,You,Toi
+UI_DUEL_VOTE_OPPONENT,Opponent,Adversaire
+UI_DUEL_TIMEOUT,Too late!,Trop tard !
+UI_DUEL_WRONG,Wrong,Raté
+UI_DUEL_WAITING_OPPONENT,Time's up! Waiting for your opponent…,Temps écoulé ! En attente de l'adversaire…
+UI_DUEL_WIN,Victory!,Victoire !
+UI_DUEL_LOSS,Defeat,Défaite
+UI_DUEL_DRAW,Draw,Égalité
+UI_DUEL_TOTAL,total,total
+UI_DUEL_STREAK_BONUS,Streak bonus included: +{bonus} 🏆,Bonus de série compris : +{bonus} 🏆
+UI_DUEL_PLAY_AGAIN,Play again,Rejouer
+UI_DUEL_ERROR_OFFLINE,Can't reach the server. Check your connection.,Impossible de joindre le serveur. Vérifie ta connexion.
+UI_DUEL_ERROR_ABORTED,The match was cancelled.,Le match a été annulé.
