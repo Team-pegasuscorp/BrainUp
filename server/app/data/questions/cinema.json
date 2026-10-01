@@ -1,0 +1,4805 @@
+{
+  "category": "cinema",
+  "questions": [
+    {
+      "id": "cinema_001",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who directed the movie 'Inception'?",
+          "choices": [
+            "Steven Spielberg",
+            "Quentin Tarantino",
+            "Christopher Nolan",
+            "Ridley Scott"
+          ],
+          "explanation": "Christopher Nolan wrote and directed Inception (2010), a heist film set inside dreams."
+        },
+        "fr": {
+          "text": "Qui a réalisé le film « Inception » ?",
+          "choices": [
+            "Steven Spielberg",
+            "Quentin Tarantino",
+            "Christopher Nolan",
+            "Ridley Scott"
+          ],
+          "explanation": "Christopher Nolan a écrit et réalisé Inception (2010), un film de casse qui se déroule dans les rêves."
+        }
+      }
+    },
+    {
+      "id": "cinema_002",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which film won the Academy Award for Best Picture in 1998?",
+          "choices": [
+            "Saving Private Ryan",
+            "Titanic",
+            "Good Will Hunting",
+            "L.A. Confidential"
+          ],
+          "explanation": "Titanic won 11 Oscars at the 1998 ceremony, including Best Picture — a record shared with Ben-Hur and The Return of the King."
+        },
+        "fr": {
+          "text": "Quel film a remporté l'Oscar du meilleur film en 1998 ?",
+          "choices": [
+            "Il faut sauver le soldat Ryan",
+            "Titanic",
+            "Will Hunting",
+            "L.A. Confidential"
+          ],
+          "explanation": "Titanic a remporté 11 Oscars en 1998, dont celui du meilleur film : un record partagé avec Ben-Hur et Le Retour du roi."
+        }
+      }
+    },
+    {
+      "id": "cinema_003",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the highest-grossing film of all time (unadjusted)?",
+          "choices": [
+            "Avatar",
+            "Avengers: Endgame",
+            "Titanic",
+            "Star Wars: The Force Awakens"
+          ],
+          "explanation": "Avatar (2009) has grossed about 2.9 billion dollars worldwide, ahead of Avengers: Endgame."
+        },
+        "fr": {
+          "text": "Quel est le film le plus rentable de l'histoire (sans ajustement inflation) ?",
+          "choices": [
+            "Avatar",
+            "Avengers: Endgame",
+            "Titanic",
+            "Star Wars : Le Réveil de la Force"
+          ],
+          "explanation": "Avatar (2009) a rapporté environ 2,9 milliards de dollars dans le monde, devant Avengers: Endgame."
+        }
+      }
+    },
+    {
+      "id": "cinema_004",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which actor played Jack in 'Titanic'?",
+          "choices": [
+            "Brad Pitt",
+            "Matt Damon",
+            "Johnny Depp",
+            "Leonardo DiCaprio"
+          ],
+          "explanation": "Leonardo DiCaprio played Jack Dawson opposite Kate Winslet in James Cameron's Titanic (1997)."
+        },
+        "fr": {
+          "text": "Quel acteur a joué Jack dans « Titanic » ?",
+          "choices": [
+            "Brad Pitt",
+            "Matt Damon",
+            "Johnny Depp",
+            "Leonardo DiCaprio"
+          ],
+          "explanation": "Leonardo DiCaprio jouait Jack Dawson face à Kate Winslet dans Titanic (1997) de James Cameron."
+        }
+      }
+    },
+    {
+      "id": "cinema_005",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which studio created the Minions?",
+          "choices": [
+            "Pixar",
+            "DreamWorks",
+            "Illumination",
+            "Blue Sky"
+          ],
+          "explanation": "The Minions first appeared in Despicable Me (2010), produced by Illumination."
+        },
+        "fr": {
+          "text": "Quel studio a créé les Minions ?",
+          "choices": [
+            "Pixar",
+            "DreamWorks",
+            "Illumination",
+            "Blue Sky"
+          ],
+          "explanation": "Les Minions sont apparus dans Moi, moche et méchant (2010), produit par Illumination."
+        }
+      }
+    },
+    {
+      "id": "cinema_006",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which film features the quote 'May the Force be with you'?",
+          "choices": [
+            "Star Trek",
+            "Star Wars",
+            "Guardians of the Galaxy",
+            "The Matrix"
+          ],
+          "explanation": "\"May the Force be with you\" has been said in every Star Wars film since 1977."
+        },
+        "fr": {
+          "text": "Dans quel film entend-on « Que la Force soit avec toi » ?",
+          "choices": [
+            "Star Trek",
+            "Star Wars",
+            "Les Gardiens de la Galaxie",
+            "Matrix"
+          ],
+          "explanation": "« Que la Force soit avec toi » est prononcée dans chaque film Star Wars depuis 1977."
+        }
+      }
+    },
+    {
+      "id": "cinema_007",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of the kingdom in 'Black Panther'?",
+          "choices": [
+            "Wakanda",
+            "Genosha",
+            "Latveria",
+            "Zamunda"
+          ],
+          "explanation": "Wakanda is a hidden, technologically advanced African nation powered by vibranium."
+        },
+        "fr": {
+          "text": "Quel est le nom du royaume dans « Black Panther » ?",
+          "choices": [
+            "Wakanda",
+            "Genosha",
+            "Latveria",
+            "Zamunda"
+          ],
+          "explanation": "Le Wakanda est une nation africaine cachée et ultra-avancée grâce au vibranium."
+        }
+      }
+    },
+    {
+      "id": "cinema_008",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who played the female lead in the 1933 film \"King Kong\"?",
+          "choices": [
+            "Jean Harlow",
+            "Fay Wray",
+            "Vivien Leigh",
+            "Mae West"
+          ],
+          "explanation": "Fay Wray played Ann Darrow, the woman King Kong carries to the top of the Empire State Building."
+        },
+        "fr": {
+          "text": "Qui a joué le premier rôle féminin dans le film « King Kong » de 1933 ?",
+          "choices": [
+            "Jean Harlow",
+            "Fay Wray",
+            "Vivien Leigh",
+            "Mae West"
+          ],
+          "explanation": "Fay Wray jouait Ann Darrow, que King Kong emporte au sommet de l'Empire State Building."
+        }
+      }
+    },
+    {
+      "id": "cinema_009",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In the Lord of the Rings: The Two Towers, where are the party of orcs taking the hobbits?",
+          "choices": [
+            "Mordor",
+            "Rivendell",
+            "Isengard",
+            "Moria"
+          ],
+          "explanation": "Saruman's Uruk-hai carry Merry and Pippin toward Isengard before the Ents step in."
+        },
+        "fr": {
+          "text": "Dans Le Seigneur des anneaux : Les Deux Tours, où les orques emmènent-ils les hobbits ?",
+          "choices": [
+            "Mordor",
+            "Fondcombe",
+            "Isengard",
+            "Moria"
+          ],
+          "explanation": "Les Uruk-hai de Saroumane emmènent Merry et Pippin vers l'Isengard, avant l'intervention des Ents."
+        }
+      }
+    },
+    {
+      "id": "cinema_010",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who plays the Nemesis in the Resident Evil movies?",
+          "choices": [
+            "Jimmy Matts",
+            "Matthew Taylor",
+            "Jason Dip",
+            "Eric Mabius"
+          ],
+          "explanation": "Matthew G. Taylor wore the Nemesis suit in Resident Evil: Apocalypse (2004)."
+        },
+        "fr": {
+          "text": "Qui joue Nemesis dans les films Resident Evil ?",
+          "choices": [
+            "Jimmy Matts",
+            "Matthew Taylor",
+            "Jason Dip",
+            "Eric Mabius"
+          ],
+          "explanation": "Matthew G. Taylor portait le costume de Nemesis dans Resident Evil: Apocalypse (2004)."
+        }
+      }
+    },
+    {
+      "id": "cinema_011",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What type of cheese, loved by Wallace and Gromit, had it's sale prices rise after their successful short films?",
+          "choices": [
+            "Cheddar",
+            "Wensleydale",
+            "Edam",
+            "Moon Cheese"
+          ],
+          "explanation": "Wallace's love of Wensleydale helped save the Yorkshire creamery that makes it."
+        },
+        "fr": {
+          "text": "Quel type de fromage, aimé par Wallace et Gromit, a vu ses prix de vente augmenter après leurs courts métrages réussis ?",
+          "choices": [
+            "Cheddar",
+            "Wensleydale",
+            "Edam",
+            "Moon Cheese"
+          ],
+          "explanation": "L'amour de Wallace pour le Wensleydale a aidé à sauver la fromagerie du Yorkshire qui le fabrique."
+        }
+      }
+    },
+    {
+      "id": "cinema_012",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which actor plays the character \"Tommy Jarvis\" in \"Friday the 13th: The Final Chapter\" (1984)?",
+          "choices": [
+            "Macaulay Culkin",
+            "Mark Hamill",
+            "Corey Feldman",
+            "Mel Gibson"
+          ],
+          "explanation": "A young Corey Feldman played Tommy Jarvis, the boy who finally stops Jason in this film."
+        },
+        "fr": {
+          "text": "Quel acteur joue Tommy Jarvis dans « Vendredi 13 : Chapitre final » (1984) ?",
+          "choices": [
+            "Macaulay Culkin",
+            "Mark Hamill",
+            "Corey Feldman",
+            "Mel Gibson"
+          ],
+          "explanation": "Le jeune Corey Feldman jouait Tommy Jarvis, le garçon qui vient à bout de Jason dans ce film."
+        }
+      }
+    },
+    {
+      "id": "cinema_013",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which of these actors does NOT appear in the 1998 movie \"Saving Private Ryan\"?",
+          "choices": [
+            "Tom Hanks",
+            "Vin Diesel",
+            "Matt Damon",
+            "Ralph Fiennes"
+          ],
+          "explanation": "Ralph Fiennes is not in it; Spielberg's film stars Tom Hanks, Matt Damon and a young Vin Diesel."
+        },
+        "fr": {
+          "text": "Lequel de ces acteurs n'apparaît PAS dans le film « Il faut sauver le soldat Ryan » (1998) ?",
+          "choices": [
+            "Tom Hanks",
+            "Vin Diesel",
+            "Matt Damon",
+            "Ralph Fiennes"
+          ],
+          "explanation": "Ralph Fiennes n'y joue pas : le film de Spielberg réunit Tom Hanks, Matt Damon et un jeune Vin Diesel."
+        }
+      }
+    },
+    {
+      "id": "cinema_014",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What was the name of the actor who played Leatherface in the 1974 horror film, The Texas Chainsaw Massacre?",
+          "choices": [
+            "Gunnar Hansen",
+            "Joe Bill Hogan",
+            "Edwin Neal",
+            "John Dugan"
+          ],
+          "explanation": "Gunnar Hansen, an Icelandic-born actor, created the masked killer Leatherface in 1974."
+        },
+        "fr": {
+          "text": "Quel acteur jouait Leatherface dans le film d'horreur « Massacre à la tronçonneuse » (1974) ?",
+          "choices": [
+            "Gunnar Hansen",
+            "Joe Bill Hogan",
+            "Edwin Neal",
+            "John Dugan"
+          ],
+          "explanation": "Gunnar Hansen, acteur né en Islande, a créé le tueur masqué Leatherface en 1974."
+        }
+      }
+    },
+    {
+      "id": "cinema_015",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "This movie contains the quote, \"I feel the need ... the need for speed!\"",
+          "choices": [
+            "Top Gun",
+            "The Color of Money",
+            "Days of Thunder",
+            "Cocktail"
+          ],
+          "explanation": "Tom Cruise and Anthony Edwards shout the line as pilots Maverick and Goose in Top Gun (1986)."
+        },
+        "fr": {
+          "text": "Ce film contient la réplique : « I feel the need... the need for speed ! »",
+          "choices": [
+            "Top Gun",
+            "La Couleur de l'argent",
+            "Jours de tonnerre",
+            "Cocktail"
+          ],
+          "explanation": "Tom Cruise et Anthony Edwards lancent la réplique en pilotes, Maverick et Goose, dans Top Gun (1986)."
+        }
+      }
+    },
+    {
+      "id": "cinema_016",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What three movies, in order from release date, make up the \"Dollars Trilogy\"?",
+          "choices": [
+            "\"A Fistful of Dollars\", \"For a Few Dollars More\", \"The Good, the Bad, and the Ugly\"",
+            "\"For a Few Dollars More\", \"The Good, the Bad, and the Ugly\", \"A Fistful of Dollars\"",
+            "\"The Good, the Bad, and the Ugly\", \"For A Few Dollars More\", \"A Fistful of Dollars\"",
+            "\"For a Few Dollars More\", \"A Fistful of Dollars\", \"The Good, the Bad, and the Ugly\""
+          ],
+          "explanation": "Sergio Leone's trilogy with Clint Eastwood came out in 1964, 1965 and 1966."
+        },
+        "fr": {
+          "text": "Quels trois films, dans l'ordre de sortie, composent la « trilogie des Dollars » ?",
+          "choices": [
+            "\"Pour une poignée de dollars\", \"Et pour quelques dollars de plus\", \"Le Bon, la Brute et le Truand\"",
+            "\"Et pour quelques dollars de plus\", \"Le Bon, la Brute et le Truand\", \"Pour une poignée de dollars\"",
+            "\"Le Bon, la Brute et le Truand\", \"Et pour quelques dollars de plus\", \"Pour une poignée de dollars\"",
+            "\"Et pour quelques dollars de plus\", \"Pour une poignée de dollars\", \"Le Bon, la Brute et le Truand\""
+          ],
+          "explanation": "La trilogie de Sergio Leone avec Clint Eastwood est sortie en 1964, 1965 et 1966."
+        }
+      }
+    },
+    {
+      "id": "cinema_017",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In what year was the movie \"Police Academy\" released?",
+          "choices": [
+            "1985",
+            "1984",
+            "1983",
+            "1986"
+          ],
+          "explanation": "Police Academy came out in 1984 and was followed by six sequels."
+        },
+        "fr": {
+          "text": "En quelle année est sorti le film « Police Academy » ?",
+          "choices": [
+            "1985",
+            "1984",
+            "1983",
+            "1986"
+          ],
+          "explanation": "Police Academy est sorti en 1984 et a eu droit à six suites."
+        }
+      }
+    },
+    {
+      "id": "cinema_018",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In Mulan (1998), who is the leader of the Huns?",
+          "choices": [
+            "Shan Yu",
+            "Chien-Po",
+            "Li Shang",
+            "Fa Zhou"
+          ],
+          "explanation": "Shan Yu leads the Hun invasion of China; Li Shang is Mulan's captain."
+        },
+        "fr": {
+          "text": "Dans Mulan (1998), qui est le chef des Huns ?",
+          "choices": [
+            "Shan Yu",
+            "Chien-Po",
+            "Li Shang",
+            "Fa Zhou"
+          ],
+          "explanation": "Shan Yu mène l'invasion hunnique de la Chine ; Li Shang est le capitaine de Mulan."
+        }
+      }
+    },
+    {
+      "id": "cinema_019",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who in Pulp Fiction says \"No, they got the metric system there, they wouldn't know what the f*** a Quarter Pounder is.\"",
+          "choices": [
+            "Jimmie Dimmick",
+            "Butch Coolidge",
+            "Vincent Vega",
+            "Jules Winnfield"
+          ],
+          "explanation": "John Travolta's Vincent Vega tells Jules about the \"Royale with Cheese\" he found in Paris."
+        },
+        "fr": {
+          "text": "Qui, dans Pulp Fiction, dit : « Non, ils ont le système métrique là-bas, ils ne sauraient pas ce que c'est qu'un Quarter Pounder » ?",
+          "choices": [
+            "Jimmie Dimmick",
+            "Butch Coolidge",
+            "Vincent Vega",
+            "Jules Winnfield"
+          ],
+          "explanation": "Le Vincent Vega de John Travolta parle à Jules du « Royale with Cheese » découvert à Paris."
+        }
+      }
+    },
+    {
+      "id": "cinema_020",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "At the end of the 2001 film \"Rat Race\", whose concert do the contestants crash?",
+          "choices": [
+            "Bowling for Soup",
+            "Smash Mouth",
+            "Sum 41",
+            "Linkin Park"
+          ],
+          "explanation": "The racers stumble onto a Smash Mouth concert, and the band plays \"All Star\"."
+        },
+        "fr": {
+          "text": "À la fin du film « Rat Race » (2001), le concert de quel groupe les concurrents font-ils irruption ?",
+          "choices": [
+            "Bowling for Soup",
+            "Smash Mouth",
+            "Sum 41",
+            "Linkin Park"
+          ],
+          "explanation": "Les concurrents débarquent en plein concert de Smash Mouth, qui joue « All Star »."
+        }
+      }
+    },
+    {
+      "id": "cinema_021",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How much money did the 2019 Marvel movie \"Avengers: Endgame\" gross for it's record-breaking worldwide opening weekend?",
+          "choices": [
+            "456 million USD",
+            "640 million USD",
+            "1.2 billion USD",
+            "392 million USD"
+          ],
+          "explanation": "Endgame opened with about 1.2 billion dollars worldwide, the first opening ever above one billion."
+        },
+        "fr": {
+          "text": "Combien le film Marvel « Avengers: Endgame » (2019) a-t-il rapporté lors de son week-end d'ouverture mondial record ?",
+          "choices": [
+            "456 millions de dollars",
+            "640 millions de dollars",
+            "1,2 milliard de dollars",
+            "392 millions de dollars"
+          ],
+          "explanation": "Endgame a démarré avec environ 1,2 milliard de dollars : le premier lancement au-delà du milliard."
+        }
+      }
+    },
+    {
+      "id": "cinema_022",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which African country was the 2006 film 'Blood Diamond' mostly set in?",
+          "choices": [
+            "Central African Republic",
+            "Liberia",
+            "Burkina Faso",
+            "Sierra Leone"
+          ],
+          "explanation": "Blood Diamond takes place during the Sierra Leone civil war of the 1990s."
+        },
+        "fr": {
+          "text": "Dans quel pays africain se déroule principalement le film « Blood Diamond » (2006) ?",
+          "choices": [
+            "République centrafricaine",
+            "Libéria",
+            "Burkina Faso",
+            "Sierra Leone"
+          ],
+          "explanation": "Blood Diamond se déroule pendant la guerre civile de Sierra Leone, dans les années 1990."
+        }
+      }
+    },
+    {
+      "id": "cinema_023",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What movie starring Bruce Willis contains the line \"I see dead people\"?",
+          "choices": [
+            "The Sixth Sense",
+            "The Fifth Element",
+            "Armageddon",
+            "Die Hard"
+          ],
+          "explanation": "Haley Joel Osment's line in The Sixth Sense (1999) became one of cinema's most quoted."
+        },
+        "fr": {
+          "text": "Quel film avec Bruce Willis contient la réplique « Je vois des gens morts » ?",
+          "choices": [
+            "Le Sixième Sens",
+            "Le Cinquième Élément",
+            "Armageddon",
+            "Piège de cristal"
+          ],
+          "explanation": "La réplique de Haley Joel Osment dans Le Sixième Sens (1999) est devenue culte."
+        }
+      }
+    },
+    {
+      "id": "cinema_024",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In order to cut costs, what were most of the extras of Mad Max (1979) paid with?",
+          "choices": [
+            "Food stamps",
+            "They weren't paid",
+            "Beer",
+            "Fast food"
+          ],
+          "explanation": "With a tiny budget, the production paid many extras and bikers in cases of beer."
+        },
+        "fr": {
+          "text": "Pour réduire les coûts, avec quoi la plupart des figurants de Mad Max (1979) ont-ils été payés ?",
+          "choices": [
+            "Tickets alimentaires",
+            "Ils n'étaient pas payés",
+            "Bière",
+            "Restauration rapide"
+          ],
+          "explanation": "Avec un budget minuscule, la production a payé de nombreux figurants et motards en caisses de bière."
+        }
+      }
+    },
+    {
+      "id": "cinema_025",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which of the following movies was not based on a novel by Stephen King?",
+          "choices": [
+            "The Green Mile",
+            "Misery",
+            "Carrie",
+            "The Thing"
+          ],
+          "explanation": "The Thing (1982) adapts John W. Campbell's story \"Who Goes There?\", not Stephen King."
+        },
+        "fr": {
+          "text": "Lequel des films suivants n'est pas adapté d'un roman de Stephen King ?",
+          "choices": [
+            "La Ligne verte",
+            "Misery",
+            "Carrie",
+            "The Thing"
+          ],
+          "explanation": "The Thing (1982) adapte « La Chose » de John W. Campbell, pas Stephen King."
+        }
+      }
+    },
+    {
+      "id": "cinema_026",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which animated film did Steven Lisberger direct in 1980 before going on to direct Tron?",
+          "choices": [
+            "The Fox and the Hound",
+            "Animalympics",
+            "The Great Mouse Detecive",
+            "The Black Cauldron"
+          ],
+          "explanation": "Animalympics (1980) spoofed the Olympics with animal athletes, two years before Tron."
+        },
+        "fr": {
+          "text": "Quel film d'animation Steven Lisberger a réalisé en 1980 avant de réaliser Tron ?",
+          "choices": [
+            "Rox et Rouky",
+            "Animalympics",
+            "Basil, détective privé",
+            "Taram et le Chaudron magique"
+          ],
+          "explanation": "Animalympics (1980) parodiait les Jeux olympiques avec des animaux, deux ans avant Tron."
+        }
+      }
+    },
+    {
+      "id": "cinema_027",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who wrote and directed the 1986 film 'Platoon'?",
+          "choices": [
+            "Oliver Stone",
+            "Francis Ford Coppola",
+            "Michael Cimino",
+            "Stanley Kubrick"
+          ],
+          "explanation": "Oliver Stone drew on his own year as a soldier in Vietnam to write Platoon."
+        },
+        "fr": {
+          "text": "Qui a écrit et réalisé le film de 1986 \"Platoon\" ?",
+          "choices": [
+            "Oliver Stone",
+            "Francis Ford Coppola",
+            "Michael Cimino",
+            "Stanley Kubrick"
+          ],
+          "explanation": "Oliver Stone s'est inspiré de sa propre année de soldat au Vietnam pour écrire Platoon."
+        }
+      }
+    },
+    {
+      "id": "cinema_028",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who portrayed Han Solo in the Star Wars main film series?",
+          "choices": [
+            "Peter Cushing",
+            "Alec Guinness",
+            "Mark Hamill",
+            "Harrison Ford"
+          ],
+          "explanation": "Harrison Ford played Han Solo in four main films, from 1977 to The Force Awakens (2015)."
+        },
+        "fr": {
+          "text": "Qui a incarné Han Solo dans la série de films Star Wars ?",
+          "choices": [
+            "Peter Cushing",
+            "Alec Guinness",
+            "Mark Hamill",
+            "Harrison Ford"
+          ],
+          "explanation": "Harrison Ford a joué Han Solo dans quatre films principaux, de 1977 au Réveil de la Force (2015)."
+        }
+      }
+    },
+    {
+      "id": "cinema_029",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In Back to the Future Part II, Marty and Dr. Emmett Brown go to which future date?",
+          "choices": [
+            "January 25, 2015",
+            "August 28, 2015",
+            "July 20, 2015",
+            "October 21, 2015"
+          ],
+          "explanation": "Marty and Doc arrive on 21 October 2015; that date is now celebrated as \"Back to the Future Day\"."
+        },
+        "fr": {
+          "text": "Dans Retour vers le futur II, à quelle date Marty et Doc voyagent-ils dans le futur ?",
+          "choices": [
+            "25 janvier 2015",
+            "28 août 2015",
+            "20 juillet 2015",
+            "21 octobre 2015"
+          ],
+          "explanation": "Marty et Doc arrivent le 21 octobre 2015, date devenue le « Back to the Future Day »."
+        }
+      }
+    },
+    {
+      "id": "cinema_030",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of the fictional retro-mod band starring Austin Powers as the lead vocalist?",
+          "choices": [
+            "Spear Mint",
+            "Ming Tea",
+            "Mister E",
+            "Cough Fi"
+          ],
+          "explanation": "Ming Tea was a real side project: Mike Myers sang, with Matthew Sweet and Susanna Hoffs."
+        },
+        "fr": {
+          "text": "Quel est le nom du groupe rétro-mod fictif avec Austin Powers comme chanteur principal ?",
+          "choices": [
+            "Spear Mint",
+            "Ming Tea",
+            "Mister E",
+            "Cough Fi"
+          ],
+          "explanation": "Ming Tea existait vraiment : Mike Myers chantait, avec Matthew Sweet et Susanna Hoffs."
+        }
+      }
+    },
+    {
+      "id": "cinema_031",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who directed the movie \"Alien\"?",
+          "choices": [
+            "Ridley Scott",
+            "Michael Bay",
+            "James Cameron",
+            "Christopher Nolan"
+          ],
+          "explanation": "Ridley Scott directed Alien (1979); James Cameron made the sequel, Aliens (1986)."
+        },
+        "fr": {
+          "text": "Qui a réalisé le film \"Alien\" ?",
+          "choices": [
+            "Ridley Scott",
+            "Michael Bay",
+            "James Cameron",
+            "Christopher Nolan"
+          ],
+          "explanation": "Ridley Scott a réalisé Alien (1979) ; James Cameron a signé la suite, Aliens (1986)."
+        }
+      }
+    },
+    {
+      "id": "cinema_032",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which of these movies is NOT considered to be part of the Marvel Cinematic Universe?",
+          "choices": [
+            "Spider-Man: Homecoming (2017)",
+            "Fantastic Four (2015)",
+            "The Incredible Hulk (2008)",
+            "Captain Marvel (2019)"
+          ],
+          "explanation": "Fantastic Four (2015) was a 20th Century Fox film, outside the Marvel Studios universe."
+        },
+        "fr": {
+          "text": "Lequel de ces films n'est PAS considéré comme faisant partie de l'Univers Cinématique Marvel ?",
+          "choices": [
+            "Spider-Man: Homecoming (2017)",
+            "Les Quatre Fantastiques (2015)",
+            "L'Incroyable Hulk (2008)",
+            "Captain Marvel (2019)"
+          ],
+          "explanation": "Les Quatre Fantastiques (2015) était un film de la Fox, hors de l'univers Marvel Studios."
+        }
+      }
+    },
+    {
+      "id": "cinema_033",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In the movie \"Back to the Future,\" what speed does Doc Brown's DeLorean need to reach in order to travel through time?",
+          "choices": [
+            "88 mph",
+            "77 mph",
+            "100 mph",
+            "70 mph"
+          ],
+          "explanation": "At 88 miles per hour (about 141 km/h), the flux capacitor sends the DeLorean through time."
+        },
+        "fr": {
+          "text": "Dans « Retour vers le futur », quelle vitesse la DeLorean de Doc doit-elle atteindre pour voyager dans le temps ?",
+          "choices": [
+            "88 mi/h",
+            "77 mi/h",
+            "100 mi/h",
+            "70 mi/h"
+          ],
+          "explanation": "À 88 miles à l'heure (environ 141 km/h), le convecteur temporel propulse la DeLorean dans le temps."
+        }
+      }
+    },
+    {
+      "id": "cinema_034",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In the \"Jurassic Park\" universe, what was the first dinosaur cloned by InGen in 1986?",
+          "choices": [
+            "Triceratops",
+            "Troodon",
+            "Velociraptor",
+            "Brachiosaurus"
+          ],
+          "explanation": "In the franchise's timeline, InGen's first successful clone was a Velociraptor in 1986."
+        },
+        "fr": {
+          "text": "Dans l'univers \"Jurassic Park\", quel fut le premier dinosaure cloné par Ingen en 1986 ?",
+          "choices": [
+            "Tricératops",
+            "Troodon",
+            "Velociraptor",
+            "Brachiosaurus"
+          ],
+          "explanation": "Dans la chronologie de la saga, le premier clone réussi d'InGen est un Vélociraptor, en 1986."
+        }
+      }
+    },
+    {
+      "id": "cinema_035",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In the film \"Interstellar\", how long did they spend on Miller's planet?",
+          "choices": [
+            "23 years, 4 months, and 8 days",
+            "15 years, 2 months, and 15 days",
+            "26 years, 4 months, and 10 days",
+            "10 months and 6 days"
+          ],
+          "explanation": "Near the black hole Gargantua, one hour on Miller's planet equals seven years on Earth."
+        },
+        "fr": {
+          "text": "Dans le film Interstellar, combien de temps ont-ils passé sur la planète de Miller ?",
+          "choices": [
+            "23 ans, 4 mois et 8 jours",
+            "15 ans, 2 mois et 15 jours",
+            "26 ans, 4 mois et 10 jours",
+            "10 mois et 6 jours"
+          ],
+          "explanation": "Près du trou noir Gargantua, une heure sur la planète de Miller équivaut à sept ans sur Terre."
+        }
+      }
+    },
+    {
+      "id": "cinema_036",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What was the first James Bond film?",
+          "choices": [
+            "Goldfinger",
+            "Thunderball",
+            "Dr. No",
+            "From Russia With Love"
+          ],
+          "explanation": "Dr. No (1962), with Sean Connery, launched the James Bond film series."
+        },
+        "fr": {
+          "text": "Quel a été le premier film de James Bond ?",
+          "choices": [
+            "Goldfinger",
+            "Opération Tonnerre",
+            "Docteur No",
+            "Bons baisers de Russie"
+          ],
+          "explanation": "Docteur No (1962), avec Sean Connery, a lancé la saga James Bond au cinéma."
+        }
+      }
+    },
+    {
+      "id": "cinema_037",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which director directed the movie \"Pan's Labyrinth\"?",
+          "choices": [
+            "Alejandro González Iñárritu",
+            "Alejandro Jodorowsky",
+            "Alfonso Cuarón",
+            "Guillermo Del Toro"
+          ],
+          "explanation": "Guillermo del Toro's Pan's Labyrinth (2006) is set in Spain after the civil war."
+        },
+        "fr": {
+          "text": "Qui a réalisé le film « Le Labyrinthe de Pan » ?",
+          "choices": [
+            "Alejandro González Iñárritu",
+            "Alejandro Jodorowsky",
+            "Alfonso Cuarón",
+            "Guillermo Del Toro"
+          ],
+          "explanation": "Le Labyrinthe de Pan (2006) de Guillermo del Toro se déroule dans l'Espagne d'après-guerre civile."
+        }
+      }
+    },
+    {
+      "id": "cinema_038",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who voices Po in the Kung Fu Panda movies?",
+          "choices": [
+            "Seth Rogen",
+            "Ben Stiller",
+            "Jim Carrey",
+            "Jack Black"
+          ],
+          "explanation": "Jack Black voices Po, the clumsy panda who becomes the Dragon Warrior."
+        },
+        "fr": {
+          "text": "Qui prête sa voix à Po dans la version originale de Kung Fu Panda ?",
+          "choices": [
+            "Seth Rogen",
+            "Ben Stiller",
+            "Jim Carrey",
+            "Jack Black"
+          ],
+          "explanation": "Jack Black prête sa voix à Po en VO, le panda maladroit qui devient le Guerrier Dragon."
+        }
+      }
+    },
+    {
+      "id": "cinema_039",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In the \"Jurassic Park\" universe, what is the name of the island that contains InGen's Site B?",
+          "choices": [
+            "Isla Nublar",
+            "Isla Pena",
+            "Isla Sorna",
+            "Isla Muerta"
+          ],
+          "explanation": "Isla Sorna, InGen's breeding site, is the setting of The Lost World and Jurassic Park III."
+        },
+        "fr": {
+          "text": "Dans l'univers \"Jurassic Park\", quel est le nom de l'île qui contient le site B de l'InGen ?",
+          "choices": [
+            "Isla Nublar",
+            "Isla Pena",
+            "Isla Sorna",
+            "Isla Muerta"
+          ],
+          "explanation": "Isla Sorna, le site d'élevage d'InGen, sert de décor au Monde perdu et à Jurassic Park III."
+        }
+      }
+    },
+    {
+      "id": "cinema_040",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Peter Jackson's film series \"The Lord of the Rings\" was shot entirely in which country?",
+          "choices": [
+            "Scotland",
+            "Canada",
+            "New Zealand",
+            "Iceland"
+          ],
+          "explanation": "Peter Jackson, a New Zealander, filmed all three movies at once across his home country."
+        },
+        "fr": {
+          "text": "La série de films de Peter Jackson \"Le Seigneur des Anneaux\" a été entièrement tournée dans quel pays ?",
+          "choices": [
+            "Écosse",
+            "Canada",
+            "Nouvelle-Zélande",
+            "Islande"
+          ],
+          "explanation": "Peter Jackson, néo-zélandais, a tourné les trois films d'un coup dans son pays."
+        }
+      }
+    },
+    {
+      "id": "cinema_041",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Daniel Radcliffe became a global star in the film industry due to his performance in which film franchise?",
+          "choices": [
+            "Ted",
+            "Pirates of the Caribbean",
+            "Spy Kids",
+            "Harry Potter"
+          ],
+          "explanation": "Daniel Radcliffe was 11 when he was cast as Harry Potter; he played him in all eight films."
+        },
+        "fr": {
+          "text": "Daniel Radcliffe est devenu une star mondiale de l'industrie cinématographique en raison de sa performance dans quelle franchise cinématographique ?",
+          "choices": [
+            "Ted",
+            "Pirates des Caraïbes",
+            "Spy Kids",
+            "Harry Potter"
+          ],
+          "explanation": "Daniel Radcliffe avait 11 ans quand il a été choisi pour Harry Potter ; il l'a joué dans les huit films."
+        }
+      }
+    },
+    {
+      "id": "cinema_042",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which of the following films was NOT directed by Quentin Tarantino?",
+          "choices": [
+            "Jackie Brown",
+            "From Dusk till Dawn",
+            "Pulp Fiction",
+            "Reservoir Dogs"
+          ],
+          "explanation": "Robert Rodriguez directed From Dusk till Dawn (1996); Tarantino wrote it and acted in it."
+        },
+        "fr": {
+          "text": "Lequel des films suivants n'a PAS été réalisé par Quentin Tarantino ?",
+          "choices": [
+            "Jackie Brown",
+            "Une nuit en enfer",
+            "Pulp Fiction",
+            "Reservoir Dogs"
+          ],
+          "explanation": "Robert Rodriguez a réalisé Une nuit en enfer (1996) ; Tarantino l'a écrit et y joue."
+        }
+      }
+    },
+    {
+      "id": "cinema_043",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In Star Wars, what's the name of the new Government created after the defeat of the Galactic Empire?",
+          "choices": [
+            "The Rebel Alliance",
+            "The First Order",
+            "The Crimson Dawn",
+            "The New Republic"
+          ],
+          "explanation": "The New Republic replaced the Empire after Return of the Jedi; the First Order rose against it."
+        },
+        "fr": {
+          "text": "Dans Star Wars, quel est le nom du nouveau gouvernement créé après la défaite de l'Empire galactique ?",
+          "choices": [
+            "L'Alliance rebelle",
+            "Le Premier Ordre",
+            "Crimson Dawn",
+            "La Nouvelle République"
+          ],
+          "explanation": "La Nouvelle République a succédé à l'Empire après Le Retour du Jedi ; le Premier Ordre s'est dressé contre elle."
+        }
+      }
+    },
+    {
+      "id": "cinema_044",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which of the following is not the name of a \"Bond Girl\"?",
+          "choices": [
+            "Wai Lin",
+            "Pam Bouvier",
+            "Vanessa Kensington",
+            "Mary Goodnight"
+          ],
+          "explanation": "Vanessa Kensington is Austin Powers' partner, played by Elizabeth Hurley — not a Bond girl."
+        },
+        "fr": {
+          "text": "Lequel de ce qui suit n'est pas le nom d'une \"Bond Girl\" ?",
+          "choices": [
+            "Wai Lin",
+            "Pam Bouvier",
+            "Vanessa Kensington",
+            "Mary Goodnight"
+          ],
+          "explanation": "Vanessa Kensington est la partenaire d'Austin Powers, jouée par Elizabeth Hurley, pas une James Bond girl."
+        }
+      }
+    },
+    {
+      "id": "cinema_045",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which of the following films was directed by Ivan Reitman, written by Gary Ross, featured Kevin Kline, and was released in 1993?",
+          "choices": [
+            "Twins",
+            "Junior",
+            "Kindergarten Cop",
+            "Dave"
+          ],
+          "explanation": "In Dave (1993), Kevin Kline plays a lookalike who secretly stands in for the US President."
+        },
+        "fr": {
+          "text": "Lequel des films suivants a été réalisé par Ivan Reitman, écrit par Gary Ross, a présenté Kevin Kline, et est sorti en 1993 ?",
+          "choices": [
+            "Jumeaux",
+            "Junior",
+            "Un flic à la maternelle",
+            "Président d'un jour (Dave)"
+          ],
+          "explanation": "Dans Président d'un jour (Dave, 1993), Kevin Kline joue un sosie qui remplace en secret le président."
+        }
+      }
+    },
+    {
+      "id": "cinema_046",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Bela Lugosi was a Hungarian-American actor best known for his starring role of what 1931 horror film?",
+          "choices": [
+            "Creature from the Black Lagoon",
+            "Dracula",
+            "The Wolf Man",
+            "Frankenstein"
+          ],
+          "explanation": "Bela Lugosi had already played Dracula on Broadway before Universal's 1931 film."
+        },
+        "fr": {
+          "text": "Bela Lugosi, acteur hongrois-américain, est surtout connu pour son rôle principal dans quel film d'horreur de 1931 ?",
+          "choices": [
+            "L'Étrange Créature du lac noir",
+            "Dracula",
+            "Le Loup-garou",
+            "Frankenstein"
+          ],
+          "explanation": "Bela Lugosi avait déjà joué Dracula à Broadway avant le film d'Universal de 1931."
+        }
+      }
+    },
+    {
+      "id": "cinema_047",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Brendan Fraser starred in the following movies, except which one?",
+          "choices": [
+            "Mrs. Winterbourne",
+            "Monkeybone",
+            "Titanic",
+            "Encino Man"
+          ],
+          "explanation": "Brendan Fraser was not in Titanic; he starred in The Mummy, Encino Man and Monkeybone."
+        },
+        "fr": {
+          "text": "Brendan Fraser a joué dans les films suivants, sauf lequel ?",
+          "choices": [
+            "Mrs. Winterbourne",
+            "Monkeybone",
+            "Titanic",
+            "California Man"
+          ],
+          "explanation": "Brendan Fraser n'était pas dans Titanic ; il a joué dans La Momie, California Man et Monkeybone."
+        }
+      }
+    },
+    {
+      "id": "cinema_048",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In Big Hero 6, what fictional city is the Big Hero 6 from?",
+          "choices": [
+            "San Fransokyo",
+            "Sankyo",
+            "Tokysisco",
+            "San Tokyo"
+          ],
+          "explanation": "San Fransokyo blends San Francisco and Tokyo, down to a Golden Gate with Japanese touches."
+        },
+        "fr": {
+          "text": "Dans Big Hero 6, quelle est la ville fictive du Big Hero 6 ?",
+          "choices": [
+            "San Fransokyo",
+            "Sankyo",
+            "Tokysisco",
+            "San Tokyo"
+          ],
+          "explanation": "San Fransokyo mélange San Francisco et Tokyo, jusqu'au Golden Gate aux allures japonaises."
+        }
+      }
+    },
+    {
+      "id": "cinema_049",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which star actor was in \"Top Gun\", \"Jerry Maguire\" and \"Born on the Fourth of July\"?",
+          "choices": [
+            "Kelly McGillis",
+            "Tom Cruise",
+            "John Travolta",
+            "George Clooney"
+          ],
+          "explanation": "Tom Cruise starred in all three: Top Gun (1986), Born on the Fourth of July (1989), Jerry Maguire (1996)."
+        },
+        "fr": {
+          "text": "Quel acteur a joué dans « Top Gun », « Jerry Maguire » et « Né un 4 juillet » ?",
+          "choices": [
+            "Kelly McGillis",
+            "Tom Cruise",
+            "John Travolta",
+            "George Clooney"
+          ],
+          "explanation": "Tom Cruise joue dans les trois : Top Gun (1986), Né un 4 juillet (1989), Jerry Maguire (1996)."
+        }
+      }
+    },
+    {
+      "id": "cinema_050",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which famous singer was portrayed by actor Kevin Spacey in the 2004 biographical film \"Beyond the Sea\"?",
+          "choices": [
+            "Bobby Darin",
+            "Dean Martin",
+            "Frank Sinatra",
+            "Louis Armstrong"
+          ],
+          "explanation": "Kevin Spacey directed Beyond the Sea and did his own singing as Bobby Darin."
+        },
+        "fr": {
+          "text": "Quel chanteur célèbre a été représenté par l'acteur Kevin Spacey dans le film biographique de 2004 \"Beyond the Sea\" ?",
+          "choices": [
+            "Bobby Darin",
+            "Dean Martin",
+            "Frank Sinatra",
+            "Louis Armstrong"
+          ],
+          "explanation": "Kevin Spacey a réalisé Beyond the Sea et chantait lui-même en Bobby Darin."
+        }
+      }
+    },
+    {
+      "id": "cinema_051",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which 90's comedy cult classic features cameos appearances from Meat Loaf, Alice Cooper and Chris Farley?",
+          "choices": [
+            "Dumb and Dumber",
+            "Bill & Ted's Excellent Adventure",
+            "Wayne's World",
+            "Austin Powers: International Man of Mystery"
+          ],
+          "explanation": "Wayne's World (1992) grew out of a Saturday Night Live sketch with Mike Myers and Dana Carvey."
+        },
+        "fr": {
+          "text": "Quelle comédie culte des années 90 met en scène des caméos de Meat Loaf, Alice Cooper et Chris Farley ?",
+          "choices": [
+            "Dumb and Dumber",
+            "Les Aventures de Bill et Ted",
+            "Wayne's World",
+            "Austin Powers"
+          ],
+          "explanation": "Wayne's World (1992) est né d'un sketch du Saturday Night Live avec Mike Myers et Dana Carvey."
+        }
+      }
+    },
+    {
+      "id": "cinema_052",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What film did James Cameron's Avatar dethrone as the highest-grossing film ever?",
+          "choices": [
+            "Gone with the Wind",
+            "Jaws",
+            "Titanic",
+            "Star Wars"
+          ],
+          "explanation": "In 2010 Avatar overtook Titanic, another James Cameron film, as the biggest box-office hit."
+        },
+        "fr": {
+          "text": "Quel film Avatar de James Cameron a-t-il détrôné comme plus gros succès du box-office ?",
+          "choices": [
+            "Autant en emporte le vent",
+            "Les Dents de la mer",
+            "Titanic",
+            "Star Wars"
+          ],
+          "explanation": "En 2010, Avatar a dépassé Titanic, un autre film de James Cameron, au box-office mondial."
+        }
+      }
+    },
+    {
+      "id": "cinema_053",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which actor auditioned for the role of Luke Skywalker?",
+          "choices": [
+            "Kurt Russell",
+            "James Remar",
+            "Christopher Lambert",
+            "Laurence Fishburne"
+          ],
+          "explanation": "Kurt Russell auditioned for both Luke and Han Solo; Mark Hamill got the part of Luke."
+        },
+        "fr": {
+          "text": "Quel acteur a auditionné pour le rôle de Luke Skywalker ?",
+          "choices": [
+            "Kurt Russell",
+            "James Remar",
+            "Christopher Lambert",
+            "Laurence Fishburne"
+          ],
+          "explanation": "Kurt Russell a auditionné pour Luke et pour Han Solo ; c'est Mark Hamill qui a eu le rôle de Luke."
+        }
+      }
+    },
+    {
+      "id": "cinema_054",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 2012, which movie won every category in the 32nd \"Golden Raspberry Awards\"?",
+          "choices": [
+            "The Girl with the Dragon Tattoo",
+            "Thor",
+            "The King's Speech",
+            "Jack and Jill"
+          ],
+          "explanation": "Jack and Jill, with Adam Sandler in two roles, swept all ten Razzie categories."
+        },
+        "fr": {
+          "text": "En 2012, quel film a remporté toutes les catégories de la 32e cérémonie des Razzie Awards ?",
+          "choices": [
+            "Millénium : Les Hommes qui n'aimaient pas les femmes",
+            "Thor",
+            "Le Discours d'un roi",
+            "Jack et Julie"
+          ],
+          "explanation": "Jack et Julie, avec Adam Sandler dans deux rôles, a raflé les dix catégories des Razzie Awards."
+        }
+      }
+    },
+    {
+      "id": "cinema_055",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "After India, which country produces the second most movies per year?",
+          "choices": [
+            "United States",
+            "China",
+            "France",
+            "Nigeria"
+          ],
+          "explanation": "Nigeria's film industry, Nollywood, releases more films each year than Hollywood."
+        },
+        "fr": {
+          "text": "Après l'Inde, quel pays produit le deuxième plus de films par an ?",
+          "choices": [
+            "États-Unis",
+            "Chine",
+            "France",
+            "Nigéria"
+          ],
+          "explanation": "L'industrie du cinéma nigériane, Nollywood, sort chaque année plus de films qu'Hollywood."
+        }
+      }
+    },
+    {
+      "id": "cinema_056",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which retired American football quarterback played himself in 'Ace Ventura: Pet Detective' and 'Little Nicky'?",
+          "choices": [
+            "Tom Brady",
+            "Dan Marino",
+            "Joe Montana",
+            "John Elway"
+          ],
+          "explanation": "Dan Marino, a Miami Dolphins legend, is kidnapped in Ace Ventura and appears in Little Nicky."
+        },
+        "fr": {
+          "text": "Quel ancien quarterback américain joue son propre rôle dans « Ace Ventura, détective chiens et chats » et « Little Nicky » ?",
+          "choices": [
+            "Tom Brady",
+            "Dan Marino",
+            "Joe Montana",
+            "John Elway"
+          ],
+          "explanation": "Dan Marino, légende des Miami Dolphins, est kidnappé dans Ace Ventura et apparaît dans Little Nicky."
+        }
+      }
+    },
+    {
+      "id": "cinema_057",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which movie contains the quote, \"Say hello to my little friend!\"?",
+          "choices": [
+            "Reservoir Dogs",
+            "Goodfellas",
+            "Scarface",
+            "Heat"
+          ],
+          "explanation": "Al Pacino says it as Tony Montana, grenade launcher in hand, in Scarface (1983)."
+        },
+        "fr": {
+          "text": "Quel film contient la réplique « Dis bonjour à mon petit ami ! » ?",
+          "choices": [
+            "Reservoir Dogs",
+            "Les Affranchis",
+            "Scarface",
+            "Heat"
+          ],
+          "explanation": "Al Pacino la lance en Tony Montana, lance-grenades en main, dans Scarface (1983)."
+        }
+      }
+    },
+    {
+      "id": "cinema_058",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which film features a clownfish searching for his lost son?",
+          "choices": [
+            "Luca",
+            "The Little Mermaid",
+            "Shark Tale",
+            "Finding Nemo"
+          ],
+          "explanation": "In Pixar's Finding Nemo (2003), Marlin crosses the ocean to find his son Nemo."
+        },
+        "fr": {
+          "text": "Quel film raconte la quête d'un poisson-clown qui cherche son fils perdu ?",
+          "choices": [
+            "Luca",
+            "La Petite Sirène",
+            "Gang de requins",
+            "Le Monde de Nemo"
+          ],
+          "explanation": "Dans Le Monde de Nemo (Pixar, 2003), Marin traverse l'océan pour retrouver son fils Nemo."
+        }
+      }
+    },
+    {
+      "id": "cinema_059",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who directed Jurassic Park (1993)?",
+          "choices": [
+            "James Cameron",
+            "Steven Spielberg",
+            "Robert Zemeckis",
+            "George Lucas"
+          ],
+          "explanation": "Steven Spielberg adapted Michael Crichton's novel, with groundbreaking computer-generated dinosaurs."
+        },
+        "fr": {
+          "text": "Qui a réalisé Jurassic Park (1993) ?",
+          "choices": [
+            "James Cameron",
+            "Steven Spielberg",
+            "Robert Zemeckis",
+            "George Lucas"
+          ],
+          "explanation": "Steven Spielberg a adapté le roman de Michael Crichton, avec des dinosaures en images de synthèse révolutionnaires."
+        }
+      }
+    },
+    {
+      "id": "cinema_060",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of the toy cowboy in Toy Story?",
+          "choices": [
+            "Buzz",
+            "Jessie",
+            "Woody",
+            "Bullseye"
+          ],
+          "explanation": "Woody, voiced by Tom Hanks, is Andy's favourite toy until Buzz Lightyear arrives."
+        },
+        "fr": {
+          "text": "Comment s'appelle le cowboy en jouet de Toy Story ?",
+          "choices": [
+            "Buzz",
+            "Jessie",
+            "Woody",
+            "Pile-Poil"
+          ],
+          "explanation": "Woody, doublé par Tom Hanks en VO, est le jouet préféré d'Andy jusqu'à l'arrivée de Buzz l'Éclair."
+        }
+      }
+    },
+    {
+      "id": "cinema_061",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In The Matrix, which pill does Neo take?",
+          "choices": [
+            "The red pill",
+            "The green pill",
+            "The white pill",
+            "The blue pill"
+          ],
+          "explanation": "Morpheus offers a choice: the blue pill to forget, the red pill to see the truth. Neo takes the red one."
+        },
+        "fr": {
+          "text": "Dans Matrix, quelle pilule Neo avale-t-il ?",
+          "choices": [
+            "La pilule rouge",
+            "La pilule verte",
+            "La pilule blanche",
+            "La pilule bleue"
+          ],
+          "explanation": "Morpheus propose la pilule bleue pour oublier ou la rouge pour voir la vérité : Neo prend la rouge."
+        }
+      }
+    },
+    {
+      "id": "cinema_062",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French film features Amélie Poulain living in Montmartre?",
+          "choices": [
+            "The Intouchables",
+            "Delicatessen",
+            "Amélie",
+            "Micmacs"
+          ],
+          "explanation": "Jean-Pierre Jeunet's 2001 film starring Audrey Tautou was a worldwide hit."
+        },
+        "fr": {
+          "text": "Quel film met en scène Amélie Poulain à Montmartre ?",
+          "choices": [
+            "Intouchables",
+            "Delicatessen",
+            "Le Fabuleux Destin d'Amélie Poulain",
+            "Micmacs à tire-larigot"
+          ],
+          "explanation": "Le film de Jean-Pierre Jeunet (2001) avec Audrey Tautou a été un succès mondial."
+        }
+      }
+    },
+    {
+      "id": "cinema_063",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which film won the first Academy Award for Best Picture?",
+          "choices": [
+            "The Jazz Singer",
+            "Wings",
+            "Metropolis",
+            "Sunrise"
+          ],
+          "explanation": "Wings, a silent film about WWI fighter pilots, won at the very first Oscars in 1929."
+        },
+        "fr": {
+          "text": "Quel film a remporté le premier Oscar du meilleur film ?",
+          "choices": [
+            "Le Chanteur de jazz",
+            "Les Ailes",
+            "Metropolis",
+            "L'Aurore"
+          ],
+          "explanation": "Les Ailes, film muet sur des pilotes de la Grande Guerre, a gagné lors des tout premiers Oscars en 1929."
+        }
+      }
+    },
+    {
+      "id": "cinema_064",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which actor has played the Joker in The Dark Knight (2008)?",
+          "choices": [
+            "Joaquin Phoenix",
+            "Heath Ledger",
+            "Jack Nicholson",
+            "Jared Leto"
+          ],
+          "explanation": "Heath Ledger won a posthumous Oscar for the role; he died months before the film's release."
+        },
+        "fr": {
+          "text": "Quel acteur joue le Joker dans The Dark Knight (2008) ?",
+          "choices": [
+            "Joaquin Phoenix",
+            "Heath Ledger",
+            "Jack Nicholson",
+            "Jared Leto"
+          ],
+          "explanation": "Heath Ledger a reçu un Oscar posthume pour ce rôle ; il est mort quelques mois avant la sortie du film."
+        }
+      }
+    },
+    {
+      "id": "cinema_065",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which city does the French film 'The Intouchables' mainly take place?",
+          "choices": [
+            "Paris",
+            "Marseille",
+            "Nice",
+            "Lyon"
+          ],
+          "explanation": "The 2011 hit with François Cluzet and Omar Sy follows a rich Parisian and his carer."
+        },
+        "fr": {
+          "text": "Dans quelle ville se déroule principalement le film « Intouchables » ?",
+          "choices": [
+            "Paris",
+            "Marseille",
+            "Nice",
+            "Lyon"
+          ],
+          "explanation": "Le succès de 2011 avec François Cluzet et Omar Sy suit un riche Parisien et son auxiliaire de vie."
+        }
+      }
+    },
+    {
+      "id": "cinema_066",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which was the first full-length film made entirely with computer animation?",
+          "choices": [
+            "Toy Story",
+            "Antz",
+            "A Bug's Life",
+            "Shrek"
+          ],
+          "explanation": "Pixar's Toy Story (1995) was the first feature film made entirely with computer animation."
+        },
+        "fr": {
+          "text": "Quel est le premier long métrage entièrement réalisé en images de synthèse ?",
+          "choices": [
+            "Toy Story",
+            "Fourmiz",
+            "1001 pattes",
+            "Shrek"
+          ],
+          "explanation": "Toy Story (Pixar, 1995) est le premier long métrage entièrement en images de synthèse."
+        }
+      }
+    },
+    {
+      "id": "cinema_067",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who composed the music for Star Wars, Jaws and Indiana Jones?",
+          "choices": [
+            "John Williams",
+            "Hans Zimmer",
+            "Ennio Morricone",
+            "Danny Elfman"
+          ],
+          "explanation": "John Williams has over 50 Oscar nominations, more than any other living person."
+        },
+        "fr": {
+          "text": "Qui a composé la musique de Star Wars, Les Dents de la mer et Indiana Jones ?",
+          "choices": [
+            "John Williams",
+            "Hans Zimmer",
+            "Ennio Morricone",
+            "Danny Elfman"
+          ],
+          "explanation": "John Williams compte plus de 50 nominations aux Oscars, plus que toute autre personne vivante."
+        }
+      }
+    },
+    {
+      "id": "cinema_068",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Studio Ghibli film won the Oscar for Best Animated Feature in 2003?",
+          "choices": [
+            "Spirited Away",
+            "Princess Mononoke",
+            "My Neighbor Totoro",
+            "Howl's Moving Castle"
+          ],
+          "explanation": "Hayao Miyazaki's Spirited Away also won the Golden Bear in Berlin in 2002."
+        },
+        "fr": {
+          "text": "Quel film du studio Ghibli a remporté l'Oscar du meilleur film d'animation en 2003 ?",
+          "choices": [
+            "Le Voyage de Chihiro",
+            "Princesse Mononoké",
+            "Mon voisin Totoro",
+            "Le Château ambulant"
+          ],
+          "explanation": "Le Voyage de Chihiro de Hayao Miyazaki avait aussi remporté l'Ours d'or à Berlin en 2002."
+        }
+      }
+    },
+    {
+      "id": "cinema_069",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which film festival awards the Palme d'Or?",
+          "choices": [
+            "Venice",
+            "Berlin",
+            "Cannes",
+            "Toronto"
+          ],
+          "explanation": "The Palme d'Or is the top prize of the Cannes Film Festival, awarded under that name since 1955."
+        },
+        "fr": {
+          "text": "Quel festival décerne la Palme d'or ?",
+          "choices": [
+            "Venise",
+            "Berlin",
+            "Cannes",
+            "Toronto"
+          ],
+          "explanation": "La Palme d'or est la récompense suprême du Festival de Cannes, sous ce nom depuis 1955."
+        }
+      }
+    },
+    {
+      "id": "cinema_070",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who directed Psycho (1960)?",
+          "choices": [
+            "Alfred Hitchcock",
+            "Billy Wilder",
+            "Orson Welles",
+            "Stanley Kubrick"
+          ],
+          "explanation": "Hitchcock's Psycho is famous for its shower scene, with violins by Bernard Herrmann."
+        },
+        "fr": {
+          "text": "Qui a réalisé Psychose (1960) ?",
+          "choices": [
+            "Alfred Hitchcock",
+            "Billy Wilder",
+            "Orson Welles",
+            "Stanley Kubrick"
+          ],
+          "explanation": "Psychose d'Hitchcock est célèbre pour sa scène de la douche, sur les violons de Bernard Herrmann."
+        }
+      }
+    },
+    {
+      "id": "cinema_071",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which film does a character say 'Here's Johnny!'?",
+          "choices": [
+            "One Flew Over the Cuckoo's Nest",
+            "The Shining",
+            "Misery",
+            "Taxi Driver"
+          ],
+          "explanation": "Jack Nicholson improvised the line in The Shining (1980) while breaking a door with an axe."
+        },
+        "fr": {
+          "text": "Dans quel film un personnage lance-t-il « Here's Johnny ! » ?",
+          "choices": [
+            "Vol au-dessus d'un nid de coucou",
+            "Shining",
+            "Misery",
+            "Taxi Driver"
+          ],
+          "explanation": "Jack Nicholson a improvisé la réplique dans Shining (1980) en défonçant une porte à la hache."
+        }
+      }
+    },
+    {
+      "id": "cinema_072",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of Indiana Jones' first film (1981)?",
+          "choices": [
+            "Temple of Doom",
+            "Kingdom of the Crystal Skull",
+            "Raiders of the Lost Ark",
+            "The Last Crusade"
+          ],
+          "explanation": "Raiders of the Lost Ark was created by George Lucas and directed by Steven Spielberg."
+        },
+        "fr": {
+          "text": "Comment s'appelle le premier film d'Indiana Jones (1981) ?",
+          "choices": [
+            "Le Temple maudit",
+            "Le Royaume du crâne de cristal",
+            "Les Aventuriers de l'arche perdue",
+            "La Dernière Croisade"
+          ],
+          "explanation": "Les Aventuriers de l'arche perdue a été imaginé par George Lucas et réalisé par Steven Spielberg."
+        }
+      }
+    },
+    {
+      "id": "cinema_073",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which actress plays Katniss Everdeen in The Hunger Games?",
+          "choices": [
+            "Shailene Woodley",
+            "Kristen Stewart",
+            "Jennifer Lawrence",
+            "Emma Watson"
+          ],
+          "explanation": "Jennifer Lawrence played Katniss in four films between 2012 and 2015."
+        },
+        "fr": {
+          "text": "Quelle actrice joue Katniss Everdeen dans Hunger Games ?",
+          "choices": [
+            "Shailene Woodley",
+            "Kristen Stewart",
+            "Jennifer Lawrence",
+            "Emma Watson"
+          ],
+          "explanation": "Jennifer Lawrence a joué Katniss dans quatre films entre 2012 et 2015."
+        }
+      }
+    },
+    {
+      "id": "cinema_074",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which silent film by the Lumière brothers shows workers leaving a factory in 1895?",
+          "choices": [
+            "Workers Leaving the Lumière Factory",
+            "A Trip to the Moon",
+            "The Sprinkler Sprinkled",
+            "The Arrival of a Train"
+          ],
+          "explanation": "It was shown at the first public paid screening, in Paris on 28 December 1895."
+        },
+        "fr": {
+          "text": "Quel film des frères Lumière montre des ouvriers quittant une usine en 1895 ?",
+          "choices": [
+            "La Sortie de l'usine Lumière à Lyon",
+            "Le Voyage dans la Lune",
+            "L'Arroseur arrosé",
+            "L'Arrivée d'un train en gare de La Ciotat"
+          ],
+          "explanation": "Il a été projeté lors de la première séance publique payante, à Paris, le 28 décembre 1895."
+        }
+      }
+    },
+    {
+      "id": "cinema_075",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who directed 'A Trip to the Moon' (1902)?",
+          "choices": [
+            "Georges Méliès",
+            "D. W. Griffith",
+            "Louis Lumière",
+            "Charlie Chaplin"
+          ],
+          "explanation": "Georges Méliès, a former magician, pioneered special effects; the rocket in the Moon's eye is iconic."
+        },
+        "fr": {
+          "text": "Qui a réalisé « Le Voyage dans la Lune » (1902) ?",
+          "choices": [
+            "Georges Méliès",
+            "D. W. Griffith",
+            "Louis Lumière",
+            "Charlie Chaplin"
+          ],
+          "explanation": "Georges Méliès, ancien magicien, a inventé les trucages ; la fusée dans l'œil de la Lune est devenue culte."
+        }
+      }
+    },
+    {
+      "id": "cinema_076",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which film was the first to win the 'Big Five' Oscars (film, director, actor, actress, screenplay)?",
+          "choices": [
+            "Casablanca",
+            "One Flew Over the Cuckoo's Nest",
+            "The Silence of the Lambs",
+            "It Happened One Night"
+          ],
+          "explanation": "Frank Capra's It Happened One Night did it in 1935; only two films have matched it since."
+        },
+        "fr": {
+          "text": "Quel film a été le premier à remporter les cinq Oscars majeurs (film, réalisateur, acteur, actrice, scénario) ?",
+          "choices": [
+            "Casablanca",
+            "Vol au-dessus d'un nid de coucou",
+            "Le Silence des agneaux",
+            "New York-Miami"
+          ],
+          "explanation": "New York-Miami de Frank Capra l'a fait en 1935 ; seuls deux films l'ont égalé depuis."
+        }
+      }
+    },
+    {
+      "id": "cinema_077",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which South Korean film won the Oscar for Best Picture in 2020?",
+          "choices": [
+            "Oldboy",
+            "The Handmaiden",
+            "Parasite",
+            "Burning"
+          ],
+          "explanation": "Bong Joon-ho's Parasite was the first non-English-language film to win Best Picture."
+        },
+        "fr": {
+          "text": "Quel film sud-coréen a remporté l'Oscar du meilleur film en 2020 ?",
+          "choices": [
+            "Old Boy",
+            "Mademoiselle",
+            "Parasite",
+            "Burning"
+          ],
+          "explanation": "Parasite de Bong Joon-ho est le premier film non anglophone à remporter l'Oscar du meilleur film."
+        }
+      }
+    },
+    {
+      "id": "cinema_078",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In Citizen Kane, what is 'Rosebud'?",
+          "choices": [
+            "A boat",
+            "A sled",
+            "A woman",
+            "A horse"
+          ],
+          "explanation": "Kane's dying word refers to the sled of his childhood, revealed in the final shot."
+        },
+        "fr": {
+          "text": "Dans Citizen Kane, qu'est-ce que « Rosebud » ?",
+          "choices": [
+            "Un bateau",
+            "Une luge",
+            "Une femme",
+            "Un cheval"
+          ],
+          "explanation": "Le dernier mot de Kane désigne la luge de son enfance, révélée dans le dernier plan du film."
+        }
+      }
+    },
+    {
+      "id": "cinema_079",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French actor starred in 'Les Visiteurs' (1993) as Godefroy de Montmirail?",
+          "choices": [
+            "Thierry Lhermitte",
+            "Jean Reno",
+            "Christian Clavier",
+            "Gérard Depardieu"
+          ],
+          "explanation": "Jean Reno plays the knight; Christian Clavier plays his servant Jacquouille la Fripouille."
+        },
+        "fr": {
+          "text": "Quel acteur joue Godefroy de Montmirail dans « Les Visiteurs » (1993) ?",
+          "choices": [
+            "Thierry Lhermitte",
+            "Jean Reno",
+            "Christian Clavier",
+            "Gérard Depardieu"
+          ],
+          "explanation": "Jean Reno joue le chevalier ; Christian Clavier incarne son écuyer, Jacquouille la Fripouille."
+        }
+      }
+    },
+    {
+      "id": "cinema_080",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What was the first feature-length film with synchronized dialogue?",
+          "choices": [
+            "Modern Times",
+            "Metropolis",
+            "Nosferatu",
+            "The Jazz Singer"
+          ],
+          "explanation": "The Jazz Singer (1927) with Al Jolson marked the beginning of the talkies."
+        },
+        "fr": {
+          "text": "Quel est le premier long métrage avec des dialogues synchronisés ?",
+          "choices": [
+            "Les Temps modernes",
+            "Metropolis",
+            "Nosferatu",
+            "Le Chanteur de jazz"
+          ],
+          "explanation": "Le Chanteur de jazz (1927), avec Al Jolson, a marqué le début du cinéma parlant."
+        }
+      }
+    },
+    {
+      "id": "cinema_081",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of the lion hero of 'The Lion King'?",
+          "choices": [
+            "Mufasa",
+            "Scar",
+            "Nala",
+            "Simba"
+          ],
+          "explanation": "Simba is the lion cub hero of 'The Lion King' (1994); Mufasa is his father and Scar his uncle."
+        },
+        "fr": {
+          "text": "Comment s'appelle le lion héros du « Roi lion » ?",
+          "choices": [
+            "Mufasa",
+            "Scar",
+            "Nala",
+            "Simba"
+          ],
+          "explanation": "Simba est le lionceau héros du « Roi lion » (1994) ; Mufasa est son père et Scar son oncle."
+        }
+      }
+    },
+    {
+      "id": "cinema_082",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which wizard is the hero of the saga created by J. K. Rowling?",
+          "choices": [
+            "Gandalf",
+            "Harry Potter",
+            "Merlin",
+            "Doctor Strange"
+          ],
+          "explanation": "The eight Harry Potter films adapt J. K. Rowling's seven novels."
+        },
+        "fr": {
+          "text": "Quel sorcier est le héros de la saga créée par J. K. Rowling ?",
+          "choices": [
+            "Gandalf",
+            "Harry Potter",
+            "Merlin",
+            "Doctor Strange"
+          ],
+          "explanation": "Les huit films Harry Potter adaptent les sept romans de J. K. Rowling."
+        }
+      }
+    },
+    {
+      "id": "cinema_083",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Frozen', what is the snowman called?",
+          "choices": [
+            "Sven",
+            "Kristoff",
+            "Olaf",
+            "Hans"
+          ],
+          "explanation": "Olaf is the snowman who dreams of summer; Sven is Kristoff's reindeer."
+        },
+        "fr": {
+          "text": "Dans « La Reine des neiges », comment s'appelle le bonhomme de neige ?",
+          "choices": [
+            "Sven",
+            "Kristoff",
+            "Olaf",
+            "Hans"
+          ],
+          "explanation": "Olaf est le bonhomme de neige qui rêve de l'été ; Sven est le renne de Kristoff."
+        }
+      }
+    },
+    {
+      "id": "cinema_084",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which superhero wears armour built by Tony Stark?",
+          "choices": [
+            "Iron Man",
+            "Captain America",
+            "Thor",
+            "Hulk"
+          ],
+          "explanation": "Tony Stark is Iron Man, played on screen by Robert Downey Jr."
+        },
+        "fr": {
+          "text": "Quel super-héros porte une armure créée par Tony Stark ?",
+          "choices": [
+            "Iron Man",
+            "Captain America",
+            "Thor",
+            "Hulk"
+          ],
+          "explanation": "Tony Stark est Iron Man, joué au cinéma par Robert Downey Jr."
+        }
+      }
+    },
+    {
+      "id": "cinema_085",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What kind of animal is Dumbo?",
+          "choices": [
+            "An elephant",
+            "A mouse",
+            "A fawn",
+            "A bear cub"
+          ],
+          "explanation": "Dumbo is a baby elephant whose big ears let him fly."
+        },
+        "fr": {
+          "text": "Quel animal est Dumbo ?",
+          "choices": [
+            "Un éléphant",
+            "Un souriceau",
+            "Un faon",
+            "Un ourson"
+          ],
+          "explanation": "Dumbo est un éléphanteau aux grandes oreilles qui lui permettent de voler."
+        }
+      }
+    },
+    {
+      "id": "cinema_086",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which fictional city does Batman live?",
+          "choices": [
+            "Metropolis",
+            "Star City",
+            "Central City",
+            "Gotham City"
+          ],
+          "explanation": "Batman protects Gotham City; Metropolis is Superman's city."
+        },
+        "fr": {
+          "text": "Dans quelle ville de fiction vit Batman ?",
+          "choices": [
+            "Metropolis",
+            "Star City",
+            "Central City",
+            "Gotham City"
+          ],
+          "explanation": "Batman protège Gotham City ; Metropolis est la ville de Superman."
+        }
+      }
+    },
+    {
+      "id": "cinema_087",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which green character lives in a swamp and marries Fiona?",
+          "choices": [
+            "Hulk",
+            "Kermit",
+            "Shrek",
+            "Yoda"
+          ],
+          "explanation": "Shrek, the ogre of the DreamWorks film (2001), marries Princess Fiona."
+        },
+        "fr": {
+          "text": "Quel personnage vert vit dans un marais et épouse Fiona ?",
+          "choices": [
+            "Hulk",
+            "Kermit",
+            "Shrek",
+            "Yoda"
+          ],
+          "explanation": "Shrek, l'ogre du film de DreamWorks (2001), épouse la princesse Fiona."
+        }
+      }
+    },
+    {
+      "id": "cinema_088",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which actor plays Jack Sparrow in 'Pirates of the Caribbean'?",
+          "choices": [
+            "Orlando Bloom",
+            "Johnny Depp",
+            "Brad Pitt",
+            "Keanu Reeves"
+          ],
+          "explanation": "Johnny Depp has played Captain Jack Sparrow since the first film of the saga in 2003."
+        },
+        "fr": {
+          "text": "Quel acteur incarne Jack Sparrow dans « Pirates des Caraïbes » ?",
+          "choices": [
+            "Orlando Bloom",
+            "Johnny Depp",
+            "Brad Pitt",
+            "Keanu Reeves"
+          ],
+          "explanation": "Johnny Depp joue le capitaine Jack Sparrow depuis le premier film de la saga, en 2003."
+        }
+      }
+    },
+    {
+      "id": "cinema_089",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Pixar film follows a family of superheroes?",
+          "choices": [
+            "Up",
+            "Cars",
+            "Ratatouille",
+            "The Incredibles"
+          ],
+          "explanation": "'The Incredibles' (2004) tells the story of the Parr family, superheroes in hiding."
+        },
+        "fr": {
+          "text": "Quel film d'animation Pixar suit une famille de super-héros ?",
+          "choices": [
+            "Là-haut",
+            "Cars",
+            "Ratatouille",
+            "Les Indestructibles"
+          ],
+          "explanation": "« Les Indestructibles » (2004) raconte la vie de la famille Parr, des super-héros cachés."
+        }
+      }
+    },
+    {
+      "id": "cinema_090",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Ratatouille', which animal dreams of becoming a chef?",
+          "choices": [
+            "A mouse",
+            "A cat",
+            "A rat",
+            "A hamster"
+          ],
+          "explanation": "Rémy, a rat with a refined palate, dreams of cooking in Paris."
+        },
+        "fr": {
+          "text": "Dans « Ratatouille », quel animal rêve de devenir chef cuisinier ?",
+          "choices": [
+            "Une souris",
+            "Un chat",
+            "Un rat",
+            "Un hamster"
+          ],
+          "explanation": "Rémy, un rat au goût très fin, rêve de cuisiner à Paris."
+        }
+      }
+    },
+    {
+      "id": "cinema_091",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of secret agent 007?",
+          "choices": [
+            "Jason Bourne",
+            "James Bond",
+            "Ethan Hunt",
+            "Jack Ryan"
+          ],
+          "explanation": "007 is the code number of James Bond, the MI6 agent created by Ian Fleming."
+        },
+        "fr": {
+          "text": "Quel est le nom de l'agent secret matricule 007 ?",
+          "choices": [
+            "Jason Bourne",
+            "James Bond",
+            "Ethan Hunt",
+            "Jack Ryan"
+          ],
+          "explanation": "007 est le matricule de James Bond, l'agent du MI6 créé par Ian Fleming."
+        }
+      }
+    },
+    {
+      "id": "cinema_092",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which Disney film does a girl lose a glass slipper?",
+          "choices": [
+            "Cinderella",
+            "Snow White",
+            "Sleeping Beauty",
+            "Tangled"
+          ],
+          "explanation": "Cinderella loses her glass slipper as she leaves the ball at midnight."
+        },
+        "fr": {
+          "text": "Dans quel film Disney une jeune fille perd-elle une pantoufle de verre ?",
+          "choices": [
+            "Cendrillon",
+            "Blanche-Neige",
+            "La Belle au bois dormant",
+            "Raiponce"
+          ],
+          "explanation": "Cendrillon perd sa pantoufle de verre en quittant le bal à minuit."
+        }
+      }
+    },
+    {
+      "id": "cinema_093",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which robot cleans an abandoned Earth in a 2008 Pixar film?",
+          "choices": [
+            "EVE",
+            "R2-D2",
+            "Baymax",
+            "WALL-E"
+          ],
+          "explanation": "WALL-E compacts the rubbish of an empty Earth; he falls in love with EVE."
+        },
+        "fr": {
+          "text": "Quel robot nettoie une Terre abandonnée dans un film Pixar de 2008 ?",
+          "choices": [
+            "EVE",
+            "R2-D2",
+            "Baymax",
+            "WALL-E"
+          ],
+          "explanation": "WALL-E compacte les déchets d'une Terre désertée ; il tombe amoureux d'EVE."
+        }
+      }
+    },
+    {
+      "id": "cinema_094",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which superhero is bitten by a radioactive spider?",
+          "choices": [
+            "Ant-Man",
+            "Spider-Man",
+            "Batman",
+            "Daredevil"
+          ],
+          "explanation": "Peter Parker becomes Spider-Man after being bitten by a modified spider."
+        },
+        "fr": {
+          "text": "Quel super-héros est piqué par une araignée radioactive ?",
+          "choices": [
+            "Ant-Man",
+            "Spider-Man",
+            "Batman",
+            "Daredevil"
+          ],
+          "explanation": "Peter Parker devient Spider-Man après la piqûre d'une araignée modifiée."
+        }
+      }
+    },
+    {
+      "id": "cinema_095",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Austrian actor plays the Terminator?",
+          "choices": [
+            "Arnold Schwarzenegger",
+            "Sylvester Stallone",
+            "Jean-Claude Van Damme",
+            "Dolph Lundgren"
+          ],
+          "explanation": "Arnold Schwarzenegger plays the T-800 in James Cameron's 'The Terminator' (1984)."
+        },
+        "fr": {
+          "text": "Quel acteur autrichien joue le Terminator ?",
+          "choices": [
+            "Arnold Schwarzenegger",
+            "Sylvester Stallone",
+            "Jean-Claude Van Damme",
+            "Dolph Lundgren"
+          ],
+          "explanation": "Arnold Schwarzenegger incarne le T-800 dans « Terminator » (1984) de James Cameron."
+        }
+      }
+    },
+    {
+      "id": "cinema_096",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Finding Nemo', what kind of fish is Dory?",
+          "choices": [
+            "A clownfish",
+            "A sunfish",
+            "A blue tang",
+            "A shark"
+          ],
+          "explanation": "Dory is a blue tang with a very short memory."
+        },
+        "fr": {
+          "text": "Dans « Le Monde de Nemo », de quel type de poisson est Dory ?",
+          "choices": [
+            "Un poisson-clown",
+            "Un poisson-lune",
+            "Un poisson chirurgien bleu",
+            "Un requin"
+          ],
+          "explanation": "Dory est un poisson chirurgien bleu à la mémoire très courte."
+        }
+      }
+    },
+    {
+      "id": "cinema_097",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which wizard guides Frodo in 'The Lord of the Rings'?",
+          "choices": [
+            "Gandalf",
+            "Saruman",
+            "Elrond",
+            "Dumbledore"
+          ],
+          "explanation": "Gandalf the Grey, played by Ian McKellen, travels with the Fellowship of the Ring."
+        },
+        "fr": {
+          "text": "Quel magicien guide Frodon dans « Le Seigneur des anneaux » ?",
+          "choices": [
+            "Gandalf",
+            "Saroumane",
+            "Elrond",
+            "Dumbledore"
+          ],
+          "explanation": "Gandalf le Gris, joué par Ian McKellen, accompagne la Communauté de l'Anneau."
+        }
+      }
+    },
+    {
+      "id": "cinema_098",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What colour is Darth Vader's lightsaber?",
+          "choices": [
+            "Blue",
+            "Green",
+            "Red",
+            "Purple"
+          ],
+          "explanation": "Sith lords such as Darth Vader wield red lightsabers."
+        },
+        "fr": {
+          "text": "Quelle est la couleur du sabre laser de Dark Vador ?",
+          "choices": [
+            "Bleu",
+            "Vert",
+            "Rouge",
+            "Violet"
+          ],
+          "explanation": "Les Sith, comme Dark Vador, manient des sabres laser rouges."
+        }
+      }
+    },
+    {
+      "id": "cinema_099",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which film features toys that come to life when humans are away?",
+          "choices": [
+            "Coco",
+            "Toy Story",
+            "Inside Out",
+            "Monsters, Inc."
+          ],
+          "explanation": "In 'Toy Story', Woody, Buzz and the other toys come alive when Andy is away."
+        },
+        "fr": {
+          "text": "Quel film met en scène des jouets qui prennent vie quand les humains sont absents ?",
+          "choices": [
+            "Coco",
+            "Toy Story",
+            "Vice-versa",
+            "Monstres et Cie"
+          ],
+          "explanation": "Dans « Toy Story », Woody, Buzz et les autres jouets s'animent en l'absence d'Andy."
+        }
+      }
+    },
+    {
+      "id": "cinema_100",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which giant monster is the star of the 1954 Japanese film named after it?",
+          "choices": [
+            "Rodan",
+            "Mothra",
+            "Gamera",
+            "Godzilla"
+          ],
+          "explanation": "Godzilla, created by Toho in 1954, became the most famous giant monster."
+        },
+        "fr": {
+          "text": "Quel monstre géant est la star du film japonais de 1954 portant son nom ?",
+          "choices": [
+            "Rodan",
+            "Mothra",
+            "Gamera",
+            "Godzilla"
+          ],
+          "explanation": "Godzilla, créé par la Toho en 1954, est devenu le plus célèbre des monstres géants."
+        }
+      }
+    },
+    {
+      "id": "cinema_101",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Inside Out', which emotion is yellow and always cheerful?",
+          "choices": [
+            "Sadness",
+            "Anger",
+            "Joy",
+            "Fear"
+          ],
+          "explanation": "Joy is the bright emotion who runs Riley's headquarters."
+        },
+        "fr": {
+          "text": "Dans « Vice-versa », quelle émotion est jaune et toujours joyeuse ?",
+          "choices": [
+            "Tristesse",
+            "Colère",
+            "Joie",
+            "Peur"
+          ],
+          "explanation": "Joie est l'émotion lumineuse qui mène le quartier général de Riley."
+        }
+      }
+    },
+    {
+      "id": "cinema_102",
+      "category": "cinema",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Disney film tells the story of a mermaid named Ariel?",
+          "choices": [
+            "Moana",
+            "Pocahontas",
+            "Aladdin",
+            "The Little Mermaid"
+          ],
+          "explanation": "'The Little Mermaid' (1989) is based on Hans Christian Andersen's tale."
+        },
+        "fr": {
+          "text": "Quel film de Disney raconte l'histoire d'une sirène nommée Ariel ?",
+          "choices": [
+            "Vaiana",
+            "Pocahontas",
+            "Aladdin",
+            "La Petite Sirène"
+          ],
+          "explanation": "« La Petite Sirène » (1989) s'inspire du conte de Hans Christian Andersen."
+        }
+      }
+    },
+    {
+      "id": "cinema_103",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who directed 'Pulp Fiction' (1994)?",
+          "choices": [
+            "Martin Scorsese",
+            "Quentin Tarantino",
+            "David Fincher",
+            "Guy Ritchie"
+          ],
+          "explanation": "Quentin Tarantino's 'Pulp Fiction' won the Palme d'Or at Cannes in 1994."
+        },
+        "fr": {
+          "text": "Qui a réalisé « Pulp Fiction » (1994) ?",
+          "choices": [
+            "Martin Scorsese",
+            "Quentin Tarantino",
+            "David Fincher",
+            "Guy Ritchie"
+          ],
+          "explanation": "« Pulp Fiction » de Quentin Tarantino a remporté la Palme d'or à Cannes en 1994."
+        }
+      }
+    },
+    {
+      "id": "cinema_104",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which actor plays Forrest Gump?",
+          "choices": [
+            "Tom Hanks",
+            "Robin Williams",
+            "Kevin Costner",
+            "Jim Carrey"
+          ],
+          "explanation": "Tom Hanks won the Best Actor Oscar for 'Forrest Gump' (1994)."
+        },
+        "fr": {
+          "text": "Quel acteur joue Forrest Gump ?",
+          "choices": [
+            "Tom Hanks",
+            "Robin Williams",
+            "Kevin Costner",
+            "Jim Carrey"
+          ],
+          "explanation": "Tom Hanks a remporté l'Oscar du meilleur acteur pour « Forrest Gump » (1994)."
+        }
+      }
+    },
+    {
+      "id": "cinema_105",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'The Godfather', which mafia family is at the heart of the story?",
+          "choices": [
+            "The Corleones",
+            "The Sopranos",
+            "The Tattaglias",
+            "The Barzinis"
+          ],
+          "explanation": "Francis Ford Coppola's film follows Vito Corleone and his son Michael."
+        },
+        "fr": {
+          "text": "Dans « Le Parrain », quelle famille mafieuse est au centre de l'histoire ?",
+          "choices": [
+            "Les Corleone",
+            "Les Soprano",
+            "Les Tattaglia",
+            "Les Barzini"
+          ],
+          "explanation": "Le film de Francis Ford Coppola suit Vito Corleone et son fils Michael."
+        }
+      }
+    },
+    {
+      "id": "cinema_106",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which director made 'E.T. the Extra-Terrestrial'?",
+          "choices": [
+            "George Lucas",
+            "Robert Zemeckis",
+            "Steven Spielberg",
+            "Ridley Scott"
+          ],
+          "explanation": "Steven Spielberg's 'E.T.' (1982) was for years the biggest box-office hit."
+        },
+        "fr": {
+          "text": "Quel réalisateur a signé « E.T. l'extra-terrestre » ?",
+          "choices": [
+            "George Lucas",
+            "Robert Zemeckis",
+            "Steven Spielberg",
+            "Ridley Scott"
+          ],
+          "explanation": "« E.T. » (1982) de Steven Spielberg a longtemps été le plus gros succès du box-office."
+        }
+      }
+    },
+    {
+      "id": "cinema_107",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French actor played Obelix in the Asterix films released from 1999 to 2012?",
+          "choices": [
+            "Christian Clavier",
+            "Jean Reno",
+            "Gilles Lellouche",
+            "Gérard Depardieu"
+          ],
+          "explanation": "Gérard Depardieu played Obelix in four films; Gilles Lellouche took over the role in 2023."
+        },
+        "fr": {
+          "text": "Quel acteur français joue Obélix dans les films Astérix sortis de 1999 à 2012 ?",
+          "choices": [
+            "Christian Clavier",
+            "Jean Reno",
+            "Gilles Lellouche",
+            "Gérard Depardieu"
+          ],
+          "explanation": "Gérard Depardieu a été Obélix dans quatre films ; Gilles Lellouche a repris le rôle en 2023."
+        }
+      }
+    },
+    {
+      "id": "cinema_108",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which 1997 Luc Besson film is set in the 23rd century with Bruce Willis?",
+          "choices": [
+            "Léon",
+            "The Fifth Element",
+            "Nikita",
+            "Lucy"
+          ],
+          "explanation": "In 'The Fifth Element', Bruce Willis plays Korben Dallas, a New York taxi driver."
+        },
+        "fr": {
+          "text": "Quel film de 1997 de Luc Besson se déroule au XXIIIe siècle avec Bruce Willis ?",
+          "choices": [
+            "Léon",
+            "Le Cinquième Élément",
+            "Nikita",
+            "Lucy"
+          ],
+          "explanation": "Dans « Le Cinquième Élément », Bruce Willis joue Korben Dallas, chauffeur de taxi à New York."
+        }
+      }
+    },
+    {
+      "id": "cinema_109",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which actor plays Wolverine in the X-Men films?",
+          "choices": [
+            "Chris Hemsworth",
+            "Russell Crowe",
+            "Hugh Jackman",
+            "Ryan Reynolds"
+          ],
+          "explanation": "Hugh Jackman played Wolverine from 'X-Men' (2000) to 'Deadpool & Wolverine' (2024)."
+        },
+        "fr": {
+          "text": "Quel acteur incarne Wolverine dans la saga X-Men ?",
+          "choices": [
+            "Chris Hemsworth",
+            "Russell Crowe",
+            "Hugh Jackman",
+            "Ryan Reynolds"
+          ],
+          "explanation": "Hugh Jackman a joué Wolverine de « X-Men » (2000) à « Deadpool & Wolverine » (2024)."
+        }
+      }
+    },
+    {
+      "id": "cinema_110",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'The Matrix', which actor plays Neo?",
+          "choices": [
+            "Laurence Fishburne",
+            "Hugo Weaving",
+            "Will Smith",
+            "Keanu Reeves"
+          ],
+          "explanation": "Keanu Reeves is Neo; Laurence Fishburne plays Morpheus and Hugo Weaving plays Agent Smith."
+        },
+        "fr": {
+          "text": "Dans « Matrix », quel acteur joue Neo ?",
+          "choices": [
+            "Laurence Fishburne",
+            "Hugo Weaving",
+            "Will Smith",
+            "Keanu Reeves"
+          ],
+          "explanation": "Keanu Reeves est Neo ; Laurence Fishburne joue Morpheus et Hugo Weaving l'agent Smith."
+        }
+      }
+    },
+    {
+      "id": "cinema_111",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Christopher Nolan film tells the story of the atomic bomb's creation?",
+          "choices": [
+            "Tenet",
+            "Oppenheimer",
+            "Dunkirk",
+            "The Prestige"
+          ],
+          "explanation": "'Oppenheimer' (2023) won seven Oscars, including Best Picture."
+        },
+        "fr": {
+          "text": "Quel film de Christopher Nolan raconte la création de la bombe atomique ?",
+          "choices": [
+            "Tenet",
+            "Oppenheimer",
+            "Dunkerque",
+            "Le Prestige"
+          ],
+          "explanation": "« Oppenheimer » (2023) a remporté sept Oscars, dont celui du meilleur film."
+        }
+      }
+    },
+    {
+      "id": "cinema_112",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the first name of Jean Dujardin's character in 'OSS 117'?",
+          "choices": [
+            "Hubert",
+            "Arnaud",
+            "Georges",
+            "Lucien"
+          ],
+          "explanation": "Jean Dujardin plays Hubert Bonisseur de La Bath, alias OSS 117."
+        },
+        "fr": {
+          "text": "Quel est le prénom du personnage joué par Jean Dujardin dans « OSS 117 » ?",
+          "choices": [
+            "Hubert",
+            "Arnaud",
+            "Georges",
+            "Lucien"
+          ],
+          "explanation": "Jean Dujardin incarne Hubert Bonisseur de La Bath, alias OSS 117."
+        }
+      }
+    },
+    {
+      "id": "cinema_113",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French silent film won Jean Dujardin the Best Actor Oscar?",
+          "choices": [
+            "The Intouchables",
+            "The Artist",
+            "La Vie en Rose",
+            "Amour"
+          ],
+          "explanation": "'The Artist' (2011), silent and in black and white, won five Oscars including Best Picture."
+        },
+        "fr": {
+          "text": "Quel film muet français a valu à Jean Dujardin l'Oscar du meilleur acteur ?",
+          "choices": [
+            "Intouchables",
+            "The Artist",
+            "La Môme",
+            "Amour"
+          ],
+          "explanation": "« The Artist » (2011), en noir et blanc et muet, a gagné cinq Oscars dont celui du meilleur film."
+        }
+      }
+    },
+    {
+      "id": "cinema_114",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French actress won the Oscar for playing Édith Piaf?",
+          "choices": [
+            "Audrey Tautou",
+            "Juliette Binoche",
+            "Marion Cotillard",
+            "Léa Seydoux"
+          ],
+          "explanation": "Marion Cotillard won the Best Actress Oscar in 2008 for 'La Vie en Rose'."
+        },
+        "fr": {
+          "text": "Quelle actrice française a remporté l'Oscar pour son rôle d'Édith Piaf ?",
+          "choices": [
+            "Audrey Tautou",
+            "Juliette Binoche",
+            "Marion Cotillard",
+            "Léa Seydoux"
+          ],
+          "explanation": "Marion Cotillard a gagné l'Oscar de la meilleure actrice en 2008 pour « La Môme »."
+        }
+      }
+    },
+    {
+      "id": "cinema_115",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Jaws', which animal terrorises the seaside town?",
+          "choices": [
+            "A great white shark",
+            "An orca",
+            "A giant squid",
+            "A crocodile"
+          ],
+          "explanation": "Spielberg's 1975 film features a great white shark off Amity Island."
+        },
+        "fr": {
+          "text": "Dans « Les Dents de la mer », quel animal terrorise la station balnéaire ?",
+          "choices": [
+            "Un grand requin blanc",
+            "Une orque",
+            "Un calmar géant",
+            "Un crocodile"
+          ],
+          "explanation": "Le film de Spielberg (1975) met en scène un grand requin blanc au large d'Amity Island."
+        }
+      }
+    },
+    {
+      "id": "cinema_116",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Disney film is set in China with a heroine who disguises herself as a soldier?",
+          "choices": [
+            "Raya and the Last Dragon",
+            "Pocahontas",
+            "Moana",
+            "Mulan"
+          ],
+          "explanation": "Mulan takes her father's place in the army by passing herself off as a man."
+        },
+        "fr": {
+          "text": "Quel film de Disney se déroule en Chine avec une héroïne qui se déguise en soldat ?",
+          "choices": [
+            "Raya et le dernier dragon",
+            "Pocahontas",
+            "Vaiana",
+            "Mulan"
+          ],
+          "explanation": "Mulan prend la place de son père dans l'armée en se faisant passer pour un homme."
+        }
+      }
+    },
+    {
+      "id": "cinema_117",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which actor plays Gollum through motion capture?",
+          "choices": [
+            "Elijah Wood",
+            "Ian Holm",
+            "Andy Serkis",
+            "Sean Astin"
+          ],
+          "explanation": "Andy Serkis gave Gollum his body and voice through motion capture."
+        },
+        "fr": {
+          "text": "Quel acteur joue Gollum grâce à la capture de mouvement ?",
+          "choices": [
+            "Elijah Wood",
+            "Ian Holm",
+            "Andy Serkis",
+            "Sean Astin"
+          ],
+          "explanation": "Andy Serkis a donné corps et voix à Gollum grâce à la capture de mouvement."
+        }
+      }
+    },
+    {
+      "id": "cinema_118",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Japanese studio produced 'My Neighbor Totoro'?",
+          "choices": [
+            "Toei Animation",
+            "Studio Pierrot",
+            "Madhouse",
+            "Studio Ghibli"
+          ],
+          "explanation": "Hayao Miyazaki's 'My Neighbor Totoro' (1988) is Studio Ghibli's emblem."
+        },
+        "fr": {
+          "text": "Quel studio japonais a produit « Mon voisin Totoro » ?",
+          "choices": [
+            "Toei Animation",
+            "Studio Pierrot",
+            "Madhouse",
+            "Le studio Ghibli"
+          ],
+          "explanation": "« Mon voisin Totoro » (1988) de Hayao Miyazaki est l'emblème du studio Ghibli."
+        }
+      }
+    },
+    {
+      "id": "cinema_119",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Back to the Future', which actor plays Marty McFly?",
+          "choices": [
+            "Michael J. Fox",
+            "Christopher Lloyd",
+            "Tom Cruise",
+            "Matthew Broderick"
+          ],
+          "explanation": "Michael J. Fox plays Marty; Christopher Lloyd plays Doc Brown."
+        },
+        "fr": {
+          "text": "Dans « Retour vers le futur », quel acteur joue Marty McFly ?",
+          "choices": [
+            "Michael J. Fox",
+            "Christopher Lloyd",
+            "Tom Cruise",
+            "Matthew Broderick"
+          ],
+          "explanation": "Michael J. Fox joue Marty ; Christopher Lloyd incarne Doc Brown."
+        }
+      }
+    },
+    {
+      "id": "cinema_120",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which 1993 Steven Spielberg film tells the story of Oskar Schindler?",
+          "choices": [
+            "The Pianist",
+            "Schindler's List",
+            "Saving Private Ryan",
+            "Munich"
+          ],
+          "explanation": "'Schindler's List' won seven Oscars, including Best Picture."
+        },
+        "fr": {
+          "text": "Quel film de Steven Spielberg (1993) raconte l'histoire d'Oskar Schindler ?",
+          "choices": [
+            "Le Pianiste",
+            "La Liste de Schindler",
+            "Il faut sauver le soldat Ryan",
+            "Munich"
+          ],
+          "explanation": "« La Liste de Schindler » a remporté sept Oscars, dont celui du meilleur film."
+        }
+      }
+    },
+    {
+      "id": "cinema_121",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which 'Frozen' song became a worldwide phenomenon?",
+          "choices": [
+            "A Whole New World",
+            "Hakuna Matata",
+            "Let It Go",
+            "Colors of the Wind"
+          ],
+          "explanation": "'Let It Go' won the Oscar for Best Original Song in 2014."
+        },
+        "fr": {
+          "text": "Quelle chanson de « La Reine des neiges » est devenue un phénomène mondial ?",
+          "choices": [
+            "Ce rêve bleu",
+            "Hakuna Matata",
+            "Libérée, délivrée",
+            "L'Air du vent"
+          ],
+          "explanation": "« Libérée, délivrée » (« Let It Go ») a remporté l'Oscar de la meilleure chanson en 2014."
+        }
+      }
+    },
+    {
+      "id": "cinema_122",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which actor plays Jack Torrance in 'The Shining'?",
+          "choices": [
+            "Robert De Niro",
+            "Jack Nicholson",
+            "Al Pacino",
+            "Dustin Hoffman"
+          ],
+          "explanation": "Jack Nicholson plays the writer who descends into madness at the Overlook Hotel."
+        },
+        "fr": {
+          "text": "Quel acteur joue Jack Torrance dans « Shining » ?",
+          "choices": [
+            "Robert De Niro",
+            "Jack Nicholson",
+            "Al Pacino",
+            "Dustin Hoffman"
+          ],
+          "explanation": "Jack Nicholson incarne l'écrivain qui sombre dans la folie à l'hôtel Overlook."
+        }
+      }
+    },
+    {
+      "id": "cinema_123",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which film is Tom Hanks stranded on an island with a ball named Wilson?",
+          "choices": [
+            "The Terminal",
+            "Big",
+            "Philadelphia",
+            "Cast Away"
+          ],
+          "explanation": "In 'Cast Away' (2000), Chuck Noland befriends a volleyball."
+        },
+        "fr": {
+          "text": "Dans quel film Tom Hanks est-il naufragé sur une île avec un ballon nommé Wilson ?",
+          "choices": [
+            "Le Terminal",
+            "Big",
+            "Philadelphia",
+            "Seul au monde"
+          ],
+          "explanation": "Dans « Seul au monde » (2000), Chuck Noland se lie d'amitié avec un ballon de volley."
+        }
+      }
+    },
+    {
+      "id": "cinema_124",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which 2019 Todd Phillips film tells the origin of a Batman villain?",
+          "choices": [
+            "Joker",
+            "The Batman",
+            "Suicide Squad",
+            "Birds of Prey"
+          ],
+          "explanation": "Joaquin Phoenix won the Best Actor Oscar for 'Joker'."
+        },
+        "fr": {
+          "text": "Quel film de 2019 de Todd Phillips raconte les origines d'un ennemi de Batman ?",
+          "choices": [
+            "Joker",
+            "The Batman",
+            "Suicide Squad",
+            "Birds of Prey"
+          ],
+          "explanation": "Joaquin Phoenix a gagné l'Oscar du meilleur acteur pour « Joker »."
+        }
+      }
+    },
+    {
+      "id": "cinema_125",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French duo stars in 'Les Visiteurs'?",
+          "choices": [
+            "Omar and Fred",
+            "Christian Clavier and Jean Reno",
+            "Kad and Olivier",
+            "Éric and Ramzy"
+          ],
+          "explanation": "Jean Reno is Godefroy de Montmirail and Christian Clavier his squire Jacquouille."
+        },
+        "fr": {
+          "text": "Quel duo comique français joue dans « Les Visiteurs » ?",
+          "choices": [
+            "Omar et Fred",
+            "Christian Clavier et Jean Reno",
+            "Kad et Olivier",
+            "Éric et Ramzy"
+          ],
+          "explanation": "Jean Reno est Godefroy de Montmirail et Christian Clavier son écuyer Jacquouille."
+        }
+      }
+    },
+    {
+      "id": "cinema_126",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which saga features Dominic Toretto's 'family'?",
+          "choices": [
+            "Mission: Impossible",
+            "The Transporter",
+            "Fast & Furious",
+            "Taxi"
+          ],
+          "explanation": "Vin Diesel has played Dominic Toretto in the 'Fast & Furious' saga since 2001."
+        },
+        "fr": {
+          "text": "Quelle saga met en scène la famille de Dominic Toretto ?",
+          "choices": [
+            "Mission impossible",
+            "Transporteur",
+            "Fast and Furious",
+            "Taxi"
+          ],
+          "explanation": "Vin Diesel incarne Dominic Toretto dans la saga « Fast and Furious » depuis 2001."
+        }
+      }
+    },
+    {
+      "id": "cinema_127",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of Han Solo's ship?",
+          "choices": [
+            "The Millennium Falcon",
+            "The Death Star",
+            "The Star Destroyer",
+            "The Enterprise"
+          ],
+          "explanation": "The Millennium Falcon 'made the Kessel Run in less than twelve parsecs'."
+        },
+        "fr": {
+          "text": "Quel est le nom du vaisseau de Han Solo ?",
+          "choices": [
+            "Le Faucon Millenium",
+            "L'Étoile de la Mort",
+            "Le Destroyer stellaire",
+            "L'Enterprise"
+          ],
+          "explanation": "Le Faucon Millenium a fait « le raid de Kessel en moins de douze parsecs »."
+        }
+      }
+    },
+    {
+      "id": "cinema_128",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "For which film did Leonardo DiCaprio finally win the Best Actor Oscar?",
+          "choices": [
+            "The Wolf of Wall Street",
+            "Titanic",
+            "Inception",
+            "The Revenant"
+          ],
+          "explanation": "DiCaprio won in 2016 for playing a trapper in 'The Revenant'."
+        },
+        "fr": {
+          "text": "Dans quel film Leonardo DiCaprio a-t-il enfin remporté l'Oscar du meilleur acteur ?",
+          "choices": [
+            "Le Loup de Wall Street",
+            "Titanic",
+            "Inception",
+            "The Revenant"
+          ],
+          "explanation": "DiCaprio a été récompensé en 2016 pour son rôle de trappeur dans « The Revenant »."
+        }
+      }
+    },
+    {
+      "id": "cinema_129",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Pixar film is set during Mexico's Day of the Dead?",
+          "choices": [
+            "Encanto",
+            "Coco",
+            "Luca",
+            "Soul"
+          ],
+          "explanation": "'Coco' (2017) follows Miguel, who crosses into the Land of the Dead during Día de Muertos."
+        },
+        "fr": {
+          "text": "Quel film de Pixar se déroule pendant la fête des morts au Mexique ?",
+          "choices": [
+            "Encanto",
+            "Coco",
+            "Luca",
+            "Soul"
+          ],
+          "explanation": "« Coco » (2017) suit Miguel, qui passe au pays des morts pendant le Día de Muertos."
+        }
+      }
+    },
+    {
+      "id": "cinema_130",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which actor plays Driss in 'The Intouchables' (2011)?",
+          "choices": [
+            "Jamel Debbouze",
+            "Kad Merad",
+            "Dany Boon",
+            "Omar Sy"
+          ],
+          "explanation": "Omar Sy won the César for Best Actor for playing Driss opposite François Cluzet."
+        },
+        "fr": {
+          "text": "Quel acteur joue Driss dans « Intouchables » (2011) ?",
+          "choices": [
+            "Jamel Debbouze",
+            "Kad Merad",
+            "Dany Boon",
+            "Omar Sy"
+          ],
+          "explanation": "Omar Sy a remporté le César du meilleur acteur pour son rôle de Driss face à François Cluzet."
+        }
+      }
+    },
+    {
+      "id": "cinema_131",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which actor plays Tintin in Steven Spielberg's 2011 film?",
+          "choices": [
+            "Daniel Radcliffe",
+            "Elijah Wood",
+            "Jamie Bell",
+            "Tom Holland"
+          ],
+          "explanation": "Jamie Bell plays Tintin through motion capture; Andy Serkis plays Captain Haddock."
+        },
+        "fr": {
+          "text": "Quel acteur prête ses traits à Tintin dans le film de Steven Spielberg (2011) ?",
+          "choices": [
+            "Daniel Radcliffe",
+            "Elijah Wood",
+            "Jamie Bell",
+            "Tom Holland"
+          ],
+          "explanation": "Jamie Bell joue Tintin en capture de mouvement ; Andy Serkis incarne le capitaine Haddock."
+        }
+      }
+    },
+    {
+      "id": "cinema_132",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which actress plays Hermione Granger in the Harry Potter films?",
+          "choices": [
+            "Emma Watson",
+            "Emma Stone",
+            "Keira Knightley",
+            "Bonnie Wright"
+          ],
+          "explanation": "Emma Watson played Hermione in all eight films, from 2001 to 2011."
+        },
+        "fr": {
+          "text": "Quelle actrice joue Hermione Granger dans les films Harry Potter ?",
+          "choices": [
+            "Emma Watson",
+            "Emma Stone",
+            "Keira Knightley",
+            "Bonnie Wright"
+          ],
+          "explanation": "Emma Watson a joué Hermione dans les huit films, de 2001 à 2011."
+        }
+      }
+    },
+    {
+      "id": "cinema_133",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which 2016 Damien Chazelle film is a jazz musical set in Los Angeles?",
+          "choices": [
+            "Whiplash",
+            "La La Land",
+            "Babylon",
+            "First Man"
+          ],
+          "explanation": "'La La Land' won six Oscars; it was wrongly announced as Best Picture instead of 'Moonlight'."
+        },
+        "fr": {
+          "text": "Quel film de 2016 de Damien Chazelle se passe à Los Angeles entre jazz et comédie musicale ?",
+          "choices": [
+            "Whiplash",
+            "La La Land",
+            "Babylon",
+            "First Man"
+          ],
+          "explanation": "« La La Land » a gagné six Oscars ; il a été annoncé par erreur meilleur film à la place de « Moonlight »."
+        }
+      }
+    },
+    {
+      "id": "cinema_134",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who directed 'Amélie' (2001)?",
+          "choices": [
+            "Jean-Pierre Jeunet",
+            "Luc Besson",
+            "Michel Gondry",
+            "Jacques Audiard"
+          ],
+          "explanation": "Jean-Pierre Jeunet directed 'Amélie' (2001), starring Audrey Tautou."
+        },
+        "fr": {
+          "text": "Quel réalisateur a tourné « Le Fabuleux Destin d'Amélie Poulain » ?",
+          "choices": [
+            "Jean-Pierre Jeunet",
+            "Luc Besson",
+            "Michel Gondry",
+            "Jacques Audiard"
+          ],
+          "explanation": "Jean-Pierre Jeunet a réalisé « Amélie » (2001), avec Audrey Tautou."
+        }
+      }
+    },
+    {
+      "id": "cinema_135",
+      "category": "cinema",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which 2009 James Cameron film is set on the moon Pandora?",
+          "choices": [
+            "Alita",
+            "The Abyss",
+            "Aliens",
+            "Avatar"
+          ],
+          "explanation": "In 'Avatar', the Na'vi live on Pandora, a moon of the gas giant Polyphemus."
+        },
+        "fr": {
+          "text": "Quel film de 2009 de James Cameron se déroule sur la lune Pandora ?",
+          "choices": [
+            "Alita",
+            "Abyss",
+            "Aliens",
+            "Avatar"
+          ],
+          "explanation": "Dans « Avatar », les Na'vi vivent sur Pandora, une lune de la géante gazeuse Polyphème."
+        }
+      }
+    },
+    {
+      "id": "cinema_136",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which 1939 film won Best Picture, starring Vivien Leigh?",
+          "choices": [
+            "The Wizard of Oz",
+            "Casablanca",
+            "Gone with the Wind",
+            "Rebecca"
+          ],
+          "explanation": "'Gone with the Wind' won eight competitive Oscars in 1940."
+        },
+        "fr": {
+          "text": "Quel film de 1939 a remporté l'Oscar du meilleur film avec Vivien Leigh ?",
+          "choices": [
+            "Le Magicien d'Oz",
+            "Casablanca",
+            "Autant en emporte le vent",
+            "Rebecca"
+          ],
+          "explanation": "« Autant en emporte le vent » a remporté huit Oscars compétitifs en 1940."
+        }
+      }
+    },
+    {
+      "id": "cinema_137",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who directed '2001: A Space Odyssey'?",
+          "choices": [
+            "Stanley Kubrick",
+            "Andrei Tarkovsky",
+            "Ridley Scott",
+            "George Lucas"
+          ],
+          "explanation": "Stanley Kubrick made this 1968 film, co-written with Arthur C. Clarke."
+        },
+        "fr": {
+          "text": "Quel réalisateur a signé « 2001 : l'Odyssée de l'espace » ?",
+          "choices": [
+            "Stanley Kubrick",
+            "Andreï Tarkovski",
+            "Ridley Scott",
+            "George Lucas"
+          ],
+          "explanation": "Stanley Kubrick a réalisé ce film de 1968, coécrit avec Arthur C. Clarke."
+        }
+      }
+    },
+    {
+      "id": "cinema_138",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of the onboard computer in '2001: A Space Odyssey'?",
+          "choices": [
+            "Skynet",
+            "MU-TH-UR",
+            "HAL 9000",
+            "JARVIS"
+          ],
+          "explanation": "HAL 9000 runs the Discovery One ship and ends up turning against the crew."
+        },
+        "fr": {
+          "text": "Comment s'appelle l'ordinateur de bord de « 2001 : l'Odyssée de l'espace » ?",
+          "choices": [
+            "Skynet",
+            "MU-TH-UR",
+            "HAL 9000",
+            "JARVIS"
+          ],
+          "explanation": "HAL 9000 contrôle le vaisseau Discovery One et finit par se retourner contre l'équipage."
+        }
+      }
+    },
+    {
+      "id": "cinema_139",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which film won the first award called the Palme d'Or, in 1955?",
+          "choices": [
+            "The Wages of Fear",
+            "Marty",
+            "Black Orpheus",
+            "La Dolce Vita"
+          ],
+          "explanation": "The Palme d'Or replaced the Grand Prix in 1955; Delbert Mann's 'Marty' was the first winner."
+        },
+        "fr": {
+          "text": "Quel film a remporté la première Palme d'or sous ce nom, en 1955 ?",
+          "choices": [
+            "Le Salaire de la peur",
+            "Marty",
+            "Orfeu Negro",
+            "La Dolce Vita"
+          ],
+          "explanation": "La Palme d'or a remplacé le Grand Prix en 1955 ; « Marty » de Delbert Mann a été le premier lauréat."
+        }
+      }
+    },
+    {
+      "id": "cinema_140",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many Oscars did 'The Lord of the Rings: The Return of the King' win?",
+          "choices": [
+            "9",
+            "12",
+            "7",
+            "11"
+          ],
+          "explanation": "It won all 11 Oscars it was nominated for, a record shared with 'Ben-Hur' and 'Titanic'."
+        },
+        "fr": {
+          "text": "Combien d'Oscars « Le Seigneur des anneaux : Le Retour du roi » a-t-il remportés ?",
+          "choices": [
+            "9",
+            "12",
+            "7",
+            "11"
+          ],
+          "explanation": "Le film a gagné les 11 Oscars pour lesquels il était nommé, un record partagé avec « Ben-Hur » et « Titanic »."
+        }
+      }
+    },
+    {
+      "id": "cinema_141",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Japanese director made 'Seven Samurai' (1954)?",
+          "choices": [
+            "Yasujirō Ozu",
+            "Kenji Mizoguchi",
+            "Hayao Miyazaki",
+            "Akira Kurosawa"
+          ],
+          "explanation": "Akira Kurosawa's 'Seven Samurai' inspired the western 'The Magnificent Seven'."
+        },
+        "fr": {
+          "text": "Quel réalisateur japonais a signé « Les Sept Samouraïs » (1954) ?",
+          "choices": [
+            "Yasujirō Ozu",
+            "Kenji Mizoguchi",
+            "Hayao Miyazaki",
+            "Akira Kurosawa"
+          ],
+          "explanation": "« Les Sept Samouraïs » d'Akira Kurosawa a inspiré le western « Les Sept Mercenaires »."
+        }
+      }
+    },
+    {
+      "id": "cinema_142",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which actress holds the record of four Best Actress Oscars?",
+          "choices": [
+            "Meryl Streep",
+            "Katharine Hepburn",
+            "Bette Davis",
+            "Ingrid Bergman"
+          ],
+          "explanation": "Katharine Hepburn won four Best Actress Oscars, between 1934 and 1982."
+        },
+        "fr": {
+          "text": "Quelle actrice détient le record de quatre Oscars de la meilleure actrice ?",
+          "choices": [
+            "Meryl Streep",
+            "Katharine Hepburn",
+            "Bette Davis",
+            "Ingrid Bergman"
+          ],
+          "explanation": "Katharine Hepburn a remporté quatre Oscars de la meilleure actrice, entre 1934 et 1982."
+        }
+      }
+    },
+    {
+      "id": "cinema_143",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the MacGuffin in 'Pulp Fiction'?",
+          "choices": [
+            "A briefcase",
+            "A gold watch",
+            "A ring",
+            "A USB stick"
+          ],
+          "explanation": "The contents of Marsellus Wallace's briefcase are never revealed; only a golden glow is shown."
+        },
+        "fr": {
+          "text": "Quel est le « MacGuffin » du film « Pulp Fiction » ?",
+          "choices": [
+            "Une mallette",
+            "Une montre en or",
+            "Une bague",
+            "Une clé USB"
+          ],
+          "explanation": "Le contenu de la mallette de Marsellus Wallace n'est jamais révélé : on ne voit qu'une lueur dorée."
+        }
+      }
+    },
+    {
+      "id": "cinema_144",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Jacques Tati film shows Monsieur Hulot on holiday at the seaside?",
+          "choices": [
+            "Mon Oncle",
+            "Playtime",
+            "Monsieur Hulot's Holiday",
+            "Jour de fête"
+          ],
+          "explanation": "'Monsieur Hulot's Holiday' (1953) introduced Jacques Tati's dreamy character."
+        },
+        "fr": {
+          "text": "Quel film de Jacques Tati met en scène M. Hulot en vacances à la mer ?",
+          "choices": [
+            "Mon oncle",
+            "Playtime",
+            "Les Vacances de M. Hulot",
+            "Jour de fête"
+          ],
+          "explanation": "« Les Vacances de M. Hulot » (1953) a révélé le personnage lunaire de Jacques Tati."
+        }
+      }
+    },
+    {
+      "id": "cinema_145",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Casablanca', what is the name of Rick's bar?",
+          "choices": [
+            "Rick's Café Américain",
+            "The Blue Parrot",
+            "The Moulin Rouge",
+            "The Copacabana"
+          ],
+          "explanation": "Humphrey Bogart plays Rick Blaine, owner of Rick's Café Américain; the Blue Parrot is Ferrari's bar."
+        },
+        "fr": {
+          "text": "Dans « Casablanca », quel est le nom du bar de Rick ?",
+          "choices": [
+            "Le Rick's Café Américain",
+            "Le Blue Parrot",
+            "Le Moulin Rouge",
+            "Le Copacabana"
+          ],
+          "explanation": "Humphrey Bogart joue Rick Blaine, patron du Rick's Café Américain ; le Blue Parrot est le bar de Ferrari."
+        }
+      }
+    },
+    {
+      "id": "cinema_146",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Hitchcock film is told from the viewpoint of a laid-up photographer?",
+          "choices": [
+            "Vertigo",
+            "North by Northwest",
+            "Rear Window",
+            "The Birds"
+          ],
+          "explanation": "In 'Rear Window' (1954), James Stewart watches his neighbours from his wheelchair."
+        },
+        "fr": {
+          "text": "Quel film de Hitchcock se déroule entièrement du point de vue d'un photographe immobilisé ?",
+          "choices": [
+            "Vertigo",
+            "La Mort aux trousses",
+            "Fenêtre sur cour",
+            "Les Oiseaux"
+          ],
+          "explanation": "Dans « Fenêtre sur cour » (1954), James Stewart observe ses voisins depuis sa chaise roulante."
+        }
+      }
+    },
+    {
+      "id": "cinema_147",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who won two Palmes d'Or, for 'Rosetta' and 'L'Enfant'?",
+          "choices": [
+            "Michael Haneke",
+            "The Dardenne brothers",
+            "Ken Loach",
+            "Francis Ford Coppola"
+          ],
+          "explanation": "Jean-Pierre and Luc Dardenne won the Palme in 1999 and 2005."
+        },
+        "fr": {
+          "text": "Quel réalisateur a remporté deux Palmes d'or, pour « Rosetta » et « L'Enfant » ?",
+          "choices": [
+            "Michael Haneke",
+            "Les frères Dardenne",
+            "Ken Loach",
+            "Francis Ford Coppola"
+          ],
+          "explanation": "Jean-Pierre et Luc Dardenne ont reçu la Palme en 1999 et 2005."
+        }
+      }
+    },
+    {
+      "id": "cinema_148",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which 1937 Jean Renoir film is set in a prisoner-of-war camp?",
+          "choices": [
+            "The Rules of the Game",
+            "Port of Shadows",
+            "Pépé le Moko",
+            "La Grande Illusion"
+          ],
+          "explanation": "'La Grande Illusion' follows French officers held prisoner during the First World War."
+        },
+        "fr": {
+          "text": "Quel film français de 1937 de Jean Renoir se déroule dans un camp de prisonniers ?",
+          "choices": [
+            "La Règle du jeu",
+            "Quai des brumes",
+            "Pépé le Moko",
+            "La Grande Illusion"
+          ],
+          "explanation": "« La Grande Illusion » suit des officiers français prisonniers pendant la Première Guerre mondiale."
+        }
+      }
+    },
+    {
+      "id": "cinema_149",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who composed the music for 'The Good, the Bad and the Ugly'?",
+          "choices": [
+            "Ennio Morricone",
+            "Nino Rota",
+            "Hans Zimmer",
+            "Maurice Jarre"
+          ],
+          "explanation": "Ennio Morricone scored Sergio Leone's westerns."
+        },
+        "fr": {
+          "text": "Qui a composé la musique du film « Le Bon, la Brute et le Truand » ?",
+          "choices": [
+            "Ennio Morricone",
+            "Nino Rota",
+            "Hans Zimmer",
+            "Maurice Jarre"
+          ],
+          "explanation": "Ennio Morricone a signé les musiques des westerns de Sergio Leone."
+        }
+      }
+    },
+    {
+      "id": "cinema_150",
+      "category": "cinema",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which year is 'Blade Runner' (1982) set?",
+          "choices": [
+            "2049",
+            "2019",
+            "2001",
+            "2035"
+          ],
+          "explanation": "Ridley Scott's film is set in Los Angeles in November 2019; its sequel is set in 2049."
+        },
+        "fr": {
+          "text": "Dans « Blade Runner » (1982), en quelle année se déroule l'action ?",
+          "choices": [
+            "2049",
+            "2019",
+            "2001",
+            "2035"
+          ],
+          "explanation": "Le film de Ridley Scott se passe à Los Angeles en novembre 2019 ; sa suite se déroule en 2049."
+        }
+      }
+    }
+  ]
+}

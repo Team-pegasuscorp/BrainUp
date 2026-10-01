@@ -1,0 +1,4805 @@
+{
+  "category": "television",
+  "questions": [
+    {
+      "id": "television_002",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Grant Gustin plays which superhero on the CW show of the same name?",
+          "choices": [
+            "Daredevil",
+            "The Flash",
+            "Black Canary",
+            "The Arrow"
+          ],
+          "explanation": "Grant Gustin played Barry Allen, the Flash, for nine seasons from 2014 to 2023."
+        },
+        "fr": {
+          "text": "Quel super-héros Grant Gustin incarne-t-il dans la série de la CW qui porte son nom ?",
+          "choices": [
+            "Daredevil",
+            "Flash",
+            "Black Canary",
+            "Arrow"
+          ],
+          "explanation": "Grant Gustin a joué Barry Allen, alias Flash, pendant neuf saisons, de 2014 à 2023."
+        }
+      }
+    },
+    {
+      "id": "television_004",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In the TV series \"Person of Interest\", who plays the character \"Harold Finch\"?",
+          "choices": [
+            "Taraji P. Henson",
+            "Michael Emerson",
+            "Kevin Chapman",
+            "Jim Caviezel"
+          ],
+          "explanation": "Michael Emerson, Ben in Lost, plays the reclusive billionaire Harold Finch."
+        },
+        "fr": {
+          "text": "Dans la série « Person of Interest », qui joue Harold Finch ?",
+          "choices": [
+            "Taraji P. Henson",
+            "Michael Emerson",
+            "Kevin Chapman",
+            "Jim Caviezel"
+          ],
+          "explanation": "Michael Emerson, le Ben de Lost, joue le milliardaire reclus Harold Finch."
+        }
+      }
+    },
+    {
+      "id": "television_005",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Alan Reed is known for providing the voice of which character?",
+          "choices": [
+            "G.I. Joe",
+            "Fred Flintstone",
+            "Bugs Bunny",
+            "Fangface"
+          ],
+          "explanation": "Alan Reed voiced Fred Flintstone from 1960 until his death in 1977."
+        },
+        "fr": {
+          "text": "Alan Reed est connu pour avoir été la voix originale de quel personnage ?",
+          "choices": [
+            "G.I. Joe",
+            "Fred Pierrafeu",
+            "Bugs Bunny",
+            "Fangface"
+          ],
+          "explanation": "Alan Reed a été la voix originale de Fred Pierrafeu de 1960 jusqu'à sa mort en 1977."
+        }
+      }
+    },
+    {
+      "id": "television_009",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In DuckTales, what is the name of the city where all the main characters live?",
+          "choices": [
+            "Duckwing",
+            "Tailspin",
+            "Wingford",
+            "Duckburg"
+          ],
+          "explanation": "Duckburg (Donaldville in French) is home to Scrooge McDuck and his money bin."
+        },
+        "fr": {
+          "text": "Dans La Bande à Picsou (DuckTales), dans quelle ville vivent les personnages ?",
+          "choices": [
+            "Canardville",
+            "Picsouville",
+            "Plumeville",
+            "Donaldville"
+          ],
+          "explanation": "Donaldville (Duckburg en VO) est la ville de Picsou et de son coffre-fort."
+        }
+      }
+    },
+    {
+      "id": "television_010",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In AMC's TV Series \"The Walking Dead\" what are \"Zombies\" referred to as?",
+          "choices": [
+            "Maggots",
+            "Hell Pigs",
+            "Walkers",
+            "Creepers"
+          ],
+          "explanation": "The characters say \"walkers\"; other groups in the series say \"biters\" or \"roamers\"."
+        },
+        "fr": {
+          "text": "Dans la série « The Walking Dead », comment les personnages appellent-ils les zombies ?",
+          "choices": [
+            "Les asticots",
+            "Les porcs de l'enfer",
+            "Les rôdeurs",
+            "Les rampants"
+          ],
+          "explanation": "Les personnages parlent de « rôdeurs » ; d'autres groupes disent « mordeurs »."
+        }
+      }
+    },
+    {
+      "id": "television_011",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "The 1985 Toyota Corolla \"AE86\" was the hero car for what anime?",
+          "choices": [
+            "Ghost MF",
+            "Initial D",
+            "Ex Driver",
+            "Wangan Midnight"
+          ],
+          "explanation": "Takumi delivers tofu in his father's AE86, which made the car a cult icon."
+        },
+        "fr": {
+          "text": "La Toyota Corolla AE86 de 1985 est la voiture du héros de quel anime ?",
+          "choices": [
+            "Ghost MF",
+            "Initial D",
+            "Ex Driver",
+            "Wangan Midnight"
+          ],
+          "explanation": "Takumi livre du tofu dans l'AE86 de son père, qui est devenue une voiture culte."
+        }
+      }
+    },
+    {
+      "id": "television_012",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the real name of the famous spanish humorist, El Risitas?",
+          "choices": [
+            "Jesús Quintero",
+            "Juan Joya Borja",
+            "Gabriel García Márquez",
+            "Ernesto Guevara"
+          ],
+          "explanation": "Juan Joya Borja's endless laugh from a 2007 interview became a worldwide meme."
+        },
+        "fr": {
+          "text": "Quel était le vrai nom de l'humoriste espagnol El Risitas ?",
+          "choices": [
+            "Jesús Quintero",
+            "Juan Joya Borja",
+            "Gabriel García Márquez",
+            "Ernesto Guevara"
+          ],
+          "explanation": "Le fou rire interminable de Juan Joya Borja, tiré d'une interview de 2007, est devenu un mème mondial."
+        }
+      }
+    },
+    {
+      "id": "television_013",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many seasons did the Sci-Fi television show \"Stargate Universe\" have?",
+          "choices": [
+            "5",
+            "3",
+            "10",
+            "2"
+          ],
+          "explanation": "Stargate Universe ran for two seasons (2009-2011) before being cancelled on a cliffhanger."
+        },
+        "fr": {
+          "text": "Combien de saisons compte la série de science-fiction « Stargate Universe » ?",
+          "choices": [
+            "5",
+            "3",
+            "10",
+            "2"
+          ],
+          "explanation": "Stargate Universe a duré deux saisons (2009-2011) avant d'être arrêtée sur un cliffhanger."
+        }
+      }
+    },
+    {
+      "id": "television_014",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In Breaking Bad, the initials W.W. refer to which of the following?",
+          "choices": [
+            "William Wolf",
+            "Walter White",
+            "Wally Walrus",
+            "Willy Wonka"
+          ],
+          "explanation": "Walter White, played by Bryan Cranston, is a chemistry teacher turned drug lord."
+        },
+        "fr": {
+          "text": "Dans Breaking Bad, à qui renvoient les initiales W.W. ?",
+          "choices": [
+            "William Wolf",
+            "Walter White",
+            "Wally Walrus",
+            "Willy Wonka"
+          ],
+          "explanation": "Walter White, joué par Bryan Cranston, est un prof de chimie devenu baron de la drogue."
+        }
+      }
+    },
+    {
+      "id": "television_015",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What was the callsign of Commander William Adama in Battlestar Galactica (2004)?",
+          "choices": [
+            "Husker",
+            "Crashdown",
+            "Starbuck",
+            "Apollo"
+          ],
+          "explanation": "Adama earned the callsign \"Husker\" as a young Viper pilot."
+        },
+        "fr": {
+          "text": "Quel était l'indicatif de pilote du commandant William Adama dans Battlestar Galactica (2004) ?",
+          "choices": [
+            "Husker",
+            "Crashdown",
+            "Starbuck",
+            "Apollo"
+          ],
+          "explanation": "Adama avait gagné l'indicatif « Husker » quand il était jeune pilote de Viper."
+        }
+      }
+    },
+    {
+      "id": "television_017",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which of these Bojack Horseman characters is a human?",
+          "choices": [
+            "Todd Chavez",
+            "Princess Carolyn",
+            "Lennie Turtletaub",
+            "Tom Jumbo-Grumbo"
+          ],
+          "explanation": "Todd Chavez, voiced by Aaron Paul, is one of the few humans among the animal characters."
+        },
+        "fr": {
+          "text": "Lequel de ces personnages de BoJack Horseman est un humain ?",
+          "choices": [
+            "Todd Chavez",
+            "Princess Carolyn",
+            "Lennie Turtletaub",
+            "Tom Jumbo-Grumbo"
+          ],
+          "explanation": "Todd Chavez, doublé par Aaron Paul en VO, est l'un des rares humains parmi les personnages animaux."
+        }
+      }
+    },
+    {
+      "id": "television_018",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In season one of the Netflix political drama \"House of Cards\", what government position does Frank Underwood hold?",
+          "choices": [
+            "Chief of Staff",
+            "Attorney General",
+            "President",
+            "House Majority Whip"
+          ],
+          "explanation": "As Majority Whip, Frank Underwood enforces party discipline in the House of Representatives."
+        },
+        "fr": {
+          "text": "Dans la saison 1 de « House of Cards », quel poste occupe Frank Underwood ?",
+          "choices": [
+            "Chef de cabinet",
+            "Procureur général",
+            "Président",
+            "Whip de la majorité à la Chambre"
+          ],
+          "explanation": "En whip de la majorité, Frank Underwood fait respecter la discipline du parti à la Chambre."
+        }
+      }
+    },
+    {
+      "id": "television_019",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Baron Silas Greenback is the arch nemesis of which cartoon hero?",
+          "choices": [
+            "Bananaman",
+            "SuperTed",
+            "Captain Star",
+            "Danger Mouse"
+          ],
+          "explanation": "Danger Mouse (Dare Dare Motus in French) fights Baron Greenback, a toad."
+        },
+        "fr": {
+          "text": "Le baron Silas Greenback est l'ennemi juré de quel héros de dessin animé ?",
+          "choices": [
+            "Bananaman",
+            "SuperTed",
+            "Captain Star",
+            "Dare Dare Motus (Danger Mouse)"
+          ],
+          "explanation": "Dare Dare Motus (Danger Mouse en VO) combat le baron Silas Greenback, un crapaud."
+        }
+      }
+    },
+    {
+      "id": "television_020",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which actor plays Hoban \"Wash\" Washburne in the TV show Firefly?",
+          "choices": [
+            "Sean Maher",
+            "Alan Tudyk",
+            "Nathan Fillion",
+            "Adam Baldwin"
+          ],
+          "explanation": "Alan Tudyk plays Wash, Serenity's pilot, in Firefly (2002) and the film Serenity."
+        },
+        "fr": {
+          "text": "Quel acteur joue Hoban « Wash » Washburne dans la série Firefly ?",
+          "choices": [
+            "Sean Maher",
+            "Alan Tudyk",
+            "Nathan Fillion",
+            "Adam Baldwin"
+          ],
+          "explanation": "Alan Tudyk joue Wash, le pilote du Serenity, dans Firefly (2002) et le film Serenity."
+        }
+      }
+    },
+    {
+      "id": "television_022",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "From what show is the character \"James Doakes\"?",
+          "choices": [
+            "Boardwalk Empire",
+            "Marvel's Daredevil",
+            "Dexter",
+            "The Walking Dead"
+          ],
+          "explanation": "Sergeant James Doakes suspects Dexter from the very first season."
+        },
+        "fr": {
+          "text": "De quelle série vient le personnage de James Doakes ?",
+          "choices": [
+            "Boardwalk Empire",
+            "Marvel's Daredevil",
+            "Dexter",
+            "The Walking Dead"
+          ],
+          "explanation": "Le sergent James Doakes soupçonne Dexter dès la première saison."
+        }
+      }
+    },
+    {
+      "id": "television_026",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In Battlestar Galactica (2004), what is the name of the President of the Twelve Colonies?",
+          "choices": [
+            "Laura Roslin",
+            "William Adama",
+            "Tricia Helfer",
+            "Harry Stills"
+          ],
+          "explanation": "Laura Roslin, Secretary of Education, becomes President after a Cylon attack kills everyone above her."
+        },
+        "fr": {
+          "text": "Dans Battlestar Galactica (2004), comment s'appelle la présidente des Douze Colonies ?",
+          "choices": [
+            "Laura Roslin",
+            "William Adama",
+            "Tricia Helfer",
+            "Harry Stills"
+          ],
+          "explanation": "Laura Roslin, ministre de l'Éducation, devient présidente quand une attaque cylon tue tous ceux au-dessus d'elle."
+        }
+      }
+    },
+    {
+      "id": "television_029",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In \"The Simpsons\", what is the real name of \"Comic Book Guy\"?",
+          "choices": [
+            "Jeff Albertson",
+            "Comic Book Guy",
+            "Edward Stone",
+            "Jack Richardson"
+          ],
+          "explanation": "His real name, Jeff Albertson, was only revealed after many seasons as \"Comic Book Guy\"."
+        },
+        "fr": {
+          "text": "Dans « Les Simpson », quel est le vrai nom du vendeur de BD (Comic Book Guy) ?",
+          "choices": [
+            "Jeff Albertson",
+            "Le vendeur de BD",
+            "Edward Stone",
+            "Jack Richardson"
+          ],
+          "explanation": "Son vrai nom, Jeff Albertson, n'a été révélé qu'après de nombreuses saisons sous le surnom de « Comic Book Guy »."
+        }
+      }
+    },
+    {
+      "id": "television_030",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who is the main character in the show \"Burn Notice\"?",
+          "choices": [
+            "Madeline Westen",
+            "Sam Axe",
+            "Michael Westen",
+            "Fiona Glenanne"
+          ],
+          "explanation": "Michael Westen is a spy \"burned\" by his agency and stuck in Miami."
+        },
+        "fr": {
+          "text": "Qui est le personnage principal de la série « Burn Notice » ?",
+          "choices": [
+            "Madeline Westen",
+            "Sam Axe",
+            "Michael Westen",
+            "Fiona Glenanne"
+          ],
+          "explanation": "Michael Westen est un espion « grillé » par son agence et coincé à Miami."
+        }
+      }
+    },
+    {
+      "id": "television_032",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What's Dr. Doofenshmirtz first name?",
+          "choices": [
+            "Hans",
+            "Heinz",
+            "Heidi",
+            "Hank"
+          ],
+          "explanation": "Heinz Doofenshmirtz is the evil scientist of Phineas and Ferb, forever foiled by Perry the platypus."
+        },
+        "fr": {
+          "text": "Quel est le prénom du Dr Doofenshmirtz ?",
+          "choices": [
+            "Hans",
+            "Heinz",
+            "Heidi",
+            "Hank"
+          ],
+          "explanation": "Heinz Doofenshmirtz est le savant maléfique de Phinéas et Ferb, toujours déjoué par Perry l'ornithorynque."
+        }
+      }
+    },
+    {
+      "id": "television_034",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of Chris's brother in \"Everybody Hates Chris\"?",
+          "choices": [
+            "Greg",
+            "Drew",
+            "Joe",
+            "Jerome"
+          ],
+          "explanation": "Drew is Chris's younger brother in the series inspired by Chris Rock's childhood."
+        },
+        "fr": {
+          "text": "Comment s'appelle le frère de Chris dans « Tout le monde déteste Chris » ?",
+          "choices": [
+            "Greg",
+            "Drew",
+            "Joe",
+            "Jerome"
+          ],
+          "explanation": "Drew est le petit frère de Chris dans la série inspirée de l'enfance de Chris Rock."
+        }
+      }
+    },
+    {
+      "id": "television_037",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who composed the theme song for The Simpsons?",
+          "choices": [
+            "Ennio Morricone",
+            "Hans Zimmer",
+            "Danny Elfman",
+            "John Williams"
+          ],
+          "explanation": "Danny Elfman wrote the Simpsons theme in 1989, reportedly in about two days."
+        },
+        "fr": {
+          "text": "Qui a composé le générique des Simpson ?",
+          "choices": [
+            "Ennio Morricone",
+            "Hans Zimmer",
+            "Danny Elfman",
+            "John Williams"
+          ],
+          "explanation": "Danny Elfman a composé le générique des Simpson en 1989, en deux jours environ selon lui."
+        }
+      }
+    },
+    {
+      "id": "television_038",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In \"Breaking Bad,\" which main character was planned to be killed in Season 1 but wasn't because the show creator liked the actor?",
+          "choices": [
+            "Saul Goodman",
+            "Hank Schrader",
+            "Gus Fring",
+            "Jesse Pinkman"
+          ],
+          "explanation": "Vince Gilligan kept Jesse alive thanks to Aaron Paul's performance; he won three Emmys for it."
+        },
+        "fr": {
+          "text": "Dans Breaking Bad, quel personnage principal devait mourir dans la saison 1, avant que le créateur change d'avis ?",
+          "choices": [
+            "Saul Goodman",
+            "Hank Schrader",
+            "Gus Fring",
+            "Jesse Pinkman"
+          ],
+          "explanation": "Vince Gilligan a gardé Jesse grâce au jeu d'Aaron Paul, récompensé par trois Emmy Awards."
+        }
+      }
+    },
+    {
+      "id": "television_041",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What year was Netflix founded?",
+          "choices": [
+            "1999",
+            "2004",
+            "1997",
+            "2001"
+          ],
+          "explanation": "Netflix started in 1997 renting DVDs by mail and launched streaming in 2007."
+        },
+        "fr": {
+          "text": "En quelle année Netflix a-t-il été fondé ?",
+          "choices": [
+            "1999",
+            "2004",
+            "1997",
+            "2001"
+          ],
+          "explanation": "Netflix a débuté en 1997 en louant des DVD par courrier, puis a lancé le streaming en 2007."
+        }
+      }
+    },
+    {
+      "id": "television_042",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which track by \"Massive Attack\" is used for the theme of \"House\"?",
+          "choices": [
+            "Angel",
+            "Teardrop",
+            "Protection",
+            "Black Milk"
+          ],
+          "explanation": "\"Teardrop\" (1998), sung by Elizabeth Fraser, opens House in the US version."
+        },
+        "fr": {
+          "text": "Quel morceau de Massive Attack sert de générique à la série « Dr House » ?",
+          "choices": [
+            "Angel",
+            "Teardrop",
+            "Protection",
+            "Black Milk"
+          ],
+          "explanation": "« Teardrop » (1998), chantée par Elizabeth Fraser, sert de générique à Dr House aux États-Unis."
+        }
+      }
+    },
+    {
+      "id": "television_043",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which character was played by Dustin Diamond in the sitcom 'Saved by the Bell'?",
+          "choices": [
+            "Zack",
+            "Screech",
+            "A.C. Slater",
+            "Mr. Belding"
+          ],
+          "explanation": "Dustin Diamond played the nerd Screech in Saved by the Bell (Sauvés par le gong)."
+        },
+        "fr": {
+          "text": "Quel personnage Dustin Diamond jouait-il dans la sitcom « Sauvés par le gong » ?",
+          "choices": [
+            "Zack",
+            "Screech",
+            "A.C. Slater",
+            "Mr. Belding"
+          ],
+          "explanation": "Dustin Diamond jouait l'intello Screech dans Sauvés par le gong."
+        }
+      }
+    },
+    {
+      "id": "television_044",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of the planet that the Doctor from television series \"Doctor Who\" comes from?",
+          "choices": [
+            "Gallifrey",
+            "Skaro",
+            "Mondas",
+            "Sontar"
+          ],
+          "explanation": "Gallifrey is the home world of the Time Lords; the Doctor fled it in a stolen TARDIS."
+        },
+        "fr": {
+          "text": "De quelle planète vient le Docteur, dans la série « Doctor Who » ?",
+          "choices": [
+            "Gallifrey",
+            "Skaro",
+            "Mondas",
+            "Sontar"
+          ],
+          "explanation": "Gallifrey est la planète des Seigneurs du Temps ; le Docteur l'a fuie dans un TARDIS volé."
+        }
+      }
+    },
+    {
+      "id": "television_045",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who was the original voice actor of Shaggy Rogers in Scooby-Doo?",
+          "choices": [
+            "Billy West",
+            "Dante Basco",
+            "Frank Welker",
+            "Casey Kasem"
+          ],
+          "explanation": "Casey Kasem voiced Shaggy from 1969 to 2009, also a famous American radio host."
+        },
+        "fr": {
+          "text": "Qui était la voix originale de Sammy (Shaggy) dans Scooby-Doo ?",
+          "choices": [
+            "Billy West",
+            "Dante Basco",
+            "Frank Welker",
+            "Casey Kasem"
+          ],
+          "explanation": "Casey Kasem a doublé Sammy (Shaggy en VO) de 1969 à 2009 ; il était aussi un célèbre animateur radio."
+        }
+      }
+    },
+    {
+      "id": "television_048",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "British actor David Morrissey stars as which role in \"The Walking Dead\"?",
+          "choices": [
+            "Negan",
+            "The Governor",
+            "Daryl Dixon",
+            "Rick Grimes"
+          ],
+          "explanation": "David Morrissey's Governor rules the town of Woodbury in seasons 3 and 4."
+        },
+        "fr": {
+          "text": "Quel rôle l'acteur britannique David Morrissey joue-t-il dans « The Walking Dead » ?",
+          "choices": [
+            "Negan",
+            "Le Gouverneur",
+            "Daryl Dixon",
+            "Rick Grimes"
+          ],
+          "explanation": "Le Gouverneur de David Morrissey dirige la ville de Woodbury dans les saisons 3 et 4."
+        }
+      }
+    },
+    {
+      "id": "television_050",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which British writer wrote for both Doctor Who and Sherlock?",
+          "choices": [
+            "Steven Moffat",
+            "Toby Whithouse",
+            "Phil Ford",
+            "Russell T Davies"
+          ],
+          "explanation": "Steven Moffat ran Doctor Who from 2010 to 2017 and co-created Sherlock with Mark Gatiss."
+        },
+        "fr": {
+          "text": "Quel scénariste britannique a écrit à la fois pour Doctor Who et Sherlock ?",
+          "choices": [
+            "Steven Moffat",
+            "Toby Whithouse",
+            "Phil Ford",
+            "Russell T Davies"
+          ],
+          "explanation": "Steven Moffat a dirigé Doctor Who de 2010 à 2017 et co-créé Sherlock avec Mark Gatiss."
+        }
+      }
+    },
+    {
+      "id": "television_051",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Friends', what is the name of the coffee shop where the friends meet?",
+          "choices": [
+            "Java Joe's",
+            "Central Perk",
+            "Monica's Café",
+            "The Coffee Bean"
+          ],
+          "explanation": "Central Perk is a pun on Central Park; Gunther works behind its counter for ten seasons."
+        },
+        "fr": {
+          "text": "Dans « Friends », comment s'appelle le café où se retrouvent les amis ?",
+          "choices": [
+            "Le Java Joe's",
+            "Le Central Perk",
+            "Le Monica's Café",
+            "Le Coffee Bean"
+          ],
+          "explanation": "Central Perk est un jeu de mots sur Central Park ; Gunther y travaille derrière le comptoir pendant dix saisons."
+        }
+      }
+    },
+    {
+      "id": "television_052",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of the yellow family's father in 'The Simpsons'?",
+          "choices": [
+            "Ned",
+            "Abe",
+            "Bart",
+            "Homer"
+          ],
+          "explanation": "Matt Groening named Homer, Marge, Lisa and Maggie after members of his own family."
+        },
+        "fr": {
+          "text": "Comment s'appelle le père de la famille jaune dans « Les Simpson » ?",
+          "choices": [
+            "Ned",
+            "Abraham",
+            "Bart",
+            "Homer"
+          ],
+          "explanation": "Matt Groening a donné à Homer, Marge, Lisa et Maggie les prénoms de membres de sa propre famille."
+        }
+      }
+    },
+    {
+      "id": "television_053",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Game of Thrones', what is the name of the continent where most of the story takes place?",
+          "choices": [
+            "Narnia",
+            "Westeros",
+            "Essos",
+            "Middle-earth"
+          ],
+          "explanation": "Westeros holds the Seven Kingdoms and the Iron Throne; Daenerys starts her journey in Essos."
+        },
+        "fr": {
+          "text": "Dans « Game of Thrones », comment s'appelle le continent où se déroule l'essentiel de l'histoire ?",
+          "choices": [
+            "Narnia",
+            "Westeros",
+            "Essos",
+            "La Terre du Milieu"
+          ],
+          "explanation": "Westeros abrite les Sept Couronnes et le Trône de fer ; Daenerys commence son voyage à Essos."
+        }
+      }
+    },
+    {
+      "id": "television_054",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Pokémon is Ash's inseparable companion in the animated series?",
+          "choices": [
+            "Pikachu",
+            "Charmander",
+            "Bulbasaur",
+            "Meowth"
+          ],
+          "explanation": "Pikachu refuses to go into its Poké Ball, which is why it always travels on Ash's shoulder."
+        },
+        "fr": {
+          "text": "Quel Pokémon est le compagnon inséparable de Sacha dans la série animée ?",
+          "choices": [
+            "Pikachu",
+            "Salamèche",
+            "Bulbizarre",
+            "Miaouss"
+          ],
+          "explanation": "Pikachu refuse d'entrer dans sa Poké Ball : c'est pour ça qu'il voyage toujours sur l'épaule de Sacha."
+        }
+      }
+    },
+    {
+      "id": "television_055",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French game show features a fort, keys and a 'Père Fouras'?",
+          "choices": [
+            "Koh-Lanta",
+            "Intervilles",
+            "Pékin Express",
+            "Fort Boyard"
+          ],
+          "explanation": "Fort Boyard has been filmed since 1990 in a real 19th-century fort off the Charente-Maritime coast."
+        },
+        "fr": {
+          "text": "Quel jeu télévisé français met en scène un fort, des clés et le Père Fouras ?",
+          "choices": [
+            "Koh-Lanta",
+            "Intervilles",
+            "Pékin Express",
+            "Fort Boyard"
+          ],
+          "explanation": "Fort Boyard est tourné depuis 1990 dans un vrai fort du XIXe siècle, au large de la Charente-Maritime."
+        }
+      }
+    },
+    {
+      "id": "television_056",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of the pineapple-dwelling sea sponge in a famous cartoon?",
+          "choices": [
+            "Patrick Star",
+            "SpongeBob SquarePants",
+            "Squidward",
+            "Mr. Krabs"
+          ],
+          "explanation": "SpongeBob was created in 1999 by Stephen Hillenburg, a former marine biology teacher."
+        },
+        "fr": {
+          "text": "Comment s'appelle l'éponge qui vit dans un ananas, héros d'un célèbre dessin animé ?",
+          "choices": [
+            "Patrick Étoile",
+            "Bob l'éponge",
+            "Carlo Tentacule",
+            "M. Krabs"
+          ],
+          "explanation": "Bob l'éponge a été créé en 1999 par Stephen Hillenburg, ancien professeur de biologie marine."
+        }
+      }
+    },
+    {
+      "id": "television_057",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Stranger Things', what is the name of the girl with psychic powers?",
+          "choices": [
+            "Max",
+            "Robin",
+            "Eleven",
+            "Nancy"
+          ],
+          "explanation": "Eleven is named after the number tattooed on her wrist in the Hawkins lab."
+        },
+        "fr": {
+          "text": "Dans « Stranger Things », comment s'appelle la fille aux pouvoirs psychiques ?",
+          "choices": [
+            "Max",
+            "Robin",
+            "Onze (Eleven)",
+            "Nancy"
+          ],
+          "explanation": "Eleven doit son nom au numéro tatoué sur son poignet au laboratoire de Hawkins."
+        }
+      }
+    },
+    {
+      "id": "television_058",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which South Korean series features deadly versions of children's games?",
+          "choices": [
+            "Squid Game",
+            "Sweet Home",
+            "Kingdom",
+            "Alice in Borderland"
+          ],
+          "explanation": "Squid Game (2021) became Netflix's most-watched series at launch."
+        },
+        "fr": {
+          "text": "Quelle série sud-coréenne met en scène des jeux d'enfants mortels ?",
+          "choices": [
+            "Squid Game",
+            "Sweet Home",
+            "Kingdom",
+            "Alice in Borderland"
+          ],
+          "explanation": "Squid Game (2021) est devenue à sa sortie la série la plus regardée de Netflix."
+        }
+      }
+    },
+    {
+      "id": "television_059",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which cartoon features a cat and mouse named Tom and Jerry?",
+          "choices": [
+            "Tom and Jerry",
+            "Garfield",
+            "Looney Tunes",
+            "Itchy & Scratchy"
+          ],
+          "explanation": "Tom and Jerry was created by Hanna and Barbera in 1940 and won seven Oscars."
+        },
+        "fr": {
+          "text": "Dans quel dessin animé un chat et une souris s'appellent-ils Tom et Jerry ?",
+          "choices": [
+            "Tom et Jerry",
+            "Garfield",
+            "Looney Tunes",
+            "Itchy et Scratchy"
+          ],
+          "explanation": "Tom et Jerry a été créé par Hanna et Barbera en 1940 et a remporté sept Oscars."
+        }
+      }
+    },
+    {
+      "id": "television_060",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Friends', what is Ross's profession?",
+          "choices": [
+            "Palaeontologist",
+            "Actor",
+            "Masseur",
+            "Chef"
+          ],
+          "explanation": "Ross works at a natural history museum and later teaches palaeontology at university."
+        },
+        "fr": {
+          "text": "Dans « Friends », quel est le métier de Ross ?",
+          "choices": [
+            "Paléontologue",
+            "Acteur",
+            "Masseur",
+            "Cuisinier"
+          ],
+          "explanation": "Ross travaille dans un musée d'histoire naturelle, puis enseigne la paléontologie à l'université."
+        }
+      }
+    },
+    {
+      "id": "television_061",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French comedy series set in King Arthur's court was created by Alexandre Astier?",
+          "choices": [
+            "Excalibur",
+            "Kaamelott",
+            "Camelot",
+            "Merlin"
+          ],
+          "explanation": "Kaamelott began in 2005 as short episodes and became a feature film in 2021."
+        },
+        "fr": {
+          "text": "Quelle série comique française sur la cour du roi Arthur a été créée par Alexandre Astier ?",
+          "choices": [
+            "Excalibur",
+            "Kaamelott",
+            "Camelot",
+            "Merlin"
+          ],
+          "explanation": "Kaamelott a commencé en 2005 en format court, avant un long métrage en 2021."
+        }
+      }
+    },
+    {
+      "id": "television_062",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Lupin' on Netflix, which actor plays Assane Diop?",
+          "choices": [
+            "Omar Sy",
+            "Jean Dujardin",
+            "Gad Elmaleh",
+            "Vincent Cassel"
+          ],
+          "explanation": "Omar Sy's gentleman thief is inspired by Maurice Leblanc's Arsène Lupin."
+        },
+        "fr": {
+          "text": "Dans la série « Lupin » sur Netflix, quel acteur joue Assane Diop ?",
+          "choices": [
+            "Omar Sy",
+            "Jean Dujardin",
+            "Gad Elmaleh",
+            "Vincent Cassel"
+          ],
+          "explanation": "Le gentleman cambrioleur d'Omar Sy s'inspire de l'Arsène Lupin de Maurice Leblanc."
+        }
+      }
+    },
+    {
+      "id": "television_063",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which manga and anime follows Monkey D. Luffy, a pirate made of rubber?",
+          "choices": [
+            "Fairy Tail",
+            "Naruto",
+            "One Piece",
+            "Bleach"
+          ],
+          "explanation": "Eiichiro Oda's One Piece began in 1997 and is the best-selling manga of all time."
+        },
+        "fr": {
+          "text": "Quel manga et anime suit Monkey D. Luffy, un pirate au corps élastique ?",
+          "choices": [
+            "Fairy Tail",
+            "Naruto",
+            "One Piece",
+            "Bleach"
+          ],
+          "explanation": "One Piece d'Eiichiro Oda a débuté en 1997 : c'est le manga le plus vendu de tous les temps."
+        }
+      }
+    },
+    {
+      "id": "television_064",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Game of Thrones', what is the family motto of House Stark?",
+          "choices": [
+            "Fire and Blood",
+            "Winter is Coming",
+            "We Do Not Sow",
+            "Hear Me Roar"
+          ],
+          "explanation": "The Starks' motto warns that long, harsh winters always return in the North."
+        },
+        "fr": {
+          "text": "Dans « Game of Thrones », quelle est la devise de la maison Stark ?",
+          "choices": [
+            "Feu et sang",
+            "L'hiver vient",
+            "Nous ne semons pas",
+            "Je rugis"
+          ],
+          "explanation": "La devise des Stark rappelle que les hivers longs et rudes reviennent toujours dans le Nord."
+        }
+      }
+    },
+    {
+      "id": "television_065",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which TV series follows the doctors of Seattle Grace Hospital?",
+          "choices": [
+            "Grey's Anatomy",
+            "House",
+            "ER",
+            "Scrubs"
+          ],
+          "explanation": "Grey's Anatomy, launched in 2005, is the longest-running scripted medical drama on US prime-time TV."
+        },
+        "fr": {
+          "text": "Quelle série suit les médecins du Seattle Grace Hospital ?",
+          "choices": [
+            "Grey's Anatomy",
+            "Dr House",
+            "Urgences",
+            "Scrubs"
+          ],
+          "explanation": "Grey's Anatomy, lancée en 2005, est la plus longue série médicale de l'histoire de la télé américaine en prime time."
+        }
+      }
+    },
+    {
+      "id": "television_066",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'The Office' (US), what is the name of the paper company?",
+          "choices": [
+            "Sabre",
+            "Staples",
+            "Dunder Mifflin",
+            "Wernham Hogg"
+          ],
+          "explanation": "Dunder Mifflin's Scranton branch is run by Michael Scott, played by Steve Carell."
+        },
+        "fr": {
+          "text": "Dans « The Office » (US), comment s'appelle l'entreprise de papier ?",
+          "choices": [
+            "Sabre",
+            "Staples",
+            "Dunder Mifflin",
+            "Wernham Hogg"
+          ],
+          "explanation": "L'agence de Scranton de Dunder Mifflin est dirigée par Michael Scott, joué par Steve Carell."
+        }
+      }
+    },
+    {
+      "id": "television_067",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who created 'The Simpsons'?",
+          "choices": [
+            "Trey Parker",
+            "Seth MacFarlane",
+            "Mike Judge",
+            "Matt Groening"
+          ],
+          "explanation": "Matt Groening sketched the family in the lobby while waiting for a meeting in 1987."
+        },
+        "fr": {
+          "text": "Qui a créé « Les Simpson » ?",
+          "choices": [
+            "Trey Parker",
+            "Seth MacFarlane",
+            "Mike Judge",
+            "Matt Groening"
+          ],
+          "explanation": "Matt Groening a dessiné la famille dans un hall d'attente, juste avant un rendez-vous en 1987."
+        }
+      }
+    },
+    {
+      "id": "television_068",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of the time machine in 'Doctor Who'?",
+          "choices": [
+            "The TARDIS",
+            "The DeLorean",
+            "The Stargate",
+            "The Enterprise"
+          ],
+          "explanation": "TARDIS stands for Time And Relative Dimension In Space; it is bigger on the inside."
+        },
+        "fr": {
+          "text": "Comment s'appelle la machine à voyager dans le temps de « Doctor Who » ?",
+          "choices": [
+            "Le TARDIS",
+            "La DeLorean",
+            "La Porte des étoiles",
+            "L'Enterprise"
+          ],
+          "explanation": "TARDIS signifie Time And Relative Dimension In Space ; il est plus grand à l'intérieur qu'à l'extérieur."
+        }
+      }
+    },
+    {
+      "id": "television_069",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Breaking Bad', what alias does Walter White use?",
+          "choices": [
+            "Einstein",
+            "Oppenheimer",
+            "Schrödinger",
+            "Heisenberg"
+          ],
+          "explanation": "The alias honours Werner Heisenberg, the physicist of the uncertainty principle."
+        },
+        "fr": {
+          "text": "Dans « Breaking Bad », quel pseudonyme utilise Walter White ?",
+          "choices": [
+            "Einstein",
+            "Oppenheimer",
+            "Schrödinger",
+            "Heisenberg"
+          ],
+          "explanation": "Le pseudonyme rend hommage à Werner Heisenberg, physicien du principe d'incertitude."
+        }
+      }
+    },
+    {
+      "id": "television_070",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French reality show sends contestants to survive on a desert island?",
+          "choices": [
+            "Loft Story",
+            "Koh-Lanta",
+            "Pékin Express",
+            "Star Academy"
+          ],
+          "explanation": "Koh-Lanta, the French version of Survivor, has aired on TF1 since 2001."
+        },
+        "fr": {
+          "text": "Quelle émission de téléréalité française envoie des candidats survivre sur une île déserte ?",
+          "choices": [
+            "Loft Story",
+            "Koh-Lanta",
+            "Pékin Express",
+            "Star Academy"
+          ],
+          "explanation": "Koh-Lanta, version française de Survivor, est diffusée sur TF1 depuis 2001."
+        }
+      }
+    },
+    {
+      "id": "television_071",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'How I Met Your Mother', what is Barney's catchphrase?",
+          "choices": [
+            "D'oh!",
+            "Bazinga!",
+            "Legen... wait for it... dary!",
+            "How you doin'?"
+          ],
+          "explanation": "Barney Stinson is played by Neil Patrick Harris; \"Bazinga!\" belongs to Sheldon in The Big Bang Theory."
+        },
+        "fr": {
+          "text": "Dans « How I Met Your Mother », quelle est la réplique fétiche de Barney ?",
+          "choices": [
+            "D'oh !",
+            "Bazinga !",
+            "Légen… attendez… daire !",
+            "Comment tu vas ?"
+          ],
+          "explanation": "Barney Stinson est joué par Neil Patrick Harris ; « Bazinga ! » est la réplique de Sheldon dans The Big Bang Theory."
+        }
+      }
+    },
+    {
+      "id": "television_072",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which character says 'Bazinga!' in 'The Big Bang Theory'?",
+          "choices": [
+            "Raj Koothrappali",
+            "Sheldon Cooper",
+            "Leonard Hofstadter",
+            "Howard Wolowitz"
+          ],
+          "explanation": "Sheldon says it after a practical joke; the series ran for 12 seasons, from 2007 to 2019."
+        },
+        "fr": {
+          "text": "Quel personnage dit « Bazinga ! » dans « The Big Bang Theory » ?",
+          "choices": [
+            "Raj Koothrappali",
+            "Sheldon Cooper",
+            "Leonard Hofstadter",
+            "Howard Wolowitz"
+          ],
+          "explanation": "Sheldon le dit après une blague ; la série a duré 12 saisons, de 2007 à 2019."
+        }
+      }
+    },
+    {
+      "id": "television_073",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French TV channel launched in 1984 as the country's first pay channel?",
+          "choices": [
+            "Arte",
+            "M6",
+            "Canal+",
+            "TF1"
+          ],
+          "explanation": "Canal+ went on air on 4 November 1984; its scrambled programmes needed a decoder."
+        },
+        "fr": {
+          "text": "Quelle chaîne a été lancée en 1984 comme première chaîne payante française ?",
+          "choices": [
+            "Arte",
+            "M6",
+            "Canal+",
+            "TF1"
+          ],
+          "explanation": "Canal+ a commencé à émettre le 4 novembre 1984 ; ses programmes cryptés nécessitaient un décodeur."
+        }
+      }
+    },
+    {
+      "id": "television_074",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Naruto', which village does Naruto come from?",
+          "choices": [
+            "Kiri (the Mist Village)",
+            "Konoha (the Leaf Village)",
+            "Suna (the Sand Village)",
+            "Kumo (the Cloud Village)"
+          ],
+          "explanation": "Naruto dreams of becoming Hokage, the leader of Konoha."
+        },
+        "fr": {
+          "text": "Dans « Naruto », de quel village vient Naruto ?",
+          "choices": [
+            "Kiri (le village de la Brume)",
+            "Konoha (le village de la Feuille)",
+            "Suna (le village du Sable)",
+            "Kumo (le village des Nuages)"
+          ],
+          "explanation": "Naruto rêve de devenir Hokage, le chef de Konoha."
+        }
+      }
+    },
+    {
+      "id": "television_075",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of the family in the animated series 'Bob's Burgers'?",
+          "choices": [
+            "The Belchers",
+            "The Hills",
+            "The Griffins",
+            "The Smiths"
+          ],
+          "explanation": "The Belchers run a small burger restaurant; the Griffins are the family of Family Guy."
+        },
+        "fr": {
+          "text": "Comment s'appelle la famille de la série animée « Bob's Burgers » ?",
+          "choices": [
+            "Les Belcher",
+            "Les Hill",
+            "Les Griffin",
+            "Les Smith"
+          ],
+          "explanation": "Les Belcher tiennent un petit restaurant de burgers ; les Griffin sont la famille des Griffin (Family Guy)."
+        }
+      }
+    },
+    {
+      "id": "television_076",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which TV series is set in the fictional town of Twin Peaks?",
+          "choices": [
+            "Fargo",
+            "Twin Peaks",
+            "Northern Exposure",
+            "True Detective"
+          ],
+          "explanation": "David Lynch's series asked \"Who killed Laura Palmer?\" in 1990."
+        },
+        "fr": {
+          "text": "Quelle série se déroule dans la ville fictive de Twin Peaks ?",
+          "choices": [
+            "Fargo",
+            "Twin Peaks",
+            "Bienvenue en Alaska",
+            "True Detective"
+          ],
+          "explanation": "La série de David Lynch posait la question « Qui a tué Laura Palmer ? » en 1990."
+        }
+      }
+    },
+    {
+      "id": "television_077",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Friends', how many main characters are there?",
+          "choices": [
+            "7",
+            "8",
+            "5",
+            "6"
+          ],
+          "explanation": "Rachel, Monica, Phoebe, Joey, Chandler and Ross: six friends over ten seasons (1994-2004)."
+        },
+        "fr": {
+          "text": "Dans « Friends », combien y a-t-il de personnages principaux ?",
+          "choices": [
+            "7",
+            "8",
+            "5",
+            "6"
+          ],
+          "explanation": "Rachel, Monica, Phoebe, Joey, Chandler et Ross : six amis pendant dix saisons (1994-2004)."
+        }
+      }
+    },
+    {
+      "id": "television_078",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which series follows a New Mexico lawyer named Jimmy McGill?",
+          "choices": [
+            "Better Call Saul",
+            "Boston Legal",
+            "Suits",
+            "The Good Wife"
+          ],
+          "explanation": "Better Call Saul (2015-2022) shows how Jimmy McGill became Saul Goodman, Walter White's lawyer."
+        },
+        "fr": {
+          "text": "Quelle série suit un avocat du Nouveau-Mexique nommé Jimmy McGill ?",
+          "choices": [
+            "Better Call Saul",
+            "Boston Legal",
+            "Suits",
+            "The Good Wife"
+          ],
+          "explanation": "Better Call Saul (2015-2022) montre comment Jimmy McGill est devenu Saul Goodman, l'avocat de Walter White."
+        }
+      }
+    },
+    {
+      "id": "television_079",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French series set in a Marseille neighbourhood aired daily from 2004 to 2022?",
+          "choices": [
+            "Sous le soleil",
+            "Plus belle la vie",
+            "Demain nous appartient",
+            "Ici tout commence"
+          ],
+          "explanation": "Plus belle la vie, set in the fictional Mistral district, ran for over 4,600 episodes on France 3."
+        },
+        "fr": {
+          "text": "Quel feuilleton quotidien situé à Marseille a été diffusé de 2004 à 2022 ?",
+          "choices": [
+            "Sous le soleil",
+            "Plus belle la vie",
+            "Demain nous appartient",
+            "Ici tout commence"
+          ],
+          "explanation": "Plus belle la vie, dans le quartier fictif du Mistral, a compté plus de 4 600 épisodes sur France 3."
+        }
+      }
+    },
+    {
+      "id": "television_080",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Game of Thrones', what is the name of Arya Stark's sword?",
+          "choices": [
+            "Needle",
+            "Ice",
+            "Oathkeeper",
+            "Longclaw"
+          ],
+          "explanation": "Jon Snow gave Needle to Arya; Longclaw is his own sword."
+        },
+        "fr": {
+          "text": "Dans « Game of Thrones », comment s'appelle l'épée d'Arya Stark ?",
+          "choices": [
+            "Aiguille",
+            "Glace",
+            "Féale",
+            "Grand-Griffe"
+          ],
+          "explanation": "Jon Snow a offert Aiguille à Arya ; Grand-Griffe est sa propre épée."
+        }
+      }
+    },
+    {
+      "id": "television_081",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which actor played the Eleventh Doctor in 'Doctor Who'?",
+          "choices": [
+            "Peter Capaldi",
+            "Matt Smith",
+            "Christopher Eccleston",
+            "David Tennant"
+          ],
+          "explanation": "Matt Smith was 26 when cast in 2010, the youngest actor to play the Doctor at the time."
+        },
+        "fr": {
+          "text": "Quel acteur a joué le Onzième Docteur dans « Doctor Who » ?",
+          "choices": [
+            "Peter Capaldi",
+            "Matt Smith",
+            "Christopher Eccleston",
+            "David Tennant"
+          ],
+          "explanation": "Matt Smith avait 26 ans en 2010 : le plus jeune acteur à jouer le Docteur à l'époque."
+        }
+      }
+    },
+    {
+      "id": "television_082",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What was the first music video broadcast on MTV in 1981?",
+          "choices": [
+            "Take On Me",
+            "Thriller",
+            "Video Killed the Radio Star",
+            "Money for Nothing"
+          ],
+          "explanation": "The Buggles' song was a fitting choice for the launch of a music video channel."
+        },
+        "fr": {
+          "text": "Quel a été le premier clip diffusé par MTV en 1981 ?",
+          "choices": [
+            "Take On Me",
+            "Thriller",
+            "Video Killed the Radio Star",
+            "Money for Nothing"
+          ],
+          "explanation": "La chanson des Buggles était un choix tout trouvé pour lancer une chaîne de clips."
+        }
+      }
+    },
+    {
+      "id": "television_083",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Twin Peaks', which FBI agent investigates Laura Palmer's murder?",
+          "choices": [
+            "Fox Mulder",
+            "Dale Cooper",
+            "Clarice Starling",
+            "Will Graham"
+          ],
+          "explanation": "Kyle MacLachlan's Dale Cooper loves black coffee and cherry pie."
+        },
+        "fr": {
+          "text": "Dans « Twin Peaks », quel agent du FBI enquête sur le meurtre de Laura Palmer ?",
+          "choices": [
+            "Fox Mulder",
+            "Dale Cooper",
+            "Clarice Starling",
+            "Will Graham"
+          ],
+          "explanation": "Le Dale Cooper de Kyle MacLachlan adore le café noir et la tarte aux cerises."
+        }
+      }
+    },
+    {
+      "id": "television_084",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French TV game show asks contestants to find the longest word from random letters?",
+          "choices": [
+            "Motus",
+            "Des chiffres et des lettres",
+            "Le Mot le plus long",
+            "Questions pour un champion"
+          ],
+          "explanation": "Created in 1965, it is one of the longest-running TV game shows in the world; the UK adapted it as Countdown."
+        },
+        "fr": {
+          "text": "Quel jeu télévisé français demande de trouver le mot le plus long avec des lettres tirées au hasard ?",
+          "choices": [
+            "Motus",
+            "Des chiffres et des lettres",
+            "Tout le monde veut prendre sa place",
+            "Questions pour un champion"
+          ],
+          "explanation": "Créé en 1965, c'est l'un des plus anciens jeux télévisés du monde ; les Britanniques l'ont adapté en Countdown."
+        }
+      }
+    },
+    {
+      "id": "television_085",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What was the name of the first ever reality show broadcast in France, in 2001?",
+          "choices": [
+            "Koh-Lanta",
+            "Star Academy",
+            "Secret Story",
+            "Loft Story"
+          ],
+          "explanation": "Loft Story, adapted from Big Brother, started on M6 in April 2001, a few months before Koh-Lanta."
+        },
+        "fr": {
+          "text": "Quelle a été la première émission de téléréalité diffusée en France, en 2001 ?",
+          "choices": [
+            "Koh-Lanta",
+            "Star Academy",
+            "Secret Story",
+            "Loft Story"
+          ],
+          "explanation": "Loft Story, adaptation de Big Brother, a démarré sur M6 en avril 2001, quelques mois avant Koh-Lanta."
+        }
+      }
+    },
+    {
+      "id": "television_086",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'The Sopranos', what is Tony Soprano's job in the mafia?",
+          "choices": [
+            "Accountant",
+            "Hitman",
+            "Boss of a New Jersey crime family",
+            "Police informant"
+          ],
+          "explanation": "James Gandolfini's Tony runs the mob while seeing a psychiatrist, Dr Melfi."
+        },
+        "fr": {
+          "text": "Dans « Les Soprano », quel est le rôle de Tony Soprano dans la mafia ?",
+          "choices": [
+            "Comptable",
+            "Tueur à gages",
+            "Chef d'une famille du New Jersey",
+            "Indicateur de police"
+          ],
+          "explanation": "Le Tony de James Gandolfini dirige la mafia tout en consultant une psychiatre, la Dr Melfi."
+        }
+      }
+    },
+    {
+      "id": "television_087",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which anime features the 'Survey Corps' fighting giant humanoid creatures?",
+          "choices": [
+            "Neon Genesis Evangelion",
+            "Tokyo Ghoul",
+            "Attack on Titan",
+            "Demon Slayer"
+          ],
+          "explanation": "Hajime Isayama's story shows humanity living behind giant walls to escape the Titans."
+        },
+        "fr": {
+          "text": "Quel anime met en scène le « bataillon d'exploration » face à des créatures humanoïdes géantes ?",
+          "choices": [
+            "Neon Genesis Evangelion",
+            "Tokyo Ghoul",
+            "L'Attaque des Titans",
+            "Demon Slayer"
+          ],
+          "explanation": "L'histoire d'Hajime Isayama montre une humanité retranchée derrière des murs géants pour échapper aux Titans."
+        }
+      }
+    },
+    {
+      "id": "television_088",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Lost', what flight number crashes on the island?",
+          "choices": [
+            "Ajira 316",
+            "Oceanic 316",
+            "Oceanic 815",
+            "Pan Am 103"
+          ],
+          "explanation": "Flight 815 was going from Sydney to Los Angeles; 8 and 15 are among the show's mysterious numbers."
+        },
+        "fr": {
+          "text": "Dans « Lost », quel vol s'écrase sur l'île ?",
+          "choices": [
+            "Ajira 316",
+            "Oceanic 316",
+            "Oceanic 815",
+            "Pan Am 103"
+          ],
+          "explanation": "Le vol 815 reliait Sydney à Los Angeles ; 8 et 15 font partie des nombres mystérieux de la série."
+        }
+      }
+    },
+    {
+      "id": "television_089",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which US sitcom is set in the fictional town of Pawnee, Indiana?",
+          "choices": [
+            "The Office",
+            "Community",
+            "Parks and Recreation",
+            "Brooklyn Nine-Nine"
+          ],
+          "explanation": "Amy Poehler plays Leslie Knope, an enthusiastic parks department official."
+        },
+        "fr": {
+          "text": "Quelle sitcom américaine se déroule dans la ville fictive de Pawnee, dans l'Indiana ?",
+          "choices": [
+            "The Office",
+            "Community",
+            "Parks and Recreation",
+            "Brooklyn Nine-Nine"
+          ],
+          "explanation": "Amy Poehler y joue Leslie Knope, une fonctionnaire enthousiaste du service des parcs."
+        }
+      }
+    },
+    {
+      "id": "television_090",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who voices Bart Simpson in the original English version?",
+          "choices": [
+            "Nancy Cartwright",
+            "Yeardley Smith",
+            "Julie Kavner",
+            "Dan Castellaneta"
+          ],
+          "explanation": "Nancy Cartwright auditioned for Lisa but preferred Bart; Dan Castellaneta voices Homer."
+        },
+        "fr": {
+          "text": "Qui double Bart Simpson dans la version originale ?",
+          "choices": [
+            "Nancy Cartwright",
+            "Yeardley Smith",
+            "Julie Kavner",
+            "Dan Castellaneta"
+          ],
+          "explanation": "Nancy Cartwright avait auditionné pour Lisa mais a préféré Bart ; Dan Castellaneta double Homer."
+        }
+      }
+    },
+    {
+      "id": "television_091",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which city is the series 'Dix pour cent' (Call My Agent!) set?",
+          "choices": [
+            "Cannes",
+            "Paris",
+            "Lyon",
+            "Marseille"
+          ],
+          "explanation": "The series follows a Paris talent agency; real stars such as Isabelle Adjani play themselves."
+        },
+        "fr": {
+          "text": "Dans quelle ville se déroule la série « Dix pour cent » ?",
+          "choices": [
+            "Cannes",
+            "Paris",
+            "Lyon",
+            "Marseille"
+          ],
+          "explanation": "La série suit une agence artistique parisienne ; de vraies stars comme Isabelle Adjani y jouent leur propre rôle."
+        }
+      }
+    },
+    {
+      "id": "television_092",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of the spaceship in 'Firefly'?",
+          "choices": [
+            "Galactica",
+            "Serenity",
+            "Enterprise",
+            "Rocinante"
+          ],
+          "explanation": "Serenity is a Firefly-class transport, which gave the series its name."
+        },
+        "fr": {
+          "text": "Comment s'appelle le vaisseau de l'équipage de « Firefly » ?",
+          "choices": [
+            "Le Galactica",
+            "Le Serenity",
+            "L'Enterprise",
+            "Le Rocinante"
+          ],
+          "explanation": "Le Serenity est un transporteur de classe Firefly, qui a donné son nom à la série."
+        }
+      }
+    },
+    {
+      "id": "television_093",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Dragon Ball', how many Dragon Balls must be gathered to summon Shenron?",
+          "choices": [
+            "9",
+            "7",
+            "12",
+            "5"
+          ],
+          "explanation": "The seven balls each carry one to seven stars; Goku's grandfather's was the four-star ball."
+        },
+        "fr": {
+          "text": "Dans « Dragon Ball », combien de boules de cristal faut-il réunir pour invoquer Shenron ?",
+          "choices": [
+            "9",
+            "7",
+            "12",
+            "5"
+          ],
+          "explanation": "Les sept boules portent de une à sept étoiles ; celle du grand-père de Goku était la boule à quatre étoiles."
+        }
+      }
+    },
+    {
+      "id": "television_094",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which channel first broadcast 'Game of Thrones' in the United States?",
+          "choices": [
+            "FX",
+            "HBO",
+            "Showtime",
+            "AMC"
+          ],
+          "explanation": "HBO aired Game of Thrones from 2011 to 2019; it won a record 59 Emmy Awards."
+        },
+        "fr": {
+          "text": "Quelle chaîne a diffusé « Game of Thrones » aux États-Unis ?",
+          "choices": [
+            "FX",
+            "HBO",
+            "Showtime",
+            "AMC"
+          ],
+          "explanation": "HBO a diffusé Game of Thrones de 2011 à 2019 ; la série a remporté un record de 59 Emmy Awards."
+        }
+      }
+    },
+    {
+      "id": "television_095",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Sherlock' (BBC), which actor plays Sherlock Holmes?",
+          "choices": [
+            "Benedict Cumberbatch",
+            "Jonny Lee Miller",
+            "Martin Freeman",
+            "Robert Downey Jr."
+          ],
+          "explanation": "Martin Freeman plays Dr Watson; Robert Downey Jr. played Holmes in the cinema."
+        },
+        "fr": {
+          "text": "Dans « Sherlock » (BBC), quel acteur joue Sherlock Holmes ?",
+          "choices": [
+            "Benedict Cumberbatch",
+            "Jonny Lee Miller",
+            "Martin Freeman",
+            "Robert Downey Jr."
+          ],
+          "explanation": "Martin Freeman joue le Dr Watson ; Robert Downey Jr. a incarné Holmes au cinéma."
+        }
+      }
+    },
+    {
+      "id": "television_096",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which famous French TV quiz show was hosted by Julien Lepers for 27 years?",
+          "choices": [
+            "Qui veut gagner des millions ?",
+            "Le Maillon faible",
+            "Questions pour un champion",
+            "Slam"
+          ],
+          "explanation": "Julien Lepers hosted the show on France 3 from 1988 to 2015."
+        },
+        "fr": {
+          "text": "Quel célèbre jeu télévisé Julien Lepers a-t-il présenté pendant 27 ans ?",
+          "choices": [
+            "Qui veut gagner des millions ?",
+            "Le Maillon faible",
+            "Questions pour un champion",
+            "Slam"
+          ],
+          "explanation": "Julien Lepers a présenté l'émission sur France 3 de 1988 à 2015."
+        }
+      }
+    },
+    {
+      "id": "television_097",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Mr. Bean', what is the name of Mr. Bean's teddy bear?",
+          "choices": [
+            "Paddington",
+            "Bear",
+            "Bruno",
+            "Teddy"
+          ],
+          "explanation": "Rowan Atkinson's Mr. Bean treats Teddy as his best friend throughout the series."
+        },
+        "fr": {
+          "text": "Dans « Mr. Bean », comment s'appelle l'ours en peluche de Mr. Bean ?",
+          "choices": [
+            "Paddington",
+            "Nounours",
+            "Bruno",
+            "Teddy"
+          ],
+          "explanation": "Le Mr. Bean de Rowan Atkinson traite Teddy comme son meilleur ami tout au long de la série."
+        }
+      }
+    },
+    {
+      "id": "television_098",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which TV series features the Dunphy, Pritchett and Tucker families?",
+          "choices": [
+            "Parenthood",
+            "Arrested Development",
+            "Modern Family",
+            "This Is Us"
+          ],
+          "explanation": "Modern Family (2009-2020) was filmed like a documentary and won five Emmys for best comedy."
+        },
+        "fr": {
+          "text": "Quelle série met en scène les familles Dunphy, Pritchett et Tucker ?",
+          "choices": [
+            "Parenthood",
+            "Arrested Development",
+            "Modern Family",
+            "This Is Us"
+          ],
+          "explanation": "Modern Family (2009-2020) était filmée comme un documentaire et a remporté cinq Emmys de la meilleure comédie."
+        }
+      }
+    },
+    {
+      "id": "television_099",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Squid Game', what shape is NOT one of the honeycomb candy shapes?",
+          "choices": [
+            "Umbrella",
+            "Triangle",
+            "Circle",
+            "Square"
+          ],
+          "explanation": "The four shapes were circle, triangle, star and umbrella; the umbrella was the hardest."
+        },
+        "fr": {
+          "text": "Dans « Squid Game », quelle forme NE fait PAS partie des biscuits en sucre (dalgona) ?",
+          "choices": [
+            "Le parapluie",
+            "Le triangle",
+            "Le cercle",
+            "Le carré"
+          ],
+          "explanation": "Les quatre formes étaient le cercle, le triangle, l'étoile et le parapluie ; le parapluie était la plus dure."
+        }
+      }
+    },
+    {
+      "id": "television_100",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which cartoon family lives at 742 Evergreen Terrace?",
+          "choices": [
+            "The Griffins",
+            "The Flintstones",
+            "The Simpsons",
+            "The Belchers"
+          ],
+          "explanation": "742 Evergreen Terrace is the Simpsons' address in Springfield, a town whose state is never revealed."
+        },
+        "fr": {
+          "text": "Quelle famille de dessin animé habite au 742 Evergreen Terrace ?",
+          "choices": [
+            "Les Griffin",
+            "Les Pierrafeu",
+            "Les Simpson",
+            "Les Belcher"
+          ],
+          "explanation": "Le 742 Evergreen Terrace est l'adresse des Simpson à Springfield, dont l'État n'est jamais révélé."
+        }
+      }
+    },
+    {
+      "id": "television_101",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which TV series follows the Shelby family, a gang in 1920s Birmingham?",
+          "choices": [
+            "Gangs of London",
+            "Peaky Blinders",
+            "Taboo",
+            "Boardwalk Empire"
+          ],
+          "explanation": "The Peaky Blinders were a real Birmingham gang; Cillian Murphy plays Thomas Shelby."
+        },
+        "fr": {
+          "text": "Quelle série suit les Shelby, une famille de gangsters à Birmingham dans les années 1920 ?",
+          "choices": [
+            "Gangs of London",
+            "Peaky Blinders",
+            "Taboo",
+            "Boardwalk Empire"
+          ],
+          "explanation": "Les Peaky Blinders étaient un vrai gang de Birmingham ; Cillian Murphy y joue Thomas Shelby."
+        }
+      }
+    },
+    {
+      "id": "television_102",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'The Simpsons', what is the mother's name?",
+          "choices": [
+            "Lisa",
+            "Marge",
+            "Maggie",
+            "Patty"
+          ],
+          "explanation": "Marge Simpson, with her famous blue hair, is Homer's wife."
+        },
+        "fr": {
+          "text": "Dans « Les Simpson », comment s'appelle la mère de famille ?",
+          "choices": [
+            "Lisa",
+            "Marge",
+            "Maggie",
+            "Patty"
+          ],
+          "explanation": "Marge Simpson, aux célèbres cheveux bleus, est l'épouse d'Homer."
+        }
+      }
+    },
+    {
+      "id": "television_103",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which cartoon features a detective dog and his friends in a van?",
+          "choices": [
+            "Pluto",
+            "Snoopy",
+            "Rin Tin Tin",
+            "Scooby-Doo"
+          ],
+          "explanation": "Scooby-Doo and the Mystery Inc. gang have been unmasking fake ghosts since 1969."
+        },
+        "fr": {
+          "text": "Quel dessin animé met en scène un chien détective et une bande d'amis dans une camionnette ?",
+          "choices": [
+            "Pluto",
+            "Snoopy",
+            "Rintintin",
+            "Scooby-Doo"
+          ],
+          "explanation": "Scooby-Doo et la bande de Mystère et Cie démasquent de faux fantômes depuis 1969."
+        }
+      }
+    },
+    {
+      "id": "television_104",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Friends', which character does Jennifer Aniston play?",
+          "choices": [
+            "Monica",
+            "Phoebe",
+            "Rachel",
+            "Janice"
+          ],
+          "explanation": "Jennifer Aniston plays Rachel Green; her 'Rachel' haircut went worldwide."
+        },
+        "fr": {
+          "text": "Dans « Friends », quel personnage est joué par Jennifer Aniston ?",
+          "choices": [
+            "Monica",
+            "Phoebe",
+            "Rachel",
+            "Janice"
+          ],
+          "explanation": "Jennifer Aniston incarne Rachel Green ; sa coupe de cheveux « la Rachel » a fait le tour du monde."
+        }
+      }
+    },
+    {
+      "id": "television_105",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which series follows a chemistry teacher who becomes a drug maker?",
+          "choices": [
+            "Breaking Bad",
+            "Weeds",
+            "Ozark",
+            "The Wire"
+          ],
+          "explanation": "In 'Breaking Bad', Walter White, diagnosed with cancer, starts making methamphetamine."
+        },
+        "fr": {
+          "text": "Quelle série suit un professeur de chimie devenu fabricant de drogue ?",
+          "choices": [
+            "Breaking Bad",
+            "Weeds",
+            "Ozark",
+            "The Wire"
+          ],
+          "explanation": "Dans « Breaking Bad », Walter White, atteint d'un cancer, se lance dans la méthamphétamine."
+        }
+      }
+    },
+    {
+      "id": "television_106",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which cartoon follows a boy and his scientist grandfather on interdimensional adventures?",
+          "choices": [
+            "Rick and Morty",
+            "Futurama",
+            "Gravity Falls",
+            "Adventure Time"
+          ],
+          "explanation": "Rick Sanchez drags his grandson Morty on trips across dimensions."
+        },
+        "fr": {
+          "text": "Quel dessin animé suit un garçon et son grand-père scientifique dans des aventures interdimensionnelles ?",
+          "choices": [
+            "Rick et Morty",
+            "Futurama",
+            "Gravity Falls",
+            "Adventure Time"
+          ],
+          "explanation": "Rick Sanchez entraîne son petit-fils Morty dans des voyages à travers les dimensions."
+        }
+      }
+    },
+    {
+      "id": "television_107",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Game of Thrones', what creatures does Daenerys own?",
+          "choices": [
+            "Direwolves",
+            "Dragons",
+            "Griffins",
+            "Giants"
+          ],
+          "explanation": "Daenerys Targaryen hatches three dragons: Drogon, Rhaegal and Viserion."
+        },
+        "fr": {
+          "text": "Dans « Game of Thrones », comment s'appellent les créatures que possède Daenerys ?",
+          "choices": [
+            "Des loups géants",
+            "Des dragons",
+            "Des griffons",
+            "Des géants"
+          ],
+          "explanation": "Daenerys Targaryen fait éclore trois dragons : Drogon, Rhaegal et Viserion."
+        }
+      }
+    },
+    {
+      "id": "television_108",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which cartoon character says 'What's up, Doc?'",
+          "choices": [
+            "Daffy Duck",
+            "Mickey Mouse",
+            "Bugs Bunny",
+            "Woody Woodpecker"
+          ],
+          "explanation": "'What's up, Doc?' is the catchphrase of Looney Tunes' Bugs Bunny."
+        },
+        "fr": {
+          "text": "Quel personnage de dessin animé dit « Quoi de neuf, docteur ? » ?",
+          "choices": [
+            "Daffy Duck",
+            "Mickey Mouse",
+            "Bugs Bunny",
+            "Woody Woodpecker"
+          ],
+          "explanation": "« What's up, Doc? » est la réplique culte de Bugs Bunny des Looney Tunes."
+        }
+      }
+    },
+    {
+      "id": "television_109",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which streaming platform produces 'Stranger Things'?",
+          "choices": [
+            "Disney+",
+            "Prime Video",
+            "HBO Max",
+            "Netflix"
+          ],
+          "explanation": "'Stranger Things' has been one of Netflix's most popular series since 2016."
+        },
+        "fr": {
+          "text": "Quelle plateforme de streaming produit « Stranger Things » ?",
+          "choices": [
+            "Disney+",
+            "Prime Video",
+            "HBO Max",
+            "Netflix"
+          ],
+          "explanation": "« Stranger Things » est l'une des séries les plus populaires de Netflix depuis 2016."
+        }
+      }
+    },
+    {
+      "id": "television_110",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which Japanese cartoon does a boy named Goku search for magic balls?",
+          "choices": [
+            "Naruto",
+            "Dragon Ball",
+            "One Piece",
+            "Saint Seiya"
+          ],
+          "explanation": "Goku is the hero of 'Dragon Ball', created by Akira Toriyama."
+        },
+        "fr": {
+          "text": "Dans quel dessin animé japonais un garçon nommé Sangoku cherche-t-il des boules magiques ?",
+          "choices": [
+            "Naruto",
+            "Dragon Ball",
+            "One Piece",
+            "Saint Seiya"
+          ],
+          "explanation": "Sangoku (Son Goku) est le héros de « Dragon Ball », créé par Akira Toriyama."
+        }
+      }
+    },
+    {
+      "id": "television_111",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which animated series follows a Quahog family with a genius baby named Stewie?",
+          "choices": [
+            "The Simpsons",
+            "American Dad",
+            "Family Guy",
+            "South Park"
+          ],
+          "explanation": "Seth MacFarlane's 'Family Guy' is set in Quahog, Rhode Island."
+        },
+        "fr": {
+          "text": "Quelle série animée suit une famille de Quahog avec un bébé génie nommé Stewie ?",
+          "choices": [
+            "Les Simpson",
+            "American Dad",
+            "Les Griffin",
+            "South Park"
+          ],
+          "explanation": "« Les Griffin » (Family Guy), de Seth MacFarlane, se déroule à Quahog, dans le Rhode Island."
+        }
+      }
+    },
+    {
+      "id": "television_112",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which game show offers a million for answering 15 questions?",
+          "choices": [
+            "The Weakest Link",
+            "Questions pour un champion",
+            "Slam",
+            "Who Wants to Be a Millionaire?"
+          ],
+          "explanation": "The show gives contestants lifelines: 50/50, phone a friend and ask the audience."
+        },
+        "fr": {
+          "text": "Quel jeu télévisé propose de gagner un million en répondant à 15 questions ?",
+          "choices": [
+            "Le Maillon faible",
+            "Questions pour un champion",
+            "Slam",
+            "Qui veut gagner des millions ?"
+          ],
+          "explanation": "Le jeu offre trois jokers au candidat : le 50/50, l'appel à un ami et l'avis du public."
+        }
+      }
+    },
+    {
+      "id": "television_113",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Stranger Things', in which town is the story set?",
+          "choices": [
+            "Hawkins",
+            "Riverdale",
+            "Derry",
+            "Springfield"
+          ],
+          "explanation": "The series is set in Hawkins, a fictional Indiana town, in the 1980s."
+        },
+        "fr": {
+          "text": "Dans « Stranger Things », dans quelle ville se déroule l'histoire ?",
+          "choices": [
+            "Hawkins",
+            "Riverdale",
+            "Derry",
+            "Springfield"
+          ],
+          "explanation": "La série se déroule à Hawkins, ville fictive de l'Indiana, dans les années 1980."
+        }
+      }
+    },
+    {
+      "id": "television_114",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In the French show 'Téléchat', which animal presents the news?",
+          "choices": [
+            "A dog",
+            "A cat",
+            "A bear",
+            "A rabbit"
+          ],
+          "explanation": "'Téléchat' was a spoof news show hosted by Groucha the cat and Lola the ostrich."
+        },
+        "fr": {
+          "text": "Dans l'émission « Téléchat », quel animal présente le journal ?",
+          "choices": [
+            "Un chien",
+            "Un chat",
+            "Un ours",
+            "Un lapin"
+          ],
+          "explanation": "« Téléchat » était un faux journal télévisé présenté par le chat Groucha et l'autruche Lola."
+        }
+      }
+    },
+    {
+      "id": "television_115",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which orange dinosaur with yellow spots hosted the French show 'L'Île aux enfants'?",
+          "choices": [
+            "Casimir",
+            "Barney",
+            "Denver",
+            "Littlefoot"
+          ],
+          "explanation": "Casimir, an orange dinosaur, was the star of 'L'Île aux enfants' in the 1970s."
+        },
+        "fr": {
+          "text": "Quel dinosaure orange à pois jaunes animait « L'Île aux enfants » ?",
+          "choices": [
+            "Casimir",
+            "Barney",
+            "Denver",
+            "Petit-Pied"
+          ],
+          "explanation": "Casimir, dinosaure orange, était la star de « L'Île aux enfants » dans les années 1970."
+        }
+      }
+    },
+    {
+      "id": "television_116",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Friends', what is Ross's monkey called?",
+          "choices": [
+            "Bobo",
+            "Abu",
+            "George",
+            "Marcel"
+          ],
+          "explanation": "Ross adopts Marcel the capuchin in the first season."
+        },
+        "fr": {
+          "text": "Dans « Friends », comment s'appelle le singe de Ross ?",
+          "choices": [
+            "Bobo",
+            "Abu",
+            "George",
+            "Marcel"
+          ],
+          "explanation": "Ross adopte le capucin Marcel dans la première saison."
+        }
+      }
+    },
+    {
+      "id": "television_117",
+      "category": "television",
+      "difficulty": 1,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which series follows the survivors of a plane crash on a mysterious island?",
+          "choices": [
+            "Survivor",
+            "Manifest",
+            "Lost",
+            "The Leftovers"
+          ],
+          "explanation": "'Lost' (2004-2010) follows the survivors of Oceanic Flight 815."
+        },
+        "fr": {
+          "text": "Quelle série suit des survivants d'un crash d'avion sur une île mystérieuse ?",
+          "choices": [
+            "Survivor",
+            "Manifest",
+            "Lost",
+            "The Leftovers"
+          ],
+          "explanation": "« Lost : Les Disparus » (2004-2010) suit les rescapés du vol Oceanic 815."
+        }
+      }
+    },
+    {
+      "id": "television_118",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which HBO series follows noble families fighting over the Iron Throne?",
+          "choices": [
+            "The Witcher",
+            "Vikings",
+            "Game of Thrones",
+            "Rome"
+          ],
+          "explanation": "'Game of Thrones' (2011-2019) adapts George R. R. Martin's novels."
+        },
+        "fr": {
+          "text": "Quelle série de HBO suit des familles nobles se disputant le Trône de fer ?",
+          "choices": [
+            "The Witcher",
+            "Vikings",
+            "Game of Thrones",
+            "Rome"
+          ],
+          "explanation": "« Game of Thrones » (2011-2019) adapte les romans de George R. R. Martin."
+        }
+      }
+    },
+    {
+      "id": "television_119",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'The Big Bang Theory', what is Penny's job at the start of the series?",
+          "choices": [
+            "Nurse",
+            "Waitress",
+            "Famous actress",
+            "Physicist"
+          ],
+          "explanation": "Penny works as a waitress at the Cheesecake Factory while dreaming of acting."
+        },
+        "fr": {
+          "text": "Dans « The Big Bang Theory », quel est le métier de Penny au début de la série ?",
+          "choices": [
+            "Infirmière",
+            "Serveuse",
+            "Actrice célèbre",
+            "Physicienne"
+          ],
+          "explanation": "Penny travaille comme serveuse à la Cheesecake Factory en rêvant de devenir actrice."
+        }
+      }
+    },
+    {
+      "id": "television_120",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Spanish series features a heist on the Royal Mint of Spain?",
+          "choices": [
+            "Money Heist",
+            "Elite",
+            "Locked Up",
+            "Narcos"
+          ],
+          "explanation": "The Professor and his city-named crew rob the Madrid mint."
+        },
+        "fr": {
+          "text": "Quelle série espagnole met en scène le braquage de la Fabrique nationale de la monnaie ?",
+          "choices": [
+            "La casa de papel",
+            "Élite",
+            "Vis a vis",
+            "Narcos"
+          ],
+          "explanation": "Le Professeur et ses complices aux noms de villes braquent la Fabrique de la monnaie de Madrid."
+        }
+      }
+    },
+    {
+      "id": "television_121",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which actor plays Sherlock Holmes in the American series 'Elementary'?",
+          "choices": [
+            "Benedict Cumberbatch",
+            "Robert Downey Jr.",
+            "Henry Cavill",
+            "Jonny Lee Miller"
+          ],
+          "explanation": "In 'Elementary', Jonny Lee Miller plays a New York-based Sherlock, with Lucy Liu as Watson."
+        },
+        "fr": {
+          "text": "Quel acteur joue Sherlock Holmes dans la série américaine « Elementary » ?",
+          "choices": [
+            "Benedict Cumberbatch",
+            "Robert Downey Jr.",
+            "Henry Cavill",
+            "Jonny Lee Miller"
+          ],
+          "explanation": "Dans « Elementary », Jonny Lee Miller joue un Sherlock installé à New York, avec Lucy Liu en Watson."
+        }
+      }
+    },
+    {
+      "id": "television_122",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'The Simpsons', what is the bar Homer goes to called?",
+          "choices": [
+            "The Kwik-E-Mart",
+            "Moe's Tavern",
+            "Krusty Burger",
+            "The power plant"
+          ],
+          "explanation": "Moe Szyslak's bar is the hangout of Homer, Barney, Lenny and Carl."
+        },
+        "fr": {
+          "text": "Dans « Les Simpson », comment s'appelle le bar où va Homer ?",
+          "choices": [
+            "Le Kwik-E-Mart",
+            "Chez Moe",
+            "Le Krusty Burger",
+            "La centrale"
+          ],
+          "explanation": "Le bar de Moe Szyslak est le repaire d'Homer, Barney, Lenny et Carl."
+        }
+      }
+    },
+    {
+      "id": "television_123",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Netflix series follows Queen Elizabeth II?",
+          "choices": [
+            "Victoria",
+            "Downton Abbey",
+            "Bridgerton",
+            "The Crown"
+          ],
+          "explanation": "'The Crown' traced Elizabeth II's reign over six seasons, from 2016 to 2023."
+        },
+        "fr": {
+          "text": "Quelle série de Netflix suit la reine Élisabeth II ?",
+          "choices": [
+            "Victoria",
+            "Downton Abbey",
+            "Bridgerton",
+            "The Crown"
+          ],
+          "explanation": "« The Crown » a retracé le règne d'Élisabeth II en six saisons, de 2016 à 2023."
+        }
+      }
+    },
+    {
+      "id": "television_124",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Friends', what is Chandler's surname?",
+          "choices": [
+            "Bing",
+            "Geller",
+            "Tribbiani",
+            "Buffay"
+          ],
+          "explanation": "Chandler Bing marries Monica Geller; Joey is a Tribbiani and Phoebe a Buffay."
+        },
+        "fr": {
+          "text": "Dans « Friends », quel est le nom de famille de Chandler ?",
+          "choices": [
+            "Bing",
+            "Geller",
+            "Tribbiani",
+            "Buffay"
+          ],
+          "explanation": "Chandler Bing épouse Monica Geller ; Joey s'appelle Tribbiani et Phoebe Buffay."
+        }
+      }
+    },
+    {
+      "id": "television_125",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which American series is set in Litchfield prison?",
+          "choices": [
+            "Prison Break",
+            "Oz",
+            "Orange Is the New Black",
+            "Wentworth"
+          ],
+          "explanation": "'Orange Is the New Black' follows Piper Chapman in a women's federal prison."
+        },
+        "fr": {
+          "text": "Quelle série américaine se déroule dans la prison de Litchfield ?",
+          "choices": [
+            "Prison Break",
+            "Oz",
+            "Orange Is the New Black",
+            "Wentworth"
+          ],
+          "explanation": "« Orange Is the New Black » suit Piper Chapman dans une prison fédérale pour femmes."
+        }
+      }
+    },
+    {
+      "id": "television_126",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is the name of Michael Scofield's brother in 'Prison Break'?",
+          "choices": [
+            "Fernando Sucre",
+            "Theodore Bagwell",
+            "Alexander Mahone",
+            "Lincoln Burrows"
+          ],
+          "explanation": "Michael gets himself jailed to break out his brother Lincoln, who is on death row."
+        },
+        "fr": {
+          "text": "Quel est le nom du frère de Michael Scofield dans « Prison Break » ?",
+          "choices": [
+            "Fernando Sucre",
+            "Theodore Bagwell",
+            "Alexander Mahone",
+            "Lincoln Burrows"
+          ],
+          "explanation": "Michael se fait incarcérer pour faire évader son frère Lincoln, condamné à mort."
+        }
+      }
+    },
+    {
+      "id": "television_127",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which series follows four New York friends including columnist Carrie Bradshaw?",
+          "choices": [
+            "Girls",
+            "Sex and the City",
+            "Gossip Girl",
+            "Desperate Housewives"
+          ],
+          "explanation": "'Sex and the City' (1998-2004) follows Carrie, Samantha, Charlotte and Miranda."
+        },
+        "fr": {
+          "text": "Quelle série suit la vie de quatre amies new-yorkaises dont la chroniqueuse Carrie Bradshaw ?",
+          "choices": [
+            "Girls",
+            "Sex and the City",
+            "Gossip Girl",
+            "Desperate Housewives"
+          ],
+          "explanation": "« Sex and the City » (1998-2004) suit Carrie, Samantha, Charlotte et Miranda."
+        }
+      }
+    },
+    {
+      "id": "television_128",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "On which fictional street do the heroines of 'Desperate Housewives' live?",
+          "choices": [
+            "Evergreen Terrace",
+            "Privet Drive",
+            "Wisteria Lane",
+            "Elm Street"
+          ],
+          "explanation": "The show's housewives live on Wisteria Lane, in the town of Fairview."
+        },
+        "fr": {
+          "text": "Dans quel quartier fictif vivent les héroïnes de « Desperate Housewives » ?",
+          "choices": [
+            "Evergreen Terrace",
+            "Privet Drive",
+            "Wisteria Lane",
+            "Elm Street"
+          ],
+          "explanation": "Les ménagères de la série habitent Wisteria Lane, dans la ville de Fairview."
+        }
+      }
+    },
+    {
+      "id": "television_129",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which animated series is set in a small Colorado town with Cartman and Kenny?",
+          "choices": [
+            "South Park",
+            "Family Guy",
+            "Beavis and Butt-Head",
+            "King of the Hill"
+          ],
+          "explanation": "'South Park', created by Trey Parker and Matt Stone, has aired since 1997."
+        },
+        "fr": {
+          "text": "Quelle série animée se déroule dans une petite ville du Colorado avec Cartman et Kenny ?",
+          "choices": [
+            "South Park",
+            "Les Griffin",
+            "Beavis et Butt-Head",
+            "King of the Hill"
+          ],
+          "explanation": "« South Park », créée par Trey Parker et Matt Stone, est diffusée depuis 1997."
+        }
+      }
+    },
+    {
+      "id": "television_130",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which actor plays Dr Gregory House?",
+          "choices": [
+            "Hugh Grant",
+            "Colin Firth",
+            "Kiefer Sutherland",
+            "Hugh Laurie"
+          ],
+          "explanation": "British actor Hugh Laurie played House with an American accent from 2004 to 2012."
+        },
+        "fr": {
+          "text": "Quel acteur joue le Dr Gregory House ?",
+          "choices": [
+            "Hugh Grant",
+            "Colin Firth",
+            "Kiefer Sutherland",
+            "Hugh Laurie"
+          ],
+          "explanation": "Hugh Laurie, acteur britannique, a joué House avec un accent américain de 2004 à 2012."
+        }
+      }
+    },
+    {
+      "id": "television_131",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'The Mandalorian', what did fans call Grogu before his name was revealed?",
+          "choices": [
+            "Little Ewok",
+            "Baby Yoda",
+            "Mini Jedi",
+            "Baby Chewie"
+          ],
+          "explanation": "Grogu, the same species as Yoda, was nicknamed 'Baby Yoda' from season 1."
+        },
+        "fr": {
+          "text": "Dans « The Mandalorian », comment les fans surnomment-ils l'enfant Grogu avant la révélation de son nom ?",
+          "choices": [
+            "Petit Ewok",
+            "Bébé Yoda",
+            "Mini Jedi",
+            "Baby Chewie"
+          ],
+          "explanation": "Grogu, de la même espèce que Yoda, a été surnommé « Bébé Yoda » dès la saison 1."
+        }
+      }
+    },
+    {
+      "id": "television_132",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which series follows agent Jack Bauer in real time?",
+          "choices": [
+            "Homeland",
+            "Prison Break",
+            "24",
+            "Alias"
+          ],
+          "explanation": "Each season of '24' covers one day, with each episode lasting one hour."
+        },
+        "fr": {
+          "text": "Quelle série suit l'agent Jack Bauer en temps réel ?",
+          "choices": [
+            "Homeland",
+            "Prison Break",
+            "24 heures chrono",
+            "Alias"
+          ],
+          "explanation": "Chaque saison de « 24 » couvre une journée, un épisode représentant une heure."
+        }
+      }
+    },
+    {
+      "id": "television_133",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Kaamelott', which actor plays King Arthur?",
+          "choices": [
+            "Alexandre Astier",
+            "Franck Pitiot",
+            "Thomas Cousseau",
+            "Jean-Christophe Hembert"
+          ],
+          "explanation": "Alexandre Astier created the series and plays Arthur Pendragon."
+        },
+        "fr": {
+          "text": "Dans « Kaamelott », quel acteur joue le roi Arthur ?",
+          "choices": [
+            "Alexandre Astier",
+            "Franck Pitiot",
+            "Thomas Cousseau",
+            "Jean-Christophe Hembert"
+          ],
+          "explanation": "Alexandre Astier a créé la série et y incarne Arthur Pendragon."
+        }
+      }
+    },
+    {
+      "id": "television_134",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which cooking show pits candidates against each other before starred chefs on M6?",
+          "choices": [
+            "Top Chef",
+            "MasterChef",
+            "Le Meilleur Pâtissier",
+            "Kitchen Nightmares"
+          ],
+          "explanation": "'Top Chef' has aired on M6 since 2010."
+        },
+        "fr": {
+          "text": "Quelle émission de cuisine voit des candidats s'affronter devant des chefs étoilés sur M6 ?",
+          "choices": [
+            "Top Chef",
+            "MasterChef",
+            "Le Meilleur Pâtissier",
+            "Cauchemar en cuisine"
+          ],
+          "explanation": "« Top Chef » est diffusé sur M6 depuis 2010."
+        }
+      }
+    },
+    {
+      "id": "television_135",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'The Walking Dead', what is Rick Grimes's job at the start of the series?",
+          "choices": [
+            "Doctor",
+            "Soldier",
+            "Sheriff's deputy",
+            "Firefighter"
+          ],
+          "explanation": "Rick Grimes, a sheriff's deputy, wakes from a coma in a world overrun by the dead."
+        },
+        "fr": {
+          "text": "Dans « The Walking Dead », quel est le métier de Rick Grimes au début de la série ?",
+          "choices": [
+            "Médecin",
+            "Militaire",
+            "Shérif adjoint",
+            "Pompier"
+          ],
+          "explanation": "Rick Grimes, adjoint du shérif, se réveille du coma dans un monde envahi par les morts."
+        }
+      }
+    },
+    {
+      "id": "television_136",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which British sci-fi anthology shows the dark side of technology?",
+          "choices": [
+            "Doctor Who",
+            "Years and Years",
+            "Humans",
+            "Black Mirror"
+          ],
+          "explanation": "'Black Mirror', created by Charlie Brooker, tells a different story in every episode."
+        },
+        "fr": {
+          "text": "Quelle série de science-fiction britannique présente des épisodes indépendants sur les dérives technologiques ?",
+          "choices": [
+            "Doctor Who",
+            "Years and Years",
+            "Humans",
+            "Black Mirror"
+          ],
+          "explanation": "« Black Mirror », créée par Charlie Brooker, propose des histoires différentes à chaque épisode."
+        }
+      }
+    },
+    {
+      "id": "television_137",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "What is Sheldon's roommate called in 'The Big Bang Theory'?",
+          "choices": [
+            "Howard",
+            "Leonard",
+            "Raj",
+            "Stuart"
+          ],
+          "explanation": "Leonard Hofstadter shares Sheldon's apartment, across the hall from Penny."
+        },
+        "fr": {
+          "text": "Quel est le nom du colocataire de Sheldon dans « The Big Bang Theory » ?",
+          "choices": [
+            "Howard",
+            "Leonard",
+            "Raj",
+            "Stuart"
+          ],
+          "explanation": "Leonard Hofstadter partage l'appartement de Sheldon, face à celui de Penny."
+        }
+      }
+    },
+    {
+      "id": "television_138",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Netflix series follows Geralt of Rivia, a monster hunter?",
+          "choices": [
+            "The Witcher",
+            "Shadow and Bone",
+            "Cursed",
+            "Warrior Nun"
+          ],
+          "explanation": "The series adapts Andrzej Sapkowski's novels, with Henry Cavill and then Liam Hemsworth."
+        },
+        "fr": {
+          "text": "Quelle série de Netflix suit Geralt de Riv, chasseur de monstres ?",
+          "choices": [
+            "The Witcher",
+            "Shadow and Bone",
+            "Cursed",
+            "Warrior Nun"
+          ],
+          "explanation": "La série adapte les romans d'Andrzej Sapkowski, avec Henry Cavill puis Liam Hemsworth."
+        }
+      }
+    },
+    {
+      "id": "television_139",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Game of Thrones', which character is nicknamed 'the Imp'?",
+          "choices": [
+            "Jaime Lannister",
+            "Petyr Baelish",
+            "Varys",
+            "Tyrion Lannister"
+          ],
+          "explanation": "Tyrion Lannister, played by Peter Dinklage, won four Emmy Awards for the role."
+        },
+        "fr": {
+          "text": "Dans « Game of Thrones », quel personnage est surnommé « le Lutin » ?",
+          "choices": [
+            "Jaime Lannister",
+            "Petyr Baelish",
+            "Varys",
+            "Tyrion Lannister"
+          ],
+          "explanation": "Tyrion Lannister, joué par Peter Dinklage, a remporté quatre Emmy Awards pour ce rôle."
+        }
+      }
+    },
+    {
+      "id": "television_140",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which anime follows Light Yagami, who kills with a notebook?",
+          "choices": [
+            "Code Geass",
+            "Death Note",
+            "Tokyo Ghoul",
+            "Psycho-Pass"
+          ],
+          "explanation": "In 'Death Note', anyone whose name is written in the notebook dies."
+        },
+        "fr": {
+          "text": "Quel anime suit Light Yagami, qui tue grâce à un cahier ?",
+          "choices": [
+            "Code Geass",
+            "Death Note",
+            "Tokyo Ghoul",
+            "Psycho-Pass"
+          ],
+          "explanation": "Dans « Death Note », quiconque dont le nom est écrit dans le cahier meurt."
+        }
+      }
+    },
+    {
+      "id": "television_141",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Friends', which song does Phoebe sing about a cat?",
+          "choices": [
+            "Crazy Cat",
+            "Happy Cat",
+            "Smelly Cat",
+            "Fat Cat"
+          ],
+          "explanation": "'Smelly Cat' is Phoebe's most famous song at Central Perk."
+        },
+        "fr": {
+          "text": "Dans « Friends », quelle chanson Phoebe chante-t-elle sur un chat ?",
+          "choices": [
+            "Crazy Cat",
+            "Happy Cat",
+            "Smelly Cat",
+            "Fat Cat"
+          ],
+          "explanation": "« Smelly Cat » est la chanson la plus célèbre de Phoebe au Central Perk."
+        }
+      }
+    },
+    {
+      "id": "television_142",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French channel's 8 pm news was long presented by PPDA?",
+          "choices": [
+            "France 2",
+            "TF1",
+            "M6",
+            "Canal+"
+          ],
+          "explanation": "Patrick Poivre d'Arvor presented TF1's 8 pm news from 1987 to 2008."
+        },
+        "fr": {
+          "text": "Quelle chaîne française diffuse le journal de 20 heures présenté historiquement par PPDA ?",
+          "choices": [
+            "France 2",
+            "TF1",
+            "M6",
+            "Canal+"
+          ],
+          "explanation": "Patrick Poivre d'Arvor a présenté le 20 heures de TF1 de 1987 à 2008."
+        }
+      }
+    },
+    {
+      "id": "television_143",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which police series follows a detective always in a raincoat?",
+          "choices": [
+            "Kojak",
+            "Magnum, P.I.",
+            "Derrick",
+            "Columbo"
+          ],
+          "explanation": "Peter Falk played Lieutenant Columbo from 1968 to 2003."
+        },
+        "fr": {
+          "text": "Quelle série policière suit l'enquêteur Columbo, toujours en imperméable ?",
+          "choices": [
+            "Kojak",
+            "Magnum",
+            "Derrick",
+            "Columbo"
+          ],
+          "explanation": "Peter Falk a incarné le lieutenant Columbo de 1968 à 2003."
+        }
+      }
+    },
+    {
+      "id": "television_144",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'The Simpsons', what is the name of Homer's very religious neighbour?",
+          "choices": [
+            "Ned Flanders",
+            "Waylon Smithers",
+            "Seymour Skinner",
+            "Barney Gumble"
+          ],
+          "explanation": "Ned Flanders, the ever-friendly neighbour, drives Homer mad."
+        },
+        "fr": {
+          "text": "Dans « Les Simpson », quel est le nom du voisin très croyant d'Homer ?",
+          "choices": [
+            "Ned Flanders",
+            "Waylon Smithers",
+            "Seymour Skinner",
+            "Barney Gumble"
+          ],
+          "explanation": "Ned Flanders, voisin toujours aimable, agace Homer au plus haut point."
+        }
+      }
+    },
+    {
+      "id": "television_145",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which series follows the Roy family, owners of a media empire?",
+          "choices": [
+            "Billions",
+            "Dallas",
+            "Succession",
+            "Yellowstone"
+          ],
+          "explanation": "'Succession' (HBO, 2018-2023) won the Emmy for Outstanding Drama Series."
+        },
+        "fr": {
+          "text": "Quelle série suit la famille Roy, propriétaire d'un empire médiatique ?",
+          "choices": [
+            "Billions",
+            "Dallas",
+            "Succession",
+            "Yellowstone"
+          ],
+          "explanation": "« Succession » (HBO, 2018-2023) a remporté l'Emmy de la meilleure série dramatique."
+        }
+      }
+    },
+    {
+      "id": "television_146",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In Netflix's 'Wednesday', which family does the heroine belong to?",
+          "choices": [
+            "The Munsters",
+            "The Belchers",
+            "The Frankensteins",
+            "The Addams family"
+          ],
+          "explanation": "Wednesday Addams, played by Jenna Ortega, attends Nevermore Academy."
+        },
+        "fr": {
+          "text": "Dans « Mercredi » (Netflix), de quelle famille vient l'héroïne ?",
+          "choices": [
+            "La famille Munster",
+            "La famille Belcher",
+            "La famille Frankenstein",
+            "La famille Addams"
+          ],
+          "explanation": "Mercredi Addams, jouée par Jenna Ortega, étudie à l'académie Nevermore."
+        }
+      }
+    },
+    {
+      "id": "television_147",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which animated series features delivery boy Fry, who wakes up in the year 3000?",
+          "choices": [
+            "The Jetsons",
+            "Futurama",
+            "Rick and Morty",
+            "Final Space"
+          ],
+          "explanation": "Philip J. Fry, accidentally frozen, wakes up on 31 December 2999."
+        },
+        "fr": {
+          "text": "Quelle série animée met en scène le livreur Fry, réveillé en l'an 3000 ?",
+          "choices": [
+            "Les Jetson",
+            "Futurama",
+            "Rick et Morty",
+            "Final Space"
+          ],
+          "explanation": "Philip J. Fry, cryogénisé par accident, se réveille le 31 décembre 2999."
+        }
+      }
+    },
+    {
+      "id": "television_148",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Breaking Bad', what is the job of Walter's brother-in-law Hank Schrader?",
+          "choices": [
+            "Lawyer",
+            "Doctor",
+            "DEA agent",
+            "City police officer"
+          ],
+          "explanation": "Hank, a DEA agent, hunts Heisenberg without knowing it is Walter."
+        },
+        "fr": {
+          "text": "Dans « Breaking Bad », quel est le métier de Hank Schrader, beau-frère de Walter ?",
+          "choices": [
+            "Avocat",
+            "Médecin",
+            "Agent de la DEA",
+            "Policier municipal"
+          ],
+          "explanation": "Hank, agent de la DEA, traque Heisenberg sans savoir qu'il s'agit de Walter."
+        }
+      }
+    },
+    {
+      "id": "television_149",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which 1999 series starring James Gandolfini is often called the greatest ever?",
+          "choices": [
+            "The Sopranos",
+            "Oz",
+            "The Wire",
+            "Boardwalk Empire"
+          ],
+          "explanation": "'The Sopranos' (HBO, 1999-2007) opened the golden age of TV drama."
+        },
+        "fr": {
+          "text": "Quelle série de 1999 avec James Gandolfini est souvent citée comme la meilleure de l'histoire ?",
+          "choices": [
+            "Les Soprano",
+            "Oz",
+            "The Wire",
+            "Boardwalk Empire"
+          ],
+          "explanation": "« Les Soprano » (HBO, 1999-2007) a ouvert l'âge d'or des séries dramatiques."
+        }
+      }
+    },
+    {
+      "id": "television_150",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which city is 'The Wire' set?",
+          "choices": [
+            "Chicago",
+            "Detroit",
+            "Philadelphia",
+            "Baltimore"
+          ],
+          "explanation": "'The Wire' depicts the drug trade and the institutions of Baltimore."
+        },
+        "fr": {
+          "text": "Dans quelle ville se déroule la série « The Wire » ?",
+          "choices": [
+            "Chicago",
+            "Detroit",
+            "Philadelphie",
+            "Baltimore"
+          ],
+          "explanation": "« The Wire » (Sur écoute) dépeint le trafic de drogue et les institutions de Baltimore."
+        }
+      }
+    },
+    {
+      "id": "television_151",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which actor played the Tenth Doctor in 'Doctor Who'?",
+          "choices": [
+            "Christopher Eccleston",
+            "David Tennant",
+            "Peter Capaldi",
+            "Tom Baker"
+          ],
+          "explanation": "David Tennant was the Tenth Doctor from 2005 to 2010, then returned in 2023."
+        },
+        "fr": {
+          "text": "Quel acteur a joué le Dixième Docteur dans « Doctor Who » ?",
+          "choices": [
+            "Christopher Eccleston",
+            "David Tennant",
+            "Peter Capaldi",
+            "Tom Baker"
+          ],
+          "explanation": "David Tennant a été le Dixième Docteur de 2005 à 2010, puis est revenu en 2023."
+        }
+      }
+    },
+    {
+      "id": "television_152",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Vince Gilligan film follows Jesse on the run after 'Breaking Bad'?",
+          "choices": [
+            "Better Call Saul",
+            "Ozark",
+            "El Camino",
+            "The Shield"
+          ],
+          "explanation": "'El Camino' (2019) is a Netflix film following Jesse Pinkman right after the series ends."
+        },
+        "fr": {
+          "text": "Quelle série créée par Vince Gilligan est la suite de « Breaking Bad » avec Jesse en fuite ?",
+          "choices": [
+            "Better Call Saul",
+            "Ozark",
+            "El Camino",
+            "The Shield"
+          ],
+          "explanation": "« El Camino » (2019) est un film Netflix qui suit Jesse Pinkman juste après la fin de la série."
+        }
+      }
+    },
+    {
+      "id": "television_153",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Kaamelott', which knight does Franck Pitiot play?",
+          "choices": [
+            "Perceval",
+            "Karadoc",
+            "Lancelot",
+            "Bohort"
+          ],
+          "explanation": "Franck Pitiot plays Perceval of Wales, sidekick of Karadoc (Jean-Christophe Hembert)."
+        },
+        "fr": {
+          "text": "Dans « Kaamelott », quel chevalier est joué par Franck Pitiot ?",
+          "choices": [
+            "Perceval",
+            "Karadoc",
+            "Lancelot",
+            "Bohort"
+          ],
+          "explanation": "Franck Pitiot incarne Perceval de Galles, compère de Karadoc (Jean-Christophe Hembert)."
+        }
+      }
+    },
+    {
+      "id": "television_154",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Danish-Swedish series opens with a body found on the Øresund Bridge?",
+          "choices": [
+            "The Killing",
+            "Borgen",
+            "The Bridge",
+            "Wallander"
+          ],
+          "explanation": "'The Bridge' (2011) was remade in the US and in France and the UK ('The Tunnel')."
+        },
+        "fr": {
+          "text": "Quelle série danoise-suédoise commence par un corps découvert sur le pont de l'Øresund ?",
+          "choices": [
+            "The Killing",
+            "Borgen",
+            "Bron / The Bridge",
+            "Wallander"
+          ],
+          "explanation": "« Bron/Broen » (2011) a été adaptée aux États-Unis et en France (« Tunnel »)."
+        }
+      }
+    },
+    {
+      "id": "television_155",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "How many seasons does 'Game of Thrones' have?",
+          "choices": [
+            "6",
+            "8",
+            "7",
+            "10"
+          ],
+          "explanation": "The series ran for eight seasons, from 2011 to 2019, totalling 73 episodes."
+        },
+        "fr": {
+          "text": "Combien de saisons compte « Game of Thrones » ?",
+          "choices": [
+            "6",
+            "8",
+            "7",
+            "10"
+          ],
+          "explanation": "La série a duré huit saisons, de 2011 à 2019, pour 73 épisodes."
+        }
+      }
+    },
+    {
+      "id": "television_156",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Mad Men', what is Don Draper's job?",
+          "choices": [
+            "Lawyer",
+            "Journalist",
+            "Banker",
+            "Advertising executive"
+          ],
+          "explanation": "Don Draper is creative director at a Madison Avenue advertising agency in the 1960s."
+        },
+        "fr": {
+          "text": "Dans « Mad Men », quel est le métier de Don Draper ?",
+          "choices": [
+            "Avocat",
+            "Journaliste",
+            "Banquier",
+            "Publicitaire"
+          ],
+          "explanation": "Don Draper est directeur de la création d'une agence de publicité de Madison Avenue dans les années 1960."
+        }
+      }
+    },
+    {
+      "id": "television_157",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which 1990s sitcom revolves around Jerry and his friends in New York?",
+          "choices": [
+            "Seinfeld",
+            "Frasier",
+            "Mad About You",
+            "Cheers"
+          ],
+          "explanation": "'Seinfeld', 'the show about nothing', aired from 1989 to 1998."
+        },
+        "fr": {
+          "text": "Quelle sitcom des années 1990 se déroule autour de Jerry et de ses amis à New York ?",
+          "choices": [
+            "Seinfeld",
+            "Frasier",
+            "Mad About You",
+            "Cheers"
+          ],
+          "explanation": "« Seinfeld », « la série sur rien », a été diffusée de 1989 à 1998."
+        }
+      }
+    },
+    {
+      "id": "television_158",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Twin Peaks', which drink does Agent Cooper love?",
+          "choices": [
+            "Coffee",
+            "Tea",
+            "Strawberry milk",
+            "Whisky"
+          ],
+          "explanation": "Agent Cooper raves about the coffee and cherry pie at the Double R Diner."
+        },
+        "fr": {
+          "text": "Dans « Twin Peaks », quelle boisson l'agent Cooper adore-t-il ?",
+          "choices": [
+            "Le café",
+            "Le thé",
+            "Le lait fraise",
+            "Le whisky"
+          ],
+          "explanation": "L'agent Cooper s'extasie sur le café et la tarte aux cerises du Double R Diner."
+        }
+      }
+    },
+    {
+      "id": "television_159",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French series follows the staff of a talent agency?",
+          "choices": [
+            "The Bureau",
+            "Spiral",
+            "Baron Noir",
+            "Call My Agent!"
+          ],
+          "explanation": "'Call My Agent!' features the ASK agency and stars playing themselves."
+        },
+        "fr": {
+          "text": "Quelle série française suit les employés d'une agence d'agents de stars ?",
+          "choices": [
+            "Le Bureau des légendes",
+            "Engrenages",
+            "Baron noir",
+            "Dix pour cent"
+          ],
+          "explanation": "« Dix pour cent » (Call My Agent!) met en scène l'agence ASK et des stars jouant leur propre rôle."
+        }
+      }
+    },
+    {
+      "id": "television_160",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which French series follows agents of the DGSE intelligence service?",
+          "choices": [
+            "Spiral",
+            "Braquo",
+            "The Bureau",
+            "Marseille"
+          ],
+          "explanation": "Created by Éric Rochant, the series follows Malotru, played by Mathieu Kassovitz."
+        },
+        "fr": {
+          "text": "Quelle série française suit des agents de la DGSE ?",
+          "choices": [
+            "Engrenages",
+            "Braquo",
+            "Le Bureau des légendes",
+            "Marseille"
+          ],
+          "explanation": "Créée par Éric Rochant, la série suit Malotru, joué par Mathieu Kassovitz."
+        }
+      }
+    },
+    {
+      "id": "television_161",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Seinfeld', what is Jerry's eccentric neighbour called?",
+          "choices": [
+            "Newman",
+            "Kramer",
+            "George",
+            "Elaine"
+          ],
+          "explanation": "Cosmo Kramer is famous for his dramatic entrances into Jerry's apartment."
+        },
+        "fr": {
+          "text": "Dans « Seinfeld », comment s'appelle le voisin excentrique de Jerry ?",
+          "choices": [
+            "Newman",
+            "Kramer",
+            "George",
+            "Elaine"
+          ],
+          "explanation": "Cosmo Kramer est célèbre pour ses entrées fracassantes dans l'appartement de Jerry."
+        }
+      }
+    },
+    {
+      "id": "television_162",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which sci-fi series follows the USS Enterprise crew under Captain Kirk?",
+          "choices": [
+            "Battlestar Galactica",
+            "Babylon 5",
+            "The Expanse",
+            "Star Trek"
+          ],
+          "explanation": "The original 'Star Trek' series aired from 1966 to 1969."
+        },
+        "fr": {
+          "text": "Quelle série de science-fiction suit l'équipage de l'USS Enterprise commandé par le capitaine Kirk ?",
+          "choices": [
+            "Battlestar Galactica",
+            "Babylon 5",
+            "The Expanse",
+            "Star Trek"
+          ],
+          "explanation": "La série originale « Star Trek » a été diffusée de 1966 à 1969."
+        }
+      }
+    },
+    {
+      "id": "television_163",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Star Trek', what species is Mr Spock through his father?",
+          "choices": [
+            "Klingon",
+            "Romulan",
+            "Vulcan",
+            "Betazoid"
+          ],
+          "explanation": "Spock is half Vulcan through his father Sarek and half human through his mother Amanda."
+        },
+        "fr": {
+          "text": "Dans « Star Trek », de quelle espèce est M. Spock par son père ?",
+          "choices": [
+            "Klingon",
+            "Romulien",
+            "Vulcain",
+            "Bétazoïde"
+          ],
+          "explanation": "Spock est à moitié vulcain par son père Sarek et à moitié humain par sa mère Amanda."
+        }
+      }
+    },
+    {
+      "id": "television_164",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Who hosted the French version of 'The Price Is Right' from 1987 to 2001?",
+          "choices": [
+            "Vincent Lagaf'",
+            "Philippe Risoli",
+            "Jean-Pierre Foucault",
+            "Nagui"
+          ],
+          "explanation": "Philippe Risoli hosted it on TF1; Vincent Lagaf' took over in 2009."
+        },
+        "fr": {
+          "text": "Quel animateur a présenté « Le Juste Prix » en France de 1987 à 2001 ?",
+          "choices": [
+            "Vincent Lagaf'",
+            "Philippe Risoli",
+            "Jean-Pierre Foucault",
+            "Nagui"
+          ],
+          "explanation": "Philippe Risoli a animé « Le Juste Prix » sur TF1 ; Vincent Lagaf' a pris le relais en 2009."
+        }
+      }
+    },
+    {
+      "id": "television_165",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In 'Better Call Saul', what is Saul Goodman's real name?",
+          "choices": [
+            "Jimmy McGill",
+            "Chuck McGill",
+            "Howard Hamlin",
+            "Mike Ehrmantraut"
+          ],
+          "explanation": "Jimmy McGill takes the name Saul Goodman to work as a shady lawyer."
+        },
+        "fr": {
+          "text": "Dans « Better Call Saul », quel est le vrai nom de Saul Goodman ?",
+          "choices": [
+            "Jimmy McGill",
+            "Chuck McGill",
+            "Howard Hamlin",
+            "Mike Ehrmantraut"
+          ],
+          "explanation": "Jimmy McGill prend le nom de Saul Goodman pour exercer comme avocat véreux."
+        }
+      }
+    },
+    {
+      "id": "television_166",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 2,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which 2019 HBO series retells the 1986 nuclear disaster?",
+          "choices": [
+            "The Terror",
+            "Fukushima",
+            "Chernobyl",
+            "Manhattan"
+          ],
+          "explanation": "The miniseries 'Chernobyl' won ten Emmy Awards."
+        },
+        "fr": {
+          "text": "Quelle série de 2019 de HBO retrace la catastrophe nucléaire de 1986 ?",
+          "choices": [
+            "The Terror",
+            "Fukushima",
+            "Chernobyl",
+            "Manhattan"
+          ],
+          "explanation": "La mini-série « Chernobyl » a remporté dix Emmy Awards."
+        }
+      }
+    },
+    {
+      "id": "television_167",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 3,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which series follows a financial adviser laundering cartel money in the Ozarks?",
+          "choices": [
+            "Breaking Bad",
+            "Narcos",
+            "Bloodline",
+            "Ozark"
+          ],
+          "explanation": "In 'Ozark', Marty Byrde (Jason Bateman) launders cartel money in Missouri."
+        },
+        "fr": {
+          "text": "Quelle série suit un conseiller financier qui blanchit l'argent d'un cartel dans les monts Ozarks ?",
+          "choices": [
+            "Breaking Bad",
+            "Narcos",
+            "Bloodline",
+            "Ozark"
+          ],
+          "explanation": "Dans « Ozark », Marty Byrde (Jason Bateman) blanchit l'argent d'un cartel dans le Missouri."
+        }
+      }
+    },
+    {
+      "id": "television_168",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Netflix series follows high-society London families in 1813?",
+          "choices": [
+            "Downton Abbey",
+            "Bridgerton",
+            "Belgravia",
+            "Poldark"
+          ],
+          "explanation": "The series, produced by Shonda Rhimes, adapts Julia Quinn's novels."
+        },
+        "fr": {
+          "text": "Quelle série de Netflix suit des familles de la haute société londonienne en 1813 ?",
+          "choices": [
+            "Downton Abbey",
+            "La Chronique des Bridgerton",
+            "Belgravia",
+            "Poldark"
+          ],
+          "explanation": "La série, produite par Shonda Rhimes, adapte les romans de Julia Quinn."
+        }
+      }
+    },
+    {
+      "id": "television_169",
+      "category": "television",
+      "difficulty": 2,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which British series follows the Crawley family and their servants in the early 20th century?",
+          "choices": [
+            "Downton Abbey",
+            "The Crown",
+            "Peaky Blinders",
+            "Bridgerton"
+          ],
+          "explanation": "'Downton Abbey' (2010-2015) is set on a large Yorkshire estate."
+        },
+        "fr": {
+          "text": "Quelle série britannique suit la famille Crawley et ses domestiques au début du XXe siècle ?",
+          "choices": [
+            "Downton Abbey",
+            "The Crown",
+            "Peaky Blinders",
+            "Bridgerton"
+          ],
+          "explanation": "« Downton Abbey » (2010-2015) se déroule dans un grand domaine du Yorkshire."
+        }
+      }
+    },
+    {
+      "id": "television_170",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 0,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "Which Japanese anime follows the alchemist brothers Edward and Alphonse Elric?",
+          "choices": [
+            "Fullmetal Alchemist",
+            "Bleach",
+            "Hunter x Hunter",
+            "Fairy Tail"
+          ],
+          "explanation": "The Elric brothers seek the Philosopher's Stone to restore their bodies."
+        },
+        "fr": {
+          "text": "Quelle série animée japonaise suit Edward et Alphonse Elric, deux alchimistes ?",
+          "choices": [
+            "Fullmetal Alchemist",
+            "Bleach",
+            "Hunter x Hunter",
+            "Fairy Tail"
+          ],
+          "explanation": "Les frères Elric cherchent la pierre philosophale pour retrouver leurs corps."
+        }
+      }
+    },
+    {
+      "id": "television_171",
+      "category": "television",
+      "difficulty": 3,
+      "correct_index": 1,
+      "locales": [
+        "fr",
+        "en"
+      ],
+      "translations": {
+        "en": {
+          "text": "In which year did the second French TV channel switch to colour?",
+          "choices": [
+            "1955",
+            "1967",
+            "1975",
+            "1982"
+          ],
+          "explanation": "The ORTF's second channel launched colour (SECAM system) on 1 October 1967."
+        },
+        "fr": {
+          "text": "En quelle année la télévision française est-elle passée à la couleur sur la deuxième chaîne ?",
+          "choices": [
+            "1955",
+            "1967",
+            "1975",
+            "1982"
+          ],
+          "explanation": "La deuxième chaîne de l'ORTF a lancé la couleur (procédé SECAM) le 1er octobre 1967."
+        }
+      }
+    }
+  ]
+}
