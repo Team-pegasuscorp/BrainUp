@@ -186,8 +186,8 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 	stats.alignment = BoxContainer.ALIGNMENT_CENTER
 	row.add_child(stats)
 
-	## Soft sky — distinct from daily-challenge teal / amber / violet.
-	var league_tile := _summary_stat_tile(Color(0.48, 0.66, 0.98, 1))
+	## Same fill as the Défis du jour card.
+	var league_tile := _summary_stat_tile()
 	stats.add_child(league_tile)
 	var league_body := league_tile.get_child(0) as VBoxContainer
 
@@ -196,7 +196,7 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 	league_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	league_title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	league_title.add_theme_font_size_override("font_size", UiScale.font(15))
-	league_title.add_theme_color_override("font_color", UiTokens.INK)
+	league_title.add_theme_color_override("font_color", Color(1, 1, 1, 0.98))
 	league_body.add_child(league_title)
 
 	var points_row := HBoxContainer.new()
@@ -216,14 +216,10 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 	points.text = _format_int(int(ranking.get("points", 0)))
 	points.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	points.add_theme_font_size_override("font_size", UiScale.font(22))
-	points.add_theme_color_override("font_color", UiTokens.INK)
+	points.add_theme_color_override("font_color", Color(1, 1, 1, 0.98))
 	points_row.add_child(points)
 
-	## Soft rose (coral when at risk) — not the daily amber slot.
-	var streak_accent := Color(0.96, 0.42, 0.38, 1) if (
-		not bool(snapshot.get("is_demo", false)) and DayStreak.at_risk()
-	) else Color(0.95, 0.58, 0.72, 1)
-	var streak_tile := _summary_stat_tile(streak_accent)
+	var streak_tile := _summary_stat_tile()
 	stats.add_child(streak_tile)
 	var streak_body := streak_tile.get_child(0) as VBoxContainer
 
@@ -232,7 +228,7 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 	streak_value.text = str(snapshot.get("day_streak", 0))
 	streak_value.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	streak_value.add_theme_font_size_override("font_size", UiScale.font(24))
-	streak_value.add_theme_color_override("font_color", UiTokens.INK)
+	streak_value.add_theme_color_override("font_color", Color(1, 1, 1, 0.98))
 	streak_body.add_child(streak_value)
 
 	var streak_caption := Label.new()
@@ -244,23 +240,26 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 	streak_caption.add_theme_font_size_override("font_size", UiScale.font(13))
 	streak_caption.add_theme_color_override(
 		"font_color",
-		Color(0.55, 0.28, 0.08, 1) if at_risk else Color(0.28, 0.30, 0.34, 1)
+		Color(1.0, 0.72, 0.42, 1) if at_risk else Color(1, 1, 1, 0.72)
 	)
 	streak_body.add_child(streak_caption)
 
 	return panel
 
 
-func _summary_stat_tile(accent: Color = Color(0.48, 0.66, 0.98, 1)) -> PanelContainer:
+## Défis du jour card fill — reused by hero league / streak subtiles.
+const _DAILY_CHALLENGES_BG := Color(0.075, 0.255, 0.245, 1)
+
+
+func _summary_stat_tile() -> PanelContainer:
 	var tile := PanelContainer.new()
 	tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tile.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	tile.custom_minimum_size = Vector2(124, 112)
-	## Same pastel wash as home challenge / achievement subtiles.
 	var style := StyleBoxFlat.new()
-	style.bg_color = accent.lerp(Color(0.97, 0.98, 0.99, 1.0), 0.72)
+	style.bg_color = _DAILY_CHALLENGES_BG
 	style.set_border_width_all(1)
-	style.border_color = Color(accent.r, accent.g, accent.b, 0.40)
+	style.border_color = Color(UiTokens.ACCENT_HOME.r, UiTokens.ACCENT_HOME.g, UiTokens.ACCENT_HOME.b, 0.40)
 	style.set_corner_radius_all(16)
 	style.shadow_size = 0
 	style.set_content_margin_all(10)
@@ -279,7 +278,7 @@ func _make_daily_challenges_card() -> PanelContainer:
 	var panel := PanelContainer.new()
 	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var style := UiStyle.home_surface(true, 0)
-	style.bg_color = Color(0.075, 0.255, 0.245, 1)
+	style.bg_color = _DAILY_CHALLENGES_BG
 	style.set_border_width_all(2)
 	style.border_color = Color(UiTokens.ACCENT_HOME.r, UiTokens.ACCENT_HOME.g, UiTokens.ACCENT_HOME.b, 0.55)
 	panel.add_theme_stylebox_override("panel", style)

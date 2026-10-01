@@ -368,7 +368,7 @@ func _build_hero() -> PanelContainer:
 
 	var xp_tag := Label.new()
 	xp_tag.text = tr("UI_PROFILE_XP_LABEL")
-	xp_tag.add_theme_font_size_override("font_size", UiScale.font(14))
+	xp_tag.add_theme_font_size_override("font_size", UiScale.font(20))
 	xp_tag.add_theme_color_override("font_color", UiTokens.ACCENT_PROFILE)
 	xp_line.add_child(xp_tag)
 
@@ -377,7 +377,7 @@ func _build_hero() -> PanelContainer:
 		_format_int(int(_profile_data.get("xp", 0))),
 		_format_int(int(_profile_data.get("xp_to_next", 100))),
 	]
-	xp_values.add_theme_font_size_override("font_size", UiScale.font(14))
+	xp_values.add_theme_font_size_override("font_size", UiScale.font(20))
 	xp_values.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	xp_line.add_child(xp_values)
 
@@ -392,14 +392,6 @@ func _build_hero() -> PanelContainer:
 	xp_fill.set_corner_radius_all(8)
 	_xp_bar.add_theme_stylebox_override("fill", xp_fill)
 	xp_col.add_child(_xp_bar)
-
-	var next_xp := Label.new()
-	next_xp.text = tr("UI_PROFILE_NEXT_LEVEL").format({
-		"xp": _format_int(int(_profile_data.get("xp_remaining", 0))),
-	})
-	next_xp.add_theme_font_size_override("font_size", UiScale.font(12))
-	next_xp.add_theme_color_override("font_color", UiTokens.PROFILE_TITLE_CAPS)
-	xp_col.add_child(next_xp)
 
 	## League column in an inset subtile (replaces the vertical divider).
 	var ranking: Dictionary = _profile_data.get("ranking", {})

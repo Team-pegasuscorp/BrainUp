@@ -61,6 +61,11 @@ var settled_trophy_matches: Array = []
 ## Head-to-head vs friends: { friend_key: {wins, losses, draws, settled: [match_ids]} }.
 ## Friend challenges never award trophies (anti-farm); only this counter + XP.
 var friend_rivalries: Dictionary = {}
+## Outgoing friend-challenge invites: [{friend_key, friend_name, mode, level, sent_at, sent_unix}, ...].
+## Inbox (Demandes de défis) will come from the server later; we only persist sends here.
+## Invites expire after 4 hours if not accepted.
+const CHALLENGE_INVITE_TTL_SEC: int = 4 * 60 * 60
+var challenge_outbox: Array = []
 var daily_state: Dictionary = {}
 var daily_challenge_result: Dictionary = {}
 ## Best survival / time-attack runs: { mode: { category: {score, correct} } }.
@@ -139,6 +144,9 @@ func load_data() -> void:
 	settled_trophy_matches = settled_raw if typeof(settled_raw) == TYPE_ARRAY else []
 	var rivalries_raw: Variant = parsed.get("friend_rivalries", {})
 	friend_rivalries = rivalries_raw if typeof(rivalries_raw) == TYPE_DICTIONARY else {}
+	var outbox_raw: Variant = parsed.get("challenge_outbox", [])
+	challenge_outbox = outbox_raw if typeof(outbox_raw) == TYPE_ARRAY else []
+	_prune_challenge_outbox()
 	daily_state = parsed.get("daily_state", daily_state)
 	daily_challenge_result = parsed.get("daily_challenge_result", daily_challenge_result)
 	mode_records = parsed.get("mode_records", mode_records)
@@ -172,6 +180,7 @@ func save_data() -> void:
 		"versus_loss_streak": versus_loss_streak,
 		"settled_trophy_matches": settled_trophy_matches,
 		"friend_rivalries": friend_rivalries,
+		"challenge_outbox": challenge_outbox,
 		"daily_state": daily_state,
 		"daily_challenge_result": daily_challenge_result,
 		"mode_records": mode_records,
@@ -579,6 +588,63 @@ func get_friend_rivalry(friend_key: String) -> Dictionary:
 		"draws": int(raw.get("draws", 0)),
 		"settled": raw.get("settled", []),
 	}
+
+
+## Queue a friend-challenge invite (mode 0 classic / 1 survival / 2 time attack).
+func record_outgoing_challenge(
+	friend_key: String,
+	friend_name: String,
+	mode: int,
+	level: int = 1
+) -> Dictionary:
+	var key := str(friend_key).strip_edges()
+	if key.is_empty():
+		return {}
+	var invite := {
+		"friend_key": key,
+		"friend_name": str(friend_name).strip_edges(),
+		"mode": clampi(mode, 0, 2),
+		"level": maxi(level, 1),
+		"sent_at": Time.get_datetime_string_from_system(true),
+		"sent_unix": int(Time.get_unix_time_from_system()),
+	}
+	challenge_outbox.append(invite)
+	_prune_challenge_outbox()
+	save_data()
+	return invite
+
+
+func get_challenge_outbox() -> Array:
+	_prune_challenge_outbox()
+	return challenge_outbox.duplicate(true)
+
+
+func is_challenge_invite_expired(invite: Dictionary) -> bool:
+	var sent_unix := int(invite.get("sent_unix", 0))
+	if sent_unix <= 0:
+		var sent_at := str(invite.get("sent_at", ""))
+		if sent_at.is_empty():
+			return false
+		sent_unix = int(Time.get_unix_time_from_datetime_string(sent_at))
+	if sent_unix <= 0:
+		return false
+	return int(Time.get_unix_time_from_system()) - sent_unix > CHALLENGE_INVITE_TTL_SEC
+
+
+func _prune_challenge_outbox() -> void:
+	var kept: Array = []
+	var changed := false
+	for invite in challenge_outbox:
+		if typeof(invite) != TYPE_DICTIONARY:
+			changed = true
+			continue
+		if is_challenge_invite_expired(invite):
+			changed = true
+			continue
+		kept.append(invite)
+	if changed:
+		challenge_outbox = kept
+		save_data()
 
 
 ## Level, XP bar and unlocked achievement ids at this instant.

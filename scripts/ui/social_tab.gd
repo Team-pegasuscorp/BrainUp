@@ -8,6 +8,10 @@ const ScenePaths = preload("res://scripts/config/scene_paths.gd")
 const PressScaleUtil = preload("res://scripts/ui/press_scale.gd")
 const GameAssets = preload("res://scripts/config/game_assets.gd")
 
+## Async create/join challenge tiles — kept in code, hidden from the Social page for now.
+## Flip to `true` to restore `_create_section` / `_join_section` / `_challenge_card`.
+const SHOW_ASYNC_CHALLENGE_TILES := false
+
 @onready var content: VBoxContainer = %Content
 @onready var message_label: Label = %MessageLabel
 
@@ -43,10 +47,17 @@ var _friends_page_scroll: ScrollContainer
 var _friend_requests: Array = []
 var _friend_requests_page: Control
 var _friend_requests_list: VBoxContainer
+var _challenge_requests: Array = []
+var _challenge_requests_page: Control
+var _challenge_requests_list: VBoxContainer
+var _challenge_mode_picker: Control
+var _pending_challenge_friend: Dictionary = {}
 
 
 func _ready() -> void:
 	_friend_requests = _demo_friend_requests()
+	_challenge_requests = _demo_challenge_requests()
+	_prune_expired_challenge_requests()
 	_ensure_friend_detail_overlay()
 	_apply()
 	LocaleManager.locale_changed.connect(_on_locale_changed)
@@ -67,8 +78,16 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not event.is_action_pressed("ui_cancel"):
 		return
+	if _challenge_mode_picker != null and _challenge_mode_picker.visible:
+		_close_challenge_mode_picker()
+		get_viewport().set_input_as_handled()
+		return
 	if _friend_detail_panel != null and _friend_detail_panel.visible:
 		_close_friend_detail()
+		get_viewport().set_input_as_handled()
+		return
+	if _challenge_requests_page != null and _challenge_requests_page.visible:
+		_close_challenge_requests_page()
 		get_viewport().set_input_as_handled()
 		return
 	if _friend_requests_page != null and _friend_requests_page.visible:
@@ -101,6 +120,7 @@ func _apply() -> void:
 
 
 func _rebuild_content(reset_scroll: bool = false) -> void:
+	_close_challenge_mode_picker()
 	_close_friend_detail()
 	var scroll := content.get_parent() as ScrollContainer
 	var prev_scroll := scroll.scroll_vertical if scroll != null else 0
@@ -116,17 +136,18 @@ func _rebuild_content(reset_scroll: bool = false) -> void:
 
 	if _live_state != "idle":
 		content.add_child(_live_section())
-	elif _current_challenge.is_empty():
-		content.add_child(_friends_section())
-		content.add_child(_friend_requests_section())
-		content.add_child(_player_search_section())
-		content.add_child(_create_section())
-		content.add_child(_join_section())
 	else:
 		content.add_child(_friends_section())
 		content.add_child(_friend_requests_section())
+		content.add_child(_challenge_requests_section())
 		content.add_child(_player_search_section())
-		content.add_child(_challenge_card())
+		## Create / join / active-code tiles: see SHOW_ASYNC_CHALLENGE_TILES.
+		if SHOW_ASYNC_CHALLENGE_TILES:
+			if _current_challenge.is_empty():
+				content.add_child(_create_section())
+				content.add_child(_join_section())
+			else:
+				content.add_child(_challenge_card())
 
 	if not _status_text.is_empty():
 		content.add_child(_make_status_label(_status_text))
@@ -334,6 +355,82 @@ func _friend_requests_section() -> PanelContainer:
 		if typeof(requests[i]) != TYPE_DICTIONARY:
 			continue
 		list.add_child(_friend_request_row(requests[i]))
+	return panel
+
+
+func _challenge_requests_section() -> PanelContainer:
+	## Same layout as friend requests: title + Voir tout + accept/decline rows.
+	var panel := PanelContainer.new()
+	panel.add_theme_stylebox_override("panel", UiStyle.social_surface(false, 0))
+
+	var pad := MarginContainer.new()
+	pad.add_theme_constant_override("margin_left", 12)
+	pad.add_theme_constant_override("margin_right", 12)
+	pad.add_theme_constant_override("margin_top", 11)
+	pad.add_theme_constant_override("margin_bottom", 11)
+	panel.add_child(pad)
+
+	var vbox := VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 10)
+	pad.add_child(vbox)
+
+	var header := HBoxContainer.new()
+	header.add_theme_constant_override("separation", 8)
+	header.alignment = BoxContainer.ALIGNMENT_CENTER
+	vbox.add_child(header)
+
+	var caption := Label.new()
+	caption.text = tr("UI_SOCIAL_CHALLENGE_REQUESTS").to_upper()
+	caption.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	caption.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	caption.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	caption.add_theme_font_size_override("font_size", UiScale.font(18))
+	caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	header.add_child(caption)
+
+	var see_all := Button.new()
+	see_all.text = tr("UI_PROFILE_SEE_ALL").to_upper() + " >"
+	see_all.flat = true
+	see_all.focus_mode = Control.FOCUS_NONE
+	see_all.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	see_all.add_theme_font_size_override("font_size", UiScale.font(17))
+	see_all.add_theme_color_override("font_color", UiTokens.ACCENT_SOCIAL)
+	see_all.add_theme_color_override("font_hover_color", UiTokens.ACCENT_SOCIAL.lightened(0.15))
+	see_all.add_theme_color_override("font_pressed_color", UiTokens.ACCENT_SOCIAL.darkened(0.1))
+	var empty_style := StyleBoxEmpty.new()
+	see_all.add_theme_stylebox_override("normal", empty_style)
+	see_all.add_theme_stylebox_override("hover", empty_style)
+	see_all.add_theme_stylebox_override("pressed", empty_style)
+	see_all.add_theme_stylebox_override("focus", empty_style)
+	see_all.pressed.connect(_open_challenge_requests_page)
+	PressScaleUtil.wire(see_all, self)
+	header.add_child(see_all)
+
+	var divider := ColorRect.new()
+	divider.custom_minimum_size.y = 1
+	divider.color = Color(1, 1, 1, 0.08)
+	divider.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	vbox.add_child(divider)
+
+	_prune_expired_challenge_requests()
+	var requests := _challenge_requests
+	if requests.is_empty():
+		var empty := Label.new()
+		empty.text = tr("UI_SOCIAL_CHALLENGE_REQUESTS_EMPTY")
+		empty.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		empty.add_theme_font_size_override("font_size", UiScale.font(18))
+		empty.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+		vbox.add_child(empty)
+		return panel
+
+	var list := VBoxContainer.new()
+	list.add_theme_constant_override("separation", 8)
+	vbox.add_child(list)
+	var shown := mini(requests.size(), 3)
+	for i in range(shown):
+		if typeof(requests[i]) != TYPE_DICTIONARY:
+			continue
+		list.add_child(_challenge_request_row(requests[i]))
 	return panel
 
 
@@ -585,6 +682,182 @@ func _demo_friend_requests() -> Array:
 	]
 
 
+func _demo_challenge_requests() -> Array:
+	## Pending live duel invites — expire after 4h; presence gates accept.
+	var now := int(Time.get_unix_time_from_system())
+	var sent_at := Time.get_datetime_string_from_system(true)
+	return [
+		{
+			"name": "Hugo",
+			"level": 16,
+			"mode": 0,
+			"presence": "online",
+			"sent_at": sent_at,
+			"sent_unix": now,
+		},
+		{
+			"name": "Lea",
+			"level": 22,
+			"mode": 1,
+			"presence": "offline",
+			"sent_at": sent_at,
+			"sent_unix": now,
+		},
+		{
+			"name": "Noah",
+			"level": 19,
+			"mode": 2,
+			"presence": "online",
+			"sent_at": sent_at,
+			"sent_unix": now,
+		},
+	]
+
+
+func _prune_expired_challenge_requests() -> void:
+	var kept: Array = []
+	for request in _challenge_requests:
+		if typeof(request) != TYPE_DICTIONARY:
+			continue
+		if SaveManager.is_challenge_invite_expired(request):
+			continue
+		kept.append(request)
+	_challenge_requests = kept
+
+
+func _challenge_mode_meta(mode: int) -> Dictionary:
+	## Labels / emoji aligned with Quiz duel modes.
+	match clampi(mode, 0, 2):
+		1:
+			return {
+				"key": "UI_MODE_SURVIVAL",
+				"icon": "❤️",
+				"accent": UiTokens.ACCENT_MODE_SURVIVAL,
+			}
+		2:
+			return {
+				"key": "UI_MODE_TIME_ATTACK",
+				"icon": "⏱️",
+				"accent": UiTokens.ACCENT_MODE_TIME_ATTACK,
+			}
+		_:
+			return {
+				"key": "UI_MODE_CLASSIC",
+				"icon": "🎯",
+				"accent": UiTokens.ACCENT_MODE_CLASSIC,
+			}
+
+
+func _challenge_request_row(request: Dictionary) -> Control:
+	## Friend-request row layout, with the proposed duel mode as a clear badge.
+	var row := PanelContainer.new()
+	row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0, 0, 0, 0)
+	style.set_corner_radius_all(14)
+	style.content_margin_left = 0
+	style.content_margin_right = 0
+	style.content_margin_top = 0
+	style.content_margin_bottom = 0
+	row.add_theme_stylebox_override("panel", style)
+
+	var request_name := str(request.get("name", ""))
+	var cosmetics: Dictionary = request.get("cosmetics", {})
+	if cosmetics.is_empty():
+		cosmetics = ShopCatalog.demo_cosmetics_for(request_name)
+
+	var banner := CosmeticsView.banner(str(cosmetics.get("banner", "")), Vector2.ZERO, 14)
+	row.add_child(banner)
+
+	var pad := MarginContainer.new()
+	pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pad.add_theme_constant_override("margin_left", 10)
+	pad.add_theme_constant_override("margin_right", 10)
+	pad.add_theme_constant_override("margin_top", 8)
+	pad.add_theme_constant_override("margin_bottom", 8)
+	row.add_child(pad)
+
+	var hbox := HBoxContainer.new()
+	hbox.add_theme_constant_override("separation", 10)
+	hbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	pad.add_child(hbox)
+
+	const AVATAR := 64.0
+	hbox.add_child(CosmeticsView.avatar(cosmetics, AVATAR))
+
+	var identity := VBoxContainer.new()
+	identity.add_theme_constant_override("separation", 1)
+	identity.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	hbox.add_child(identity)
+
+	var name_label := Label.new()
+	name_label.text = request_name
+	name_label.clip_text = true
+	name_label.add_theme_font_size_override(
+		"font_size",
+		UiScale.font(UiTokens.pseudo_font_size(request_name))
+	)
+	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	identity.add_child(name_label)
+
+	var level_label := Label.new()
+	level_label.text = "%s %d" % [tr("UI_PROFILE_LEVEL_CAPTION"), int(request.get("level", 1))]
+	level_label.add_theme_font_size_override("font_size", UiScale.font(13))
+	level_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	identity.add_child(level_label)
+
+	## Proposed mode — the detail that matters on this tile.
+	var mode_meta := _challenge_mode_meta(int(request.get("mode", 0)))
+	var mode_accent: Color = mode_meta["accent"]
+	var mode_badge := PanelContainer.new()
+	mode_badge.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	var badge_style := StyleBoxFlat.new()
+	badge_style.bg_color = mode_accent
+	badge_style.set_border_width_all(0)
+	badge_style.set_corner_radius_all(12)
+	badge_style.content_margin_left = 10
+	badge_style.content_margin_right = 12
+	badge_style.content_margin_top = 8
+	badge_style.content_margin_bottom = 8
+	mode_badge.add_theme_stylebox_override("panel", badge_style)
+	hbox.add_child(mode_badge)
+
+	var mode_row := HBoxContainer.new()
+	mode_row.add_theme_constant_override("separation", 6)
+	mode_row.alignment = BoxContainer.ALIGNMENT_CENTER
+	mode_badge.add_child(mode_row)
+
+	var mode_icon := Label.new()
+	mode_icon.text = str(mode_meta["icon"])
+	mode_icon.add_theme_font_size_override("font_size", UiScale.font(18))
+	var emoji_font := UiFonts.emoji_font()
+	if emoji_font != null:
+		mode_icon.add_theme_font_override("font", emoji_font)
+	mode_row.add_child(mode_icon)
+
+	var mode_label := Label.new()
+	mode_label.text = tr(str(mode_meta["key"])).to_upper()
+	mode_label.add_theme_font_size_override("font_size", UiScale.font(15))
+	mode_label.add_theme_color_override("font_color", Color(0.10, 0.08, 0.12, 1))
+	mode_row.add_child(mode_label)
+
+	var actions := HBoxContainer.new()
+	actions.add_theme_constant_override("separation", 8)
+	hbox.add_child(actions)
+
+	actions.add_child(_friend_request_action_btn(
+		"✕",
+		UiTokens.FEEDBACK_WRONG,
+		_on_challenge_request_declined.bind(request)
+	))
+	actions.add_child(_friend_request_action_btn(
+		"✓",
+		UiTokens.FEEDBACK_CORRECT,
+		_on_challenge_request_accepted.bind(request)
+	))
+	return row
+
+
 func _remove_friend_request(player_name: String) -> void:
 	var next: Array = []
 	for request in _friend_requests:
@@ -609,6 +882,56 @@ func _on_friend_request_declined(player_name: String) -> void:
 	_show_status(tr("UI_SOCIAL_FRIEND_REQUEST_DECLINED").format({"name": player_name}))
 	if _friend_requests_page != null and _friend_requests_page.visible:
 		_populate_friend_requests_page()
+	_rebuild_content()
+
+
+func _remove_challenge_request(player_name: String) -> void:
+	var next: Array = []
+	for request in _challenge_requests:
+		if typeof(request) != TYPE_DICTIONARY:
+			continue
+		if str(request.get("name", "")) == player_name:
+			continue
+		next.append(request)
+	_challenge_requests = next
+
+
+func _on_challenge_request_accepted(request: Dictionary) -> void:
+	## Live duel only: must accept within 4h while the challenger is online.
+	var player_name := str(request.get("name", ""))
+	if SaveManager.is_challenge_invite_expired(request):
+		_remove_challenge_request(player_name)
+		_show_status(tr("UI_SOCIAL_CHALLENGE_REQUEST_EXPIRED"))
+		if _challenge_requests_page != null and _challenge_requests_page.visible:
+			_populate_challenge_requests_page()
+		_rebuild_content()
+		return
+
+	var presence := str(request.get("presence", "offline"))
+	if presence != "online":
+		_remove_challenge_request(player_name)
+		_show_status(tr("UI_SOCIAL_CHALLENGE_REQUEST_OFFLINE").format({"name": player_name}))
+		if _challenge_requests_page != null and _challenge_requests_page.visible:
+			_populate_challenge_requests_page()
+		_rebuild_content()
+		return
+
+	var mode := clampi(int(request.get("mode", 0)), 0, 2)
+	_challenge_friend_key = _friend_rivalry_key(request)
+	_remove_challenge_request(player_name)
+	NetworkManager.accept_friend_challenge(_challenge_friend_key, mode)
+	GameManager.selected_mode = mode
+	GameManager.shell_tab_index = ScenePaths.Tab.SOCIAL
+	AudioManager.play("click")
+	get_tree().change_scene_to_file(ScenePaths.LIVE_MATCH)
+
+
+func _on_challenge_request_declined(request: Dictionary) -> void:
+	var player_name := str(request.get("name", ""))
+	_remove_challenge_request(player_name)
+	_show_status(tr("UI_SOCIAL_CHALLENGE_REQUEST_DECLINED").format({"name": player_name}))
+	if _challenge_requests_page != null and _challenge_requests_page.visible:
+		_populate_challenge_requests_page()
 	_rebuild_content()
 
 
@@ -638,7 +961,9 @@ func _close_friend_requests_page() -> void:
 	_close_friend_detail()
 	if _friend_requests_page != null:
 		_friend_requests_page.visible = false
-	if _friends_page == null or not _friends_page.visible:
+	if (_friends_page == null or not _friends_page.visible) and (
+		_challenge_requests_page == null or not _challenge_requests_page.visible
+	):
 		_set_shell_swipe_enabled(true)
 
 
@@ -752,6 +1077,135 @@ func _populate_friend_requests_page() -> void:
 	ScrollTouch.let_drags_through(_friend_requests_list)
 
 
+func _open_challenge_requests_page() -> void:
+	_ensure_challenge_requests_page()
+	_populate_challenge_requests_page()
+	_challenge_requests_page.visible = true
+	_challenge_requests_page.move_to_front()
+	_set_shell_swipe_enabled(false)
+
+
+func _close_challenge_requests_page() -> void:
+	_close_friend_detail()
+	if _challenge_requests_page != null:
+		_challenge_requests_page.visible = false
+	if (_friends_page == null or not _friends_page.visible) and (
+		_friend_requests_page == null or not _friend_requests_page.visible
+	):
+		_set_shell_swipe_enabled(true)
+
+
+func _ensure_challenge_requests_page() -> void:
+	if _challenge_requests_page != null and is_instance_valid(_challenge_requests_page):
+		return
+
+	_challenge_requests_page = Control.new()
+	_challenge_requests_page.name = "ChallengeRequestsPage"
+	_challenge_requests_page.visible = false
+	_challenge_requests_page.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_challenge_requests_page.mouse_filter = Control.MOUSE_FILTER_STOP
+	add_child(_challenge_requests_page)
+
+	var bg := ColorRect.new()
+	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	bg.color = Color.WHITE
+	bg.material = UiTokens.page_bg_material_for_tab(ScenePaths.Tab.SOCIAL)
+	bg.mouse_filter = Control.MOUSE_FILTER_STOP
+	_challenge_requests_page.add_child(bg)
+
+	var page_margin := MarginContainer.new()
+	page_margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	page_margin.add_theme_constant_override("margin_left", 10)
+	page_margin.add_theme_constant_override("margin_right", 10)
+	page_margin.add_theme_constant_override("margin_top", 10)
+	page_margin.add_theme_constant_override("margin_bottom", 10)
+	_challenge_requests_page.add_child(page_margin)
+
+	var panel := PanelContainer.new()
+	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	panel.add_theme_stylebox_override("panel", UiStyle.social_surface(true, 14))
+	page_margin.add_child(panel)
+
+	var inner := MarginContainer.new()
+	inner.add_theme_constant_override("margin_left", 14)
+	inner.add_theme_constant_override("margin_right", 14)
+	inner.add_theme_constant_override("margin_top", 14)
+	inner.add_theme_constant_override("margin_bottom", 14)
+	panel.add_child(inner)
+
+	var vbox := VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 12)
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	inner.add_child(vbox)
+
+	var header := HBoxContainer.new()
+	header.add_theme_constant_override("separation", 10)
+	vbox.add_child(header)
+
+	var back := Button.new()
+	back.text = "< " + tr("UI_BACK")
+	back.flat = true
+	back.focus_mode = Control.FOCUS_NONE
+	back.add_theme_font_size_override("font_size", UiScale.font(16))
+	back.add_theme_color_override("font_color", UiTokens.ACCENT_SOCIAL)
+	var empty := StyleBoxEmpty.new()
+	back.add_theme_stylebox_override("normal", empty)
+	back.add_theme_stylebox_override("hover", empty)
+	back.add_theme_stylebox_override("pressed", empty)
+	back.pressed.connect(_close_challenge_requests_page)
+	PressScaleUtil.wire(back, self)
+	header.add_child(back)
+
+	var page_title := Label.new()
+	page_title.text = tr("UI_SOCIAL_CHALLENGE_REQUESTS").to_upper()
+	page_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	page_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	page_title.add_theme_font_size_override("font_size", UiScale.font(20))
+	page_title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	header.add_child(page_title)
+
+	var spacer := Control.new()
+	spacer.custom_minimum_size.x = 72
+	header.add_child(spacer)
+
+	var scroll_box := ScrollContainer.new()
+	scroll_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll_box.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll_box.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll_box.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
+	vbox.add_child(scroll_box)
+
+	_challenge_requests_list = VBoxContainer.new()
+	_challenge_requests_list.add_theme_constant_override("separation", 10)
+	_challenge_requests_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll_box.add_child(_challenge_requests_list)
+
+
+func _populate_challenge_requests_page() -> void:
+	if _challenge_requests_list == null:
+		return
+	_prune_expired_challenge_requests()
+	while _challenge_requests_list.get_child_count() > 0:
+		var child := _challenge_requests_list.get_child(0)
+		_challenge_requests_list.remove_child(child)
+		child.queue_free()
+	if _challenge_requests.is_empty():
+		var empty := Label.new()
+		empty.text = tr("UI_SOCIAL_CHALLENGE_REQUESTS_EMPTY")
+		empty.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		empty.add_theme_font_size_override("font_size", UiScale.font(18))
+		empty.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+		_challenge_requests_list.add_child(empty)
+		return
+	for request in _challenge_requests:
+		if typeof(request) != TYPE_DICTIONARY:
+			continue
+		_challenge_requests_list.add_child(_challenge_request_row(request))
+	ScrollTouch.let_drags_through(_challenge_requests_list)
+
+
 func _friend_chip(friend: Dictionary) -> Control:
 	## Framed avatar from cosmetics (demo look keyed by name when missing).
 	const AVATAR := 80.0
@@ -830,28 +1284,31 @@ func _ensure_friend_detail_overlay() -> void:
 	_friend_backdrop.gui_input.connect(_on_friend_backdrop_gui_input)
 	add_child(_friend_backdrop)
 
+	## Full-rect center host so the sheet stays dead-center of the Social page.
+	var center := CenterContainer.new()
+	center.name = "FriendDetailCenter"
+	center.visible = false
+	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	center.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(center)
+
 	_friend_detail_panel = PanelContainer.new()
-	_friend_detail_panel.visible = false
-	_friend_detail_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
-	## Fixed width; height is fitted to content in `_fit_friend_detail_panel`.
-	_friend_detail_panel.offset_left = -196.0
-	_friend_detail_panel.offset_top = 0.0
-	_friend_detail_panel.offset_right = 196.0
-	_friend_detail_panel.offset_bottom = 0.0
+	_friend_detail_panel.visible = true
+	_friend_detail_panel.custom_minimum_size = Vector2(480, 0)
 	var surface := UiStyle.social_surface(true, 0)
 	## Transparent fill so the friend's banner reads as the sheet background.
 	surface.bg_color = Color(0, 0, 0, 0)
 	_friend_detail_panel.add_theme_stylebox_override("panel", surface)
-	add_child(_friend_detail_panel)
+	center.add_child(_friend_detail_panel)
 
 	_friend_detail_banner = CosmeticsView.banner("", Vector2.ZERO, UiTokens.PROFILE_CARD_RADIUS)
 	_friend_detail_panel.add_child(_friend_detail_banner)
 
 	var pad := MarginContainer.new()
-	pad.add_theme_constant_override("margin_left", 16)
-	pad.add_theme_constant_override("margin_right", 16)
-	pad.add_theme_constant_override("margin_top", 16)
-	pad.add_theme_constant_override("margin_bottom", 14)
+	pad.add_theme_constant_override("margin_left", 20)
+	pad.add_theme_constant_override("margin_right", 20)
+	pad.add_theme_constant_override("margin_top", 20)
+	pad.add_theme_constant_override("margin_bottom", 18)
 	pad.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_friend_detail_panel.add_child(pad)
 
@@ -861,15 +1318,23 @@ func _ensure_friend_detail_overlay() -> void:
 	pad.add_child(_friend_detail_body)
 
 
+func _friend_detail_center() -> CenterContainer:
+	return get_node_or_null("FriendDetailCenter") as CenterContainer
+
+
 func _open_friend_detail(friend: Dictionary) -> void:
 	_ensure_friend_detail_overlay()
 	_selected_friend = friend.duplicate(true)
 	_apply_friend_detail_banner(friend)
 	_populate_friend_detail(friend)
 	_friend_backdrop.visible = true
+	var center := _friend_detail_center()
+	if center != null:
+		center.visible = true
 	_friend_detail_panel.visible = true
 	_friend_backdrop.move_to_front()
-	_friend_detail_panel.move_to_front()
+	if center != null:
+		center.move_to_front()
 	_set_shell_swipe_enabled(false)
 	call_deferred("_fit_friend_detail_panel")
 
@@ -887,25 +1352,31 @@ func _fit_friend_detail_panel() -> void:
 	## Shrink sheet height to content so no empty band sits above the CTA.
 	if _friend_detail_panel == null or _friend_detail_body == null:
 		return
-	var pad_h := 30.0 ## top 16 + bottom 14
+	var pad_h := 38.0 ## top 20 + bottom 18
 	var content_h := _friend_detail_body.get_combined_minimum_size().y
 	if content_h < 1.0:
 		content_h = _friend_detail_body.size.y
 	var h := maxf(content_h + pad_h, 120.0)
-	_friend_detail_panel.offset_top = -h * 0.5
-	_friend_detail_panel.offset_bottom = h * 0.5
-	_friend_detail_panel.reset_size()
+	var max_w := maxf(size.x - 32.0, 320.0)
+	var w := minf(480.0, max_w)
+	_friend_detail_panel.custom_minimum_size = Vector2(w, h)
 
 
 func _close_friend_detail() -> void:
 	if _friend_backdrop != null:
 		_friend_backdrop.visible = false
+	var center := _friend_detail_center()
+	if center != null:
+		center.visible = false
 	if _friend_detail_panel != null:
 		_friend_detail_panel.visible = false
 	_selected_friend.clear()
 	var friends_open := _friends_page != null and _friends_page.visible
 	var requests_open := _friend_requests_page != null and _friend_requests_page.visible
-	if not friends_open and not requests_open:
+	var challenge_requests_open := (
+		_challenge_requests_page != null and _challenge_requests_page.visible
+	)
+	if not friends_open and not requests_open and not challenge_requests_open:
 		_set_shell_swipe_enabled(true)
 
 
@@ -934,7 +1405,9 @@ func _close_friends_page() -> void:
 	_close_friend_detail()
 	if _friends_page != null:
 		_friends_page.visible = false
-	if (_friend_requests_page == null or not _friend_requests_page.visible):
+	if (_friend_requests_page == null or not _friend_requests_page.visible) and (
+		_challenge_requests_page == null or not _challenge_requests_page.visible
+	):
 		_set_shell_swipe_enabled(true)
 
 
@@ -1088,7 +1561,7 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 	if cosmetics.is_empty():
 		cosmetics = ShopCatalog.demo_cosmetics_for(friend_name)
 
-	var avatar := CosmeticsView.avatar(cosmetics, 80.0)
+	var avatar := CosmeticsView.avatar(cosmetics, 128.0)
 	avatar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	match str(friend.get("presence", "offline")):
 		"online":
@@ -1120,7 +1593,7 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 		int(friend.get("level", 1)),
 	]
 	meta.add_theme_font_size_override("font_size", UiScale.font(16))
-	meta.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+	meta.add_theme_color_override("font_color", Color(1, 1, 1, 0.95))
 	identity.add_child(meta)
 
 	var menu := Button.new()
@@ -1218,19 +1691,12 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 	challenge_row.add_child(swords)
 
 	var challenge_label := Label.new()
-	challenge_label.text = tr("UI_SOCIAL_FRIEND_CHALLENGE")
-	challenge_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	challenge_label.text = tr("UI_SOCIAL_FRIEND_CHALLENGE").to_upper()
+	challenge_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	challenge_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	challenge_label.add_theme_font_size_override("font_size", UiScale.font(20))
 	challenge_label.add_theme_color_override("font_color", Color(0.12, 0.06, 0.1, 1))
 	challenge_row.add_child(challenge_label)
-
-	var challenge_chevron := Label.new()
-	challenge_chevron.text = ">"
-	challenge_chevron.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	challenge_chevron.add_theme_font_size_override("font_size", UiScale.font(20))
-	challenge_chevron.add_theme_color_override("font_color", Color(0.12, 0.06, 0.1, 0.7))
-	challenge_row.add_child(challenge_chevron)
 
 	## Divider + back.
 	var divider := ColorRect.new()
@@ -1309,26 +1775,6 @@ func _friend_best_subject_card(friend: Dictionary, cat_accent: Color) -> Control
 	subject.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	texts.add_child(subject)
 
-	var badge := PanelContainer.new()
-	badge.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	var badge_style := StyleBoxFlat.new()
-	badge_style.bg_color = Color(UiTokens.ACCENT_SOCIAL.r, UiTokens.ACCENT_SOCIAL.g, UiTokens.ACCENT_SOCIAL.b, 0.22)
-	badge_style.set_corner_radius_all(12)
-	badge_style.content_margin_left = 12
-	badge_style.content_margin_right = 12
-	badge_style.content_margin_top = 8
-	badge_style.content_margin_bottom = 8
-	badge.add_theme_stylebox_override("panel", badge_style)
-	var badge_label := Label.new()
-	badge_label.text = "%s %d" % [
-		tr("UI_PROFILE_LEVEL_CAPTION"),
-		int(friend.get("best_subject_level", 1)),
-	]
-	badge_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	badge_label.add_theme_font_size_override("font_size", UiScale.font(16))
-	badge_label.add_theme_color_override("font_color", UiTokens.ACCENT_SOCIAL)
-	badge.add_child(badge_label)
-	row.add_child(badge)
 	return card
 
 
@@ -1501,9 +1947,172 @@ func _presence_label(presence: String) -> String:
 func _on_challenge_friend_pressed() -> void:
 	if _selected_friend.is_empty():
 		return
-	_challenge_friend_key = _friend_rivalry_key(_selected_friend)
-	var friend_name := str(_selected_friend.get("name", ""))
+	_pending_challenge_friend = _selected_friend.duplicate(true)
+	_challenge_friend_key = _friend_rivalry_key(_pending_challenge_friend)
 	_close_friend_detail()
+	_open_challenge_mode_picker()
+
+
+func _open_challenge_mode_picker() -> void:
+	_ensure_challenge_mode_picker()
+	_challenge_mode_picker.visible = true
+	_challenge_mode_picker.move_to_front()
+	_set_shell_swipe_enabled(false)
+
+
+func _close_challenge_mode_picker() -> void:
+	if _challenge_mode_picker != null:
+		_challenge_mode_picker.visible = false
+	_pending_challenge_friend.clear()
+	var friends_open := _friends_page != null and _friends_page.visible
+	var requests_open := _friend_requests_page != null and _friend_requests_page.visible
+	var challenge_requests_open := (
+		_challenge_requests_page != null and _challenge_requests_page.visible
+	)
+	if not friends_open and not requests_open and not challenge_requests_open:
+		_set_shell_swipe_enabled(true)
+
+
+func _ensure_challenge_mode_picker() -> void:
+	if _challenge_mode_picker != null and is_instance_valid(_challenge_mode_picker):
+		return
+
+	_challenge_mode_picker = Control.new()
+	_challenge_mode_picker.name = "ChallengeModePicker"
+	_challenge_mode_picker.visible = false
+	_challenge_mode_picker.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_challenge_mode_picker.mouse_filter = Control.MOUSE_FILTER_STOP
+	add_child(_challenge_mode_picker)
+
+	var backdrop := ColorRect.new()
+	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	backdrop.color = Color(0, 0, 0, 0.5)
+	backdrop.mouse_filter = Control.MOUSE_FILTER_STOP
+	backdrop.gui_input.connect(func(event: InputEvent) -> void:
+		if event is InputEventMouseButton and event.pressed:
+			_close_challenge_mode_picker()
+	)
+	_challenge_mode_picker.add_child(backdrop)
+
+	var center := CenterContainer.new()
+	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	center.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_challenge_mode_picker.add_child(center)
+
+	var sheet := PanelContainer.new()
+	sheet.custom_minimum_size = Vector2(360, 0)
+	sheet.add_theme_stylebox_override("panel", UiStyle.social_surface(true, 0))
+	center.add_child(sheet)
+
+	var pad := MarginContainer.new()
+	pad.add_theme_constant_override("margin_left", 18)
+	pad.add_theme_constant_override("margin_right", 18)
+	pad.add_theme_constant_override("margin_top", 18)
+	pad.add_theme_constant_override("margin_bottom", 16)
+	sheet.add_child(pad)
+
+	var column := VBoxContainer.new()
+	column.add_theme_constant_override("separation", 12)
+	pad.add_child(column)
+
+	var title := Label.new()
+	title.text = tr("UI_SOCIAL_PICK_CHALLENGE_MODE").to_upper()
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.add_theme_font_size_override("font_size", UiScale.font(18))
+	title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	column.add_child(title)
+
+	for mode in range(3):
+		column.add_child(_challenge_mode_picker_btn(mode))
+
+	var cancel := Button.new()
+	cancel.text = tr("UI_SOCIAL_PICK_CHALLENGE_CANCEL").to_upper()
+	cancel.flat = true
+	cancel.focus_mode = Control.FOCUS_NONE
+	cancel.alignment = HORIZONTAL_ALIGNMENT_CENTER
+	cancel.add_theme_font_size_override("font_size", UiScale.font(16))
+	cancel.add_theme_color_override("font_color", UiTokens.ACCENT_SOCIAL)
+	var empty := StyleBoxEmpty.new()
+	cancel.add_theme_stylebox_override("normal", empty)
+	cancel.add_theme_stylebox_override("hover", empty)
+	cancel.add_theme_stylebox_override("pressed", empty)
+	cancel.pressed.connect(_close_challenge_mode_picker)
+	PressScaleUtil.wire(cancel, self)
+	column.add_child(cancel)
+
+
+func _challenge_mode_picker_btn(mode: int) -> Button:
+	var meta := _challenge_mode_meta(mode)
+	var accent: Color = meta["accent"]
+	var btn := Button.new()
+	btn.focus_mode = Control.FOCUS_NONE
+	btn.custom_minimum_size.y = 56
+	btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var style := StyleBoxFlat.new()
+	style.bg_color = accent
+	style.set_corner_radius_all(14)
+	style.content_margin_left = 14
+	style.content_margin_right = 14
+	style.content_margin_top = 12
+	style.content_margin_bottom = 12
+	var hover := style.duplicate() as StyleBoxFlat
+	hover.bg_color = accent.lightened(0.08)
+	var pressed := style.duplicate() as StyleBoxFlat
+	pressed.bg_color = accent.darkened(0.06)
+	btn.add_theme_stylebox_override("normal", style)
+	btn.add_theme_stylebox_override("hover", hover)
+	btn.add_theme_stylebox_override("pressed", pressed)
+	btn.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+	btn.pressed.connect(_on_challenge_mode_picked.bind(mode))
+	PressScaleUtil.wire(btn, self)
+
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 10)
+	row.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	btn.add_child(row)
+
+	var ink := Color(0.10, 0.08, 0.12, 1)
+	var icon := Label.new()
+	icon.text = str(meta["icon"])
+	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	icon.add_theme_font_size_override("font_size", UiScale.font(22))
+	var emoji_font := UiFonts.emoji_font()
+	if emoji_font != null:
+		icon.add_theme_font_override("font", emoji_font)
+	row.add_child(icon)
+
+	var label := Label.new()
+	label.text = tr(str(meta["key"])).to_upper()
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	label.add_theme_font_size_override("font_size", UiScale.font(18))
+	label.add_theme_color_override("font_color", ink)
+	row.add_child(label)
+	return btn
+
+
+func _on_challenge_mode_picked(mode: int) -> void:
+	if _pending_challenge_friend.is_empty():
+		_close_challenge_mode_picker()
+		return
+	var friend := _pending_challenge_friend.duplicate(true)
+	_close_challenge_mode_picker()
+	_send_friend_challenge(friend, mode)
+
+
+func _send_friend_challenge(friend: Dictionary, mode: int) -> void:
+	## Persist outbox + stub network; inbox stays server/demo (no self-receive).
+	var friend_key := _friend_rivalry_key(friend)
+	var friend_name := str(friend.get("name", ""))
+	_challenge_friend_key = friend_key
+	SaveManager.record_outgoing_challenge(
+		friend_key,
+		friend_name,
+		mode,
+		int(friend.get("level", 1))
+	)
+	NetworkManager.send_friend_challenge(friend_key, mode)
 	_show_status(tr("UI_SOCIAL_FRIEND_CHALLENGE_SENT").format({"name": friend_name}))
 
 
@@ -1578,6 +2187,7 @@ func _demo_friend(
 
 
 func _create_section() -> PanelContainer:
+	## Kept for SHOW_ASYNC_CHALLENGE_TILES — not mounted while the flag is false.
 	## Category picker: icon disc + name under (not chip pills).
 	var panel := PanelContainer.new()
 	panel.add_theme_stylebox_override("panel", UiStyle.social_surface(false, 0))
@@ -1936,6 +2546,7 @@ func _build_live_over_view(vbox: VBoxContainer) -> void:
 
 
 func _join_section() -> PanelContainer:
+	## Kept for SHOW_ASYNC_CHALLENGE_TILES — not mounted while the flag is false.
 	var panel := PanelContainer.new()
 	panel.add_theme_stylebox_override("panel", UiStyle.social_surface(false, 10))
 
@@ -1991,6 +2602,7 @@ func _join_section() -> PanelContainer:
 
 
 func _challenge_card() -> PanelContainer:
+	## Kept for SHOW_ASYNC_CHALLENGE_TILES — active challenge sheet after create/join.
 	var panel := PanelContainer.new()
 	panel.add_theme_stylebox_override("panel", UiStyle.social_surface(false, 10))
 

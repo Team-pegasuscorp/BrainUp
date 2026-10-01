@@ -105,10 +105,18 @@ UI_SOCIAL_FRIEND_ACCURACY,Best accuracy,Meilleure précision
 UI_SOCIAL_FRIEND_LAST_GAME,Last game,Dernière partie
 UI_SOCIAL_FRIEND_CHALLENGE,Challenge,Proposer un défi
 UI_SOCIAL_FRIEND_CHALLENGE_SENT,Challenge sent to {name}.,Défi proposé à {name}.
+UI_SOCIAL_PICK_CHALLENGE_MODE,Choose a mode,Choisis un mode
+UI_SOCIAL_PICK_CHALLENGE_CANCEL,Cancel,Annuler
 UI_SOCIAL_FRIEND_REQUESTS,Friend requests,Demandes d'amis
 UI_SOCIAL_FRIEND_REQUESTS_EMPTY,No pending friend requests.,Aucune demande d'ami en attente.
 UI_SOCIAL_FRIEND_REQUEST_ACCEPTED,Friend request from {name} accepted.,Demande d'ami de {name} acceptée.
 UI_SOCIAL_FRIEND_REQUEST_DECLINED,Friend request from {name} declined.,Demande d'ami de {name} refusée.
+UI_SOCIAL_CHALLENGE_REQUESTS,Challenge requests,Demandes de défis
+UI_SOCIAL_CHALLENGE_REQUESTS_EMPTY,No pending challenge requests.,Aucune demande de défi en attente.
+UI_SOCIAL_CHALLENGE_REQUEST_ACCEPTED,Challenge from {name} accepted.,Défi de {name} accepté.
+UI_SOCIAL_CHALLENGE_REQUEST_DECLINED,Challenge from {name} declined.,Défi de {name} refusé.
+UI_SOCIAL_CHALLENGE_REQUEST_EXPIRED,This challenge expired (valid 4 hours).,Ce défi a expiré (valable 4 heures).
+UI_SOCIAL_CHALLENGE_REQUEST_OFFLINE,{name} is offline — challenge cancelled. Send a new one when they are online.,{name} est hors ligne — défi annulé. Renvoie une demande quand iel sera connecté(e).
 UI_SOCIAL_SEARCH_PLAYER,Search for a player,Rechercher un joueur
 UI_SOCIAL_SEARCH_PLACEHOLDER,Username...,Nom d'utilisateur...
 UI_SOCIAL_ADD_FRIEND,Add a friend,Ajouter un ami

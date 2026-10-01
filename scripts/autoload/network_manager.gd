@@ -9,6 +9,8 @@ signal challenge_joined(challenge: Dictionary)
 signal challenge_join_failed(error_code: int)
 signal challenge_fetched(challenge: Dictionary)
 signal challenge_fetch_failed(code: String)
+## Friend-targeted challenge invite (stub until friends API exists).
+signal friend_challenge_sent(invite: Dictionary)
 signal live_match_found(data: Dictionary)
 signal live_question(data: Dictionary)
 signal live_reveal(data: Dictionary)
@@ -368,6 +370,27 @@ func create_challenge(category: String) -> void:
 		return
 
 	challenge_created.emit(parsed)
+
+
+## Stub: deliver a mode invite to a friend. Replace with POST when the friends API lands.
+func send_friend_challenge(friend_id: String, mode: int) -> void:
+	var invite := {
+		"friend_id": str(friend_id).strip_edges(),
+		"mode": clampi(mode, 0, 2),
+		"challenger_id": player_id,
+	}
+	friend_challenge_sent.emit(invite)
+
+
+## Stub: accept a live friend challenge. Real join happens when both are online.
+func accept_friend_challenge(friend_id: String, mode: int) -> void:
+	## Client starts the live duel screen; server will validate presence later.
+	friend_challenge_sent.emit({
+		"friend_id": str(friend_id).strip_edges(),
+		"mode": clampi(mode, 0, 2),
+		"accepted": true,
+		"challenger_id": player_id,
+	})
 
 
 func join_challenge(code: String) -> void:
