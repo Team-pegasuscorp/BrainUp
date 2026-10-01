@@ -68,15 +68,7 @@ func _rebuild() -> void:
 			false
 		))
 
-	if bool(global_snap.get("is_demo", false)):
-		var hint := Label.new()
-		hint.text = tr("UI_LEADERBOARD_DEMO_HINT")
-		hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		hint.add_theme_font_size_override("font_size", UiScale.font(12))
-		hint.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
-		content.add_child(hint)
-	else:
+	if not bool(global_snap.get("is_demo", false)):
 		NetworkManager.fetch_leaderboard(_selected_filter)
 	ScrollTouch.let_drags_through(content)
 
@@ -291,15 +283,6 @@ func _board_section(
 	if with_podium and not podium.is_empty():
 		vbox.add_child(_make_podium(podium))
 
-	var player_rank := int(snapshot.get("player_rank", 0))
-	if player_rank > 0:
-		var rank_hint := Label.new()
-		rank_hint.text = tr("UI_LEADERBOARD_YOUR_RANK").format({"rank": player_rank})
-		rank_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		rank_hint.add_theme_font_size_override("font_size", UiScale.font(22))
-		rank_hint.add_theme_color_override("font_color", _scope_accent())
-		vbox.add_child(rank_hint)
-
 	var list := VBoxContainer.new()
 	list.add_theme_constant_override("separation", 8)
 	vbox.add_child(list)
@@ -338,7 +321,7 @@ func _make_gap_row(entry: Dictionary) -> Control:
 
 
 func _make_podium(podium: Array) -> Control:
-	## Classic stepped podium: 2nd · 1st · 3rd — same infos as before, on real pedestals.
+	## Top 3 as banner tiles: 2nd · 1st · 3rd (no pedestal steps), bottom-aligned.
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 10)
 	row.alignment = BoxContainer.ALIGNMENT_END
@@ -352,28 +335,26 @@ func _make_podium(podium: Array) -> Control:
 	if podium.size() >= 3:
 		slots.append(podium[2])
 
-	## Pedestal heights (visual steps); 1st is tallest.
-	var step_heights := [92.0, 128.0, 72.0]
 	var places := [2, 1, 3]
 	var accents := [
 		Color(0.75, 0.78, 0.84, 1), ## silver
 		UiTokens.PODIUM_GOLD, ## classic gold — 1st place (not page champagne)
 		Color(0.90, 0.58, 0.32, 1), ## bronze
 	]
-	var max_h := 360.0
-	row.custom_minimum_size.y = max_h
 
 	for slot_index in range(slots.size()):
 		var entry: Dictionary = slots[slot_index]
 		var place: int = places[slot_index]
 		var accent: Color = accents[slot_index]
-		var step_h: float = step_heights[slot_index]
 
 		var col := VBoxContainer.new()
 		col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		col.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		col.alignment = BoxContainer.ALIGNMENT_END
-		col.add_theme_constant_override("separation", 8)
+		col.add_theme_constant_override("separation", 0)
+		## 1st place reads slightly taller in the row.
+		if place == 1:
+			col.size_flags_stretch_ratio = 1.15
 		row.add_child(col)
 
 		col.add_child(_podium_identity(
@@ -382,7 +363,6 @@ func _make_podium(podium: Array) -> Control:
 			int(entry.get("rank", place)),
 			place
 		))
-		col.add_child(_podium_step(place, accent, step_h))
 	return row
 
 
@@ -392,10 +372,37 @@ func _podium_identity(
 	rank: int,
 	place: int
 ) -> Control:
+	## Card with the player's banner behind medal / avatar / name / trophies.
+	var tile := PanelContainer.new()
+	tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var radius := 18 if place == 1 else 16
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0, 0, 0, 0)
+	style.set_corner_radius_all(radius)
+	style.set_border_width_all(0)
+	style.shadow_color = Color(0, 0, 0, 0.16)
+	style.shadow_size = 5
+	style.shadow_offset = Vector2(0, 2)
+	tile.add_theme_stylebox_override("panel", style)
+
+	var cosmetics: Dictionary = entry.get("cosmetics", {})
+	if cosmetics.is_empty():
+		cosmetics = ShopCatalog.demo_cosmetics_for(str(entry.get("name", "")))
+	tile.add_child(CosmeticsView.banner(str(cosmetics.get("banner", "")), Vector2.ZERO, radius))
+
+	var pad := MarginContainer.new()
+	pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pad.add_theme_constant_override("margin_left", 8 if place == 1 else 6)
+	pad.add_theme_constant_override("margin_right", 8 if place == 1 else 6)
+	pad.add_theme_constant_override("margin_top", 10 if place == 1 else 8)
+	pad.add_theme_constant_override("margin_bottom", 10 if place == 1 else 8)
+	tile.add_child(pad)
+
 	var vbox := VBoxContainer.new()
 	vbox.add_theme_constant_override("separation", 4)
 	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
 	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	pad.add_child(vbox)
 
 	var medal := Label.new()
 	medal.text = _rank_medal_icon(rank)
@@ -430,54 +437,19 @@ func _podium_identity(
 	level.text = "★ %s %d" % [tr("UI_PROFILE_LEVEL_CAPTION"), int(entry.get("level", 1))]
 	level.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	level.add_theme_font_size_override("font_size", UiScale.font(12))
-	level.add_theme_color_override("font_color", Color(0.72, 0.62, 1.0, 1))
+	level.add_theme_color_override(
+		"font_color",
+		UiTokens.PROFILE_TEXT_MUTED if bool(entry.get("is_player", false)) else Color(0.72, 0.62, 1.0, 1)
+	)
 	vbox.add_child(level)
 
 	var score := Label.new()
 	score.text = "🏆 %s" % _format_int(int(entry.get("score", 0)))
 	score.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	score.add_theme_font_size_override("font_size", UiScale.font(28 if place == 1 else (24 if place == 2 else 22)))
-	score.add_theme_color_override("font_color", accent)
+	score.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	vbox.add_child(score)
-	return vbox
-
-
-func _podium_step(place: int, accent: Color, height: float) -> Control:
-	var step := PanelContainer.new()
-	step.custom_minimum_size.y = height
-	step.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	step.mouse_filter = Control.MOUSE_FILTER_IGNORE
-
-	var style := StyleBoxFlat.new()
-	style.bg_color = Color(accent.r, accent.g, accent.b, 0.92 if place == 1 else 0.78)
-	## Flat top, slightly rounded bottom — reads as a real pedestal.
-	style.corner_radius_top_left = 10
-	style.corner_radius_top_right = 10
-	style.corner_radius_bottom_left = 4
-	style.corner_radius_bottom_right = 4
-	style.set_border_width_all(0)
-	style.shadow_color = Color(accent.r, accent.g, accent.b, 0.35)
-	style.shadow_size = 14 if place == 1 else 10
-	style.shadow_offset = Vector2(0, 4)
-	style.content_margin_left = 4
-	style.content_margin_right = 4
-	style.content_margin_top = 8
-	style.content_margin_bottom = 8
-	## Top highlight edge.
-	style.border_width_top = 2
-	style.border_color = Color(1, 1, 1, 0.35 if place == 1 else 0.22)
-	step.add_theme_stylebox_override("panel", style)
-
-	var place_label := Label.new()
-	place_label.text = str(place)
-	place_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	place_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	place_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	place_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	place_label.add_theme_font_size_override("font_size", UiScale.font(42 if place == 1 else (34 if place == 2 else 28)))
-	place_label.add_theme_color_override("font_color", Color(0.08, 0.06, 0.04, 0.88))
-	step.add_child(place_label)
-	return step
+	return tile
 
 
 func _make_rank_row(entry: Dictionary) -> PanelContainer:
@@ -491,12 +463,15 @@ func _make_rank_row(entry: Dictionary) -> PanelContainer:
 		style.bg_color = _scope_card_bg(true).darkened(0.08)
 		style.set_border_width_all(3)
 		style.border_color = accent
-		style.shadow_color = Color(accent.r, accent.g, accent.b, 0.22)
-		style.shadow_size = 8
-		style.shadow_offset = Vector2(0, 3)
+		style.shadow_color = Color(accent.r, accent.g, accent.b, 0.14)
+		style.shadow_size = 6
+		style.shadow_offset = Vector2(0, 2)
 	else:
 		style.bg_color = _scope_card_bg(true).lightened(0.06)
 		style.set_border_width_all(0)
+		style.shadow_color = Color(0, 0, 0, 0.14)
+		style.shadow_size = 4
+		style.shadow_offset = Vector2(0, 2)
 	style.set_corner_radius_all(16 if is_player else 14)
 	panel.add_theme_stylebox_override("panel", style)
 	if is_player:
@@ -554,10 +529,11 @@ func _make_rank_row(entry: Dictionary) -> PanelContainer:
 		var rank_disc := Panel.new()
 		rank_disc.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		var rd := StyleBoxFlat.new()
+		## Opaque fill so the rank chip stays readable on the banner.
 		if is_player:
 			rd.bg_color = accent
 		else:
-			rd.bg_color = Color(1, 1, 1, 0.10)
+			rd.bg_color = _scope_card_bg(true).lightened(0.10)
 		rd.set_corner_radius_all(int(rank_slot_size * 0.34))
 		rank_disc.add_theme_stylebox_override("panel", rd)
 		rank_slot.add_child(rank_disc)
@@ -607,7 +583,7 @@ func _make_rank_row(entry: Dictionary) -> PanelContainer:
 	var score := Label.new()
 	score.text = "🏆 %s" % _format_int(int(entry.get("score", 0)))
 	score.add_theme_font_size_override("font_size", UiScale.font(30 if is_player else 24))
-	score.add_theme_color_override("font_color", accent)
+	score.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	row.add_child(score)
 	return panel
 

@@ -72,7 +72,7 @@ static func player_card(
 	name_label.text = display_name
 	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	name_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-	name_label.add_theme_font_size_override("font_size", UiScale.font(18))
+	name_label.add_theme_font_size_override("font_size", UiScale.font(20))
 	name_label.add_theme_color_override("font_color", Color.WHITE)
 	name_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.55))
 	name_label.add_theme_constant_override("outline_size", 4)

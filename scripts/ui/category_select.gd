@@ -313,11 +313,7 @@ func _build_duel_tiles() -> void:
 	if _daily_card != null:
 		## The daily card becomes the last tile, under the modes.
 		_scroll_content.move_child(_daily_card, _scroll_content.get_child_count() - 1)
-		var daily_style := UiStyle.filled(Color(0.97, 0.95, 0.88, 1), 24)
-		daily_style.set_border_width_all(3)
-		daily_style.border_color = UiTokens.PODIUM_GOLD
-		daily_style.shadow_color = Color(UiTokens.PODIUM_GOLD.r, UiTokens.PODIUM_GOLD.g, UiTokens.PODIUM_GOLD.b, 0.3)
-		daily_style.shadow_size = 12
+		var daily_style := UiStyle.category_tile(UiTokens.PODIUM_GOLD)
 		daily_style.set_content_margin_all(16)
 		_daily_card.custom_minimum_size.y = 130
 		_daily_card.add_theme_stylebox_override("panel", daily_style)
@@ -328,8 +324,23 @@ func _section_title(text: String) -> Label:
 	var label := Label.new()
 	label.text = text.to_upper()
 	label.add_theme_font_size_override("font_size", UiScale.font(16))
-	label.add_theme_color_override("font_color", Color(1, 1, 1, 0.6))
+	## Quiz page canvas is brand navy — keep section labels light.
+	label.add_theme_color_override("font_color", Color(1, 1, 1, 0.55))
 	return label
+
+
+## Dark ink for labels sitting on light pastel tile fills.
+func _pastel_ink() -> Color:
+	return Color(0.10, 0.12, 0.15, 1)
+
+
+func _pastel_ink_muted() -> Color:
+	return Color(0.28, 0.30, 0.34, 1)
+
+
+## Accent-tinted ink deep enough to read on a soft wash of the same hue.
+func _pastel_accent_ink(accent: Color) -> Color:
+	return accent.darkened(0.45).lerp(Color(0.08, 0.09, 0.12, 1), 0.40)
 
 
 ## League badge, trophies and the way to the next league.
@@ -345,11 +356,9 @@ func _rank_strip() -> Control:
 			break
 
 	var panel := PanelContainer.new()
-	var style := UiStyle.filled(Color(1, 1, 1, 0.07), 22)
-	style.set_content_margin_all(14)
-	style.set_border_width_all(1)
-	style.border_color = Color(1, 1, 1, 0.12)
-	panel.add_theme_stylebox_override("panel", style)
+	var rank_style := UiStyle.category_tile(UiTokens.ACCENT_QUIZ)
+	rank_style.set_content_margin_all(14)
+	panel.add_theme_stylebox_override("panel", rank_style)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 14)
 	panel.add_child(row)
@@ -367,7 +376,7 @@ func _rank_strip() -> Control:
 	var title := Label.new()
 	title.text = "%s  ·  🏆 %d" % [tr(str(league.get("title_key", ""))), trophies]
 	title.add_theme_font_size_override("font_size", UiScale.font(22))
-	title.add_theme_color_override("font_color", Color.WHITE)
+	title.add_theme_color_override("font_color", _pastel_ink())
 	info.add_child(title)
 	if next_min > 0:
 		var floor_min := int(league.get("min_trophies", 0))
@@ -382,7 +391,7 @@ func _rank_strip() -> Control:
 		var hint := Label.new()
 		hint.text = tr("UI_DUEL_NEXT_LEAGUE").format({"league": tr(next_key), "trophies": next_min - trophies})
 		hint.add_theme_font_size_override("font_size", UiScale.font(14))
-		hint.add_theme_color_override("font_color", Color(1, 1, 1, 0.6))
+		hint.add_theme_color_override("font_color", _pastel_ink_muted())
 		info.add_child(hint)
 	return panel
 
@@ -398,9 +407,7 @@ func _pass_strip() -> Control:
 	button.custom_minimum_size.y = 84
 	button.focus_mode = Control.FOCUS_NONE
 	var gold := Color(1.0, 0.78, 0.2, 1)
-	var style := UiStyle.filled(Color(0.16, 0.10, 0.30, 1), 22)
-	style.set_border_width_all(2)
-	style.border_color = gold if bool(state.get("premium", false)) else Color(gold.r, gold.g, gold.b, 0.45)
+	var style := UiStyle.category_tile(gold)
 	for button_state in ["normal", "hover", "pressed", "focus"]:
 		button.add_theme_stylebox_override(button_state, style)
 	button.pressed.connect(func() -> void:
@@ -424,7 +431,7 @@ func _pass_strip() -> Control:
 	var active := bool(state.get("active", false))
 	title.text = (tr("UI_PASS_STRIP").format({"tier": int(state.get("tier", 0))}) if active else tr("UI_PASS_TAB")) + "  ›"
 	title.add_theme_font_size_override("font_size", UiScale.font(18))
-	title.add_theme_color_override("font_color", gold)
+	title.add_theme_color_override("font_color", _pastel_accent_ink(gold))
 	column.add_child(title)
 	if active:
 		var tier_xp := int(state.get("tier_xp", 800))
@@ -445,7 +452,7 @@ func _on_pass_state(_state: Dictionary) -> void:
 		_build_duel_tiles()
 
 
-## Big coloured tile for one duel mode; a tap goes straight to matchmaking.
+## Big tile for one duel mode; a tap goes straight to matchmaking.
 func _mode_tile(mode: int, height: float, wide: bool) -> Button:
 	var entry: Array = MODES[mode]
 	var accent: Color = UiTokens.MODE_ACCENTS[mode]
@@ -453,49 +460,21 @@ func _mode_tile(mode: int, height: float, wide: bool) -> Button:
 	tile.custom_minimum_size.y = height
 	tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tile.focus_mode = Control.FOCUS_NONE
-	var style := UiStyle.filled(accent.darkened(0.35), 26)
-	style.set_border_width_all(3)
-	style.border_color = accent.lightened(0.2)
-	style.shadow_color = Color(accent.r, accent.g, accent.b, 0.35)
-	style.shadow_size = 14
-	style.shadow_offset = Vector2(0, 5)
+	## Pastel wash of the mode accent — same recipe as home / category tiles.
+	var style := UiStyle.category_tile(accent)
 	var pressed := style.duplicate() as StyleBoxFlat
-	pressed.bg_color = accent.darkened(0.45)
+	pressed.bg_color = accent.lerp(Color(0.97, 0.98, 0.99, 1.0), 0.58)
 	for state in ["normal", "hover", "focus"]:
 		tile.add_theme_stylebox_override(state, style)
 	tile.add_theme_stylebox_override("pressed", pressed)
 	tile.pressed.connect(_on_mode_tile_pressed.bind(mode))
 	PressScaleUtil.wire(tile, self)
 
-	## Soft glow in the top corner, like a light on the card. It lives in a rounded
-	## face (inside the border) that clips it, so nothing spills past the corners.
-	var face := Panel.new()
-	face.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT, Control.PRESET_MODE_MINSIZE, 3)
-	face.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	face.clip_children = CanvasItem.CLIP_CHILDREN_AND_DRAW
-	face.add_theme_stylebox_override("panel", UiStyle.filled(accent.darkened(0.35), 23))
-	tile.add_child(face)
-	var glow := TextureRect.new()
-	glow.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	glow.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	glow.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	glow.stretch_mode = TextureRect.STRETCH_SCALE
-	var gradient := Gradient.new()
-	gradient.set_color(0, Color(accent.lightened(0.3), 0.55))
-	gradient.set_color(1, Color(accent, 0.0))
-	var glow_tex := GradientTexture2D.new()
-	glow_tex.gradient = gradient
-	glow_tex.fill = GradientTexture2D.FILL_RADIAL
-	glow_tex.fill_from = Vector2(0.85, 0.15)
-	glow_tex.fill_to = Vector2(0.2, 1.0)
-	glow.texture = glow_tex
-	face.add_child(glow)
-
 	var emoji_font := UiFonts.emoji_font()
 	var big_icon := Label.new()
 	big_icon.text = str(entry[3])
 	big_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	big_icon.modulate.a = 0.9
+	big_icon.modulate.a = 0.85
 	big_icon.add_theme_font_size_override("font_size", UiScale.font(76 if wide else 58))
 	if emoji_font != null:
 		big_icon.add_theme_font_override("font", emoji_font)
@@ -514,10 +493,11 @@ func _mode_tile(mode: int, height: float, wide: bool) -> Button:
 	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	column.add_theme_constant_override("separation", 6)
 	pad.add_child(column)
+	var accent_ink := _pastel_accent_ink(accent)
 	var chip := Label.new()
 	chip.text = tr("UI_DUEL_RANKED_CHIP").to_upper()
 	chip.add_theme_font_size_override("font_size", UiScale.font(13))
-	chip.add_theme_color_override("font_color", accent.lightened(0.5))
+	chip.add_theme_color_override("font_color", accent_ink)
 	column.add_child(chip)
 	var spacer := Control.new()
 	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -526,20 +506,18 @@ func _mode_tile(mode: int, height: float, wide: bool) -> Button:
 	var name_label := Label.new()
 	name_label.text = tr(str(entry[1])).to_upper()
 	name_label.add_theme_font_size_override("font_size", UiScale.font(34 if wide else 26))
-	name_label.add_theme_color_override("font_color", Color.WHITE)
-	name_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.35))
-	name_label.add_theme_constant_override("outline_size", 6)
+	name_label.add_theme_color_override("font_color", _pastel_ink())
 	column.add_child(name_label)
 	var hint := Label.new()
 	hint.text = tr(str(entry[2]).replace("UI_MODE_", "UI_DUEL_TILE_"))
 	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	hint.add_theme_font_size_override("font_size", UiScale.font(15))
-	hint.add_theme_color_override("font_color", Color(1, 1, 1, 0.85))
+	hint.add_theme_color_override("font_color", _pastel_ink_muted())
 	column.add_child(hint)
 	var play := Label.new()
 	play.text = tr("UI_DUEL_TILE_PLAY") + "  ›"
 	play.add_theme_font_size_override("font_size", UiScale.font(17))
-	play.add_theme_color_override("font_color", accent.lightened(0.55))
+	play.add_theme_color_override("font_color", accent_ink)
 	column.add_child(play)
 	return tile
 
@@ -697,18 +675,18 @@ func _render_daily() -> void:
 			}),
 		]
 	tag.add_theme_font_size_override("font_size", UiScale.font(14))
-	tag.add_theme_color_override("font_color", UiTokens.PODIUM_GOLD)
+	tag.add_theme_color_override("font_color", _pastel_accent_ink(UiTokens.PODIUM_GOLD))
 	labels.add_child(tag)
 
 	var name_label := Label.new()
 	name_label.text = category_name if known else tr("UI_DAILY_CHALLENGE_LOADING")
 	name_label.add_theme_font_size_override("font_size", UiScale.font(24))
-	name_label.add_theme_color_override("font_color", UiTokens.INK)
+	name_label.add_theme_color_override("font_color", _pastel_ink())
 	labels.add_child(name_label)
 
 	var sub := Label.new()
 	sub.add_theme_font_size_override("font_size", UiScale.font(14))
-	sub.add_theme_color_override("font_color", UiTokens.INK_MUTED)
+	sub.add_theme_color_override("font_color", _pastel_ink_muted())
 	if not result.is_empty():
 		var seconds := DailyChallenge.seconds_until_reset()
 		sub.text = "%s\n%s" % [

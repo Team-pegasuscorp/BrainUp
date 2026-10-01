@@ -186,12 +186,12 @@ const CATEGORY_LEVEL_MAX: int = 99
 const DEFAULT_PLAYER_NAME: String = "Player"
 const MAX_PLAYER_NAME_LENGTH: int = 24
 ## Base pseudo size for list/history rows; long names step down (see pseudo_font_size).
-const PSEUDO_FONT_SIZE: int = 20
+const PSEUDO_FONT_SIZE: int = 22
 const PSEUDO_FONT_SIZE_MIN: int = 13
 ## Larger identity surfaces (home summary / profile hero).
-const PSEUDO_FONT_SIZE_HOME: int = 28
-const PSEUDO_FONT_SIZE_HERO: int = 34
-const PSEUDO_FONT_SIZE_DETAIL: int = 30
+const PSEUDO_FONT_SIZE_HOME: int = 30
+const PSEUDO_FONT_SIZE_HERO: int = 36
+const PSEUDO_FONT_SIZE_DETAIL: int = 32
 
 
 ## Fit a player/opponent/friend pseudo: full `base` up to 8 chars, then shrink.

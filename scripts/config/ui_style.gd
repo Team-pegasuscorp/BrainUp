@@ -181,24 +181,24 @@ static func category_tile_featured(accent: Color, selected: bool = false) -> Sty
 
 
 static func profile_card(accent: Color = Color(0, 0, 0, 0), raised: bool = false) -> StyleBoxFlat:
-	## Mock-style navy tile: soft border + colored outer glow when accented.
+	## Mock-style navy tile: soft border + light drop shadow (not Quiz).
 	var style := StyleBoxFlat.new()
 	style.bg_color = UiTokens.PROFILE_CARD_BG_RAISED if raised else UiTokens.PROFILE_CARD_BG
 	style.set_border_width_all(1)
 	style.set_corner_radius_all(UiTokens.PROFILE_CARD_RADIUS)
-	style.shadow_offset = Vector2(0, 4)
+	style.shadow_offset = Vector2(0, 2)
 	style.content_margin_left = 0
 	style.content_margin_top = 0
 	style.content_margin_right = 0
 	style.content_margin_bottom = 0
 	if accent.a > 0.02:
 		style.border_color = Color(accent.r, accent.g, accent.b, 0.28 if raised else 0.18)
-		style.shadow_color = Color(accent.r, accent.g, accent.b, 0.22 if raised else 0.14)
-		style.shadow_size = 14 if raised else 10
+		style.shadow_color = Color(accent.r, accent.g, accent.b, 0.14 if raised else 0.10)
+		style.shadow_size = 6 if raised else 4
 	else:
 		style.border_color = UiTokens.PROFILE_CARD_BORDER
-		style.shadow_color = Color(0, 0, 0, 0.30)
-		style.shadow_size = 10 if raised else 6
+		style.shadow_color = Color(0, 0, 0, 0.18)
+		style.shadow_size = 5 if raised else 3
 	return style
 
 
@@ -214,8 +214,9 @@ static func social_surface(raised: bool = false, pad: int = 10) -> StyleBoxFlat:
 	var style := profile_card(UiTokens.ACCENT_SOCIAL, raised)
 	style.bg_color = UiTokens.SOCIAL_CARD_BG_RAISED if raised else UiTokens.SOCIAL_CARD_BG
 	style.border_color = UiTokens.SOCIAL_CARD_BORDER
-	style.shadow_color = Color(UiTokens.ACCENT_SOCIAL.r, UiTokens.ACCENT_SOCIAL.g, UiTokens.ACCENT_SOCIAL.b, 0.20)
-	style.shadow_size = 12 if raised else 9
+	style.shadow_color = Color(UiTokens.ACCENT_SOCIAL.r, UiTokens.ACCENT_SOCIAL.g, UiTokens.ACCENT_SOCIAL.b, 0.12)
+	style.shadow_size = 6 if raised else 4
+	style.shadow_offset = Vector2(0, 2)
 	style.set_content_margin_all(pad)
 	return style
 
@@ -225,8 +226,9 @@ static func home_surface(raised: bool = false, pad: int = 10) -> StyleBoxFlat:
 	var style := profile_card(UiTokens.ACCENT_HOME, raised)
 	style.bg_color = UiTokens.HOME_CARD_BG_RAISED if raised else UiTokens.HOME_CARD_BG
 	style.border_color = UiTokens.HOME_CARD_BORDER
-	style.shadow_color = Color(UiTokens.ACCENT_HOME.r, UiTokens.ACCENT_HOME.g, UiTokens.ACCENT_HOME.b, 0.20)
-	style.shadow_size = 12 if raised else 9
+	style.shadow_color = Color(UiTokens.ACCENT_HOME.r, UiTokens.ACCENT_HOME.g, UiTokens.ACCENT_HOME.b, 0.12)
+	style.shadow_size = 6 if raised else 4
+	style.shadow_offset = Vector2(0, 2)
 	style.set_content_margin_all(pad)
 	return style
 
@@ -244,8 +246,19 @@ static func leaderboard_surface(raised: bool = false, pad: int = 10, friends: bo
 	else:
 		style.bg_color = UiTokens.LEADERBOARD_CARD_BG_RAISED if raised else UiTokens.LEADERBOARD_CARD_BG
 		style.border_color = UiTokens.LEADERBOARD_CARD_BORDER
-	style.shadow_color = Color(accent.r, accent.g, accent.b, 0.22)
-	style.shadow_size = 12 if raised else 9
+	style.shadow_color = Color(accent.r, accent.g, accent.b, 0.12)
+	style.shadow_size = 6 if raised else 4
+	style.shadow_offset = Vector2(0, 2)
+	style.set_content_margin_all(pad)
+	return style
+
+
+static func quiz_surface(accent: Color = Color(0, 0, 0, 0), raised: bool = false, pad: int = 14) -> StyleBoxFlat:
+	## Dark navy tiles on the Quiz page — same language as profile / social cards.
+	var edge := accent if accent.a > 0.02 else UiTokens.ACCENT_QUIZ
+	var style := profile_card(edge, raised)
+	style.bg_color = UiTokens.PROFILE_CARD_BG_RAISED if raised else UiTokens.PROFILE_CARD_BG
+	style.border_color = Color(edge.r, edge.g, edge.b, 0.45 if raised else 0.28)
 	style.set_content_margin_all(pad)
 	return style
 

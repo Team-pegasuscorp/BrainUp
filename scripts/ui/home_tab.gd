@@ -44,7 +44,20 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 	var panel := PanelContainer.new()
 	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	panel.custom_minimum_size.y = 220
-	panel.add_theme_stylebox_override("panel", UiStyle.home_surface(true, 0))
+	## Empty chrome: banner alone is the card surface; light drop shadow only.
+	var surface := StyleBoxFlat.new()
+	surface.bg_color = Color(0, 0, 0, 0)
+	surface.set_corner_radius_all(UiTokens.PROFILE_CARD_RADIUS)
+	surface.set_border_width_all(0)
+	surface.shadow_color = Color(0, 0, 0, 0.16)
+	surface.shadow_size = 5
+	surface.shadow_offset = Vector2(0, 2)
+	panel.add_theme_stylebox_override("panel", surface)
+
+	var banner := CosmeticsView.banner(
+		SaveManager.get_equipped_banner(), Vector2.ZERO, UiTokens.PROFILE_CARD_RADIUS
+	)
+	panel.add_child(banner)
 
 	var margin := _pad(16, 14)
 	panel.add_child(margin)
@@ -153,7 +166,7 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 	var level_caption := Label.new()
 	level_caption.text = tr("UI_PROFILE_LEVEL_CAPTION").to_upper()
 	level_caption.add_theme_font_size_override("font_size", UiScale.font(14))
-	level_caption.add_theme_color_override("font_color", UiTokens.PROFILE_TITLE_CAPS)
+	level_caption.add_theme_color_override("font_color", Color(1, 1, 1, 0.95))
 	level_row.add_child(level_caption)
 
 	var level_num := Label.new()
@@ -269,9 +282,6 @@ func _make_daily_challenges_card() -> PanelContainer:
 	style.bg_color = Color(0.075, 0.255, 0.245, 1)
 	style.set_border_width_all(2)
 	style.border_color = Color(UiTokens.ACCENT_HOME.r, UiTokens.ACCENT_HOME.g, UiTokens.ACCENT_HOME.b, 0.55)
-	style.shadow_color = Color(UiTokens.ACCENT_HOME.r, UiTokens.ACCENT_HOME.g, UiTokens.ACCENT_HOME.b, 0.38)
-	style.shadow_size = 18
-	style.shadow_offset = Vector2(0, 5)
 	panel.add_theme_stylebox_override("panel", style)
 
 	var margin := _pad(16, 16)

@@ -34,6 +34,7 @@ var _countdown_label: Label = null
 
 var _friend_backdrop: ColorRect
 var _friend_detail_panel: PanelContainer
+var _friend_detail_banner: BannerView
 var _friend_detail_body: VBoxContainer
 var _selected_friend: Dictionary = {}
 var _friends_page: Control
@@ -469,45 +470,38 @@ func _friend_request_row(request: Dictionary) -> Control:
 	var row := PanelContainer.new()
 	row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var style := StyleBoxFlat.new()
-	style.bg_color = Color(1, 1, 1, 0.04)
+	## Transparent fill so the requester's banner reads as the row background.
+	style.bg_color = Color(0, 0, 0, 0)
 	style.set_corner_radius_all(14)
-	style.content_margin_left = 10
-	style.content_margin_right = 10
-	style.content_margin_top = 8
-	style.content_margin_bottom = 8
+	style.content_margin_left = 0
+	style.content_margin_right = 0
+	style.content_margin_top = 0
+	style.content_margin_bottom = 0
 	row.add_theme_stylebox_override("panel", style)
+
+	var request_name := str(request.get("name", ""))
+	var cosmetics: Dictionary = request.get("cosmetics", {})
+	if cosmetics.is_empty():
+		cosmetics = ShopCatalog.demo_cosmetics_for(request_name)
+
+	var banner := CosmeticsView.banner(str(cosmetics.get("banner", "")), Vector2.ZERO, 14)
+	row.add_child(banner)
+
+	var pad := MarginContainer.new()
+	pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pad.add_theme_constant_override("margin_left", 10)
+	pad.add_theme_constant_override("margin_right", 10)
+	pad.add_theme_constant_override("margin_top", 8)
+	pad.add_theme_constant_override("margin_bottom", 8)
+	row.add_child(pad)
 
 	var hbox := HBoxContainer.new()
 	hbox.add_theme_constant_override("separation", 10)
 	hbox.alignment = BoxContainer.ALIGNMENT_CENTER
-	row.add_child(hbox)
+	pad.add_child(hbox)
 
-	var accent: Color = request.get("accent", UiTokens.ACCENT_SOCIAL)
-	var request_name := str(request.get("name", ""))
 	const AVATAR := 64.0
-	var avatar := PanelContainer.new()
-	avatar.custom_minimum_size = Vector2(AVATAR, AVATAR)
-	var disc := StyleBoxFlat.new()
-	disc.bg_color = Color(accent.r, accent.g, accent.b, 0.5)
-	disc.set_corner_radius_all(int(AVATAR * 0.5))
-	disc.set_border_width_all(2)
-	disc.border_color = accent
-	avatar.add_theme_stylebox_override("panel", disc)
-	var initial := Label.new()
-	initial.text = request_name.substr(0, 1).to_upper() if not request_name.is_empty() else "?"
-	initial.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	initial.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	initial.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	initial.add_theme_font_size_override("font_size", UiScale.font(24))
-	initial.add_theme_color_override("font_color", Color.WHITE)
-	avatar.add_child(initial)
-	## Size must be set before wire — otherwise GameAssets falls back to 56px.
-	if GameAssets.wire_demo_avatar(avatar, request_name):
-		disc.bg_color = Color(0, 0, 0, 0)
-		disc.border_color = Color(0, 0, 0, 0)
-		disc.set_border_width_all(0)
-		initial.visible = false
-	hbox.add_child(avatar)
+	hbox.add_child(CosmeticsView.avatar(cosmetics, AVATAR))
 
 	var identity := VBoxContainer.new()
 	identity.add_theme_constant_override("separation", 1)
@@ -527,7 +521,7 @@ func _friend_request_row(request: Dictionary) -> Control:
 	var level_label := Label.new()
 	level_label.text = "%s %d" % [tr("UI_PROFILE_LEVEL_CAPTION"), int(request.get("level", 1))]
 	level_label.add_theme_font_size_override("font_size", UiScale.font(13))
-	level_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+	level_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	identity.add_child(level_label)
 
 	var actions := HBoxContainer.new()
@@ -759,7 +753,7 @@ func _populate_friend_requests_page() -> void:
 
 
 func _friend_chip(friend: Dictionary) -> Control:
-	## Demo avatars keep their generated circular background.
+	## Framed avatar from cosmetics (demo look keyed by name when missing).
 	const AVATAR := 80.0
 	var wrap := Control.new()
 	wrap.custom_minimum_size = Vector2(96, 138)
@@ -771,51 +765,24 @@ func _friend_chip(friend: Dictionary) -> Control:
 	col.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	wrap.add_child(col)
 
-	var avatar_wrap := Control.new()
-	avatar_wrap.custom_minimum_size = Vector2(AVATAR, AVATAR)
-	avatar_wrap.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	avatar_wrap.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var friend_name := str(friend.get("name", ""))
+	var cosmetics: Dictionary = friend.get("cosmetics", {})
+	if cosmetics.is_empty():
+		cosmetics = ShopCatalog.demo_cosmetics_for(friend_name)
 
-	var avatar := PanelContainer.new()
-	avatar.custom_minimum_size = Vector2(AVATAR, AVATAR)
-	avatar.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	avatar.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	avatar.add_theme_stylebox_override("panel", StyleBoxEmpty.new())
-	var initial := Label.new()
-	initial.text = str(friend.get("name", "?")).substr(0, 1).to_upper()
-	initial.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	initial.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	initial.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	initial.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	initial.add_theme_font_size_override("font_size", UiScale.font(28))
-	initial.add_theme_color_override("font_color", Color.WHITE)
-	avatar.add_child(initial)
-	## Size must be set on the panel before wire — otherwise GameAssets falls back to 56px.
-	if GameAssets.wire_demo_avatar(avatar, str(friend.get("name", ""))):
-		initial.visible = false
-	avatar_wrap.add_child(avatar)
-
-	## Mock presence: green online, grey otherwise.
-	var presence := str(friend.get("presence", "offline"))
-	var dot_color := Color(0.55, 0.56, 0.60, 1)
-	if presence == "online":
-		dot_color = Color(0.22, 0.86, 0.42, 1)
-	var dot_size := 14.0
-	var dot := Panel.new()
-	dot.custom_minimum_size = Vector2(dot_size, dot_size)
-	dot.position = Vector2(AVATAR - dot_size - 1.0, AVATAR - dot_size - 1.0)
-	dot.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var dot_style := StyleBoxFlat.new()
-	dot_style.bg_color = dot_color
-	dot_style.set_corner_radius_all(int(dot_size * 0.5))
-	dot_style.set_border_width_all(2)
-	dot_style.border_color = UiTokens.SOCIAL_CARD_BG
-	dot.add_theme_stylebox_override("panel", dot_style)
-	avatar_wrap.add_child(dot)
-	col.add_child(avatar_wrap)
+	var avatar := CosmeticsView.avatar(cosmetics, AVATAR)
+	avatar.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	match str(friend.get("presence", "offline")):
+		"online":
+			avatar.set_presence(CircularAvatar.Presence.ONLINE)
+		"away":
+			avatar.set_presence(CircularAvatar.Presence.AWAY)
+		_:
+			avatar.set_presence(CircularAvatar.Presence.OFFLINE)
+	col.add_child(avatar)
 
 	var name_label := Label.new()
-	name_label.text = str(friend.get("name", ""))
+	name_label.text = friend_name
 	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	name_label.clip_text = true
 	name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -871,8 +838,14 @@ func _ensure_friend_detail_overlay() -> void:
 	_friend_detail_panel.offset_top = 0.0
 	_friend_detail_panel.offset_right = 196.0
 	_friend_detail_panel.offset_bottom = 0.0
-	_friend_detail_panel.add_theme_stylebox_override("panel", UiStyle.social_surface(true, 0))
+	var surface := UiStyle.social_surface(true, 0)
+	## Transparent fill so the friend's banner reads as the sheet background.
+	surface.bg_color = Color(0, 0, 0, 0)
+	_friend_detail_panel.add_theme_stylebox_override("panel", surface)
 	add_child(_friend_detail_panel)
+
+	_friend_detail_banner = CosmeticsView.banner("", Vector2.ZERO, UiTokens.PROFILE_CARD_RADIUS)
+	_friend_detail_panel.add_child(_friend_detail_banner)
 
 	var pad := MarginContainer.new()
 	pad.add_theme_constant_override("margin_left", 16)
@@ -891,6 +864,7 @@ func _ensure_friend_detail_overlay() -> void:
 func _open_friend_detail(friend: Dictionary) -> void:
 	_ensure_friend_detail_overlay()
 	_selected_friend = friend.duplicate(true)
+	_apply_friend_detail_banner(friend)
 	_populate_friend_detail(friend)
 	_friend_backdrop.visible = true
 	_friend_detail_panel.visible = true
@@ -898,6 +872,15 @@ func _open_friend_detail(friend: Dictionary) -> void:
 	_friend_detail_panel.move_to_front()
 	_set_shell_swipe_enabled(false)
 	call_deferred("_fit_friend_detail_panel")
+
+
+func _apply_friend_detail_banner(friend: Dictionary) -> void:
+	if _friend_detail_banner == null:
+		return
+	var cosmetics: Dictionary = friend.get("cosmetics", {})
+	if cosmetics.is_empty():
+		cosmetics = ShopCatalog.demo_cosmetics_for(str(friend.get("name", "")))
+	_friend_detail_banner.set_banner(str(cosmetics.get("banner", "")))
 
 
 func _fit_friend_detail_panel() -> void:
@@ -1094,51 +1077,27 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 	var cat_accent := UiTokens.accent_for_category(cat_id) if not cat_id.is_empty() else UiTokens.ACCENT_SOCIAL
 	var last_won := bool(friend.get("last_won", false))
 
-	## Header: avatar + name/meta + menu.
+	## Header: framed avatar + name/meta + menu.
 	var header := HBoxContainer.new()
 	header.add_theme_constant_override("separation", 12)
 	header.alignment = BoxContainer.ALIGNMENT_CENTER
 	_friend_detail_body.add_child(header)
 
-	var avatar_wrap := Control.new()
-	avatar_wrap.custom_minimum_size = Vector2(80, 80)
-	avatar_wrap.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	header.add_child(avatar_wrap)
+	var friend_name := str(friend.get("name", ""))
+	var cosmetics: Dictionary = friend.get("cosmetics", {})
+	if cosmetics.is_empty():
+		cosmetics = ShopCatalog.demo_cosmetics_for(friend_name)
 
-	var avatar := Panel.new()
-	avatar.custom_minimum_size = Vector2(80, 80)
-	avatar.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	avatar.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	avatar.add_theme_stylebox_override("panel", StyleBoxEmpty.new())
-	avatar_wrap.add_child(avatar)
-
-	var initial := Label.new()
-	initial.text = str(friend.get("name", "?")).substr(0, 1).to_upper()
-	initial.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	initial.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	initial.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	initial.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	initial.add_theme_font_size_override("font_size", UiScale.font(34))
-	initial.add_theme_color_override("font_color", Color.WHITE)
-	avatar_wrap.add_child(initial)
-	if GameAssets.wire_demo_avatar_to_control(avatar, str(friend.get("name", ""))):
-		initial.visible = false
-
-	var presence := str(friend.get("presence", "offline"))
-	var dot_color := Color(0.55, 0.56, 0.60, 1)
-	if presence == "online":
-		dot_color = Color(0.22, 0.86, 0.42, 1)
-	var dot := Panel.new()
-	dot.custom_minimum_size = Vector2(16, 16)
-	dot.position = Vector2(62, 62)
-	dot.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var dot_style := StyleBoxFlat.new()
-	dot_style.bg_color = dot_color
-	dot_style.set_corner_radius_all(8)
-	dot_style.set_border_width_all(2)
-	dot_style.border_color = UiTokens.SOCIAL_CARD_BG_RAISED
-	dot.add_theme_stylebox_override("panel", dot_style)
-	avatar_wrap.add_child(dot)
+	var avatar := CosmeticsView.avatar(cosmetics, 80.0)
+	avatar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	match str(friend.get("presence", "offline")):
+		"online":
+			avatar.set_presence(CircularAvatar.Presence.ONLINE)
+		"away":
+			avatar.set_presence(CircularAvatar.Presence.AWAY)
+		_:
+			avatar.set_presence(CircularAvatar.Presence.OFFLINE)
+	header.add_child(avatar)
 
 	var identity := VBoxContainer.new()
 	identity.add_theme_constant_override("separation", 4)
@@ -1147,7 +1106,7 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 	header.add_child(identity)
 
 	var name_label := Label.new()
-	name_label.text = str(friend.get("name", ""))
+	name_label.text = friend_name
 	name_label.add_theme_font_size_override(
 		"font_size",
 		UiScale.font(UiTokens.pseudo_font_size(name_label.text, UiTokens.PSEUDO_FONT_SIZE_DETAIL))
@@ -1302,10 +1261,11 @@ func _friend_best_subject_card(friend: Dictionary, cat_accent: Color) -> Control
 	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	card.custom_minimum_size.y = 100
 	var style := StyleBoxFlat.new()
-	style.bg_color = Color(1, 1, 1, 0.04)
+	## Solid social tile fill so content stays readable on the full-brightness banner.
+	style.bg_color = UiTokens.SOCIAL_CARD_BG_RAISED
 	style.set_corner_radius_all(14)
 	style.set_border_width_all(1)
-	style.border_color = Color(1, 1, 1, 0.10)
+	style.border_color = UiTokens.SOCIAL_CARD_BORDER
 	style.content_margin_left = 14
 	style.content_margin_right = 14
 	style.content_margin_top = 14
@@ -1387,10 +1347,11 @@ func _friend_stat_tile(
 	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	card.custom_minimum_size.y = 172
 	var style := StyleBoxFlat.new()
-	style.bg_color = Color(1, 1, 1, 0.04)
+	## Solid social tile fill so content stays readable on the full-brightness banner.
+	style.bg_color = UiTokens.SOCIAL_CARD_BG_RAISED
 	style.set_corner_radius_all(14)
 	style.set_border_width_all(1)
-	style.border_color = Color(1, 1, 1, 0.10)
+	style.border_color = UiTokens.SOCIAL_CARD_BORDER
 	style.content_margin_left = 4
 	style.content_margin_right = 4
 	style.content_margin_top = 8

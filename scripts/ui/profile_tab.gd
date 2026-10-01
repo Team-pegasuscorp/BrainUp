@@ -32,8 +32,15 @@ const ScenePaths = preload("res://scripts/config/scene_paths.gd")
 var _profile_data: Dictionary = {}
 ## Avatar picked in the edit panel, applied on save ("" = default avatar).
 var _pending_avatar_id: String = ""
+## Frame / banner equipped from the edit panel on save.
+var _pending_frame_id: String = ""
+var _pending_banner_id: String = ""
 var _avatar_label: Label
 var _avatar_grid: GridContainer
+var _frame_label: Label
+var _frame_grid: GridContainer
+var _banner_label: Label
+var _banner_grid: GridContainer
 var _animated_nodes: Array[Control] = []
 var _xp_bar: ProgressBar
 var _active_tweens: Array[Tween] = []
@@ -148,6 +155,10 @@ func _apply_translations() -> void:
 	pseudo_input.placeholder_text = tr("UI_PROFILE_PSEUDO_PLACEHOLDER")
 	if _avatar_label != null:
 		_avatar_label.text = tr("UI_PROFILE_CHOOSE_AVATAR")
+	if _frame_label != null:
+		_frame_label.text = tr("UI_PROFILE_CHOOSE_FRAME")
+	if _banner_label != null:
+		_banner_label.text = tr("UI_PROFILE_CHOOSE_BANNER")
 	edit_save_button.text = tr("UI_PROFILE_SAVE")
 	edit_close_button.text = tr("UI_BACK")
 	badge_detail_close.text = tr("UI_BACK")
@@ -196,6 +207,18 @@ func _build_hero() -> PanelContainer:
 	## Mock layout: avatar | identity+XP | divider | league column (~1/4 width).
 	var panel := _tile()
 	panel.custom_minimum_size.y = UiTokens.DASH_HERO_HEIGHT
+	var surface := panel.get_theme_stylebox("panel") as StyleBoxFlat
+	if surface != null:
+		surface = surface.duplicate() as StyleBoxFlat
+		## Transparent fill so the equipped banner reads as the card background.
+		surface.bg_color = Color(0, 0, 0, 0)
+		panel.add_theme_stylebox_override("panel", surface)
+
+	var banner := CosmeticsView.banner(
+		SaveManager.get_equipped_banner(), Vector2.ZERO, UiTokens.PROFILE_CARD_RADIUS
+	)
+	panel.add_child(banner)
+
 	var margin := _pad(16, 16)
 	panel.add_child(margin)
 
@@ -296,7 +319,7 @@ func _build_hero() -> PanelContainer:
 	var country := Label.new()
 	country.text = country_name
 	country.add_theme_font_size_override("font_size", UiScale.font(19))
-	country.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+	country.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	country_row.add_child(country)
 
 	## Level block under the flag — caption left of the number.
@@ -316,7 +339,7 @@ func _build_hero() -> PanelContainer:
 	level_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	level_caption.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	level_caption.add_theme_font_size_override("font_size", UiScale.font(16))
-	level_caption.add_theme_color_override("font_color", UiTokens.PROFILE_TITLE_CAPS)
+	level_caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	level_row.add_child(level_caption)
 
 	var level_num := Label.new()
@@ -383,14 +406,8 @@ func _build_hero() -> PanelContainer:
 	var league_tile := PanelContainer.new()
 	league_tile.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	league_tile.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	## Soft blue-violet wash — a bit bluer than ACCENT_PROFILE.
-	var league_accent := Color(0.38, 0.52, 0.98, 1)
-	var league_style := StyleBoxFlat.new()
-	## Lighter pastel so dark ink stays crisp.
-	league_style.bg_color = league_accent.lerp(Color(0.97, 0.98, 0.99, 1.0), 0.80)
-	league_style.set_corner_radius_all(16)
-	league_style.set_border_width_all(1)
-	league_style.border_color = Color(league_accent.r, league_accent.g, league_accent.b, 0.40)
+	## Same dark fill as the 2nd profile page tile (stats strip).
+	var league_style := UiStyle.profile_card(Color(0, 0, 0, 0), true)
 	league_style.content_margin_left = 10
 	league_style.content_margin_right = 10
 	league_style.content_margin_top = 10
@@ -412,8 +429,8 @@ func _build_hero() -> PanelContainer:
 	league_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	league_title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	league_title.add_theme_font_size_override("font_size", UiScale.font(16))
-	## Dark ink on light pastel — same readability as home / stats subtiles.
-	league_title.add_theme_color_override("font_color", UiTokens.INK)
+	## Light text on the dark profile card fill.
+	league_title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	league_col.add_child(league_title)
 
 	## Icon follows trophy league tier (not a fixed diamond).
@@ -435,7 +452,7 @@ func _build_hero() -> PanelContainer:
 	points.text = "🏆  %s" % _format_int(int(ranking.get("points", 0)))
 	points.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	points.add_theme_font_size_override("font_size", UiScale.font(28))
-	points.add_theme_color_override("font_color", UiTokens.INK)
+	points.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	var points_wrap := MarginContainer.new()
 	points_wrap.add_theme_constant_override("margin_top", -10)
 	points_wrap.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
@@ -1426,8 +1443,14 @@ func _play_entrance_animation() -> void:
 func _open_edit_profile() -> void:
 	pseudo_input.text = str(_profile_data.get("player_name", ""))
 	_pending_avatar_id = SaveManager.profile_avatar_id
+	_pending_frame_id = SaveManager.get_equipped_frame()
+	_pending_banner_id = SaveManager.get_equipped_banner()
 	_ensure_avatar_picker()
 	_sync_avatar_picker()
+	_ensure_frame_picker()
+	_populate_frame_picker()
+	_ensure_banner_picker()
+	_populate_banner_picker()
 	edit_backdrop.visible = true
 	edit_panel.visible = true
 	edit_panel.move_to_front()
@@ -1441,6 +1464,10 @@ func _close_edit_profile() -> void:
 func _on_edit_save_pressed() -> void:
 	SaveManager.set_player_name(pseudo_input.text)
 	SaveManager.set_profile_avatar_id(_pending_avatar_id)
+	if not _pending_frame_id.is_empty():
+		SaveManager.equip_item(_pending_frame_id)
+	if not _pending_banner_id.is_empty():
+		SaveManager.equip_item(_pending_banner_id)
 	_close_edit_profile()
 	refresh()
 
@@ -1777,18 +1804,19 @@ func _ensure_avatar_picker() -> void:
 	edit_vbox.move_child(_avatar_label, pseudo_input.get_index() + 1)
 
 	_avatar_grid = GridContainer.new()
-	_avatar_grid.columns = 5
-	_avatar_grid.add_theme_constant_override("h_separation", 6)
-	_avatar_grid.add_theme_constant_override("v_separation", 6)
+	_avatar_grid.columns = 4
+	_avatar_grid.add_theme_constant_override("h_separation", 10)
+	_avatar_grid.add_theme_constant_override("v_separation", 10)
 	_avatar_grid.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	edit_vbox.add_child(_avatar_grid)
 	edit_vbox.move_child(_avatar_grid, _avatar_label.get_index() + 1)
 
+	const AVATAR_CELL := 80.0
 	var ids: Array[String] = [""]
 	ids.append_array(SaveManager.PROFILE_AVATAR_IDS)
 	for avatar_id in ids:
 		var cell := Button.new()
-		cell.custom_minimum_size = Vector2(56, 56)
+		cell.custom_minimum_size = Vector2(AVATAR_CELL, AVATAR_CELL)
 		cell.focus_mode = Control.FOCUS_NONE
 		cell.set_meta("avatar_id", avatar_id)
 		var icon := TextureRect.new()
@@ -1797,14 +1825,15 @@ func _ensure_avatar_picker() -> void:
 		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-		icon.offset_left = 5
-		icon.offset_top = 5
-		icon.offset_right = -5
-		icon.offset_bottom = -5
+		icon.offset_left = 6
+		icon.offset_top = 6
+		icon.offset_right = -6
+		icon.offset_bottom = -6
 		cell.add_child(icon)
 		cell.pressed.connect(func() -> void:
 			_pending_avatar_id = avatar_id
 			_sync_avatar_picker()
+			_populate_frame_picker()
 		)
 		_avatar_grid.add_child(cell)
 
@@ -1814,9 +1843,152 @@ func _sync_avatar_picker() -> void:
 		var selected := str(cell.get_meta("avatar_id", "")) == _pending_avatar_id
 		var ring := StyleBoxFlat.new()
 		ring.bg_color = Color(0, 0, 0, 0)
-		ring.set_corner_radius_all(28)
+		ring.set_corner_radius_all(40)
 		ring.set_border_width_all(3 if selected else 0)
 		ring.border_color = UiTokens.ACCENT_PROFILE
+		for state in ["normal", "hover", "pressed", "focus"]:
+			cell.add_theme_stylebox_override(state, ring)
+
+
+## Owned frames under the avatar grid (shop purchases + free defaults).
+func _ensure_frame_picker() -> void:
+	if _frame_grid != null:
+		return
+	_frame_label = Label.new()
+	_frame_label.text = tr("UI_PROFILE_CHOOSE_FRAME")
+	_frame_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_frame_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+	_frame_label.add_theme_font_size_override("font_size", UiScale.font(16))
+	edit_vbox.add_child(_frame_label)
+	edit_vbox.move_child(_frame_label, _avatar_grid.get_index() + 1)
+
+	_frame_grid = GridContainer.new()
+	_frame_grid.columns = 4
+	_frame_grid.add_theme_constant_override("h_separation", 10)
+	_frame_grid.add_theme_constant_override("v_separation", 10)
+	_frame_grid.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	edit_vbox.add_child(_frame_grid)
+	edit_vbox.move_child(_frame_grid, _frame_label.get_index() + 1)
+
+
+func _populate_frame_picker() -> void:
+	if _frame_grid == null:
+		return
+	while _frame_grid.get_child_count() > 0:
+		var child := _frame_grid.get_child(0)
+		_frame_grid.remove_child(child)
+		child.free()
+
+	const FRAME_CELL := 80.0
+	for item in ShopCatalog.items_of_kind(ShopCatalog.KIND_FRAME):
+		var frame_id := str(item.get("id", ""))
+		if frame_id.is_empty() or not SaveManager.is_item_owned(frame_id):
+			continue
+		var cell := Button.new()
+		cell.custom_minimum_size = Vector2(FRAME_CELL, FRAME_CELL)
+		cell.focus_mode = Control.FOCUS_NONE
+		cell.set_meta("frame_id", frame_id)
+		var wrap := CenterContainer.new()
+		wrap.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		wrap.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		cell.add_child(wrap)
+		var preview := CosmeticsView.avatar(
+			{"avatar": _pending_avatar_id, "frame": frame_id},
+			FRAME_CELL - 10.0
+		)
+		preview.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		wrap.add_child(preview)
+		var pick_id := frame_id
+		cell.pressed.connect(func() -> void:
+			_pending_frame_id = pick_id
+			_sync_frame_picker()
+		)
+		_frame_grid.add_child(cell)
+	_sync_frame_picker()
+
+
+func _sync_frame_picker() -> void:
+	if _frame_grid == null:
+		return
+	for cell in _frame_grid.get_children():
+		var selected := str(cell.get_meta("frame_id", "")) == _pending_frame_id
+		var ring := StyleBoxFlat.new()
+		ring.bg_color = Color(0, 0, 0, 0)
+		ring.set_corner_radius_all(40)
+		ring.set_border_width_all(3 if selected else 0)
+		ring.border_color = UiTokens.ACCENT_PROFILE
+		for state in ["normal", "hover", "pressed", "focus"]:
+			cell.add_theme_stylebox_override(state, ring)
+
+
+## Owned banners under the frame grid (shop purchases + free defaults).
+func _ensure_banner_picker() -> void:
+	if _banner_grid != null:
+		return
+	_banner_label = Label.new()
+	_banner_label.text = tr("UI_PROFILE_CHOOSE_BANNER")
+	_banner_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_banner_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+	_banner_label.add_theme_font_size_override("font_size", UiScale.font(16))
+	edit_vbox.add_child(_banner_label)
+	## After frame grid when present, else after avatar grid.
+	var after := _frame_grid if _frame_grid != null else _avatar_grid
+	edit_vbox.move_child(_banner_label, after.get_index() + 1)
+
+	_banner_grid = GridContainer.new()
+	_banner_grid.columns = 2
+	_banner_grid.add_theme_constant_override("h_separation", 8)
+	_banner_grid.add_theme_constant_override("v_separation", 8)
+	_banner_grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	edit_vbox.add_child(_banner_grid)
+	edit_vbox.move_child(_banner_grid, _banner_label.get_index() + 1)
+
+
+func _populate_banner_picker() -> void:
+	if _banner_grid == null:
+		return
+	while _banner_grid.get_child_count() > 0:
+		var child := _banner_grid.get_child(0)
+		_banner_grid.remove_child(child)
+		child.free()
+
+	for item in ShopCatalog.items_of_kind(ShopCatalog.KIND_BANNER):
+		var banner_id := str(item.get("id", ""))
+		if banner_id.is_empty() or not SaveManager.is_item_owned(banner_id):
+			continue
+		var cell := Button.new()
+		cell.custom_minimum_size = Vector2(0, 72)
+		cell.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		cell.focus_mode = Control.FOCUS_NONE
+		cell.clip_contents = true
+		cell.set_meta("banner_id", banner_id)
+		var preview := CosmeticsView.banner(banner_id, Vector2.ZERO, 12)
+		preview.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		preview.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		cell.add_child(preview)
+		var pick_id := banner_id
+		cell.pressed.connect(func() -> void:
+			_pending_banner_id = pick_id
+			_sync_banner_picker()
+		)
+		_banner_grid.add_child(cell)
+	_sync_banner_picker()
+
+
+func _sync_banner_picker() -> void:
+	if _banner_grid == null:
+		return
+	for cell in _banner_grid.get_children():
+		var selected := str(cell.get_meta("banner_id", "")) == _pending_banner_id
+		var ring := StyleBoxFlat.new()
+		ring.bg_color = Color(0, 0, 0, 0)
+		ring.set_corner_radius_all(10)
+		ring.set_border_width_all(3 if selected else 1)
+		ring.border_color = UiTokens.ACCENT_PROFILE if selected else Color(1, 1, 1, 0.18)
+		ring.content_margin_left = 0
+		ring.content_margin_right = 0
+		ring.content_margin_top = 0
+		ring.content_margin_bottom = 0
 		for state in ["normal", "hover", "pressed", "focus"]:
 			cell.add_theme_stylebox_override(state, ring)
 

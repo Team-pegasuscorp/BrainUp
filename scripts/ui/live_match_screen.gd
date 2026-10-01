@@ -729,7 +729,7 @@ func _header_side(display_name: String, cosmetics: Dictionary, mirrored: bool) -
 	name_label.text = display_name
 	name_label.horizontal_alignment = align
 	name_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-	name_label.add_theme_font_size_override("font_size", UiScale.font(15))
+	name_label.add_theme_font_size_override("font_size", UiScale.font(17))
 	name_label.add_theme_color_override("font_color", Color.WHITE)
 	info.add_child(name_label)
 	var score := Label.new()

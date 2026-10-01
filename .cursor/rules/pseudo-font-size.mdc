@@ -12,10 +12,10 @@ Player names, opponent names, and friend display names (**pseudos**) use **`UiTo
 
 | Surface | Constant | Default |
 |---------|----------|---------|
-| Lists / history / leaderboard | `PSEUDO_FONT_SIZE` | 20 |
-| Home identity | `PSEUDO_FONT_SIZE_HOME` | 28 |
-| Profile hero | `PSEUDO_FONT_SIZE_HERO` | 34 |
-| Friend detail | `PSEUDO_FONT_SIZE_DETAIL` | 30 |
+| Lists / history / leaderboard | `PSEUDO_FONT_SIZE` | 22 |
+| Home identity | `PSEUDO_FONT_SIZE_HOME` | 30 |
+| Profile hero | `PSEUDO_FONT_SIZE_HERO` | 36 |
+| Friend detail | `PSEUDO_FONT_SIZE_DETAIL` | 32 |
 
 Floor: `PSEUDO_FONT_SIZE_MIN` (13). Full base size through **8** characters, then −1 px per **2** extra characters.
 
