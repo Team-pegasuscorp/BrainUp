@@ -622,7 +622,7 @@ func _friend_request_row(request: Dictionary) -> Control:
 	identity.add_child(level_label)
 
 	var actions := HBoxContainer.new()
-	actions.add_theme_constant_override("separation", 8)
+	actions.add_theme_constant_override("separation", 16)
 	hbox.add_child(actions)
 
 	actions.add_child(_friend_request_action_btn(
@@ -778,7 +778,7 @@ func _challenge_request_row(request: Dictionary) -> Control:
 	row.add_child(pad)
 
 	var hbox := HBoxContainer.new()
-	hbox.add_theme_constant_override("separation", 10)
+	hbox.add_theme_constant_override("separation", 16)
 	hbox.alignment = BoxContainer.ALIGNMENT_CENTER
 	pad.add_child(hbox)
 
@@ -842,7 +842,7 @@ func _challenge_request_row(request: Dictionary) -> Control:
 	mode_row.add_child(mode_label)
 
 	var actions := HBoxContainer.new()
-	actions.add_theme_constant_override("separation", 8)
+	actions.add_theme_constant_override("separation", 16)
 	hbox.add_child(actions)
 
 	actions.add_child(_friend_request_action_btn(
@@ -967,6 +967,53 @@ func _close_friend_requests_page() -> void:
 		_set_shell_swipe_enabled(true)
 
 
+func _social_close_button(on_pressed: Callable, light: bool = false) -> Button:
+	## Shared top-right ✕ (no circle) — light on dark banners, accent on social pages.
+	var close_btn := Button.new()
+	close_btn.text = "✕"
+	close_btn.flat = true
+	close_btn.focus_mode = Control.FOCUS_NONE
+	close_btn.custom_minimum_size = Vector2(44, 44)
+	close_btn.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	close_btn.add_theme_font_size_override("font_size", UiScale.font(28))
+	var ink := Color(1, 1, 1, 0.92) if light else UiTokens.PROFILE_TEXT
+	var ink_hover := Color(1, 1, 1, 1) if light else UiTokens.ACCENT_SOCIAL
+	var ink_pressed := Color(1, 1, 1, 0.75) if light else UiTokens.PROFILE_TEXT_MUTED
+	close_btn.add_theme_color_override("font_color", ink)
+	close_btn.add_theme_color_override("font_hover_color", ink_hover)
+	close_btn.add_theme_color_override("font_pressed_color", ink_pressed)
+	var close_empty := StyleBoxEmpty.new()
+	close_btn.add_theme_stylebox_override("normal", close_empty)
+	close_btn.add_theme_stylebox_override("hover", close_empty)
+	close_btn.add_theme_stylebox_override("pressed", close_empty)
+	close_btn.add_theme_stylebox_override("focus", close_empty)
+	close_btn.pressed.connect(on_pressed)
+	PressScaleUtil.wire(close_btn, self)
+	return close_btn
+
+
+func _social_page_header(title_key: String, on_close: Callable) -> HBoxContainer:
+	## Centered title with matching left spacer and ✕ on the right.
+	var header := HBoxContainer.new()
+	header.add_theme_constant_override("separation", 10)
+	header.alignment = BoxContainer.ALIGNMENT_CENTER
+
+	var spacer := Control.new()
+	spacer.custom_minimum_size = Vector2(44, 44)
+	header.add_child(spacer)
+
+	var page_title := Label.new()
+	page_title.text = tr(title_key).to_upper()
+	page_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	page_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	page_title.add_theme_font_size_override("font_size", UiScale.font(20))
+	page_title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	header.add_child(page_title)
+
+	header.add_child(_social_close_button(on_close, false))
+	return header
+
+
 func _ensure_friend_requests_page() -> void:
 	if _friend_requests_page != null and is_instance_valid(_friend_requests_page):
 		return
@@ -1012,35 +1059,8 @@ func _ensure_friend_requests_page() -> void:
 	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	inner.add_child(vbox)
 
-	var header := HBoxContainer.new()
-	header.add_theme_constant_override("separation", 10)
+	var header := _social_page_header("UI_SOCIAL_FRIEND_REQUESTS", _close_friend_requests_page)
 	vbox.add_child(header)
-
-	var back := Button.new()
-	back.text = "< " + tr("UI_BACK")
-	back.flat = true
-	back.focus_mode = Control.FOCUS_NONE
-	back.add_theme_font_size_override("font_size", UiScale.font(16))
-	back.add_theme_color_override("font_color", UiTokens.ACCENT_SOCIAL)
-	var empty := StyleBoxEmpty.new()
-	back.add_theme_stylebox_override("normal", empty)
-	back.add_theme_stylebox_override("hover", empty)
-	back.add_theme_stylebox_override("pressed", empty)
-	back.pressed.connect(_close_friend_requests_page)
-	PressScaleUtil.wire(back, self)
-	header.add_child(back)
-
-	var page_title := Label.new()
-	page_title.text = tr("UI_SOCIAL_FRIEND_REQUESTS").to_upper()
-	page_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	page_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	page_title.add_theme_font_size_override("font_size", UiScale.font(20))
-	page_title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-	header.add_child(page_title)
-
-	var spacer := Control.new()
-	spacer.custom_minimum_size.x = 72
-	header.add_child(spacer)
 
 	var scroll_box := ScrollContainer.new()
 	scroll_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -1140,35 +1160,8 @@ func _ensure_challenge_requests_page() -> void:
 	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	inner.add_child(vbox)
 
-	var header := HBoxContainer.new()
-	header.add_theme_constant_override("separation", 10)
+	var header := _social_page_header("UI_SOCIAL_CHALLENGE_REQUESTS", _close_challenge_requests_page)
 	vbox.add_child(header)
-
-	var back := Button.new()
-	back.text = "< " + tr("UI_BACK")
-	back.flat = true
-	back.focus_mode = Control.FOCUS_NONE
-	back.add_theme_font_size_override("font_size", UiScale.font(16))
-	back.add_theme_color_override("font_color", UiTokens.ACCENT_SOCIAL)
-	var empty := StyleBoxEmpty.new()
-	back.add_theme_stylebox_override("normal", empty)
-	back.add_theme_stylebox_override("hover", empty)
-	back.add_theme_stylebox_override("pressed", empty)
-	back.pressed.connect(_close_challenge_requests_page)
-	PressScaleUtil.wire(back, self)
-	header.add_child(back)
-
-	var page_title := Label.new()
-	page_title.text = tr("UI_SOCIAL_CHALLENGE_REQUESTS").to_upper()
-	page_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	page_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	page_title.add_theme_font_size_override("font_size", UiScale.font(20))
-	page_title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-	header.add_child(page_title)
-
-	var spacer := Control.new()
-	spacer.custom_minimum_size.x = 72
-	header.add_child(spacer)
 
 	var scroll_box := ScrollContainer.new()
 	scroll_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -1313,7 +1306,7 @@ func _ensure_friend_detail_overlay() -> void:
 	_friend_detail_panel.add_child(pad)
 
 	_friend_detail_body = VBoxContainer.new()
-	_friend_detail_body.add_theme_constant_override("separation", 14)
+	_friend_detail_body.add_theme_constant_override("separation", 16)
 	_friend_detail_body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	pad.add_child(_friend_detail_body)
 
@@ -1456,40 +1449,8 @@ func _ensure_friends_page() -> void:
 	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	inner.add_child(vbox)
 
-	var header := HBoxContainer.new()
-	header.add_theme_constant_override("separation", 10)
+	var header := _social_page_header("UI_SOCIAL_FRIENDS", _close_friends_page)
 	vbox.add_child(header)
-
-	var back := Button.new()
-	back.text = "< " + tr("UI_BACK")
-	back.flat = true
-	back.focus_mode = Control.FOCUS_NONE
-	back.add_theme_font_size_override("font_size", UiScale.font(16))
-	back.add_theme_color_override("font_color", UiTokens.ACCENT_SOCIAL)
-	var empty := StyleBoxEmpty.new()
-	back.add_theme_stylebox_override("normal", empty)
-	back.add_theme_stylebox_override("hover", empty)
-	back.add_theme_stylebox_override("pressed", empty)
-	back.pressed.connect(_close_friends_page)
-	PressScaleUtil.wire(back, self)
-	header.add_child(back)
-
-	var title_row := HBoxContainer.new()
-	title_row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	title_row.alignment = BoxContainer.ALIGNMENT_CENTER
-	header.add_child(title_row)
-
-	var page_title := Label.new()
-	page_title.text = tr("UI_SOCIAL_FRIENDS").to_upper()
-	page_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	page_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	page_title.add_theme_font_size_override("font_size", UiScale.font(20))
-	page_title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-	title_row.add_child(page_title)
-
-	var spacer := Control.new()
-	spacer.custom_minimum_size.x = 72
-	header.add_child(spacer)
 
 	var scroll_box := ScrollContainer.new()
 	scroll_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -1550,7 +1511,7 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 	var cat_accent := UiTokens.accent_for_category(cat_id) if not cat_id.is_empty() else UiTokens.ACCENT_SOCIAL
 	var last_won := bool(friend.get("last_won", false))
 
-	## Header: framed avatar + name/meta + menu.
+	## Header: framed avatar + name/meta + close (top-right).
 	var header := HBoxContainer.new()
 	header.add_theme_constant_override("separation", 12)
 	header.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -1596,23 +1557,7 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 	meta.add_theme_color_override("font_color", Color(1, 1, 1, 0.95))
 	identity.add_child(meta)
 
-	var menu := Button.new()
-	menu.text = "⋮"
-	menu.flat = true
-	menu.focus_mode = Control.FOCUS_NONE
-	menu.custom_minimum_size = Vector2(34, 34)
-	menu.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
-	menu.add_theme_font_size_override("font_size", UiScale.font(22))
-	menu.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
-	var menu_bg := StyleBoxFlat.new()
-	menu_bg.bg_color = Color(1, 1, 1, 0.06)
-	menu_bg.set_corner_radius_all(17)
-	var menu_empty := StyleBoxEmpty.new()
-	menu.add_theme_stylebox_override("normal", menu_bg)
-	menu.add_theme_stylebox_override("hover", menu_bg)
-	menu.add_theme_stylebox_override("pressed", menu_empty)
-	menu.add_theme_stylebox_override("focus", menu_empty)
-	header.add_child(menu)
+	header.add_child(_social_close_button(_close_friend_detail, true))
 
 	## Best subject row.
 	_friend_detail_body.add_child(_friend_best_subject_card(friend, cat_accent))
@@ -1651,7 +1596,7 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 	## Challenge CTA.
 	var challenge := Button.new()
 	challenge.focus_mode = Control.FOCUS_NONE
-	challenge.custom_minimum_size.y = 56
+	challenge.custom_minimum_size.y = 60
 	challenge.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var challenge_style := StyleBoxFlat.new()
 	challenge_style.bg_color = UiTokens.ACCENT_SOCIAL
@@ -1698,26 +1643,6 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 	challenge_label.add_theme_color_override("font_color", Color(0.12, 0.06, 0.1, 1))
 	challenge_row.add_child(challenge_label)
 
-	## Divider + back.
-	var divider := ColorRect.new()
-	divider.custom_minimum_size.y = 1
-	divider.color = Color(1, 1, 1, 0.12)
-	divider.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_friend_detail_body.add_child(divider)
-
-	var close_btn := Button.new()
-	close_btn.text = tr("UI_BACK")
-	close_btn.flat = true
-	close_btn.focus_mode = Control.FOCUS_NONE
-	close_btn.alignment = HORIZONTAL_ALIGNMENT_CENTER
-	close_btn.add_theme_font_size_override("font_size", UiScale.font(18))
-	close_btn.add_theme_color_override("font_color", UiTokens.ACCENT_SOCIAL)
-	var empty := StyleBoxEmpty.new()
-	close_btn.add_theme_stylebox_override("normal", empty)
-	close_btn.add_theme_stylebox_override("hover", empty)
-	close_btn.add_theme_stylebox_override("pressed", empty)
-	close_btn.pressed.connect(_close_friend_detail)
-	_friend_detail_body.add_child(close_btn)
 	call_deferred("_fit_friend_detail_panel")
 
 

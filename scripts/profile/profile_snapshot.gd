@@ -133,10 +133,10 @@ static func _merge_demo(base: Dictionary, locale: String) -> Dictionary:
 	## Demo XP = total correct answers; one row per real category pack.
 	demo["categories"] = _build_demo_categories(locale)
 	demo["history"] = [
-		_make_history_row("science", locale, 820, true, 15, 9, 0, "Lucas", 24, 2),
-		_make_history_row("cinema", locale, 780, true, 18, 12, 0, "Emma", 18, 15),
-		_make_history_row("sport", locale, 410, false, 8, 15, 1, "Theo", -12, 60),
-		_make_history_row("geography", locale, 860, true, 20, 11, 3, "Chloé", 22, 180),
+		_make_history_row("science", locale, 820, true, 15, 9, 0, "Lucas", 24, 2, "classic"),
+		_make_history_row("cinema", locale, 780, true, 18, 12, 0, "Emma", 18, 15, "survival"),
+		_make_history_row("sport", locale, 410, false, 8, 15, 1, "Theo", -12, 60, "time_attack"),
+		_make_history_row("geography", locale, 860, true, 20, 11, 3, "Chloé", 22, 180, "classic"),
 	]
 	return demo
 
@@ -346,7 +346,8 @@ static func _make_history_row(
 	age_hours: int,
 	opponent: String = "",
 	points_delta: int = 0,
-	age_minutes: int = -1
+	age_minutes: int = -1,
+	mode: String = "classic"
 ) -> Dictionary:
 	if opponent.is_empty():
 		opponent = HISTORY_OPPONENTS[absi(hash("%s-%s-%d" % [category_id, locale, score])) % HISTORY_OPPONENTS.size()]
@@ -357,6 +358,7 @@ static func _make_history_row(
 	return {
 		"category_id": category_id,
 		"category_name": _resolve_category_name(category_id, locale),
+		"mode": mode if not mode.is_empty() else "classic",
 		"score": score,
 		"won": won,
 		"correct_count": my_score,
@@ -395,7 +397,8 @@ static func _build_history(locale: String) -> Array:
 			age_hours,
 			HISTORY_OPPONENTS[index % HISTORY_OPPONENTS.size()],
 			0,
-			age_minutes
+			age_minutes,
+			str(raw.get("mode", "classic"))
 		))
 		index += 1
 	return rows

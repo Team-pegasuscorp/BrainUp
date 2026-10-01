@@ -805,9 +805,7 @@ func _make_last_match_card(snapshot: Dictionary) -> PanelContainer:
 				break
 			if typeof(row) != TYPE_DICTIONARY:
 				continue
-			var won: bool = bool(row.get("won", false))
-			var wash := Color(0.20, 0.86, 0.48, 1) if won else Color(0.96, 0.26, 0.32, 1)
-			list.add_child(_make_home_subtile(_history_row(row), -1, wash, 0.78))
+			list.add_child(_history_row(row))
 			count += 1
 
 	return panel
@@ -823,70 +821,121 @@ func _history_divider() -> Control:
 	return line
 
 
+func _history_mode_meta(mode: String) -> Dictionary:
+	match mode:
+		"survival":
+			return {
+				"key": "UI_MODE_SURVIVAL",
+				"icon": "❤️",
+				"accent": UiTokens.ACCENT_MODE_SURVIVAL,
+			}
+		"time_attack":
+			return {
+				"key": "UI_MODE_TIME_ATTACK",
+				"icon": "⏱️",
+				"accent": UiTokens.ACCENT_MODE_TIME_ATTACK,
+			}
+		_:
+			return {
+				"key": "UI_MODE_CLASSIC",
+				"icon": "🎯",
+				"accent": UiTokens.ACCENT_MODE_CLASSIC,
+			}
+
+
+func _history_mode_badge(mode: String) -> Control:
+	## Compact mode chip under the opponent name (same look as social challenge tiles).
+	var meta := _history_mode_meta(mode)
+	var badge := PanelContainer.new()
+	badge.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	badge.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	var style := StyleBoxFlat.new()
+	style.bg_color = meta["accent"]
+	style.set_border_width_all(0)
+	style.set_corner_radius_all(10)
+	style.content_margin_left = 8
+	style.content_margin_right = 10
+	style.content_margin_top = 4
+	style.content_margin_bottom = 4
+	badge.add_theme_stylebox_override("panel", style)
+
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 5)
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	badge.add_child(row)
+
+	var icon := Label.new()
+	icon.text = str(meta["icon"])
+	icon.add_theme_font_size_override("font_size", UiScale.font(14))
+	var emoji_font := UiFonts.emoji_font()
+	if emoji_font != null:
+		icon.add_theme_font_override("font", emoji_font)
+	row.add_child(icon)
+
+	var label := Label.new()
+	label.text = tr(str(meta["key"])).to_upper()
+	label.add_theme_font_size_override("font_size", UiScale.font(13))
+	label.add_theme_color_override("font_color", Color(0.10, 0.08, 0.12, 1))
+	row.add_child(label)
+	return badge
+
+
 func _history_row(row: Dictionary) -> Control:
+	## Opponent banner behind the row — same pattern as social request tiles.
 	var won: bool = row.get("won", false)
-	## Saturated accents for the thin bar; darker ink for labels on pastel tiles.
 	var win_color := Color(0.20, 0.86, 0.48, 1)
 	var loss_color := Color(0.96, 0.26, 0.32, 1)
-	var result_color := (
-		Color(0.06, 0.42, 0.26, 1) if won else Color(0.68, 0.10, 0.16, 1)
-	)
-	var cat_accent := UiTokens.accent_for_category(str(row.get("category_id", "")))
-	var ink := Color(0.10, 0.12, 0.15, 1)
-	var ink_muted := Color(0.28, 0.30, 0.34, 1)
+	var result_color := win_color if won else loss_color
 
-	var row_wrap := MarginContainer.new()
-	row_wrap.add_theme_constant_override("margin_top", 0)
-	row_wrap.add_theme_constant_override("margin_bottom", 0)
-	row_wrap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var opponent_name := str(row.get("opponent", "?"))
+	var cosmetics: Dictionary = row.get("cosmetics", {})
+	if cosmetics.is_empty():
+		cosmetics = ShopCatalog.demo_cosmetics_for(opponent_name)
+
+	var panel := PanelContainer.new()
+	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0, 0, 0, 0)
+	style.set_corner_radius_all(14)
+	style.content_margin_left = 0
+	style.content_margin_right = 0
+	style.content_margin_top = 0
+	style.content_margin_bottom = 0
+	panel.add_theme_stylebox_override("panel", style)
+
+	var banner := CosmeticsView.banner(str(cosmetics.get("banner", "")), Vector2.ZERO, 14)
+	panel.add_child(banner)
+
+	var pad := MarginContainer.new()
+	pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pad.add_theme_constant_override("margin_left", 10)
+	pad.add_theme_constant_override("margin_right", 10)
+	pad.add_theme_constant_override("margin_top", 8)
+	pad.add_theme_constant_override("margin_bottom", 8)
+	panel.add_child(pad)
 
 	var hbox := HBoxContainer.new()
 	hbox.add_theme_constant_override("separation", 10)
 	hbox.alignment = BoxContainer.ALIGNMENT_CENTER
 	hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	row_wrap.add_child(hbox)
+	pad.add_child(hbox)
+
+	const AVATAR_SIDE := 58.0
 
 	var bar := Panel.new()
-	bar.custom_minimum_size = Vector2(3, 48)
+	bar.custom_minimum_size = Vector2(3, AVATAR_SIDE)
 	bar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var bar_style := StyleBoxFlat.new()
-	bar_style.bg_color = win_color if won else loss_color
+	bar_style.bg_color = result_color
 	bar_style.set_corner_radius_all(2)
 	bar.add_theme_stylebox_override("panel", bar_style)
 	hbox.add_child(bar)
 
-	var avatar_slot := Control.new()
-	avatar_slot.custom_minimum_size = Vector2(48, 48)
-	avatar_slot.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	avatar_slot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	avatar_slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	hbox.add_child(avatar_slot)
-
-	var avatar_bg := Panel.new()
-	avatar_bg.custom_minimum_size = Vector2(48, 48)
-	avatar_bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	avatar_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var av_style := StyleBoxFlat.new()
-	av_style.bg_color = Color(cat_accent.r, cat_accent.g, cat_accent.b, 0.28)
-	av_style.set_corner_radius_all(24)
-	av_style.set_content_margin_all(0)
-	avatar_bg.add_theme_stylebox_override("panel", av_style)
-	avatar_slot.add_child(avatar_bg)
-
-	var opponent_name := str(row.get("opponent", "?"))
-	var initial := Label.new()
-	initial.text = opponent_name[0].to_upper() if not opponent_name.is_empty() else "?"
-	initial.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	initial.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	initial.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	initial.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	initial.add_theme_font_size_override("font_size", UiScale.font(20))
-	initial.add_theme_color_override("font_color", ink)
-	avatar_slot.add_child(initial)
-	if GameAssets.wire_demo_avatar_to_control(avatar_bg, opponent_name):
-		av_style.bg_color = Color(0, 0, 0, 0)
-		initial.visible = false
+	var avatar := CosmeticsView.avatar(cosmetics, AVATAR_SIDE)
+	avatar.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	avatar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	hbox.add_child(avatar)
 
 	var left := VBoxContainer.new()
 	left.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -901,15 +950,10 @@ func _history_row(row: Dictionary) -> Control:
 		"font_size",
 		UiScale.font(UiTokens.pseudo_font_size(opponent_name))
 	)
-	name_label.add_theme_color_override("font_color", ink)
+	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	left.add_child(name_label)
 
-	var cat := Label.new()
-	cat.text = str(row.get("category_name", ""))
-	cat.clip_text = true
-	cat.add_theme_font_size_override("font_size", UiScale.font(15))
-	cat.add_theme_color_override("font_color", ink_muted)
-	left.add_child(cat)
+	left.add_child(_history_mode_badge(str(row.get("mode", "classic"))))
 
 	var mid := HBoxContainer.new()
 	mid.add_theme_constant_override("separation", 10)
@@ -926,6 +970,8 @@ func _history_row(row: Dictionary) -> Control:
 	result.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	result.add_theme_font_size_override("font_size", UiScale.font(19))
 	result.add_theme_color_override("font_color", result_color)
+	result.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.65))
+	result.add_theme_constant_override("outline_size", 4)
 	mid.add_child(result)
 
 	var mine := int(row.get("my_score", row.get("correct_count", 0)))
@@ -937,6 +983,8 @@ func _history_row(row: Dictionary) -> Control:
 	score.custom_minimum_size.x = 60
 	score.add_theme_font_size_override("font_size", UiScale.font(19))
 	score.add_theme_color_override("font_color", result_color)
+	score.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.65))
+	score.add_theme_constant_override("outline_size", 4)
 	mid.add_child(score)
 
 	var right := HBoxContainer.new()
@@ -952,10 +1000,12 @@ func _history_row(row: Dictionary) -> Control:
 	age.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	age.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	age.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	age.add_theme_font_size_override("font_size", UiScale.font(14))
-	age.add_theme_color_override("font_color", ink_muted)
+	age.add_theme_font_size_override("font_size", UiScale.font(15))
+	age.add_theme_color_override("font_color", Color(1, 1, 1, 0.96))
+	age.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.65))
+	age.add_theme_constant_override("outline_size", 4)
 	right.add_child(age)
-	return row_wrap
+	return panel
 
 
 func _pad(h: int, v: int) -> MarginContainer:
