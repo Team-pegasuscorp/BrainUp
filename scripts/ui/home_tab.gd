@@ -186,10 +186,10 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 	stats.alignment = BoxContainer.ALIGNMENT_CENTER
 	row.add_child(stats)
 
-	## Same fill as the Défis du jour card.
+	## League + streak mini-tiles with foret aurora fill.
 	var league_tile := _summary_stat_tile()
 	stats.add_child(league_tile)
-	var league_body := league_tile.get_child(0) as VBoxContainer
+	var league_body := league_tile.get_meta("body") as VBoxContainer
 
 	var league_title := Label.new()
 	league_title.text = tr(str(ranking.get("league_key", "UI_LEAGUE_BRONZE"))).to_upper()
@@ -221,7 +221,7 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 
 	var streak_tile := _summary_stat_tile()
 	stats.add_child(streak_tile)
-	var streak_body := streak_tile.get_child(0) as VBoxContainer
+	var streak_body := streak_tile.get_meta("body") as VBoxContainer
 
 	var streak_value := Label.new()
 	## Consecutive days played: the habit the home screen should push.
@@ -252,24 +252,37 @@ const _DAILY_CHALLENGES_BG := Color(0.075, 0.255, 0.245, 1)
 
 
 func _summary_stat_tile() -> PanelContainer:
+	## League / streak chips — foret aurora fill.
 	var tile := PanelContainer.new()
 	tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tile.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	tile.custom_minimum_size = Vector2(124, 112)
-	var style := StyleBoxFlat.new()
-	style.bg_color = _DAILY_CHALLENGES_BG
-	style.set_border_width_all(1)
-	style.border_color = Color(UiTokens.ACCENT_HOME.r, UiTokens.ACCENT_HOME.g, UiTokens.ACCENT_HOME.b, 0.40)
-	style.set_corner_radius_all(16)
-	style.shadow_size = 0
-	style.set_content_margin_all(10)
-	tile.add_theme_stylebox_override("panel", style)
+	var empty := StyleBoxEmpty.new()
+	tile.add_theme_stylebox_override("panel", empty)
+
+	var bg := AuroreTile.new()
+	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	bg.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	bg.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	bg.aurore_theme = "foret"
+	tile.add_child(bg)
+
+	var pad := MarginContainer.new()
+	pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pad.add_theme_constant_override("margin_left", 10)
+	pad.add_theme_constant_override("margin_right", 10)
+	pad.add_theme_constant_override("margin_top", 10)
+	pad.add_theme_constant_override("margin_bottom", 10)
+	tile.add_child(pad)
+
 	var body := VBoxContainer.new()
 	body.alignment = BoxContainer.ALIGNMENT_CENTER
 	body.add_theme_constant_override("separation", 6)
 	body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	tile.add_child(body)
+	pad.add_child(body)
+	tile.set_meta("body", body)
 	return tile
 
 
@@ -283,10 +296,10 @@ func _make_daily_challenges_card() -> PanelContainer:
 	style.border_color = Color(UiTokens.ACCENT_HOME.r, UiTokens.ACCENT_HOME.g, UiTokens.ACCENT_HOME.b, 0.55)
 	panel.add_theme_stylebox_override("panel", style)
 
-	var margin := _pad(16, 16)
+	var margin := _pad(14, 12)
 	panel.add_child(margin)
 	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 14)
+	vbox.add_theme_constant_override("separation", 8)
 	margin.add_child(vbox)
 
 	var header := HBoxContainer.new()
@@ -296,7 +309,7 @@ func _make_daily_challenges_card() -> PanelContainer:
 
 	var fire := Label.new()
 	fire.text = "🔥"
-	fire.add_theme_font_size_override("font_size", UiScale.font(26))
+	fire.add_theme_font_size_override("font_size", UiScale.font(24))
 	var emoji_font := UiFonts.emoji_font()
 	if emoji_font != null:
 		fire.add_theme_font_override("font", emoji_font)
@@ -318,20 +331,44 @@ func _make_daily_challenges_card() -> PanelContainer:
 	reset.add_theme_color_override("font_color", UiTokens.ACCENT_HOME)
 	header.add_child(reset)
 
-	var quest_index := 0
-	for row in DailyQuests.get_quests(LocaleManager.get_content_locale()):
-		vbox.add_child(_make_daily_challenge_featured_row(row, quest_index))
-		quest_index += 1
+	var quests: Array = DailyQuests.get_quests(LocaleManager.get_content_locale())
+	var quest_keys: Array = []
+	for row in quests:
+		quest_keys.append(str(row.get("id", quest_keys.size())))
+	var quest_themes := _assign_daily_aurore_themes(quest_keys)
+	for row in quests:
+		var key := str(row.get("id", ""))
+		vbox.add_child(_make_aurore_content_tile(
+			_make_daily_challenge_row(row),
+			str(quest_themes.get(key, "violet")),
+			true
+		))
 
 	return panel
 
 
-## Soft but clearly distinct pastels for home inset rows (défis / succès).
+## Soft but clearly distinct pastels for home inset rows (autres blocs).
 const _HOME_SUBTILE_WASH := [
 	Color(0.42, 0.82, 0.78, 1), ## teal
 	Color(0.98, 0.72, 0.38, 1), ## amber
 	Color(0.62, 0.58, 0.95, 1), ## violet
 ]
+
+const _AURORE_THEMES := [
+	"violet", "sunset", "ocean", "foret", "fruits", "or", "indigo", "menthe",
+	"lavande", "lagon", "crepuscule", "bonbon", "citron", "minuit", "sakura", "lave",
+]
+
+
+func _assign_daily_aurore_themes(keys: Array) -> Dictionary:
+	## One theme per key for the local day (duplicates allowed).
+	var out := {}
+	for key_variant in keys:
+		var key := str(key_variant)
+		var rng := RandomNumberGenerator.new()
+		rng.seed = hash("%s|%s" % [DailyQuests.today_key(), key])
+		out[key] = _AURORE_THEMES[rng.randi_range(0, _AURORE_THEMES.size() - 1)]
+	return out
 
 
 func _make_home_subtile(
@@ -362,8 +399,36 @@ func _make_home_subtile(
 	return tile
 
 
-func _make_daily_challenge_featured_row(data: Dictionary, slot: int = 0) -> PanelContainer:
-	return _make_home_subtile(_make_daily_challenge_row(data), slot)
+func _make_aurore_content_tile(
+	content: Control,
+	aurore_theme: String = "violet",
+	compact: bool = false
+) -> Control:
+	## Transparent panel + AuroreTile fill behind the row content.
+	var tile := PanelContainer.new()
+	tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var empty := StyleBoxEmpty.new()
+	tile.add_theme_stylebox_override("panel", empty)
+
+	var bg := AuroreTile.new()
+	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	bg.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	bg.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	bg.aurore_theme = aurore_theme
+	tile.add_child(bg)
+
+	var pad_h := 10 if compact else 12
+	var pad_v := 6 if compact else 10
+	var pad := MarginContainer.new()
+	pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pad.add_theme_constant_override("margin_left", pad_h)
+	pad.add_theme_constant_override("margin_right", pad_h)
+	pad.add_theme_constant_override("margin_top", pad_v)
+	pad.add_theme_constant_override("margin_bottom", pad_v)
+	tile.add_child(pad)
+	pad.add_child(content)
+	return tile
 
 
 func _make_near_achievements_card(snapshot: Dictionary) -> PanelContainer:
@@ -394,11 +459,16 @@ func _make_near_achievements_card(snapshot: Dictionary) -> PanelContainer:
 	if near.is_empty():
 		vbox.add_child(_empty_line(tr("UI_HOME_NEAR_ACHIEVEMENTS_EMPTY")))
 	else:
+		var keys: Array = []
 		for row in near:
-			var accent: Color = row.get("accent", UiTokens.ACCENT_HOME)
-			if typeof(accent) != TYPE_COLOR:
-				accent = UiTokens.ACCENT_HOME
-			vbox.add_child(_make_home_subtile(_make_near_achievement_row(row), -1, accent))
+			keys.append(str(row.get("id", keys.size())))
+		var themes := _assign_daily_aurore_themes(keys)
+		for row in near:
+			var key := str(row.get("id", ""))
+			vbox.add_child(_make_aurore_content_tile(
+				_make_near_achievement_row(row),
+				str(themes.get(key, "violet"))
+			))
 
 	return panel
 
@@ -532,14 +602,14 @@ func _make_near_achievement_row(data: Dictionary) -> Control:
 	title.text = tr(str(data.get("title_key", "")))
 	title.clip_text = true
 	title.add_theme_font_size_override("font_size", UiScale.font(18))
-	title.add_theme_color_override("font_color", UiTokens.INK)
+	title.add_theme_color_override("font_color", Color.WHITE)
 	mid.add_child(title)
 
 	var desc := Label.new()
 	desc.text = tr(str(data.get("desc_key", "")))
 	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	desc.add_theme_font_size_override("font_size", UiScale.font(16))
-	desc.add_theme_color_override("font_color", Color(0.28, 0.30, 0.34, 1))
+	desc.add_theme_color_override("font_color", Color(1, 1, 1, 0.82))
 	mid.add_child(desc)
 
 	var progress_row := HBoxContainer.new()
@@ -557,7 +627,7 @@ func _make_near_achievement_row(data: Dictionary) -> Control:
 		"target": target,
 	})
 	ratio_label.add_theme_font_size_override("font_size", UiScale.font(15))
-	ratio_label.add_theme_color_override("font_color", UiTokens.INK)
+	ratio_label.add_theme_color_override("font_color", Color.WHITE)
 	progress_row.add_child(ratio_label)
 
 	var bar := ProgressBar.new()
@@ -566,8 +636,12 @@ func _make_near_achievement_row(data: Dictionary) -> Control:
 	bar.max_value = 1.0
 	bar.value = clampf(float(current) / float(target), 0.0, 1.0)
 	bar.show_percentage = false
-	bar.add_theme_stylebox_override("background", UiStyle.progress_bg())
-	var fill := UiStyle.progress_fill(data.get("accent", UiTokens.ACCENT_HOME))
+	var bar_bg := StyleBoxFlat.new()
+	bar_bg.bg_color = Color(1, 1, 1, 0.18)
+	bar_bg.set_corner_radius_all(6)
+	bar.add_theme_stylebox_override("background", bar_bg)
+	var fill := StyleBoxFlat.new()
+	fill.bg_color = Color(1, 1, 1, 0.92)
 	fill.set_corner_radius_all(6)
 	bar.add_theme_stylebox_override("fill", fill)
 	progress_row.add_child(bar)
@@ -588,7 +662,7 @@ func _make_near_achievement_row(data: Dictionary) -> Control:
 	var remaining := Label.new()
 	remaining.text = tr("UI_HOME_NEAR_REMAINING").format({"n": maxi(target - current, 0)})
 	remaining.add_theme_font_size_override("font_size", UiScale.font(15))
-	remaining.add_theme_color_override("font_color", UiTokens.INK)
+	remaining.add_theme_color_override("font_color", Color.WHITE)
 	remaining_row.add_child(remaining)
 
 	return row
@@ -605,33 +679,33 @@ func _empty_line(text: String) -> Label:
 
 func _make_daily_challenge_row(data: Dictionary) -> Control:
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 12)
+	row.add_theme_constant_override("separation", 10)
 	row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
 
-	row.add_child(_make_challenge_icon(str(data.get("icon", "★")), data.get("accent", UiTokens.ACCENT_HOME)))
+	row.add_child(_make_challenge_icon(str(data.get("icon", "★")), data.get("accent", UiTokens.ACCENT_HOME), 40.0))
 
 	var mid := VBoxContainer.new()
 	mid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	mid.add_theme_constant_override("separation", 4)
+	mid.add_theme_constant_override("separation", 2)
 	row.add_child(mid)
 
 	var title := Label.new()
 	title.text = str(data.get("title", ""))
 	title.clip_text = true
-	title.add_theme_font_size_override("font_size", UiScale.font(20))
-	title.add_theme_color_override("font_color", UiTokens.INK)
+	title.add_theme_font_size_override("font_size", UiScale.font(17))
+	title.add_theme_color_override("font_color", Color.WHITE)
 	mid.add_child(title)
 
 	var desc := Label.new()
 	desc.text = str(data.get("desc", ""))
 	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	desc.add_theme_font_size_override("font_size", UiScale.font(16))
-	desc.add_theme_color_override("font_color", Color(0.28, 0.30, 0.34, 1))
+	desc.add_theme_font_size_override("font_size", UiScale.font(13))
+	desc.add_theme_color_override("font_color", Color(1, 1, 1, 0.82))
 	mid.add_child(desc)
 
 	var progress_row := HBoxContainer.new()
-	progress_row.add_theme_constant_override("separation", 8)
+	progress_row.add_theme_constant_override("separation", 6)
 	progress_row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	progress_row.alignment = BoxContainer.ALIGNMENT_CENTER
 	mid.add_child(progress_row)
@@ -644,18 +718,22 @@ func _make_daily_challenge_row(data: Dictionary) -> Control:
 		"current": current,
 		"target": target,
 	})
-	ratio_label.add_theme_font_size_override("font_size", UiScale.font(15))
-	ratio_label.add_theme_color_override("font_color", UiTokens.INK)
+	ratio_label.add_theme_font_size_override("font_size", UiScale.font(13))
+	ratio_label.add_theme_color_override("font_color", Color.WHITE)
 	progress_row.add_child(ratio_label)
 
 	var bar := ProgressBar.new()
-	bar.custom_minimum_size = Vector2(0, 10)
+	bar.custom_minimum_size = Vector2(0, 7)
 	bar.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	bar.max_value = 1.0
 	bar.value = clampf(float(current) / float(target), 0.0, 1.0)
 	bar.show_percentage = false
-	bar.add_theme_stylebox_override("background", UiStyle.progress_bg())
-	var fill := UiStyle.progress_fill(data.get("accent", UiTokens.ACCENT_HOME))
+	var bar_bg := StyleBoxFlat.new()
+	bar_bg.bg_color = Color(1, 1, 1, 0.18)
+	bar_bg.set_corner_radius_all(6)
+	bar.add_theme_stylebox_override("background", bar_bg)
+	var fill := StyleBoxFlat.new()
+	fill.bg_color = Color(1, 1, 1, 0.92)
 	fill.set_corner_radius_all(6)
 	bar.add_theme_stylebox_override("fill", fill)
 	progress_row.add_child(bar)
@@ -666,8 +744,8 @@ func _make_daily_challenge_row(data: Dictionary) -> Control:
 	elif claimed:
 		var done := Label.new()
 		done.text = "✓"
-		done.add_theme_font_size_override("font_size", UiScale.font(20))
-		done.add_theme_color_override("font_color", UiTokens.FEEDBACK_CORRECT)
+		done.add_theme_font_size_override("font_size", UiScale.font(18))
+		done.add_theme_color_override("font_color", Color(0.45, 1.0, 0.62, 1))
 		progress_row.add_child(done)
 	else:
 		progress_row.add_child(_make_xp_badge(int(data.get("xp", 0))))
@@ -691,7 +769,7 @@ func _make_xp_badge(xp_amount: int) -> Control:
 	var xp := Label.new()
 	xp.text = tr("UI_HOME_DAILY_CHALLENGE_XP").format({"xp": xp_amount})
 	xp.add_theme_font_size_override("font_size", UiScale.font(15))
-	xp.add_theme_color_override("font_color", UiTokens.INK)
+	xp.add_theme_color_override("font_color", Color.WHITE)
 	xp_row.add_child(xp)
 	return xp_row
 
@@ -730,9 +808,9 @@ func _on_claim_pressed(quest_id: String, button: Button) -> void:
 	pop.tween_callback(_rebuild)
 
 
-func _make_challenge_icon(icon_text: String, accent: Color) -> Control:
+func _make_challenge_icon(icon_text: String, accent: Color, size_px: float = 48.0) -> Control:
 	var slot := Control.new()
-	slot.custom_minimum_size = Vector2(48, 48)
+	slot.custom_minimum_size = Vector2(size_px, size_px)
 	slot.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	slot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -742,7 +820,7 @@ func _make_challenge_icon(icon_text: String, accent: Color) -> Control:
 	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color(accent.r, accent.g, accent.b, 0.92)
-	style.set_corner_radius_all(24)
+	style.set_corner_radius_all(int(size_px * 0.5))
 	bg.add_theme_stylebox_override("panel", style)
 	slot.add_child(bg)
 
@@ -752,7 +830,7 @@ func _make_challenge_icon(icon_text: String, accent: Color) -> Control:
 	icon.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	icon.add_theme_font_size_override("font_size", UiScale.font(22))
+	icon.add_theme_font_size_override("font_size", UiScale.font(18 if size_px < 48.0 else 22))
 	var emoji_font := UiFonts.emoji_font()
 	if emoji_font != null:
 		icon.add_theme_font_override("font", emoji_font)

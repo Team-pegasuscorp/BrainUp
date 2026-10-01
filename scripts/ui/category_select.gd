@@ -313,10 +313,9 @@ func _build_duel_tiles() -> void:
 	if _daily_card != null:
 		## The daily card becomes the last tile, under the modes.
 		_scroll_content.move_child(_daily_card, _scroll_content.get_child_count() - 1)
-		var daily_style := UiStyle.category_tile(UiTokens.PODIUM_GOLD)
-		daily_style.set_content_margin_all(16)
-		_daily_card.custom_minimum_size.y = 130
-		_daily_card.add_theme_stylebox_override("panel", daily_style)
+		_daily_card.custom_minimum_size.y = 104
+		_daily_card.add_theme_stylebox_override("panel", _aurore_chrome_style(UiTokens.PODIUM_GOLD))
+		_wire_aurore_fill(_daily_card, UiTokens.PODIUM_GOLD)
 	ScrollTouch.let_drags_through(_duel_tiles)
 
 
@@ -343,6 +342,46 @@ func _pastel_accent_ink(accent: Color) -> Color:
 	return accent.darkened(0.45).lerp(Color(0.08, 0.09, 0.12, 1), 0.40)
 
 
+func _wire_aurore_fill(host: Control, accent: Color, theme_override: String = "") -> AuroreTile:
+	## Aurora wash behind tile content — closest palette to `accent` (or forced theme).
+	var bg := host.get_node_or_null("AuroreFill") as AuroreTile
+	if bg == null:
+		bg = AuroreTile.new()
+		bg.name = "AuroreFill"
+		bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		bg.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		bg.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		host.add_child(bg)
+		host.move_child(bg, 0)
+	if theme_override.is_empty():
+		bg.aurore_theme = AuroreTile.theme_closest_to(accent)
+	else:
+		bg.aurore_theme = theme_override
+	return bg
+
+
+func _aurore_chrome_style(accent: Color, selected: bool = false) -> StyleBoxFlat:
+	## Transparent fill so AuroreTile shows through; white ring when selected.
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0, 0, 0, 0)
+	style.set_corner_radius_all(22)
+	style.content_margin_left = 0
+	style.content_margin_top = 0
+	style.content_margin_right = 0
+	style.content_margin_bottom = 0
+	if selected:
+		style.set_border_width_all(3)
+		style.border_color = Color(1, 1, 1, 0.92)
+		style.shadow_color = Color(accent.r, accent.g, accent.b, 0.28)
+		style.shadow_size = 10
+		style.shadow_offset = Vector2(0, 2)
+	else:
+		style.set_border_width_all(0)
+		style.shadow_size = 0
+	return style
+
+
 ## League badge, trophies and the way to the next league.
 func _rank_strip() -> Control:
 	var trophies := SaveManager.trophies
@@ -356,12 +395,18 @@ func _rank_strip() -> Control:
 			break
 
 	var panel := PanelContainer.new()
-	var rank_style := UiStyle.category_tile(UiTokens.ACCENT_QUIZ)
-	rank_style.set_content_margin_all(14)
-	panel.add_theme_stylebox_override("panel", rank_style)
+	panel.add_theme_stylebox_override("panel", _aurore_chrome_style(UiTokens.ACCENT_QUIZ))
+	_wire_aurore_fill(panel, UiTokens.ACCENT_QUIZ)
+	var pad := MarginContainer.new()
+	pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pad.add_theme_constant_override("margin_left", 14)
+	pad.add_theme_constant_override("margin_right", 14)
+	pad.add_theme_constant_override("margin_top", 14)
+	pad.add_theme_constant_override("margin_bottom", 14)
+	panel.add_child(pad)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 14)
-	panel.add_child(row)
+	pad.add_child(row)
 	var icon := TextureRect.new()
 	icon.custom_minimum_size = Vector2(76, 76)
 	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -376,7 +421,7 @@ func _rank_strip() -> Control:
 	var title := Label.new()
 	title.text = "%s  ·  🏆 %d" % [tr(str(league.get("title_key", ""))), trophies]
 	title.add_theme_font_size_override("font_size", UiScale.font(22))
-	title.add_theme_color_override("font_color", _pastel_ink())
+	title.add_theme_color_override("font_color", Color.WHITE)
 	info.add_child(title)
 	if next_min > 0:
 		var floor_min := int(league.get("min_trophies", 0))
@@ -391,7 +436,7 @@ func _rank_strip() -> Control:
 		var hint := Label.new()
 		hint.text = tr("UI_DUEL_NEXT_LEAGUE").format({"league": tr(next_key), "trophies": next_min - trophies})
 		hint.add_theme_font_size_override("font_size", UiScale.font(14))
-		hint.add_theme_color_override("font_color", _pastel_ink_muted())
+		hint.add_theme_color_override("font_color", Color(1, 1, 1, 0.78))
 		info.add_child(hint)
 	return panel
 
@@ -407,9 +452,10 @@ func _pass_strip() -> Control:
 	button.custom_minimum_size.y = 84
 	button.focus_mode = Control.FOCUS_NONE
 	var gold := Color(1.0, 0.78, 0.2, 1)
-	var style := UiStyle.category_tile(gold)
+	var style := _aurore_chrome_style(gold)
 	for button_state in ["normal", "hover", "pressed", "focus"]:
 		button.add_theme_stylebox_override(button_state, style)
+	_wire_aurore_fill(button, gold)
 	button.pressed.connect(func() -> void:
 		var shell := get_tree().current_scene
 		if shell != null and shell.has_method("open_shop_tab"):
@@ -431,7 +477,7 @@ func _pass_strip() -> Control:
 	var active := bool(state.get("active", false))
 	title.text = (tr("UI_PASS_STRIP").format({"tier": int(state.get("tier", 0))}) if active else tr("UI_PASS_TAB")) + "  ›"
 	title.add_theme_font_size_override("font_size", UiScale.font(18))
-	title.add_theme_color_override("font_color", _pastel_accent_ink(gold))
+	title.add_theme_color_override("font_color", Color.WHITE)
 	column.add_child(title)
 	if active:
 		var tier_xp := int(state.get("tier_xp", 800))
@@ -460,13 +506,12 @@ func _mode_tile(mode: int, height: float, wide: bool) -> Button:
 	tile.custom_minimum_size.y = height
 	tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tile.focus_mode = Control.FOCUS_NONE
-	## Pastel wash of the mode accent — same recipe as home / category tiles.
-	var style := UiStyle.category_tile(accent)
-	var pressed := style.duplicate() as StyleBoxFlat
-	pressed.bg_color = accent.lerp(Color(0.97, 0.98, 0.99, 1.0), 0.58)
-	for state in ["normal", "hover", "focus"]:
+	var style := _aurore_chrome_style(accent)
+	for state in ["normal", "hover", "pressed", "focus"]:
 		tile.add_theme_stylebox_override(state, style)
-	tile.add_theme_stylebox_override("pressed", pressed)
+	## Survival keeps the red fruits aurora regardless of closest-match.
+	var theme_override := "fruits" if mode == GameManager.Mode.SURVIVAL else ""
+	_wire_aurore_fill(tile, accent, theme_override)
 	tile.pressed.connect(_on_mode_tile_pressed.bind(mode))
 	PressScaleUtil.wire(tile, self)
 
@@ -493,11 +538,10 @@ func _mode_tile(mode: int, height: float, wide: bool) -> Button:
 	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	column.add_theme_constant_override("separation", 6)
 	pad.add_child(column)
-	var accent_ink := _pastel_accent_ink(accent)
 	var chip := Label.new()
 	chip.text = tr("UI_DUEL_RANKED_CHIP").to_upper()
 	chip.add_theme_font_size_override("font_size", UiScale.font(13))
-	chip.add_theme_color_override("font_color", accent_ink)
+	chip.add_theme_color_override("font_color", Color(1, 1, 1, 0.88))
 	column.add_child(chip)
 	var spacer := Control.new()
 	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -506,18 +550,18 @@ func _mode_tile(mode: int, height: float, wide: bool) -> Button:
 	var name_label := Label.new()
 	name_label.text = tr(str(entry[1])).to_upper()
 	name_label.add_theme_font_size_override("font_size", UiScale.font(34 if wide else 26))
-	name_label.add_theme_color_override("font_color", _pastel_ink())
+	name_label.add_theme_color_override("font_color", Color.WHITE)
 	column.add_child(name_label)
 	var hint := Label.new()
 	hint.text = tr(str(entry[2]).replace("UI_MODE_", "UI_DUEL_TILE_"))
 	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	hint.add_theme_font_size_override("font_size", UiScale.font(15))
-	hint.add_theme_color_override("font_color", _pastel_ink_muted())
+	hint.add_theme_color_override("font_color", Color(1, 1, 1, 0.78))
 	column.add_child(hint)
 	var play := Label.new()
 	play.text = tr("UI_DUEL_TILE_PLAY") + "  ›"
 	play.add_theme_font_size_override("font_size", UiScale.font(17))
-	play.add_theme_color_override("font_color", accent_ink)
+	play.add_theme_color_override("font_color", Color(1, 1, 1, 0.92))
 	column.add_child(play)
 	return tile
 
@@ -575,9 +619,8 @@ func _primary_category_index() -> int:
 ## Shared daily challenge card, pinned above the category list.
 func _setup_daily_card() -> void:
 	_daily_card = PanelContainer.new()
-	var daily_style := UiStyle.card(UiTokens.PODIUM_GOLD)
-	daily_style.bg_color = Color(0.90, 0.92, 0.96, 1)
-	_daily_card.add_theme_stylebox_override("panel", daily_style)
+	_daily_card.add_theme_stylebox_override("panel", _aurore_chrome_style(UiTokens.PODIUM_GOLD))
+	_wire_aurore_fill(_daily_card, UiTokens.PODIUM_GOLD)
 	_scroll_content.add_child(_daily_card)
 	_scroll_content.move_child(_daily_card, 0)
 	NetworkManager.daily_challenge_received.connect(_on_daily_received)
@@ -630,7 +673,16 @@ func _on_daily_failed() -> void:
 
 func _render_daily() -> void:
 	for child in _daily_card.get_children():
+		if child.name == "AuroreFill":
+			continue
 		child.queue_free()
+
+	var accent := UiTokens.PODIUM_GOLD
+	var category_id_preview := str(_daily.get("category_id", ""))
+	if not category_id_preview.is_empty():
+		accent = UiTokens.accent_for_category(category_id_preview)
+	_daily_card.add_theme_stylebox_override("panel", _aurore_chrome_style(accent))
+	_wire_aurore_fill(_daily_card, accent)
 
 	var margin := MarginContainer.new()
 	for side in ["left", "right"]:
@@ -675,18 +727,18 @@ func _render_daily() -> void:
 			}),
 		]
 	tag.add_theme_font_size_override("font_size", UiScale.font(14))
-	tag.add_theme_color_override("font_color", _pastel_accent_ink(UiTokens.PODIUM_GOLD))
+	tag.add_theme_color_override("font_color", Color(1, 1, 1, 0.88))
 	labels.add_child(tag)
 
 	var name_label := Label.new()
 	name_label.text = category_name if known else tr("UI_DAILY_CHALLENGE_LOADING")
 	name_label.add_theme_font_size_override("font_size", UiScale.font(24))
-	name_label.add_theme_color_override("font_color", _pastel_ink())
+	name_label.add_theme_color_override("font_color", Color.WHITE)
 	labels.add_child(name_label)
 
 	var sub := Label.new()
 	sub.add_theme_font_size_override("font_size", UiScale.font(14))
-	sub.add_theme_color_override("font_color", _pastel_ink_muted())
+	sub.add_theme_color_override("font_color", Color(1, 1, 1, 0.78))
 	if not result.is_empty():
 		var seconds := DailyChallenge.seconds_until_reset()
 		sub.text = "%s\n%s" % [
@@ -863,6 +915,11 @@ func _make_category_tile(index: int, category: Dictionary) -> Button:
 	button.pressed.connect(_on_category_selected.bind(index))
 	PressScaleUtil.wire(button, self)
 
+	var chrome := _aurore_chrome_style(accent, false)
+	for state in ["normal", "hover", "pressed", "focus"]:
+		button.add_theme_stylebox_override(state, chrome)
+	_wire_aurore_fill(button, accent)
+
 	var margin := MarginContainer.new()
 	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	margin.add_theme_constant_override("margin_left", 16)
@@ -892,6 +949,7 @@ func _make_category_tile(index: int, category: Dictionary) -> Button:
 	var name_label := Label.new()
 	name_label.text = str(category.get("name", category_id))
 	name_label.add_theme_font_size_override("font_size", UiScale.font(26 if featured else 22))
+	name_label.add_theme_color_override("font_color", Color.WHITE)
 	name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	labels.add_child(name_label)
 
@@ -899,8 +957,7 @@ func _make_category_tile(index: int, category: Dictionary) -> Button:
 	desc.text = str(category.get("description", ""))
 	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	desc.add_theme_font_size_override("font_size", UiScale.font(14 if featured else 13))
-	## Darker than INK_MUTED so descriptions stay readable on pastel tile fills.
-	desc.add_theme_color_override("font_color", Color(0.26, 0.28, 0.32, 1))
+	desc.add_theme_color_override("font_color", Color(1, 1, 1, 0.78))
 	desc.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	labels.add_child(desc)
 
@@ -921,29 +978,20 @@ func _on_category_selected(index: int) -> void:
 	for tile_index in range(_tile_buttons.size()):
 		var tile := _tile_buttons[tile_index]
 		var accent: Color = tile.get_meta("accent")
-		var featured: bool = tile.get_meta("featured", false)
 		var selected := tile_index == index
-		var style: StyleBoxFlat
-		if featured:
-			style = UiStyle.category_tile_featured(accent, selected)
-		elif selected:
-			style = UiStyle.category_tile_selected(accent)
-		else:
-			style = UiStyle.category_tile(accent)
+		var style := _aurore_chrome_style(accent, selected)
 		tile.add_theme_stylebox_override("normal", style)
 		tile.add_theme_stylebox_override("hover", style)
-		tile.add_theme_stylebox_override(
-			"pressed",
-			UiStyle.category_tile_featured(accent, true) if featured else UiStyle.category_tile_selected(accent)
-		)
+		tile.add_theme_stylebox_override("pressed", style)
+		tile.add_theme_stylebox_override("focus", style)
 		var name_label: Label = tile.get_meta("name_label")
 		var desc_label: Label = tile.get_meta("desc_label")
 		if selected:
-			name_label.add_theme_color_override("font_color", accent.darkened(0.18))
-			desc_label.add_theme_color_override("font_color", Color(0.24, 0.26, 0.30, 1))
+			name_label.add_theme_color_override("font_color", Color.WHITE)
+			desc_label.add_theme_color_override("font_color", Color(1, 1, 1, 0.90))
 		else:
-			name_label.add_theme_color_override("font_color", UiTokens.INK)
-			desc_label.add_theme_color_override("font_color", Color(0.26, 0.28, 0.32, 1))
+			name_label.add_theme_color_override("font_color", Color(1, 1, 1, 0.95))
+			desc_label.add_theme_color_override("font_color", Color(1, 1, 1, 0.78))
 
 
 func _on_start_pressed() -> void:

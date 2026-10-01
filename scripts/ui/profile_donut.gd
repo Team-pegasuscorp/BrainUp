@@ -132,8 +132,8 @@ func _draw() -> void:
 		)
 		return
 
-	var main_size := int(clampf(minf(size.x, size.y) * 0.18, 24.0, 36.0))
-	var sub_size := int(clampf(minf(size.x, size.y) * 0.09, 12.0, 16.0))
+	var main_size := int(clampf(minf(size.x, size.y) * 0.22, 28.0, 42.0))
+	var sub_size := int(clampf(minf(size.x, size.y) * 0.10, 13.0, 18.0))
 	var main_sz := font.get_string_size(center_label, HORIZONTAL_ALIGNMENT_CENTER, -1, main_size)
 	var sub_sz := font.get_string_size(center_sublabel, HORIZONTAL_ALIGNMENT_CENTER, -1, sub_size)
 	draw_string(

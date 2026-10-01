@@ -393,26 +393,37 @@ func _build_hero() -> PanelContainer:
 	_xp_bar.add_theme_stylebox_override("fill", xp_fill)
 	xp_col.add_child(_xp_bar)
 
-	## League column in an inset subtile (replaces the vertical divider).
+	## League column in an inset subtile — nuit indigo aurora.
 	var ranking: Dictionary = _profile_data.get("ranking", {})
 	var league_tile := PanelContainer.new()
 	league_tile.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	league_tile.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	## Same dark fill as the 2nd profile page tile (stats strip).
-	var league_style := UiStyle.profile_card(Color(0, 0, 0, 0), true)
-	league_style.content_margin_left = 10
-	league_style.content_margin_right = 10
-	league_style.content_margin_top = 10
-	league_style.content_margin_bottom = 10
-	league_tile.add_theme_stylebox_override("panel", league_style)
+	var league_empty := StyleBoxEmpty.new()
+	league_tile.add_theme_stylebox_override("panel", league_empty)
 	row.add_child(league_tile)
+
+	var league_bg := AuroreTile.new()
+	league_bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	league_bg.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	league_bg.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	league_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	league_bg.aurore_theme = "indigo"
+	league_tile.add_child(league_bg)
+
+	var league_pad := MarginContainer.new()
+	league_pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	league_pad.add_theme_constant_override("margin_left", 10)
+	league_pad.add_theme_constant_override("margin_right", 10)
+	league_pad.add_theme_constant_override("margin_top", 10)
+	league_pad.add_theme_constant_override("margin_bottom", 10)
+	league_tile.add_child(league_pad)
 
 	var league_col := VBoxContainer.new()
 	league_col.alignment = BoxContainer.ALIGNMENT_CENTER
 	league_col.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	league_col.custom_minimum_size.x = 150
 	league_col.add_theme_constant_override("separation", 12)
-	league_tile.add_child(league_col)
+	league_pad.add_child(league_col)
 
 	var league_title := Label.new()
 	league_title.text = (
@@ -530,30 +541,46 @@ func _build_stats_strip() -> PanelContainer:
 		{"value": "%.0f%%" % _profile_data.get("win_rate_percent", 0.0), "label": tr("UI_PROFILE_STAT_WINRATE"), "color": Color(1.0, 0.72, 0.28)},
 		{"value": str(_profile_data.get("best_win_streak", 0)), "label": tr("UI_PROFILE_STAT_STREAK"), "color": Color(1.0, 0.48, 0.42)},
 	]
+	var accents: Array = []
 	for item in items:
-		row.add_child(_stat_subtile(str(item.value), str(item.label), item.color as Color))
+		accents.append(item.color as Color)
+	var themes := AuroreTile.themes_closest_unique(accents)
+	for i in items.size():
+		var item: Dictionary = items[i]
+		row.add_child(_stat_subtile(
+			str(item.value),
+			str(item.label),
+			item.color as Color,
+			themes[i]
+		))
 
 	_animated_nodes.append(panel)
 	return panel
 
 
-func _stat_subtile(value: String, label: String, accent: Color) -> PanelContainer:
+func _stat_subtile(value: String, label: String, accent: Color, aurore_theme: String = "") -> PanelContainer:
 	var tile := PanelContainer.new()
 	tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tile.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	## Same pastel wash recipe as home `_make_home_subtile` (softness 0.72).
-	var softness := 0.72
-	var style := StyleBoxFlat.new()
-	style.bg_color = accent.lerp(Color(0.97, 0.98, 0.99, 1.0), softness)
-	style.set_corner_radius_all(14)
-	style.set_border_width_all(1)
-	style.border_color = Color(accent.r, accent.g, accent.b, 0.40)
-	style.content_margin_left = 4
-	style.content_margin_right = 4
-	style.content_margin_top = 6
-	style.content_margin_bottom = 6
-	tile.add_theme_stylebox_override("panel", style)
-	tile.add_child(_stat_icon_cell(value, label, accent))
+	var empty := StyleBoxEmpty.new()
+	tile.add_theme_stylebox_override("panel", empty)
+
+	var bg := AuroreTile.new()
+	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	bg.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	bg.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	bg.aurore_theme = aurore_theme if not aurore_theme.is_empty() else AuroreTile.theme_closest_to(accent)
+	tile.add_child(bg)
+
+	var pad := MarginContainer.new()
+	pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pad.add_theme_constant_override("margin_left", 4)
+	pad.add_theme_constant_override("margin_right", 4)
+	pad.add_theme_constant_override("margin_top", 6)
+	pad.add_theme_constant_override("margin_bottom", 6)
+	tile.add_child(pad)
+	pad.add_child(_stat_icon_cell(value, label, accent))
 	return tile
 
 
@@ -586,8 +613,7 @@ func _stat_icon_cell(value: String, label: String, _color: Color) -> Control:
 	value_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	value_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	value_label.add_theme_font_size_override("font_size", UiScale.font(26))
-	## Dark ink on light pastel — same as home subtiles.
-	value_label.add_theme_color_override("font_color", UiTokens.INK)
+	value_label.add_theme_color_override("font_color", Color.WHITE)
 	top_lift.add_child(value_label)
 
 	var caption := Label.new()
@@ -595,7 +621,7 @@ func _stat_icon_cell(value: String, label: String, _color: Color) -> Control:
 	caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	caption.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	caption.add_theme_font_size_override("font_size", UiScale.font(16))
-	caption.add_theme_color_override("font_color", Color(0.28, 0.30, 0.34, 1))
+	caption.add_theme_color_override("font_color", Color(1, 1, 1, 0.82))
 	caption.clip_text = true
 	var caption_wrap := MarginContainer.new()
 	caption_wrap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -838,10 +864,15 @@ func _build_win_distribution_tile() -> PanelContainer:
 	donut_wrap.add_child(donut)
 
 	var segments: Array = []
+	var accents: Array = []
 	for row in dist:
+		accents.append(row.get("color", Color.WHITE) as Color)
+	var aurore_colors := AuroreTile.colors_closest_unique(accents)
+	for i in dist.size():
+		var row: Dictionary = dist[i]
 		segments.append({
 			"ratio": row.get("ratio", 0.0),
-			"color": row.get("color", Color.WHITE),
+			"color": aurore_colors[i] if i < aurore_colors.size() else row.get("color", Color.WHITE),
 			"name": row.get("name", ""),
 			"wins": row.get("wins", 0),
 			"percent": row.get("percent", 0),
@@ -904,14 +935,14 @@ func _make_win_split_popup() -> PanelContainer:
 	title.name = "Title"
 	title.clip_text = true
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.add_theme_font_size_override("font_size", UiScale.font(17))
+	title.add_theme_font_size_override("font_size", UiScale.font(19))
 	title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	col.add_child(title)
 
 	var meta := Label.new()
 	meta.name = "Meta"
 	meta.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	meta.add_theme_font_size_override("font_size", UiScale.font(14))
+	meta.add_theme_font_size_override("font_size", UiScale.font(17))
 	meta.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	col.add_child(meta)
 
@@ -1509,6 +1540,50 @@ func _set_shell_swipe_enabled(enabled: bool) -> void:
 		shell.get_node("%TabSwipeContainer").set_input_enabled(enabled)
 
 
+func _profile_close_button(on_pressed: Callable) -> Button:
+	## Same top-right ✕ as social pages (no circle).
+	var close_btn := Button.new()
+	close_btn.text = "✕"
+	close_btn.flat = true
+	close_btn.focus_mode = Control.FOCUS_NONE
+	close_btn.custom_minimum_size = Vector2(44, 44)
+	close_btn.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	close_btn.add_theme_font_size_override("font_size", UiScale.font(28))
+	close_btn.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	close_btn.add_theme_color_override("font_hover_color", UiTokens.ACCENT_PROFILE)
+	close_btn.add_theme_color_override("font_pressed_color", UiTokens.PROFILE_TEXT_MUTED)
+	var close_empty := StyleBoxEmpty.new()
+	close_btn.add_theme_stylebox_override("normal", close_empty)
+	close_btn.add_theme_stylebox_override("hover", close_empty)
+	close_btn.add_theme_stylebox_override("pressed", close_empty)
+	close_btn.add_theme_stylebox_override("focus", close_empty)
+	close_btn.pressed.connect(on_pressed)
+	PressScaleUtil.wire(close_btn, self)
+	return close_btn
+
+
+func _profile_page_header(title_key: String, on_close: Callable) -> HBoxContainer:
+	## Centered title with left spacer and ✕ on the right.
+	var header := HBoxContainer.new()
+	header.add_theme_constant_override("separation", 10)
+	header.alignment = BoxContainer.ALIGNMENT_CENTER
+
+	var spacer := Control.new()
+	spacer.custom_minimum_size = Vector2(44, 44)
+	header.add_child(spacer)
+
+	var page_title := Label.new()
+	page_title.text = tr(title_key).to_upper()
+	page_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	page_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	page_title.add_theme_font_size_override("font_size", UiScale.font(20))
+	page_title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	header.add_child(page_title)
+
+	header.add_child(_profile_close_button(on_close))
+	return header
+
+
 func _ensure_achievements_page() -> void:
 	if _achievements_page != null and is_instance_valid(_achievements_page):
 		return
@@ -1554,35 +1629,8 @@ func _ensure_achievements_page() -> void:
 	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	inner.add_child(vbox)
 
-	var header := HBoxContainer.new()
-	header.add_theme_constant_override("separation", 10)
+	var header := _profile_page_header("UI_PROFILE_BADGES_ALL", _close_achievements_page)
 	vbox.add_child(header)
-
-	var back := Button.new()
-	back.text = "< " + tr("UI_BACK")
-	back.flat = true
-	back.focus_mode = Control.FOCUS_NONE
-	back.add_theme_font_size_override("font_size", UiScale.font(16))
-	back.add_theme_color_override("font_color", UiTokens.ACCENT_PROFILE)
-	var empty := StyleBoxEmpty.new()
-	back.add_theme_stylebox_override("normal", empty)
-	back.add_theme_stylebox_override("hover", empty)
-	back.add_theme_stylebox_override("pressed", empty)
-	back.pressed.connect(_close_achievements_page)
-	PressScaleUtil.wire(back, self)
-	header.add_child(back)
-
-	var page_title := Label.new()
-	page_title.text = tr("UI_PROFILE_BADGES_ALL").to_upper()
-	page_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	page_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	page_title.add_theme_font_size_override("font_size", UiScale.font(20))
-	page_title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-	header.add_child(page_title)
-
-	var spacer := Control.new()
-	spacer.custom_minimum_size.x = 72
-	header.add_child(spacer)
 
 	var scroll_box := ScrollContainer.new()
 	scroll_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -1644,35 +1692,8 @@ func _ensure_categories_page() -> void:
 	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	inner.add_child(vbox)
 
-	var header := HBoxContainer.new()
-	header.add_theme_constant_override("separation", 10)
+	var header := _profile_page_header("UI_PROFILE_CATEGORIES_ALL", _close_categories_page)
 	vbox.add_child(header)
-
-	var back := Button.new()
-	back.text = "< " + tr("UI_BACK")
-	back.flat = true
-	back.focus_mode = Control.FOCUS_NONE
-	back.add_theme_font_size_override("font_size", UiScale.font(16))
-	back.add_theme_color_override("font_color", UiTokens.ACCENT_PROFILE)
-	var empty := StyleBoxEmpty.new()
-	back.add_theme_stylebox_override("normal", empty)
-	back.add_theme_stylebox_override("hover", empty)
-	back.add_theme_stylebox_override("pressed", empty)
-	back.pressed.connect(_close_categories_page)
-	PressScaleUtil.wire(back, self)
-	header.add_child(back)
-
-	var page_title := Label.new()
-	page_title.text = tr("UI_PROFILE_CATEGORIES_ALL").to_upper()
-	page_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	page_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	page_title.add_theme_font_size_override("font_size", UiScale.font(20))
-	page_title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-	header.add_child(page_title)
-
-	var spacer := Control.new()
-	spacer.custom_minimum_size.x = 72
-	header.add_child(spacer)
 
 	var scroll_box := ScrollContainer.new()
 	scroll_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
