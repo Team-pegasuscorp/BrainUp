@@ -91,6 +91,14 @@ func _scope_accent() -> Color:
 	)
 
 
+## Same unique aurora pair as the Général / Amis pills.
+func _scope_aurore_themes() -> PackedStringArray:
+	return AuroreTile.themes_closest_unique([
+		UiTokens.ACCENT_LEADERBOARD,
+		UiTokens.ACCENT_LEADERBOARD_FRIENDS,
+	])
+
+
 func _scope_card_bg(raised: bool = false) -> Color:
 	if _scope == "friends":
 		return (
@@ -124,11 +132,11 @@ func _find_top_app_bar() -> TopAppBar:
 
 
 func _scope_toggle() -> Control:
-	var panel := _toggle_track(24, 5)
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 4)
-	panel.add_child(row)
+	row.add_theme_constant_override("separation", 8)
+	row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_scope_buttons.clear()
+	var themes := _scope_aurore_themes()
 	var general := _pill_chip(
 		"🌐",
 		tr("UI_LEADERBOARD_SCOPE_GENERAL"),
@@ -137,7 +145,8 @@ func _scope_toggle() -> Control:
 		54,
 		22,
 		19,
-		_on_scope_pressed.bind("general")
+		_on_scope_pressed.bind("general"),
+		str(themes[0]) if themes.size() > 0 else ""
 	)
 	var friends := _pill_chip(
 		"👤",
@@ -147,31 +156,14 @@ func _scope_toggle() -> Control:
 		54,
 		22,
 		19,
-		_on_scope_pressed.bind("friends")
+		_on_scope_pressed.bind("friends"),
+		str(themes[1]) if themes.size() > 1 else ""
 	)
 	row.add_child(general)
 	row.add_child(friends)
 	_scope_buttons["general"] = general
 	_scope_buttons["friends"] = friends
-	return panel
-
-
-func _toggle_track(radius: int, pad: int) -> PanelContainer:
-	var panel := PanelContainer.new()
-	var style := StyleBoxFlat.new()
-	style.bg_color = _scope_card_bg(false)
-	style.set_corner_radius_all(radius)
-	style.set_border_width_all(1)
-	style.border_color = (
-		UiTokens.LEADERBOARD_FRIENDS_CARD_BORDER if _scope == "friends"
-		else UiTokens.LEADERBOARD_CARD_BORDER
-	)
-	style.content_margin_left = pad
-	style.content_margin_right = pad
-	style.content_margin_top = pad
-	style.content_margin_bottom = pad
-	panel.add_theme_stylebox_override("panel", style)
-	return panel
+	return row
 
 
 func _pill_chip(
@@ -182,27 +174,30 @@ func _pill_chip(
 	height: float,
 	icon_size: int,
 	label_size: int,
-	on_pressed: Callable
+	on_pressed: Callable,
+	aurore_theme: String = ""
 ) -> Button:
 	var btn := Button.new()
 	btn.focus_mode = Control.FOCUS_NONE
 	btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	btn.custom_minimum_size.y = height
+	btn.clip_contents = true
 	btn.pressed.connect(on_pressed)
 	PressScaleUtil.wire(btn, self)
 
+	## Transparent chrome so aurora shows through; white ring when selected.
 	var chip := StyleBoxFlat.new()
-	if selected:
-		chip.bg_color = accent
-	else:
-		chip.bg_color = Color(accent.r, accent.g, accent.b, 0.14)
-		chip.set_border_width_all(1)
-		chip.border_color = Color(accent.r, accent.g, accent.b, 0.35)
+	chip.bg_color = Color(0, 0, 0, 0)
 	chip.set_corner_radius_all(int(height * 0.37))
 	chip.content_margin_left = 14
 	chip.content_margin_right = 14
 	chip.content_margin_top = 10
 	chip.content_margin_bottom = 10
+	if selected:
+		chip.set_border_width_all(3)
+		chip.border_color = Color(1, 1, 1, 0.92)
+	else:
+		chip.set_border_width_all(0)
 	btn.add_theme_stylebox_override("normal", chip)
 	btn.add_theme_stylebox_override("hover", chip)
 	btn.add_theme_stylebox_override("pressed", chip)
@@ -210,6 +205,18 @@ func _pill_chip(
 	btn.add_theme_color_override("font_color", Color(0, 0, 0, 0))
 	btn.add_theme_color_override("font_hover_color", Color(0, 0, 0, 0))
 	btn.add_theme_color_override("font_pressed_color", Color(0, 0, 0, 0))
+
+	var bg := AuroreTile.new()
+	bg.name = "AuroreFill"
+	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	bg.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	bg.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	bg.aurore_theme = aurore_theme if not aurore_theme.is_empty() else AuroreTile.theme_closest_to(accent)
+	if not selected:
+		bg.modulate = Color(1, 1, 1, 0.62)
+	btn.add_child(bg)
+	btn.move_child(bg, 0)
 
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 10)
@@ -233,7 +240,7 @@ func _pill_chip(
 	label.add_theme_font_size_override("font_size", UiScale.font(label_size))
 	label.add_theme_color_override(
 		"font_color",
-		Color(0.12, 0.1, 0.08, 1) if selected else Color(1, 1, 1, 0.92)
+		Color.WHITE if selected else Color(1, 1, 1, 0.88)
 	)
 	row.add_child(label)
 	return btn
