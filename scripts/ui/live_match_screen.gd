@@ -881,42 +881,55 @@ func _hearts(lives: int) -> String:
 
 func _build_over() -> void:
 	_clear()
-	_body.alignment = BoxContainer.ALIGNMENT_CENTER
+	_body.alignment = BoxContainer.ALIGNMENT_BEGIN
 	var won := bool(_over.get("won", false))
 	var draw := bool(_over.get("draw", false))
+	var friendly := bool(_over.get("friendly", false))
+	var mood := UiTokens.PODIUM_GOLD if won else (Color(0.75, 0.82, 1.0, 1) if draw else Color(1.0, 0.5, 0.5, 1))
+
+	_body.add_child(_spacer())
 	var key := "UI_DUEL_DRAW" if draw else ("UI_DUEL_WIN" if won else "UI_DUEL_LOSS")
-	var title := _title(tr(key), 42)
-	title.add_theme_color_override("font_color", UiTokens.PODIUM_GOLD if won else Color.WHITE)
+	var title := _title(tr(key), 58)
+	title.add_theme_color_override("font_color", mood)
+	title.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.35))
+	title.add_theme_constant_override("outline_size", 8)
 	_body.add_child(title)
 	_body.add_child(_subtitle("%s · %s" % [_category_name(_category), _mode_name()]))
-	_body.add_child(_face_off(
-		str(_my_score), str(_opponent_score), UiTokens.PODIUM_GOLD if won else Color(0, 0, 0, 0)
-	))
+	var face := _face_off(str(_my_score), str(_opponent_score), UiTokens.PODIUM_GOLD if won else Color(0, 0, 0, 0))
+	_body.add_child(face)
 
-	var friendly := bool(_over.get("friendly", false))
-	var delta := int(_over.get("trophy_delta", 0))
+	## Rewards card: one row per gain, revealed one after the other.
+	var card := PanelContainer.new()
+	var card_style := UiStyle.filled(Color(0, 0, 0, 0.26), 24)
+	card_style.content_margin_left = 22
+	card_style.content_margin_right = 22
+	card_style.content_margin_top = 16
+	card_style.content_margin_bottom = 16
+	card.add_theme_stylebox_override("panel", card_style)
+	_body.add_child(card)
+	var rows := VBoxContainer.new()
+	rows.add_theme_constant_override("separation", 12)
+	card.add_child(rows)
 	if friendly:
 		var rivalry := SaveManager.get_friend_rivalry(str(_over.get("opponent_id", "")))
-		_body.add_child(_subtitle(tr("UI_DUEL_FRIENDLY_RECORD").format({
-			"wins": int(rivalry.get("wins", 0)), "losses": int(rivalry.get("losses", 0)),
-		})))
-	var cups := _title("%s%d 🏆   ·   %s %d" % [
-		"+" if delta > 0 else "", delta, tr("UI_DUEL_TOTAL"), int(_over.get("trophies", SaveManager.trophies))
-	], 26)
-	cups.add_theme_color_override("font_color", UiTokens.FEEDBACK_CORRECT if delta > 0 else (UiTokens.FEEDBACK_WRONG if delta < 0 else Color.WHITE))
-	if not friendly:
-		_body.add_child(cups)
-	var bonus := int(_over.get("trophy_streak_bonus", 0)) + int(_over.get("trophy_loss_consolation", 0))
-	if bonus > 0:
-		_body.add_child(_subtitle(tr("UI_DUEL_STREAK_BONUS").format({"bonus": bonus})))
-	_body.add_child(_subtitle("+%d XP" % _xp_gained))
+		rows.add_child(_reward_row("🤝", tr("UI_DUEL_REWARD_FRIENDLY"),
+			"%d - %d" % [int(rivalry.get("wins", 0)), int(rivalry.get("losses", 0))],
+			Color.WHITE, tr("UI_DUEL_REWARD_FRIENDLY_HINT")))
+	else:
+		var delta := int(_over.get("trophy_delta", 0))
+		var detail := "%s %d" % [tr("UI_DUEL_TOTAL"), int(_over.get("trophies", SaveManager.trophies))]
+		var bonus := int(_over.get("trophy_streak_bonus", 0)) + int(_over.get("trophy_loss_consolation", 0))
+		if bonus > 0:
+			detail += "  ·  " + tr("UI_DUEL_REWARD_STREAK").format({"bonus": bonus})
+		rows.add_child(_reward_row("🏆", tr("UI_DUEL_REWARD_TROPHIES"), "%s%d" % ["+" if delta > 0 else "", delta],
+			UiTokens.FEEDBACK_CORRECT if delta > 0 else (UiTokens.FEEDBACK_WRONG if delta < 0 else Color.WHITE), detail))
+	rows.add_child(_reward_row("⭐", tr("UI_DUEL_REWARD_XP"), "+%d" % _xp_gained, Color(0.55, 0.85, 1.0, 1), ""))
 	var pass_xp := int(_over.get("pass_xp", 0))
 	if pass_xp > 0:
-		var pass_line := _title(tr("UI_DUEL_PASS_XP").format({"xp": pass_xp}), 20)
-		pass_line.add_theme_color_override("font_color", Color(1.0, 0.78, 0.2, 1))
-		_body.add_child(pass_line)
+		rows.add_child(_reward_row("🎟", tr("UI_DUEL_REWARD_PASS"), "+%d" % pass_xp, Color(1.0, 0.78, 0.2, 1), ""))
 		NetworkManager.fetch_pass()
 
+	_body.add_child(_spacer())
 	## A friend invite is played once: a rematch is a new invite from the Social tab.
 	if _friend_challenge_id.is_empty():
 		var again := _button(tr("UI_DUEL_PLAY_AGAIN"), _accent, UiTokens.INK)
@@ -925,6 +938,63 @@ func _build_over() -> void:
 	var back := _button(tr("UI_BACK"), Color(1, 1, 1, 0.14), Color.WHITE)
 	back.pressed.connect(_leave)
 	_body.add_child(back)
+
+	## Title pops, then the reward rows slide in one by one.
+	title.pivot_offset = Vector2(PAGE_WIDTH * 0.5, 40)
+	title.scale = Vector2(0.6, 0.6)
+	title.modulate.a = 0.0
+	var tween := _track(create_tween())
+	tween.tween_property(title, "modulate:a", 1.0, 0.18)
+	tween.parallel().tween_property(title, "scale", Vector2.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	for row in rows.get_children():
+		(row as Control).modulate.a = 0.0
+		tween.tween_property(row, "modulate:a", 1.0, 0.22).set_delay(0.08)
+		tween.tween_callback(AudioManager.play.bind("click"))
+
+
+## One gain on the end screen: icon, label (+ small detail), value on the right.
+func _reward_row(icon: String, label_text: String, value: String, value_color: Color, detail: String) -> Control:
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 14)
+	var badge := Label.new()
+	badge.text = icon
+	badge.custom_minimum_size = Vector2(44, 44)
+	badge.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	badge.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	badge.add_theme_font_size_override("font_size", UiScale.font(26))
+	var emoji_font := UiFonts.emoji_font()
+	if emoji_font != null:
+		badge.add_theme_font_override("font", emoji_font)
+	row.add_child(badge)
+	var texts := VBoxContainer.new()
+	texts.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	texts.alignment = BoxContainer.ALIGNMENT_CENTER
+	texts.add_theme_constant_override("separation", 0)
+	row.add_child(texts)
+	var name_label := Label.new()
+	name_label.text = label_text
+	name_label.add_theme_font_size_override("font_size", UiScale.font(19))
+	name_label.add_theme_color_override("font_color", Color.WHITE)
+	texts.add_child(name_label)
+	if not detail.is_empty():
+		var detail_label := Label.new()
+		detail_label.text = detail
+		detail_label.add_theme_font_size_override("font_size", UiScale.font(14))
+		detail_label.add_theme_color_override("font_color", Color(1, 1, 1, 0.6))
+		texts.add_child(detail_label)
+	var value_label := Label.new()
+	value_label.text = value
+	value_label.add_theme_font_size_override("font_size", UiScale.font(28))
+	value_label.add_theme_color_override("font_color", value_color)
+	row.add_child(value_label)
+	return row
+
+
+func _spacer() -> Control:
+	var spacer := Control.new()
+	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	spacer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return spacer
 
 
 func _build_error() -> void:

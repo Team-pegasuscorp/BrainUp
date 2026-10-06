@@ -476,3 +476,9 @@ UI_SOCIAL_REMOVE_FRIEND_CONFIRM,Remove {name}? Tap again to confirm.,Retirer {na
 UI_SOCIAL_FRIEND_REMOVED,{name} is no longer your friend.,{name} ne fait plus partie de tes amis.
 UI_SOCIAL_CHALLENGE_REQUEST_BUSY,{name} is in a game. Try again in a moment.,{name} est en pleine partie. Réessaie dans un instant.
 UI_PASS_FREE,Free,Gratuit
+UI_DUEL_REWARD_TROPHIES,Trophies,Trophées
+UI_DUEL_REWARD_XP,Experience,Expérience
+UI_DUEL_REWARD_PASS,Battle pass,Passe de combat
+UI_DUEL_REWARD_STREAK,streak +{bonus},série +{bonus}
+UI_DUEL_REWARD_FRIENDLY,Friendly duel,Duel amical
+UI_DUEL_REWARD_FRIENDLY_HINT,Your record against them · no trophies at stake,Ton bilan face à iel · aucun trophée en jeu

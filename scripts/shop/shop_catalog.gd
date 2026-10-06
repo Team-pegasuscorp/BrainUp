@@ -17,7 +17,8 @@ const KIND_FRAME := "frame"
 const KIND_BANNER := "banner"
 const RARITIES: Array[String] = ["common", "rare", "epic", "legendary"]
 const RARITY_COLORS := {
-	"common": Color(0.36, 0.55, 0.78, 1),
+	## Slate grey, so common no longer reads like rare's blue.
+	"common": Color(0.45, 0.52, 0.6, 1),
 	"rare": Color(0.18, 0.56, 0.88, 1),
 	"epic": Color(0.55, 0.32, 0.95, 1),
 	"legendary": Color(0.94, 0.62, 0.12, 1),

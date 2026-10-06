@@ -1133,7 +1133,7 @@ func _rarity_card(item: Dictionary, card_size: Vector2) -> Button:
 func _item_preview(item: Dictionary, side: float) -> Control:
 	var kind := str(item.get("kind", ""))
 	if kind == ShopCatalog.KIND_FRAME:
-		return _player_avatar(side, str(item.get("id", "")))
+		return _player_avatar(side, str(item.get("id", "")), true)
 	if kind == ShopCatalog.KIND_BANNER:
 		return _banner_preview(str(item.get("id", "")), side)
 	var avatar := _new_avatar(side)
@@ -1152,13 +1152,21 @@ func _banner_preview(banner_id: String, side: float) -> Control:
 	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	center.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	view.add_child(center)
-	center.add_child(_player_avatar(side * 0.62, SaveManager.get_equipped_frame()))
+	center.add_child(_player_avatar(side * 0.62, SaveManager.get_equipped_frame(), true))
 	return view
 
 
-func _player_avatar(side: float, frame_id: String) -> Control:
+## `showcase`: shop previews show a stand-in animal while the player still has the grey
+## default avatar, so frames and banners are seen on real art (the locker keeps the truth).
+const SHOWCASE_AVATAR := "lucas"
+
+
+func _player_avatar(side: float, frame_id: String, showcase: bool = false) -> Control:
 	var avatar := _new_avatar(side)
-	avatar.set_avatar(SaveManager.get_profile_avatar_texture())
+	if showcase and SaveManager.profile_avatar_id.is_empty():
+		avatar.set_avatar(SaveManager.avatar_texture_for(SHOWCASE_AVATAR))
+	else:
+		avatar.set_avatar(SaveManager.get_profile_avatar_texture())
 	ShopCatalog.apply_frame(avatar, frame_id)
 	return avatar
 
