@@ -471,3 +471,6 @@ UI_SOCIAL_ALREADY_FRIEND,Friend,Ami
 UI_SOCIAL_REQUEST_PENDING,Sent,Envoyée
 UI_SOCIAL_ACCEPT,Accept,Accepter
 UI_SOCIAL_ADD,Add,Ajouter
+UI_SOCIAL_REMOVE_FRIEND,Remove from friends,Retirer des amis
+UI_SOCIAL_REMOVE_FRIEND_CONFIRM,Remove {name}? Tap again to confirm.,Retirer {name} ? Touche encore pour confirmer.
+UI_SOCIAL_FRIEND_REMOVED,{name} is no longer your friend.,{name} ne fait plus partie de tes amis.

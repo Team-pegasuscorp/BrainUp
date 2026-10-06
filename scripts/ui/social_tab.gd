@@ -1891,7 +1891,42 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 	challenge_label.add_theme_color_override("font_color", Color(0.12, 0.06, 0.1, 1))
 	challenge_row.add_child(challenge_label)
 
+	## Real friends only (server id): two taps, the first one asks for confirmation.
+	if _social_live and not str(friend.get("id", "")).is_empty():
+		var remove := Button.new()
+		remove.flat = true
+		remove.focus_mode = Control.FOCUS_NONE
+		remove.text = tr("UI_SOCIAL_REMOVE_FRIEND")
+		remove.add_theme_font_size_override("font_size", UiScale.font(15))
+		remove.add_theme_color_override("font_color", Color(1, 1, 1, 0.8))
+		remove.add_theme_color_override("font_hover_color", Color.WHITE)
+		remove.add_theme_color_override("font_pressed_color", Color.WHITE)
+		remove.pressed.connect(_on_remove_friend_pressed.bind(remove, friend))
+		_friend_detail_body.add_child(remove)
+
 	call_deferred("_fit_friend_detail_panel")
+
+
+func _on_remove_friend_pressed(button: Button, friend: Dictionary) -> void:
+	if not button.has_meta("armed"):
+		button.set_meta("armed", true)
+		button.text = tr("UI_SOCIAL_REMOVE_FRIEND_CONFIRM").format({"name": str(friend.get("name", ""))})
+		## Armed: solid red pill, white text (red text is unreadable on the pink sheet).
+		button.flat = false
+		button.custom_minimum_size.y = 52
+		for state in ["normal", "hover", "pressed"]:
+			button.add_theme_stylebox_override(state, UiStyle.filled(UiTokens.FEEDBACK_WRONG, 16))
+		button.add_theme_color_override("font_color", Color.WHITE)
+		return
+	var friend_id := str(friend.get("id", ""))
+	NetworkManager.remove_friend(friend_id)
+	## Drop it now; the next poll confirms.
+	_real_friends = _real_friends.filter(func(row: Dictionary) -> bool: return str(row.get("id", "")) != friend_id)
+	_close_friend_detail()
+	_rebuild_content()
+	_show_status(tr("UI_SOCIAL_FRIEND_REMOVED").format({"name": str(friend.get("name", ""))}))
+	if _friends_page != null and _friends_page.visible:
+		_populate_friends_page()
 
 
 func _friend_best_subject_card(friend: Dictionary, cat_accent: Color) -> Control:

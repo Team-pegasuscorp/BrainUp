@@ -11,6 +11,8 @@
 - **Ajouter un ami** : taper au moins 2 lettres du pseudo → liste des joueurs trouvés, bouton « Ajouter »
   (« Accepter » si ce joueur nous avait déjà demandé : on devient amis tout de suite).
 - **Défier un ami** : fiche de l'ami → Défier → choix du mode. Le défi reste valable **4 h**.
+- **Retirer un ami** : fiche de l'ami → « Retirer des amis », puis toucher encore pour confirmer
+  (les défis en cours entre vous deux sont annulés).
 - **Accepter un défi** : seulement si l'ami qui a défié est **en ligne** (application ouverte). Les deux
   téléphones rejoignent alors une salle privée (catégorie tirée au sort comme en classé).
   Si l'autre ne vient pas dans les 90 s : « X n'a pas rejoint le duel ».
@@ -52,7 +54,6 @@
 
 ## Pas encore fait
 
-- Retirer un ami depuis la fiche (route serveur prête : `POST /friends/remove`).
 - Si j'ai défié un ami et qu'il accepte pendant que je suis dans une autre partie, le duel ne s'ouvre pas
   (il faut être dans l'application, hors partie).
 - Comptes : l'identité reste l'identifiant de l'appareil ; pseudo non unique (la recherche montre le niveau
