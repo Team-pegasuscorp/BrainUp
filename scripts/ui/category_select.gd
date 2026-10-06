@@ -286,8 +286,7 @@ func refresh() -> void:
 
 # --- Duel tiles (Quiz tab) --------------------------------------------------
 
-## Rank strip, one tile per duel mode (tap = search an opponent), then the daily
-## challenge tile. Replaces the old mode chips + Play button.
+## Rank strip, ranked-duels feature card, then daily challenge.
 func _build_duel_tiles() -> void:
 	for node in [_mode_section_label, _mode_row, _mode_hint, start_button]:
 		if node != null:
@@ -295,36 +294,103 @@ func _build_duel_tiles() -> void:
 	if _duel_tiles != null and is_instance_valid(_duel_tiles):
 		_duel_tiles.queue_free()
 	_duel_tiles = VBoxContainer.new()
-	_duel_tiles.add_theme_constant_override("separation", 14)
+	_duel_tiles.add_theme_constant_override("separation", 12)
 	_scroll_content.add_child(_duel_tiles)
 	_scroll_content.move_child(_duel_tiles, 0)
 
-	_duel_tiles.add_child(_rank_strip())
-	_duel_tiles.add_child(_pass_strip())
-	_duel_tiles.add_child(_section_title(tr("UI_DUEL_TILES_TITLE")))
-	_duel_tiles.add_child(_mode_tile(GameManager.Mode.CLASSIC, 250.0, true))
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 14)
-	_duel_tiles.add_child(row)
-	row.add_child(_mode_tile(GameManager.Mode.SURVIVAL, 250.0, false))
-	row.add_child(_mode_tile(GameManager.Mode.TIME_ATTACK, 250.0, false))
-	_duel_tiles.add_child(_section_title(tr("UI_DAILY_CHALLENGE_TITLE")))
+	## League + Pass inside the same blue shell as ranked / daily (no title).
+	var progress := _quiz_feature_card("", "")
+	var top_row := HBoxContainer.new()
+	top_row.add_theme_constant_override("separation", 10)
+	top_row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	progress["body"].add_child(top_row)
+	var rank := _rank_strip()
+	rank.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	rank.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	rank.size_flags_stretch_ratio = 3.0
+	top_row.add_child(rank)
+	var pass_tile := _pass_strip()
+	pass_tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	pass_tile.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	pass_tile.size_flags_stretch_ratio = 1.0
+	top_row.add_child(pass_tile)
+	_duel_tiles.add_child(progress["panel"])
+
+	## Ranked duel modes.
+	var ranked := _quiz_feature_card(tr("UI_DUEL_TILES_TITLE"), "⚔️")
+	ranked["body"].add_child(_mode_tile(GameManager.Mode.CLASSIC))
+	ranked["body"].add_child(_mode_tile(GameManager.Mode.SURVIVAL))
+	ranked["body"].add_child(_mode_tile(GameManager.Mode.TIME_ATTACK))
+	_duel_tiles.add_child(ranked["panel"])
 
 	if _daily_card != null:
-		## The daily card becomes the last tile, under the modes.
 		_scroll_content.move_child(_daily_card, _scroll_content.get_child_count() - 1)
-		_daily_card.custom_minimum_size.y = 104
-		_daily_card.add_theme_stylebox_override("panel", _aurore_chrome_style(UiTokens.PODIUM_GOLD))
-		_wire_aurore_fill(_daily_card, UiTokens.PODIUM_GOLD)
+		_daily_card.custom_minimum_size.y = 0
 	ScrollTouch.let_drags_through(_duel_tiles)
+
+
+## Dark blue feature card — returns {panel, body}.
+func _quiz_feature_card(title_text: String, emoji: String, show_reset: bool = false) -> Dictionary:
+	var panel := PanelContainer.new()
+	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var shell := UiStyle.home_surface(true, 0)
+	shell.bg_color = Color(0.07, 0.16, 0.32, 1)
+	shell.set_border_width_all(2)
+	shell.border_color = Color(UiTokens.ACCENT_QUIZ.r, UiTokens.ACCENT_QUIZ.g, UiTokens.ACCENT_QUIZ.b, 0.55)
+	panel.add_theme_stylebox_override("panel", shell)
+
+	var margin := MarginContainer.new()
+	margin.add_theme_constant_override("margin_left", 14)
+	margin.add_theme_constant_override("margin_right", 14)
+	margin.add_theme_constant_override("margin_top", 12)
+	margin.add_theme_constant_override("margin_bottom", 12)
+	panel.add_child(margin)
+	var vbox := VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 12)
+	margin.add_child(vbox)
+
+	if not title_text.is_empty() or not emoji.is_empty() or show_reset:
+		var header := HBoxContainer.new()
+		header.add_theme_constant_override("separation", 10)
+		header.alignment = BoxContainer.ALIGNMENT_CENTER
+		vbox.add_child(header)
+
+		if not emoji.is_empty():
+			var icon := Label.new()
+			icon.text = emoji
+			icon.add_theme_font_size_override("font_size", UiScale.font(26))
+			var emoji_font := UiFonts.emoji_font()
+			if emoji_font != null:
+				icon.add_theme_font_override("font", emoji_font)
+			header.add_child(icon)
+
+		if not title_text.is_empty():
+			var title := Label.new()
+			title.text = title_text.to_upper()
+			title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			title.add_theme_font_size_override("font_size", UiScale.font(20))
+			title.add_theme_color_override("font_color", Color(1, 1, 1, 0.98))
+			header.add_child(title)
+
+		if show_reset:
+			var seconds := DailyChallenge.seconds_until_reset()
+			var reset := Label.new()
+			reset.text = tr("UI_DAILY_RESET_IN").format({
+				"time": "%dh%02d" % [int(seconds / 3600.0), int((seconds % 3600) / 60.0)],
+			})
+			reset.add_theme_font_size_override("font_size", UiScale.font(15))
+			reset.add_theme_color_override("font_color", UiTokens.ACCENT_QUIZ)
+			header.add_child(reset)
+
+	return {"panel": panel, "body": vbox}
 
 
 func _section_title(text: String) -> Label:
 	var label := Label.new()
 	label.text = text.to_upper()
-	label.add_theme_font_size_override("font_size", UiScale.font(16))
-	## Quiz page canvas is brand navy — keep section labels light.
-	label.add_theme_color_override("font_color", Color(1, 1, 1, 0.55))
+	label.add_theme_font_size_override("font_size", UiScale.font(18))
+	## Match home / profile section caps on the dark quiz sheet.
+	label.add_theme_color_override("font_color", Color(1, 1, 1, 0.72))
 	return label
 
 
@@ -382,7 +448,7 @@ func _aurore_chrome_style(accent: Color, selected: bool = false) -> StyleBoxFlat
 	return style
 
 
-## League badge, trophies and the way to the next league.
+## League badge + trophies — half-width compact tile.
 func _rank_strip() -> Control:
 	var trophies := SaveManager.trophies
 	var league := TrophyLeagues.for_trophies(trophies)
@@ -395,55 +461,70 @@ func _rank_strip() -> Control:
 			break
 
 	var panel := PanelContainer.new()
+	panel.custom_minimum_size.y = 132
 	var league_theme := AuroreTile.theme_for_league(str(league.get("id", "bronze")))
 	var league_accent := AuroreTile.primary_color(league_theme)
 	panel.add_theme_stylebox_override("panel", _aurore_chrome_style(league_accent))
 	_wire_aurore_fill(panel, league_accent, league_theme)
 	var pad := MarginContainer.new()
 	pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	pad.add_theme_constant_override("margin_left", 14)
-	pad.add_theme_constant_override("margin_right", 14)
-	pad.add_theme_constant_override("margin_top", 14)
-	pad.add_theme_constant_override("margin_bottom", 14)
+	pad.add_theme_constant_override("margin_left", 12)
+	pad.add_theme_constant_override("margin_right", 12)
+	pad.add_theme_constant_override("margin_top", 12)
+	pad.add_theme_constant_override("margin_bottom", 12)
 	panel.add_child(pad)
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 14)
-	pad.add_child(row)
+	var column := VBoxContainer.new()
+	column.add_theme_constant_override("separation", 6)
+	column.alignment = BoxContainer.ALIGNMENT_CENTER
+	pad.add_child(column)
+
+	var head := HBoxContainer.new()
+	head.add_theme_constant_override("separation", 10)
+	head.alignment = BoxContainer.ALIGNMENT_CENTER
+	column.add_child(head)
 	var icon := TextureRect.new()
-	icon.custom_minimum_size = Vector2(76, 76)
+	icon.custom_minimum_size = Vector2(52, 52)
 	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	icon.texture = GameAssets.load_texture("res://assets/leagues/%s.png" % str(league.get("id", "bronze")))
-	row.add_child(icon)
-	var info := VBoxContainer.new()
-	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	info.alignment = BoxContainer.ALIGNMENT_CENTER
-	info.add_theme_constant_override("separation", 6)
-	row.add_child(info)
+	head.add_child(icon)
+	var name_col := VBoxContainer.new()
+	name_col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	name_col.add_theme_constant_override("separation", 2)
+	head.add_child(name_col)
 	var title := Label.new()
-	title.text = "%s  ·  🏆 %d" % [tr(str(league.get("title_key", ""))), trophies]
-	title.add_theme_font_size_override("font_size", UiScale.font(22))
+	title.text = tr(str(league.get("title_key", "")))
+	title.clip_text = true
+	title.add_theme_font_size_override("font_size", UiScale.font(18))
 	title.add_theme_color_override("font_color", Color.WHITE)
-	info.add_child(title)
+	name_col.add_child(title)
+	var cups := Label.new()
+	cups.text = "🏆 %d" % trophies
+	cups.add_theme_font_size_override("font_size", UiScale.font(16))
+	cups.add_theme_color_override("font_color", Color(1, 1, 1, 0.9))
+	name_col.add_child(cups)
+
 	if next_min > 0:
 		var floor_min := int(league.get("min_trophies", 0))
 		var bar := ProgressBar.new()
 		bar.show_percentage = false
-		bar.custom_minimum_size.y = 10
+		bar.custom_minimum_size.y = 8
 		bar.max_value = float(next_min - floor_min)
 		bar.value = float(trophies - floor_min)
 		bar.add_theme_stylebox_override("background", UiStyle.progress_bg())
 		bar.add_theme_stylebox_override("fill", UiStyle.progress_fill(UiTokens.PODIUM_GOLD))
-		info.add_child(bar)
+		column.add_child(bar)
 		var hint := Label.new()
 		hint.text = tr("UI_DUEL_NEXT_LEAGUE").format({"league": tr(next_key), "trophies": next_min - trophies})
-		hint.add_theme_font_size_override("font_size", UiScale.font(14))
-		hint.add_theme_color_override("font_color", Color(1, 1, 1, 0.78))
-		info.add_child(hint)
+		hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		hint.max_lines_visible = 2
+		hint.add_theme_font_size_override("font_size", UiScale.font(12))
+		hint.add_theme_color_override("font_color", Color(1, 1, 1, 0.75))
+		column.add_child(hint)
 	return panel
 
 
-## Battle pass progress; a tap opens the Pass tab of the shop.
+## Battle pass progress — narrow companion (~1/4) next to the league tile.
 func _pass_strip() -> Control:
 	var state: Dictionary = NetworkManager.pass_state
 	if state.is_empty():
@@ -451,7 +532,7 @@ func _pass_strip() -> Control:
 		if not NetworkManager.pass_received.is_connected(_on_pass_state):
 			NetworkManager.pass_received.connect(_on_pass_state)
 	var button := Button.new()
-	button.custom_minimum_size.y = 84
+	button.custom_minimum_size.y = 132
 	button.focus_mode = Control.FOCUS_NONE
 	var gold := Color(1.0, 0.78, 0.2, 1)
 	var style := _aurore_chrome_style(gold)
@@ -467,25 +548,40 @@ func _pass_strip() -> Control:
 	var pad := MarginContainer.new()
 	pad.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	for side in ["left", "right", "top", "bottom"]:
-		pad.add_theme_constant_override("margin_" + side, 14)
+	pad.add_theme_constant_override("margin_left", 8)
+	pad.add_theme_constant_override("margin_right", 8)
+	pad.add_theme_constant_override("margin_top", 10)
+	pad.add_theme_constant_override("margin_bottom", 10)
 	button.add_child(pad)
 	var column := VBoxContainer.new()
 	column.alignment = BoxContainer.ALIGNMENT_CENTER
-	column.add_theme_constant_override("separation", 6)
+	column.add_theme_constant_override("separation", 4)
 	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	pad.add_child(column)
+
+	var ticket := Label.new()
+	ticket.text = "🎫"
+	ticket.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	ticket.add_theme_font_size_override("font_size", UiScale.font(32))
+	var emoji_font := UiFonts.emoji_font()
+	if emoji_font != null:
+		ticket.add_theme_font_override("font", emoji_font)
+	column.add_child(ticket)
+
 	var title := Label.new()
 	var active := bool(state.get("active", false))
-	title.text = (tr("UI_PASS_STRIP").format({"tier": int(state.get("tier", 0))}) if active else tr("UI_PASS_TAB")) + "  ›"
-	title.add_theme_font_size_override("font_size", UiScale.font(18))
+	title.text = ("T%d" % int(state.get("tier", 0))) if active else tr("UI_PASS_TAB")
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.clip_text = true
+	title.add_theme_font_size_override("font_size", UiScale.font(14))
 	title.add_theme_color_override("font_color", Color.WHITE)
 	column.add_child(title)
+
 	if active:
 		var tier_xp := int(state.get("tier_xp", 800))
 		var bar := ProgressBar.new()
 		bar.show_percentage = false
-		bar.custom_minimum_size.y = 10
+		bar.custom_minimum_size.y = 6
 		bar.max_value = float(tier_xp)
 		bar.value = float(int(state.get("xp", 0)) % tier_xp)
 		bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -500,12 +596,12 @@ func _on_pass_state(_state: Dictionary) -> void:
 		_build_duel_tiles()
 
 
-## Big tile for one duel mode; a tap goes straight to matchmaking.
-func _mode_tile(mode: int, height: float, wide: bool) -> Button:
+## Compact aurore row for one duel mode — same rhythm as home content tiles.
+func _mode_tile(mode: int, _height: float = 0.0, _wide: bool = false) -> Button:
 	var entry: Array = MODES[mode]
 	var accent: Color = UiTokens.MODE_ACCENTS[mode]
 	var tile := Button.new()
-	tile.custom_minimum_size.y = height
+	tile.custom_minimum_size.y = 156
 	tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tile.focus_mode = Control.FOCUS_NONE
 	var style := _aurore_chrome_style(accent)
@@ -517,54 +613,69 @@ func _mode_tile(mode: int, height: float, wide: bool) -> Button:
 	tile.pressed.connect(_on_mode_tile_pressed.bind(mode))
 	PressScaleUtil.wire(tile, self)
 
-	var emoji_font := UiFonts.emoji_font()
-	var big_icon := Label.new()
-	big_icon.text = str(entry[3])
-	big_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	big_icon.modulate.a = 0.85
-	big_icon.add_theme_font_size_override("font_size", UiScale.font(76 if wide else 58))
-	if emoji_font != null:
-		big_icon.add_theme_font_override("font", emoji_font)
-	big_icon.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
-	big_icon.offset_left = -(150.0 if wide else 110.0)
-	big_icon.offset_top = 18.0
-	tile.add_child(big_icon)
-
 	var pad := MarginContainer.new()
 	pad.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	for side in ["left", "right", "top", "bottom"]:
-		pad.add_theme_constant_override("margin_" + side, 20)
+	pad.add_theme_constant_override("margin_left", 16)
+	pad.add_theme_constant_override("margin_right", 18)
+	pad.add_theme_constant_override("margin_top", 16)
+	pad.add_theme_constant_override("margin_bottom", 16)
 	tile.add_child(pad)
-	var column := VBoxContainer.new()
-	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	column.add_theme_constant_override("separation", 6)
-	pad.add_child(column)
-	var chip := Label.new()
-	chip.text = tr("UI_DUEL_RANKED_CHIP").to_upper()
-	chip.add_theme_font_size_override("font_size", UiScale.font(13))
-	chip.add_theme_color_override("font_color", Color(1, 1, 1, 0.88))
-	column.add_child(chip)
-	var spacer := Control.new()
-	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	spacer.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	column.add_child(spacer)
+
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 16)
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pad.add_child(row)
+
+	## Mode emoji in a soft circle — mirrors category / home icon chips.
+	const ICON := 88.0
+	var icon_slot := Control.new()
+	icon_slot.custom_minimum_size = Vector2(ICON, ICON)
+	icon_slot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	icon_slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_child(icon_slot)
+	var icon_bg := Panel.new()
+	icon_bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	icon_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var icon_style := StyleBoxFlat.new()
+	icon_style.bg_color = Color(1, 1, 1, 0.18)
+	icon_style.set_corner_radius_all(int(ICON * 0.5))
+	icon_bg.add_theme_stylebox_override("panel", icon_style)
+	icon_slot.add_child(icon_bg)
+	var emoji := Label.new()
+	emoji.text = str(entry[3])
+	emoji.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	emoji.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	emoji.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	emoji.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	emoji.add_theme_font_size_override("font_size", UiScale.font(38))
+	var emoji_font := UiFonts.emoji_font()
+	if emoji_font != null:
+		emoji.add_theme_font_override("font", emoji_font)
+	icon_slot.add_child(emoji)
+
+	var texts := VBoxContainer.new()
+	texts.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	texts.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	texts.add_theme_constant_override("separation", 6)
+	texts.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_child(texts)
+
 	var name_label := Label.new()
 	name_label.text = tr(str(entry[1])).to_upper()
-	name_label.add_theme_font_size_override("font_size", UiScale.font(34 if wide else 26))
+	name_label.clip_text = true
+	name_label.add_theme_font_size_override("font_size", UiScale.font(28))
 	name_label.add_theme_color_override("font_color", Color.WHITE)
-	column.add_child(name_label)
+	texts.add_child(name_label)
+
 	var hint := Label.new()
 	hint.text = tr(str(entry[2]).replace("UI_MODE_", "UI_DUEL_TILE_"))
 	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	hint.add_theme_font_size_override("font_size", UiScale.font(15))
+	hint.max_lines_visible = 2
+	hint.add_theme_font_size_override("font_size", UiScale.font(17))
 	hint.add_theme_color_override("font_color", Color(1, 1, 1, 0.78))
-	column.add_child(hint)
-	var play := Label.new()
-	play.text = tr("UI_DUEL_TILE_PLAY") + "  ›"
-	play.add_theme_font_size_override("font_size", UiScale.font(17))
-	play.add_theme_color_override("font_color", Color(1, 1, 1, 0.92))
-	column.add_child(play)
+	texts.add_child(hint)
 	return tile
 
 
@@ -618,11 +729,10 @@ func _primary_category_index() -> int:
 	return 0
 
 
-## Shared daily challenge card, pinned above the category list.
+## Shared daily challenge card — same shell as Accueil “défis du jour”.
 func _setup_daily_card() -> void:
 	_daily_card = PanelContainer.new()
-	_daily_card.add_theme_stylebox_override("panel", _aurore_chrome_style(UiTokens.PODIUM_GOLD))
-	_wire_aurore_fill(_daily_card, UiTokens.PODIUM_GOLD)
+	_daily_card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_scroll_content.add_child(_daily_card)
 	_scroll_content.move_child(_daily_card, 0)
 	NetworkManager.daily_challenge_received.connect(_on_daily_received)
@@ -674,29 +784,25 @@ func _on_daily_failed() -> void:
 
 
 func _render_daily() -> void:
-	for child in _daily_card.get_children():
-		if child.name == "AuroreFill":
-			continue
+	## Rebuild into the shared Accueil-style feature shell.
+	while _daily_card.get_child_count() > 0:
+		var child := _daily_card.get_child(0)
+		_daily_card.remove_child(child)
 		child.queue_free()
 
-	var accent := UiTokens.PODIUM_GOLD
-	var category_id_preview := str(_daily.get("category_id", ""))
-	if not category_id_preview.is_empty():
-		accent = UiTokens.accent_for_category(category_id_preview)
-	_daily_card.add_theme_stylebox_override("panel", _aurore_chrome_style(accent))
-	_wire_aurore_fill(_daily_card, accent)
-
-	var margin := MarginContainer.new()
-	for side in ["left", "right"]:
-		margin.add_theme_constant_override("margin_" + side, 8)
-	for side in ["top", "bottom"]:
-		margin.add_theme_constant_override("margin_" + side, 4)
-	_daily_card.add_child(margin)
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 14)
-	row.alignment = BoxContainer.ALIGNMENT_CENTER
-	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	margin.add_child(row)
+	var featured := _quiz_feature_card(tr("UI_DAILY_CHALLENGE_TITLE"), "🔥", true)
+	var shell_panel: PanelContainer = featured["panel"]
+	var body: VBoxContainer = featured["body"]
+	## Steal the feature card chrome onto the persistent daily node.
+	_daily_card.add_theme_stylebox_override(
+		"panel",
+		shell_panel.get_theme_stylebox("panel").duplicate()
+	)
+	while shell_panel.get_child_count() > 0:
+		var piece := shell_panel.get_child(0)
+		shell_panel.remove_child(piece)
+		_daily_card.add_child(piece)
+	shell_panel.queue_free()
 
 	var category_id := str(_daily.get("category_id", ""))
 	var date := str(_daily.get("date", ""))
@@ -708,64 +814,83 @@ func _render_daily() -> void:
 			known = true
 			category_name = str(category.get("name", category_id))
 
+	var accent := UiTokens.PODIUM_GOLD
+	if known:
+		accent = UiTokens.accent_for_category(category_id)
+
+	var inner := PanelContainer.new()
+	inner.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	inner.custom_minimum_size.y = 156
+	inner.add_theme_stylebox_override("panel", _aurore_chrome_style(accent))
+	_wire_aurore_fill(inner, accent)
+	body.add_child(inner)
+
+	var inner_pad := MarginContainer.new()
+	inner_pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	inner_pad.add_theme_constant_override("margin_left", 16)
+	inner_pad.add_theme_constant_override("margin_right", 16)
+	inner_pad.add_theme_constant_override("margin_top", 14)
+	inner_pad.add_theme_constant_override("margin_bottom", 14)
+	inner.add_child(inner_pad)
+
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 16)
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	inner_pad.add_child(row)
+
 	row.add_child(GameAssets.make_circular_icon_display(
-		GameAssets.category_texture(category_id) if known else null, "🌍", 64.0
+		GameAssets.category_texture(category_id) if known else null, "🌍", 88.0
 	))
 
 	var labels := VBoxContainer.new()
 	labels.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	labels.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	labels.alignment = BoxContainer.ALIGNMENT_CENTER
+	labels.add_theme_constant_override("separation", 4)
+	labels.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	row.add_child(labels)
 
 	var tag := Label.new()
-	tag.text = "%s · +%d XP" % [tr("UI_DAILY_CHALLENGE_TITLE").to_upper(), DailyChallenge.BONUS_XP]
+	tag.text = "+%d XP" % DailyChallenge.BONUS_XP
 	if not result.is_empty() and _daily_board.get("player_rank") != null:
-		tag.text = "%s · %s" % [
-			tr("UI_DAILY_CHALLENGE_TITLE").to_upper(),
-			tr("UI_DAILY_RANK_TOTAL").format({
-				"rank": int(_daily_board["player_rank"]),
-				"total": int(_daily_board.get("total_players", 0)),
-			}),
-		]
-	tag.add_theme_font_size_override("font_size", UiScale.font(14))
+		tag.text = tr("UI_DAILY_RANK_TOTAL").format({
+			"rank": int(_daily_board["player_rank"]),
+			"total": int(_daily_board.get("total_players", 0)),
+		})
+	tag.add_theme_font_size_override("font_size", UiScale.font(16))
 	tag.add_theme_color_override("font_color", Color(1, 1, 1, 0.88))
 	labels.add_child(tag)
 
 	var name_label := Label.new()
 	name_label.text = category_name if known else tr("UI_DAILY_CHALLENGE_LOADING")
-	name_label.add_theme_font_size_override("font_size", UiScale.font(24))
+	name_label.clip_text = true
+	name_label.add_theme_font_size_override("font_size", UiScale.font(26))
 	name_label.add_theme_color_override("font_color", Color.WHITE)
 	labels.add_child(name_label)
 
 	var sub := Label.new()
-	sub.add_theme_font_size_override("font_size", UiScale.font(14))
+	sub.add_theme_font_size_override("font_size", UiScale.font(16))
 	sub.add_theme_color_override("font_color", Color(1, 1, 1, 0.78))
 	if not result.is_empty():
-		var seconds := DailyChallenge.seconds_until_reset()
-		sub.text = "%s\n%s" % [
-			tr("UI_DAILY_CHALLENGE_DONE").format({
-				"score": int(result.get("score", 0)),
-				"correct": int(result.get("correct_count", 0)),
-				"total": int(result.get("total_count", 0)),
-			}),
-			tr("UI_DAILY_CHALLENGE_NEXT").format({
-				"time": "%dh%02d" % [int(seconds / 3600.0), int((seconds % 3600) / 60.0)],
-			}),
-		]
+		sub.text = tr("UI_DAILY_CHALLENGE_DONE").format({
+			"score": int(result.get("score", 0)),
+			"correct": int(result.get("correct_count", 0)),
+			"total": int(result.get("total_count", 0)),
+		})
 	else:
 		sub.text = tr("UI_DAILY_CHALLENGE_SUB")
 	labels.add_child(sub)
 
 	if not result.is_empty():
 		var board := Button.new()
-		board.text = "🏆 " + tr("UI_DAILY_BOARD_BUTTON")
-		board.custom_minimum_size = Vector2(150, 48)
-		board.add_theme_font_size_override("font_size", UiScale.font(18))
+		board.text = "🏆"
+		board.custom_minimum_size = Vector2(64, 56)
+		board.focus_mode = Control.FOCUS_NONE
+		board.add_theme_font_size_override("font_size", UiScale.font(26))
 		for slot in ["font_color", "font_hover_color", "font_pressed_color"]:
 			board.add_theme_color_override(slot, UiTokens.INK)
-		var outline := UiStyle.filled(Color(1, 1, 1, 1), 24)
-		outline.set_border_width_all(3)
+		var outline := UiStyle.filled(Color(1, 1, 1, 1), 16)
+		outline.set_border_width_all(2)
 		outline.border_color = UiTokens.PODIUM_GOLD
 		for state in ["normal", "hover", "pressed", "focus"]:
 			board.add_theme_stylebox_override(state, outline)
@@ -776,13 +901,14 @@ func _render_daily() -> void:
 
 	var play := Button.new()
 	play.text = tr("UI_PLAY").to_upper()
-	play.custom_minimum_size = Vector2(110, 48)
+	play.custom_minimum_size = Vector2(128, 56)
+	play.focus_mode = Control.FOCUS_NONE
 	play.add_theme_font_size_override("font_size", UiScale.font(20))
 	for slot in ["font_color", "font_hover_color", "font_pressed_color", "font_disabled_color"]:
 		play.add_theme_color_override(slot, UiTokens.INK)
-	var style := UiStyle.filled(UiTokens.PODIUM_GOLD, 24)
+	var play_style := UiStyle.filled(UiTokens.PODIUM_GOLD, 16)
 	for state in ["normal", "hover", "pressed", "focus", "disabled"]:
-		play.add_theme_stylebox_override(state, style)
+		play.add_theme_stylebox_override(state, play_style)
 	play.disabled = not known or _daily_fetching
 	PressScaleUtil.wire(play, self)
 	play.pressed.connect(_on_daily_play_pressed)
