@@ -1145,9 +1145,12 @@ func _shake(control: Control) -> void:
 		tween.tween_property(control, "rotation", angle, 0.05)
 
 
-func _set_badge(label: Label, text: String) -> void:
-	if label == null or not is_instance_valid(label):
+## Untyped on purpose: a late opponent message can arrive after a rebuild freed the
+## label, and a typed Label argument would fail before the validity check runs.
+func _set_badge(target: Variant, text: String) -> void:
+	if target == null or not is_instance_valid(target):
 		return
+	var label := target as Label
 	label.text = text
 	if not text.is_empty():
 		_pulse(label, 1.3)

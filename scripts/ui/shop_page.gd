@@ -374,6 +374,7 @@ func _pass_track(state: Dictionary) -> Control:
 	var tier := int(state.get("tier", 0))
 	var premium := bool(state.get("premium", false))
 	var claimed: Dictionary = state.get("claimed", {})
+	row.add_child(_pass_track_labels())
 	for entry in state.get("tiers", []):
 		var number := int(entry.get("tier", 0))
 		var column := VBoxContainer.new()
@@ -397,12 +398,42 @@ func _pass_track(state: Dictionary) -> Control:
 	var claimables := _pass_claimables(state)
 	if not claimables.is_empty():
 		focus_tier = int(claimables[0][0])
-	var target_x := maxf(float(focus_tier - 1) * (PASS_COLUMN_WIDTH + 10.0) - 40.0, 0.0)
+	## The label column (92 + 10) comes before tier 1.
+	var target_x := maxf(float(focus_tier - 1) * (PASS_COLUMN_WIDTH + 10.0) + 102.0 - 40.0, 0.0)
 	scroll.ready.connect(func() -> void:
 		await get_tree().process_frame
 		scroll.scroll_horizontal = int(target_x)
 	)
 	return scroll
+
+
+## First column of the track: which row is premium and which is free.
+func _pass_track_labels() -> Control:
+	var column := VBoxContainer.new()
+	column.custom_minimum_size.x = 92
+	column.add_theme_constant_override("separation", 8)
+	var head := Label.new()
+	head.text = " "
+	head.add_theme_font_size_override("font_size", UiScale.font(18))
+	column.add_child(head)
+	for track in [["UI_PASS_PREMIUM", PASS_GOLD], ["UI_PASS_FREE", PASS_FREE]]:
+		var accent: Color = track[1]
+		var cell := PanelContainer.new()
+		cell.custom_minimum_size = Vector2(92, 200)
+		var style := UiStyle.filled(Color(0, 0, 0, 0.22), 18)
+		style.set_border_width_all(2)
+		style.border_color = Color(accent.r, accent.g, accent.b, 0.6)
+		cell.add_theme_stylebox_override("panel", style)
+		var label := Label.new()
+		label.text = tr(str(track[0])).to_upper()
+		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		label.add_theme_font_size_override("font_size", UiScale.font(13))
+		label.add_theme_color_override("font_color", accent)
+		cell.add_child(label)
+		column.add_child(cell)
+	return column
 
 
 func _pass_reward_tile(reward: Variant, tier: int, track: String, claimable_now: bool, claimed: bool, locked: bool) -> Control:
@@ -431,6 +462,15 @@ func _pass_reward_tile(reward: Variant, tier: int, track: String, claimable_now:
 	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	tile.add_child(column)
 	if not has_reward:
+		## Nothing on this track at this tier: a quiet dash, not a tile that looks unloaded.
+		style.bg_color = Color(accent.r, accent.g, accent.b, 0.05)
+		style.border_color = Color(accent.r, accent.g, accent.b, 0.15)
+		var dash := Label.new()
+		dash.text = "—"
+		dash.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		dash.add_theme_font_size_override("font_size", UiScale.font(22))
+		dash.add_theme_color_override("font_color", Color(1, 1, 1, 0.25))
+		column.add_child(dash)
 		return tile
 	var art := CenterContainer.new()
 	art.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -731,19 +771,34 @@ func _build_locker() -> void:
 	stage_col.add_theme_constant_override("separation", 10)
 	stage_margin.add_child(stage_col)
 
+	## The avatar stands on a glowing pedestal: the disc is drawn first and sits
+	## under the avatar's bottom edge, so it reads as a floor, not as an empty bar.
+	const HERO := 280.0
 	var hero_box := CenterContainer.new()
 	stage_col.add_child(hero_box)
-	hero_box.add_child(_player_avatar(280, SaveManager.get_equipped_frame()))
-
-	var pedestal_box := CenterContainer.new()
-	stage_col.add_child(pedestal_box)
-	var pedestal := Panel.new()
-	pedestal.custom_minimum_size = Vector2(300, 30)
-	var pedestal_style := UiStyle.filled(Color(ACCENT.r, ACCENT.g, ACCENT.b, 0.28), 15)
-	pedestal_style.shadow_color = Color(ACCENT.r, ACCENT.g, ACCENT.b, 0.35)
-	pedestal_style.shadow_size = 16
-	pedestal.add_theme_stylebox_override("panel", pedestal_style)
-	pedestal_box.add_child(pedestal)
+	var hero := Control.new()
+	hero.custom_minimum_size = Vector2(HERO + 60.0, HERO + 22.0)
+	hero.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	hero_box.add_child(hero)
+	## Soft elliptic glow on the "floor", drawn as stacked ellipses (wide and faint to small
+	## and bright) so it fades out instead of ending on a hard edge.
+	var pedestal := Control.new()
+	pedestal.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pedestal.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	pedestal.draw.connect(func() -> void:
+		var center := Vector2(hero.custom_minimum_size.x * 0.5, HERO - 6.0)
+		for step in range(6):
+			var t := float(step) / 5.0
+			var radius := Vector2(lerpf(170.0, 90.0, t), lerpf(26.0, 10.0, t))
+			pedestal.draw_set_transform(center, 0.0, Vector2(1.0, radius.y / radius.x))
+			pedestal.draw_circle(Vector2.ZERO, radius.x, Color(ACCENT.r, ACCENT.g, ACCENT.b, lerpf(0.08, 0.35, t)))
+		pedestal.draw_set_transform(Vector2.ZERO)
+	)
+	hero.add_child(pedestal)
+	var avatar := _player_avatar(HERO, SaveManager.get_equipped_frame())
+	avatar.position = Vector2(30.0, 0.0)
+	avatar.size = Vector2(HERO, HERO)
+	hero.add_child(avatar)
 
 	var name_label := Label.new()
 	name_label.text = SaveManager.player_name

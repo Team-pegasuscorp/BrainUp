@@ -475,3 +475,4 @@ UI_SOCIAL_REMOVE_FRIEND,Remove from friends,Retirer des amis
 UI_SOCIAL_REMOVE_FRIEND_CONFIRM,Remove {name}? Tap again to confirm.,Retirer {name} ? Touche encore pour confirmer.
 UI_SOCIAL_FRIEND_REMOVED,{name} is no longer your friend.,{name} ne fait plus partie de tes amis.
 UI_SOCIAL_CHALLENGE_REQUEST_BUSY,{name} is in a game. Try again in a moment.,{name} est en pleine partie. Réessaie dans un instant.
+UI_PASS_FREE,Free,Gratuit
