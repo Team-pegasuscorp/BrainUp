@@ -54,6 +54,7 @@ signal daily_leaderboard_failed
 const BASE_URL: String = "http://127.0.0.1:8000"
 const DEVICE_ID_PATH: String = "user://device_id.txt"
 const LiveMatchmakingScript = preload("res://scripts/profile/live_matchmaking.gd")
+const ScenePaths = preload("res://scripts/config/scene_paths.gd")
 
 var player_id: String = ""
 
@@ -96,6 +97,9 @@ var _social_poll_left: float = 0.0
 var _social_polling: bool = false
 ## Accepted invites already handed to the UI (so one acceptance opens one duel).
 var _accepted_seen: Dictionary = {}
+## In a game (any scene but the app shell): sent with the poll so friends cannot accept
+## our invites while the duel could not open.
+var _busy: bool = false
 ## Quest claims that did not reach the server yet: [{quest_id, day}], retried on each poll.
 const QUEST_OUTBOX_PATH := "user://quest_outbox.json"
 var _quest_outbox: Array = []
@@ -104,6 +108,12 @@ var _quest_flushing: bool = false
 
 func _process(_delta: float) -> void:
 	if not player_id.is_empty():
+		var scene := get_tree().current_scene
+		var busy := scene != null and scene.scene_file_path != ScenePaths.APP_SHELL
+		if busy != _busy:
+			## Tell the server right away, not at the next 15 s tick.
+			_busy = busy
+			_social_poll_left = 0.0
 		_social_poll_left -= _delta
 		if _social_poll_left <= 0.0:
 			_social_poll_left = SOCIAL_POLL_SECONDS
@@ -439,7 +449,9 @@ func fetch_social() -> void:
 		return
 	_social_polling = true
 	var reply: Dictionary = await _social_call(
-		HTTPClient.METHOD_GET, "/social?device_id=%s" % _load_or_create_device_id().uri_encode(), {}
+		HTTPClient.METHOD_GET,
+		"/social?device_id=%s&busy=%s" % [_load_or_create_device_id().uri_encode(), "true" if _busy else "false"],
+		{}
 	)
 	_social_polling = false
 	if int(reply["code"]) != 200 or typeof(reply["data"]) != TYPE_DICTIONARY:

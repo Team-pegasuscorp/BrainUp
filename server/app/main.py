@@ -1,5 +1,5 @@
 import secrets
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from uuid import UUID
 
 from fastapi import FastAPI, HTTPException, Query, WebSocket
@@ -35,7 +35,12 @@ from schemas import (
     PlayerRegister,
 )
 
-DAILY_CATEGORIES = ["sport", "cinema", "history"]
+## Daily challenge rotation: one category a day, "general" mixes them all. The game keeps a
+## copy (scripts/profile/daily_challenge.gd) as its offline fallback: change both together.
+DAILY_CATEGORIES = ["sport", "cinema", "history", "geography", "science", "music", "television", "general"]
+DAILY_ROTATION_START = date(2026, 10, 7)
+## Before the 8-category rotation started, the challenge only cycled through these three.
+LEGACY_DAILY_CATEGORIES = ["sport", "cinema", "history"]
 DAILY_QUESTION_COUNT = 7
 QUESTION_TIME_SECONDS = 10.0
 # Best possible daily score: every answer instant, combo growing each question.
@@ -168,8 +173,13 @@ def _trophy_leaderboard(limit: int) -> list[dict]:
 def _today_daily():
     """Today's shared challenge, always on the UTC calendar day."""
     today = datetime.now(timezone.utc).date()
-    category_id = DAILY_CATEGORIES[today.toordinal() % len(DAILY_CATEGORIES)]
-    return today, category_id
+    return today, daily_category(today)
+
+
+def daily_category(day: date) -> str:
+    if day < DAILY_ROTATION_START:
+        return LEGACY_DAILY_CATEGORIES[day.toordinal() % len(LEGACY_DAILY_CATEGORIES)]
+    return DAILY_CATEGORIES[(day - DAILY_ROTATION_START).days % len(DAILY_CATEGORIES)]
 
 
 @app.get("/daily-challenge", response_model=DailyChallenge)
@@ -442,8 +452,8 @@ def _social(action):
 
 
 @app.get("/social")
-def social_overview(device_id: str = Query(min_length=1, max_length=128)):
-    return _social(lambda conn: friends.overview(conn, _player_for_device(conn, device_id)))
+def social_overview(device_id: str = Query(min_length=1, max_length=128), busy: bool = False):
+    return _social(lambda conn: friends.overview(conn, _player_for_device(conn, device_id), busy))
 
 
 @app.get("/players/search")

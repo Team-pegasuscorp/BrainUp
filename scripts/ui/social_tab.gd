@@ -25,20 +25,6 @@ var _current_challenge: Dictionary = {}
 var _challenge_friend_key: String = ""
 var _status_text: String = ""
 
-var _live_state: String = "idle" # idle | searching | question | over
-var _live_opponent_name: String = ""
-var _live_opponent_trophies: int = -1
-## Opponent's look from match_found {avatar, frame, banner}.
-var _live_opponent_cosmetics: Dictionary = {}
-var _live_my_score: int = 0
-var _live_opponent_score: int = 0
-var _live_question: Dictionary = {}
-var _live_last_reveal: Dictionary = {}
-var _live_answered: bool = false
-var _live_countdown: float = 0.0
-var _live_over_data: Dictionary = {}
-var _countdown_label: Label = null
-
 var _friend_backdrop: ColorRect
 var _friend_detail_panel: PanelContainer
 var _friend_detail_banner: BannerView
@@ -80,12 +66,6 @@ func _ready() -> void:
 	NetworkManager.challenge_join_failed.connect(_on_challenge_join_failed)
 	NetworkManager.challenge_fetched.connect(_on_challenge_fetched)
 	NetworkManager.challenge_fetch_failed.connect(_on_challenge_fetch_failed)
-	NetworkManager.live_match_found.connect(_on_live_match_found)
-	NetworkManager.live_question.connect(_on_live_question)
-	NetworkManager.live_reveal.connect(_on_live_reveal)
-	NetworkManager.live_match_over.connect(_on_live_match_over)
-	NetworkManager.live_error.connect(_on_live_error)
-	NetworkManager.live_search_range_changed.connect(_on_live_search_range_changed)
 	NetworkManager.social_received.connect(_on_social_received)
 	NetworkManager.social_action_done.connect(_on_social_action_done)
 	NetworkManager.social_action_failed.connect(_on_social_action_failed)
@@ -119,14 +99,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _friends_page != null and _friends_page.visible:
 		_close_friends_page()
 		get_viewport().set_input_as_handled()
-
-
-func _process(_delta: float) -> void:
-	if _live_state != "question" or _live_answered:
-		return
-	_live_countdown = max(0.0, _live_countdown - _delta)
-	if _countdown_label != null:
-		_countdown_label.text = "%d" % ceili(_live_countdown)
 
 
 func on_tab_shown() -> void:
@@ -181,8 +153,7 @@ func _on_social_received(data: Dictionary) -> void:
 	if not _selected_friend.is_empty() or (_challenge_mode_picker != null and _challenge_mode_picker.visible):
 		return
 	_social_signature = signature
-	if _live_state == "idle":
-		_rebuild_content()
+	_rebuild_content()
 	if _friends_page != null and _friends_page.visible:
 		_populate_friends_page()
 	if _friend_requests_page != null and _friend_requests_page.visible:
@@ -223,7 +194,11 @@ func _on_social_action_failed(action: String, reason: String) -> void:
 	if action == "challenge_accept":
 		var friend_name := str(_accepting_challenge.get("name", ""))
 		_accepting_challenge = {}
-		var key := "UI_SOCIAL_CHALLENGE_REQUEST_OFFLINE" if reason == "challenger_offline" else "UI_SOCIAL_CHALLENGE_REQUEST_EXPIRED"
+		var key := "UI_SOCIAL_CHALLENGE_REQUEST_EXPIRED"
+		if reason == "challenger_offline":
+			key = "UI_SOCIAL_CHALLENGE_REQUEST_OFFLINE"
+		elif reason == "challenger_busy":
+			key = "UI_SOCIAL_CHALLENGE_REQUEST_BUSY"
 		_show_status(tr(key).format({"name": friend_name}))
 		NetworkManager.poll_social_now()
 		return
@@ -306,22 +281,18 @@ func _rebuild_content(reset_scroll: bool = false) -> void:
 	for child in stale:
 		content.remove_child(child)
 		child.queue_free()
-	_countdown_label = null
 
-	if _live_state != "idle":
-		content.add_child(_live_section())
-	else:
-		content.add_child(_friends_section())
-		content.add_child(_friend_requests_section())
-		content.add_child(_challenge_requests_section())
-		content.add_child(_player_search_section())
-		## Create / join / active-code tiles: see SHOW_ASYNC_CHALLENGE_TILES.
-		if SHOW_ASYNC_CHALLENGE_TILES:
-			if _current_challenge.is_empty():
-				content.add_child(_create_section())
-				content.add_child(_join_section())
-			else:
-				content.add_child(_challenge_card())
+	content.add_child(_friends_section())
+	content.add_child(_friend_requests_section())
+	content.add_child(_challenge_requests_section())
+	content.add_child(_player_search_section())
+	## Create / join / active-code tiles: see SHOW_ASYNC_CHALLENGE_TILES.
+	if SHOW_ASYNC_CHALLENGE_TILES:
+		if _current_challenge.is_empty():
+			content.add_child(_create_section())
+			content.add_child(_join_section())
+		else:
+			content.add_child(_challenge_card())
 
 	if not _status_text.is_empty():
 		content.add_child(_make_status_label(_status_text))
@@ -2643,165 +2614,6 @@ func _paint_category_chip(wrap: Control) -> void:
 	)
 
 
-func _live_search_section() -> PanelContainer:
-	var panel := PanelContainer.new()
-	panel.add_theme_stylebox_override("panel", UiStyle.social_surface(false, 10))
-
-	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 10)
-	panel.add_child(vbox)
-
-	var caption := Label.new()
-	caption.text = tr("UI_SOCIAL_LIVE_TITLE").to_upper()
-	caption.add_theme_font_size_override("font_size", UiScale.font(18))
-	caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-	vbox.add_child(caption)
-
-	var search_button := Button.new()
-	search_button.text = tr("UI_SOCIAL_LIVE_SEARCH")
-	search_button.pressed.connect(_on_live_search_pressed)
-	vbox.add_child(search_button)
-
-	return panel
-
-
-func _live_section() -> PanelContainer:
-	var panel := PanelContainer.new()
-	panel.add_theme_stylebox_override("panel", UiStyle.social_surface(false, 10))
-
-	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 10)
-	panel.add_child(vbox)
-
-	match _live_state:
-		"searching":
-			var label := Label.new()
-			var range_cups := NetworkManager.live_trophy_range
-			var searching := tr("UI_SOCIAL_LIVE_SEARCHING_RANGE").format({"range": range_cups})
-			if searching.begins_with("UI_SOCIAL_"):
-				searching = tr("UI_SOCIAL_LIVE_SEARCHING") + " (±%d 🏆)" % range_cups
-			label.text = searching
-			label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
-			vbox.add_child(label)
-			var cancel_button := Button.new()
-			cancel_button.text = tr("UI_SOCIAL_LIVE_CANCEL")
-			cancel_button.pressed.connect(_on_live_cancel_pressed)
-			vbox.add_child(cancel_button)
-		"question":
-			_build_live_question_view(vbox)
-		"over":
-			_build_live_over_view(vbox)
-
-	return panel
-
-
-func _build_live_question_view(vbox: VBoxContainer) -> void:
-	vbox.add_child(_live_face_off(str(_live_my_score), str(_live_opponent_score)))
-
-	_countdown_label = Label.new()
-	_countdown_label.text = "%d" % ceili(_live_countdown)
-	_countdown_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_countdown_label.add_theme_font_size_override("font_size", UiScale.font(22))
-	_countdown_label.add_theme_color_override("font_color", UiTokens.ACCENT_SOCIAL)
-	vbox.add_child(_countdown_label)
-
-	var question_label := Label.new()
-	question_label.text = str(_live_question.get("text", ""))
-	question_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	question_label.add_theme_font_size_override("font_size", UiScale.font(17))
-	question_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-	vbox.add_child(question_label)
-
-	var correct_index := -1
-	var your_selected := -2
-	if not _live_last_reveal.is_empty():
-		correct_index = int(_live_last_reveal.get("correct_index", -1))
-		your_selected = int(_live_last_reveal.get("your_result", {}).get("selected_index", -2))
-
-	var choices: Array = _live_question.get("choices", [])
-	for index in range(choices.size()):
-		var button := Button.new()
-		button.text = str(choices[index])
-		button.disabled = _live_answered
-		if index == correct_index:
-			button.add_theme_color_override("font_color", Color.FOREST_GREEN)
-		elif index == your_selected:
-			button.add_theme_color_override("font_color", Color.CRIMSON)
-		button.pressed.connect(_on_live_choice_pressed.bind(index))
-		vbox.add_child(button)
-
-	if not _live_last_reveal.is_empty():
-		var your_result: Dictionary = _live_last_reveal.get("your_result", {})
-		var points_label := Label.new()
-		points_label.text = tr("UI_SOCIAL_LIVE_POINTS").format({"points": int(your_result.get("points", 0))})
-		points_label.add_theme_font_size_override("font_size", UiScale.font(13))
-		points_label.add_theme_color_override("font_color", UiTokens.ACCENT_SOCIAL)
-		vbox.add_child(points_label)
-
-
-## Me vs opponent, each with banner, framed avatar and current score.
-func _live_face_off(my_value: String, opponent_value: String, my_highlight: Color = Color(0, 0, 0, 0)) -> Control:
-	return CosmeticsView.face_off(
-		SaveManager.player_name, SaveManager.get_cosmetics(), my_value,
-		_live_opponent_name, _live_opponent_cosmetics, opponent_value,
-		640.0, my_highlight
-	)
-
-
-func _build_live_over_view(vbox: VBoxContainer) -> void:
-	var won: bool = bool(_live_over_data.get("won", false))
-	var my_score: int = int(_live_over_data.get("your_score", 0))
-	var opponent_score: int = int(_live_over_data.get("opponent_score", 0))
-	vbox.add_child(_live_face_off(
-		str(my_score), str(opponent_score), UiTokens.PODIUM_GOLD if won else Color(0, 0, 0, 0)
-	))
-
-	var key := "UI_SOCIAL_RESULT_LOSS"
-	if won:
-		key = "UI_SOCIAL_RESULT_WIN"
-	elif my_score == opponent_score:
-		key = "UI_SOCIAL_RESULT_TIE"
-
-	var label := Label.new()
-	label.text = tr(key).format({"my_score": my_score, "opponent_score": opponent_score})
-	label.add_theme_font_size_override("font_size", UiScale.font(18))
-	label.add_theme_color_override("font_color", UiTokens.ACCENT_SOCIAL)
-	vbox.add_child(label)
-
-	## Clash-style settle as soon as the live match ends.
-	## Prefer opponent cups from match_over, else the value cached at match_found.
-	var match_id := "live:%s" % str(_live_over_data.get("match_id", "%d-%d" % [my_score, opponent_score]))
-	var opp_cups := _live_opponent_trophies_from(_live_over_data)
-	if opp_cups < 0:
-		opp_cups = _live_opponent_trophies
-	var delta := SaveManager.settle_versus_trophies(match_id, my_score, opponent_score, opp_cups)
-	if delta != 0:
-		var cups := Label.new()
-		var sign := "+" if delta > 0 else ""
-		var line := "%s%d 🏆" % [sign, delta]
-		var streak_bonus := SaveManager.last_trophy_streak_bonus
-		if streak_bonus > 0:
-			var bonus_label := tr("UI_TROPHY_STREAK_BONUS").format({"streak": SaveManager.versus_win_streak})
-			if bonus_label.begins_with("UI_TROPHY_"):
-				bonus_label = "streak x%d" % SaveManager.versus_win_streak
-			line += "  ·  +%d (%s)" % [streak_bonus, bonus_label]
-		var consolation := SaveManager.last_trophy_loss_consolation
-		if consolation > 0:
-			var cons_label := tr("UI_TROPHY_LOSS_CONSOLATION")
-			if cons_label.begins_with("UI_TROPHY_"):
-				cons_label = "keep going" if LocaleManager.current_locale != "fr" else "courage"
-			line += "  ·  +%d (%s)" % [consolation, cons_label]
-		cups.text = line
-		cups.add_theme_font_size_override("font_size", UiScale.font(16))
-		cups.add_theme_color_override("font_color", UiTokens.PODIUM_GOLD)
-		vbox.add_child(cups)
-
-	var close_button := Button.new()
-	close_button.text = tr("UI_SOCIAL_LIVE_CLOSE")
-	close_button.pressed.connect(_on_live_close_pressed)
-	vbox.add_child(close_button)
-
-
 func _join_section() -> PanelContainer:
 	## Kept for SHOW_ASYNC_CHALLENGE_TILES — not mounted while the flag is false.
 	var panel := PanelContainer.new()
@@ -3050,93 +2862,6 @@ func _on_play_pressed() -> void:
 		_rebuild_content()
 		return
 	get_tree().change_scene_to_file(ScenePaths.QUIZ_GAME)
-
-
-func _on_live_search_pressed() -> void:
-	if _selected_category_id.is_empty():
-		return
-	_live_state = "searching"
-	_rebuild_content()
-	NetworkManager.start_live_matchmaking(_selected_category_id)
-
-
-func _on_live_search_range_changed(_trophy_range: int) -> void:
-	if _live_state == "searching":
-		_rebuild_content()
-
-
-func _on_live_cancel_pressed() -> void:
-	NetworkManager.stop_live_matchmaking()
-	_live_state = "idle"
-	_live_opponent_trophies = -1
-	_rebuild_content()
-
-
-func _on_live_match_found(data: Dictionary) -> void:
-	_live_opponent_name = str(data.get("opponent_name", ""))
-	_live_opponent_trophies = _live_opponent_trophies_from(data)
-	var cosmetics: Variant = data.get("opponent_cosmetics", {})
-	_live_opponent_cosmetics = cosmetics if typeof(cosmetics) == TYPE_DICTIONARY else {}
-	_live_my_score = 0
-	_live_opponent_score = 0
-
-
-func _live_opponent_trophies_from(data: Dictionary) -> int:
-	## Server contract: top-level opponent_trophies, or nested under opponent {}.
-	if data.has("opponent_trophies"):
-		return maxi(int(data.get("opponent_trophies", -1)), -1)
-	var nested: Variant = data.get("opponent", {})
-	if typeof(nested) == TYPE_DICTIONARY and nested.has("trophies"):
-		return maxi(int(nested.get("trophies", -1)), -1)
-	return -1
-
-
-func _on_live_question(data: Dictionary) -> void:
-	_live_question = data
-	_live_state = "question"
-	_live_answered = false
-	_live_last_reveal = {}
-	_live_countdown = float(data.get("time_limit", 10.0))
-	_rebuild_content()
-
-
-func _on_live_choice_pressed(index: int) -> void:
-	if _live_answered:
-		return
-	_live_answered = true
-	NetworkManager.send_live_answer(int(_live_question.get("index", 0)), index)
-	_rebuild_content()
-
-
-func _on_live_reveal(data: Dictionary) -> void:
-	_live_last_reveal = data
-	_live_answered = true
-	_live_my_score = int(data.get("your_result", {}).get("score", _live_my_score))
-	_live_opponent_score = int(data.get("opponent_result", {}).get("score", _live_opponent_score))
-	_rebuild_content()
-
-
-func _on_live_match_over(data: Dictionary) -> void:
-	_live_over_data = data
-	var cups := _live_opponent_trophies_from(data)
-	if cups >= 0:
-		_live_opponent_trophies = cups
-	_live_state = "over"
-	_rebuild_content()
-
-
-func _on_live_error(_reason: String) -> void:
-	_live_state = "idle"
-	_live_opponent_trophies = -1
-	_status_text = tr("UI_SOCIAL_ERROR_OFFLINE")
-	_rebuild_content()
-
-
-func _on_live_close_pressed() -> void:
-	_live_state = "idle"
-	_live_over_data = {}
-	_live_opponent_trophies = -1
-	_rebuild_content()
 
 
 func _on_locale_changed(_locale: String) -> void:

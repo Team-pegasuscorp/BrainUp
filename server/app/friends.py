@@ -31,8 +31,13 @@ class SocialError(Exception):
         self.status = status
 
 
-def touch(conn: Connection, player_id: str) -> None:
-    conn.execute(text("UPDATE players SET last_seen_at = now() WHERE id = :id"), {"id": player_id})
+def touch(conn: Connection, player_id: str, busy: bool = False) -> None:
+    conn.execute(
+        text("""UPDATE players SET last_seen_at = now(),
+                busy_until = CASE WHEN :busy THEN now() + make_interval(secs => :s) ELSE NULL END
+                WHERE id = :id"""),
+        {"id": player_id, "busy": busy, "s": ONLINE_SECONDS},
+    )
 
 
 def _now() -> datetime:
@@ -192,7 +197,7 @@ def answer_challenge(conn: Connection, me: str, challenge_id: str, accept: bool)
     _expire_challenges(conn)
     row = conn.execute(
         text("""SELECT c.id, c.from_id, c.to_id, c.mode, c.status, c.created_at, c.expires_at,
-                       p.last_seen_at AS challenger_seen
+                       p.last_seen_at AS challenger_seen, p.busy_until AS challenger_busy_until
                 FROM friend_challenges c JOIN players p ON p.id = c.from_id
                 WHERE c.id = :id FOR UPDATE OF c"""),
         {"id": challenge_id},
@@ -211,6 +216,9 @@ def answer_challenge(conn: Connection, me: str, challenge_id: str, accept: bool)
     seen = row["challenger_seen"]
     if seen is None or (_now() - seen).total_seconds() > ONLINE_SECONDS:
         raise SocialError("challenger_offline")
+    busy_until = row["challenger_busy_until"]
+    if busy_until is not None and busy_until > _now():
+        raise SocialError("challenger_busy")
     conn.execute(
         text("UPDATE friend_challenges SET status = 'accepted', accepted_at = now() WHERE id = :id"),
         {"id": challenge_id},
@@ -276,9 +284,9 @@ def _friend_stats(conn: Connection, ids: list[str]) -> dict:
     return stats
 
 
-def overview(conn: Connection, me: str) -> dict:
-    """Everything the Social tab shows. Also counts as a presence ping."""
-    touch(conn, me)
+def overview(conn: Connection, me: str, busy: bool = False) -> dict:
+    """Everything the Social tab shows. Also counts as a presence ping (`busy`: in a game)."""
+    touch(conn, me, busy)
     _expire_challenges(conn)
     friends = conn.execute(
         text(f"""SELECT {_PLAYER_COLUMNS} FROM friendships f JOIN players p ON p.id = f.friend_id

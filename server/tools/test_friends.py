@@ -123,6 +123,10 @@ async def main() -> None:
     psql(f"UPDATE players SET last_seen_at = now() - interval '10 minutes' WHERE id = '{alice['id']}';")
     status, refused = call("POST", f"/friends/challenges/{invite['id']}/accept", {"device_id": bob["device"]})
     check("accept refused while Alice is offline", status == 409 and refused["detail"] == "challenger_offline", refused)
+    ## Challenger in a game (busy poll): refused too, the invite stays pending.
+    call("GET", f"/social?device_id={alice['device']}&busy=true")
+    status, refused = call("POST", f"/friends/challenges/{invite['id']}/accept", {"device_id": bob["device"]})
+    check("accept refused while Alice is in a game", status == 409 and refused["detail"] == "challenger_busy", refused)
     call("GET", f"/social?device_id={alice['device']}")
     status, accepted = call("POST", f"/friends/challenges/{invite['id']}/accept", {"device_id": bob["device"]})
     check("accept works once Alice is back", status == 200 and accepted["status"] == "accepted", accepted)
