@@ -11,7 +11,8 @@ const CORNER_RADIUS := 14.0
 ## Palette keys for inspector + code (see PALETTES).
 @export_enum(
 	"violet", "sunset", "ocean", "foret", "fruits", "or", "indigo", "menthe",
-	"lavande", "lagon", "crepuscule", "bonbon", "citron", "minuit", "sakura", "lave"
+	"lavande", "lagon", "crepuscule", "bonbon", "citron", "minuit", "sakura", "lave",
+	"argent"
 )
 var aurore_theme: String = "violet":
 	set(value):
@@ -36,7 +37,22 @@ const PALETTES := {
 	"minuit": ["3b82f6", "a855f7", "0b1437"],
 	"sakura": ["f9a8d4", "c4b5fd", "4a1d4d"],
 	"lave": ["ef4444", "f59e0b", "2b0a0a"],
+	"argent": ["d1d5db", "94a3b8", "1f2937"],
 }
+
+## League id → aurora palette (bronze copper, silver grey, gold, etc.).
+const LEAGUE_THEMES := {
+	"bronze": "sunset",
+	"silver": "argent",
+	"gold": "or",
+	"platinum": "lavande",
+	"diamond": "lagon",
+}
+
+
+static func theme_for_league(league_id: String) -> String:
+	var key := league_id.strip_edges().to_lower()
+	return str(LEAGUE_THEMES.get(key, "sunset"))
 
 
 ## Pick the palette whose blob/base colours sit closest to `accent`.

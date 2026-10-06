@@ -699,7 +699,7 @@ func _demo_challenge_requests() -> Array:
 			"name": "Lea",
 			"level": 22,
 			"mode": 1,
-			"presence": "offline",
+			"presence": "online",
 			"sent_at": sent_at,
 			"sent_unix": now,
 		},
@@ -1287,7 +1287,7 @@ func _ensure_friend_detail_overlay() -> void:
 
 	_friend_detail_panel = PanelContainer.new()
 	_friend_detail_panel.visible = true
-	_friend_detail_panel.custom_minimum_size = Vector2(480, 0)
+	_friend_detail_panel.custom_minimum_size = Vector2(560, 0)
 	var surface := UiStyle.social_surface(true, 0)
 	## Transparent fill so the friend's banner reads as the sheet background.
 	surface.bg_color = Color(0, 0, 0, 0)
@@ -1298,15 +1298,15 @@ func _ensure_friend_detail_overlay() -> void:
 	_friend_detail_panel.add_child(_friend_detail_banner)
 
 	var pad := MarginContainer.new()
-	pad.add_theme_constant_override("margin_left", 20)
-	pad.add_theme_constant_override("margin_right", 20)
-	pad.add_theme_constant_override("margin_top", 20)
-	pad.add_theme_constant_override("margin_bottom", 18)
+	pad.add_theme_constant_override("margin_left", 24)
+	pad.add_theme_constant_override("margin_right", 24)
+	pad.add_theme_constant_override("margin_top", 24)
+	pad.add_theme_constant_override("margin_bottom", 22)
 	pad.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_friend_detail_panel.add_child(pad)
 
 	_friend_detail_body = VBoxContainer.new()
-	_friend_detail_body.add_theme_constant_override("separation", 16)
+	_friend_detail_body.add_theme_constant_override("separation", 18)
 	_friend_detail_body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	pad.add_child(_friend_detail_body)
 
@@ -1345,13 +1345,13 @@ func _fit_friend_detail_panel() -> void:
 	## Shrink sheet height to content so no empty band sits above the CTA.
 	if _friend_detail_panel == null or _friend_detail_body == null:
 		return
-	var pad_h := 38.0 ## top 20 + bottom 18
+	var pad_h := 46.0 ## top 24 + bottom 22
 	var content_h := _friend_detail_body.get_combined_minimum_size().y
 	if content_h < 1.0:
 		content_h = _friend_detail_body.size.y
 	var h := maxf(content_h + pad_h, 120.0)
-	var max_w := maxf(size.x - 32.0, 320.0)
-	var w := minf(480.0, max_w)
+	var max_w := maxf(size.x - 24.0, 360.0)
+	var w := minf(560.0, max_w)
 	_friend_detail_panel.custom_minimum_size = Vector2(w, h)
 
 
@@ -1522,7 +1522,7 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 	if cosmetics.is_empty():
 		cosmetics = ShopCatalog.demo_cosmetics_for(friend_name)
 
-	var avatar := CosmeticsView.avatar(cosmetics, 128.0)
+	var avatar := CosmeticsView.avatar(cosmetics, 148.0)
 	avatar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	match str(friend.get("presence", "offline")):
 		"online":
@@ -1559,52 +1559,60 @@ func _populate_friend_detail(friend: Dictionary) -> void:
 
 	header.add_child(_social_close_button(_close_friend_detail, true))
 
-	## Best subject row.
+	## Best subject row — same category aurora as the stat tiles.
 	_friend_detail_body.add_child(_friend_best_subject_card(friend, cat_accent))
 
-	## Three stat tiles.
+	## Three stat tiles — shared aurora matched to the friend's best category.
 	var stats := HBoxContainer.new()
-	stats.add_theme_constant_override("separation", 8)
+	stats.add_theme_constant_override("separation", 10)
 	stats.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_friend_detail_body.add_child(stats)
 
+	var shared_theme := AuroreTile.theme_closest_to(cat_accent)
+
 	stats.add_child(_friend_stat_tile(
 		"🎯",
-		Color(1.0, 0.55, 0.22, 1),
+		cat_accent,
 		tr("UI_SOCIAL_FRIEND_ACCURACY").to_upper(),
 		"%.0f%%" % float(friend.get("best_accuracy", 0.0)),
 		"",
-		UiTokens.PROFILE_TEXT
+		UiTokens.PROFILE_TEXT,
+		false,
+		shared_theme
 	))
 	stats.add_child(_friend_stat_tile(
 		"⚔️",
-		UiTokens.ACCENT_SOCIAL,
+		cat_accent,
 		tr("UI_SOCIAL_FRIEND_H2H").to_upper(),
 		_friend_h2h_label(friend),
 		"",
-		UiTokens.PROFILE_TEXT
+		UiTokens.PROFILE_TEXT,
+		false,
+		shared_theme
 	))
 	stats.add_child(_friend_stat_tile(
 		"🎮",
-		UiTokens.FEEDBACK_WRONG,
+		cat_accent,
 		tr("UI_SOCIAL_FRIEND_LAST_GAME").to_upper(),
 		tr("UI_PROFILE_WIN") if last_won else tr("UI_PROFILE_LOSS"),
 		str(friend.get("last_game_subject", "")),
-		UiTokens.FEEDBACK_CORRECT if last_won else UiTokens.FEEDBACK_WRONG
+		UiTokens.FEEDBACK_CORRECT if last_won else UiTokens.FEEDBACK_WRONG,
+		false,
+		shared_theme
 	))
 
 	## Challenge CTA.
 	var challenge := Button.new()
 	challenge.focus_mode = Control.FOCUS_NONE
-	challenge.custom_minimum_size.y = 60
+	challenge.custom_minimum_size.y = 68
 	challenge.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var challenge_style := StyleBoxFlat.new()
 	challenge_style.bg_color = UiTokens.ACCENT_SOCIAL
 	challenge_style.set_corner_radius_all(16)
-	challenge_style.content_margin_left = 16
-	challenge_style.content_margin_right = 16
-	challenge_style.content_margin_top = 12
-	challenge_style.content_margin_bottom = 12
+	challenge_style.content_margin_left = 18
+	challenge_style.content_margin_right = 18
+	challenge_style.content_margin_top = 14
+	challenge_style.content_margin_bottom = 14
 	challenge_style.shadow_color = Color(UiTokens.ACCENT_SOCIAL.r, UiTokens.ACCENT_SOCIAL.g, UiTokens.ACCENT_SOCIAL.b, 0.35)
 	challenge_style.shadow_size = 10
 	challenge_style.shadow_offset = Vector2(0, 4)
@@ -1650,33 +1658,48 @@ func _friend_best_subject_card(friend: Dictionary, cat_accent: Color) -> Control
 	var cat_id := str(friend.get("best_category_id", ""))
 	var card := PanelContainer.new()
 	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	card.custom_minimum_size.y = 100
+	card.custom_minimum_size.y = 118
 	var style := StyleBoxFlat.new()
-	## Solid social tile fill so content stays readable on the full-brightness banner.
-	style.bg_color = UiTokens.SOCIAL_CARD_BG_RAISED
-	style.set_corner_radius_all(14)
-	style.set_border_width_all(1)
-	style.border_color = UiTokens.SOCIAL_CARD_BORDER
-	style.content_margin_left = 14
-	style.content_margin_right = 14
-	style.content_margin_top = 14
-	style.content_margin_bottom = 14
+	## Transparent chrome so AuroreTile (category palette) shows through.
+	style.bg_color = Color(0, 0, 0, 0)
+	style.set_corner_radius_all(16)
+	style.set_border_width_all(0)
+	style.content_margin_left = 22
+	style.content_margin_right = 16
+	style.content_margin_top = 16
+	style.content_margin_bottom = 16
 	card.add_theme_stylebox_override("panel", style)
 
+	var bg := AuroreTile.new()
+	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	bg.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	bg.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	bg.aurore_theme = AuroreTile.theme_closest_to(cat_accent)
+	card.add_child(bg)
+
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 14)
+	row.add_theme_constant_override("separation", 16)
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
 	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	card.add_child(row)
+
+	## Small inset so the circle isn't flush against the tile edge.
+	var icon_pad := MarginContainer.new()
+	icon_pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	icon_pad.add_theme_constant_override("margin_left", 14)
+	icon_pad.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	row.add_child(icon_pad)
 
 	var cat_icon := _friend_category_icon(
 		cat_id,
 		str(friend.get("best_subject_icon", "🧠")),
 		cat_accent,
-		68
+		70.0
 	)
 	cat_icon.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	row.add_child(cat_icon)
+	icon_pad.add_child(cat_icon)
 
 	var texts := VBoxContainer.new()
 	texts.add_theme_constant_override("separation", 4)
@@ -1688,54 +1711,78 @@ func _friend_best_subject_card(friend: Dictionary, cat_accent: Color) -> Control
 	var caption := Label.new()
 	caption.text = tr("UI_SOCIAL_BEST_CATEGORY").to_upper()
 	caption.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	caption.add_theme_font_size_override("font_size", UiScale.font(17))
+	caption.add_theme_font_size_override("font_size", UiScale.font(16))
 	caption.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 	texts.add_child(caption)
 
 	var subject := Label.new()
 	subject.text = str(friend.get("best_subject", "—"))
 	subject.clip_text = true
+	subject.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	subject.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	subject.add_theme_font_size_override("font_size", UiScale.font(22))
+	subject.add_theme_font_size_override(
+		"font_size",
+		UiScale.font(_friend_detail_fit_font(subject.text, 22, 16))
+	)
 	subject.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	texts.add_child(subject)
 
 	return card
 
 
+func _friend_detail_fit_font(text: String, base: int, floor_size: int) -> int:
+	## Shrink long labels so they stay readable inside narrow friend-detail tiles.
+	var n := text.strip_edges().length()
+	if n <= 8:
+		return base
+	if n <= 14:
+		return maxi(floor_size, base - 2)
+	if n <= 20:
+		return maxi(floor_size, base - 4)
+	return floor_size
+
+
 func _friend_stat_tile(
 	icon_text: String,
-	_icon_color: Color,
+	icon_color: Color,
 	caption: String,
 	value: String,
 	subtitle: String,
 	value_color: Color,
-	with_chevron: bool = false
+	with_chevron: bool = false,
+	aurore_theme: String = ""
 ) -> Control:
-	const ICON_SIZE := 48.0
-	const CAPTION_H := 48.0
+	const ICON_SIZE := 44.0
 	var card := PanelContainer.new()
 	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	card.custom_minimum_size.y = 172
+	card.custom_minimum_size.y = 200
 	var style := StyleBoxFlat.new()
-	## Solid social tile fill so content stays readable on the full-brightness banner.
-	style.bg_color = UiTokens.SOCIAL_CARD_BG_RAISED
-	style.set_corner_radius_all(14)
-	style.set_border_width_all(1)
-	style.border_color = UiTokens.SOCIAL_CARD_BORDER
-	style.content_margin_left = 4
-	style.content_margin_right = 4
-	style.content_margin_top = 8
-	style.content_margin_bottom = 10
+	## Transparent chrome so AuroreTile reads as the tile surface.
+	style.bg_color = Color(0, 0, 0, 0)
+	style.set_corner_radius_all(16)
+	style.set_border_width_all(0)
+	style.content_margin_left = 8
+	style.content_margin_right = 8
+	style.content_margin_top = 12
+	style.content_margin_bottom = 12
 	card.add_theme_stylebox_override("panel", style)
 
+	var bg := AuroreTile.new()
+	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	bg.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	bg.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	bg.aurore_theme = aurore_theme if not aurore_theme.is_empty() else AuroreTile.theme_closest_to(icon_color)
+	card.add_child(bg)
+
 	var col := VBoxContainer.new()
-	col.add_theme_constant_override("separation", 2)
-	col.alignment = BoxContainer.ALIGNMENT_BEGIN
+	col.add_theme_constant_override("separation", 4)
+	col.alignment = BoxContainer.ALIGNMENT_CENTER
 	col.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	col.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	card.add_child(col)
 
-	## Fixed-height icon band so the 3 sibling tiles share the same icon baseline.
+	## Icon
 	var icon_row := HBoxContainer.new()
 	icon_row.custom_minimum_size.y = ICON_SIZE
 	icon_row.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -1776,54 +1823,54 @@ func _friend_stat_tile(
 		chevron.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
 		trail.add_child(chevron)
 
-	## Fixed caption band tall enough for 2 wrapped lines on all 3 tiles.
-	var caption_slot := Control.new()
-	caption_slot.custom_minimum_size.y = CAPTION_H
-	caption_slot.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	col.add_child(caption_slot)
-
+	## Caption — shrink long FR/EN labels so they don't collide in narrow columns.
 	var caption_label := Label.new()
 	caption_label.text = caption
 	caption_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	caption_label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	caption_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	caption_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	caption_label.max_lines_visible = 2
-	caption_label.clip_text = false
-	caption_label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	caption_label.add_theme_font_size_override("font_size", UiScale.font(15))
+	caption_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	caption_label.add_theme_font_size_override(
+		"font_size",
+		UiScale.font(_friend_detail_fit_font(caption, 14, 11))
+	)
 	caption_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
-	caption_slot.add_child(caption_label)
+	col.add_child(caption_label)
 
-	## Fixed value band so the 3 results share one baseline.
-	var value_slot := Control.new()
-	value_slot.custom_minimum_size.y = 34
-	value_slot.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	col.add_child(value_slot)
-
+	## Value — primary figure; scale down for longer H2H scores.
 	var value_label := Label.new()
 	value_label.text = value
 	value_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	value_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	value_label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	value_label.add_theme_font_size_override("font_size", UiScale.font(28))
+	value_label.clip_text = true
+	value_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	value_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	value_label.add_theme_font_size_override(
+		"font_size",
+		UiScale.font(_friend_detail_fit_font(value, 28, 18))
+	)
 	value_label.add_theme_color_override("font_color", value_color)
-	value_slot.add_child(value_label)
+	col.add_child(value_label)
 
-	## Always reserve subtitle height so tiles without one stay aligned.
-	var sub_slot := Control.new()
-	sub_slot.custom_minimum_size.y = 18
-	sub_slot.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	col.add_child(sub_slot)
-
+	## Subtitle (category of last game, etc.) — keep height even when empty for alignment.
 	var sub := Label.new()
-	sub.text = subtitle
+	sub.text = subtitle if not subtitle.strip_edges().is_empty() else " "
 	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	sub.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	sub.clip_text = true
-	sub.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	sub.add_theme_font_size_override("font_size", UiScale.font(14))
-	sub.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
-	sub_slot.add_child(sub)
+	sub.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	sub.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	sub.custom_minimum_size.y = 18
+	sub.add_theme_font_size_override(
+		"font_size",
+		UiScale.font(_friend_detail_fit_font(subtitle, 13, 11))
+	)
+	sub.add_theme_color_override(
+		"font_color",
+		UiTokens.PROFILE_TEXT_MUTED if not subtitle.strip_edges().is_empty() else Color(0, 0, 0, 0)
+	)
+	col.add_child(sub)
 	return card
 
 
@@ -1831,31 +1878,38 @@ func _friend_category_icon(
 	category_id: String,
 	icon_text: String,
 	accent: Color,
-	size_px: float = 36.0
+	size_px: float = 54.0
 ) -> Control:
+	## Same circular treatment as profile mastery icons — UI circle + inset PNG.
+	var side := size_px
 	var slot := Control.new()
-	slot.custom_minimum_size = Vector2(size_px, size_px)
+	slot.custom_minimum_size = Vector2(side, side)
+	slot.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	slot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 	var bg := Panel.new()
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var style := StyleBoxFlat.new()
-	style.bg_color = Color(accent.r, accent.g, accent.b, 0.28)
-	style.set_corner_radius_all(int(size_px * 0.5))
-	bg.add_theme_stylebox_override("panel", style)
+	var icon_style := StyleBoxFlat.new()
+	icon_style.bg_color = Color(accent.r, accent.g, accent.b, 0.42)
+	icon_style.set_corner_radius_all(int(round(side * 0.5)))
+	icon_style.set_content_margin_all(0)
+	icon_style.shadow_color = Color(accent.r, accent.g, accent.b, 0.18)
+	icon_style.shadow_size = 2
+	bg.add_theme_stylebox_override("panel", icon_style)
 	slot.add_child(bg)
 
-	var icon := GameAssets.make_icon_display(
+	var emoji_size := clampi(int(round(side * 0.52)), 18, 36)
+	var icon_display := GameAssets.make_circular_icon_display(
 		GameAssets.category_texture(category_id),
 		icon_text,
-		size_px,
-		int(size_px * 0.72),
-		0.84
+		side,
+		emoji_size,
+		GameAssets.ROUND_ICON_INSET
 	)
-	icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	slot.add_child(icon)
+	icon_display.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	slot.add_child(icon_display)
 	return slot
 
 

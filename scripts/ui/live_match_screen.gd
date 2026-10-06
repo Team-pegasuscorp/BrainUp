@@ -36,7 +36,6 @@ var _opponent_lives: int = 0
 var _my_clock: float = 0.0
 var _opponent_clock: float = 0.0
 
-var _search_elapsed: float = 0.0
 var _draft_left: float = 0.0
 var _draft_vote: String = ""
 var _draft_tiles: Dictionary = {}
@@ -51,7 +50,6 @@ var _error_key: String = ""
 
 var _margin: MarginContainer
 var _body: VBoxContainer
-var _search_label: Label
 var _timer_fill: Panel
 var _timer_track: Panel
 var _answer_buttons: Array[Button] = []
@@ -69,6 +67,7 @@ var _tile_letters: Array[Label] = []
 var _tile_texts: Array[Label] = []
 var _tile_markers: Array[HBoxContainer] = []
 var _tap_catcher: Control
+var _search_backdrop: Control
 var _opponent_badge: Label
 var _reading: bool = false
 var _read_left: float = 0.0
@@ -115,7 +114,6 @@ func _ready() -> void:
 	NetworkManager.live_opponent_ready.connect(_on_opponent_ready)
 	NetworkManager.live_match_over.connect(_on_match_over)
 	NetworkManager.live_error.connect(_on_error)
-	NetworkManager.live_search_range_changed.connect(func(_r: int) -> void: _update_search_label())
 	_start_search()
 
 
@@ -134,9 +132,6 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _process(delta: float) -> void:
 	match _state:
-		State.SEARCHING:
-			_search_elapsed += delta
-			_update_search_label()
 		State.DRAFT:
 			if _draft_left > 0.0:
 				_draft_left = maxf(_draft_left - delta, 0.0)
@@ -158,7 +153,6 @@ func _process(delta: float) -> void:
 
 func _start_search() -> void:
 	_state = State.SEARCHING
-	_search_elapsed = 0.0
 	_found = {}
 	_over = {}
 	_category = ""
@@ -422,6 +416,9 @@ func _clear() -> void:
 	if _tap_catcher != null and is_instance_valid(_tap_catcher):
 		_tap_catcher.queue_free()
 	_tap_catcher = null
+	if _search_backdrop != null and is_instance_valid(_search_backdrop):
+		_search_backdrop.queue_free()
+	_search_backdrop = null
 	_reading = false
 	_answer_buttons.clear()
 	_tile_badges.clear()
@@ -435,29 +432,82 @@ func _clear() -> void:
 
 func _build_search() -> void:
 	_clear()
-	_body.alignment = BoxContainer.ALIGNMENT_CENTER
-	_body.add_child(_title(tr("UI_DUEL_SEARCHING"), 30))
-	_body.add_child(_subtitle(_mode_name()))
-	var card_box := CenterContainer.new()
-	_body.add_child(card_box)
-	card_box.add_child(CosmeticsView.player_card(
-		SaveManager.player_name, SaveManager.get_cosmetics(), "🏆 %d" % SaveManager.trophies, 320.0
-	))
-	_search_label = _subtitle("")
-	_body.add_child(_search_label)
-	_update_search_label()
-	var cancel := _button(tr("UI_DUEL_CANCEL"), Color(1, 1, 1, 0.14), Color.WHITE)
+	## Full-bleed player banner behind the search UI.
+	_search_backdrop = Control.new()
+	_search_backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_search_backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var banner := CosmeticsView.banner(SaveManager.get_equipped_banner(), Vector2.ZERO, 0)
+	banner.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	banner.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_search_backdrop.add_child(banner)
+	var veil := ColorRect.new()
+	veil.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	veil.color = Color(0, 0, 0, 0.32)
+	veil.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_search_backdrop.add_child(veil)
+	add_child(_search_backdrop)
+	## Sit above the page shader, under the content margin.
+	move_child(_search_backdrop, 1)
+
+	_body.alignment = BoxContainer.ALIGNMENT_BEGIN
+	_body.add_theme_constant_override("separation", 14)
+
+	## Stage fills the height; avatar bottom sits above mid, copy + mode underneath.
+	const AVATAR_SIDE := 280.0
+	var stage := Control.new()
+	stage.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	stage.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	stage.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_body.add_child(stage)
+
+	var avatar := CosmeticsView.avatar(SaveManager.get_cosmetics(), AVATAR_SIDE)
+	avatar.anchor_left = 0.5
+	avatar.anchor_right = 0.5
+	avatar.anchor_top = 0.5
+	avatar.anchor_bottom = 0.5
+	avatar.offset_left = -AVATAR_SIDE * 0.5
+	avatar.offset_right = AVATAR_SIDE * 0.5
+	avatar.offset_top = -AVATAR_SIDE - 200.0
+	avatar.offset_bottom = -200.0
+	stage.add_child(avatar)
+
+	var identity := VBoxContainer.new()
+	identity.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	identity.add_theme_constant_override("separation", 10)
+	identity.anchor_left = 0.0
+	identity.anchor_right = 1.0
+	identity.anchor_top = 0.5
+	identity.anchor_bottom = 0.5
+	identity.offset_top = 14.0 - 200.0
+	identity.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	stage.add_child(identity)
+
+	var name_label := _title(SaveManager.player_name, 28)
+	name_label.add_theme_font_size_override(
+		"font_size", UiScale.font(UiTokens.pseudo_font_size(SaveManager.player_name, 28))
+	)
+	name_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.55))
+	name_label.add_theme_constant_override("outline_size", 5)
+	identity.add_child(name_label)
+
+	var trophies := _title("🏆 %d" % SaveManager.trophies, 24)
+	trophies.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.55))
+	trophies.add_theme_constant_override("outline_size", 4)
+	identity.add_child(trophies)
+
+	var title := _title(tr("UI_DUEL_SEARCHING").to_upper(), 40)
+	title.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.55))
+	title.add_theme_constant_override("outline_size", 6)
+	identity.add_child(title)
+
+	var mode_wrap := CenterContainer.new()
+	mode_wrap.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	identity.add_child(mode_wrap)
+	mode_wrap.add_child(_mode_badge(_mode))
+
+	var cancel := _button(tr("UI_DUEL_CANCEL"), Color(1, 1, 1, 0.18), Color.WHITE)
 	cancel.pressed.connect(_leave)
 	_body.add_child(cancel)
-
-
-func _update_search_label() -> void:
-	if _search_label == null or not is_instance_valid(_search_label):
-		return
-	var dots := ".".repeat(1 + int(_search_elapsed * 2.0) % 3)
-	_search_label.text = "%s  ±%d 🏆  ·  %d s%s" % [
-		tr("UI_DUEL_SEARCH_RANGE"), NetworkManager.live_trophy_range, int(_search_elapsed), dots
-	]
 
 
 func _build_draft(choices: Array) -> void:
@@ -1016,6 +1066,50 @@ func _mode_name() -> String:
 		"time_attack":
 			return tr("UI_MODE_TIME_ATTACK")
 	return tr("UI_MODE_CLASSIC")
+
+
+## Same coloured mode chip as home “last matches” / history rows.
+func _mode_badge(mode: String) -> Control:
+	var key := "UI_MODE_CLASSIC"
+	var icon := "🎯"
+	var accent := UiTokens.ACCENT_MODE_CLASSIC
+	match mode:
+		"survival":
+			key = "UI_MODE_SURVIVAL"
+			icon = "❤️"
+			accent = UiTokens.ACCENT_MODE_SURVIVAL
+		"time_attack":
+			key = "UI_MODE_TIME_ATTACK"
+			icon = "⏱️"
+			accent = UiTokens.ACCENT_MODE_TIME_ATTACK
+	var badge := PanelContainer.new()
+	badge.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	var style := StyleBoxFlat.new()
+	style.bg_color = accent
+	style.set_border_width_all(0)
+	style.set_corner_radius_all(14)
+	style.content_margin_left = 16
+	style.content_margin_right = 18
+	style.content_margin_top = 10
+	style.content_margin_bottom = 10
+	badge.add_theme_stylebox_override("panel", style)
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 8)
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	badge.add_child(row)
+	var icon_label := Label.new()
+	icon_label.text = icon
+	icon_label.add_theme_font_size_override("font_size", UiScale.font(22))
+	var emoji_font := UiFonts.emoji_font()
+	if emoji_font != null:
+		icon_label.add_theme_font_override("font", emoji_font)
+	row.add_child(icon_label)
+	var label := Label.new()
+	label.text = tr(key).to_upper()
+	label.add_theme_font_size_override("font_size", UiScale.font(18))
+	label.add_theme_color_override("font_color", Color(0.10, 0.08, 0.12, 1))
+	row.add_child(label)
+	return badge
 
 
 func _category_name(category_id: String) -> String:

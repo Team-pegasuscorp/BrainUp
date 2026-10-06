@@ -395,8 +395,10 @@ func _rank_strip() -> Control:
 			break
 
 	var panel := PanelContainer.new()
-	panel.add_theme_stylebox_override("panel", _aurore_chrome_style(UiTokens.ACCENT_QUIZ))
-	_wire_aurore_fill(panel, UiTokens.ACCENT_QUIZ)
+	var league_theme := AuroreTile.theme_for_league(str(league.get("id", "bronze")))
+	var league_accent := AuroreTile.primary_color(league_theme)
+	panel.add_theme_stylebox_override("panel", _aurore_chrome_style(league_accent))
+	_wire_aurore_fill(panel, league_accent, league_theme)
 	var pad := MarginContainer.new()
 	pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	pad.add_theme_constant_override("margin_left", 14)

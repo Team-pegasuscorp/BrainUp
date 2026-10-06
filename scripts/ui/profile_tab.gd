@@ -58,11 +58,56 @@ func _ready() -> void:
 	edit_panel.add_theme_stylebox_override("panel", UiStyle.profile_card(UiTokens.ACCENT_PROFILE, true))
 	_style_dark_controls()
 	_wire_events()
+	_install_modal_close_crosses()
 	_apply_translations()
 	if not scroll.resized.is_connected(_balance_page_gutters):
 		scroll.resized.connect(_balance_page_gutters)
 	call_deferred("_balance_page_gutters")
 	refresh()
+
+
+## Drop bottom "Retour" buttons; use the shared top-right ✕ instead.
+func _install_modal_close_crosses() -> void:
+	edit_close_button.visible = false
+	edit_close_button.disabled = true
+	_wrap_label_with_close(edit_title, _close_edit_profile)
+
+	badge_detail_close.visible = false
+	badge_detail_close.disabled = true
+	var badge_vbox := badge_detail_close.get_parent() as VBoxContainer
+	if badge_vbox != null and badge_vbox.get_node_or_null("BadgeCloseHeader") == null:
+		var header := HBoxContainer.new()
+		header.name = "BadgeCloseHeader"
+		header.add_theme_constant_override("separation", 0)
+		var spacer := Control.new()
+		spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		header.add_child(spacer)
+		header.add_child(_profile_close_button(_close_badge_detail))
+		badge_vbox.add_child(header)
+		badge_vbox.move_child(header, 0)
+
+
+func _wrap_label_with_close(title: Label, on_close: Callable) -> void:
+	if title.get_parent() is HBoxContainer and title.get_parent().has_meta("profile_close_header"):
+		return
+	var parent := title.get_parent()
+	if parent == null:
+		return
+	var idx := title.get_index()
+	parent.remove_child(title)
+	var header := HBoxContainer.new()
+	header.set_meta("profile_close_header", true)
+	header.add_theme_constant_override("separation", 10)
+	header.alignment = BoxContainer.ALIGNMENT_CENTER
+	var spacer := Control.new()
+	spacer.custom_minimum_size = Vector2(44, 44)
+	header.add_child(spacer)
+	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	header.add_child(title)
+	header.add_child(_profile_close_button(on_close))
+	parent.add_child(header)
+	parent.move_child(header, idx)
 
 
 func _balance_page_gutters() -> void:
@@ -93,9 +138,28 @@ func _style_dark_controls() -> void:
 	pseudo_input.add_theme_stylebox_override("focus", _pseudo_input_style(UiTokens.ACCENT_PROFILE))
 	for button in [
 		edit_save_button,
-		edit_close_button, badge_detail_close,
 	]:
 		_style_profile_button(button, UiTokens.ACCENT_PROFILE)
+	_style_edit_save_button()
+
+
+func _style_edit_save_button() -> void:
+	## Larger primary CTA in the edit modal.
+	edit_save_button.custom_minimum_size = Vector2(0, 56)
+	edit_save_button.add_theme_font_size_override("font_size", UiScale.font(20))
+	var accent := UiTokens.ACCENT_PROFILE
+	for state in ["normal", "hover", "pressed"]:
+		var style := edit_save_button.get_theme_stylebox(state) as StyleBoxFlat
+		if style == null:
+			continue
+		style = style.duplicate() as StyleBoxFlat
+		style.content_margin_top = 16
+		style.content_margin_bottom = 16
+		style.content_margin_left = 20
+		style.content_margin_right = 20
+		if state == "hover":
+			style.bg_color = Color(accent.r, accent.g, accent.b, 0.45)
+		edit_save_button.add_theme_stylebox_override(state, style)
 
 
 func _pseudo_input_style(border: Color) -> StyleBoxFlat:
@@ -145,13 +209,13 @@ func _wire_events() -> void:
 	LocaleManager.locale_changed.connect(_on_locale_changed)
 	for button in [
 		edit_save_button,
-		edit_close_button, badge_detail_close,
 	]:
 		PressScaleUtil.wire(button, self)
 
 
 func _apply_translations() -> void:
-	edit_title.text = tr("UI_PROFILE_EDIT")
+	edit_title.text = tr("UI_PROFILE_EDIT").to_upper()
+	edit_title.add_theme_font_size_override("font_size", UiScale.font(26))
 	pseudo_input.placeholder_text = tr("UI_PROFILE_PSEUDO_PLACEHOLDER")
 	if _avatar_label != null:
 		_avatar_label.text = tr("UI_PROFILE_CHOOSE_AVATAR")
@@ -160,8 +224,6 @@ func _apply_translations() -> void:
 	if _banner_label != null:
 		_banner_label.text = tr("UI_PROFILE_CHOOSE_BANNER")
 	edit_save_button.text = tr("UI_PROFILE_SAVE")
-	edit_close_button.text = tr("UI_BACK")
-	badge_detail_close.text = tr("UI_BACK")
 
 
 func _rebuild_sections() -> void:
@@ -393,7 +455,7 @@ func _build_hero() -> PanelContainer:
 	_xp_bar.add_theme_stylebox_override("fill", xp_fill)
 	xp_col.add_child(_xp_bar)
 
-	## League column in an inset subtile — nuit indigo aurora.
+	## League column in an inset subtile — aurora matched to trophy league.
 	var ranking: Dictionary = _profile_data.get("ranking", {})
 	var league_tile := PanelContainer.new()
 	league_tile.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -407,7 +469,7 @@ func _build_hero() -> PanelContainer:
 	league_bg.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	league_bg.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	league_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	league_bg.aurore_theme = "indigo"
+	league_bg.aurore_theme = AuroreTile.theme_for_league(str(ranking.get("league_id", "bronze")))
 	league_tile.add_child(league_bg)
 
 	var league_pad := MarginContainer.new()
@@ -655,6 +717,8 @@ func _build_categories_tile() -> PanelContainer:
 	)
 	var shown := 0
 	const MAX_VISIBLE := 5
+	var visible_rows: Array = []
+	var accents: Array = []
 	for row in categories:
 		if shown >= MAX_VISIBLE:
 			break
@@ -662,8 +726,12 @@ func _build_categories_tile() -> PanelContainer:
 			continue
 		if int(row.get("games_played", 0)) <= 0 and not _profile_data.get("is_demo", false):
 			continue
-		list.add_child(_category_mastery_subtile(row))
+		visible_rows.append(row)
+		accents.append(UiTokens.accent_for_category(str(row.get("id", ""))))
 		shown += 1
+	var themes := AuroreTile.themes_closest_unique(accents)
+	for i in visible_rows.size():
+		list.add_child(_category_mastery_subtile(visible_rows[i], str(themes[i])))
 	if shown == 0:
 		list.add_child(_empty(tr("UI_PROFILE_NO_CATEGORIES")))
 	_animated_nodes.append(panel)
@@ -682,14 +750,14 @@ func _categories_section_title() -> String:
 	return translated
 
 
-func _category_name_label(text: String) -> Label:
-	## Shared size for mastered-categories rows (light pastel subtiles).
+func _category_name_label(text: String, on_aurore: bool = false) -> Label:
+	## Shared size for mastered-categories rows.
 	var label := Label.new()
 	label.text = text
 	label.clip_text = true
 	label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	label.add_theme_font_size_override("font_size", UiScale.font(18))
-	label.add_theme_color_override("font_color", UiTokens.INK)
+	label.add_theme_color_override("font_color", Color.WHITE if on_aurore else UiTokens.INK)
 	return label
 
 
@@ -705,10 +773,10 @@ func _mastery_category_icon(category_id: String, icon_text: String, accent: Colo
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var icon_style := StyleBoxFlat.new()
-	icon_style.bg_color = Color(accent.r, accent.g, accent.b, 0.28)
+	icon_style.bg_color = Color(accent.r, accent.g, accent.b, 0.42)
 	icon_style.set_corner_radius_all(27)
 	icon_style.set_content_margin_all(0)
-	icon_style.shadow_color = Color(accent.r, accent.g, accent.b, 0.12)
+	icon_style.shadow_color = Color(accent.r, accent.g, accent.b, 0.18)
 	icon_style.shadow_size = 2
 	bg.add_theme_stylebox_override("panel", icon_style)
 	slot.add_child(bg)
@@ -725,34 +793,44 @@ func _mastery_category_icon(category_id: String, icon_text: String, accent: Colo
 	return slot
 
 
-func _category_mastery_subtile(row: Dictionary) -> PanelContainer:
-	## Same pastel wash as home `_make_home_subtile` (softness 0.72).
+func _category_mastery_subtile(row: Dictionary, aurore_theme: String = "") -> PanelContainer:
+	## Aurora wash closest to the category accent.
 	var accent := UiTokens.accent_for_category(str(row.get("id", "")))
+	var theme := aurore_theme if not aurore_theme.is_empty() else AuroreTile.theme_closest_to(accent)
 	var tile := PanelContainer.new()
 	tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	var softness := 0.72
-	var style := StyleBoxFlat.new()
-	style.bg_color = accent.lerp(Color(0.97, 0.98, 0.99, 1.0), softness)
-	style.set_corner_radius_all(14)
-	style.set_border_width_all(1)
-	style.border_color = Color(accent.r, accent.g, accent.b, 0.40)
-	style.content_margin_left = 10
-	style.content_margin_right = 10
-	style.content_margin_top = 8
-	style.content_margin_bottom = 8
-	tile.add_theme_stylebox_override("panel", style)
-	tile.add_child(_category_mastery_row(row))
+	var empty := StyleBoxEmpty.new()
+	tile.add_theme_stylebox_override("panel", empty)
+
+	var bg := AuroreTile.new()
+	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	bg.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	bg.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	bg.aurore_theme = theme
+	tile.add_child(bg)
+
+	var pad := MarginContainer.new()
+	pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pad.add_theme_constant_override("margin_left", 10)
+	pad.add_theme_constant_override("margin_right", 10)
+	pad.add_theme_constant_override("margin_top", 8)
+	pad.add_theme_constant_override("margin_bottom", 8)
+	tile.add_child(pad)
+	pad.add_child(_category_mastery_row(row, theme))
 	return tile
 
 
-func _category_mastery_row(row: Dictionary) -> Control:
+func _category_mastery_row(row: Dictionary, aurore_theme: String = "") -> Control:
 	var accent := UiTokens.accent_for_category(str(row.get("id", "")))
+	var theme := aurore_theme if not aurore_theme.is_empty() else AuroreTile.theme_closest_to(accent)
+	var chip := AuroreTile.primary_color(theme)
 	var hbox := HBoxContainer.new()
 	hbox.add_theme_constant_override("separation", 10)
 	hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	hbox.alignment = BoxContainer.ALIGNMENT_CENTER
 
-	hbox.add_child(_mastery_category_icon(str(row.get("id", "")), str(row.get("icon", "🧠")), accent))
+	hbox.add_child(_mastery_category_icon(str(row.get("id", "")), str(row.get("icon", "🧠")), chip))
 
 	## Name + progress bar (center stretch).
 	var mid := VBoxContainer.new()
@@ -761,7 +839,7 @@ func _category_mastery_row(row: Dictionary) -> Control:
 	mid.add_theme_constant_override("separation", 5)
 	hbox.add_child(mid)
 
-	var title := _category_name_label(str(row.get("name", "")))
+	var title := _category_name_label(str(row.get("name", "")), true)
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	mid.add_child(title)
 
@@ -772,17 +850,17 @@ func _category_mastery_row(row: Dictionary) -> Control:
 	var accuracy := clampf(float(row.get("accuracy_percent", 0.0)), 0.0, 100.0)
 	bar.value = accuracy / 100.0
 	bar.show_percentage = false
-	## Soft dark track readable on light pastel chips.
 	var track := StyleBoxFlat.new()
-	track.bg_color = Color(0, 0, 0, 0.10)
+	track.bg_color = Color(1, 1, 1, 0.18)
 	track.set_corner_radius_all(8)
 	bar.add_theme_stylebox_override("background", track)
-	var fill := UiStyle.progress_fill(accent)
+	var fill := StyleBoxFlat.new()
+	fill.bg_color = Color(1, 1, 1, 0.92)
 	fill.set_corner_radius_all(5)
 	bar.add_theme_stylebox_override("fill", fill)
 	mid.add_child(bar)
 
-	## Accuracy column: small caption over large accent %.
+	## Accuracy column: small caption over large %.
 	var acc_col := VBoxContainer.new()
 	acc_col.alignment = BoxContainer.ALIGNMENT_CENTER
 	acc_col.size_flags_vertical = Control.SIZE_SHRINK_CENTER
@@ -797,14 +875,14 @@ func _category_mastery_row(row: Dictionary) -> Control:
 	acc_caption.text = acc_caption_text.to_upper()
 	acc_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	acc_caption.add_theme_font_size_override("font_size", UiScale.font(9))
-	acc_caption.add_theme_color_override("font_color", Color(0.28, 0.30, 0.34, 1))
+	acc_caption.add_theme_color_override("font_color", Color(1, 1, 1, 0.78))
 	acc_col.add_child(acc_caption)
 
 	var acc_num := Label.new()
 	acc_num.text = "%.0f%%" % accuracy
 	acc_num.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	acc_num.add_theme_font_size_override("font_size", UiScale.font(18))
-	acc_num.add_theme_color_override("font_color", accent)
+	acc_num.add_theme_color_override("font_color", Color.WHITE)
 	var acc_num_wrap := MarginContainer.new()
 	acc_num_wrap.add_theme_constant_override("margin_top", -2)
 	acc_num_wrap.add_child(acc_num)
@@ -1738,13 +1816,17 @@ func _populate_categories_page() -> void:
 			return a_played
 		return float(a.get("accuracy_percent", 0.0)) > float(b.get("accuracy_percent", 0.0))
 	)
-	var shown := 0
+	var visible_rows: Array = []
+	var accents: Array = []
 	for row in categories:
 		if typeof(row) != TYPE_DICTIONARY:
 			continue
-		_categories_list.add_child(_category_mastery_subtile(row))
-		shown += 1
-	if shown == 0:
+		visible_rows.append(row)
+		accents.append(UiTokens.accent_for_category(str(row.get("id", ""))))
+	var themes := AuroreTile.themes_closest_unique(accents)
+	for i in visible_rows.size():
+		_categories_list.add_child(_category_mastery_subtile(visible_rows[i], str(themes[i])))
+	if visible_rows.is_empty():
 		_categories_list.add_child(_empty(tr("UI_PROFILE_NO_CATEGORIES")))
 	ScrollTouch.let_drags_through(_categories_list)
 
@@ -1854,13 +1936,82 @@ func _ensure_avatar_picker() -> void:
 func _sync_avatar_picker() -> void:
 	for cell in _avatar_grid.get_children():
 		var selected := str(cell.get_meta("avatar_id", "")) == _pending_avatar_id
-		var ring := StyleBoxFlat.new()
-		ring.bg_color = Color(0, 0, 0, 0)
-		ring.set_corner_radius_all(40)
-		ring.set_border_width_all(3 if selected else 0)
-		ring.border_color = UiTokens.ACCENT_PROFILE
-		for state in ["normal", "hover", "pressed", "focus"]:
-			cell.add_theme_stylebox_override(state, ring)
+		_apply_cosmetic_pick_style(cell, selected, false)
+
+
+## Shared selected / idle look for avatar, frame and banner cells.
+## `ringed` draws a rectangular accent frame (banners); avatars/frames stay clean.
+func _apply_cosmetic_pick_style(cell: Button, selected: bool, ringed: bool) -> void:
+	var accent := UiTokens.ACCENT_PROFILE
+	var ring := StyleBoxFlat.new()
+	ring.bg_color = Color(0, 0, 0, 0)
+	ring.set_border_width_all(0)
+	ring.shadow_size = 0
+	ring.set_corner_radius_all(10 if ringed else 40)
+	if ringed:
+		if selected:
+			ring.bg_color = Color(accent.r, accent.g, accent.b, 0.28)
+			ring.set_border_width_all(4)
+			ring.border_color = accent
+			ring.shadow_color = Color(accent.r, accent.g, accent.b, 0.55)
+			ring.shadow_size = 10
+			ring.shadow_offset = Vector2.ZERO
+			ring.content_margin_left = 4
+			ring.content_margin_right = 4
+			ring.content_margin_top = 4
+			ring.content_margin_bottom = 4
+		else:
+			ring.bg_color = Color(1, 1, 1, 0.04)
+			ring.set_border_width_all(1)
+			ring.border_color = Color(1, 1, 1, 0.16)
+	for state in ["normal", "hover", "pressed", "focus"]:
+		cell.add_theme_stylebox_override(state, ring)
+	cell.modulate = Color(1, 1, 1, 1) if selected else Color(1, 1, 1, 0.62)
+	_sync_cosmetic_pick_check(cell, selected)
+
+
+func _sync_cosmetic_pick_check(cell: Button, selected: bool) -> void:
+	var badge: Control = cell.get_node_or_null("PickCheckBadge") as Control
+	if selected:
+		if badge == null:
+			badge = PanelContainer.new()
+			badge.name = "PickCheckBadge"
+			badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			badge.z_index = 2
+			var badge_style := StyleBoxFlat.new()
+			badge_style.bg_color = UiTokens.ACCENT_PROFILE
+			badge_style.set_corner_radius_all(12)
+			badge_style.content_margin_left = 5
+			badge_style.content_margin_right = 5
+			badge_style.content_margin_top = 2
+			badge_style.content_margin_bottom = 2
+			badge.add_theme_stylebox_override("panel", badge_style)
+			badge.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+			badge.offset_left = -28
+			badge.offset_top = 2
+			badge.offset_right = -2
+			badge.offset_bottom = 28
+			var check := Label.new()
+			check.name = "PickCheck"
+			check.text = "✓"
+			check.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			check.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			check.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+			check.add_theme_color_override("font_color", Color(1, 1, 1, 1))
+			check.add_theme_font_size_override("font_size", UiScale.font(18))
+			badge.add_child(check)
+			cell.add_child(badge)
+		else:
+			badge.offset_left = -28
+			badge.offset_top = 2
+			badge.offset_right = -2
+			badge.offset_bottom = 28
+			var existing := badge.get_node_or_null("PickCheck") as Label
+			if existing != null:
+				existing.add_theme_font_size_override("font_size", UiScale.font(18))
+		badge.visible = true
+	elif badge != null:
+		badge.visible = false
 
 
 ## Owned frames under the avatar grid (shop purchases + free defaults).
@@ -1925,13 +2076,7 @@ func _sync_frame_picker() -> void:
 		return
 	for cell in _frame_grid.get_children():
 		var selected := str(cell.get_meta("frame_id", "")) == _pending_frame_id
-		var ring := StyleBoxFlat.new()
-		ring.bg_color = Color(0, 0, 0, 0)
-		ring.set_corner_radius_all(40)
-		ring.set_border_width_all(3 if selected else 0)
-		ring.border_color = UiTokens.ACCENT_PROFILE
-		for state in ["normal", "hover", "pressed", "focus"]:
-			cell.add_theme_stylebox_override(state, ring)
+		_apply_cosmetic_pick_style(cell, selected, false)
 
 
 ## Owned banners under the frame grid (shop purchases + free defaults).
@@ -1970,14 +2115,18 @@ func _populate_banner_picker() -> void:
 		if banner_id.is_empty() or not SaveManager.is_item_owned(banner_id):
 			continue
 		var cell := Button.new()
-		cell.custom_minimum_size = Vector2(0, 72)
+		cell.custom_minimum_size = Vector2(0, 76)
 		cell.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		cell.focus_mode = Control.FOCUS_NONE
-		cell.clip_contents = true
+		cell.clip_contents = false
 		cell.set_meta("banner_id", banner_id)
-		var preview := CosmeticsView.banner(banner_id, Vector2.ZERO, 12)
+		var preview := CosmeticsView.banner(banner_id, Vector2.ZERO, 10)
 		preview.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		preview.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		preview.offset_left = 4
+		preview.offset_top = 4
+		preview.offset_right = -4
+		preview.offset_bottom = -4
 		cell.add_child(preview)
 		var pick_id := banner_id
 		cell.pressed.connect(func() -> void:
@@ -1993,17 +2142,7 @@ func _sync_banner_picker() -> void:
 		return
 	for cell in _banner_grid.get_children():
 		var selected := str(cell.get_meta("banner_id", "")) == _pending_banner_id
-		var ring := StyleBoxFlat.new()
-		ring.bg_color = Color(0, 0, 0, 0)
-		ring.set_corner_radius_all(10)
-		ring.set_border_width_all(3 if selected else 1)
-		ring.border_color = UiTokens.ACCENT_PROFILE if selected else Color(1, 1, 1, 0.18)
-		ring.content_margin_left = 0
-		ring.content_margin_right = 0
-		ring.content_margin_top = 0
-		ring.content_margin_bottom = 0
-		for state in ["normal", "hover", "pressed", "focus"]:
-			cell.add_theme_stylebox_override(state, ring)
+		_apply_cosmetic_pick_style(cell, selected, true)
 
 
 func _on_locale_changed(_locale: String) -> void:
