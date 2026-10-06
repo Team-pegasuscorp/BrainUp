@@ -820,33 +820,33 @@ func _render_daily() -> void:
 
 	var inner := PanelContainer.new()
 	inner.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	inner.custom_minimum_size.y = 156
+	inner.custom_minimum_size.y = 128
 	inner.add_theme_stylebox_override("panel", _aurore_chrome_style(accent))
 	_wire_aurore_fill(inner, accent)
 	body.add_child(inner)
 
 	var inner_pad := MarginContainer.new()
 	inner_pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	inner_pad.add_theme_constant_override("margin_left", 16)
-	inner_pad.add_theme_constant_override("margin_right", 16)
-	inner_pad.add_theme_constant_override("margin_top", 14)
-	inner_pad.add_theme_constant_override("margin_bottom", 14)
+	inner_pad.add_theme_constant_override("margin_left", 12)
+	inner_pad.add_theme_constant_override("margin_right", 12)
+	inner_pad.add_theme_constant_override("margin_top", 10)
+	inner_pad.add_theme_constant_override("margin_bottom", 10)
 	inner.add_child(inner_pad)
 
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 16)
+	row.add_theme_constant_override("separation", 12)
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
 	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	inner_pad.add_child(row)
 
 	row.add_child(GameAssets.make_circular_icon_display(
-		GameAssets.category_texture(category_id) if known else null, "🌍", 88.0
+		GameAssets.category_texture(category_id) if known else null, "🌍", 72.0
 	))
 
 	var labels := VBoxContainer.new()
 	labels.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	labels.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	labels.add_theme_constant_override("separation", 4)
+	labels.add_theme_constant_override("separation", 2)
 	labels.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	row.add_child(labels)
 
@@ -857,19 +857,19 @@ func _render_daily() -> void:
 			"rank": int(_daily_board["player_rank"]),
 			"total": int(_daily_board.get("total_players", 0)),
 		})
-	tag.add_theme_font_size_override("font_size", UiScale.font(16))
+	tag.add_theme_font_size_override("font_size", UiScale.font(14))
 	tag.add_theme_color_override("font_color", Color(1, 1, 1, 0.88))
 	labels.add_child(tag)
 
 	var name_label := Label.new()
 	name_label.text = category_name if known else tr("UI_DAILY_CHALLENGE_LOADING")
 	name_label.clip_text = true
-	name_label.add_theme_font_size_override("font_size", UiScale.font(26))
+	name_label.add_theme_font_size_override("font_size", UiScale.font(22))
 	name_label.add_theme_color_override("font_color", Color.WHITE)
 	labels.add_child(name_label)
 
 	var sub := Label.new()
-	sub.add_theme_font_size_override("font_size", UiScale.font(16))
+	sub.add_theme_font_size_override("font_size", UiScale.font(14))
 	sub.add_theme_color_override("font_color", Color(1, 1, 1, 0.78))
 	if not result.is_empty():
 		sub.text = tr("UI_DAILY_CHALLENGE_DONE").format({
@@ -884,12 +884,12 @@ func _render_daily() -> void:
 	if not result.is_empty():
 		var board := Button.new()
 		board.text = "🏆"
-		board.custom_minimum_size = Vector2(64, 56)
+		board.custom_minimum_size = Vector2(56, 48)
 		board.focus_mode = Control.FOCUS_NONE
-		board.add_theme_font_size_override("font_size", UiScale.font(26))
+		board.add_theme_font_size_override("font_size", UiScale.font(22))
 		for slot in ["font_color", "font_hover_color", "font_pressed_color"]:
 			board.add_theme_color_override(slot, UiTokens.INK)
-		var outline := UiStyle.filled(Color(1, 1, 1, 1), 16)
+		var outline := UiStyle.filled(Color(1, 1, 1, 1), 14)
 		outline.set_border_width_all(2)
 		outline.border_color = UiTokens.PODIUM_GOLD
 		for state in ["normal", "hover", "pressed", "focus"]:
@@ -901,12 +901,12 @@ func _render_daily() -> void:
 
 	var play := Button.new()
 	play.text = tr("UI_PLAY").to_upper()
-	play.custom_minimum_size = Vector2(128, 56)
+	play.custom_minimum_size = Vector2(112, 48)
 	play.focus_mode = Control.FOCUS_NONE
-	play.add_theme_font_size_override("font_size", UiScale.font(20))
+	play.add_theme_font_size_override("font_size", UiScale.font(18))
 	for slot in ["font_color", "font_hover_color", "font_pressed_color", "font_disabled_color"]:
 		play.add_theme_color_override(slot, UiTokens.INK)
-	var play_style := UiStyle.filled(UiTokens.PODIUM_GOLD, 16)
+	var play_style := UiStyle.filled(UiTokens.PODIUM_GOLD, 14)
 	for state in ["normal", "hover", "pressed", "focus", "disabled"]:
 		play.add_theme_stylebox_override(state, play_style)
 	play.disabled = not known or _daily_fetching
