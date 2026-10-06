@@ -9,6 +9,7 @@ from sqlalchemy import text
 
 import battle_pass
 import bots
+import friends
 import question_bank
 import trophies
 from trophies import LEGACY_RANGE
@@ -37,6 +38,10 @@ READ_MIN_SECONDS = 4.0
 READ_MAX_SECONDS = 10.0
 ## Same cap as the client's GameManager.MODE_COMBO_CAP for long modes.
 MODE_COMBO_CAP = 10
+## Jokers from the battle pass: each kind at most once per match.
+JOKER_TIME_BONUS = 5.0
+## A friend duel waits this long for the other phone before giving up.
+FRIEND_WAIT_SECONDS = 90.0
 TIME_LIMIT_SECONDS = 10.0
 ANSWER_GRACE_SECONDS = 2.0
 REVEAL_PAUSE_SECONDS = 1.5
@@ -52,6 +57,8 @@ CLAIM_DRIFT_TOLERANCE = 250
 _queues: dict[str, list["Waiting"]] = {}
 _queue_lock = asyncio.Lock()
 _matches: dict[str, "LiveMatch"] = {}
+## Friend duels: accepted invite id -> the first phone that joined, waiting for the other.
+_friend_rooms: dict[str, "Waiting"] = {}
 ## Players queued or in a match: one live session per account at a time.
 _active_players: set[str] = set()
 _match_tasks: set[asyncio.Task] = set()
@@ -72,6 +79,8 @@ class Waiting:
     mode: str = "classic"
     ## Legacy clients pick the category up front; "" means it is drafted after pairing.
     category: str = ""
+    ## Joker stock when the player sat down ({joker_id: count}).
+    jokers: dict = field(default_factory=dict)
 
 
 class PlayerState:
@@ -94,6 +103,12 @@ class PlayerState:
         self.answers: asyncio.Queue = asyncio.Queue()
         self.votes: asyncio.Queue = asyncio.Queue()
         self.readies: asyncio.Queue = asyncio.Queue()
+        self.jokers = dict(waiting.jokers)
+        self.jokers_used: set[str] = set()
+        ## The question this player can still answer (and use a joker on), -1 if none.
+        self.open_index = -1
+        self.open_question: dict | None = None
+        self.bonus_time = 0.0
 
 
 class LiveMatch:
@@ -101,9 +116,13 @@ class LiveMatch:
     Modes: classic (7 synced questions), survival (synced, 3 lives, last one standing)
     and time_attack (each player's own 60 s clock over the same question list)."""
 
-    def __init__(self, match_id: str, mode: str, category: str, a: PlayerState, b: PlayerState):
+    def __init__(self, match_id: str, mode: str, category: str, a: PlayerState, b: PlayerState,
+                 friend_challenge_id: str = ""):
         self.match_id = match_id
         self.mode = mode
+        ## Friend duel: no trophies, no pass XP, no ranked history (anti-farm).
+        self.friend_challenge_id = friend_challenge_id
+        self.friendly = bool(friend_challenge_id)
         ## "" = decided by the draft once both players are seated.
         self.category = category
         self.draft_choices = [] if category else question_bank.draft_choices(DRAFT_CHOICES)
@@ -163,6 +182,8 @@ class LiveMatch:
                 "total_questions": QUESTIONS_PER_MATCH if self.mode == "classic" else 0,
                 "lives": SURVIVAL_LIVES if self.mode == "survival" else 0,
                 "clock": TIME_ATTACK_SECONDS if self.mode == "time_attack" else 0,
+                "friendly": self.friendly,
+                "jokers": player.jokers,
             })
 
     # --- Draft ---------------------------------------------------------------
@@ -318,7 +339,7 @@ class LiveMatch:
             if player.is_bot:
                 _spawn(self._bot_answer(player, index, question, min(clock, TIME_LIMIT_SECONDS)))
             result = await self._collect_answer(player, index, send_time, question, time_limit=clock)
-            clock -= result["elapsed"]
+            clock -= result["elapsed"] - result["bonus"]
             if result["selected_index"] >= 0 and not result["is_correct"]:
                 clock -= TIME_ATTACK_WRONG_PENALTY
             clock = max(clock, 0.0)
@@ -345,16 +366,19 @@ class LiveMatch:
     async def _collect_answer(self, player: PlayerState, index: int, send_time: float, question: dict,
                               time_limit: float = TIME_LIMIT_SECONDS) -> dict:
         selected_index = -1
-        answered_at = send_time + time_limit
-        deadline = send_time + time_limit + ANSWER_GRACE_SECONDS
+        player.open_index = index
+        player.open_question = question
+        player.bonus_time = 0.0
+        answered_at = None
         while player.connected or player.is_bot:
-            remaining = deadline - time.monotonic()
+            ## The deadline moves when a time joker is played: wait in short slices.
+            remaining = send_time + time_limit + player.bonus_time + ANSWER_GRACE_SECONDS - time.monotonic()
             if remaining <= 0:
                 break
             try:
-                received_at, message = await asyncio.wait_for(player.answers.get(), timeout=remaining)
+                received_at, message = await asyncio.wait_for(player.answers.get(), timeout=min(remaining, 0.25))
             except asyncio.TimeoutError:
-                break
+                continue
             ## Only the first valid answer to *this* question, received after it was sent,
             ## counts: answers queued ahead of time would otherwise score as instant.
             if received_at < send_time or trophies.sanitize_int(message.get("index"), -1) != index:
@@ -373,7 +397,12 @@ class LiveMatch:
                 await self._send(self.opponent_of(player.player_id), {"type": "opponent_answered", "index": index})
             break
 
-        elapsed = min(max(answered_at - send_time, 0.0), time_limit)
+        player.open_index = -1
+        player.open_question = None
+        bonus = player.bonus_time
+        if answered_at is None:
+            answered_at = send_time + time_limit + bonus
+        elapsed = min(max(answered_at - send_time, 0.0), time_limit + bonus)
         is_correct = selected_index == question["correct_index"]
         player.answered += 1
         if is_correct:
@@ -394,7 +423,37 @@ class LiveMatch:
             "points": points,
             "score": player.score,
             "elapsed": round(elapsed, 3),
+            "bonus": bonus,
         }
+
+    async def use_joker(self, player: PlayerState, message: dict) -> None:
+        """50/50 hides two wrong answers for this player; the time joker adds a few seconds
+        to their window (or to their clock in time attack). Spent only when it applies."""
+        joker_id = str(message.get("joker", ""))
+        index = trophies.sanitize_int(message.get("index"), -1)
+        question = player.open_question
+        reply = {"type": "joker_result", "joker": joker_id, "index": index, "ok": False}
+        if (player.is_bot or joker_id not in battle_pass.JOKER_IDS or joker_id in player.jokers_used
+                or question is None or index != player.open_index or player.jokers.get(joker_id, 0) <= 0):
+            await self._send(player, reply)
+            return
+        with engine.begin() as conn:
+            spent = battle_pass.use_joker(conn, player.player_id, joker_id)
+        if not spent:
+            player.jokers[joker_id] = 0
+            await self._send(player, reply)
+            return
+        player.jokers_used.add(joker_id)
+        player.jokers[joker_id] -= 1
+        reply.update(ok=True, left=player.jokers[joker_id])
+        if joker_id == "joker_5050":
+            wrong = [i for i in range(len(question["choices"])) if i != question["correct_index"]]
+            reply["removed"] = random.sample(wrong, min(2, max(len(wrong) - 1, 0)))
+        else:
+            player.bonus_time += JOKER_TIME_BONUS
+            reply["bonus"] = JOKER_TIME_BONUS
+        await self._send(player, reply)
+        await self._send(self.opponent_of(player.player_id), {"type": "opponent_joker", "joker": joker_id})
 
     async def _bot_answer(self, bot: PlayerState, index: int, question: dict, time_limit: float) -> None:
         delay, choice = bots.plan_answer(bot.trophies, question, time_limit)
@@ -417,6 +476,9 @@ class LiveMatch:
 
     async def _finish(self) -> None:
         a, b = self.order
+        if self.friendly:
+            await self._finish_friendly()
+            return
         with engine.begin() as conn:
             for player in (a, b):
                 if player.is_bot:
@@ -513,6 +575,40 @@ class LiveMatch:
             })
         self.completed.set()
 
+    async def _finish_friendly(self) -> None:
+        """Friend duel: only the result. Trophies, pass XP and ranked history stay untouched."""
+        with engine.begin() as conn:
+            friends.set_challenge_status(conn, self.friend_challenge_id, "played")
+        for player in self.order:
+            opponent = self.opponent_of(player.player_id)
+            outcome = self._outcome(player, opponent)
+            await self._send(player, {
+                "type": "match_over",
+                "match_id": self.match_id,
+                "friendly": True,
+                "friend_challenge_id": self.friend_challenge_id,
+                "opponent_id": opponent.player_id,
+                "mode": self.mode,
+                "category": self.category,
+                "your_score": player.score,
+                "opponent_score": opponent.score,
+                "your_correct": player.correct_count,
+                "opponent_correct": opponent.correct_count,
+                "your_answered": player.answered,
+                "your_max_combo": player.max_combo,
+                "your_lives": player.lives,
+                "opponent_lives": opponent.lives,
+                "won": outcome > 0,
+                "draw": outcome == 0,
+                "opponent_trophies": opponent.trophies,
+                "trophy_delta": 0,
+                "trophy_match_delta": 0,
+                "trophy_streak_bonus": 0,
+                "trophy_loss_consolation": 0,
+                "pass_xp": 0,
+            })
+        self.completed.set()
+
     async def _broadcast(self, message: dict) -> None:
         for player in self.order:
             await self._send(player, message)
@@ -592,9 +688,10 @@ def _pair_locked(category: str, me: Waiting) -> bool:
     return True
 
 
-def _start_match(queue_key: str, first: Waiting, second: Waiting) -> None:
+def _start_match(queue_key: str, first: Waiting, second: Waiting, friend_challenge_id: str = "") -> None:
     match_id = str(uuid.uuid4())
-    match = LiveMatch(match_id, first.mode, first.category, PlayerState(first), PlayerState(second))
+    match = LiveMatch(match_id, first.mode, first.category, PlayerState(first), PlayerState(second),
+                      friend_challenge_id=friend_challenge_id)
     _matches[match_id] = match
     _spawn(match.run())
     for waiting in (first, second):
@@ -651,7 +748,7 @@ async def _read_while_waiting(websocket: WebSocket, category: str, me: Waiting) 
         return
 
 
-async def _forward_inbound(websocket: WebSocket, player: PlayerState) -> None:
+async def _forward_inbound(websocket: WebSocket, match: LiveMatch, player: PlayerState) -> None:
     try:
         while True:
             message = await websocket.receive_json()
@@ -663,8 +760,26 @@ async def _forward_inbound(websocket: WebSocket, player: PlayerState) -> None:
                 await player.votes.put(message)
             elif message.get("type") == "ready" and player.readies.qsize() < 4:
                 await player.readies.put(message)
+            elif message.get("type") == "joker":
+                await match.use_joker(player, message)
     except (WebSocketDisconnect, ValueError):
         player.connected = False
+
+
+async def _join_friend_room(challenge_id: str, me: Waiting) -> None:
+    """First phone waits in the room; the second one starts the duel."""
+    async with _queue_lock:
+        other = _friend_rooms.pop(challenge_id, None)
+        if other is not None and other.player_id != me.player_id and not other.future.done():
+            _start_match(f"friend:{challenge_id}", other, me, friend_challenge_id=challenge_id)
+        else:
+            _friend_rooms[challenge_id] = me
+
+
+async def _leave_friend_room(challenge_id: str, me: Waiting) -> None:
+    async with _queue_lock:
+        if _friend_rooms.get(challenge_id) is me:
+            del _friend_rooms[challenge_id]
 
 
 async def handle_live_socket(websocket: WebSocket) -> None:
@@ -674,7 +789,7 @@ async def handle_live_socket(websocket: WebSocket) -> None:
     except (WebSocketDisconnect, ValueError):
         return
 
-    if not isinstance(join_msg, dict) or join_msg.get("type") != "join_queue":
+    if not isinstance(join_msg, dict) or join_msg.get("type") not in ("join_queue", "join_friend"):
         await websocket.close(code=4000)
         return
 
@@ -683,20 +798,42 @@ async def handle_live_socket(websocket: WebSocket) -> None:
     except ValueError:
         await websocket.close(code=4004)
         return
-    ## New clients send a mode and draft the category after pairing; older ones send
-    ## a category and play classic in it. The queue key keeps the two apart.
-    mode = str(join_msg.get("mode", ""))
-    fixed_category = "" if mode else str(join_msg.get("category", ""))[:32]
-    if mode not in MODES:
-        mode = "classic"
-    category = f"mode:{mode}" if not fixed_category else fixed_category
+
+    friend_challenge_id = ""
+    if join_msg.get("type") == "join_friend":
+        ## Friend duel: the mode comes from the accepted invite, the category is drafted.
+        try:
+            friend_challenge_id = str(uuid.UUID(str(join_msg.get("challenge_id", ""))))
+        except ValueError:
+            await websocket.close(code=4004)
+            return
+        with engine.begin() as conn:
+            seat = friends.seat_for_live(conn, player_id, friend_challenge_id)
+        if seat is None:
+            await websocket.send_json({"type": "match_aborted", "reason": "invite_invalid"})
+            await websocket.close(code=4003)
+            return
+        mode, fixed_category = seat["mode"], ""
+        category = f"friend:{friend_challenge_id}"
+    else:
+        ## New clients send a mode and draft the category after pairing; older ones send
+        ## a category and play classic in it. The queue key keeps the two apart.
+        mode = str(join_msg.get("mode", ""))
+        fixed_category = "" if mode else str(join_msg.get("category", ""))[:32]
+        if mode not in MODES:
+            mode = "classic"
+        category = f"mode:{mode}" if not fixed_category else fixed_category
     locale = str(join_msg.get("locale", "fr"))[:8]
 
-    ranked = _load_ranked_player(player_id, join_msg.get("trophies"))
+    ## A friend duel never touches trophies: don't import the client's claim there.
+    claimed = None if friend_challenge_id else join_msg.get("trophies")
+    ranked = _load_ranked_player(player_id, claimed)
     if ranked is None:
         await websocket.close(code=4004)
         return
     display_name, server_trophies, cosmetics = ranked
+    with engine.begin() as conn:
+        jokers = battle_pass.jokers_available(conn, player_id)
 
     async with _queue_lock:
         if player_id in _active_players:
@@ -718,25 +855,43 @@ async def handle_live_socket(websocket: WebSocket) -> None:
             cosmetics=cosmetics,
             mode=mode,
             category=fixed_category,
+            jokers=jokers,
         )
-        await _enqueue(category, waiting)
-
         reader = asyncio.create_task(_read_while_waiting(websocket, category, waiting))
-        done, _pending = await asyncio.wait(
-            {waiting.future, reader}, timeout=bots.BOT_AFTER_SECONDS, return_when=asyncio.FIRST_COMPLETED
-        )
-        if not done:
-            await _seat_bot(category, waiting)
-            done, _pending = await asyncio.wait({waiting.future, reader}, return_when=asyncio.FIRST_COMPLETED)
-        if waiting.future not in done:
-            waiting.future.cancel()
-            await _remove_from_queue(category, waiting)
-            return
+        if friend_challenge_id:
+            await _join_friend_room(friend_challenge_id, waiting)
+            done, _pending = await asyncio.wait(
+                {waiting.future, reader}, timeout=FRIEND_WAIT_SECONDS, return_when=asyncio.FIRST_COMPLETED
+            )
+            if waiting.future not in done:
+                waiting.future.cancel()
+                reader.cancel()
+                await _leave_friend_room(friend_challenge_id, waiting)
+                if not done:
+                    with engine.begin() as conn:
+                        friends.set_challenge_status(conn, friend_challenge_id, "expired")
+                    try:
+                        await websocket.send_json({"type": "match_aborted", "reason": "friend_absent"})
+                    except Exception:
+                        pass
+                return
+        else:
+            await _enqueue(category, waiting)
+            done, _pending = await asyncio.wait(
+                {waiting.future, reader}, timeout=bots.BOT_AFTER_SECONDS, return_when=asyncio.FIRST_COMPLETED
+            )
+            if not done:
+                await _seat_bot(category, waiting)
+                done, _pending = await asyncio.wait({waiting.future, reader}, return_when=asyncio.FIRST_COMPLETED)
+            if waiting.future not in done:
+                waiting.future.cancel()
+                await _remove_from_queue(category, waiting)
+                return
         reader.cancel()
         match_id, match = waiting.future.result()
 
         player = match.players[player_id]
-        forward_task = asyncio.create_task(_forward_inbound(websocket, player))
+        forward_task = asyncio.create_task(_forward_inbound(websocket, match, player))
         try:
             await match.completed.wait()
         finally:

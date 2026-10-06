@@ -16,6 +16,7 @@ const ROULETTE_SECONDS := 2.2
 ## Server's pause showing the colours before the reading phase (REVEAL_PAUSE_SECONDS).
 const REVEAL_PAUSE := 1.5
 const EXPLANATION_DELAY := 1.1
+const JOKER_IDS: Array[String] = ["joker_5050", "joker_time"]
 
 enum State { SEARCHING, DRAFT, PLAYING, WAITING, OVER, ERROR }
 
@@ -47,6 +48,14 @@ var _revealed: bool = false
 var _over: Dictionary = {}
 var _xp_gained: int = 0
 var _error_key: String = ""
+## Accepted friend invite this screen plays (empty = ranked matchmaking).
+var _friend_challenge_id: String = ""
+var _friend_name: String = ""
+## Joker stock sent by the server at pairing, and the kinds already played this match.
+var _jokers: Dictionary = {}
+var _jokers_used: Dictionary = {}
+var _joker_buttons: Dictionary = {}
+var _removed_choices: Array[int] = []
 
 var _margin: MarginContainer
 var _body: VBoxContainer
@@ -79,6 +88,8 @@ var _fx: Array[Tween] = []
 
 func _ready() -> void:
 	_mode = str(GameManager.MODE_KEYS.get(GameManager.selected_mode, "classic"))
+	_friend_challenge_id = str(GameManager.friend_challenge.get("id", ""))
+	_friend_name = str(GameManager.friend_challenge.get("name", ""))
 	_accent = UiTokens.MODE_ACCENTS[GameManager.selected_mode]
 	for category in QuestionLoaderScript.get_categories(LocaleManager.get_content_locale()):
 		_category_names[str(category.get("id", ""))] = str(category.get("name", ""))
@@ -114,6 +125,8 @@ func _ready() -> void:
 	NetworkManager.live_opponent_ready.connect(_on_opponent_ready)
 	NetworkManager.live_match_over.connect(_on_match_over)
 	NetworkManager.live_error.connect(_on_error)
+	NetworkManager.live_joker_result.connect(_on_joker_result)
+	NetworkManager.live_opponent_joker.connect(_on_opponent_joker)
 	_start_search()
 
 
@@ -158,13 +171,20 @@ func _start_search() -> void:
 	_category = ""
 	_my_score = 0
 	_opponent_score = 0
-	NetworkManager.start_live_matchmaking("", _mode)
+	if _friend_challenge_id.is_empty():
+		NetworkManager.start_live_matchmaking("", _mode)
+	else:
+		NetworkManager.start_friend_match(_friend_challenge_id)
 	_build_search()
+	if not _friend_challenge_id.is_empty():
+		_feedback_text(tr("UI_DUEL_WAITING_FRIEND").format({"name": _friend_name}))
 
 
 func _leave() -> void:
 	NetworkManager.stop_live_matchmaking()
-	GameManager.shell_tab_index = ScenePaths.Tab.QUIZ
+	var from_friend := not _friend_challenge_id.is_empty()
+	GameManager.friend_challenge = {}
+	GameManager.shell_tab_index = ScenePaths.Tab.SOCIAL if from_friend else ScenePaths.Tab.QUIZ
 	get_tree().change_scene_to_file(ScenePaths.APP_SHELL)
 
 
@@ -179,6 +199,9 @@ func _on_match_found(data: Dictionary) -> void:
 	_my_clock = float(data.get("clock", 0.0))
 	_opponent_clock = _my_clock
 	_category = str(data.get("category", ""))
+	var stock: Variant = data.get("jokers", {})
+	_jokers = stock if typeof(stock) == TYPE_DICTIONARY else {}
+	_jokers_used = {}
 	AudioManager.play("correct")
 	var draft: Variant = data.get("draft")
 	if typeof(draft) == TYPE_DICTIONARY and not (draft.get("choices", []) as Array).is_empty():
@@ -254,9 +277,10 @@ func _on_answer_pressed(index: int) -> void:
 	_answered_index = index
 	AudioManager.play("click")
 	NetworkManager.send_live_answer(int(_question.get("index", 0)), index)
+	_refresh_jokers()
 	for i in range(_answer_buttons.size()):
 		_answer_buttons[i].disabled = true
-		_style_answer(i, "picked" if i == index else "idle")
+		_style_answer(i, "picked" if i == index else ("dim" if _removed_choices.has(i) else "idle"))
 	_pulse(_answer_buttons[index], 1.04)
 
 
@@ -264,6 +288,7 @@ func _on_reveal(data: Dictionary) -> void:
 	if _state != State.PLAYING:
 		return
 	_revealed = true
+	_refresh_jokers()
 	var question_index := int(data.get("index", 0))
 	var correct := int(data.get("correct_index", -1))
 	var mine: Dictionary = data.get("your_result", {})
@@ -388,7 +413,13 @@ func _on_match_over(data: Dictionary) -> void:
 	_over = data
 	_my_score = int(data.get("your_score", _my_score))
 	_opponent_score = int(data.get("opponent_score", _opponent_score))
-	_xp_gained = SaveManager.record_duel_result(data)
+	if bool(data.get("friendly", false)):
+		_xp_gained = SaveManager.record_friend_duel_result(data)
+	else:
+		_xp_gained = SaveManager.record_duel_result(data)
+	## Jokers spent during the match: refresh the stock from the server.
+	if not _jokers_used.is_empty():
+		NetworkManager.fetch_pass()
 	var streak: Dictionary = DayStreak.record_play()
 	if int(streak.get("xp", 0)) > 0:
 		SaveManager.add_xp(int(streak["xp"]))
@@ -403,7 +434,15 @@ func _on_error(reason: String) -> void:
 	if _state == State.OVER:
 		return
 	_state = State.ERROR
-	_error_key = "UI_DUEL_ERROR_ABORTED" if reason == "aborted" else "UI_DUEL_ERROR_OFFLINE"
+	match reason:
+		"aborted":
+			_error_key = "UI_DUEL_ERROR_ABORTED"
+		"friend_absent":
+			_error_key = "UI_DUEL_ERROR_FRIEND_ABSENT"
+		"invite_invalid":
+			_error_key = "UI_DUEL_ERROR_INVITE_INVALID"
+		_:
+			_error_key = "UI_DUEL_ERROR_OFFLINE"
 	_build_error()
 
 
@@ -426,6 +465,7 @@ func _clear() -> void:
 	_tile_texts.clear()
 	_tile_markers.clear()
 	_draft_tiles.clear()
+	_joker_buttons.clear()
 	_timer_fill = null
 	_feedback_label = null
 
@@ -620,6 +660,9 @@ func _build_playing() -> void:
 		var tile := _make_answer_tile(i)
 		_body.add_child(tile)
 		_answer_buttons.append(tile)
+	var jokers := _joker_row()
+	if jokers != null:
+		_body.add_child(jokers)
 	_feedback_label = _title("", 26)
 	_body.add_child(_feedback_label)
 
@@ -702,6 +745,8 @@ func _show_question() -> void:
 		for marker in _tile_markers[i].get_children():
 			marker.queue_free()
 		_style_answer(i, "idle")
+	_removed_choices.clear()
+	_refresh_jokers()
 	if _feedback_label != null:
 		_feedback_label.text = ""
 	_set_badge(_opponent_badge, "")
@@ -848,12 +893,19 @@ func _build_over() -> void:
 		str(_my_score), str(_opponent_score), UiTokens.PODIUM_GOLD if won else Color(0, 0, 0, 0)
 	))
 
+	var friendly := bool(_over.get("friendly", false))
 	var delta := int(_over.get("trophy_delta", 0))
+	if friendly:
+		var rivalry := SaveManager.get_friend_rivalry(str(_over.get("opponent_id", "")))
+		_body.add_child(_subtitle(tr("UI_DUEL_FRIENDLY_RECORD").format({
+			"wins": int(rivalry.get("wins", 0)), "losses": int(rivalry.get("losses", 0)),
+		})))
 	var cups := _title("%s%d 🏆   ·   %s %d" % [
 		"+" if delta > 0 else "", delta, tr("UI_DUEL_TOTAL"), int(_over.get("trophies", SaveManager.trophies))
 	], 26)
 	cups.add_theme_color_override("font_color", UiTokens.FEEDBACK_CORRECT if delta > 0 else (UiTokens.FEEDBACK_WRONG if delta < 0 else Color.WHITE))
-	_body.add_child(cups)
+	if not friendly:
+		_body.add_child(cups)
 	var bonus := int(_over.get("trophy_streak_bonus", 0)) + int(_over.get("trophy_loss_consolation", 0))
 	if bonus > 0:
 		_body.add_child(_subtitle(tr("UI_DUEL_STREAK_BONUS").format({"bonus": bonus})))
@@ -865,9 +917,11 @@ func _build_over() -> void:
 		_body.add_child(pass_line)
 		NetworkManager.fetch_pass()
 
-	var again := _button(tr("UI_DUEL_PLAY_AGAIN"), _accent, UiTokens.INK)
-	again.pressed.connect(_start_search)
-	_body.add_child(again)
+	## A friend invite is played once: a rematch is a new invite from the Social tab.
+	if _friend_challenge_id.is_empty():
+		var again := _button(tr("UI_DUEL_PLAY_AGAIN"), _accent, UiTokens.INK)
+		again.pressed.connect(_start_search)
+		_body.add_child(again)
 	var back := _button(tr("UI_BACK"), Color(1, 1, 1, 0.14), Color.WHITE)
 	back.pressed.connect(_leave)
 	_body.add_child(back)
@@ -876,13 +930,107 @@ func _build_over() -> void:
 func _build_error() -> void:
 	_clear()
 	_body.alignment = BoxContainer.ALIGNMENT_CENTER
-	_body.add_child(_title(tr(_error_key), 24))
-	var again := _button(tr("UI_DUEL_PLAY_AGAIN"), _accent, UiTokens.INK)
-	again.pressed.connect(_start_search)
-	_body.add_child(again)
+	_body.add_child(_title(tr(_error_key).format({"name": _friend_name}), 24))
+	if _friend_challenge_id.is_empty():
+		var again := _button(tr("UI_DUEL_PLAY_AGAIN"), _accent, UiTokens.INK)
+		again.pressed.connect(_start_search)
+		_body.add_child(again)
 	var back := _button(tr("UI_BACK"), Color(1, 1, 1, 0.14), Color.WHITE)
 	back.pressed.connect(_leave)
 	_body.add_child(back)
+
+
+# --- Jokers -----------------------------------------------------------------
+
+## Row of joker buttons under the answers; null when the player owns none.
+func _joker_row() -> Control:
+	var total := 0
+	for joker_id in JOKER_IDS:
+		total += int(_jokers.get(joker_id, 0))
+	if total <= 0:
+		return null
+	var row := HBoxContainer.new()
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.add_theme_constant_override("separation", 14)
+	for joker_id in JOKER_IDS:
+		var button := Button.new()
+		button.custom_minimum_size = Vector2(200, 64)
+		button.focus_mode = Control.FOCUS_NONE
+		button.add_theme_font_size_override("font_size", UiScale.font(19))
+		button.add_theme_color_override("font_color", Color.WHITE)
+		button.add_theme_color_override("font_disabled_color", Color(1, 1, 1, 0.45))
+		var fill := Color(0.55, 0.32, 0.95, 1)
+		button.add_theme_stylebox_override("normal", UiStyle.filled(fill, 32))
+		button.add_theme_stylebox_override("hover", UiStyle.filled(fill.lightened(0.12), 32))
+		button.add_theme_stylebox_override("pressed", UiStyle.filled(fill.darkened(0.15), 32))
+		button.add_theme_stylebox_override("disabled", UiStyle.filled(Color(1, 1, 1, 0.12), 32))
+		button.pressed.connect(_on_joker_pressed.bind(joker_id))
+		PressScaleUtil.wire(button, self)
+		row.add_child(button)
+		_joker_buttons[joker_id] = button
+	_refresh_jokers()
+	return row
+
+
+## A joker can be played once per match, while a question is open and unanswered.
+func _refresh_jokers() -> void:
+	var open := _state == State.PLAYING and not _revealed and _answered_index < 0 and not _question.is_empty()
+	for joker_id in _joker_buttons.keys():
+		var button: Button = _joker_buttons[joker_id]
+		if not is_instance_valid(button):
+			continue
+		var count := int(_jokers.get(joker_id, 0))
+		var label := "50/50" if joker_id == "joker_5050" else "+5 s"
+		button.text = "%s  ×%d" % [label, count]
+		button.disabled = not open or count <= 0 or _jokers_used.has(joker_id)
+
+
+func _on_joker_pressed(joker_id: String) -> void:
+	if _jokers_used.has(joker_id) or int(_jokers.get(joker_id, 0)) <= 0:
+		return
+	## Marked used right away so a double tap cannot send it twice.
+	_jokers_used[joker_id] = true
+	NetworkManager.send_joker(int(_question.get("index", 0)), joker_id)
+	_refresh_jokers()
+
+
+func _on_joker_result(data: Dictionary) -> void:
+	var joker_id := str(data.get("joker", ""))
+	if not bool(data.get("ok", false)):
+		## Refused (question closed meanwhile or stock empty): the joker was not spent.
+		if int(data.get("index", -1)) == int(_question.get("index", -2)) and not _revealed:
+			_jokers_used.erase(joker_id)
+		_refresh_jokers()
+		return
+	_jokers[joker_id] = int(data.get("left", maxi(int(_jokers.get(joker_id, 1)) - 1, 0)))
+	_jokers_used[joker_id] = true
+	if int(data.get("index", -1)) != int(_question.get("index", -2)) or _revealed:
+		_refresh_jokers()
+		return
+	if joker_id == "joker_5050":
+		for raw in data.get("removed", []):
+			var i := int(raw)
+			if i < 0 or i >= _answer_buttons.size():
+				continue
+			_removed_choices.append(i)
+			_answer_buttons[i].disabled = true
+			_style_answer(i, "dim")
+			_tile_texts[i].text = ""
+	else:
+		var bonus := float(data.get("bonus", 5.0))
+		_question_left += bonus
+		_question_limit = maxf(_question_limit, _question_left)
+		_feedback_text("+%d s" % int(bonus))
+		_feedback_label.add_theme_color_override("font_color", Color(0.75, 0.6, 1.0, 1))
+		_pulse(_feedback_label, 1.2)
+	AudioManager.play("correct")
+	_refresh_jokers()
+
+
+func _on_opponent_joker(data: Dictionary) -> void:
+	if _state != State.PLAYING:
+		return
+	_set_badge(_opponent_badge, "50/50" if str(data.get("joker", "")) == "joker_5050" else "+5 s")
 
 
 # --- Building blocks --------------------------------------------------------

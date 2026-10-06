@@ -324,6 +324,64 @@ func apply_pass_reward(reward: Dictionary) -> void:
 	save_data()
 
 
+## Server stock wins over the local count (jokers are spent on the server during duels).
+func set_jokers(stock: Dictionary) -> void:
+	var next := {}
+	for joker_id in stock.keys():
+		next[str(joker_id)] = maxi(int(stock[joker_id]), 0)
+	if next != jokers:
+		jokers = next
+		save_data()
+
+
+## Friend duel finished: no trophies and no wins/losses on the profile (anti-farm), only
+## the head-to-head counter, category stats, history, quests ("play a challenge") and XP.
+func record_friend_duel_result(summary: Dictionary) -> int:
+	var category_id := str(summary.get("category", ""))
+	var mode := str(summary.get("mode", "classic"))
+	var score := int(summary.get("your_score", 0))
+	var opponent_score := int(summary.get("opponent_score", 0))
+	var correct_count := int(summary.get("your_correct", 0))
+	var total_count := int(summary.get("your_answered", 0))
+	var max_combo := int(summary.get("your_max_combo", 0))
+	var won := bool(summary.get("won", false))
+
+	var stats: Dictionary = category_stats.get(category_id, {
+		"games_played": 0, "best_score": 0, "total_correct": 0, "total_questions": 0,
+	})
+	stats["games_played"] = int(stats.get("games_played", 0)) + 1
+	stats["best_score"] = max(int(stats.get("best_score", 0)), score)
+	stats["total_correct"] = int(stats.get("total_correct", 0)) + correct_count
+	stats["total_questions"] = int(stats.get("total_questions", 0)) + total_count
+	category_stats[category_id] = stats
+
+	## Survival is decided on lives, not points: feed the H2H counter with the outcome.
+	var my_side := 1 if won else (0 if bool(summary.get("draw", false)) else -1)
+	record_friend_rivalry(str(summary.get("opponent_id", "")), my_side, 0, str(summary.get("match_id", "")))
+
+	_prepend_match_history({
+		"category_id": category_id,
+		"score": score,
+		"correct_count": correct_count,
+		"total_count": total_count,
+		"max_combo": max_combo,
+		"won": won,
+		"mode": mode,
+		"opponent": str(summary.get("opponent_name", "")),
+		"friendly": true,
+		"opponent_score": opponent_score,
+		"played_at": int(Time.get_unix_time_from_system()),
+	})
+	DailyQuestsScript.record_match(category_id, won, correct_count, max_combo, true, false)
+
+	var gained_xp: int = correct_count * 10 + score / 10
+	if mode != "classic":
+		gained_xp = mini(gained_xp, GameManager.MODE_XP_CAP)
+	add_xp(gained_xp)
+	save_data()
+	return gained_xp
+
+
 ## Local purchase. Returns false if unknown, already owned or too expensive.
 ## TODO(server): move to a backend route once coins are earned server-side.
 func buy_item(item_id: String) -> bool:

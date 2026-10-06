@@ -8,6 +8,7 @@ from sqlalchemy.exc import IntegrityError
 
 import battle_pass
 import bots
+import friends
 import leaderboard_bots
 from db import engine
 from live_match import handle_live_socket
@@ -21,6 +22,9 @@ from schemas import (
     DailyLeaderboard,
     DailyResult,
     DailyResultSubmit,
+    DeviceOnly,
+    FriendChallengeCreate,
+    FriendTarget,
     LeaderboardEntry,
     Match,
     MatchSubmit,
@@ -71,11 +75,13 @@ def register_player(payload: PlayerRegister):
         row = conn.execute(
             text(
                 """
-                INSERT INTO players (device_id, display_name, cosmetics)
-                VALUES (:device_id, :display_name, COALESCE(CAST(:cosmetics AS jsonb), '{}'::jsonb))
+                INSERT INTO players (device_id, display_name, cosmetics, level)
+                VALUES (:device_id, :display_name, COALESCE(CAST(:cosmetics AS jsonb), '{}'::jsonb),
+                    COALESCE(:level, 1))
                 ON CONFLICT (device_id)
                 DO UPDATE SET display_name = EXCLUDED.display_name,
-                    cosmetics = COALESCE(CAST(:cosmetics AS jsonb), players.cosmetics)
+                    cosmetics = COALESCE(CAST(:cosmetics AS jsonb), players.cosmetics),
+                    level = COALESCE(:level, players.level), last_seen_at = now()
                 RETURNING id, device_id, display_name, created_at, cosmetics
                 """
             ),
@@ -83,6 +89,7 @@ def register_player(payload: PlayerRegister):
                 "device_id": payload.device_id,
                 "display_name": payload.display_name,
                 "cosmetics": payload.cosmetics.model_dump_json() if payload.cosmetics else None,
+                "level": payload.level,
             },
         ).mappings().one()
     return row
@@ -264,7 +271,7 @@ def pass_claim(payload: PassClaim):
 def pass_quest(payload: PassQuest):
     with engine.begin() as conn:
         player_id = _player_for_device(conn, payload.device_id)
-        gained = battle_pass.claim_quest(conn, player_id, payload.quest_id)
+        gained = battle_pass.claim_quest(conn, player_id, payload.quest_id, payload.day)
     return {"pass_xp": gained}
 
 
@@ -421,3 +428,66 @@ def get_challenge(code: str):
     if row is None:
         raise HTTPException(status_code=404, detail="challenge not found")
     return row
+
+
+# --- Friends ------------------------------------------------------------------
+
+def _social(action):
+    """Runs a friends action in one transaction and maps its refusals to HTTP errors."""
+    try:
+        with engine.begin() as conn:
+            return action(conn)
+    except friends.SocialError as error:
+        raise HTTPException(status_code=error.status, detail=error.reason)
+
+
+@app.get("/social")
+def social_overview(device_id: str = Query(min_length=1, max_length=128)):
+    return _social(lambda conn: friends.overview(conn, _player_for_device(conn, device_id)))
+
+
+@app.get("/players/search")
+def search_players(device_id: str = Query(min_length=1, max_length=128), q: str = Query("", max_length=40)):
+    return _social(lambda conn: friends.search(conn, _player_for_device(conn, device_id), q))
+
+
+@app.post("/friends/requests")
+def send_friend_request(payload: FriendTarget):
+    return _social(lambda conn: friends.send_request(
+        conn, _player_for_device(conn, payload.device_id), str(payload.player_id)))
+
+
+@app.post("/friends/requests/{request_id}/accept")
+def accept_friend_request(request_id: UUID, payload: DeviceOnly):
+    return _social(lambda conn: friends.answer_request(
+        conn, _player_for_device(conn, payload.device_id), str(request_id), True) or {"status": "friends"})
+
+
+@app.post("/friends/requests/{request_id}/decline")
+def decline_friend_request(request_id: UUID, payload: DeviceOnly):
+    return _social(lambda conn: friends.answer_request(
+        conn, _player_for_device(conn, payload.device_id), str(request_id), False) or {"status": "declined"})
+
+
+@app.post("/friends/remove")
+def remove_friend(payload: FriendTarget):
+    return _social(lambda conn: friends.remove_friend(
+        conn, _player_for_device(conn, payload.device_id), str(payload.player_id)) or {"status": "removed"})
+
+
+@app.post("/friends/challenges")
+def send_friend_challenge(payload: FriendChallengeCreate):
+    return _social(lambda conn: friends.send_challenge(
+        conn, _player_for_device(conn, payload.device_id), str(payload.friend_id), payload.mode))
+
+
+@app.post("/friends/challenges/{challenge_id}/accept")
+def accept_friend_challenge(challenge_id: UUID, payload: DeviceOnly):
+    return _social(lambda conn: friends.answer_challenge(
+        conn, _player_for_device(conn, payload.device_id), str(challenge_id), True))
+
+
+@app.post("/friends/challenges/{challenge_id}/decline")
+def decline_friend_challenge(challenge_id: UUID, payload: DeviceOnly):
+    return _social(lambda conn: friends.answer_challenge(
+        conn, _player_for_device(conn, payload.device_id), str(challenge_id), False))

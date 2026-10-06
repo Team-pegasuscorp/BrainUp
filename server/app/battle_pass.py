@@ -13,6 +13,7 @@ PASS_DIR = Path(__file__).parent / "data" / "pass"
 ## Unlocks premium without a store receipt. Only for local development: never set it in production.
 DEV_UNLOCK = os.environ.get("PASS_DEV_UNLOCK") == "1"
 QUEST_DAYS_KEPT = 3
+JOKER_IDS = ("joker_5050", "joker_time")
 
 
 def _load_seasons() -> list[dict]:
@@ -131,13 +132,24 @@ def record_daily(conn: Connection, player_id: str) -> int:
     return gained
 
 
-def claim_quest(conn: Connection, player_id: str, quest_id: str) -> int:
-    """Daily quests live on the phone: the server only caps how many pay per UTC day."""
+def quest_day(claimed_day: str | None) -> str:
+    """Quests roll over at the phone's local midnight, not UTC's: the cap is kept per
+    phone day, which may be one day off the UTC date (time zones), never more."""
+    utc_day = today()
+    try:
+        day = date.fromisoformat(str(claimed_day))
+    except ValueError:
+        return utc_day.isoformat()
+    return day.isoformat() if abs((day - utc_day).days) <= 1 else utc_day.isoformat()
+
+
+def claim_quest(conn: Connection, player_id: str, quest_id: str, claimed_day: str | None = None) -> int:
+    """Daily quests live on the phone: the server only caps how many pay per (phone) day."""
     season = current_season()
     if season is None:
         return 0
     row = _row(conn, player_id, season)
-    day = today().isoformat()
+    day = quest_day(claimed_day)
     claimed_today = list(row["quests"].get(day, []))
     if quest_id in claimed_today or len(claimed_today) >= int(season["xp"]["quests_per_day"]):
         return 0
@@ -187,11 +199,50 @@ def unlock_premium(conn: Connection, player_id: str, receipt: str) -> bool:
     return True
 
 
+def jokers_available(conn: Connection, player_id: str) -> dict:
+    """Stock per joker: everything won in claimed pass tiers (all seasons) minus what was used."""
+    earned = {joker_id: 0 for joker_id in JOKER_IDS}
+    seasons = {season["id"]: season for season in SEASONS}
+    rows = conn.execute(
+        text("SELECT season_id, claimed FROM pass_progress WHERE player_id = :p"), {"p": player_id}
+    ).all()
+    for season_id, claimed in rows:
+        season = seasons.get(season_id)
+        if season is None:
+            continue
+        for track in ("free", "premium"):
+            for tier in (claimed or {}).get(track, []):
+                if not 1 <= int(tier) <= len(season["tiers"]):
+                    continue
+                reward = season["tiers"][int(tier) - 1].get(track) or {}
+                if reward.get("type") == "joker" and reward.get("id") in earned:
+                    earned[reward["id"]] += max(int(reward.get("amount", 1)), 1)
+    used = conn.execute(text("SELECT jokers_used FROM players WHERE id = :p"), {"p": player_id}).scalar() or {}
+    return {joker_id: max(count - int(used.get(joker_id, 0)), 0) for joker_id, count in earned.items()}
+
+
+def use_joker(conn: Connection, player_id: str, joker_id: str) -> bool:
+    """Spends one joker if the player has one left. Locks the player row against double spends."""
+    if joker_id not in JOKER_IDS:
+        return False
+    used = conn.execute(
+        text("SELECT jokers_used FROM players WHERE id = :p FOR UPDATE"), {"p": player_id}
+    ).scalar()
+    if used is None or jokers_available(conn, player_id).get(joker_id, 0) <= 0:
+        return False
+    used[joker_id] = int(used.get(joker_id, 0)) + 1
+    conn.execute(
+        text("UPDATE players SET jokers_used = CAST(:u AS jsonb) WHERE id = :p"),
+        {"u": json.dumps(used), "p": player_id},
+    )
+    return True
+
+
 def state(conn: Connection, player_id: str) -> dict:
     """Everything the pass screen needs: season, tiers, progress, this week's challenges."""
     season = current_season()
     if season is None:
-        return {"active": False}
+        return {"active": False, "jokers": jokers_available(conn, player_id)}
     row = _row(conn, player_id, season, lock=False)
     week = week_of(season)
     return {
@@ -214,4 +265,5 @@ def state(conn: Connection, player_id: str) -> dict:
         ],
         "quests_today": len(row["quests"].get(today().isoformat(), [])),
         "dev_unlock": DEV_UNLOCK,
+        "jokers": jokers_available(conn, player_id),
     }

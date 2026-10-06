@@ -11,6 +11,9 @@ const GameAssets = preload("res://scripts/config/game_assets.gd")
 ## Async create/join challenge tiles — kept in code, hidden from the Social page for now.
 ## Flip to `true` to restore `_create_section` / `_join_section` / `_challenge_card`.
 const SHOW_ASYNC_CHALLENGE_TILES := false
+## Until the server answers (offline, no backend), show the demo friends / requests so
+## the tab can still be designed. Real data replaces them on the first /social reply.
+const SHOW_DEMO_WHEN_OFFLINE := true
 
 @onready var content: VBoxContainer = %Content
 @onready var message_label: Label = %MessageLabel
@@ -52,11 +55,21 @@ var _challenge_requests_page: Control
 var _challenge_requests_list: VBoxContainer
 var _challenge_mode_picker: Control
 var _pending_challenge_friend: Dictionary = {}
+## Server data (NetworkManager.social_state) has arrived: lists below are real.
+var _social_live: bool = false
+var _real_friends: Array = []
+## Last data drawn, to redraw only when a poll brings something new.
+var _social_signature: String = ""
+var _search_query: String = ""
+var _search_results: Array = []
+## Invite being accepted (waiting for the server's go before opening the duel).
+var _accepting_challenge: Dictionary = {}
 
 
 func _ready() -> void:
-	_friend_requests = _demo_friend_requests()
-	_challenge_requests = _demo_challenge_requests()
+	if SHOW_DEMO_WHEN_OFFLINE:
+		_friend_requests = _demo_friend_requests()
+		_challenge_requests = _demo_challenge_requests()
 	_prune_expired_challenge_requests()
 	_ensure_friend_detail_overlay()
 	_apply()
@@ -73,6 +86,15 @@ func _ready() -> void:
 	NetworkManager.live_match_over.connect(_on_live_match_over)
 	NetworkManager.live_error.connect(_on_live_error)
 	NetworkManager.live_search_range_changed.connect(_on_live_search_range_changed)
+	NetworkManager.social_received.connect(_on_social_received)
+	NetworkManager.social_action_done.connect(_on_social_action_done)
+	NetworkManager.social_action_failed.connect(_on_social_action_failed)
+	NetworkManager.players_found.connect(_on_players_found)
+	NetworkManager.friend_challenge_sent.connect(_on_friend_challenge_sent)
+	NetworkManager.friend_challenge_failed.connect(_on_friend_challenge_failed)
+	NetworkManager.friend_challenge_accepted.connect(_on_my_challenge_accepted)
+	if not NetworkManager.social_state.is_empty():
+		_on_social_received(NetworkManager.social_state)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -108,7 +130,159 @@ func _process(_delta: float) -> void:
 
 
 func on_tab_shown() -> void:
+	NetworkManager.poll_social_now()
 	_apply()
+
+
+# --- Server data ----------------------------------------------------------------
+
+const _MODE_INDEX := {"classic": 0, "survival": 1, "time_attack": 2}
+
+
+func _on_social_received(data: Dictionary) -> void:
+	_social_live = true
+	var locale := TranslationServer.get_locale()
+	_real_friends = []
+	for raw in data.get("friends", []):
+		var friend := _player_card(raw)
+		var best := str(raw.get("best_category_id", ""))
+		var last := str(raw.get("last_category_id", ""))
+		friend["best_category_id"] = best
+		friend["best_subject"] = ProfileSnapshot._resolve_category_name(best, locale) if not best.is_empty() else "—"
+		friend["best_subject_icon"] = ProfileSnapshot._category_icon(best) if not best.is_empty() else "❔"
+		friend["best_accuracy"] = float(raw.get("best_accuracy", 0.0))
+		friend["best_subject_level"] = maxi(1, int(round(float(raw.get("best_accuracy", 0.0)) * 0.32)))
+		friend["last_won"] = bool(raw.get("last_won", false))
+		friend["last_category_id"] = last
+		friend["last_game_subject"] = ProfileSnapshot._resolve_category_name(last, locale) if not last.is_empty() else "—"
+		friend["wins"] = int(raw.get("wins", 0))
+		_real_friends.append(friend)
+	_friend_requests = []
+	for raw in data.get("requests_in", []):
+		var request := _player_card(raw.get("player", {}))
+		request["request_id"] = str(raw.get("id", ""))
+		_friend_requests.append(request)
+	_challenge_requests = []
+	var now := int(Time.get_unix_time_from_system())
+	for raw in data.get("challenges_in", []):
+		if str(raw.get("status", "")) != "pending":
+			continue
+		var invite := _player_card(raw.get("player", {}))
+		invite["challenge_id"] = str(raw.get("id", ""))
+		invite["mode"] = int(_MODE_INDEX.get(str(raw.get("mode", "classic")), 0))
+		## Expiry stays the server's: rebuild a send time that matches its countdown.
+		invite["sent_unix"] = now - (SaveManager.CHALLENGE_INVITE_TTL_SEC - int(raw.get("expires_in", 0)))
+		_challenge_requests.append(invite)
+
+	var signature := JSON.stringify([_real_friends, _friend_requests, _challenge_requests])
+	if signature == _social_signature:
+		return
+	## Never redraw under an open sheet: the next poll will.
+	if not _selected_friend.is_empty() or (_challenge_mode_picker != null and _challenge_mode_picker.visible):
+		return
+	_social_signature = signature
+	if _live_state == "idle":
+		_rebuild_content()
+	if _friends_page != null and _friends_page.visible:
+		_populate_friends_page()
+	if _friend_requests_page != null and _friend_requests_page.visible:
+		_populate_friend_requests_page()
+	if _challenge_requests_page != null and _challenge_requests_page.visible:
+		_populate_challenge_requests_page()
+
+
+## Server player summary -> the dictionary the Social widgets read.
+func _player_card(raw: Variant) -> Dictionary:
+	var player: Dictionary = raw if typeof(raw) == TYPE_DICTIONARY else {}
+	var cosmetics: Variant = player.get("cosmetics", {})
+	return {
+		"id": str(player.get("id", "")),
+		"name": str(player.get("name", "?")),
+		"level": maxi(int(player.get("level", 1)), 1),
+		"presence": str(player.get("presence", "offline")),
+		"cosmetics": cosmetics if typeof(cosmetics) == TYPE_DICTIONARY else {},
+		"trophies": int(player.get("trophies", 0)),
+		"accent": UiTokens.ACCENT_SOCIAL,
+	}
+
+
+func _on_social_action_done(action: String, result: Dictionary) -> void:
+	match action:
+		"request_send":
+			if str(result.get("status", "")) == "friends":
+				_show_status(tr("UI_SOCIAL_NOW_FRIENDS"))
+			for row in _search_results:
+				if str(row.get("id", "")) == _last_request_target:
+					row["request_sent"] = true
+			_rebuild_content()
+		"challenge_accept":
+			_open_accepted_challenge()
+
+
+func _on_social_action_failed(action: String, reason: String) -> void:
+	if action == "challenge_accept":
+		var friend_name := str(_accepting_challenge.get("name", ""))
+		_accepting_challenge = {}
+		var key := "UI_SOCIAL_CHALLENGE_REQUEST_OFFLINE" if reason == "challenger_offline" else "UI_SOCIAL_CHALLENGE_REQUEST_EXPIRED"
+		_show_status(tr(key).format({"name": friend_name}))
+		NetworkManager.poll_social_now()
+		return
+	_show_status(tr("UI_SOCIAL_ERROR_OFFLINE") if reason == "offline" else tr("UI_SOCIAL_ERROR_GENERIC"))
+
+
+var _last_request_target: String = ""
+
+
+func _on_players_found(query: String, results: Array) -> void:
+	if query != _search_query:
+		return
+	_search_results = results
+	if results.is_empty():
+		_show_status(tr("UI_SOCIAL_SEARCH_EMPTY").format({"name": query}))
+	_rebuild_content()
+
+
+func _on_add_found_player(player: Dictionary) -> void:
+	_last_request_target = str(player.get("id", ""))
+	NetworkManager.send_friend_request(_last_request_target)
+	_show_status(tr("UI_SOCIAL_ADD_FRIEND_SENT").format({"name": str(player.get("name", ""))}))
+
+
+func _on_friend_challenge_sent(invite: Dictionary) -> void:
+	if str(invite.get("status", "")) == "pending":
+		return
+	_show_status(tr("UI_SOCIAL_ERROR_GENERIC"))
+
+
+func _on_friend_challenge_failed(reason: String) -> void:
+	_show_status(tr("UI_SOCIAL_ERROR_OFFLINE") if reason == "offline" else tr("UI_SOCIAL_ERROR_GENERIC"))
+
+
+## The server agreed: both phones now join the private room.
+func _open_accepted_challenge() -> void:
+	if _accepting_challenge.is_empty():
+		return
+	var invite := _accepting_challenge
+	_accepting_challenge = {}
+	_start_friend_duel(str(invite.get("challenge_id", "")), str(invite.get("name", "")), int(invite.get("mode", 0)))
+
+
+## Someone accepted one of my invites while the app is open.
+func _on_my_challenge_accepted(challenge: Dictionary) -> void:
+	var player: Dictionary = challenge.get("player", {})
+	_start_friend_duel(
+		str(challenge.get("id", "")), str(player.get("name", "")),
+		int(_MODE_INDEX.get(str(challenge.get("mode", "classic")), 0))
+	)
+
+
+func _start_friend_duel(challenge_id: String, friend_name: String, mode: int) -> void:
+	if challenge_id.is_empty() or not is_inside_tree():
+		return
+	GameManager.friend_challenge = {"id": challenge_id, "name": friend_name}
+	GameManager.selected_mode = mode
+	GameManager.shell_tab_index = ScenePaths.Tab.SOCIAL
+	get_tree().change_scene_to_file(ScenePaths.LIVE_MATCH)
 
 
 func _apply() -> void:
@@ -548,7 +722,7 @@ func _player_search_section() -> PanelContainer:
 
 	var ink := Color(0.12, 0.06, 0.1, 1)
 	var plus := Label.new()
-	plus.text = "＋"
+	plus.text = "+"
 	plus.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	plus.add_theme_font_size_override("font_size", UiScale.font(18))
 	plus.add_theme_color_override("font_color", ink)
@@ -560,7 +734,62 @@ func _player_search_section() -> PanelContainer:
 	add_label.add_theme_font_size_override("font_size", UiScale.font(18))
 	add_label.add_theme_color_override("font_color", ink)
 	add_row.add_child(add_label)
+	for player in _search_results:
+		if typeof(player) == TYPE_DICTIONARY:
+			vbox.add_child(_search_result_row(player))
 	return panel
+
+
+## One search hit: avatar, name, level and the add button (or where things stand).
+func _search_result_row(player: Dictionary) -> Control:
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 12)
+	var card := _player_card(player)
+	var cosmetics: Dictionary = card["cosmetics"]
+	if cosmetics.is_empty():
+		cosmetics = ShopCatalog.demo_cosmetics_for(str(card["name"]))
+	var avatar := CosmeticsView.avatar(cosmetics, 52)
+	avatar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	row.add_child(avatar)
+	var identity := VBoxContainer.new()
+	identity.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	identity.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.add_child(identity)
+	var name_label := Label.new()
+	name_label.text = str(card["name"])
+	name_label.clip_text = true
+	name_label.add_theme_font_size_override("font_size", UiScale.font(18))
+	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
+	identity.add_child(name_label)
+	var level_label := Label.new()
+	level_label.text = "%s %d · %d 🏆" % [tr("UI_PROFILE_LEVEL_CAPTION"), int(card["level"]), int(card["trophies"])]
+	level_label.add_theme_font_size_override("font_size", UiScale.font(13))
+	level_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT_MUTED)
+	identity.add_child(level_label)
+
+	var button := Button.new()
+	button.focus_mode = Control.FOCUS_NONE
+	button.custom_minimum_size = Vector2(150, 48)
+	button.add_theme_font_size_override("font_size", UiScale.font(15))
+	button.add_theme_color_override("font_color", Color(0.12, 0.06, 0.1, 1))
+	button.add_theme_color_override("font_disabled_color", UiTokens.PROFILE_TEXT_MUTED)
+	button.add_theme_stylebox_override("normal", UiStyle.filled(UiTokens.ACCENT_SOCIAL, 14))
+	button.add_theme_stylebox_override("hover", UiStyle.filled(UiTokens.ACCENT_SOCIAL.lightened(0.1), 14))
+	button.add_theme_stylebox_override("pressed", UiStyle.filled(UiTokens.ACCENT_SOCIAL.darkened(0.06), 14))
+	button.add_theme_stylebox_override("disabled", UiStyle.filled(Color(1, 1, 1, 0.08), 14))
+	if bool(player.get("is_friend", false)):
+		button.text = tr("UI_SOCIAL_ALREADY_FRIEND")
+		button.disabled = true
+	elif bool(player.get("request_sent", false)):
+		button.text = tr("UI_SOCIAL_REQUEST_PENDING")
+		button.disabled = true
+	else:
+		## They already asked us: adding them back makes us friends at once.
+		button.text = tr("UI_SOCIAL_ACCEPT") if bool(player.get("request_received", false)) else tr("UI_SOCIAL_ADD")
+		button.pressed.connect(_on_add_found_player.bind(player))
+		PressScaleUtil.wire(button, self)
+	row.add_child(button)
+	return row
 
 
 func _friend_request_row(request: Dictionary) -> Control:
@@ -628,12 +857,12 @@ func _friend_request_row(request: Dictionary) -> Control:
 	actions.add_child(_friend_request_action_btn(
 		"✕",
 		UiTokens.FEEDBACK_WRONG,
-		_on_friend_request_declined.bind(request_name)
+		_on_friend_request_declined.bind(request)
 	))
 	actions.add_child(_friend_request_action_btn(
 		"✓",
 		UiTokens.FEEDBACK_CORRECT,
-		_on_friend_request_accepted.bind(request_name)
+		_on_friend_request_accepted.bind(request)
 	))
 	return row
 
@@ -869,7 +1098,10 @@ func _remove_friend_request(player_name: String) -> void:
 	_friend_requests = next
 
 
-func _on_friend_request_accepted(player_name: String) -> void:
+func _on_friend_request_accepted(request: Dictionary) -> void:
+	var player_name := str(request.get("name", ""))
+	if request.has("request_id"):
+		NetworkManager.answer_friend_request(str(request["request_id"]), true)
 	_remove_friend_request(player_name)
 	_show_status(tr("UI_SOCIAL_FRIEND_REQUEST_ACCEPTED").format({"name": player_name}))
 	if _friend_requests_page != null and _friend_requests_page.visible:
@@ -877,7 +1109,10 @@ func _on_friend_request_accepted(player_name: String) -> void:
 	_rebuild_content()
 
 
-func _on_friend_request_declined(player_name: String) -> void:
+func _on_friend_request_declined(request: Dictionary) -> void:
+	var player_name := str(request.get("name", ""))
+	if request.has("request_id"):
+		NetworkManager.answer_friend_request(str(request["request_id"]), false)
 	_remove_friend_request(player_name)
 	_show_status(tr("UI_SOCIAL_FRIEND_REQUEST_DECLINED").format({"name": player_name}))
 	if _friend_requests_page != null and _friend_requests_page.visible:
@@ -916,18 +1151,22 @@ func _on_challenge_request_accepted(request: Dictionary) -> void:
 		_rebuild_content()
 		return
 
-	var mode := clampi(int(request.get("mode", 0)), 0, 2)
 	_challenge_friend_key = _friend_rivalry_key(request)
+	if request.has("challenge_id"):
+		## The server checks the challenger is still online, then the duel opens.
+		_accepting_challenge = request
+		NetworkManager.answer_friend_challenge(str(request["challenge_id"]), true)
+		_show_status(tr("UI_SOCIAL_CHALLENGE_JOINING").format({"name": player_name}))
+		return
+	## Demo invite (offline): nothing to join.
 	_remove_challenge_request(player_name)
-	NetworkManager.accept_friend_challenge(_challenge_friend_key, mode)
-	GameManager.selected_mode = mode
-	GameManager.shell_tab_index = ScenePaths.Tab.SOCIAL
-	AudioManager.play("click")
-	get_tree().change_scene_to_file(ScenePaths.LIVE_MATCH)
+	_show_status(tr("UI_SOCIAL_ERROR_OFFLINE"))
 
 
 func _on_challenge_request_declined(request: Dictionary) -> void:
 	var player_name := str(request.get("name", ""))
+	if request.has("challenge_id"):
+		NetworkManager.answer_friend_challenge(str(request["challenge_id"]), false)
 	_remove_challenge_request(player_name)
 	_show_status(tr("UI_SOCIAL_CHALLENGE_REQUEST_DECLINED").format({"name": player_name}))
 	if _challenge_requests_page != null and _challenge_requests_page.visible:
@@ -941,12 +1180,13 @@ func _on_search_player_pressed(search: LineEdit) -> void:
 
 func _on_add_friend_pressed(search: LineEdit) -> void:
 	var player_name := search.text.strip_edges() if search != null else ""
-	if player_name.is_empty():
+	if player_name.length() < 2:
 		_show_status(tr("UI_SOCIAL_ADD_FRIEND_EMPTY"))
-	else:
-		_show_status(tr("UI_SOCIAL_ADD_FRIEND_SENT").format({"name": player_name}))
-		if search != null:
-			search.text = ""
+		return
+	## Search first: the results list below has one "add" button per player.
+	_search_query = player_name
+	_search_results = []
+	NetworkManager.search_players(player_name)
 
 
 func _open_friend_requests_page() -> void:
@@ -2091,7 +2331,8 @@ func _send_friend_challenge(friend: Dictionary, mode: int) -> void:
 		mode,
 		int(friend.get("level", 1))
 	)
-	NetworkManager.send_friend_challenge(friend_key, mode)
+	if _social_live and not str(friend.get("id", "")).is_empty():
+		NetworkManager.send_friend_challenge(str(friend["id"]), mode)
 	_show_status(tr("UI_SOCIAL_FRIEND_CHALLENGE_SENT").format({"name": friend_name}))
 
 
@@ -2108,7 +2349,9 @@ func _friend_h2h_label(friend: Dictionary) -> String:
 
 
 func _get_friends() -> Array:
-	## Prefer real save data when available; otherwise demo profiles for UI work.
+	## Server friends once the first /social reply arrived; otherwise demo profiles for UI work.
+	if _social_live or not SHOW_DEMO_WHEN_OFFLINE:
+		return _real_friends
 	if SaveManager.has_method("get_friends"):
 		var stored: Variant = SaveManager.call("get_friends")
 		if stored is Array and not stored.is_empty():

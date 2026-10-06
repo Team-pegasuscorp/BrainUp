@@ -9,8 +9,20 @@ signal challenge_joined(challenge: Dictionary)
 signal challenge_join_failed(error_code: int)
 signal challenge_fetched(challenge: Dictionary)
 signal challenge_fetch_failed(code: String)
-## Friend-targeted challenge invite (stub until friends API exists).
+## Friends (server: brainup-backend app/friends.py). `social_received` carries
+## {friends, requests_in, requests_out, challenges_in, challenges_out}.
 signal friend_challenge_sent(invite: Dictionary)
+signal friend_challenge_failed(reason: String)
+signal social_received(data: Dictionary)
+signal social_failed
+signal players_found(query: String, results: Array)
+signal social_action_done(action: String, result: Dictionary)
+signal social_action_failed(action: String, reason: String)
+## One of my invites was accepted while the app is open: time to join the private room.
+signal friend_challenge_accepted(challenge: Dictionary)
+## Jokers during a duel: my own result ({joker, ok, removed | bonus}) / the opponent used one.
+signal live_joker_result(data: Dictionary)
+signal live_opponent_joker(data: Dictionary)
 signal live_match_found(data: Dictionary)
 signal live_question(data: Dictionary)
 signal live_reveal(data: Dictionary)
@@ -76,8 +88,27 @@ var _live_widen_elapsed: float = 0.0
 ## Public mirror for UI (searching label).
 var live_trophy_range: int = LiveMatchmakingScript.initial_range()
 
+## Last friends overview received (empty until the first poll succeeds).
+var social_state: Dictionary = {}
+## The Social poll doubles as the presence ping: friends see us "online" only while it runs.
+const SOCIAL_POLL_SECONDS := 15.0
+var _social_poll_left: float = 0.0
+var _social_polling: bool = false
+## Accepted invites already handed to the UI (so one acceptance opens one duel).
+var _accepted_seen: Dictionary = {}
+## Quest claims that did not reach the server yet: [{quest_id, day}], retried on each poll.
+const QUEST_OUTBOX_PATH := "user://quest_outbox.json"
+var _quest_outbox: Array = []
+var _quest_flushing: bool = false
+
 
 func _process(_delta: float) -> void:
+	if not player_id.is_empty():
+		_social_poll_left -= _delta
+		if _social_poll_left <= 0.0:
+			_social_poll_left = SOCIAL_POLL_SECONDS
+			fetch_social()
+			_flush_quest_outbox()
 	if _live_socket == null:
 		return
 
@@ -214,8 +245,13 @@ func _handle_live_message(raw: String) -> void:
 		"match_over":
 			live_match_over.emit(parsed)
 			stop_live_matchmaking()
+		"joker_result":
+			live_joker_result.emit(parsed)
+		"opponent_joker":
+			live_opponent_joker.emit(parsed)
 		"match_aborted":
-			live_error.emit("aborted")
+			var reason := str(parsed.get("reason", ""))
+			live_error.emit(reason if reason in ["friend_absent", "invite_invalid"] else "aborted")
 			stop_live_matchmaking()
 
 
@@ -232,6 +268,7 @@ func _ready() -> void:
 	_pass_request = _make_request_node()
 	_pass_write_request = _make_request_node()
 	SaveManager.cosmetics_changed.connect(_sync_cosmetics)
+	_load_quest_outbox()
 	_register_player()
 
 
@@ -372,25 +409,136 @@ func create_challenge(category: String) -> void:
 	challenge_created.emit(parsed)
 
 
-## Stub: deliver a mode invite to a friend. Replace with POST when the friends API lands.
+const _MODE_IDS: Array[String] = ["classic", "survival", "time_attack"]
+
+
+## Invites a friend (server player id) to a live duel in `mode` (0 classic / 1 survival /
+## 2 time attack). The friend sees it on their next Social poll.
 func send_friend_challenge(friend_id: String, mode: int) -> void:
-	var invite := {
-		"friend_id": str(friend_id).strip_edges(),
-		"mode": clampi(mode, 0, 2),
-		"challenger_id": player_id,
-	}
+	var body := {"device_id": _load_or_create_device_id(), "friend_id": friend_id,
+		"mode": _MODE_IDS[clampi(mode, 0, 2)]}
+	var reply: Dictionary = await _social_call(HTTPClient.METHOD_POST, "/friends/challenges", body)
+	if int(reply["code"]) != 200:
+		friend_challenge_failed.emit(str(reply["detail"]))
+		return
+	var invite: Dictionary = reply["data"]
+	invite["friend_id"] = friend_id
 	friend_challenge_sent.emit(invite)
+	fetch_social()
 
 
-## Stub: accept a live friend challenge. Real join happens when both are online.
-func accept_friend_challenge(friend_id: String, mode: int) -> void:
-	## Client starts the live duel screen; server will validate presence later.
-	friend_challenge_sent.emit({
-		"friend_id": str(friend_id).strip_edges(),
-		"mode": clampi(mode, 0, 2),
-		"accepted": true,
-		"challenger_id": player_id,
-	})
+## Accepts (or declines) an invite. Accepting succeeds only while the challenger is online;
+## the reply's challenge is then joined with `start_friend_match`.
+func answer_friend_challenge(challenge_id: String, accept: bool) -> void:
+	var action := "challenge_accept" if accept else "challenge_decline"
+	await _social_action(action, "/friends/challenges/%s/%s" % [challenge_id.uri_encode(), "accept" if accept else "decline"], {})
+
+
+func fetch_social() -> void:
+	if _social_polling or player_id.is_empty():
+		return
+	_social_polling = true
+	var reply: Dictionary = await _social_call(
+		HTTPClient.METHOD_GET, "/social?device_id=%s" % _load_or_create_device_id().uri_encode(), {}
+	)
+	_social_polling = false
+	if int(reply["code"]) != 200 or typeof(reply["data"]) != TYPE_DICTIONARY:
+		social_failed.emit()
+		return
+	social_state = reply["data"]
+	social_received.emit(social_state)
+	for challenge in social_state.get("challenges_out", []):
+		var challenge_id := str(challenge.get("id", ""))
+		if str(challenge.get("status", "")) == "accepted" and not _accepted_seen.has(challenge_id):
+			_accepted_seen[challenge_id] = true
+			friend_challenge_accepted.emit(challenge)
+
+
+## Asks for an immediate poll (e.g. when the Social tab opens).
+func poll_social_now() -> void:
+	_social_poll_left = 0.0
+
+
+func search_players(query: String) -> void:
+	var q := query.strip_edges()
+	var reply: Dictionary = await _social_call(
+		HTTPClient.METHOD_GET,
+		"/players/search?device_id=%s&q=%s" % [_load_or_create_device_id().uri_encode(), q.uri_encode()],
+		{}
+	)
+	if int(reply["code"]) != 200 or typeof(reply["data"]) != TYPE_ARRAY:
+		social_action_failed.emit("search", str(reply["detail"]))
+		return
+	players_found.emit(q, reply["data"])
+
+
+func send_friend_request(target_id: String) -> void:
+	await _social_action("request_send", "/friends/requests", {"player_id": target_id})
+
+
+func answer_friend_request(request_id: String, accept: bool) -> void:
+	var action := "request_accept" if accept else "request_decline"
+	await _social_action(action, "/friends/requests/%s/%s" % [request_id.uri_encode(), "accept" if accept else "decline"], {})
+
+
+func remove_friend(friend_id: String) -> void:
+	await _social_action("remove", "/friends/remove", {"player_id": friend_id})
+
+
+func _social_action(action: String, path: String, extra: Dictionary) -> void:
+	var body := extra.duplicate()
+	body["device_id"] = _load_or_create_device_id()
+	var reply: Dictionary = await _social_call(HTTPClient.METHOD_POST, path, body)
+	if int(reply["code"]) != 200:
+		social_action_failed.emit(action, str(reply["detail"]))
+		return
+	var data: Variant = reply["data"]
+	social_action_done.emit(action, data if typeof(data) == TYPE_DICTIONARY else {})
+	fetch_social()
+
+
+## One throwaway HTTPRequest per call, so polls and button presses never wait on each other.
+## Returns {code, data, detail} (code 0 = no connection).
+func _social_call(method: int, path: String, body: Dictionary) -> Dictionary:
+	var request := _make_request_node()
+	var payload := "" if body.is_empty() else JSON.stringify(body)
+	var sent := request.request(BASE_URL + path, ["Content-Type: application/json"], method, payload)
+	if sent != OK:
+		request.queue_free()
+		return {"code": 0, "data": null, "detail": "offline"}
+	var result: Array = await request.request_completed
+	request.queue_free()
+	var parsed: Variant = JSON.parse_string((result[3] as PackedByteArray).get_string_from_utf8())
+	var detail := "offline" if int(result[1]) == 0 else str(int(result[1]))
+	if typeof(parsed) == TYPE_DICTIONARY and parsed.has("detail"):
+		detail = str(parsed["detail"])
+	return {"code": int(result[1]), "data": parsed, "detail": detail}
+
+
+## Joins the private room of an accepted invite (both players call this).
+func start_friend_match(challenge_id: String) -> void:
+	if player_id.is_empty():
+		live_error.emit("no_player")
+		return
+	stop_live_matchmaking()
+	var ws_url := BASE_URL.replace("http://", "ws://").replace("https://", "wss://") + "/ws/live"
+	_live_socket = WebSocketPeer.new()
+	if _live_socket.connect_to_url(ws_url) != OK:
+		_live_socket = null
+		live_error.emit("connect_failed")
+		return
+	_live_pending_join = {
+		"type": "join_friend",
+		"player_id": player_id,
+		"challenge_id": challenge_id,
+		"locale": LocaleManager.get_content_locale(),
+	}
+
+
+func send_joker(index: int, joker_id: String) -> void:
+	if _live_socket == null:
+		return
+	_live_socket.send_text(JSON.stringify({"type": "joker", "joker": joker_id, "index": index}))
 
 
 func join_challenge(code: String) -> void:
@@ -456,6 +604,7 @@ func _register_player() -> void:
 		"device_id": device_id,
 		"display_name": SaveManager.player_name,
 		"cosmetics": SaveManager.get_cosmetics(),
+		"level": SaveManager.level,
 	}
 	var sent := _players_request.request(
 		"%s/players" % BASE_URL,
@@ -495,6 +644,10 @@ func fetch_pass() -> void:
 		pass_failed.emit()
 		return
 	pass_state = parsed
+	## The server owns the joker stock (won in the pass, spent in duels).
+	var server_jokers: Variant = parsed.get("jokers")
+	if typeof(server_jokers) == TYPE_DICTIONARY:
+		SaveManager.set_jokers(server_jokers)
 	pass_received.emit(pass_state)
 	if _pass_refetch:
 		_pass_refetch = false
@@ -515,8 +668,48 @@ func claim_pass_reward(tier: int, track: String) -> void:
 
 
 ## A daily quest was claimed on the phone: the server pays pass XP (3 a day at most).
-func claim_pass_quest(quest_id: String) -> void:
-	await _pass_post("/pass/quest", {"device_id": _load_or_create_device_id(), "quest_id": quest_id})
+## `day` is the phone's local date of the quest. Claims that cannot reach the server are
+## kept and retried, so no pass XP is lost offline.
+func claim_pass_quest(quest_id: String, day: String) -> void:
+	_quest_outbox.append({"quest_id": quest_id, "day": day})
+	_save_quest_outbox()
+	_flush_quest_outbox()
+
+
+func _flush_quest_outbox() -> void:
+	if _quest_flushing or _quest_outbox.is_empty():
+		return
+	_quest_flushing = true
+	var paid := false
+	while not _quest_outbox.is_empty():
+		var claim: Dictionary = _quest_outbox[0]
+		var parsed: Variant = await _pass_post("/pass/quest", {
+			"device_id": _load_or_create_device_id(),
+			"quest_id": str(claim.get("quest_id", "")),
+			"day": str(claim.get("day", "")),
+		})
+		if typeof(parsed) != TYPE_DICTIONARY or not parsed.has("pass_xp"):
+			break
+		paid = paid or int(parsed["pass_xp"]) > 0
+		_quest_outbox.pop_front()
+		_save_quest_outbox()
+	_quest_flushing = false
+	if paid:
+		fetch_pass()
+
+
+func _load_quest_outbox() -> void:
+	if not FileAccess.file_exists(QUEST_OUTBOX_PATH):
+		return
+	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(QUEST_OUTBOX_PATH))
+	if typeof(parsed) == TYPE_ARRAY:
+		_quest_outbox = parsed
+
+
+func _save_quest_outbox() -> void:
+	var file := FileAccess.open(QUEST_OUTBOX_PATH, FileAccess.WRITE)
+	if file != null:
+		file.store_string(JSON.stringify(_quest_outbox))
 
 
 ## TODO(billing): send the Google Play purchase token. "dev" only works on a development
@@ -551,6 +744,7 @@ func _sync_cosmetics() -> void:
 		"device_id": _load_or_create_device_id(),
 		"display_name": SaveManager.player_name,
 		"cosmetics": SaveManager.get_cosmetics(),
+		"level": SaveManager.level,
 	}
 	var sent := _cosmetics_request.request(
 		"%s/players" % BASE_URL,
