@@ -249,10 +249,6 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 	return panel
 
 
-## Défis du jour card fill — reused by hero league / streak subtiles.
-const _DAILY_CHALLENGES_BG := Color(0.075, 0.255, 0.245, 1)
-
-
 func _summary_stat_tile(aurore_theme: String = "foret") -> PanelContainer:
 	## Home hero chips — league wash follows tier; streak stays foret.
 	var tile := PanelContainer.new()
@@ -293,9 +289,6 @@ func _make_daily_challenges_card() -> PanelContainer:
 	var panel := PanelContainer.new()
 	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var style := UiStyle.home_surface(true, 0)
-	style.bg_color = _DAILY_CHALLENGES_BG
-	style.set_border_width_all(2)
-	style.border_color = Color(UiTokens.ACCENT_HOME.r, UiTokens.ACCENT_HOME.g, UiTokens.ACCENT_HOME.b, 0.55)
 	panel.add_theme_stylebox_override("panel", style)
 
 	var margin := _pad(14, 12)

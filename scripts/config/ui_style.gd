@@ -181,84 +181,55 @@ static func category_tile_featured(accent: Color, selected: bool = false) -> Sty
 
 
 static func profile_card(accent: Color = Color(0, 0, 0, 0), raised: bool = false) -> StyleBoxFlat:
-	## Mock-style navy tile: soft border + light drop shadow (not Quiz).
+	## Large section shell — Quiz blue (sub-tiles / banners keep their own fills).
 	var style := StyleBoxFlat.new()
-	style.bg_color = UiTokens.PROFILE_CARD_BG_RAISED if raised else UiTokens.PROFILE_CARD_BG
-	style.set_border_width_all(1)
+	style.bg_color = UiTokens.SHELL_CARD_BG_RAISED if raised else UiTokens.SHELL_CARD_BG
+	style.set_border_width_all(2)
 	style.set_corner_radius_all(UiTokens.PROFILE_CARD_RADIUS)
+	style.border_color = UiTokens.SHELL_CARD_BORDER
 	style.shadow_offset = Vector2(0, 2)
 	style.content_margin_left = 0
 	style.content_margin_top = 0
 	style.content_margin_right = 0
 	style.content_margin_bottom = 0
-	if accent.a > 0.02:
-		style.border_color = Color(accent.r, accent.g, accent.b, 0.28 if raised else 0.18)
-		style.shadow_color = Color(accent.r, accent.g, accent.b, 0.14 if raised else 0.10)
-		style.shadow_size = 6 if raised else 4
-	else:
-		style.border_color = UiTokens.PROFILE_CARD_BORDER
-		style.shadow_color = Color(0, 0, 0, 0.18)
-		style.shadow_size = 5 if raised else 3
+	var edge := accent if accent.a > 0.02 else UiTokens.ACCENT_QUIZ
+	style.shadow_color = Color(edge.r, edge.g, edge.b, 0.14 if raised else 0.10)
+	style.shadow_size = 6 if raised else 4
 	return style
 
 
 static func profile_surface(accent: Color = Color(0, 0, 0, 0), raised: bool = false, pad: int = 16) -> StyleBoxFlat:
-	## Profile navy tile with built-in padding (for Home / Social / Leaderboard).
+	## Large profile shell with built-in padding.
 	var style := profile_card(accent, raised)
 	style.set_content_margin_all(pad)
 	return style
 
 
 static func social_surface(raised: bool = false, pad: int = 10) -> StyleBoxFlat:
-	## Dark magenta tiles tuned to Social's pastel page wash.
-	var style := profile_card(UiTokens.ACCENT_SOCIAL, raised)
-	style.bg_color = UiTokens.SOCIAL_CARD_BG_RAISED if raised else UiTokens.SOCIAL_CARD_BG
-	style.border_color = UiTokens.SOCIAL_CARD_BORDER
-	style.shadow_color = Color(UiTokens.ACCENT_SOCIAL.r, UiTokens.ACCENT_SOCIAL.g, UiTokens.ACCENT_SOCIAL.b, 0.12)
-	style.shadow_size = 6 if raised else 4
-	style.shadow_offset = Vector2(0, 2)
+	## Large Social shells — Quiz blue (list rows / banners stay separate).
+	var style := profile_card(UiTokens.ACCENT_QUIZ, raised)
 	style.set_content_margin_all(pad)
 	return style
 
 
 static func home_surface(raised: bool = false, pad: int = 10) -> StyleBoxFlat:
-	## Dark teal tiles tuned to Home's page wash.
-	var style := profile_card(UiTokens.ACCENT_HOME, raised)
-	style.bg_color = UiTokens.HOME_CARD_BG_RAISED if raised else UiTokens.HOME_CARD_BG
-	style.border_color = UiTokens.HOME_CARD_BORDER
-	style.shadow_color = Color(UiTokens.ACCENT_HOME.r, UiTokens.ACCENT_HOME.g, UiTokens.ACCENT_HOME.b, 0.12)
-	style.shadow_size = 6 if raised else 4
-	style.shadow_offset = Vector2(0, 2)
+	## Large Home shells — Quiz blue (aurore sub-tiles unchanged).
+	var style := profile_card(UiTokens.ACCENT_QUIZ, raised)
 	style.set_content_margin_all(pad)
 	return style
 
 
-static func leaderboard_surface(raised: bool = false, pad: int = 10, friends: bool = false) -> StyleBoxFlat:
-	## Dark gold tiles; friends scope shifts toward warm copper.
-	var accent := UiTokens.ACCENT_LEADERBOARD_FRIENDS if friends else UiTokens.ACCENT_LEADERBOARD
-	var style := profile_card(accent, raised)
-	if friends:
-		style.bg_color = (
-			UiTokens.LEADERBOARD_FRIENDS_CARD_BG_RAISED if raised
-			else UiTokens.LEADERBOARD_FRIENDS_CARD_BG
-		)
-		style.border_color = UiTokens.LEADERBOARD_FRIENDS_CARD_BORDER
-	else:
-		style.bg_color = UiTokens.LEADERBOARD_CARD_BG_RAISED if raised else UiTokens.LEADERBOARD_CARD_BG
-		style.border_color = UiTokens.LEADERBOARD_CARD_BORDER
-	style.shadow_color = Color(accent.r, accent.g, accent.b, 0.12)
-	style.shadow_size = 6 if raised else 4
-	style.shadow_offset = Vector2(0, 2)
+static func leaderboard_surface(raised: bool = false, pad: int = 10, _friends: bool = false) -> StyleBoxFlat:
+	## Large Classement shell — Quiz blue (rank-row sub-tiles keep lime/olive tokens).
+	var style := profile_card(UiTokens.ACCENT_QUIZ, raised)
 	style.set_content_margin_all(pad)
 	return style
 
 
 static func quiz_surface(accent: Color = Color(0, 0, 0, 0), raised: bool = false, pad: int = 14) -> StyleBoxFlat:
-	## Dark navy tiles on the Quiz page — same language as profile / social cards.
+	## Quiz feature shells — same blue language as other large tiles.
 	var edge := accent if accent.a > 0.02 else UiTokens.ACCENT_QUIZ
 	var style := profile_card(edge, raised)
-	style.bg_color = UiTokens.PROFILE_CARD_BG_RAISED if raised else UiTokens.PROFILE_CARD_BG
-	style.border_color = Color(edge.r, edge.g, edge.b, 0.45 if raised else 0.28)
 	style.set_content_margin_all(pad)
 	return style
 

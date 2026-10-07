@@ -65,42 +65,26 @@ func _ready() -> void:
 
 
 func _apply_page_backgrounds() -> void:
+	## Experiment: every tab shares the Quiz brand-navy canvas (no per-tab wash).
 	var pages: Control = tab_swipe.pages_row
 	for page_index in range(pages.get_child_count()):
-		var tab_id: int = ScenePaths.tab_for_page_index(page_index)
-		## Quiz keeps the shared brand navy canvas behind the pages.
-		if tab_id == ScenePaths.Tab.QUIZ:
-			continue
 		var page := pages.get_child(page_index) as Control
 		if page == null:
 			continue
-		## Remove experimental particle overlays if present.
 		var old_particles := page.get_node_or_null("TabPageParticles")
 		if old_particles != null:
 			old_particles.queue_free()
+		var old_bg := page.get_node_or_null("TabPageBackground")
+		if old_bg != null:
+			old_bg.queue_free()
 		if page.has_meta("tab_page_bg"):
-			continue
-		var bg := ColorRect.new()
-		bg.name = "TabPageBackground"
-		bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-		bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		bg.color = Color.WHITE
-		bg.material = UiTokens.page_bg_material_for_tab(tab_id)
-		page.add_child(bg)
-		page.move_child(bg, 0)
-		page.set_meta("tab_page_bg", true)
+			page.remove_meta("tab_page_bg")
 
 
-func _sync_shell_background(page_index: int) -> void:
-	## Pages stop above the bottom nav; tint the full-screen shell so the color
-	## continues behind / below the floating dock.
-	var tab_id: int = ScenePaths.tab_for_page_index(page_index)
-	if tab_id == ScenePaths.Tab.QUIZ:
-		shell_background.material = _brand_bg_material
-		shell_background.color = UiTokens.BG_CREAM
-	else:
-		shell_background.color = Color.WHITE
-		shell_background.material = UiTokens.page_bg_material_for_tab(tab_id)
+func _sync_shell_background(_page_index: int) -> void:
+	## Same Quiz brand navy for every tab (shell shows through all pages).
+	shell_background.material = _brand_bg_material
+	shell_background.color = UiTokens.BG_CREAM
 
 
 func _wire_navigation() -> void:
@@ -348,10 +332,8 @@ func _notify_tab_shown(page_index: int) -> void:
 	if page_index < 0 or page_index >= pages.get_child_count():
 		return
 	var page := pages.get_child(page_index)
-	var tab_id: int = ScenePaths.tab_for_page_index(page_index)
-	## Leaderboard owns header-margin wash for Général / Amis; clear elsewhere.
-	if tab_id != ScenePaths.Tab.LEADERBOARD:
-		top_app_bar.clear_margin_wash()
+	## All tabs share the Quiz navy canvas — no per-tab header wash.
+	top_app_bar.clear_margin_wash()
 	if page.has_method("on_tab_shown"):
 		page.call("on_tab_shown")
 

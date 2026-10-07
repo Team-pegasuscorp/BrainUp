@@ -8,8 +8,6 @@ signal tab_changed(index: int)
 @export var swipe_threshold: float = 80.0
 @export var animation_duration: float = 0.28
 @export var drag_lock_threshold: float = 14.0
-## Fade duration when jumping more than one tab (nav tap).
-@export var jump_fade_duration: float = 0.11
 
 @onready var pages_row: Control = %PagesRow
 
@@ -43,12 +41,6 @@ func set_tab(index: int, animate: bool = true) -> void:
 		return
 	var next_tab := clampi(index, 0, tab_count - 1)
 	if next_tab == current_tab and not _dragging and not _animating:
-		return
-
-	var distance := absi(next_tab - current_tab)
-	## Multi-tab jump (bottom nav): fade instead of sliding through every page.
-	if animate and distance > 1:
-		_jump_direct(next_tab)
 		return
 
 	current_tab = next_tab
@@ -100,28 +92,6 @@ func _snap_to_tab(index: int, animate: bool) -> void:
 	_tween.set_ease(Tween.EASE_OUT)
 	_tween.tween_property(pages_row, "position:x", target_x, animation_duration)
 	_tween.finished.connect(_on_tween_finished)
-
-
-func _jump_direct(next_tab: int) -> void:
-	if _page_width <= 0.0:
-		current_tab = next_tab
-		tab_changed.emit(current_tab)
-		return
-	if _tween:
-		_tween.kill()
-	_animating = true
-	_tween = create_tween()
-	_tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
-	_tween.tween_property(self, "modulate:a", 0.0, jump_fade_duration)
-	_tween.tween_callback(_apply_direct_jump.bind(next_tab))
-	_tween.tween_property(self, "modulate:a", 1.0, jump_fade_duration)
-	_tween.finished.connect(_on_tween_finished)
-
-
-func _apply_direct_jump(next_tab: int) -> void:
-	current_tab = next_tab
-	pages_row.position.x = -next_tab * _page_width
-	tab_changed.emit(current_tab)
 
 
 func _on_tween_finished() -> void:

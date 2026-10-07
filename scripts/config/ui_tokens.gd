@@ -132,7 +132,11 @@ const TAB_ICON_PATHS: Array[String] = [
 ]
 
 const PROFILE_CARD_RADIUS: int = 16
-## Dark competitive profile surface (BrainUp mock).
+## Shared large-tile shell — same blue as Quiz feature cards (not sub-tiles / banners).
+const SHELL_CARD_BG := Color(0.07, 0.16, 0.32, 1)
+const SHELL_CARD_BG_RAISED := Color(0.09, 0.20, 0.38, 1)
+const SHELL_CARD_BORDER := Color(0.36, 0.75, 1.0, 0.55) ## ACCENT_QUIZ @ 0.55
+## Dark competitive profile surface (BrainUp mock) — kept for sub-surfaces / avatars.
 const PROFILE_PAGE_BG := Color(0.043, 0.043, 0.118, 1)       # #0B0B1E
 const PROFILE_CARD_BG := Color(0.102, 0.102, 0.180, 1)         # #1A1A2E
 const PROFILE_CARD_BG_RAISED := Color(0.125, 0.125, 0.210, 1)  # #202036
@@ -145,7 +149,7 @@ const SOCIAL_CARD_BORDER := Color(0.95, 0.62, 0.76, 0.22)
 const HOME_CARD_BG := Color(0.045, 0.175, 0.170, 1)           # deep teal
 const HOME_CARD_BG_RAISED := Color(0.065, 0.220, 0.210, 1)
 const HOME_CARD_BORDER := Color(0.071, 0.769, 0.722, 0.28)
-## Dark lime tiles tuned to Leaderboard Général wash.
+## Dark lime tiles tuned to Leaderboard Général wash (rank-row sub-tiles).
 const LEADERBOARD_CARD_BG := Color(0.16, 0.24, 0.10, 1)       # deep lime
 const LEADERBOARD_CARD_BG_RAISED := Color(0.22, 0.32, 0.14, 1)
 const LEADERBOARD_CARD_BORDER := Color(0.62, 0.84, 0.32, 0.30)

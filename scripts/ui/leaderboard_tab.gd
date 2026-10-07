@@ -109,19 +109,10 @@ func _scope_card_bg(raised: bool = false) -> Color:
 
 
 func _tint_page_for_scope() -> void:
-	## Soft wash shift so Général (lime) and Amis (olive) read apart.
-	var accent := _scope_accent()
-	var bg := get_node_or_null("TabPageBackground") as ColorRect
-	if bg != null:
-		var mat := ShaderMaterial.new()
-		mat.shader = load("res://shaders/tab_page_bg.gdshader") as Shader
-		mat.set_shader_parameter("accent", accent)
-		mat.set_shader_parameter("deep", UiTokens.BG_CREAM)
-		bg.material = mat
-	## Only the header margin gap — never the full shell (Quiz uses that canvas).
+	## Shared Quiz navy canvas — no per-scope page wash (pills still shift accent).
 	var top_bar := _find_top_app_bar()
 	if top_bar != null:
-		top_bar.set_margin_wash(accent)
+		top_bar.clear_margin_wash()
 
 
 func _find_top_app_bar() -> TopAppBar:
@@ -536,11 +527,10 @@ func _make_rank_row(entry: Dictionary) -> PanelContainer:
 		var rank_disc := Panel.new()
 		rank_disc.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		var rd := StyleBoxFlat.new()
-		## Opaque fill so the rank chip stays readable on the banner.
-		if is_player:
-			rd.bg_color = accent
-		else:
-			rd.bg_color = _scope_card_bg(true).lightened(0.10)
+		## Same Quiz blue as the large classement shell.
+		rd.bg_color = (
+			UiTokens.SHELL_CARD_BG_RAISED if is_player else UiTokens.SHELL_CARD_BG
+		)
 		rd.set_corner_radius_all(int(rank_slot_size * 0.34))
 		rank_disc.add_theme_stylebox_override("panel", rd)
 		rank_slot.add_child(rank_disc)
@@ -550,10 +540,7 @@ func _make_rank_row(entry: Dictionary) -> PanelContainer:
 		rank_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		rank_label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		rank_label.add_theme_font_size_override("font_size", UiScale.font(18 if is_player else 13))
-		rank_label.add_theme_color_override(
-			"font_color",
-			Color(0.10, 0.08, 0.04, 1) if is_player else UiTokens.PROFILE_TEXT
-		)
+		rank_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 		rank_slot.add_child(rank_label)
 
 	row.add_child(_entry_avatar(entry, 80.0 if is_player else 58.0, accent))

@@ -333,10 +333,7 @@ func _build_duel_tiles() -> void:
 func _quiz_feature_card(title_text: String, emoji: String, show_reset: bool = false) -> Dictionary:
 	var panel := PanelContainer.new()
 	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	var shell := UiStyle.home_surface(true, 0)
-	shell.bg_color = Color(0.07, 0.16, 0.32, 1)
-	shell.set_border_width_all(2)
-	shell.border_color = Color(UiTokens.ACCENT_QUIZ.r, UiTokens.ACCENT_QUIZ.g, UiTokens.ACCENT_QUIZ.b, 0.55)
+	var shell := UiStyle.quiz_surface(UiTokens.ACCENT_QUIZ, true, 0)
 	panel.add_theme_stylebox_override("panel", shell)
 
 	var margin := MarginContainer.new()
