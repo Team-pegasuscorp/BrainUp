@@ -910,42 +910,59 @@ func _history_mode_meta(mode: String) -> Dictionary:
 			return {
 				"key": "UI_MODE_SURVIVAL",
 				"icon": "❤️",
-				"accent": UiTokens.ACCENT_MODE_SURVIVAL,
+				"theme": "lave",
 			}
 		"time_attack":
 			return {
 				"key": "UI_MODE_TIME_ATTACK",
 				"icon": "⏱️",
-				"accent": UiTokens.ACCENT_MODE_TIME_ATTACK,
+				"theme": "jaune",
 			}
 		_:
 			return {
 				"key": "UI_MODE_CLASSIC",
 				"icon": "🎯",
-				"accent": UiTokens.ACCENT_MODE_CLASSIC,
+				"theme": "ocean",
 			}
 
 
 func _history_mode_badge(mode: String) -> Control:
-	## Compact mode chip under the opponent name (same look as social challenge tiles).
+	## Compact aurora chip — same ocean / lave / jaune language as Quiz mode tiles.
 	var meta := _history_mode_meta(mode)
 	var badge := PanelContainer.new()
 	badge.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	badge.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	var style := StyleBoxFlat.new()
-	style.bg_color = meta["accent"]
-	style.set_border_width_all(0)
-	style.set_corner_radius_all(10)
-	style.content_margin_left = 8
-	style.content_margin_right = 10
-	style.content_margin_top = 4
-	style.content_margin_bottom = 4
-	badge.add_theme_stylebox_override("panel", style)
+	var chrome := StyleBoxFlat.new()
+	chrome.bg_color = Color(0, 0, 0, 0)
+	chrome.set_corner_radius_all(10)
+	chrome.content_margin_left = 0
+	chrome.content_margin_right = 0
+	chrome.content_margin_top = 0
+	chrome.content_margin_bottom = 0
+	badge.add_theme_stylebox_override("panel", chrome)
+
+	var bg := AuroreTile.new()
+	bg.name = "AuroreFill"
+	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	bg.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	bg.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	bg.aurore_theme = str(meta["theme"])
+	badge.add_child(bg)
+
+	var pad := MarginContainer.new()
+	pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pad.add_theme_constant_override("margin_left", 8)
+	pad.add_theme_constant_override("margin_right", 10)
+	pad.add_theme_constant_override("margin_top", 4)
+	pad.add_theme_constant_override("margin_bottom", 4)
+	badge.add_child(pad)
 
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 5)
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
-	badge.add_child(row)
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pad.add_child(row)
 
 	var icon := Label.new()
 	icon.text = str(meta["icon"])
@@ -958,7 +975,7 @@ func _history_mode_badge(mode: String) -> Control:
 	var label := Label.new()
 	label.text = tr(str(meta["key"])).to_upper()
 	label.add_theme_font_size_override("font_size", UiScale.font(13))
-	label.add_theme_color_override("font_color", Color(0.10, 0.08, 0.12, 1))
+	label.add_theme_color_override("font_color", Color.WHITE)
 	row.add_child(label)
 	return badge
 
