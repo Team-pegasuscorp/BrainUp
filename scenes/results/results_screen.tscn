@@ -128,14 +128,6 @@ custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="PlayAgainButton" type="Button" parent="MarginContainer/VBox"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 56)
-layout_mode = 2
-theme_type_variation = &"PrimaryButton"
-theme_override_font_sizes/font_size = 21
-text = "Play again"
-
 [node name="MenuButton" type="Button" parent="MarginContainer/VBox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 48)

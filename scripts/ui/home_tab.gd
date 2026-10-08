@@ -1051,7 +1051,7 @@ func _history_row(row: Dictionary) -> Control:
 	result.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	result.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	result.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	result.add_theme_font_size_override("font_size", UiScale.font(19))
+	result.add_theme_font_size_override("font_size", UiScale.font(24))
 	result.add_theme_color_override("font_color", result_color)
 	result.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.65))
 	result.add_theme_constant_override("outline_size", 4)
@@ -1064,7 +1064,7 @@ func _history_row(row: Dictionary) -> Control:
 	score.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	score.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	score.custom_minimum_size.x = 60
-	score.add_theme_font_size_override("font_size", UiScale.font(19))
+	score.add_theme_font_size_override("font_size", UiScale.font(22))
 	score.add_theme_color_override("font_color", result_color)
 	score.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.65))
 	score.add_theme_constant_override("outline_size", 4)
@@ -1085,8 +1085,6 @@ func _history_row(row: Dictionary) -> Control:
 	age.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	age.add_theme_font_size_override("font_size", UiScale.font(15))
 	age.add_theme_color_override("font_color", Color(1, 1, 1, 0.96))
-	age.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.65))
-	age.add_theme_constant_override("outline_size", 4)
 	right.add_child(age)
 	return panel
 

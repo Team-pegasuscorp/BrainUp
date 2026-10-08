@@ -15,7 +15,6 @@ const AchievementsCatalog = preload("res://scripts/profile/achievements_catalog.
 @onready var correct_value_label: Label = %CorrectValueLabel
 @onready var combo_value_label: Label = %ComboValueLabel
 @onready var average_value_label: Label = %AverageValueLabel
-@onready var play_again_button: Button = %PlayAgainButton
 @onready var menu_button: Button = %MenuButton
 @onready var stats_panel: PanelContainer = %StatsPanel
 @onready var vbox: VBoxContainer = $MarginContainer/VBox
@@ -60,10 +59,8 @@ func _ready() -> void:
 	_build_share_button()
 	_apply_translations()
 	_play_intro()
-	play_again_button.pressed.connect(_on_play_again_pressed)
 	menu_button.pressed.connect(_on_menu_pressed)
 	LocaleManager.locale_changed.connect(_on_locale_changed)
-	PressScaleUtil.wire(play_again_button, self)
 	PressScaleUtil.wire(menu_button, self)
 	_style_menu_button()
 
@@ -113,19 +110,8 @@ func _apply_translations() -> void:
 	average_value_label.text = tr("UI_SECONDS").format({
 		"value": "%.1f" % summary.get("average_time", 0.0),
 	})
-	play_again_button.text = tr("UI_PLAY_AGAIN")
 	menu_button.text = tr("UI_MAIN_MENU")
 	_share_button.text = tr("UI_SHARE_SCORE")
-
-
-func _on_play_again_pressed() -> void:
-	## Same mode again; a daily or challenge round replays as a normal classic one.
-	var replay_mode: int = GameManager.mode if not bool(summary.get("is_daily", false)) else GameManager.Mode.CLASSIC
-	GameManager.start_round(summary.get("category_id", ""), "", "", replay_mode)
-	if GameManager.has_questions():
-		get_tree().change_scene_to_file(ScenePaths.QUIZ_GAME)
-	else:
-		ScenePaths.go_to_shell(get_tree(), ScenePaths.Tab.QUIZ)
 
 
 ## "Share" sits next to "Main menu" so the pinned buttons keep their height.
@@ -548,11 +534,6 @@ func _input(event: InputEvent) -> void:
 
 func _on_intro_finished() -> void:
 	_intro_done = true
-	## Idle pulse on the primary button: invites the next round without fighting
-	## PressScaleUtil, which owns the button's scale.
-	var pulse := play_again_button.create_tween().set_loops()
-	pulse.tween_property(play_again_button, "modulate", Color(1.14, 1.14, 1.14), 0.7).set_trans(Tween.TRANS_SINE)
-	pulse.tween_property(play_again_button, "modulate", Color.WHITE, 0.7).set_trans(Tween.TRANS_SINE)
 
 
 func _stat_rows() -> Array:

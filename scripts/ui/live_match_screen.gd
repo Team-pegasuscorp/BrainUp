@@ -930,11 +930,6 @@ func _build_over() -> void:
 		NetworkManager.fetch_pass()
 
 	_body.add_child(_spacer())
-	## A friend invite is played once: a rematch is a new invite from the Social tab.
-	if _friend_challenge_id.is_empty():
-		var again := _button(tr("UI_DUEL_PLAY_AGAIN"), _accent, UiTokens.INK)
-		again.pressed.connect(_start_search)
-		_body.add_child(again)
 	var back := _button(tr("UI_BACK"), Color(1, 1, 1, 0.14), Color.WHITE)
 	back.pressed.connect(_leave)
 	_body.add_child(back)

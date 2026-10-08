@@ -12,7 +12,7 @@ const CORNER_RADIUS := 14.0
 @export_enum(
 	"violet", "sunset", "ocean", "foret", "fruits", "or", "indigo", "menthe",
 	"lavande", "lagon", "crepuscule", "bonbon", "citron", "minuit", "sakura", "lave",
-	"argent"
+	"argent", "jaune"
 )
 var aurore_theme: String = "violet":
 	set(value):
@@ -38,6 +38,8 @@ const PALETTES := {
 	"sakura": ["f9a8d4", "c4b5fd", "4a1d4d"],
 	"lave": ["ef4444", "f59e0b", "2b0a0a"],
 	"argent": ["d1d5db", "94a3b8", "1f2937"],
+	## Chrono — pure yellow / amber (no pink wash like `or`).
+	"jaune": ["ffe566", "f5a524", "3d2e08"],
 }
 
 ## League id → aurora palette (bronze copper, silver grey, gold, etc.).

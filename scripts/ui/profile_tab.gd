@@ -488,12 +488,10 @@ func _build_hero() -> PanelContainer:
 	league_pad.add_child(league_col)
 
 	var league_title := Label.new()
-	league_title.text = (
-		tr("UI_PROFILE_LEAGUE") + " " + tr(str(ranking.get("league_key", "UI_LEAGUE_BRONZE")))
-	).to_upper()
+	league_title.text = tr(str(ranking.get("league_key", "UI_LEAGUE_BRONZE"))).to_upper()
 	league_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	league_title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	league_title.add_theme_font_size_override("font_size", UiScale.font(16))
+	league_title.add_theme_font_size_override("font_size", UiScale.font(22))
 	## Light text on the dark profile card fill.
 	league_title.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	league_col.add_child(league_title)
@@ -576,7 +574,7 @@ func _fit_hero_mock_proportions(
 		circ.ring_gap = clampf(avatar_side * 0.016, 2.0, 3.5)
 		circ.queue_redraw()
 	if is_instance_valid(league_title):
-		league_title.add_theme_font_size_override("font_size", UiScale.font(int(clampf(league_w * 0.105, 15.0, 19.0))))
+		league_title.add_theme_font_size_override("font_size", UiScale.font(int(clampf(league_w * 0.14, 20.0, 26.0))))
 	if is_instance_valid(league_icon):
 		var league_icon_side := clampf(league_w * 0.78, 96.0, 128.0)
 		league_icon.custom_minimum_size = Vector2(league_icon_side, league_icon_side)

@@ -28,7 +28,7 @@ var _tab: String = TAB_STORE
 var _locker_slot: String = ShopCatalog.KIND_AVATAR
 
 var _margin: MarginContainer
-var _back_button: Button
+var _close_button: Button
 var _coin_label: Label
 var _tab_buttons: Dictionary = {}
 var _scroll: ScrollContainer
@@ -69,6 +69,7 @@ func _ready() -> void:
 	_scroll = ScrollContainer.new()
 	_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
 	column.add_child(_scroll)
 
 	_content = VBoxContainer.new()
@@ -96,10 +97,10 @@ func open(tab: String = TAB_STORE) -> void:
 	_rebuild()
 	visible = true
 	move_to_front()
-	_back_button.grab_focus()
+	_close_button.grab_focus()
 
 
-## Back closes the purchase popup first, then the page.
+## ✕ / Back closes the purchase popup first, then the page.
 func close() -> void:
 	if _detail_panel.visible:
 		_close_detail()
@@ -111,44 +112,60 @@ func close() -> void:
 
 
 func _apply_safe_area() -> void:
-	_margin.add_theme_constant_override("margin_left", 20)
-	_margin.add_theme_constant_override("margin_right", 20)
-	_margin.add_theme_constant_override("margin_top", 14 + int(SafeArea.top))
-	_margin.add_theme_constant_override("margin_bottom", 14 + int(SafeArea.bottom))
+	## Same side gutters as Accueil / Social / Classement tabs.
+	_margin.add_theme_constant_override("margin_left", 10)
+	_margin.add_theme_constant_override("margin_right", 10)
+	_margin.add_theme_constant_override("margin_top", 10 + int(SafeArea.top))
+	_margin.add_theme_constant_override("margin_bottom", 10 + int(SafeArea.bottom))
 
 
 # --- Chrome -----------------------------------------------------------------
 
 func _build_header() -> Control:
+	## Coins on the left, ✕ close on the right (no Retour label).
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 12)
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
 
-	_back_button = Button.new()
-	_back_button.focus_mode = Control.FOCUS_ALL
-	_back_button.pressed.connect(close)
-	row.add_child(_back_button)
-	PressScaleUtil.wire(_back_button, self)
+	var pill := PanelContainer.new()
+	var pill_style := UiStyle.filled(Color(0.05, 0.04, 0.12, 0.55), 26)
+	pill_style.content_margin_left = 18
+	pill_style.content_margin_right = 22
+	pill_style.content_margin_top = 10
+	pill_style.content_margin_bottom = 10
+	pill.add_theme_stylebox_override("panel", pill_style)
+	row.add_child(pill)
+	var coins := HBoxContainer.new()
+	coins.add_theme_constant_override("separation", 10)
+	pill.add_child(coins)
+	coins.add_child(_make_coin(32))
+	_coin_label = Label.new()
+	_coin_label.add_theme_font_size_override("font_size", UiScale.font(24))
+	_coin_label.add_theme_color_override("font_color", Color.WHITE)
+	coins.add_child(_coin_label)
 
 	var spacer := Control.new()
 	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	row.add_child(spacer)
 
-	var pill := PanelContainer.new()
-	var pill_style := UiStyle.filled(Color(0.05, 0.04, 0.12, 0.55), 22)
-	pill_style.content_margin_left = 14
-	pill_style.content_margin_right = 18
-	pill_style.content_margin_top = 6
-	pill_style.content_margin_bottom = 6
-	pill.add_theme_stylebox_override("panel", pill_style)
-	row.add_child(pill)
-	var coins := HBoxContainer.new()
-	coins.add_theme_constant_override("separation", 8)
-	pill.add_child(coins)
-	coins.add_child(_make_coin(26))
-	_coin_label = Label.new()
-	_coin_label.add_theme_font_size_override("font_size", UiScale.font(20))
-	_coin_label.add_theme_color_override("font_color", Color.WHITE)
-	coins.add_child(_coin_label)
+	_close_button = Button.new()
+	_close_button.text = "✕"
+	_close_button.flat = true
+	_close_button.focus_mode = Control.FOCUS_ALL
+	_close_button.custom_minimum_size = Vector2(44, 44)
+	_close_button.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	_close_button.add_theme_font_size_override("font_size", UiScale.font(28))
+	_close_button.add_theme_color_override("font_color", Color(1, 1, 1, 0.92))
+	_close_button.add_theme_color_override("font_hover_color", Color.WHITE)
+	_close_button.add_theme_color_override("font_pressed_color", Color(1, 1, 1, 0.75))
+	var close_empty := StyleBoxEmpty.new()
+	_close_button.add_theme_stylebox_override("normal", close_empty)
+	_close_button.add_theme_stylebox_override("hover", close_empty)
+	_close_button.add_theme_stylebox_override("pressed", close_empty)
+	_close_button.add_theme_stylebox_override("focus", close_empty)
+	_close_button.pressed.connect(close)
+	row.add_child(_close_button)
+	PressScaleUtil.wire(_close_button, self)
 	return row
 
 
@@ -190,7 +207,6 @@ func _on_tab_pressed(tab: String) -> void:
 
 
 func _rebuild() -> void:
-	_back_button.text = "‹  " + tr("UI_BACK")
 	_coin_label.text = _format_amount(SaveManager.coins)
 	_style_tabs()
 	for child in _content.get_children():
@@ -699,6 +715,9 @@ func _make_store_card(item: Dictionary, card_size: Vector2, art_size: float) -> 
 	var band := PanelContainer.new()
 	var band_style := StyleBoxFlat.new()
 	band_style.bg_color = Color(0.03, 0.02, 0.10, 0.62)
+	## Match the card’s bottom rounding so the info strip isn’t square-cut.
+	band_style.corner_radius_bottom_left = 24
+	band_style.corner_radius_bottom_right = 24
 	band_style.content_margin_left = 10
 	band_style.content_margin_right = 10
 	band_style.content_margin_top = 8
@@ -1095,36 +1114,20 @@ func _on_detail_backdrop_input(event: InputEvent) -> void:
 
 # --- Building blocks --------------------------------------------------------
 
-## Tappable card painted in the item's rarity colour, lighter towards the top.
+## Tappable card painted in the item's rarity colour.
 func _rarity_card(item: Dictionary, card_size: Vector2) -> Button:
 	var rarity := ShopCatalog.rarity_color(item)
 	var card := Button.new()
 	card.custom_minimum_size = card_size
 	card.focus_mode = Control.FOCUS_NONE
-	card.clip_contents = true
-	var style := UiStyle.filled(rarity.darkened(0.25), 20)
+	var style := UiStyle.filled(rarity.darkened(0.25), 24)
 	style.set_border_width_all(3)
 	style.border_color = rarity.lightened(0.35)
 	style.shadow_color = Color(rarity.r, rarity.g, rarity.b, 0.35)
 	style.shadow_size = 10
+	style.set_corner_radius_all(24)
 	for state in ["normal", "hover", "pressed", "focus", "disabled"]:
 		card.add_theme_stylebox_override(state, style)
-
-	var glow := TextureRect.new()
-	glow.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT, Control.PRESET_MODE_MINSIZE, 3)
-	glow.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	glow.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	glow.stretch_mode = TextureRect.STRETCH_SCALE
-	var gradient := Gradient.new()
-	gradient.set_color(0, Color(rarity.lightened(0.4), 0.85))
-	gradient.set_color(1, Color(rarity.lightened(0.4), 0.0))
-	var tex := GradientTexture2D.new()
-	tex.gradient = gradient
-	tex.fill = GradientTexture2D.FILL_RADIAL
-	tex.fill_from = Vector2(0.5, 0.38)
-	tex.fill_to = Vector2(1.05, 0.9)
-	glow.texture = tex
-	card.add_child(glow)
 	return card
 
 
