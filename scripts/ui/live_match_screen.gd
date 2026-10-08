@@ -10,6 +10,7 @@ const UiStyle = preload("res://scripts/config/ui_style.gd")
 const UiFonts = preload("res://scripts/config/ui_fonts.gd")
 const PressScaleUtil = preload("res://scripts/ui/press_scale.gd")
 const QuestionLoaderScript = preload("res://scripts/quiz/question_loader.gd")
+const ProfileSnapshot = preload("res://scripts/profile/profile_snapshot.gd")
 
 const PAGE_WIDTH := 680.0
 const ROULETTE_SECONDS := 2.2
@@ -530,7 +531,7 @@ func _build_search() -> void:
 	name_label.add_theme_constant_override("outline_size", 5)
 	identity.add_child(name_label)
 
-	var trophies := _title("🏆 %d" % SaveManager.trophies, 24)
+	var trophies := _title("🏆 %d" % _account_trophies(), 24)
 	trophies.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.55))
 	trophies.add_theme_constant_override("outline_size", 4)
 	identity.add_child(trophies)
@@ -543,7 +544,7 @@ func _build_search() -> void:
 	var mode_wrap := CenterContainer.new()
 	mode_wrap.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	identity.add_child(mode_wrap)
-	mode_wrap.add_child(_mode_badge(_mode))
+	mode_wrap.add_child(_mode_aurore_tile(_mode))
 
 	var cancel := _button(tr("UI_DUEL_CANCEL"), Color(1, 1, 1, 0.18), Color.WHITE)
 	cancel.pressed.connect(_leave)
@@ -553,7 +554,7 @@ func _build_search() -> void:
 func _build_draft(choices: Array) -> void:
 	_clear()
 	_body.alignment = BoxContainer.ALIGNMENT_BEGIN
-	_body.add_child(_face_off("🏆 %d" % SaveManager.trophies, "🏆 %d" % _opponent_trophies))
+	_body.add_child(_face_off("🏆 %d" % _account_trophies(), "🏆 %d" % _opponent_trophies))
 	_body.add_child(_title(tr("UI_DUEL_DRAFT_TITLE"), 26))
 	_body.add_child(_subtitle(tr("UI_DUEL_DRAFT_HINT")))
 	_body.add_child(_timer_bar())
@@ -1284,48 +1285,76 @@ func _mode_name() -> String:
 	return tr("UI_MODE_CLASSIC")
 
 
-## Same coloured mode chip as home “last matches” / history rows.
-func _mode_badge(mode: String) -> Control:
+## Trophy count shown on the account (same source as Quiz / Profil league tiles).
+func _account_trophies() -> int:
+	var snapshot: Dictionary = ProfileSnapshot.build_full(LocaleManager.get_content_locale())
+	var ranking: Dictionary = snapshot.get("ranking", {})
+	return int(ranking.get("points", SaveManager.trophies))
+
+
+## Mode indicator — same aurora wash as Quiz mode tiles (ocean / lave / jaune).
+func _mode_aurore_tile(mode: String) -> Control:
 	var key := "UI_MODE_CLASSIC"
 	var icon := "🎯"
-	var accent := UiTokens.ACCENT_MODE_CLASSIC
+	var theme := "ocean"
 	match mode:
 		"survival":
 			key = "UI_MODE_SURVIVAL"
 			icon = "❤️"
-			accent = UiTokens.ACCENT_MODE_SURVIVAL
+			theme = "lave"
 		"time_attack":
 			key = "UI_MODE_TIME_ATTACK"
 			icon = "⏱️"
-			accent = UiTokens.ACCENT_MODE_TIME_ATTACK
-	var badge := PanelContainer.new()
-	badge.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	var style := StyleBoxFlat.new()
-	style.bg_color = accent
-	style.set_border_width_all(0)
-	style.set_corner_radius_all(14)
-	style.content_margin_left = 16
-	style.content_margin_right = 18
-	style.content_margin_top = 10
-	style.content_margin_bottom = 10
-	badge.add_theme_stylebox_override("panel", style)
+			theme = "jaune"
+	var tile := PanelContainer.new()
+	tile.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	tile.custom_minimum_size = Vector2(220, 56)
+	var chrome := StyleBoxFlat.new()
+	chrome.bg_color = Color(0, 0, 0, 0)
+	chrome.set_corner_radius_all(18)
+	chrome.content_margin_left = 0
+	chrome.content_margin_right = 0
+	chrome.content_margin_top = 0
+	chrome.content_margin_bottom = 0
+	tile.add_theme_stylebox_override("panel", chrome)
+
+	var bg := AuroreTile.new()
+	bg.name = "AuroreFill"
+	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	bg.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	bg.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	bg.aurore_theme = theme
+	tile.add_child(bg)
+
+	var pad := MarginContainer.new()
+	pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pad.add_theme_constant_override("margin_left", 16)
+	pad.add_theme_constant_override("margin_right", 18)
+	pad.add_theme_constant_override("margin_top", 10)
+	pad.add_theme_constant_override("margin_bottom", 10)
+	tile.add_child(pad)
+
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 8)
+	row.add_theme_constant_override("separation", 10)
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
-	badge.add_child(row)
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pad.add_child(row)
+
 	var icon_label := Label.new()
 	icon_label.text = icon
-	icon_label.add_theme_font_size_override("font_size", UiScale.font(22))
+	icon_label.add_theme_font_size_override("font_size", UiScale.font(24))
 	var emoji_font := UiFonts.emoji_font()
 	if emoji_font != null:
 		icon_label.add_theme_font_override("font", emoji_font)
 	row.add_child(icon_label)
+
 	var label := Label.new()
 	label.text = tr(key).to_upper()
-	label.add_theme_font_size_override("font_size", UiScale.font(18))
-	label.add_theme_color_override("font_color", Color(0.10, 0.08, 0.12, 1))
+	label.add_theme_font_size_override("font_size", UiScale.font(20))
+	label.add_theme_color_override("font_color", Color.WHITE)
 	row.add_child(label)
-	return badge
+	return tile
 
 
 func _category_name(category_id: String) -> String:
