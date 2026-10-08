@@ -116,12 +116,12 @@ UI_SOCIAL_CHALLENGE_REQUESTS_EMPTY,No pending challenge requests.,Aucune demande
 UI_SOCIAL_CHALLENGE_REQUEST_ACCEPTED,Challenge from {name} accepted.,Défi de {name} accepté.
 UI_SOCIAL_CHALLENGE_REQUEST_DECLINED,Challenge from {name} declined.,Défi de {name} refusé.
 UI_SOCIAL_CHALLENGE_REQUEST_EXPIRED,This challenge expired (valid 4 hours).,Ce défi a expiré (valable 4 heures).
-UI_SOCIAL_CHALLENGE_REQUEST_OFFLINE,{name} is offline — challenge cancelled. Send a new one when they are online.,{name} est hors ligne — défi annulé. Renvoie une demande quand iel sera connecté(e).
+UI_SOCIAL_CHALLENGE_REQUEST_OFFLINE,{name} isn't online right now. Try again when they are.,{name} n'est pas en ligne pour l'instant. Réessaie quand iel sera connecté(e).
 UI_SOCIAL_SEARCH_PLAYER,Search for a player,Rechercher un joueur
 UI_SOCIAL_SEARCH_PLACEHOLDER,Username...,Nom d'utilisateur...
 UI_SOCIAL_ADD_FRIEND,Add a friend,Ajouter un ami
 UI_SOCIAL_ADD_FRIEND_SENT,Friend request sent to {name}.,Demande d'ami envoyée à {name}.
-UI_SOCIAL_ADD_FRIEND_EMPTY,Enter a username first.,Entre d'abord un nom d'utilisateur.
+UI_SOCIAL_ADD_FRIEND_EMPTY,Type at least 2 letters of a username.,Tape au moins 2 lettres d'un pseudo.
 UI_SOCIAL_CREATE_CHALLENGE,Create a challenge,Créer un défi
 UI_SOCIAL_CREATE_BUTTON,Create,Créer
 UI_SOCIAL_JOIN_CHALLENGE,Join a challenge,Rejoindre un défi
@@ -459,3 +459,26 @@ UI_PASS_XP_LEGEND,"Pass XP: duel +{duel} (+{win} if you win) · daily challenge 
 UI_PASS_STRIP,Battle pass · tier {tier},Passe de combat · palier {tier}
 UI_DUEL_PASS_XP,+{xp} pass XP,+{xp} XP de passe
 UI_PASS_CLAIM_ALL,Claim all ({n}),Tout récupérer ({n})
+UI_DUEL_WAITING_FRIEND,Waiting for {name}…,En attente de {name}…
+UI_DUEL_ERROR_FRIEND_ABSENT,{name} didn't join the duel.,{name} n'a pas rejoint le duel.
+UI_DUEL_ERROR_INVITE_INVALID,This challenge is no longer available.,Ce défi n'est plus disponible.
+UI_DUEL_FRIENDLY_RECORD,Friendly duel · you vs them {wins}-{losses},Duel amical · bilan {wins}-{losses}
+UI_SOCIAL_NOW_FRIENDS,You are now friends!,Vous êtes maintenant amis !
+UI_SOCIAL_ERROR_GENERIC,That didn't work. Try again.,Ça n'a pas marché. Réessaie.
+UI_SOCIAL_SEARCH_EMPTY,"No player found for ""{name}"".",Aucun joueur trouvé pour « {name} ».
+UI_SOCIAL_CHALLENGE_JOINING,Joining {name}'s duel…,Connexion au duel de {name}…
+UI_SOCIAL_ALREADY_FRIEND,Friend,Ami
+UI_SOCIAL_REQUEST_PENDING,Sent,Envoyée
+UI_SOCIAL_ACCEPT,Accept,Accepter
+UI_SOCIAL_ADD,Add,Ajouter
+UI_SOCIAL_REMOVE_FRIEND,Remove from friends,Retirer des amis
+UI_SOCIAL_REMOVE_FRIEND_CONFIRM,Remove {name}? Tap again to confirm.,Retirer {name} ? Touche encore pour confirmer.
+UI_SOCIAL_FRIEND_REMOVED,{name} is no longer your friend.,{name} ne fait plus partie de tes amis.
+UI_SOCIAL_CHALLENGE_REQUEST_BUSY,{name} is in a game. Try again in a moment.,{name} est en pleine partie. Réessaie dans un instant.
+UI_PASS_FREE,Free,Gratuit
+UI_DUEL_REWARD_TROPHIES,Trophies,Trophées
+UI_DUEL_REWARD_XP,Experience,Expérience
+UI_DUEL_REWARD_PASS,Battle pass,Passe de combat
+UI_DUEL_REWARD_STREAK,streak +{bonus},série +{bonus}
+UI_DUEL_REWARD_FRIENDLY,Friendly duel,Duel amical
+UI_DUEL_REWARD_FRIENDLY_HINT,Your record against them · no trophies at stake,Ton bilan face à iel · aucun trophée en jeu

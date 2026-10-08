@@ -8,7 +8,6 @@ const QuestionLoaderScript = preload("res://scripts/quiz/question_loader.gd")
 const AchievementsCatalogScript = preload("res://scripts/profile/achievements_catalog.gd")
 const DailyQuestsScript = preload("res://scripts/profile/daily_quests.gd")
 const DailyChallengeScript = preload("res://scripts/profile/daily_challenge.gd")
-const TrophySystemScript = preload("res://scripts/profile/trophy_system.gd")
 
 const SAVE_PATH: String = "user://save.json"
 ## Legacy custom photo (before avatars became a fixed set); deleted on reset.
@@ -51,13 +50,6 @@ var trophies: int = 0
 var versus_win_streak: int = 0
 ## Consecutive versus losses (resets on win / draw). Consolation at 5.
 var versus_loss_streak: int = 0
-## Last settle breakdown (for UI); not persisted.
-var last_trophy_match_delta: int = 0
-var last_trophy_streak_bonus: int = 0
-var last_trophy_loss_consolation: int = 0
-var last_settled_trophy_match_id: String = ""
-## Challenge codes already settled for competitive trophies (live only).
-var settled_trophy_matches: Array = []
 ## Head-to-head vs friends: { friend_key: {wins, losses, draws, settled: [match_ids]} }.
 ## Friend challenges never award trophies (anti-farm); only this counter + XP.
 var friend_rivalries: Dictionary = {}
@@ -140,8 +132,6 @@ func load_data() -> void:
 		trophies = _best_score_global()
 	versus_win_streak = maxi(int(parsed.get("versus_win_streak", 0)), 0)
 	versus_loss_streak = maxi(int(parsed.get("versus_loss_streak", 0)), 0)
-	var settled_raw: Variant = parsed.get("settled_trophy_matches", [])
-	settled_trophy_matches = settled_raw if typeof(settled_raw) == TYPE_ARRAY else []
 	var rivalries_raw: Variant = parsed.get("friend_rivalries", {})
 	friend_rivalries = rivalries_raw if typeof(rivalries_raw) == TYPE_DICTIONARY else {}
 	var outbox_raw: Variant = parsed.get("challenge_outbox", [])
@@ -178,7 +168,6 @@ func save_data() -> void:
 		"trophies": trophies,
 		"versus_win_streak": versus_win_streak,
 		"versus_loss_streak": versus_loss_streak,
-		"settled_trophy_matches": settled_trophy_matches,
 		"friend_rivalries": friend_rivalries,
 		"challenge_outbox": challenge_outbox,
 		"daily_state": daily_state,
@@ -322,6 +311,64 @@ func apply_pass_reward(reward: Dictionary) -> void:
 			var joker_id := str(reward.get("id", ""))
 			jokers[joker_id] = int(jokers.get(joker_id, 0)) + maxi(int(reward.get("amount", 1)), 1)
 	save_data()
+
+
+## Server stock wins over the local count (jokers are spent on the server during duels).
+func set_jokers(stock: Dictionary) -> void:
+	var next := {}
+	for joker_id in stock.keys():
+		next[str(joker_id)] = maxi(int(stock[joker_id]), 0)
+	if next != jokers:
+		jokers = next
+		save_data()
+
+
+## Friend duel finished: no trophies and no wins/losses on the profile (anti-farm), only
+## the head-to-head counter, category stats, history, quests ("play a challenge") and XP.
+func record_friend_duel_result(summary: Dictionary) -> int:
+	var category_id := str(summary.get("category", ""))
+	var mode := str(summary.get("mode", "classic"))
+	var score := int(summary.get("your_score", 0))
+	var opponent_score := int(summary.get("opponent_score", 0))
+	var correct_count := int(summary.get("your_correct", 0))
+	var total_count := int(summary.get("your_answered", 0))
+	var max_combo := int(summary.get("your_max_combo", 0))
+	var won := bool(summary.get("won", false))
+
+	var stats: Dictionary = category_stats.get(category_id, {
+		"games_played": 0, "best_score": 0, "total_correct": 0, "total_questions": 0,
+	})
+	stats["games_played"] = int(stats.get("games_played", 0)) + 1
+	stats["best_score"] = max(int(stats.get("best_score", 0)), score)
+	stats["total_correct"] = int(stats.get("total_correct", 0)) + correct_count
+	stats["total_questions"] = int(stats.get("total_questions", 0)) + total_count
+	category_stats[category_id] = stats
+
+	## Survival is decided on lives, not points: feed the H2H counter with the outcome.
+	var my_side := 1 if won else (0 if bool(summary.get("draw", false)) else -1)
+	record_friend_rivalry(str(summary.get("opponent_id", "")), my_side, 0, str(summary.get("match_id", "")))
+
+	_prepend_match_history({
+		"category_id": category_id,
+		"score": score,
+		"correct_count": correct_count,
+		"total_count": total_count,
+		"max_combo": max_combo,
+		"won": won,
+		"mode": mode,
+		"opponent": str(summary.get("opponent_name", "")),
+		"friendly": true,
+		"opponent_score": opponent_score,
+		"played_at": int(Time.get_unix_time_from_system()),
+	})
+	DailyQuestsScript.record_match(category_id, won, correct_count, max_combo, true, false)
+
+	var gained_xp: int = correct_count * 10 + score / 10
+	if mode != "classic":
+		gained_xp = mini(gained_xp, GameManager.MODE_XP_CAP)
+	add_xp(gained_xp)
+	save_data()
+	return gained_xp
 
 
 ## Local purchase. Returns false if unknown, already owned or too expensive.
@@ -496,51 +543,6 @@ func record_duel_result(summary: Dictionary) -> int:
 	add_xp(gained_xp)
 	save_data()
 	return gained_xp
-
-
-## Clash-style settle for a finished 1v1. Returns total signed delta incl. streak bonus
-## (0 if already settled / invalid). Opponent trophies unknown → equal baseline.
-func settle_versus_trophies(
-	match_id: String,
-	my_score: int,
-	opponent_score: int,
-	opponent_trophies: int = -1
-) -> int:
-	var id := str(match_id).strip_edges()
-	if id.is_empty():
-		return 0
-	## Idempotent: same match can be queried again for UI without wiping the breakdown.
-	if settled_trophy_matches.has(id):
-		if id == last_settled_trophy_match_id:
-			return last_trophy_match_delta + last_trophy_streak_bonus + last_trophy_loss_consolation
-		return 0
-	var opp_cups := opponent_trophies if opponent_trophies >= 0 else trophies
-	var match_delta := TrophySystemScript.calculate_delta(trophies, opp_cups, my_score, opponent_score)
-	last_trophy_match_delta = match_delta
-	last_trophy_streak_bonus = 0
-	last_trophy_loss_consolation = 0
-
-	if my_score > opponent_score:
-		versus_win_streak += 1
-		versus_loss_streak = 0
-		last_trophy_streak_bonus = TrophySystemScript.streak_bonus(versus_win_streak)
-	elif my_score < opponent_score:
-		versus_win_streak = 0
-		versus_loss_streak += 1
-		last_trophy_loss_consolation = TrophySystemScript.loss_streak_consolation(versus_loss_streak)
-	else:
-		## Draw breaks both streaks.
-		versus_win_streak = 0
-		versus_loss_streak = 0
-
-	var total := match_delta + last_trophy_streak_bonus + last_trophy_loss_consolation
-	trophies = maxi(trophies + total, 0)
-	settled_trophy_matches.append(id)
-	last_settled_trophy_match_id = id
-	while settled_trophy_matches.size() > 80:
-		settled_trophy_matches.pop_front()
-	save_data()
-	return total
 
 
 ## Friend-challenge H2H (no trophies). Idempotent per match_id.

@@ -33,6 +33,9 @@ var active_daily_date: String = ""
 var mode: int = Mode.CLASSIC
 ## Mode picked on the category screen; kept for "play again".
 var selected_mode: int = Mode.CLASSIC
+## Friend duel to join on the live match screen: {id, name} of an accepted invite
+## (empty = ranked matchmaking). Cleared when the screen is left.
+var friend_challenge: Dictionary = {}
 var lives: int = 0
 
 

@@ -19,6 +19,8 @@ class PlayerRegister(BaseModel):
     display_name: str = Field(min_length=1, max_length=40)
     ## Omitted by older clients: the stored look is then kept.
     cosmetics: Cosmetics | None = None
+    ## Profile level shown to friends (display only). Omitted: the stored one is kept.
+    level: int | None = Field(default=None, ge=1, le=9999)
 
 
 class Player(BaseModel):
@@ -82,6 +84,23 @@ class PassClaim(BaseModel):
 class PassQuest(BaseModel):
     device_id: str = Field(min_length=1, max_length=128)
     quest_id: str = Field(min_length=1, max_length=40)
+    ## The phone's local date (YYYY-MM-DD) the quest belongs to.
+    day: str | None = Field(default=None, max_length=10)
+
+
+class DeviceOnly(BaseModel):
+    device_id: str = Field(min_length=1, max_length=128)
+
+
+class FriendTarget(BaseModel):
+    device_id: str = Field(min_length=1, max_length=128)
+    player_id: UUID
+
+
+class FriendChallengeCreate(BaseModel):
+    device_id: str = Field(min_length=1, max_length=128)
+    friend_id: UUID
+    mode: str = Field(pattern=r"^(classic|survival|time_attack)$")
 
 
 class PassPremium(BaseModel):

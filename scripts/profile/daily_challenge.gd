@@ -3,7 +3,11 @@ extends RefCounted
 ## The server decides the category and seed; this mirrors its rotation only as an
 ## offline fallback so the mode still works without a connection.
 
-const ROTATION: Array[String] = ["sport", "cinema", "history"]
+## Same lists and start day as brainup-backend app/main.py (DAILY_CATEGORIES): change both together.
+const ROTATION: Array[String] = ["sport", "cinema", "history", "geography", "science", "music", "television", "general"]
+## 2026-10-07 in days since 1970-01-01: the 8-category rotation starts that day.
+const ROTATION_START_DAY := 20733
+const LEGACY_ROTATION: Array[String] = ["sport", "cinema", "history"]
 const BONUS_XP := 50
 ## Python's date.toordinal() for 1970-01-01, used to mirror the server rotation.
 const EPOCH_ORDINAL := 719163
@@ -15,10 +19,16 @@ static func offline_today() -> Dictionary:
 	var iso := "%04d-%02d-%02d" % [int(date["year"]), int(date["month"]), int(date["day"])]
 	return {
 		"date": iso,
-		"category_id": ROTATION[(unix_days + EPOCH_ORDINAL) % ROTATION.size()],
+		"category_id": category_for_day(unix_days),
 		"seed": iso,
 		"offline": true,
 	}
+
+
+static func category_for_day(unix_days: int) -> String:
+	if unix_days < ROTATION_START_DAY:
+		return LEGACY_ROTATION[(unix_days + EPOCH_ORDINAL) % LEGACY_ROTATION.size()]
+	return ROTATION[(unix_days - ROTATION_START_DAY) % ROTATION.size()]
 
 
 ## Result stored for `date`, or {} if the player has not played that day yet.
