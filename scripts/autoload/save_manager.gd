@@ -72,6 +72,9 @@ var owned_items: Array = []
 ## What the server sells right now: {item_id: price} and {joker_id: price}. Not saved.
 var shop_prices: Dictionary = {}
 var joker_prices: Dictionary = {}
+## Rewarded ads the server still pays today, and what one pays. Not saved.
+var ads_left: int = 0
+var ad_reward: int = 0
 var equipped_frame: String = ""
 var equipped_banner: String = ""
 ## Jokers won in the battle pass: {joker_id: count}.
@@ -387,6 +390,9 @@ func apply_shop_state(state: Dictionary) -> void:
 		shop_prices = state["prices"]
 	if typeof(state.get("joker_prices")) == TYPE_DICTIONARY:
 		joker_prices = state["joker_prices"]
+	ads_left = int(state.get("ads_left", ads_left))
+	if typeof(state.get("rules")) == TYPE_DICTIONARY:
+		ad_reward = int(state["rules"].get("ad", ad_reward))
 	if typeof(state.get("jokers")) == TYPE_DICTIONARY:
 		set_jokers(state["jokers"])
 	## Once the server tracks this player's trophies, its count wins (sent with the shop state).

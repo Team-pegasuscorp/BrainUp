@@ -89,6 +89,15 @@ func _ready() -> void:
 		if visible and _tab == TAB_PASS:
 			_rebuild()
 	)
+	AdsManager.availability_changed.connect(func(_ready: bool) -> void:
+		if visible and _tab == TAB_STORE:
+			_rebuild()
+	)
+	AdsManager.reward_finished.connect(func(coins: int) -> void:
+		AudioManager.play("correct" if coins > 0 else "wrong")
+		if visible:
+			_rebuild()
+	)
 	SaveManager.shop_changed.connect(func() -> void:
 		if visible:
 			_rebuild()
@@ -676,6 +685,8 @@ func _section_label_text(text: String) -> Label:
 # --- Boutique ---------------------------------------------------------------
 
 func _build_store() -> void:
+	if AdsManager.is_available():
+		_content.add_child(_make_ad_offer())
 	var featured: Array[Dictionary] = []
 	var others: Array[Dictionary] = []
 	for item in ShopCatalog.store_items():
@@ -719,6 +730,69 @@ func _build_store() -> void:
 			grid.add_child(_make_store_card(item, Vector2(w, 300), 132))
 		_content.add_child(grid)
 	_build_joker_offers()
+
+
+## "Free Neurones": a rewarded ad the player chooses to watch, a few times a day.
+func _make_ad_offer() -> Control:
+	var fill := Color(0.16, 0.62, 0.55, 1)
+	var card := Button.new()
+	card.custom_minimum_size = Vector2(PAGE_WIDTH, 120)
+	card.focus_mode = Control.FOCUS_NONE
+	var style := UiStyle.filled(fill.darkened(0.3), 24)
+	style.set_border_width_all(3)
+	style.border_color = fill.lightened(0.3)
+	for state in ["normal", "hover", "pressed", "focus", "disabled"]:
+		card.add_theme_stylebox_override(state, style)
+	var left := SaveManager.ads_left
+	card.disabled = left <= 0 or not AdsManager.is_ready()
+	card.pressed.connect(func() -> void: AdsManager.show_rewarded())
+	PressScaleUtil.wire(card, self)
+
+	var row := HBoxContainer.new()
+	row.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT, Control.PRESET_MODE_MINSIZE, 20)
+	row.add_theme_constant_override("separation", 18)
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	card.add_child(row)
+	var icon := Label.new()
+	icon.text = "🎬"
+	icon.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	icon.add_theme_font_size_override("font_size", UiScale.font(40))
+	var emoji_font := UiFonts.emoji_font()
+	if emoji_font != null:
+		icon.add_theme_font_override("font", emoji_font)
+	row.add_child(icon)
+	var texts := VBoxContainer.new()
+	texts.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	texts.alignment = BoxContainer.ALIGNMENT_CENTER
+	texts.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_child(texts)
+	var title := Label.new()
+	title.text = tr("UI_SHOP_AD_TITLE")
+	title.add_theme_font_size_override("font_size", UiScale.font(22))
+	title.add_theme_color_override("font_color", Color.WHITE)
+	texts.add_child(title)
+	var hint := Label.new()
+	if left <= 0:
+		hint.text = tr("UI_SHOP_AD_DONE")
+	elif not AdsManager.is_ready():
+		hint.text = tr("UI_SHOP_AD_LOADING")
+	else:
+		hint.text = tr("UI_SHOP_AD_LEFT") % left
+	hint.add_theme_font_size_override("font_size", UiScale.font(15))
+	hint.add_theme_color_override("font_color", fill.lightened(0.6))
+	texts.add_child(hint)
+	var reward := HBoxContainer.new()
+	reward.add_theme_constant_override("separation", 6)
+	reward.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_child(reward)
+	reward.add_child(_make_coin(22))
+	var amount := Label.new()
+	amount.text = "+%d" % SaveManager.ad_reward
+	amount.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	amount.add_theme_font_size_override("font_size", UiScale.font(24))
+	amount.add_theme_color_override("font_color", Color.WHITE if not card.disabled else Color(1, 1, 1, 0.5))
+	reward.add_child(amount)
+	return card
 
 
 ## Jokers stack (max one of each per duel): one card per joker, a tap buys one.

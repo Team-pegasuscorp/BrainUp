@@ -28,6 +28,7 @@ AudioManager="*res://scripts/autoload/audio_manager.gd"
 LocaleManager="*res://scripts/autoload/locale_manager.gd"
 GameManager="*res://scripts/autoload/game_manager.gd"
 NetworkManager="*res://scripts/autoload/network_manager.gd"
+AdsManager="*res://scripts/autoload/ads_manager.gd"
 
 [display]
 
@@ -38,6 +39,10 @@ window/size/window_height_override=720
 window/stretch/mode="canvas_items"
 window/stretch/aspect="keep_width"
 window/handheld/orientation=1
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/admob/plugin.cfg")
 
 [gui]
 

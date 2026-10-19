@@ -34,6 +34,7 @@ from schemas import (
     PassPremium,
     PassQuest,
     Player,
+    AdReward,
     JokerUse,
     PlayerRegister,
     ShopBuy,
@@ -337,6 +338,15 @@ def shop_buy(payload: ShopBuy):
 @app.post("/shop/joker")
 def shop_buy_joker(payload: ShopBuy):
     return _shop(payload.device_id, lambda conn, player_id: shop.buy_joker(conn, player_id, payload.item_id))
+
+
+@app.post("/ads/reward")
+def ad_reward(payload: AdReward):
+    """A rewarded ad was watched to the end on the phone: pays AD_COINS, capped per day."""
+    with engine.begin() as conn:
+        player_id = _player_for_device(conn, payload.device_id)
+        coins = shop.record_ad(conn, player_id, payload.day)
+        return {"coins_gained": coins, **shop.state(conn, player_id)}
 
 
 @app.post("/jokers/use")

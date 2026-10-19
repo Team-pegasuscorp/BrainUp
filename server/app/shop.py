@@ -34,6 +34,10 @@ LEAGUES = (
     ("diamond", 2800, 500),
 )
 JOKER_PRICES = {"joker_5050": 150, "joker_time": 150}
+## Rewarded ads (the player chooses to watch). The phone reports the reward: until AdMob
+## server-side verification is wired (needs a public URL), the daily cap bounds any abuse.
+AD_COINS = 15
+ADS_PER_DAY = 5
 
 
 class ShopError(Exception):
@@ -166,6 +170,28 @@ def record_quest(conn: Connection, player_id: str, quest_id: str, claimed_day: s
     return credit(conn, player_id, QUEST_COINS, "quest", f"{day}:{quest_id[:40]}")
 
 
+def record_ad(conn: Connection, player_id: str, claimed_day: str | None) -> int:
+    """Pays one watched rewarded ad, at most ADS_PER_DAY per (phone) day."""
+    day = battle_pass.quest_day(claimed_day)
+    _lock_player(conn, player_id)
+    watched = conn.execute(
+        text("SELECT COUNT(*) FROM coin_ledger WHERE player_id = :p AND reason = 'ad' AND ref LIKE :d"),
+        {"p": player_id, "d": day + ":%"},
+    ).scalar_one()
+    if watched >= ADS_PER_DAY:
+        return 0
+    return credit(conn, player_id, AD_COINS, "ad", f"{day}:{watched + 1}")
+
+
+def ads_left(conn: Connection, player_id: str) -> int:
+    day = battle_pass.today().isoformat()
+    watched = conn.execute(
+        text("SELECT COUNT(*) FROM coin_ledger WHERE player_id = :p AND reason = 'ad' AND ref LIKE :d"),
+        {"p": player_id, "d": day + ":%"},
+    ).scalar_one()
+    return max(ADS_PER_DAY - watched, 0)
+
+
 def record_pass_reward(conn: Connection, player_id: str, season_id: str, track: str, tier: int,
                        reward: dict) -> int:
     if reward.get("type") != "coins":
@@ -192,9 +218,11 @@ def state(conn: Connection, player_id: str) -> dict:
         "prices": {item_id: int(item["price"]) for item_id, item in CATALOG.items() if _for_sale(item)},
         "jokers": battle_pass.jokers_available(conn, player_id),
         "joker_prices": JOKER_PRICES,
+        "ads_left": ads_left(conn, player_id),
         "rules": {
             "duel": DUEL_COINS, "duel_win_bonus": DUEL_WIN_BONUS, "daily": DAILY_COINS,
             "quest": QUEST_COINS, "quests_per_day": QUESTS_PER_DAY,
+            "ad": AD_COINS, "ads_per_day": ADS_PER_DAY,
             "leagues": [{"id": league_id, "min_trophies": minimum, "coins": reward}
                         for league_id, minimum, reward in LEAGUES[1:]],
         },

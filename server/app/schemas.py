@@ -98,6 +98,12 @@ class JokerUse(BaseModel):
     joker_id: str = Field(min_length=1, max_length=32)
 
 
+class AdReward(BaseModel):
+    device_id: str = Field(min_length=1, max_length=128)
+    ## The phone's local date (YYYY-MM-DD): the daily cap follows the player's day.
+    day: str | None = Field(default=None, max_length=10)
+
+
 class DeviceOnly(BaseModel):
     device_id: str = Field(min_length=1, max_length=128)
 

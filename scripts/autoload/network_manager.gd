@@ -777,6 +777,20 @@ func buy_shop_joker(joker_id: String) -> bool:
 	return await _shop_purchase("/shop/joker", joker_id)
 
 
+## A rewarded ad was watched to the end: the server pays Neurones (capped per phone day).
+## Returns the amount paid (0 = cap reached or offline).
+func claim_ad_reward() -> int:
+	var parsed: Variant = await _pass_post("/ads/reward", {
+		"device_id": _load_or_create_device_id(),
+		"day": Time.get_date_string_from_system(),
+	})
+	if typeof(parsed) != TYPE_DICTIONARY or not parsed.has("coins"):
+		return 0
+	SaveManager.apply_shop_state(parsed)
+	shop_received.emit(parsed)
+	return int(parsed.get("coins_gained", 0))
+
+
 ## Spends one joker in the daily challenge; true when the server had one left.
 func use_daily_joker(joker_id: String) -> bool:
 	var parsed: Variant = await _pass_post("/jokers/use", {"device_id": _load_or_create_device_id(), "joker_id": joker_id})

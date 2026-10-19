@@ -111,6 +111,15 @@ async def main() -> None:
     status, used = call("POST", "/jokers/use", {"device_id": device, "joker_id": "joker_5050"})
     check("no joker left: the daily use is refused", status == 200 and not used["ok"], used)
 
+    _, state = call("GET", f"/shop?device_id={device}")
+    coins_before_ads = state["coins"]
+    check("five ads to watch today", state.get("ads_left") == 5, state.get("ads_left"))
+    gains = [call("POST", "/ads/reward", {"device_id": device})[1].get("coins_gained") for _ in range(6)]
+    _, state = call("GET", f"/shop?device_id={device}")
+    check("rewarded ads pay 15, five a day", gains == [15] * 5 + [0] and state["ads_left"] == 0
+          and state["coins"] == coins_before_ads + 75, f"{gains} left {state['ads_left']}")
+    psql(f"DELETE FROM coin_ledger WHERE player_id = '{pid}' AND reason = 'ad'")
+
     ## Two taps at once must not spend the same coins twice: 550 coins, three frames at 300.
     loop = asyncio.get_running_loop()
     results = await asyncio.gather(*(loop.run_in_executor(None, call, "POST", "/shop/buy",
