@@ -382,7 +382,7 @@ UI_SHOP_BUY,Buy,Acheter
 UI_SHOP_EQUIP,Equip,Équiper
 UI_SHOP_EQUIPPED,Equipped,Équipé
 UI_SHOP_OWNED,Owned,Possédé
-UI_SHOP_NOT_ENOUGH,Not enough coins,Pas assez de pièces
+UI_SHOP_NOT_ENOUGH,Not enough Neurons,Pas assez de Neurones
 UI_SHOP_CANCEL,Cancel,Annuler
 UI_SHOP_KIND_AVATAR,Avatar,Avatar
 UI_SHOP_KIND_FRAME,Frame,Cadre
@@ -449,7 +449,7 @@ UI_PASS_WEEKLY,Week {week} challenges,Défis de la semaine {week}
 UI_PASS_CLAIM,Claim!,Récupérer !
 UI_PASS_CLAIMED,Claimed,Récupéré
 UI_PASS_PREMIUM,Premium,Premium
-UI_PASS_COINS,Coins,Pièces
+UI_PASS_COINS,Neurons,Neurones
 UI_PASS_JOKER,Joker,Joker
 UI_PASS_CH_DUELS_PLAYED,Play {n} ranked duels,Joue {n} duels classés
 UI_PASS_CH_DUELS_WON,Win {n} ranked duels,Gagne {n} duels classés
@@ -481,7 +481,7 @@ UI_PASS_FREE,Free,Gratuit
 UI_DUEL_REWARD_TROPHIES,Trophies,Trophées
 UI_DUEL_REWARD_XP,Experience,Expérience
 UI_DUEL_REWARD_PASS,Battle pass,Passe de combat
-UI_DUEL_REWARD_COINS,Coins,Pièces
+UI_DUEL_REWARD_COINS,Neurons,Neurones
 UI_DUEL_REWARD_LEAGUE,new league +{bonus},nouvelle ligue +{bonus}
 UI_DUEL_REWARD_STREAK,streak +{bonus},série +{bonus}
 UI_DUEL_REWARD_FRIENDLY,Friendly duel,Duel amical

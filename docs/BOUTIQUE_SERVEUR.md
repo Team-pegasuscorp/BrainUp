@@ -2,7 +2,7 @@
 
 > Branche `test-boutique-serveur` (jeu + `brainup-backend`), 2026-10-19.
 > Choix (page de décisions + Yannick le 19/10) : avatars + cadres (+ bannières), petit catalogue fixe,
-> exclusifs gagnés en jouant, **une seule monnaie (pièces) gagnée en jouant**, rythme ≈ 15-20 duels pour
+> exclusifs gagnés en jouant, **une seule monnaie, les Neurones (« coins » dans le code), gagnée en jouant**, rythme ≈ 15-20 duels pour
 > un objet commun, **jokers vendus contre des pièces** (pas d'argent réel), **soldes repartis de zéro**.
 
 ## Ce qui change pour le joueur

@@ -946,7 +946,7 @@ func _build_over() -> void:
 		var league_coins := int(_over.get("league_coins", 0))
 		if league_coins > 0:
 			coins_detail += "  ·  " + tr("UI_DUEL_REWARD_LEAGUE").format({"bonus": league_coins})
-		rows.add_child(_reward_row("🪙", tr("UI_DUEL_REWARD_COINS"), "+%d" % coins, Color(0.97, 0.78, 0.26, 1), coins_detail))
+		rows.add_child(_reward_row("🧠", tr("UI_DUEL_REWARD_COINS"), "+%d" % coins, Color(0.97, 0.78, 0.26, 1), coins_detail))
 	var pass_xp := int(_over.get("pass_xp", 0))
 	if pass_xp > 0:
 		rows.add_child(_reward_row("🎟", tr("UI_DUEL_REWARD_PASS"), "+%d" % pass_xp, Color(1.0, 0.78, 0.2, 1), ""))
