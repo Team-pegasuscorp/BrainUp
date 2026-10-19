@@ -34,6 +34,7 @@ from schemas import (
     PassPremium,
     PassQuest,
     Player,
+    JokerUse,
     PlayerRegister,
     ShopBuy,
 )
@@ -336,6 +337,16 @@ def shop_buy(payload: ShopBuy):
 @app.post("/shop/joker")
 def shop_buy_joker(payload: ShopBuy):
     return _shop(payload.device_id, lambda conn, player_id: shop.buy_joker(conn, player_id, payload.item_id))
+
+
+@app.post("/jokers/use")
+def use_joker_solo(payload: JokerUse):
+    """Spends one joker in the daily challenge (played on the phone: the game applies the
+    effect, at most one of each per run). Ranked duels never get jokers, see live_match.py."""
+    with engine.begin() as conn:
+        player_id = _player_for_device(conn, payload.device_id)
+        ok = battle_pass.use_joker(conn, player_id, payload.joker_id)
+        return {"ok": ok, "jokers": battle_pass.jokers_available(conn, player_id)}
 
 
 @app.get("/daily-challenge/leaderboard", response_model=DailyLeaderboard)

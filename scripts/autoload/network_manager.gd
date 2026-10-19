@@ -777,6 +777,16 @@ func buy_shop_joker(joker_id: String) -> bool:
 	return await _shop_purchase("/shop/joker", joker_id)
 
 
+## Spends one joker in the daily challenge; true when the server had one left.
+func use_daily_joker(joker_id: String) -> bool:
+	var parsed: Variant = await _pass_post("/jokers/use", {"device_id": _load_or_create_device_id(), "joker_id": joker_id})
+	if typeof(parsed) != TYPE_DICTIONARY:
+		return false
+	if typeof(parsed.get("jokers")) == TYPE_DICTIONARY:
+		SaveManager.set_jokers(parsed["jokers"])
+	return bool(parsed.get("ok", false))
+
+
 func _shop_purchase(path: String, item_id: String) -> bool:
 	var parsed: Variant = await _pass_post(path, {"device_id": _load_or_create_device_id(), "item_id": item_id})
 	if typeof(parsed) != TYPE_DICTIONARY or not parsed.has("coins"):

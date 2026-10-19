@@ -12,7 +12,7 @@
   de test disparaissent ; un objet porté mais plus possédé repasse à l'apparence par défaut.
 - Acheter = demande au serveur (`NetworkManager.buy_shop_item`) ; la page se redessine à la réponse.
 - Nouveau rayon **Jokers** sous les objets : 50/50 et +5 s, stock affiché, un toucher = un joker acheté.
-  Utilisables seulement en duel entre amis (1 de chaque au plus par duel), jamais en classé.
+  Utilisables en duel entre amis et dans le défi du jour (1 de chaque au plus par partie), jamais en classé.
 - La boutique ne liste que ce que le serveur vend (les avatars « demo » sont masqués, sauf
   `SHOP_DEMO_ITEMS=1` sur le serveur de dev).
 

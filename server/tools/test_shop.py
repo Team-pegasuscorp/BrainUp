@@ -105,6 +105,12 @@ async def main() -> None:
     check("joker purchase adds one to the stock", status == 200 and state["coins"] == 550
           and state["jokers"]["joker_5050"] == before + 1, state.get("jokers"))
 
+    status, used = call("POST", "/jokers/use", {"device_id": device, "joker_id": "joker_5050"})
+    check("a bought joker can be spent in the daily challenge",
+          status == 200 and used["ok"] and used["jokers"]["joker_5050"] == before, used)
+    status, used = call("POST", "/jokers/use", {"device_id": device, "joker_id": "joker_5050"})
+    check("no joker left: the daily use is refused", status == 200 and not used["ok"], used)
+
     ## Two taps at once must not spend the same coins twice: 550 coins, three frames at 300.
     loop = asyncio.get_running_loop()
     results = await asyncio.gather(*(loop.run_in_executor(None, call, "POST", "/shop/buy",

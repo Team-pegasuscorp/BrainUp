@@ -21,6 +21,10 @@
   et la quête du jour « Jouer un défi ».
 - **Jokers en duel amical seulement** : boutons sous les réponses si on en possède. Retirés du classé le
   2026-10-19 (retour à la règle du 30/09 de `PASSE_DE_COMBAT.md` : trophées au mérite).
+- **Jokers dans le défi du jour** (2026-10-19) : mêmes boutons sous les réponses (`quiz_game.gd`), 1 de
+  chaque par partie ; le serveur décompte le stock (`POST /jokers/use {device_id, joker_id}` → `ok`,
+  `jokers`) et le jeu applique l'effet. Le +5 s décale aussi le départ de la question : le score
+  ne pénalise pas le temps offert, et le plafond `MAX_DAILY_SCORE` reste valable.
   - **50/50** : retire deux mauvaises réponses.
   - **+5 s** : 5 secondes de plus sur la question (en Chrono : 5 s de plus sur l'horloge).
   - Chaque sorte au plus **une fois par match**, avant d'avoir répondu. L'adversaire voit « 50/50 » / « +5 s ».

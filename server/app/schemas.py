@@ -93,6 +93,11 @@ class ShopBuy(BaseModel):
     item_id: str = Field(min_length=1, max_length=64)
 
 
+class JokerUse(BaseModel):
+    device_id: str = Field(min_length=1, max_length=128)
+    joker_id: str = Field(min_length=1, max_length=32)
+
+
 class DeviceOnly(BaseModel):
     device_id: str = Field(min_length=1, max_length=128)
 

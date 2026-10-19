@@ -28,6 +28,10 @@ const READ_MIN_SECONDS := 4.0
 const READ_MAX_SECONDS := 10.0
 ## Room kept in the card for the caption above and the hint below the explanation.
 const EXPLANATION_CHROME := 76.0
+## Daily challenge jokers (same as friend duels): one of each per run, stock on the server.
+const JOKER_IDS: Array[String] = ["joker_5050", "joker_time"]
+const JOKER_TIME_BONUS := 5.0
+const JOKER_FILL := Color(0.55, 0.32, 0.95, 1)
 
 @onready var progress_label: Label = %ProgressLabel
 @onready var score_label: Label = %ScoreLabel
@@ -64,6 +68,9 @@ var _clock: float = 0.0
 var _clock_over: bool = false
 var _finished: bool = false
 var _lives_label: Label
+var _joker_buttons: Dictionary = {}
+var _jokers_used: Dictionary = {}
+var _joker_pending: bool = false
 
 
 func _ready() -> void:
@@ -112,6 +119,8 @@ func _ready() -> void:
 	question_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	feedback_label.add_theme_font_size_override("font_size", UiScale.font(24))
 	_build_explanation_nodes()
+	if not GameManager.active_daily_date.is_empty():
+		_build_joker_row()
 	_show_current_question()
 
 
@@ -292,6 +301,7 @@ func _show_current_question() -> void:
 	accepting_input = true
 	_animate_question_in()
 	_fit_texts()
+	_refresh_jokers()
 
 
 ## Question card fades in, then the answers cascade one after another.
@@ -375,13 +385,15 @@ func _submit_answer(selected_index: int) -> void:
 	if not accepting_input:
 		return
 	accepting_input = false
+	_refresh_jokers()
 
 	for button in answer_buttons:
 		button.disabled = true
 
 	var question: Dictionary = GameManager.get_current_question()
 	var correct_index: int = int(question.get("correct_index", -1))
-	var elapsed: float = (Time.get_ticks_msec() / 1000.0) - question_start_time
+	## Never below 0: the +5 s joker moves question_start_time forward.
+	var elapsed: float = maxf((Time.get_ticks_msec() / 1000.0) - question_start_time, 0.0)
 	var result: Dictionary = GameManager.submit_answer(selected_index, elapsed)
 	_show_feedback(result, selected_index, correct_index)
 
@@ -564,6 +576,83 @@ func _reset_answer_visuals() -> void:
 	if _timer_label != null:
 		_timer_label.scale = Vector2.ONE
 	score_label.scale = Vector2.ONE
+
+
+# --- Jokers (daily challenge only) ---------------------------------------------
+
+## Row under the answers, only when the player owns a joker.
+func _build_joker_row() -> void:
+	var total := 0
+	for joker_id in JOKER_IDS:
+		total += int(SaveManager.jokers.get(joker_id, 0))
+	if total <= 0:
+		return
+	var row := HBoxContainer.new()
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.add_theme_constant_override("separation", 14)
+	for joker_id in JOKER_IDS:
+		var button := Button.new()
+		button.custom_minimum_size = Vector2(200, 64)
+		button.focus_mode = Control.FOCUS_NONE
+		button.add_theme_font_size_override("font_size", UiScale.font(19))
+		button.add_theme_color_override("font_color", Color.WHITE)
+		button.add_theme_color_override("font_disabled_color", Color(1, 1, 1, 0.45))
+		button.add_theme_stylebox_override("normal", UiStyle.filled(JOKER_FILL, 32))
+		button.add_theme_stylebox_override("hover", UiStyle.filled(JOKER_FILL.lightened(0.12), 32))
+		button.add_theme_stylebox_override("pressed", UiStyle.filled(JOKER_FILL.darkened(0.15), 32))
+		button.add_theme_stylebox_override("disabled", UiStyle.filled(Color(1, 1, 1, 0.12), 32))
+		button.pressed.connect(_on_joker_pressed.bind(joker_id))
+		PressScaleUtil.wire(button, self)
+		row.add_child(button)
+		_joker_buttons[joker_id] = button
+	var vbox := answers_grid.get_parent()
+	vbox.add_child(row)
+	vbox.move_child(row, answers_grid.get_index() + 1)
+
+
+func _refresh_jokers() -> void:
+	for joker_id in _joker_buttons.keys():
+		var button: Button = _joker_buttons[joker_id]
+		var count := int(SaveManager.jokers.get(joker_id, 0))
+		button.text = "%s  ×%d" % ["50/50" if joker_id == "joker_5050" else "+5 s", count]
+		button.disabled = (not accepting_input or _joker_pending or _jokers_used.has(joker_id)
+			or count <= 0)
+
+
+func _on_joker_pressed(joker_id: String) -> void:
+	if not accepting_input or _joker_pending or _jokers_used.has(joker_id):
+		return
+	_joker_pending = true
+	_refresh_jokers()
+	var ok: bool = await NetworkManager.use_daily_joker(joker_id)
+	_joker_pending = false
+	if not is_inside_tree():
+		return
+	if not ok or not accepting_input:
+		## Refused, or the question ended while the server answered (joker spent anyway).
+		if ok:
+			_jokers_used[joker_id] = true
+		AudioManager.play("wrong")
+		_refresh_jokers()
+		return
+	_jokers_used[joker_id] = true
+	AudioManager.play("correct")
+	if joker_id == "joker_5050":
+		var correct_index := int(GameManager.get_current_question().get("correct_index", -1))
+		var wrong: Array = []
+		for index in range(answer_buttons.size()):
+			if index != correct_index and answer_buttons[index].visible:
+				wrong.append(index)
+		wrong.shuffle()
+		for index in wrong.slice(0, mini(2, maxi(wrong.size() - 1, 0))):
+			answer_buttons[index].disabled = true
+			answer_buttons[index].modulate.a = 0.25
+	else:
+		## Moving the start keeps the score fair: the extra seconds do not count as slowness.
+		time_remaining += JOKER_TIME_BONUS
+		question_start_time += JOKER_TIME_BONUS
+		_pulse(_timer_label, 1.3)
+	_refresh_jokers()
 
 
 func _finish_quiz() -> void:
