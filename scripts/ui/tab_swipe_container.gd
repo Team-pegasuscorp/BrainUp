@@ -4,6 +4,9 @@ class_name TabSwipeContainer
 ## Horizontal pager with touch swipe and animated tab transitions.
 
 signal tab_changed(index: int)
+## The page has finished sliding in: the moment for heavy refreshes, so they never
+## run during the slide (tab_changed fires at its start, for the nav highlight).
+signal tab_settled(index: int)
 
 @export var swipe_threshold: float = 80.0
 @export var animation_duration: float = 0.28
@@ -23,6 +26,7 @@ var _drag_base_x: float = 0.0
 var _tween: Tween
 var _animating: bool = false
 var _input_enabled: bool = true
+var _settle_pending: bool = false
 
 
 func _ready() -> void:
@@ -44,8 +48,11 @@ func set_tab(index: int, animate: bool = true) -> void:
 		return
 
 	current_tab = next_tab
+	_settle_pending = animate and _page_width > 0.0
 	_snap_to_tab(current_tab, animate)
 	tab_changed.emit(current_tab)
+	if not _settle_pending:
+		tab_settled.emit(current_tab)
 
 
 func get_tab() -> int:
@@ -97,6 +104,9 @@ func _snap_to_tab(index: int, animate: bool) -> void:
 func _on_tween_finished() -> void:
 	_animating = false
 	modulate.a = 1.0
+	if _settle_pending:
+		_settle_pending = false
+		tab_settled.emit(current_tab)
 
 
 func _gui_input(event: InputEvent) -> void:
@@ -128,6 +138,10 @@ func _handle_press(position: Vector2, pressed: bool) -> void:
 			_tween.kill()
 		_animating = false
 		modulate.a = 1.0
+		## A new touch interrupted a slide: the page is on screen, refresh it now.
+		if _settle_pending:
+			_settle_pending = false
+			tab_settled.emit(current_tab)
 	else:
 		if not _dragging:
 			return
