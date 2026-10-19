@@ -90,6 +90,7 @@ func _sync_shell_background(_page_index: int) -> void:
 func _wire_navigation() -> void:
 	bottom_nav.tab_selected.connect(_on_bottom_nav_selected)
 	tab_swipe.tab_changed.connect(_on_tab_changed)
+	tab_swipe.tab_settled.connect(_notify_tab_shown)
 
 
 func _connect_settings() -> void:
@@ -324,7 +325,7 @@ func _on_tab_changed(page_index: int) -> void:
 	bottom_nav.set_active_tab(page_index)
 	GameManager.shell_tab_index = ScenePaths.tab_for_page_index(page_index)
 	_sync_shell_background(page_index)
-	_notify_tab_shown(page_index)
+	## The page itself refreshes on tab_settled, once the slide is over.
 
 
 func _notify_tab_shown(page_index: int) -> void:
