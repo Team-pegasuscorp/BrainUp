@@ -630,6 +630,8 @@ func _style_draft_tiles(highlight: String, mine: String, theirs: String) -> void
 			if category_id == theirs:
 				tags.append(tr("UI_DUEL_VOTE_OPPONENT"))
 			votes.text = " · ".join(tags)
+			## Hidden while empty, so the category name stays centred on the icon.
+			votes.visible = not tags.is_empty()
 
 
 func _build_playing() -> void:
