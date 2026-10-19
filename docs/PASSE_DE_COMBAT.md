@@ -52,5 +52,6 @@ Les objets du passe sont dans `data/shop/catalog.json` avec `"source": "pass"` :
 ## À faire ensuite
 
 - Utiliser les jokers (50/50, +5 s) : prévus pour le défi du jour et les parties non classées, jamais en duel classé.
+  Fait pour les duels entre amis (classé coupé le 2026-10-19) ; défi du jour : pas encore branché.
 - Images des 3 avatars exclusifs (générées sur RunPod) : pour l'instant des images provisoires (`"art_todo": true`).
 - Saison 2 : nouveau fichier `season_2.json` qui démarre à la fin de la saison 1.

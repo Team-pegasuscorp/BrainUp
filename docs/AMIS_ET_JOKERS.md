@@ -19,7 +19,8 @@
 - **Duel amical** : pas de trophées, pas d'XP de passe, pas de victoire/défaite au profil (anti-triche
   entre amis). Compte : le bilan face à cet ami, l'XP de profil, les stats de catégorie, l'historique,
   et la quête du jour « Jouer un défi ».
-- **Jokers en duel** (classé ou amical) : boutons sous les réponses si on en possède.
+- **Jokers en duel amical seulement** : boutons sous les réponses si on en possède. Retirés du classé le
+  2026-10-19 (retour à la règle du 30/09 de `PASSE_DE_COMBAT.md` : trophées au mérite).
   - **50/50** : retire deux mauvaises réponses.
   - **+5 s** : 5 secondes de plus sur la question (en Chrono : 5 s de plus sur l'horloge).
   - Chaque sorte au plus **une fois par match**, avant d'avoir répondu. L'adversaire voit « 50/50 » / « +5 s ».

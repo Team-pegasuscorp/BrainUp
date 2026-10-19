@@ -53,18 +53,25 @@ def grant(player_id: str, amount: int) -> None:
 
 
 async def duel(player_id: str) -> dict:
+    found, joker_results = {}, []
     async with websockets.connect(WS) as ws:
         await ws.send(json.dumps({"type": "join_queue", "player_id": player_id, "mode": "classic",
                                   "locale": "fr", "trophies": 100, "trophy_range": 100000}))
         while True:
             message = json.loads(await asyncio.wait_for(ws.recv(), timeout=120))
-            if message["type"] == "question":
+            if message["type"] == "match_found":
+                found = message
+            elif message["type"] == "question":
+                if message["index"] == 0:
+                    await ws.send(json.dumps({"type": "joker", "joker": "joker_5050", "index": 0}))
                 await ws.send(json.dumps({"type": "answer", "index": message["index"],
                                           "selected_index": random.randrange(4)}))
             elif message["type"] == "reveal" and message.get("read_time"):
                 await ws.send(json.dumps({"type": "ready", "index": message["index"]}))
+            elif message["type"] == "joker_result":
+                joker_results.append(message)
             elif message["type"] == "match_over":
-                return message
+                return {**message, "_found": found, "_jokers": joker_results}
 
 
 async def main() -> None:
@@ -131,6 +138,10 @@ async def main() -> None:
     _, state = call("GET", f"/shop?device_id={device}")
     coins_before_duel = state["coins"]
     over = await duel(pid)
+    check("a joker sent anyway in a ranked duel is refused",
+          bool(over["_jokers"]) and not any(r.get("ok") for r in over["_jokers"]), over["_jokers"])
+    check("no jokers offered in a ranked duel (bought ones included)", over["_found"].get("jokers") == {},
+          over["_found"].get("jokers"))
     expected = 15 + (10 if over["won"] else 0)
     check("ranked duel pays coins", over.get("coins_gained") == expected + over.get("league_coins", -1)
           and over.get("coins") == coins_before_duel + over["coins_gained"], over.get("coins_gained"))

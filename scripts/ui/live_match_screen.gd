@@ -200,8 +200,9 @@ func _on_match_found(data: Dictionary) -> void:
 	_my_clock = float(data.get("clock", 0.0))
 	_opponent_clock = _my_clock
 	_category = str(data.get("category", ""))
+	## Jokers only in friend duels (the server sends none in ranked and refuses them anyway).
 	var stock: Variant = data.get("jokers", {})
-	_jokers = stock if typeof(stock) == TYPE_DICTIONARY else {}
+	_jokers = stock if typeof(stock) == TYPE_DICTIONARY and bool(data.get("friendly", false)) else {}
 	_jokers_used = {}
 	AudioManager.play("correct")
 	var draft: Variant = data.get("draft")

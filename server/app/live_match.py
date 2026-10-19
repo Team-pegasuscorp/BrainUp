@@ -129,6 +129,11 @@ class LiveMatch:
         self.draft_choices = [] if category else question_bank.draft_choices(DRAFT_CHOICES)
         self.players = {a.player_id: a, b.player_id: b}
         self.order = [a, b]
+        ## Jokers are for friend duels only: ranked trophies stay earned on merit
+        ## (decision of 2026-09-30, docs/PASSE_DE_COMBAT.md). An empty stock also refuses use_joker.
+        if not self.friendly:
+            for player in self.order:
+                player.jokers = {}
         self.completed = asyncio.Event()
 
     def opponent_of(self, player_id: str) -> PlayerState:
