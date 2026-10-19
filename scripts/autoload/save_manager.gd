@@ -389,6 +389,9 @@ func apply_shop_state(state: Dictionary) -> void:
 		joker_prices = state["joker_prices"]
 	if typeof(state.get("jokers")) == TYPE_DICTIONARY:
 		set_jokers(state["jokers"])
+	## Once the server tracks this player's trophies, its count wins (sent with the shop state).
+	if state.get("trophies") != null:
+		trophies = maxi(int(state["trophies"]), 0)
 	var unequipped := false
 	if not equipped_frame.is_empty() and not is_item_owned(equipped_frame):
 		equipped_frame = ""

@@ -180,9 +180,14 @@ def sanitize_cosmetics(conn: Connection, player_id: str | None, cosmetics: dict)
 
 
 def state(conn: Connection, player_id: str) -> dict:
-    """Everything the shop screen needs. `prices` lists what can be bought right now."""
+    """Everything the shop screen needs. `prices` lists what can be bought right now.
+    `trophies` is the server's count once it tracks this player (None before the first ranked join)."""
+    trophies, seeded = conn.execute(
+        text("SELECT trophies, trophies_seeded FROM players WHERE id = :p"), {"p": player_id}
+    ).one()
     return {
         "coins": balance(conn, player_id),
+        "trophies": trophies if seeded else None,
         "owned": sorted(owned_items(conn, player_id)),
         "prices": {item_id: int(item["price"]) for item_id, item in CATALOG.items() if _for_sale(item)},
         "jokers": battle_pass.jokers_available(conn, player_id),

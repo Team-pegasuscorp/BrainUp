@@ -124,7 +124,7 @@ static func _merge_demo(base: Dictionary, locale: String) -> Dictionary:
 	demo["day_streak"] = 12
 	demo["best_day_streak"] = 23
 	demo["best_score"] = 980
-	demo["trophies"] = 2845
+	## Trophies stay real even in the demo: they come from the server (matchmaking, leagues, shop bonuses).
 	demo["has_perfect_round"] = false
 	demo["country"] = "France"
 	demo["country_flag"] = CountryFlags.emoji_for("France")
@@ -444,7 +444,6 @@ static func _build_ranking(data: Dictionary, locale: String) -> Dictionary:
 	var points := int(data.get("trophies", data.get("best_score", 0)))
 	if data.get("is_demo", false):
 		rank = 184
-		points = int(data.get("trophies", 2845))
 	elif rank <= 0:
 		rank = maxi(1, 220 - int(data.get("level", 1)) * 3)
 	var weekly_delta := 23 if data.get("is_demo", false) else clampi(int(data.get("current_win_streak", 0)) * 3, -18, 42)
@@ -574,7 +573,6 @@ static func _build_season(data: Dictionary) -> Dictionary:
 	}
 	if data.get("is_demo", false):
 		season["number"] = 12
-		season["points"] = 2845
 		season["wins"] = 68
 		season["win_rate"] = 63.0
 		season["best_rank"] = 184

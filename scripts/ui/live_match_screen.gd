@@ -558,43 +558,50 @@ func _build_draft(choices: Array) -> void:
 	_body.add_child(_title(tr("UI_DUEL_DRAFT_TITLE"), 26))
 	_body.add_child(_subtitle(tr("UI_DUEL_DRAFT_HINT")))
 	_body.add_child(_timer_bar())
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 12)
-	_body.add_child(row)
-	var width := (PAGE_WIDTH - 24.0) / 3.0
+	## The three choices stack as wide tiles that share the rest of the screen height.
 	for raw in choices:
 		var category_id := str(raw)
 		var tile := Button.new()
-		tile.custom_minimum_size = Vector2(width, 230)
+		tile.custom_minimum_size.y = 150
+		tile.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		tile.focus_mode = Control.FOCUS_NONE
 		tile.pressed.connect(_on_draft_vote.bind(category_id))
-		var column := VBoxContainer.new()
-		column.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT, Control.PRESET_MODE_MINSIZE, 10)
-		column.alignment = BoxContainer.ALIGNMENT_CENTER
-		column.add_theme_constant_override("separation", 8)
-		column.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		tile.add_child(column)
+		var pad := MarginContainer.new()
+		pad.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		pad.add_theme_constant_override("margin_left", 24)
+		pad.add_theme_constant_override("margin_right", 24)
+		pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		tile.add_child(pad)
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 22)
+		row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		pad.add_child(row)
 		var icon := TextureRect.new()
-		icon.custom_minimum_size = Vector2(110, 110)
+		icon.custom_minimum_size = Vector2(130, 130)
+		icon.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		icon.texture = GameAssets.category_texture(category_id)
 		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		column.add_child(icon)
+		row.add_child(icon)
+		var column := VBoxContainer.new()
+		column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		column.alignment = BoxContainer.ALIGNMENT_CENTER
+		column.add_theme_constant_override("separation", 6)
+		column.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		row.add_child(column)
 		var name_label := Label.new()
 		name_label.text = _category_name(category_id)
-		name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		name_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		name_label.add_theme_font_size_override("font_size", UiScale.font(17))
+		name_label.add_theme_font_size_override("font_size", UiScale.font(26))
 		name_label.add_theme_color_override("font_color", Color.WHITE)
 		column.add_child(name_label)
 		var votes := Label.new()
 		votes.name = "Votes"
-		votes.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		votes.add_theme_font_size_override("font_size", UiScale.font(13))
+		votes.add_theme_font_size_override("font_size", UiScale.font(16))
 		votes.add_theme_color_override("font_color", Color(1, 1, 1, 0.9))
 		column.add_child(votes)
-		row.add_child(tile)
+		_body.add_child(tile)
 		_draft_tiles[category_id] = tile
 	_feedback_label = _subtitle("")
 	_body.add_child(_feedback_label)
@@ -636,6 +643,9 @@ func _build_playing() -> void:
 	_question_card = PanelContainer.new()
 	_question_card.add_theme_stylebox_override("panel", UiStyle.profile_surface(_accent, true, 20))
 	_question_card.custom_minimum_size.y = 280
+	## Card and answer tiles grow to fill the screen height (no empty band at the bottom).
+	_question_card.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_question_card.size_flags_stretch_ratio = 1.6
 	_body.add_child(_question_card)
 	var column := VBoxContainer.new()
 	column.add_theme_constant_override("separation", 8)
@@ -681,6 +691,7 @@ func _build_playing() -> void:
 func _make_answer_tile(index: int) -> Button:
 	var tile := Button.new()
 	tile.custom_minimum_size.y = 108
+	tile.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	tile.focus_mode = Control.FOCUS_NONE
 	tile.pressed.connect(_on_answer_pressed.bind(index))
 	var pad := MarginContainer.new()

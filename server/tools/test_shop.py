@@ -77,6 +77,7 @@ async def main() -> None:
     check("prices list shop items only", state["prices"].get("frame_ocean") == 300
           and "frame_neon" not in state["prices"] and "avatar_s1_1" not in state["prices"])
     check("demo avatars are not for sale here", "avatar_panther" not in state["prices"])
+    check("no server trophies before the first ranked join", state.get("trophies", "missing") is None, state.get("trophies"))
     check("unknown device is refused", call("GET", "/shop?device_id=nobody")[0] == 404)
 
     status, body = call("POST", "/shop/buy", {"device_id": device, "item_id": "frame_ocean"})
@@ -133,6 +134,10 @@ async def main() -> None:
     expected = 15 + (10 if over["won"] else 0)
     check("ranked duel pays coins", over.get("coins_gained") == expected + over.get("league_coins", -1)
           and over.get("coins") == coins_before_duel + over["coins_gained"], over.get("coins_gained"))
+
+    _, state = call("GET", f"/shop?device_id={device}")
+    check("shop state carries the server trophies after a duel", state.get("trophies") == over["trophies"],
+          f"{state.get('trophies')} / {over['trophies']}")
 
     league = in_api(
         "from db import engine\nimport shop\n"
