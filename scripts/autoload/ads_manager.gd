@@ -78,8 +78,13 @@ func _on_consent_info_updated() -> void:
 
 
 func _start_ads() -> void:
-	MobileAds.initialize()
-	_load_ad()
+	var config := RequestConfiguration.new()
+	config.max_ad_content_rating = RequestConfiguration.MAX_AD_CONTENT_RATING_T
+	MobileAds.set_request_configuration(config)
+	var on_init := OnInitializationCompleteListener.new()
+	on_init.on_initialization_complete = func(_status: InitializationStatus) -> void:
+		_load_ad()
+	MobileAds.initialize(on_init)
 
 
 # --- Loading and showing ---------------------------------------------------------
