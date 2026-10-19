@@ -925,6 +925,14 @@ func _build_over() -> void:
 		rows.add_child(_reward_row("🏆", tr("UI_DUEL_REWARD_TROPHIES"), "%s%d" % ["+" if delta > 0 else "", delta],
 			UiTokens.FEEDBACK_CORRECT if delta > 0 else (UiTokens.FEEDBACK_WRONG if delta < 0 else Color.WHITE), detail))
 	rows.add_child(_reward_row("⭐", tr("UI_DUEL_REWARD_XP"), "+%d" % _xp_gained, Color(0.55, 0.85, 1.0, 1), ""))
+	## Coins are credited by the server (shop.record_duel); the balance shown is the server's.
+	var coins := int(_over.get("coins_gained", 0))
+	if coins > 0:
+		var coins_detail := "%s %d" % [tr("UI_DUEL_TOTAL"), int(_over.get("coins", SaveManager.coins))]
+		var league_coins := int(_over.get("league_coins", 0))
+		if league_coins > 0:
+			coins_detail += "  ·  " + tr("UI_DUEL_REWARD_LEAGUE").format({"bonus": league_coins})
+		rows.add_child(_reward_row("🪙", tr("UI_DUEL_REWARD_COINS"), "+%d" % coins, Color(0.97, 0.78, 0.26, 1), coins_detail))
 	var pass_xp := int(_over.get("pass_xp", 0))
 	if pass_xp > 0:
 		rows.add_child(_reward_row("🎟", tr("UI_DUEL_REWARD_PASS"), "+%d" % pass_xp, Color(1.0, 0.78, 0.2, 1), ""))

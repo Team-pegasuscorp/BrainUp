@@ -57,5 +57,5 @@ Test : `python tools/test_shop.py` (pile lancée sous `-p quizz-backend`, `pip i
 ## Reste à faire
 
 - Retours visuels du rayon Jokers et du parcours d'achat sur téléphone (domaine de Sylou7 pour le style).
-- Animation « +N pièces » à la fin du duel (`coins_gained` est déjà envoyé).
+- ~~« +N pièces » à la fin du duel~~ : fait (ligne « Pièces » de l'écran de fin, total serveur + bonus de nouvelle ligue).
 - Argent réel (packs, retrait des pubs) : plus tard, après les comptes Google Play Jeux.
