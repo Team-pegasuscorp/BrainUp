@@ -9,6 +9,7 @@ from sqlalchemy import text
 
 import battle_pass
 import bots
+import shop
 import friends
 import question_bank
 import trophies
@@ -524,6 +525,11 @@ class LiveMatch:
                     conn, player.player_id, self.mode,
                     self._outcome(player, opponent) > 0, player.correct_count,
                 )
+                result.update(shop.record_duel(
+                    conn, player.player_id, self.match_id, self._outcome(player, opponent) > 0,
+                    player.trophies, result["trophies"],
+                ))
+                result["coins"] = shop.balance(conn, player.player_id)
                 conn.execute(
                     text(
                         """
@@ -572,6 +578,10 @@ class LiveMatch:
                 "win_streak": result["win_streak"],
                 "loss_streak": result["loss_streak"],
                 "pass_xp": result["pass_xp"],
+                ## Coins: this duel's payout (league bonuses included) and the new balance.
+                "coins_gained": result["coins_gained"],
+                "league_coins": result["league_coins"],
+                "coins": result["coins"],
             })
         self.completed.set()
 
@@ -606,6 +616,8 @@ class LiveMatch:
                 "trophy_streak_bonus": 0,
                 "trophy_loss_consolation": 0,
                 "pass_xp": 0,
+                "coins_gained": 0,
+                "league_coins": 0,
             })
         self.completed.set()
 

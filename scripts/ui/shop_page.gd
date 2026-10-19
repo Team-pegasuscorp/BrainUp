@@ -4,7 +4,8 @@ extends Control
 ## Full-screen shop opened from the top bar, in two tabs:
 ## - Boutique: coin balance, featured items, then a grid of items coloured by rarity.
 ## - Casier: the player's animal with its frame, slots (avatar / frame) and owned items.
-## Items come from ShopCatalog; purchases are local (SaveManager.buy_item) for now.
+## Items come from ShopCatalog; the server owns coins and purchases (NetworkManager.buy_shop_item)
+## and only what it sells is listed. Jokers are sold below the items.
 
 signal closed
 
@@ -37,6 +38,8 @@ var _content: VBoxContainer
 var _detail_backdrop: ColorRect
 var _detail_panel: PanelContainer
 var _detail_item: Dictionary = {}
+## A purchase is on its way to the server: ignore further taps until it answers.
+var _buying: bool = false
 
 
 func _ready() -> void:
@@ -86,6 +89,12 @@ func _ready() -> void:
 		if visible and _tab == TAB_PASS:
 			_rebuild()
 	)
+	SaveManager.shop_changed.connect(func() -> void:
+		if visible:
+			_rebuild()
+			if _detail_panel.visible:
+				_fill_detail()
+	)
 	NetworkManager.pass_reward_claimed.connect(func(_result: Dictionary) -> void: AudioManager.play("correct"))
 	NetworkManager.pass_claim_failed.connect(func(_reason: String) -> void: AudioManager.play("wrong"))
 
@@ -93,6 +102,7 @@ func _ready() -> void:
 func open(tab: String = TAB_STORE) -> void:
 	_tab = tab
 	NetworkManager.fetch_pass()
+	NetworkManager.fetch_shop()
 	_close_detail()
 	_rebuild()
 	visible = true
@@ -665,6 +675,11 @@ func _build_store() -> void:
 	var featured: Array[Dictionary] = []
 	var others: Array[Dictionary] = []
 	for item in ShopCatalog.store_items():
+		## Once the server answered, list only what it sells (and what the player owns).
+		var item_id := str(item["id"])
+		if not SaveManager.shop_prices.is_empty() and not SaveManager.shop_prices.has(item_id) \
+				and not SaveManager.is_item_owned(item_id):
+			continue
 		if bool(item.get("featured", false)):
 			featured.append(item)
 		else:
@@ -673,6 +688,7 @@ func _build_store() -> void:
 	if featured.is_empty() and others.is_empty():
 		_content.add_child(_section_label("UI_SHOP_ITEMS"))
 		_content.add_child(_empty_card())
+		_build_joker_offers()
 		return
 
 	if not featured.is_empty():
@@ -694,6 +710,80 @@ func _build_store() -> void:
 		for item in featured.slice(2) + others:
 			grid.add_child(_make_store_card(item, Vector2(w, 300), 132))
 		_content.add_child(grid)
+	_build_joker_offers()
+
+
+## Jokers stack (max one of each per duel): one card per joker, a tap buys one.
+func _build_joker_offers() -> void:
+	if SaveManager.joker_prices.is_empty():
+		return
+	_content.add_child(_section_label("UI_SHOP_JOKERS"))
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 12)
+	var w := (PAGE_WIDTH - 12.0) * 0.5
+	for joker_id in ["joker_5050", "joker_time"]:
+		if SaveManager.joker_prices.has(joker_id):
+			row.add_child(_make_joker_card(joker_id, int(SaveManager.joker_prices[joker_id]), Vector2(w, 200)))
+	_content.add_child(row)
+
+
+func _make_joker_card(joker_id: String, price: int, card_size: Vector2) -> Control:
+	var fill := Color(0.55, 0.32, 0.95, 1)
+	var card := Button.new()
+	card.custom_minimum_size = card_size
+	card.focus_mode = Control.FOCUS_NONE
+	var style := UiStyle.filled(fill.darkened(0.25), 24)
+	style.set_border_width_all(3)
+	style.border_color = fill.lightened(0.35)
+	for state in ["normal", "hover", "pressed", "focus", "disabled"]:
+		card.add_theme_stylebox_override(state, style)
+	card.disabled = SaveManager.coins < price
+
+	var column := VBoxContainer.new()
+	column.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	column.alignment = BoxContainer.ALIGNMENT_CENTER
+	column.add_theme_constant_override("separation", 6)
+	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	card.add_child(column)
+
+	var name_label := Label.new()
+	name_label.text = "50/50" if joker_id == "joker_5050" else "+5 s"
+	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	name_label.add_theme_font_size_override("font_size", UiScale.font(34))
+	name_label.add_theme_color_override("font_color", Color.WHITE)
+	column.add_child(name_label)
+
+	var stock := Label.new()
+	stock.text = tr("UI_SHOP_JOKER_STOCK") % int(SaveManager.jokers.get(joker_id, 0))
+	stock.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	stock.add_theme_font_size_override("font_size", UiScale.font(14))
+	stock.add_theme_color_override("font_color", fill.lightened(0.55))
+	column.add_child(stock)
+
+	var price_row := HBoxContainer.new()
+	price_row.alignment = BoxContainer.ALIGNMENT_CENTER
+	price_row.add_theme_constant_override("separation", 6)
+	price_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	column.add_child(price_row)
+	price_row.add_child(_make_coin(18))
+	var price_label := Label.new()
+	price_label.text = _format_amount(price)
+	price_label.add_theme_font_size_override("font_size", UiScale.font(17))
+	price_label.add_theme_color_override("font_color", Color.WHITE if not card.disabled else Color(1, 1, 1, 0.5))
+	price_row.add_child(price_label)
+
+	card.pressed.connect(_on_joker_buy.bind(joker_id))
+	PressScaleUtil.wire(card, self)
+	return card
+
+
+func _on_joker_buy(joker_id: String) -> void:
+	if _buying:
+		return
+	_buying = true
+	var ok: bool = await NetworkManager.buy_shop_joker(joker_id)
+	_buying = false
+	AudioManager.play("correct" if ok else "wrong")
 
 
 func _make_store_card(item: Dictionary, card_size: Vector2, art_size: float) -> Control:
@@ -1086,12 +1176,13 @@ func _fill_detail() -> void:
 
 
 func _on_detail_buy() -> void:
-	if not SaveManager.buy_item(str(_detail_item.get("id", ""))):
-		AudioManager.play("wrong")
+	if _buying:
 		return
-	AudioManager.play("correct")
-	_rebuild()
-	_fill_detail()
+	_buying = true
+	var ok: bool = await NetworkManager.buy_shop_item(str(_detail_item.get("id", "")))
+	_buying = false
+	## On success the new state arrives through SaveManager.shop_changed (rebuilds the page).
+	AudioManager.play("correct" if ok else "wrong")
 
 
 func _on_detail_equip() -> void:

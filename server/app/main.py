@@ -1,3 +1,4 @@
+import json
 import secrets
 from datetime import date, datetime, timezone
 from uuid import UUID
@@ -10,6 +11,7 @@ import battle_pass
 import bots
 import friends
 import leaderboard_bots
+import shop
 from db import engine
 from live_match import handle_live_socket
 from scoring import calculate_points
@@ -33,6 +35,7 @@ from schemas import (
     PassQuest,
     Player,
     PlayerRegister,
+    ShopBuy,
 )
 
 ## Daily challenge rotation: one category a day, "general" mixes them all. The game keeps a
@@ -77,6 +80,12 @@ async def live_endpoint(websocket: WebSocket):
 @app.post("/players", response_model=Player)
 def register_player(payload: PlayerRegister):
     with engine.begin() as conn:
+        cosmetics = None
+        if payload.cosmetics:
+            ## Worn items must be owned on the server: unowned ones are dropped (default look).
+            known = conn.execute(text("SELECT id FROM players WHERE device_id = :d"), {"d": payload.device_id}).first()
+            cosmetics = json.dumps(shop.sanitize_cosmetics(
+                conn, str(known[0]) if known else None, payload.cosmetics.model_dump()))
         row = conn.execute(
             text(
                 """
@@ -93,7 +102,7 @@ def register_player(payload: PlayerRegister):
             {
                 "device_id": payload.device_id,
                 "display_name": payload.display_name,
-                "cosmetics": payload.cosmetics.model_dump_json() if payload.cosmetics else None,
+                "cosmetics": cosmetics,
                 "level": payload.level,
             },
         ).mappings().one()
@@ -231,6 +240,7 @@ def submit_daily_result(payload: DailyResultSubmit):
             ).first()
             ## Only the first result of the day pays pass XP.
             pass_xp = battle_pass.record_daily(conn, str(payload.player_id)) if inserted is not None else 0
+            coins = shop.record_daily(conn, str(payload.player_id), today) if inserted is not None else 0
             row = conn.execute(
                 text(f"SELECT * FROM ({DAILY_RANKED}) ranked WHERE player_id = :player_id"),
                 {"day": today, "player_id": payload.player_id},
@@ -247,6 +257,7 @@ def submit_daily_result(payload: DailyResultSubmit):
         "rank": row["rank"],
         "already_played": inserted is None,
         "pass_xp": pass_xp,
+        "coins_gained": coins,
     }
 
 
@@ -274,7 +285,10 @@ def pass_claim(payload: PassClaim):
             reward = battle_pass.claim_reward(conn, player_id, payload.tier, payload.track)
         except ValueError as error:
             raise HTTPException(status_code=409, detail=str(error))
-    return {"tier": payload.tier, "track": payload.track, "reward": reward}
+        season = battle_pass.current_season()
+        coins = shop.record_pass_reward(conn, player_id, season["id"], payload.track, payload.tier, reward)
+        return {"tier": payload.tier, "track": payload.track, "reward": reward,
+                "coins_gained": coins, "coins": shop.balance(conn, player_id)}
 
 
 @app.post("/pass/quest")
@@ -282,7 +296,8 @@ def pass_quest(payload: PassQuest):
     with engine.begin() as conn:
         player_id = _player_for_device(conn, payload.device_id)
         gained = battle_pass.claim_quest(conn, player_id, payload.quest_id, payload.day)
-    return {"pass_xp": gained}
+        coins = shop.record_quest(conn, player_id, payload.quest_id, payload.day)
+    return {"pass_xp": gained, "coins_gained": coins}
 
 
 @app.post("/pass/premium")
@@ -292,6 +307,35 @@ def pass_premium(payload: PassPremium):
         if not battle_pass.unlock_premium(conn, player_id, payload.receipt):
             raise HTTPException(status_code=402, detail="purchase not verified")
         return battle_pass.state(conn, player_id)
+
+
+# --- Shop ---------------------------------------------------------------------
+# The server owns coins, bought items and bought jokers; the game only displays them.
+
+def _shop(device_id: str, action):
+    """Runs a purchase in one transaction and answers with the new shop state."""
+    try:
+        with engine.begin() as conn:
+            player_id = _player_for_device(conn, device_id)
+            action(conn, player_id)
+            return shop.state(conn, player_id)
+    except shop.ShopError as error:
+        raise HTTPException(status_code=error.status, detail=error.reason)
+
+
+@app.get("/shop")
+def shop_state(device_id: str = Query(min_length=1, max_length=128)):
+    return _shop(device_id, lambda conn, player_id: None)
+
+
+@app.post("/shop/buy")
+def shop_buy(payload: ShopBuy):
+    return _shop(payload.device_id, lambda conn, player_id: shop.buy_item(conn, player_id, payload.item_id))
+
+
+@app.post("/shop/joker")
+def shop_buy_joker(payload: ShopBuy):
+    return _shop(payload.device_id, lambda conn, player_id: shop.buy_joker(conn, player_id, payload.item_id))
 
 
 @app.get("/daily-challenge/leaderboard", response_model=DailyLeaderboard)

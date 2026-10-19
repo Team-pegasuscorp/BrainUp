@@ -42,6 +42,10 @@ signal pass_received(state: Dictionary)
 signal pass_failed
 signal pass_reward_claimed(result: Dictionary)
 signal pass_claim_failed(reason: String)
+## Shop (server state; see brainup-backend app/shop.py).
+signal shop_received(state: Dictionary)
+signal shop_purchase_done(item_id: String)
+signal shop_purchase_failed(item_id: String, reason: String)
 signal live_search_range_changed(trophy_range: int)
 signal daily_challenge_received(data: Dictionary)
 signal daily_challenge_failed
@@ -69,6 +73,7 @@ var _daily_board_request: HTTPRequest
 var _cosmetics_request: HTTPRequest
 var _pass_request: HTTPRequest
 var _pass_write_request: HTTPRequest
+var _shop_request: HTTPRequest
 ## Last pass state received (empty until the first fetch).
 var pass_state: Dictionary = {}
 ## A fetch was asked while another was running: fetch again right after it.
@@ -255,6 +260,8 @@ func _handle_live_message(raw: String) -> void:
 		"match_over":
 			live_match_over.emit(parsed)
 			stop_live_matchmaking()
+			if int(parsed.get("coins_gained", 0)) > 0:
+				fetch_shop()
 		"joker_result":
 			live_joker_result.emit(parsed)
 		"opponent_joker":
@@ -277,6 +284,7 @@ func _ready() -> void:
 	_cosmetics_request = _make_request_node()
 	_pass_request = _make_request_node()
 	_pass_write_request = _make_request_node()
+	_shop_request = _make_request_node()
 	SaveManager.cosmetics_changed.connect(_sync_cosmetics)
 	_load_quest_outbox()
 	_register_player()
@@ -346,6 +354,8 @@ func submit_daily_result(score: int, correct_count: int, total_count: int, max_c
 		return
 	last_daily_result = parsed
 	daily_result_submitted.emit(parsed)
+	if int(parsed.get("coins_gained", 0)) > 0:
+		fetch_shop()
 
 
 func fetch_daily_leaderboard() -> void:
@@ -640,6 +650,7 @@ func _register_player() -> void:
 	player_id = str(parsed.get("id", ""))
 	if not player_id.is_empty():
 		player_ready.emit(player_id)
+		fetch_shop()
 
 
 func fetch_pass() -> void:
@@ -677,6 +688,8 @@ func claim_pass_reward(tier: int, track: String) -> void:
 	SaveManager.apply_pass_reward(parsed["reward"])
 	pass_reward_claimed.emit(parsed)
 	fetch_pass()
+	if int(parsed.get("coins_gained", 0)) > 0:
+		fetch_shop()
 
 
 ## A daily quest was claimed on the phone: the server pays pass XP (3 a day at most).
@@ -693,6 +706,7 @@ func _flush_quest_outbox() -> void:
 		return
 	_quest_flushing = true
 	var paid := false
+	var coins_paid := false
 	while not _quest_outbox.is_empty():
 		var claim: Dictionary = _quest_outbox[0]
 		var parsed: Variant = await _pass_post("/pass/quest", {
@@ -703,11 +717,14 @@ func _flush_quest_outbox() -> void:
 		if typeof(parsed) != TYPE_DICTIONARY or not parsed.has("pass_xp"):
 			break
 		paid = paid or int(parsed["pass_xp"]) > 0
+		coins_paid = coins_paid or int(parsed.get("coins_gained", 0)) > 0
 		_quest_outbox.pop_front()
 		_save_quest_outbox()
 	_quest_flushing = false
 	if paid:
 		fetch_pass()
+	if coins_paid:
+		fetch_shop()
 
 
 func _load_quest_outbox() -> void:
@@ -733,6 +750,46 @@ func unlock_pass_premium(receipt: String) -> void:
 		pass_received.emit(pass_state)
 	else:
 		pass_claim_failed.emit("premium")
+
+
+## Coins, bought items and jokers as the server knows them; replaces the local copy.
+func fetch_shop() -> void:
+	if _shop_request.get_http_client_status() != HTTPClient.STATUS_DISCONNECTED:
+		return
+	var url := "%s/shop?device_id=%s" % [BASE_URL, _load_or_create_device_id().uri_encode()]
+	if _shop_request.request(url) != OK:
+		return
+	var result: Array = await _shop_request.request_completed
+	var parsed: Variant = JSON.parse_string((result[3] as PackedByteArray).get_string_from_utf8())
+	if int(result[1]) != 200 or typeof(parsed) != TYPE_DICTIONARY:
+		return
+	SaveManager.apply_shop_state(parsed)
+	shop_received.emit(parsed)
+
+
+## Buys a catalogue item with coins. The server checks the price and the balance.
+func buy_shop_item(item_id: String) -> bool:
+	return await _shop_purchase("/shop/buy", item_id)
+
+
+## Buys one joker (stacks, unlike items).
+func buy_shop_joker(joker_id: String) -> bool:
+	return await _shop_purchase("/shop/joker", joker_id)
+
+
+func _shop_purchase(path: String, item_id: String) -> bool:
+	var parsed: Variant = await _pass_post(path, {"device_id": _load_or_create_device_id(), "item_id": item_id})
+	if typeof(parsed) != TYPE_DICTIONARY or not parsed.has("coins"):
+		var reason := str(parsed.get("detail", "offline")) if typeof(parsed) == TYPE_DICTIONARY else "offline"
+		shop_purchase_failed.emit(item_id, reason)
+		## The phone's copy was stale (already owned, balance changed elsewhere): resync.
+		if reason != "offline":
+			fetch_shop()
+		return false
+	SaveManager.apply_shop_state(parsed)
+	shop_received.emit(parsed)
+	shop_purchase_done.emit(item_id)
+	return true
 
 
 func _pass_post(path: String, body: Dictionary) -> Variant:

@@ -73,3 +73,8 @@ Sur une base existante, appliquer les migrations à la main :
 `docker exec -i quizz-backend-postgres-1 psql -U quizz -d quizz < db/init/004_trophies.sql` (puis `005_versus_streaks.sql`)
 
 Test : `python tools/test_live_trophies.py` (stack lancée, `pip install websockets`).
+
+**Boutique (`app/shop.py`, migration `011_shop.sql`)** : le serveur fait foi pour les pièces
+(journal `coin_ledger`, gains idempotents), les objets achetés et les jokers achetés. Routes
+`/shop`, `/shop/buy`, `/shop/joker` ; détail dans `docs/BOUTIQUE_SERVEUR.md` du dépôt du jeu.
+Test : `python tools/test_shop.py`.

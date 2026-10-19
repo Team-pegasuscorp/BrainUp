@@ -9,8 +9,6 @@ const CATALOG_PATH := "res://data/shop/catalog.json"
 ## Items marked "demo" reuse existing art to show the layout; hide them once real
 ## shop avatars exist (same idea as FORCE_DEMO_BOARD).
 const SHOW_DEMO_ITEMS := true
-## Coin balance given to saves that predate coins, while the economy is not wired.
-const DEMO_START_COINS := 2000
 
 const KIND_AVATAR := "avatar"
 const KIND_FRAME := "frame"

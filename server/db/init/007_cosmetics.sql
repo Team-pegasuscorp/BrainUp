@@ -1,3 +1,3 @@
 -- What the player wears (shop avatar / frame / banner ids), shown to other players.
--- Ids are only format-checked: purchases are still client-side for now.
+-- Unowned catalogue items are reset to "" on registration (see shop.sanitize_cosmetics, 011).
 ALTER TABLE players ADD COLUMN IF NOT EXISTS cosmetics JSONB NOT NULL DEFAULT '{}'::jsonb;

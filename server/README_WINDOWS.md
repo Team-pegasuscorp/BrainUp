@@ -111,6 +111,7 @@ pip install websockets
 python tools\test_live_modes.py     # un duel par mode contre le bot + un draft à deux (~3 min)
 python tools\test_live_cosmetics.py
 python tools\test_battle_pass.py    # XP, quêtes, récompenses, premium de test (option A, -p quizz-backend, PASS_DEV_UNLOCK=1)
+python tools\test_shop.py           # pièces, achats, jokers, tenues non possédées (option A, -p quizz-backend)
 ```
 
 `tools\test_live_trophies.py` lit la base via `docker exec quizz-backend-postgres-1` : il ne marche qu'avec

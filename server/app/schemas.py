@@ -88,6 +88,11 @@ class PassQuest(BaseModel):
     day: str | None = Field(default=None, max_length=10)
 
 
+class ShopBuy(BaseModel):
+    device_id: str = Field(min_length=1, max_length=128)
+    item_id: str = Field(min_length=1, max_length=64)
+
+
 class DeviceOnly(BaseModel):
     device_id: str = Field(min_length=1, max_length=128)
 
@@ -120,6 +125,8 @@ class DailyResult(BaseModel):
     already_played: bool
     ## Battle pass XP earned by this result (0 when already played or no season).
     pass_xp: int = 0
+    ## Coins earned by this result (0 when already played).
+    coins_gained: int = 0
 
 
 class DailyLeaderboardEntry(BaseModel):

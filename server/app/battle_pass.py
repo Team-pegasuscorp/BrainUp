@@ -199,10 +199,10 @@ def unlock_premium(conn: Connection, player_id: str, receipt: str) -> bool:
     return True
 
 
-def jokers_available(conn: Connection, player_id: str) -> dict:
-    """Stock per joker: everything won in claimed pass tiers (all seasons) minus what was used."""
-    earned = {joker_id: 0 for joker_id in JOKER_IDS}
+def claimed_rewards(conn: Connection, player_id: str) -> list[dict]:
+    """Every reward of every tier this player claimed, all seasons and both tracks."""
     seasons = {season["id"]: season for season in SEASONS}
+    rewards = []
     rows = conn.execute(
         text("SELECT season_id, claimed FROM pass_progress WHERE player_id = :p"), {"p": player_id}
     ).all()
@@ -212,13 +212,30 @@ def jokers_available(conn: Connection, player_id: str) -> dict:
             continue
         for track in ("free", "premium"):
             for tier in (claimed or {}).get(track, []):
-                if not 1 <= int(tier) <= len(season["tiers"]):
-                    continue
-                reward = season["tiers"][int(tier) - 1].get(track) or {}
-                if reward.get("type") == "joker" and reward.get("id") in earned:
-                    earned[reward["id"]] += max(int(reward.get("amount", 1)), 1)
-    used = conn.execute(text("SELECT jokers_used FROM players WHERE id = :p"), {"p": player_id}).scalar() or {}
-    return {joker_id: max(count - int(used.get(joker_id, 0)), 0) for joker_id, count in earned.items()}
+                if 1 <= int(tier) <= len(season["tiers"]):
+                    rewards.append(season["tiers"][int(tier) - 1].get(track) or {})
+    return rewards
+
+
+def pass_items(conn: Connection, player_id: str) -> set[str]:
+    """Catalogue items won in the pass."""
+    return {str(r["id"]) for r in claimed_rewards(conn, player_id) if r.get("type") == "item" and r.get("id")}
+
+
+def jokers_available(conn: Connection, player_id: str) -> dict:
+    """Stock per joker: won in claimed pass tiers (all seasons) + bought in the shop - used."""
+    earned = {joker_id: 0 for joker_id in JOKER_IDS}
+    for reward in claimed_rewards(conn, player_id):
+        if reward.get("type") == "joker" and reward.get("id") in earned:
+            earned[reward["id"]] += max(int(reward.get("amount", 1)), 1)
+    used, bought = conn.execute(
+        text("SELECT jokers_used, jokers_bought FROM players WHERE id = :p"), {"p": player_id}
+    ).first() or ({}, {})
+    used, bought = used or {}, bought or {}
+    return {
+        joker_id: max(count + int(bought.get(joker_id, 0)) - int(used.get(joker_id, 0)), 0)
+        for joker_id, count in earned.items()
+    }
 
 
 def use_joker(conn: Connection, player_id: str, joker_id: str) -> bool:

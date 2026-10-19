@@ -2,6 +2,8 @@ extends Node
 
 ## Avatar, frame or banner changed (the server copy must be refreshed).
 signal cosmetics_changed
+## Coins, owned items or shop prices changed (server state applied).
+signal shop_changed
 
 const UiTokens = preload("res://scripts/config/ui_tokens.gd")
 const QuestionLoaderScript = preload("res://scripts/quiz/question_loader.gd")
@@ -63,9 +65,13 @@ var daily_challenge_result: Dictionary = {}
 ## Best survival / time-attack runs: { mode: { category: {score, correct} } }.
 var mode_records: Dictionary = {}
 ## Shop: soft currency, bought item ids and the equipped frame (see ShopCatalog).
-## Local only for now — the server must own these before real purchases.
-var coins: int = ShopCatalog.DEMO_START_COINS if ShopCatalog.SHOW_DEMO_ITEMS else 0
+## The server owns coins and purchases (NetworkManager.fetch_shop): these are its last
+## known values, kept for offline display.
+var coins: int = 0
 var owned_items: Array = []
+## What the server sells right now: {item_id: price} and {joker_id: price}. Not saved.
+var shop_prices: Dictionary = {}
+var joker_prices: Dictionary = {}
 var equipped_frame: String = ""
 var equipped_banner: String = ""
 ## Jokers won in the battle pass: {joker_id: count}.
@@ -298,11 +304,10 @@ func is_item_owned(item_id: String) -> bool:
 	return int(item.get("price", 0)) <= 0 or owned_items.has(item_id)
 
 
-## Applies a battle pass reward sent by the server (coins, item or joker).
+## Applies a battle pass reward sent by the server (item or joker; coins arrive
+## with the next shop state, the server credits them).
 func apply_pass_reward(reward: Dictionary) -> void:
 	match str(reward.get("type", "")):
-		"coins":
-			coins += maxi(int(reward.get("amount", 0)), 0)
 		"item":
 			var item_id := str(reward.get("id", ""))
 			if not item_id.is_empty() and not owned_items.has(item_id):
@@ -371,19 +376,33 @@ func record_friend_duel_result(summary: Dictionary) -> int:
 	return gained_xp
 
 
-## Local purchase. Returns false if unknown, already owned or too expensive.
-## TODO(server): move to a backend route once coins are earned server-side.
-func buy_item(item_id: String) -> bool:
-	var item := ShopCatalog.get_item(item_id)
-	if item.is_empty() or is_item_owned(item_id):
-		return false
-	var price := int(item.get("price", 0))
-	if coins < price:
-		return false
-	coins -= price
-	owned_items.append(item_id)
+## Server shop state (GET /shop or a purchase reply). It replaces the local copy: items
+## bought locally before the server shop existed are dropped, and unequipped if worn.
+func apply_shop_state(state: Dictionary) -> void:
+	coins = maxi(int(state.get("coins", coins)), 0)
+	var owned: Variant = state.get("owned")
+	if typeof(owned) == TYPE_ARRAY:
+		owned_items = (owned as Array).duplicate()
+	if typeof(state.get("prices")) == TYPE_DICTIONARY:
+		shop_prices = state["prices"]
+	if typeof(state.get("joker_prices")) == TYPE_DICTIONARY:
+		joker_prices = state["joker_prices"]
+	if typeof(state.get("jokers")) == TYPE_DICTIONARY:
+		set_jokers(state["jokers"])
+	var unequipped := false
+	if not equipped_frame.is_empty() and not is_item_owned(equipped_frame):
+		equipped_frame = ""
+		unequipped = true
+	if not equipped_banner.is_empty() and not is_item_owned(equipped_banner):
+		equipped_banner = ""
+		unequipped = true
+	if not profile_avatar_id.is_empty() and not can_use_avatar(profile_avatar_id):
+		profile_avatar_id = ""
+		unequipped = true
 	save_data()
-	return true
+	if unequipped:
+		cosmetics_changed.emit()
+	shop_changed.emit()
 
 
 func get_equipped_frame() -> String:
