@@ -113,6 +113,9 @@ async def play_out(ws, choice, cheat_early: bool = False) -> dict:
                 first_points = msg["your_result"]
             if cheat_early:
                 await ws.send(json.dumps({"type": "answer", "index": msg["index"] + 1, "selected_index": msg["correct_index"]}))
+            ## Skip the explanation pause (up to 10 s a question), like a player tapping "ready".
+            if msg.get("read_time"):
+                await ws.send(json.dumps({"type": "ready", "index": msg["index"]}))
         elif msg["type"] in ("match_over", "match_aborted"):
             msg["_q1"] = first_points
             msg["_counted"] = counted
