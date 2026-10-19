@@ -228,6 +228,10 @@ func _rebuild() -> void:
 			_build_pass()
 		_:
 			_build_store()
+	## Breathing room under the last row (the scroll otherwise stops flush with the screen edge).
+	var bottom_gap := Control.new()
+	bottom_gap.custom_minimum_size.y = 40
+	_content.add_child(bottom_gap)
 	ScrollTouch.let_drags_through(_content)
 
 
@@ -684,6 +688,10 @@ func _build_store() -> void:
 			featured.append(item)
 		else:
 			others.append(item)
+
+	## A lone featured card leaves half the row empty: promote the next item next to it.
+	if featured.size() == 1 and not others.is_empty():
+		featured.append(others.pop_front())
 
 	if featured.is_empty() and others.is_empty():
 		_content.add_child(_section_label("UI_SHOP_ITEMS"))
