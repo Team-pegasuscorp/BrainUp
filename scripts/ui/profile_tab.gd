@@ -41,13 +41,14 @@ var _frame_label: Label
 var _frame_grid: GridContainer
 var _banner_label: Label
 var _banner_grid: GridContainer
-var _animated_nodes: Array[Control] = []
 var _xp_bar: ProgressBar
 var _active_tweens: Array[Tween] = []
 var _achievements_page: Control
 var _achievements_grid: GridContainer
 var _categories_page: Control
 var _categories_list: VBoxContainer
+## Skip wipe+rebuild on tab show when nothing changed (avoids the arrival jump).
+var _content_fingerprint: String = ""
 ## Base page gutter; left/right stay equal visually without changing tile width.
 const _PAGE_GUTTER: int = 10
 
@@ -62,8 +63,13 @@ func _ready() -> void:
 	_apply_translations()
 	if not scroll.resized.is_connected(_balance_page_gutters):
 		scroll.resized.connect(_balance_page_gutters)
-	call_deferred("_balance_page_gutters")
-	refresh()
+	## After the swipe pager has sized this page — hero width is then correct (no post-jump refit).
+	call_deferred("_bootstrap_content")
+
+
+func _bootstrap_content() -> void:
+	refresh(true)
+	_balance_page_gutters()
 
 
 ## Drop bottom "Retour" buttons; use the shared top-right ✕ instead.
@@ -175,17 +181,47 @@ func _pseudo_input_style(border: Color) -> StyleBoxFlat:
 	return style
 
 
-func refresh() -> void:
+func refresh(force: bool = true) -> void:
 	_close_achievements_page()
 	_close_categories_page()
-	_profile_data = ProfileSnapshot.build_full(LocaleManager.get_content_locale())
+	var data := ProfileSnapshot.build_full(LocaleManager.get_content_locale())
+	var fingerprint := _profile_fingerprint(data)
+	if not force and fingerprint == _content_fingerprint and sections.get_child_count() > 0:
+		return
+	_profile_data = data
+	_content_fingerprint = fingerprint
 	_rebuild_sections()
-	call_deferred("_balance_page_gutters")
-	_play_entrance_animation()
+	_balance_page_gutters()
 
 
 func on_tab_shown() -> void:
-	refresh()
+	## Same swipe as other tabs — only rebuild when save/cosmetics actually changed.
+	refresh(false)
+
+
+func _profile_fingerprint(data: Dictionary) -> String:
+	var history: Array = data.get("history", [])
+	var latest := ""
+	if not history.is_empty() and history[0] is Dictionary:
+		latest = str((history[0] as Dictionary).get("played_at", ""))
+	var ranking: Dictionary = data.get("ranking", {})
+	return "|".join([
+		LocaleManager.get_content_locale(),
+		str(data.get("player_name", "")),
+		str(data.get("level", 0)),
+		str(data.get("xp", 0)),
+		str(data.get("wins", 0)),
+		str(data.get("losses", 0)),
+		str(data.get("games_played", 0)),
+		str(data.get("trophies", 0)),
+		str(ranking.get("points", 0)),
+		str(ranking.get("league_id", "")),
+		SaveManager.profile_avatar_id,
+		SaveManager.get_equipped_frame(),
+		SaveManager.get_equipped_banner(),
+		str(history.size()),
+		latest,
+	])
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -228,7 +264,6 @@ func _apply_translations() -> void:
 
 func _rebuild_sections() -> void:
 	_kill_profile_tweens()
-	_animated_nodes.clear()
 	while sections.get_child_count() > 0:
 		var child := sections.get_child(0)
 		sections.remove_child(child)
@@ -289,9 +324,8 @@ func _build_hero() -> PanelContainer:
 	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	margin.add_child(row)
 
-	## Avatar — nearly full hero height, circular.
+	## Avatar — nearly full hero height, circular (final size applied immediately below).
 	var avatar_wrap := Control.new()
-	avatar_wrap.custom_minimum_size = Vector2(148, 148)
 	avatar_wrap.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	row.add_child(avatar_wrap)
 
@@ -447,7 +481,7 @@ func _build_hero() -> PanelContainer:
 	_xp_bar.custom_minimum_size = Vector2(0, 12)
 	_xp_bar.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_xp_bar.max_value = 1.0
-	_xp_bar.value = 0.0
+	_xp_bar.value = clampf(float(_profile_data.get("xp_progress", 0.0)), 0.0, 1.0)
 	_xp_bar.show_percentage = false
 	_xp_bar.add_theme_stylebox_override("background", UiStyle.profile_progress_bg())
 	var xp_fill := UiStyle.progress_fill(Color(0.85, 0.28, 0.78, 1))
@@ -483,7 +517,6 @@ func _build_hero() -> PanelContainer:
 	var league_col := VBoxContainer.new()
 	league_col.alignment = BoxContainer.ALIGNMENT_CENTER
 	league_col.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	league_col.custom_minimum_size.x = 150
 	league_col.add_theme_constant_override("separation", 12)
 	league_pad.add_child(league_col)
 
@@ -522,12 +555,7 @@ func _build_hero() -> PanelContainer:
 	points_wrap.add_child(points)
 	league_col.add_child(points_wrap)
 
-	_animated_nodes.append(panel)
-	call_deferred(
-		"_fit_hero_mock_proportions",
-		panel, avatar_wrap, avatar, league_col, league_icon, league_title, points
-	)
-	call_deferred("_animate_xp_bar")
+	_apply_hero_proportions(avatar_wrap, avatar, league_col, league_icon, league_title, points)
 	return panel
 
 
@@ -541,8 +569,16 @@ func _on_avatar_hover(avatar: Control, show_overlay: bool) -> void:
 	tween.tween_method(circ.set_overlay_alpha, circ.overlay_alpha, target, 0.2)
 
 
-func _fit_hero_mock_proportions(
-	hero: Control,
+func _hero_content_width() -> float:
+	var w := scroll.size.x if scroll != null else 0.0
+	if w <= 1.0:
+		w = size.x
+	if w <= 1.0:
+		w = 390.0
+	return maxf(w - float(_PAGE_GUTTER) * 2.0, 280.0)
+
+
+func _apply_hero_proportions(
 	avatar_wrap: Control,
 	avatar: Control,
 	league_col: Control,
@@ -550,16 +586,9 @@ func _fit_hero_mock_proportions(
 	league_title: Label = null,
 	points: Label = null
 ) -> void:
-	if not is_instance_valid(hero):
-		return
-	await get_tree().process_frame
-	if not is_instance_valid(hero):
-		return
-	var h := hero.size.y
-	var w := hero.size.x
-	if h <= 1.0 or w <= 1.0:
-		return
-	## Avatar ≈ full inner height; league column wider for larger right-side info.
+	## Sync sizes from known hero height / page width — no deferred frame (that caused the jump).
+	var h := UiTokens.DASH_HERO_HEIGHT
+	var w := _hero_content_width()
 	var avatar_side := clampf(h - 32.0, 128.0, 176.0)
 	var league_w := clampf(w * 0.34, 140.0, 172.0)
 	if is_instance_valid(avatar_wrap):
@@ -568,11 +597,9 @@ func _fit_hero_mock_proportions(
 		league_col.custom_minimum_size.x = league_w
 	if is_instance_valid(avatar) and avatar is CircularAvatarScript:
 		var circ := avatar as CircularAvatarScript
-		## Thicker frames (epic / legendary) keep their extra width.
 		var frame_scale := float(ShopCatalog.get_item(SaveManager.get_equipped_frame()).get("width", 3.5)) / 3.5
 		circ.ring_width = clampf(avatar_side * 0.022, 3.0, 4.5) * frame_scale
 		circ.ring_gap = clampf(avatar_side * 0.016, 2.0, 3.5)
-		circ.queue_redraw()
 	if is_instance_valid(league_title):
 		league_title.add_theme_font_size_override("font_size", UiScale.font(int(clampf(league_w * 0.14, 20.0, 26.0))))
 	if is_instance_valid(league_icon):
@@ -614,7 +641,6 @@ func _build_stats_strip() -> PanelContainer:
 			themes[i]
 		))
 
-	_animated_nodes.append(panel)
 	return panel
 
 
@@ -732,7 +758,6 @@ func _build_categories_tile() -> PanelContainer:
 		list.add_child(_category_mastery_subtile(visible_rows[i], str(themes[i])))
 	if shown == 0:
 		list.add_child(_empty(tr("UI_PROFILE_NO_CATEGORIES")))
-	_animated_nodes.append(panel)
 	return panel
 
 
@@ -920,7 +945,6 @@ func _build_win_distribution_tile() -> PanelContainer:
 	var dist: Array = _profile_data.get("win_distribution", [])
 	if dist.is_empty():
 		root.add_child(_empty(tr("UI_PROFILE_NO_CATEGORIES")))
-		_animated_nodes.append(panel)
 		return panel
 
 	var body := VBoxContainer.new()
@@ -972,7 +996,6 @@ func _build_win_distribution_tile() -> PanelContainer:
 	body.add_child(popup)
 	donut.segment_clicked.connect(_on_win_split_segment.bind(donut, popup, tip))
 
-	_animated_nodes.append(panel)
 	return panel
 
 
@@ -1072,7 +1095,6 @@ func _build_badges_tile() -> PanelContainer:
 	var limit := mini(achievements.size(), 6)
 	for i in range(limit):
 		grid.add_child(_badge_cell(achievements[i]))
-	_animated_nodes.append(panel)
 	return panel
 
 
@@ -1232,7 +1254,6 @@ func _build_season_tile() -> PanelContainer:
 		bottom_space.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		body.add_child(bottom_space)
 
-		_animated_nodes.append(panel)
 		return panel
 
 	## Mock unlocked layout: title + season chip, crown emoji, icon/value/label stats.
@@ -1330,7 +1351,6 @@ func _build_season_tile() -> PanelContainer:
 		tr("UI_PROFILE_SEASON_WINRATE")
 	))
 
-	_animated_nodes.append(panel)
 	return panel
 
 
@@ -1515,28 +1535,6 @@ func _style_profile_button(button: Button, accent: Color) -> void:
 	button.add_theme_stylebox_override("hover", hover)
 	button.add_theme_stylebox_override("pressed", normal)
 	button.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
-
-
-func _animate_xp_bar() -> void:
-	if _xp_bar == null or not is_instance_valid(_xp_bar):
-		return
-	var target := clampf(float(_profile_data.get("xp_progress", 0.0)), 0.0, 1.0)
-	_xp_bar.value = 0.0
-	var tween := _track_tween(create_tween())
-	tween.tween_property(_xp_bar, "value", target, 0.45).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-
-
-func _play_entrance_animation() -> void:
-	## Only fade — never touch position (breaks VBox layout / causes overlap).
-	var delay := 0.0
-	for node in _animated_nodes:
-		if not is_instance_valid(node):
-			continue
-		node.modulate.a = 0.0
-		var tween := _track_tween(create_tween())
-		tween.tween_property(node, "modulate:a", 1.0, 0.2).set_delay(delay)
-		delay += 0.025
-	_animated_nodes.clear()
 
 
 func _open_edit_profile() -> void:

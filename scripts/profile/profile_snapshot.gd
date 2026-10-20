@@ -26,8 +26,6 @@ static func build_full(locale: String) -> Dictionary:
 	data["best_category"] = _pick_best_category(data.get("categories", []))
 	data["win_distribution"] = _build_win_distribution(data)
 	data["season"] = _build_season(data)
-	## Preview: force display name to check hero layout.
-	data["player_name"] = "Arknoid"
 	return data
 
 

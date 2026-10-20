@@ -1,7 +1,12 @@
 ## Launch news / patch-notes popup policy.
 ## Frequency rules are intentionally stubbed — product will define when to show.
+## Kept for a later re-enable: AppShell still builds the news UI, but launch
+## currently opens the auth gate instead (see AuthGatePolicy).
 class_name NewsPopupPolicy
 extends RefCounted
+
+## Flip to true (+ wire AppShell launch again) when product wants news on open.
+const ENABLED: bool = false
 
 ## Session flag so a single app run never stacks the popup.
 static var _shown_this_session: bool = false
@@ -10,6 +15,8 @@ static var _shown_this_session: bool = false
 ## Called from AppShell on open. Replace body when frequency is decided
 ## (e.g. once per day, once per news id, on version bump…).
 static func should_show_on_launch() -> bool:
+	if not ENABLED:
+		return false
 	if _shown_this_session:
 		return false
 	## TODO(frequency): gate on last_seen_news_id / day / app version.

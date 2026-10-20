@@ -63,6 +63,7 @@ const ScenePaths = preload("res://scripts/config/scene_paths.gd")
 var player_id: String = ""
 
 var _players_request: HTTPRequest
+var _play_games_request: HTTPRequest
 var _leaderboard_request: HTTPRequest
 var _matches_request: HTTPRequest
 var _challenges_request: HTTPRequest
@@ -274,6 +275,7 @@ func _handle_live_message(raw: String) -> void:
 
 func _ready() -> void:
 	_players_request = _make_request_node()
+	_play_games_request = _make_request_node()
 	_leaderboard_request = _make_request_node()
 	_matches_request = _make_request_node()
 	_challenges_request = _make_request_node()
@@ -649,6 +651,52 @@ func _register_player() -> void:
 
 	player_id = str(parsed.get("id", ""))
 	if not player_id.is_empty():
+		player_ready.emit(player_id)
+		fetch_shop()
+
+
+## Link this device to a verified Play Games account (server checks server_auth_code).
+## Local Google auth still succeeds if this route is offline — see docs/PLAY_GAMES_AUTH.md.
+func link_play_games(
+	server_auth_code: String,
+	games_player_id: String = "",
+	display_name: String = ""
+) -> void:
+	var code := server_auth_code.strip_edges()
+	if code.is_empty():
+		push_warning("NetworkManager: link_play_games skipped — empty server_auth_code")
+		return
+	if _play_games_request.get_http_client_status() != HTTPClient.STATUS_DISCONNECTED:
+		push_warning("NetworkManager: link_play_games skipped — request busy")
+		return
+	var payload := {
+		"device_id": _load_or_create_device_id(),
+		"server_auth_code": code,
+		"play_games_player_id": games_player_id.strip_edges(),
+		"display_name": display_name.strip_edges() if not display_name.strip_edges().is_empty() else SaveManager.player_name,
+	}
+	var sent := _play_games_request.request(
+		"%s/players/play_games" % BASE_URL,
+		["Content-Type: application/json"],
+		HTTPClient.METHOD_POST,
+		JSON.stringify(payload)
+	)
+	if sent != OK:
+		push_warning("NetworkManager: link_play_games request failed to start")
+		return
+	var result: Array = await _play_games_request.request_completed
+	var response_code: int = result[1]
+	var body: PackedByteArray = result[3]
+	if response_code != 200:
+		push_warning("NetworkManager: link_play_games HTTP %d (route may be missing)" % response_code)
+		return
+	var parsed: Variant = JSON.parse_string(body.get_string_from_utf8())
+	if typeof(parsed) != TYPE_DICTIONARY:
+		push_warning("NetworkManager: link_play_games bad JSON")
+		return
+	var linked_id := str(parsed.get("id", ""))
+	if not linked_id.is_empty():
+		player_id = linked_id
 		player_ready.emit(player_id)
 		fetch_shop()
 

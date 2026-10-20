@@ -95,6 +95,26 @@ UI_HOME_NEAR_REMAINING,{n} left,Plus que {n}
 UI_HOME_NEWS,News,Actualités
 UI_NEWS_POPUP_BODY,"Welcome back! News and patch notes will appear here.","Bon retour ! Les actualités et notes de version apparaîtront ici."
 UI_NEWS_POPUP_DISMISS,Got it,Compris
+UI_AUTH_TITLE,Create an account,Créer un compte
+UI_AUTH_LOGIN_TITLE,Log in,Se connecter
+UI_AUTH_ALREADY,Already registered?,Déjà inscrit ?
+UI_AUTH_LOGIN_LINK,Log in,Se connecter
+UI_AUTH_NEED_ACCOUNT,No account yet?,Pas encore de compte ?
+UI_AUTH_CREATE_LINK,Create one,Créer un compte
+UI_AUTH_USERNAME,Username,Nom d'utilisateur
+UI_AUTH_USERNAME_PH,Arknoid,Arknoid
+UI_AUTH_EMAIL,Email address,Adresse mail
+UI_AUTH_EMAIL_PH,you@example.com,vous@exemple.com
+UI_AUTH_PASSWORD,Password,Mot de passe
+UI_AUTH_PASSWORD_PH,••••••••,••••••••
+UI_AUTH_CREATE_ACTION,Create my account,Créer mon compte
+UI_AUTH_LOGIN_ACTION,Log in,Se connecter
+UI_AUTH_GOOGLE,Continue with Google,Continuer avec Google
+UI_AUTH_GUEST,Continue as guest,Continuer en invité
+UI_AUTH_GOOGLE_ANDROID_ONLY,Google sign-in is only available on Android.,La connexion Google n'est disponible que sur Android.
+UI_AUTH_GOOGLE_UNAVAILABLE,Google Play Games is not available on this device.,Google Play Games n'est pas disponible sur cet appareil.
+UI_AUTH_GOOGLE_NOT_CONFIGURED,Google sign-in is not configured yet.,La connexion Google n'est pas encore configurée.
+UI_AUTH_GOOGLE_FAILED,Google sign-in failed. Please try again.,Échec de la connexion Google. Réessaie.
 UI_SOCIAL_CHALLENGE_HINT,Ready for a challenge,Prêt pour un défi
 UI_SOCIAL_FRIENDS,Friends,Amis
 UI_SOCIAL_FRIENDS_EMPTY,No friends yet. Add players as you meet them.,Aucun ami pour l'instant. Ajoute des joueurs au fur et à mesure.
@@ -295,6 +315,7 @@ UI_RESULTS_NEW_ACHIEVEMENTS,New achievements,Nouveaux succès
 UI_RESULTS_STREAK,🔥 {count} wins in a row!,🔥 {count} victoires d'affilée !
 UI_SETTINGS_SOUND,Sound effects,Effets sonores
 UI_SETTINGS_VOLUME,Volume,Volume
+UI_SETTINGS_SIGN_OUT,Sign out,Se déconnecter
 UI_DAILY_RESET_IN,Resets in {time},Renouvellement dans {time}
 UI_DAILY_CLAIM,Claim,Récupérer
 UI_DAILY_CATEGORY_GAMES_TITLE,{category} mastery,Maîtrise : {category}

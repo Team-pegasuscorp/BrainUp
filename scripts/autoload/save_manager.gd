@@ -31,6 +31,10 @@ var preferred_locale: String = ""
 var email: String = ""
 ## True after the player confirms ownership of `email` (mail verification).
 var email_verified: bool = false
+## Account gate: "" = not chosen yet, "guest", "google" (more providers later).
+var auth_mode: String = ""
+## Play Games player id after a successful Google sign-in (empty otherwise).
+var play_games_player_id: String = ""
 var level: int = 1
 ## Lifetime XP earned (never decreases on level-up).
 var xp: int = 0
@@ -118,6 +122,8 @@ func load_data() -> void:
 	preferred_locale = parsed.get("preferred_locale", preferred_locale)
 	email = str(parsed.get("email", email))
 	email_verified = bool(parsed.get("email_verified", email_verified))
+	auth_mode = str(parsed.get("auth_mode", auth_mode))
+	play_games_player_id = str(parsed.get("play_games_player_id", play_games_player_id))
 	level = int(parsed.get("level", level))
 	xp = int(parsed.get("xp", xp))
 	if not bool(parsed.get("xp_is_total", false)):
@@ -160,6 +166,8 @@ func save_data() -> void:
 		"preferred_locale": preferred_locale,
 		"email": email,
 		"email_verified": email_verified,
+		"auth_mode": auth_mode,
+		"play_games_player_id": play_games_player_id,
 		"level": level,
 		"xp": xp,
 		"xp_is_total": true,
@@ -211,6 +219,96 @@ func set_player_name(name: String) -> void:
 	var trimmed := name.strip_edges()
 	player_name = trimmed if not trimmed.is_empty() else UiTokens.DEFAULT_PLAYER_NAME
 	save_data()
+
+
+func needs_auth_choice() -> bool:
+	return auth_mode.is_empty()
+
+
+func is_guest() -> bool:
+	return auth_mode == "guest"
+
+
+func is_google_account() -> bool:
+	return auth_mode == "google"
+
+
+func set_auth_mode(mode: String) -> void:
+	auth_mode = mode.strip_edges()
+	save_data()
+
+
+## Clear account choice so the auth gate can be shown again. Keeps progress / pseudo.
+func sign_out() -> void:
+	auth_mode = ""
+	play_games_player_id = ""
+	email = ""
+	email_verified = false
+	save_data()
+
+
+## Persist a successful Play Games sign-in (local first; network link is separate).
+func complete_play_games_sign_in(display_name: String, games_player_id: String) -> void:
+	auth_mode = "google"
+	play_games_player_id = games_player_id.strip_edges()
+	var name_trimmed := display_name.strip_edges()
+	if not name_trimmed.is_empty():
+		if name_trimmed.length() > UiTokens.MAX_PLAYER_NAME_LENGTH:
+			name_trimmed = name_trimmed.substr(0, UiTokens.MAX_PLAYER_NAME_LENGTH)
+		player_name = name_trimmed
+	save_data()
+
+
+## @deprecated Use complete_play_games_sign_in after Play Games auth.
+func complete_google_sign_in_stub(display_name: String = "", account_email: String = "") -> void:
+	complete_play_games_sign_in(display_name, "")
+	if not account_email.strip_edges().is_empty():
+		email = account_email.strip_edges()
+		email_verified = true
+		save_data()
+
+
+## Stub until email/password auth hits the backend.
+## `display_name` is the account username and becomes the player pseudo.
+func complete_email_sign_in_stub(display_name: String = "", account_email: String = "") -> void:
+	auth_mode = "email"
+	var name_trimmed := display_name.strip_edges()
+	if not name_trimmed.is_empty():
+		if name_trimmed.length() > UiTokens.MAX_PLAYER_NAME_LENGTH:
+			name_trimmed = name_trimmed.substr(0, UiTokens.MAX_PLAYER_NAME_LENGTH)
+		player_name = name_trimmed
+	var mail := account_email.strip_edges()
+	if not mail.is_empty():
+		email = mail
+	save_data()
+
+
+func continue_as_guest() -> void:
+	auth_mode = "guest"
+	player_name = _generate_guest_pseudo()
+	save_data()
+
+
+## Guest pseudo: animal + number (locale-aware), e.g. Renard42 / Fox42.
+func _generate_guest_pseudo() -> String:
+	var animals_fr: Array[String] = [
+		"Loup", "Renard", "Ours", "Lynx", "Aigle", "Panda", "Tigre", "Lion",
+		"Dauphin", "Hibou", "Faucon", "Panthere", "Koala", "Loutre", "Bison", "Cerf",
+	]
+	var animals_en: Array[String] = [
+		"Wolf", "Fox", "Bear", "Lynx", "Eagle", "Panda", "Tiger", "Lion",
+		"Dolphin", "Owl", "Falcon", "Panther", "Koala", "Otter", "Bison", "Deer",
+	]
+	var locale := LocaleManager.get_content_locale()
+	if locale.is_empty():
+		locale = preferred_locale
+	var animals: Array[String] = animals_fr if locale.begins_with("fr") else animals_en
+	var animal: String = animals[randi() % animals.size()]
+	var number := randi_range(10, 9999)
+	var pseudo := "%s%d" % [animal, number]
+	if pseudo.length() > UiTokens.MAX_PLAYER_NAME_LENGTH:
+		pseudo = pseudo.substr(0, UiTokens.MAX_PLAYER_NAME_LENGTH)
+	return pseudo
 
 
 func set_sound_enabled(enabled: bool) -> void:

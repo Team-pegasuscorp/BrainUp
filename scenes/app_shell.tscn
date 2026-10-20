@@ -132,7 +132,7 @@ theme_override_constants/separation = 16
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"MonoLabel"
-theme_override_font_sizes/font_size = 17
+theme_override_font_sizes/font_size = 15
 text = "Language"
 
 [node name="LanguageOption" type="OptionButton" parent="SettingsPanel/SettingsMargin/SettingsVBox"]
@@ -142,4 +142,5 @@ layout_mode = 2
 [node name="CloseSettingsButton" type="Button" parent="SettingsPanel/SettingsMargin/SettingsVBox"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Back"
+flat = true
+text = "✕"

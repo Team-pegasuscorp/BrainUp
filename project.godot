@@ -29,6 +29,8 @@ LocaleManager="*res://scripts/autoload/locale_manager.gd"
 GameManager="*res://scripts/autoload/game_manager.gd"
 NetworkManager="*res://scripts/autoload/network_manager.gd"
 AdsManager="*res://scripts/autoload/ads_manager.gd"
+GodotPlayGameServices="*res://addons/GodotPlayGameServices/scripts/autoloads/godot_play_game_services.gd"
+PlayGamesAuth="*res://scripts/autoload/play_games_auth.gd"
 
 [display]
 
@@ -42,7 +44,7 @@ window/handheld/orientation=1
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/admob/plugin.cfg")
+enabled=PackedStringArray("res://addons/admob/plugin.cfg", "res://addons/GodotPlayGameServices/plugin.cfg")
 
 [gui]
 
