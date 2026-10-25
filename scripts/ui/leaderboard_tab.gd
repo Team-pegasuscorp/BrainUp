@@ -17,11 +17,18 @@ var _scope: String = "general" ## general | friends
 var _selected_filter: String = "all"
 var _online_entries_by_category: Dictionary = {}
 var _scope_buttons: Dictionary = {} ## id -> Button
+## A rebuild costs ~200 ms on a phone: only while the tab is on screen, and only when
+## the data changed. Off screen, _dirty defers it to the next on_tab_shown.
+var _shown: bool = false
+var _dirty: bool = false
+var _friends_signature: String = ""
+var _known_player_id: String = ""
 
 
 func _ready() -> void:
 	if scroll != null:
 		scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
+	_known_player_id = NetworkManager.player_id
 	_apply()
 	LocaleManager.locale_changed.connect(_on_locale_changed)
 	NetworkManager.leaderboard_received.connect(_on_leaderboard_received)
@@ -31,25 +38,43 @@ func _ready() -> void:
 
 
 func on_tab_shown() -> void:
-	_online_entries_by_category.clear()
+	_shown = true
 	NetworkManager.ensure_player_registered()
 	NetworkManager.poll_social_now()
+	## Keep showing the cached board; a changed reply rebuilds it (_on_leaderboard_received).
 	NetworkManager.fetch_leaderboard(_selected_filter)
-	_apply()
+	if _dirty:
+		_rebuild()
 
 
-func _on_player_ready(_player_id: String) -> void:
+func on_tab_hidden() -> void:
+	_shown = false
+
+
+func _on_player_ready(player_id: String) -> void:
+	## ensure_player_registered() re-announces the same player on every visit.
+	if player_id == _known_player_id:
+		return
+	_known_player_id = player_id
 	_online_entries_by_category.clear()
 	NetworkManager.poll_social_now()
 	NetworkManager.fetch_leaderboard(_selected_filter)
-	_apply()
+	_request_rebuild()
 
 
 func _apply() -> void:
 	_rebuild()
 
 
+func _request_rebuild() -> void:
+	if _shown:
+		_rebuild()
+	else:
+		_dirty = true
+
+
 func _rebuild() -> void:
+	_dirty = false
 	while content.get_child_count() > 0:
 		var child := content.get_child(0)
 		content.remove_child(child)
@@ -82,7 +107,7 @@ func _rebuild() -> void:
 			false
 		))
 
-	if not bool(global_snap.get("is_demo", false)):
+	if not bool(global_snap.get("is_demo", false)) and not _online_entries_by_category.has(_selected_filter):
 		NetworkManager.fetch_leaderboard(_selected_filter)
 	ScrollTouch.let_drags_through(content)
 
@@ -693,18 +718,25 @@ func _on_scope_pressed(scope_id: String) -> void:
 
 
 func _on_leaderboard_received(category: String, entries: Array) -> void:
-	_online_entries_by_category[category] = _filter_online_entries(entries)
+	var filtered := _filter_online_entries(entries)
+	if _online_entries_by_category.get(category) == filtered:
+		return
+	_online_entries_by_category[category] = filtered
 	if category == _selected_filter and _scope == "general":
-		_rebuild()
+		_request_rebuild()
 
 
 func _on_leaderboard_failed(_category: String) -> void:
 	pass
 
 
-func _on_social_received(_data: Dictionary) -> void:
+func _on_social_received(data: Dictionary) -> void:
+	var signature := JSON.stringify(data.get("friends", []))
+	if signature == _friends_signature:
+		return
+	_friends_signature = signature
 	if _scope == "friends":
-		_rebuild()
+		_request_rebuild()
 
 
 func _filter_online_entries(entries: Array) -> Array:

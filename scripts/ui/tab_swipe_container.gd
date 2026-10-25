@@ -127,26 +127,77 @@ func _page_at(index: int) -> Control:
 	return child as Control if child is Control else null
 
 
-func _gui_input(event: InputEvent) -> void:
-	if not _input_enabled or _animating or tab_count <= 1:
+## Gestures are read in _input, before the GUI: every page is a ScrollContainer full
+## of buttons that swallow the drag, so _gui_input never saw a swipe. Once a drag is
+## clearly horizontal the pager takes it over (see _take_over_drag).
+func _input(event: InputEvent) -> void:
+	if not _input_enabled or tab_count <= 1 or _page_width <= 0.0:
 		return
-
+	if event.has_meta(_SYNTHETIC_META):
+		return
+	var touchscreen := DisplayServer.is_touchscreen_available()
 	if event is InputEventScreenTouch:
-		_handle_press(event.position, event.pressed)
+		var touch := event as InputEventScreenTouch
+		if touch.index == 0:
+			_handle_press(touch.position, touch.pressed)
 	elif event is InputEventScreenDrag:
-		_handle_drag(event.position)
-	elif event is InputEventMouseButton:
+		var drag := event as InputEventScreenDrag
+		if drag.index == 0:
+			_handle_drag(drag.position)
+			if _drag_locked:
+				get_viewport().set_input_as_handled()
+	elif event is InputEventMouseMotion:
+		if touchscreen:
+			## Mouse emulated from the finger: keep it from the page while we own the drag.
+			if _drag_locked and _dragging:
+				get_viewport().set_input_as_handled()
+		elif (event as InputEventMouseMotion).button_mask & MOUSE_BUTTON_MASK_LEFT:
+			_handle_drag((event as InputEventMouseMotion).position)
+			if _drag_locked:
+				get_viewport().set_input_as_handled()
+	elif event is InputEventMouseButton and not touchscreen:
 		var mouse_event := event as InputEventMouseButton
 		if mouse_event.button_index == MOUSE_BUTTON_LEFT:
 			_handle_press(mouse_event.position, mouse_event.pressed)
-	elif event is InputEventMouseMotion:
-		var motion_event := event as InputEventMouseMotion
-		if motion_event.button_mask & MOUSE_BUTTON_MASK_LEFT:
-			_handle_drag(motion_event.position)
+
+
+const _SYNTHETIC_META := &"tab_swipe_synthetic"
+
+
+## A swipe must not end as a tap: move the pointer far away for the control that got
+## the press (a Button then sees the release outside itself and does not fire).
+## relative stays zero so a ScrollContainer in drag mode does not jump.
+func _take_over_drag() -> void:
+	var away := InputEventMouseMotion.new()
+	away.position = Vector2(-100000, -100000)
+	away.global_position = away.position
+	away.button_mask = MOUSE_BUTTON_MASK_LEFT
+	away.set_meta(_SYNTHETIC_META, true)
+	get_viewport().push_input(away)
+
+
+## The drag started on something that scrolls sideways itself, or not on a page.
+func _drag_belongs_elsewhere() -> bool:
+	var hovered := get_viewport().gui_get_hovered_control()
+	if hovered == null:
+		return false
+	if not pages_row.is_ancestor_of(hovered):
+		return true  ## Settings, shop, news… drawn over the pages.
+	var node: Node = hovered
+	while node != null and node != pages_row:
+		if node is ScrollContainer:
+			var sc := node as ScrollContainer
+			if sc.horizontal_scroll_mode != ScrollContainer.SCROLL_MODE_DISABLED \
+					and sc.get_h_scroll_bar().max_value > sc.size.x + 1.0:
+				return true
+		node = node.get_parent()
+	return false
 
 
 func _handle_press(position: Vector2, pressed: bool) -> void:
 	if pressed:
+		if _animating or not get_global_rect().has_point(position):
+			return
 		_dragging = true
 		_drag_locked = false
 		_drag_cancelled = false
@@ -165,8 +216,7 @@ func _handle_press(position: Vector2, pressed: bool) -> void:
 			return
 		_dragging = false
 		if _drag_cancelled or not _drag_locked:
-			_snap_to_tab(current_tab, true)
-			return
+			return  ## A tap or a vertical scroll: the pages never moved.
 		var delta_x := position.x - _drag_start.x
 		if absf(delta_x) >= swipe_threshold:
 			if delta_x < 0.0:
@@ -185,12 +235,12 @@ func _handle_drag(position: Vector2) -> void:
 	if not _drag_locked and not _drag_cancelled:
 		if absf(delta.x) < drag_lock_threshold and absf(delta.y) < drag_lock_threshold:
 			return
-		if absf(delta.y) > absf(delta.x):
+		if absf(delta.y) > absf(delta.x) or _drag_belongs_elsewhere():
 			_drag_cancelled = true
 			_dragging = false
-			_snap_to_tab(current_tab, true)
 			return
 		_drag_locked = true
+		_take_over_drag()
 
 	if not _drag_locked:
 		return

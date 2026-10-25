@@ -13,6 +13,9 @@ const PressScaleUtil = preload("res://scripts/ui/press_scale.gd")
 
 @onready var content: VBoxContainer = %Content
 
+## What the cards were last built from: a revisit with nothing new skips the ~100 ms rebuild.
+var _fingerprint: String = ""
+
 
 func _ready() -> void:
 	_rebuild()
@@ -20,11 +23,24 @@ func _ready() -> void:
 
 
 func on_tab_shown() -> void:
-	_rebuild()
+	_rebuild(false)
 
 
-func _rebuild() -> void:
-	var snapshot: Dictionary = ProfileSnapshot.build_full(LocaleManager.get_content_locale())
+func _rebuild(force: bool = true) -> void:
+	var locale := LocaleManager.get_content_locale()
+	var snapshot: Dictionary = ProfileSnapshot.build_full(locale)
+	var fingerprint := str([
+		snapshot,
+		DailyQuests.get_quests(locale),
+		## The reset countdown shows minutes.
+		int(DailyQuests.seconds_until_reset() / 60),
+		SaveManager.profile_avatar_id,
+		SaveManager.get_equipped_frame(),
+		SaveManager.get_equipped_banner(),
+	])
+	if not force and fingerprint == _fingerprint:
+		return
+	_fingerprint = fingerprint
 	_rebuild_cards(snapshot)
 
 

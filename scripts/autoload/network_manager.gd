@@ -315,6 +315,9 @@ func sync_player_profile() -> void:
 func fetch_leaderboard(category: String) -> void:
 	## Général (category=all): server pads with leaderboard_bots (realistic nicknames).
 	## Test rows in `players` stay filtered server-side; other categories = scores only.
+	## Already on its way: that reply refreshes the board.
+	if _leaderboard_request.get_http_client_status() != HTTPClient.STATUS_DISCONNECTED:
+		return
 	var with_bots := "true" if category == "all" else "false"
 	var url := "%s/leaderboard?category=%s&include_bots=%s" % [
 		BASE_URL, category.uri_encode(), with_bots,
@@ -930,6 +933,8 @@ func _sync_cosmetics() -> void:
 
 func _make_request_node() -> HTTPRequest:
 	var request := HTTPRequest.new()
+	## Off the main thread: on a phone the TLS connect alone froze a frame for ~140 ms.
+	request.use_threads = true
 	add_child(request)
 	return request
 
