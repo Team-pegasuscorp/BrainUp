@@ -1,0 +1,56 @@
+## Production deployment (Hetzner VPS).
+## Copy the repository to the server (rsync), create .env (see README), then:
+##   docker compose -f docker-compose.prod.yml up -d --build
+##
+## Layout: Caddy terminates HTTPS and routes api.<domain> to the api container;
+## Postgres stays on the internal compose network (no published port).
+
+services:
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-quizz}
+      POSTGRES_USER: ${POSTGRES_USER:-quizz}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-quizz}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build: ./app
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-quizz}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-quizz}
+      GOOGLE_PLAY_WEB_CLIENT_ID: ${GOOGLE_PLAY_WEB_CLIENT_ID:-}
+      GOOGLE_PLAY_WEB_CLIENT_SECRET: ${GOOGLE_PLAY_WEB_CLIENT_SECRET:-}
+      ## Production: never set these.
+      PASS_DEV_UNLOCK: ${PASS_DEV_UNLOCK:-0}
+      SHOP_DEMO_ITEMS: ${SHOP_DEMO_ITEMS:-0}
+      GOOGLE_AUTH_MOCK_SUB: ""
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - api
+
+volumes:
+  pgdata:
+  caddy_data:
+  caddy_config:

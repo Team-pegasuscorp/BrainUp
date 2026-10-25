@@ -1,0 +1,6 @@
+## BrainUp API — HTTPS via Let's Encrypt (managed and renewed by Caddy).
+## Requires the public DNS A record: api.philia-interactive.com -> this server.
+
+api.philia-interactive.com {
+	reverse_proxy api:8000
+}
