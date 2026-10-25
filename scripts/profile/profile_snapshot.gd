@@ -10,8 +10,8 @@ const CountryFlags = preload("res://scripts/profile/country_flags.gd")
 const TrophyLeagues = preload("res://scripts/profile/trophy_leagues.gd")
 
 const USE_DEMO_WHEN_EMPTY: bool = true
-## Force demo profile data (categories, history, stats) for layout testing.
-const FORCE_DEMO_PROFILE: bool = true
+## Demo data only when the save is empty; never override a real profile.
+const FORCE_DEMO_PROFILE: bool = false
 const DAILY_GOAL_TARGET: int = 5
 const HISTORY_OPPONENTS: Array[String] = ["Lucas", "Emma", "Noah", "Léa", "Hugo", "Chloé"]
 

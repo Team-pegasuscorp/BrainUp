@@ -6,9 +6,9 @@ extends RefCounted
 ## so they need no art. Avatars point to a round PNG.
 
 const CATALOG_PATH := "res://data/shop/catalog.json"
-## Items marked "demo" reuse existing art to show the layout; hide them once real
+## Items marked "demo" reuse existing art to show the layout; hidden until real
 ## shop avatars exist (same idea as FORCE_DEMO_BOARD).
-const SHOW_DEMO_ITEMS := true
+const SHOW_DEMO_ITEMS := false
 
 const KIND_AVATAR := "avatar"
 const KIND_FRAME := "frame"

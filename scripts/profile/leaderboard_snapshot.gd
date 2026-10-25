@@ -13,8 +13,8 @@ const DEMO_FRIEND_NAMES: Array[String] = [
 ]
 const DEMO_FRIENDS_MIN := 12
 const USE_DEMO_WHEN_EMPTY: bool = true
-## Force the padded global demo (player at DEMO_PLAYER_RANK) even if the save has games.
-const FORCE_DEMO_BOARD: bool = true
+## Real leaderboard (server when online); demo only when the save is empty.
+const FORCE_DEMO_BOARD: bool = false
 
 ## After the podium: show ranks 4..6, then optionally a gap + context around the player.
 const REST_NEAR_COUNT := 3
