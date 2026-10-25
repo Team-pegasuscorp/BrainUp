@@ -1,7 +1,6 @@
 # Google Play Games — auth (app + contrat API)
 
-> Statut : **app en cours**. Ne **pas** publier en store tant que Yaya n’a pas livré la vérif serveur.
-> Demander à Yaya : le projet Play Games Console existe-t-il déjà (Game ID, OAuth Android + Web) ?
+> Statut : **route serveur implémentée** (branche `test-play-games-auth` de brainup-backend, `ea5842e` ; fusion sur demande). Ne **pas** publier en store tant que Yaya n’a pas configuré la Play Console et les credentials OAuth ci-dessous.
 
 ## Flux
 
@@ -51,9 +50,11 @@ Plugin : [`addons/GodotPlayGameServices`](../addons/GodotPlayGameServices) (v3.4
 1. Vérifier `server_auth_code` auprès de Google (source de vérité ; ne pas faire confiance au `play_games_player_id` client seul).
 2. Lier le compte Google vérifié au `device_id` (migration guest → Google si besoin).
 3. Réponse alignée sur `POST /players` actuel (`id` = `player_id`, etc.).
-4. Erreurs : code invalide / expiré → **401** ; payload incomplet → **400**.
+4. Erreurs : code invalide / expiré → **401** ; payload incomplet → **400** ; credentials serveur absents → **503** (rien n’est stocké tant que Google n’a pas vérifié le code).
 
-Tant que la route n’existe pas, le client peut sauver l’auth en local et loguer un warning réseau — **pas de release** avant que ce endpoint soit live.
+Implémenté côté serveur (`brainup-backend`) : échange du code à `https://oauth2.googleapis.com/token` avec le **web client** (jamais le client Android), `sub` de l’id_token vérifié (`aud` contrôlé) stocké dans `players.play_games_player_id`. Les credentials se configurent par variables d’environnement de l’API : `GOOGLE_PLAY_WEB_CLIENT_ID` + `GOOGLE_PLAY_WEB_CLIENT_SECRET` (vide → 503). Migration guest → Google sur la même ligne (progression conservée), transfert vers un nouvel appareil, et fusion d’un guest local dans un compte déjà lié (matches, ledger, passe, amis ré-attribués). Test : `tools/test_play_games.py` du backend (mock `GOOGLE_AUTH_MOCK_SUB`, 23 checks).
+
+Tant que les credentials ne sont pas configurés, le client peut sauver l’auth en local et loguer un warning réseau — **pas de release** avant que ce endpoint soit live avec de vraies credentials.
 
 ## Fichiers app
 
