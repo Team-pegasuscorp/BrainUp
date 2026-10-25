@@ -17,6 +17,8 @@ const ROULETTE_SECONDS := 2.2
 ## Server's pause showing the colours before the reading phase (REVEAL_PAUSE_SECONDS).
 const REVEAL_PAUSE := 1.5
 const EXPLANATION_DELAY := 1.1
+## Server keeps accepting an answer briefly after the clock hits zero (live_match.py).
+const ANSWER_GRACE_SECONDS := 2.0
 const JOKER_IDS: Array[String] = ["joker_5050", "joker_time"]
 
 enum State { SEARCHING, DRAFT, PLAYING, WAITING, OVER, ERROR }
@@ -158,9 +160,13 @@ func _process(delta: float) -> void:
 				_question_left = maxf(_question_left - delta, 0.0)
 				_set_timer_ratio(_question_left / maxf(_question_limit, 0.01))
 				if _mode == "time_attack":
-					## One clock for the whole run: it only runs while a question is open.
-					_my_clock = _question_left
+					## Match server grace: show 0 only when the window is really closed.
+					var display_clock := maxf(_question_left - ANSWER_GRACE_SECONDS, 0.0)
+					_my_clock = display_clock
 					_refresh_header()
+					if display_clock <= 0.0 and _answered_index < 0:
+						for button in _answer_buttons:
+							button.disabled = true
 
 
 # --- Flow -------------------------------------------------------------------
@@ -264,9 +270,11 @@ func _on_question(data: Dictionary) -> void:
 	_question_limit = float(data.get("time_limit", 10.0))
 	_question_left = _question_limit
 	if _mode == "time_attack":
-		_my_clock = float(data.get("clock", _question_limit))
-		_question_left = _my_clock
-		_question_limit = float(_found.get("clock", 60.0))
+		var limit := float(data.get("time_limit", _question_limit))
+		_my_clock = float(data.get("clock", limit))
+		## Per-question window (+ server grace), not the initial 60 s from match_found.
+		_question_limit = limit + ANSWER_GRACE_SECONDS
+		_question_left = _question_limit
 	if _state != State.PLAYING:
 		_state = State.PLAYING
 		_build_playing()

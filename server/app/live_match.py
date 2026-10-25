@@ -363,8 +363,9 @@ class LiveMatch:
                 "answered": player.answered,
                 "clock": round(clock, 2),
             })
-            ## The clock stands still while the answer is shown.
-            await asyncio.sleep(TIME_ATTACK_FEEDBACK_SECONDS)
+            ## The clock stands still while the answer is shown (skip when time is up).
+            if clock > 0:
+                await asyncio.sleep(TIME_ATTACK_FEEDBACK_SECONDS)
         await self._send(player, {"type": "player_done", "score": player.score})
 
     # --- Shared ---------------------------------------------------------------
