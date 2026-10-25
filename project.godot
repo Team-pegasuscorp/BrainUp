@@ -18,7 +18,7 @@ config/name="Quizz"
 config/description="QuizUp-style trivia game with FR/EN support."
 run/main_scene="res://scenes/app_shell.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://assets/branding/launcher/icon_512.png"
 
 [autoload]
 

@@ -737,6 +737,9 @@ func _pass_xp_legend(state: Dictionary) -> Control:
 		"daily": int(rules.get("daily", 0)), "quest": int(rules.get("quest", 0)),
 		"quests": int(rules.get("quests_per_day", 0)),
 	})
+	var full_duels := int(rules.get("duels_full_per_day", 0))
+	if full_duels > 0:
+		label.text += " " + tr("UI_PASS_XP_DUEL_CAP").format({"n": full_duels})
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	label.add_theme_font_size_override("font_size", UiScale.font(14))
 	label.add_theme_color_override("font_color", Color(1, 1, 1, 0.65))
