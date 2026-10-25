@@ -165,6 +165,7 @@ def link_play_games(payload: PlayGamesLink):
     except play_games.AuthNotConfiguredError as error:
         raise HTTPException(status_code=503, detail=str(error))
     except play_games.AuthCodeError as error:
+        print(f"[play_games] auth code rejected: {error}", flush=True)
         raise HTTPException(status_code=401, detail=str(error))
     google_sub = verified["google_sub"]
     try:

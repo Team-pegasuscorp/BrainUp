@@ -42,6 +42,22 @@ def _decode_id_token_payload(id_token: str) -> dict:
         raise AuthCodeError("malformed id_token payload")
 
 
+def _fetch_play_games_player_id(access_token: str) -> str:
+    """Who owns this access token, according to the Play Games web API (verified)."""
+    request = urllib.request.Request(
+        "https://www.googleapis.com/games/v1/players/me",
+        headers={"Authorization": "Bearer %s" % access_token})
+    try:
+        with urllib.request.urlopen(request, timeout=15) as response:
+            payload = json.load(response)
+    except urllib.error.HTTPError as error:
+        raise AuthCodeError(f"games api rejected the access token (HTTP {error.code})")
+    player_id = str(payload.get("playerId", "")) or str(payload.get("id", ""))
+    if not player_id:
+        raise AuthCodeError("games api response without player id")
+    return player_id
+
+
 def verify_server_auth_code(code: str) -> dict:
     """Exchange a Play Games server auth code for the verified Google account id."""
     if MOCK_SUB:
@@ -67,13 +83,28 @@ def verify_server_auth_code(code: str) -> dict:
         with urllib.request.urlopen(request, timeout=15) as response:
             token_payload = json.load(response)
     except urllib.error.HTTPError as error:
-        raise AuthCodeError(f"google rejected the auth code (HTTP {error.code})")
+        detail = ""
+        try:
+            detail = str(json.loads(error.read()).get("error_description", ""))[:300]
+        except Exception:
+            detail = ""
+        raise AuthCodeError(
+            f"google rejected the auth code (HTTP {error.code})"
+            + (f": {detail}" if detail else ""))
     except urllib.error.URLError as error:
         raise AuthCodeError(f"google token endpoint unreachable: {error.reason}")
-    claims = _decode_id_token_payload(str(token_payload.get("id_token", "")))
-    if claims.get("aud") != WEB_CLIENT_ID:
-        raise AuthCodeError("id_token audience mismatch")
-    google_sub = str(claims.get("sub", ""))
-    if not google_sub:
-        raise AuthCodeError("id_token without sub")
-    return {"google_sub": google_sub}
+    id_token = str(token_payload.get("id_token", ""))
+    if id_token:
+        claims = _decode_id_token_payload(id_token)
+        if claims.get("aud") != WEB_CLIENT_ID:
+            raise AuthCodeError("id_token audience mismatch")
+        google_sub = str(claims.get("sub", ""))
+        if not google_sub:
+            raise AuthCodeError("id_token without sub")
+        return {"google_sub": google_sub}
+    ## With force_refresh_token=true the exchange may omit the id_token: fall back
+    ## to the Play Games web API, which answers with the verified player id.
+    access_token = str(token_payload.get("access_token", ""))
+    if access_token:
+        return {"google_sub": _fetch_play_games_player_id(access_token)}
+    raise AuthCodeError("token response without id_token nor access_token")
