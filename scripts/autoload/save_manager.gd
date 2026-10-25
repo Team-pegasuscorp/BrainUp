@@ -285,7 +285,10 @@ func complete_email_sign_in_stub(display_name: String = "", account_email: Strin
 
 func continue_as_guest() -> void:
 	auth_mode = "guest"
-	player_name = _generate_guest_pseudo()
+	## A returning player keeps the pseudo they already have; only the default
+	## name (never chosen) is replaced by a guest animal.
+	if player_name.is_empty() or player_name == UiTokens.DEFAULT_PLAYER_NAME:
+		player_name = _generate_guest_pseudo()
 	save_data()
 
 
