@@ -271,8 +271,9 @@ func _on_question(data: Dictionary) -> void:
 	_question_left = _question_limit
 	if _mode == "time_attack":
 		var limit := float(data.get("time_limit", _question_limit))
-		_my_clock = float(data.get("clock", limit))
-		## Per-question window (+ server grace), not the initial 60 s from match_found.
+		var budget := float(data.get("clock", limit))
+		## Server may grant at least 5 s per question even when the budget is lower.
+		_my_clock = maxf(budget, limit)
 		_question_limit = limit + ANSWER_GRACE_SECONDS
 		_question_left = _question_limit
 	if _state != State.PLAYING:

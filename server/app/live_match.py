@@ -31,6 +31,8 @@ TIME_ATTACK_SECONDS = 60.0
 TIME_ATTACK_WRONG_PENALTY = 5.0
 TIME_ATTACK_POOL = 80
 TIME_ATTACK_FEEDBACK_SECONDS = 0.8
+## Floor per question so a player who still has time is not rushed when the opponent is done.
+TIME_ATTACK_MIN_QUESTION_SECONDS = 5.0
 ## After a synced question: the explanation is read for a time that grows with its
 ## length (same numbers as the solo game); both players tapping "ready" moves on sooner.
 READ_BASE_SECONDS = 3.0
@@ -135,6 +137,7 @@ class LiveMatch:
             for player in self.order:
                 player.jokers = {}
         self.completed = asyncio.Event()
+        self._time_attack_done: set[str] = set()
 
     def opponent_of(self, player_id: str) -> PlayerState:
         for player in self.order:
@@ -333,19 +336,21 @@ class LiveMatch:
             if clock <= 0:
                 break
             _drain(player.answers)
+            window = max(clock, TIME_ATTACK_MIN_QUESTION_SECONDS)
             send_time = time.monotonic()
             await self._send(player, {
                 "type": "question",
                 "index": index,
                 "text": question["text"],
                 "choices": question["choices"],
-                "time_limit": clock,
-                "clock": clock,
+                "time_limit": window,
+                "clock": round(clock, 2),
             })
             if player.is_bot:
-                _spawn(self._bot_answer(player, index, question, min(clock, TIME_LIMIT_SECONDS)))
-            result = await self._collect_answer(player, index, send_time, question, time_limit=clock)
-            clock -= result["elapsed"] - result["bonus"]
+                _spawn(self._bot_answer(player, index, question, min(window, TIME_LIMIT_SECONDS)))
+            result = await self._collect_answer(player, index, send_time, question, time_limit=window)
+            charge = min(max(result["elapsed"] - result["bonus"], 0.0), clock)
+            clock -= charge
             if result["selected_index"] >= 0 and not result["is_correct"]:
                 clock -= TIME_ATTACK_WRONG_PENALTY
             clock = max(clock, 0.0)
@@ -366,6 +371,7 @@ class LiveMatch:
             ## The clock stands still while the answer is shown (skip when time is up).
             if clock > 0:
                 await asyncio.sleep(TIME_ATTACK_FEEDBACK_SECONDS)
+        self._time_attack_done.add(player.player_id)
         await self._send(player, {"type": "player_done", "score": player.score})
 
     # --- Shared ---------------------------------------------------------------
