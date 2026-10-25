@@ -7,4 +7,11 @@ extends RefCounted
 ## sign-in and AdMob work fine over http on a USB-reversed device, but a real
 ## account link should not leave the local network on plain http.
 
-const BASE_URL: String = "http://127.0.0.1:8000"
+const DEV_BASE_URL: String = "http://127.0.0.1:8000"
+const PROD_BASE_URL: String = "https://api.philia-interactive.com"
+
+
+static func base_url() -> String:
+	if OS.is_debug_build():
+		return DEV_BASE_URL
+	return PROD_BASE_URL

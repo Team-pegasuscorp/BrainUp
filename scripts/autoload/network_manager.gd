@@ -54,7 +54,9 @@ signal daily_leaderboard_received(data: Dictionary)
 signal daily_leaderboard_failed
 
 ## Backend endpoint: see scripts/config/server_config.gd (local dev vs Hetzner prod).
-const BASE_URL: String = ServerConfig.BASE_URL
+var BASE_URL: String:
+	get:
+		return ServerConfig.base_url()
 const DEVICE_ID_PATH: String = "user://device_id.txt"
 const LiveMatchmakingScript = preload("res://scripts/profile/live_matchmaking.gd")
 const ScenePaths = preload("res://scripts/config/scene_paths.gd")
