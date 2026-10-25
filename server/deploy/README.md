@@ -39,11 +39,37 @@ diagnostiquer.
 
 ## Sauvegardes
 
-La base vit dans le volume `pgdata`. Dump manuel :
+**Sur le serveur** : `deploy/backup.sh`, lancé chaque nuit à 03:30 par cron
+(`pg_dump -Fc`, vérifié par `pg_restore --list`, 14 jours gardés dans
+`/opt/brainup/backups`, journal `/var/log/brainup-backup.log`). Installation :
 
 ```bash
-docker compose -f docker-compose.prod.yml exec postgres \
-  pg_dump -U quizz quizz > backup-$(date +%F).sql
+ssh brainup-hetzner 'install -m 644 /opt/brainup/deploy/brainup-backup.cron /etc/cron.d/brainup-backup \
+  && /opt/brainup/deploy/backup.sh'
 ```
 
-À automatiser (cron + rclone) avant la mise en ligne réelle des joueurs.
+**Copie hors serveur** : le PC de Yannick rapatrie les dumps puis les pousse sur
+Google Drive (`gdrive:BrainUp/backups`), aucune clé Google sur le serveur :
+
+```bash
+install -m 755 deploy/pull-backups.sh ~/.local/bin/brainup-pull-backups
+cp deploy/systemd/brainup-pull-backups.* ~/.config/systemd/user/
+systemctl --user daemon-reload && systemctl --user enable --now brainup-pull-backups.timer
+```
+
+**Restaurer** (dans une base vide) :
+
+```bash
+docker compose -f docker-compose.prod.yml exec -T postgres \
+  pg_restore -U quizz -d quizz --clean --if-exists --no-owner < backups/brainup-AAAA-MM-JJ_HHMM.dump
+```
+
+Essayer le script sur la pile locale :
+`BRAINUP_ROOT=$PWD BRAINUP_BACKUP_DIR=/tmp/bk BRAINUP_COMPOSE="docker compose -p quizz-backend" sh deploy/backup.sh`
+
+## Limites de requêtes
+
+`app/rate_limit.py` : par joueur (`device_id` / `player_id`) 120 req/min (20/min
+sur achats, pub, inscription, recherche, demandes d'amis), et 600 req/min par IP.
+Au-delà : 429 + `Retry-After`. Actif en prod (`RATE_LIMIT_ENABLED=1`), coupé par
+défaut en local pour les suites `tools/`. Test : `python tools/test_rate_limit.py`.

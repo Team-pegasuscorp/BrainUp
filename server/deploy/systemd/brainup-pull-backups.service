@@ -1,0 +1,8 @@
+[Unit]
+Description=Copy BrainUp production backups to this PC and Google Drive
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/brainup-pull-backups

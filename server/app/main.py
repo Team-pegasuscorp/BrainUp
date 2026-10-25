@@ -15,6 +15,7 @@ import play_games
 import shop
 from db import engine
 from live_match import handle_live_socket
+from rate_limit import RateLimitMiddleware
 from scoring import calculate_points
 
 ## Public boards: drop CI / load-test rows and accounts that never really played.
@@ -99,6 +100,7 @@ def _generate_code(length: int = 6) -> str:
     return "".join(secrets.choice(CODE_ALPHABET) for _ in range(length))
 
 app = FastAPI(title="Quizz backend")
+app.add_middleware(RateLimitMiddleware)
 
 
 @app.get("/health")

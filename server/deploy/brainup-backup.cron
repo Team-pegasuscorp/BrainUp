@@ -1,0 +1,2 @@
+## Copied to /etc/cron.d/brainup-backup on the server. Every night at 03:30 (server time).
+30 3 * * * root /opt/brainup/deploy/backup.sh >> /var/log/brainup-backup.log 2>&1

@@ -33,6 +33,8 @@ services:
       ## Test only: skips the Google exchange and accepts any auth code as this
       ## Google account id. Never set on a real deployment.
       GOOGLE_AUTH_MOCK_SUB: ${GOOGLE_AUTH_MOCK_SUB:-}
+      ## Off by default here: the tools/ suites fire many calls a second. 1 = test the limits.
+      RATE_LIMIT_ENABLED: ${RATE_LIMIT_ENABLED:-0}
     ports:
       - "8000:8000"
     depends_on:

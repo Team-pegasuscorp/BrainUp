@@ -33,6 +33,8 @@ services:
       PASS_DEV_UNLOCK: ${PASS_DEV_UNLOCK:-0}
       SHOP_DEMO_ITEMS: ${SHOP_DEMO_ITEMS:-0}
       GOOGLE_AUTH_MOCK_SUB: ""
+      ## Per-player / per-IP limits (app/rate_limit.py). 0 only to debug.
+      RATE_LIMIT_ENABLED: ${RATE_LIMIT_ENABLED:-1}
     depends_on:
       postgres:
         condition: service_healthy
