@@ -389,6 +389,10 @@ func _build_hero() -> PanelContainer:
 		verified.add_theme_color_override("font_color", Color(0.36, 0.75, 1.0, 1))
 		name_row.add_child(verified)
 
+	var title := CosmeticsView.title_label(SaveManager.get_cosmetics(), 18)
+	if title != null:
+		info.add_child(title)
+
 	var country_row := HBoxContainer.new()
 	country_row.add_theme_constant_override("separation", 6)
 	var country_wrap := MarginContainer.new()

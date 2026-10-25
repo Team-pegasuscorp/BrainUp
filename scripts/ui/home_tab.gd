@@ -132,6 +132,9 @@ func _make_profile_summary_card(snapshot: Dictionary) -> PanelContainer:
 	)
 	name_label.add_theme_color_override("font_color", Color(1, 1, 1, 0.98))
 	info.add_child(name_label)
+	var title := CosmeticsView.title_label(SaveManager.get_cosmetics(), 17)
+	if title != null:
+		info.add_child(title)
 
 	var country_row := HBoxContainer.new()
 	country_row.add_theme_constant_override("separation", 8)

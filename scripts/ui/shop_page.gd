@@ -1068,6 +1068,9 @@ func _build_locker() -> void:
 	name_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.55))
 	name_label.add_theme_constant_override("outline_size", 5)
 	stage_col.add_child(name_label)
+	var worn_title := CosmeticsView.title_label(SaveManager.get_cosmetics(), 18, HORIZONTAL_ALIGNMENT_CENTER, true)
+	if worn_title != null:
+		stage_col.add_child(worn_title)
 
 	## Slots: which part of the look the grid below edits.
 	var slots := HBoxContainer.new()
@@ -1079,6 +1082,7 @@ func _build_locker() -> void:
 	slots.add_child(_make_slot(ShopCatalog.KIND_AVATAR, "UI_SHOP_KIND_AVATAR", avatar_item))
 	slots.add_child(_make_slot(ShopCatalog.KIND_FRAME, "UI_SHOP_KIND_FRAME", frame_item))
 	slots.add_child(_make_slot(ShopCatalog.KIND_BANNER, "UI_SHOP_KIND_BANNER", banner_item))
+	slots.add_child(_make_slot(ShopCatalog.KIND_TITLE, "UI_SHOP_KIND_TITLE", _locker_entry_for_title(SaveManager.equipped_title)))
 
 	var hint := Label.new()
 	hint.text = tr("UI_SHOP_LOCKER_HINT")
@@ -1182,7 +1186,9 @@ func _on_locker_tile_pressed(entry: Dictionary) -> void:
 	if _is_equipped(entry):
 		return
 	var item_id := str(entry.get("id", ""))
-	if bool(entry.get("starter", false)):
+	if str(entry.get("kind", "")) == ShopCatalog.KIND_TITLE and item_id.is_empty():
+		SaveManager.unequip_title()
+	elif bool(entry.get("starter", false)):
 		SaveManager.set_profile_avatar_id(item_id)
 	else:
 		SaveManager.equip_item(item_id)
@@ -1198,6 +1204,8 @@ func _owned_entries(kind: String) -> Array[Dictionary]:
 		out.append(_locker_entry_for_avatar(""))
 		for slug in SaveManager.PROFILE_AVATAR_IDS:
 			out.append(_locker_entry_for_avatar(slug))
+	elif kind == ShopCatalog.KIND_TITLE:
+		out.append(_locker_entry_for_title(""))
 	for item in ShopCatalog.items_of_kind(kind):
 		if SaveManager.is_item_owned(str(item["id"])):
 			out.append(item)
@@ -1211,9 +1219,19 @@ func _locker_entry_for_avatar(avatar_id: String) -> Dictionary:
 	return {"id": avatar_id, "kind": ShopCatalog.KIND_AVATAR, "rarity": "common", "starter": true}
 
 
+## The worn title, or the "no title" entry.
+func _locker_entry_for_title(title_id: String) -> Dictionary:
+	var item := ShopCatalog.get_item(title_id)
+	if not title_id.is_empty() and not item.is_empty():
+		return item
+	return {"id": "", "kind": ShopCatalog.KIND_TITLE, "rarity": "common", "starter": true}
+
+
 func _is_equipped(entry: Dictionary) -> bool:
 	var item_id := str(entry.get("id", ""))
 	match str(entry.get("kind", "")):
+		ShopCatalog.KIND_TITLE:
+			return item_id == SaveManager.equipped_title
 		ShopCatalog.KIND_FRAME:
 			return item_id == SaveManager.get_equipped_frame()
 		ShopCatalog.KIND_BANNER:
@@ -1222,6 +1240,8 @@ func _is_equipped(entry: Dictionary) -> bool:
 
 
 func _entry_name(entry: Dictionary) -> String:
+	if str(entry.get("kind", "")) == ShopCatalog.KIND_TITLE and str(entry.get("id", "")).is_empty():
+		return tr("UI_SHOP_NO_TITLE")
 	if bool(entry.get("starter", false)):
 		return tr("UI_SHOP_STARTER") if not str(entry.get("id", "")).is_empty() else tr("UI_SHOP_DEFAULT_AVATAR")
 	return ShopCatalog.display_name(entry)
@@ -1388,6 +1408,8 @@ func _rarity_card(item: Dictionary, card_size: Vector2) -> Button:
 ## current animal wearing that frame.
 func _item_preview(item: Dictionary, side: float) -> Control:
 	var kind := str(item.get("kind", ""))
+	if kind == ShopCatalog.KIND_TITLE:
+		return _title_preview(item, side)
 	if kind == ShopCatalog.KIND_FRAME:
 		return _player_avatar(side, str(item.get("id", "")), true)
 	if kind == ShopCatalog.KIND_BANNER:
@@ -1399,6 +1421,33 @@ func _item_preview(item: Dictionary, side: float) -> Control:
 		avatar.set_avatar(ShopCatalog.avatar_texture(item))
 	ShopCatalog.apply_frame(avatar, SaveManager.get_equipped_frame())
 	return avatar
+
+
+## A title as a plaque in its rarity colour ("no title" entry: a dashed-looking empty plaque).
+func _title_preview(item: Dictionary, side: float) -> Control:
+	var none := str(item.get("id", "")).is_empty()
+	var plaque := PanelContainer.new()
+	plaque.custom_minimum_size = Vector2(side * 1.5, side * 0.62)
+	plaque.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var tint := ShopCatalog.rarity_color(item)
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(tint.r, tint.g, tint.b, 0.10 if none else 0.28)
+	style.border_color = Color(tint.r, tint.g, tint.b, 0.45 if none else 0.95)
+	style.set_border_width_all(2)
+	style.set_corner_radius_all(int(side * 0.16))
+	style.content_margin_left = 6
+	style.content_margin_right = 6
+	plaque.add_theme_stylebox_override("panel", style)
+	var label := Label.new()
+	label.text = "—" if none else "« %s »" % ShopCatalog.display_name(item)
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	label.add_theme_font_size_override("font_size", UiScale.font(clampi(int(side * 0.16), 11, 18)))
+	label.add_theme_color_override("font_color", tint.lightened(0.55))
+	plaque.add_child(label)
+	return plaque
 
 
 ## A banner with the player's small framed avatar on it (wider than tall).
@@ -1481,6 +1530,8 @@ func _kind_text(item: Dictionary) -> String:
 			kind_key = "UI_SHOP_KIND_FRAME"
 		ShopCatalog.KIND_BANNER:
 			kind_key = "UI_SHOP_KIND_BANNER"
+		ShopCatalog.KIND_TITLE:
+			kind_key = "UI_SHOP_KIND_TITLE"
 	return "%s · %s" % [tr(kind_key), tr(ShopCatalog.rarity_key(item))]
 
 

@@ -72,7 +72,7 @@ Problèmes :
 | Lot | Contenu | Qui |
 |---|---|---|
 | E1 | Saison 2 (`season_2.json`, palier 1 000 XP, piste premium refaite) + XP de duel dégressive | serveur |
-| E2 | Type d'objet « titre » + catalogue agrandi | serveur + jeu |
+| E2 | Type d'objet « titre » (fait : 6 titres en boutique 300-1 500, 6 de saison 2, Casier « Titre », affiché sous le pseudo à l'Accueil, au Profil, au Classement, dans Social et en duel) ; catalogue agrandi avec E3 | serveur + jeu |
 | E3 | Boutique tournante (sélection du jour, refus hors sélection, compte à rebours) | serveur + jeu |
 | E4 | Achats en euros (premium, packs, récompense sans pub) | après Play Billing |
 

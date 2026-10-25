@@ -472,6 +472,9 @@ func _podium_identity(
 		_scope_accent() if bool(entry.get("is_player", false)) else UiTokens.PROFILE_TEXT
 	)
 	vbox.add_child(name_label)
+	var title := CosmeticsView.title_label(entry.get("cosmetics", {}), 13, HORIZONTAL_ALIGNMENT_CENTER, true)
+	if title != null:
+		vbox.add_child(title)
 
 	var level := Label.new()
 	level.text = "★ %s %d" % [tr("UI_PROFILE_LEVEL_CAPTION"), int(entry.get("level", 1))]
@@ -606,6 +609,9 @@ func _make_rank_row(entry: Dictionary) -> PanelContainer:
 	)
 	name.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	info.add_child(name)
+	var title := CosmeticsView.title_label(entry.get("cosmetics", {}), 14 if is_player else 12, HORIZONTAL_ALIGNMENT_LEFT, true)
+	if title != null:
+		info.add_child(title)
 
 	var level := Label.new()
 	level.text = "★ %s %d" % [tr("UI_PROFILE_LEVEL_CAPTION"), int(entry.get("level", 1))]

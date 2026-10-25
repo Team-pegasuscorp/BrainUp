@@ -31,6 +31,28 @@ static func banner(banner_id: String, min_size: Vector2 = Vector2.ZERO, radius: 
 
 ## Vertical player card: banner background, framed avatar, name and one value line
 ## (score, trophies…). Used for the live face-off.
+## The worn title under a pseudo, tinted by rarity; null when the player wears none.
+static func title_label(
+	cosmetics: Dictionary, font_px: int, align: HorizontalAlignment = HORIZONTAL_ALIGNMENT_LEFT,
+	outlined: bool = false
+) -> Label:
+	var title_id := str(cosmetics.get("title", ""))
+	var text := ShopCatalog.title_text(title_id)
+	if text.is_empty():
+		return null
+	var label := Label.new()
+	label.text = "« %s »" % text
+	label.horizontal_alignment = align
+	label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	label.add_theme_font_size_override("font_size", UiScale.font(font_px))
+	label.add_theme_color_override("font_color", ShopCatalog.rarity_color(ShopCatalog.get_item(title_id)).lightened(0.45))
+	if outlined:
+		label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.55))
+		label.add_theme_constant_override("outline_size", 4)
+	return label
+
+
 static func player_card(
 	display_name: String, cosmetics: Dictionary, value_text: String, width: float, highlight: Color = Color(0, 0, 0, 0)
 ) -> Control:
@@ -77,6 +99,9 @@ static func player_card(
 	name_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.55))
 	name_label.add_theme_constant_override("outline_size", 4)
 	column.add_child(name_label)
+	var title := title_label(cosmetics, 14, HORIZONTAL_ALIGNMENT_CENTER, true)
+	if title != null:
+		column.add_child(title)
 
 	if not value_text.is_empty():
 		var value := Label.new()

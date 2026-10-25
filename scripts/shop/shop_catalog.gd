@@ -13,6 +13,8 @@ const SHOW_DEMO_ITEMS := false
 const KIND_AVATAR := "avatar"
 const KIND_FRAME := "frame"
 const KIND_BANNER := "banner"
+## A text shown under the pseudo. No default: "" means no title.
+const KIND_TITLE := "title"
 const RARITIES: Array[String] = ["common", "rare", "epic", "legendary"]
 const RARITY_COLORS := {
 	## Slate grey, so common no longer reads like rare's blue.
@@ -91,6 +93,14 @@ static func display_name(item: Dictionary) -> String:
 		return str(item.get("id", ""))
 	var locale := str(LocaleManager.current_locale).substr(0, 2)
 	return str(names.get(locale, names.get("en", item.get("id", ""))))
+
+
+## Name of a worn title id, "" when none or unknown.
+static func title_text(title_id: String) -> String:
+	var item := get_item(title_id)
+	if title_id.is_empty() or str(item.get("kind", "")) != KIND_TITLE:
+		return ""
+	return display_name(item)
 
 
 static func rarity_color(item: Dictionary) -> Color:

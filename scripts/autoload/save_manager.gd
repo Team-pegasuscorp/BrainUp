@@ -81,6 +81,7 @@ var ads_left: int = 0
 var ad_reward: int = 0
 var equipped_frame: String = ""
 var equipped_banner: String = ""
+var equipped_title: String = ""
 ## Jokers won in the battle pass: {joker_id: count}.
 var jokers: Dictionary = {}
 var sound_enabled: bool = true
@@ -116,6 +117,9 @@ func load_data() -> void:
 	equipped_banner = str(parsed.get("equipped_banner", ""))
 	if not is_item_owned(equipped_banner):
 		equipped_banner = ""
+	equipped_title = str(parsed.get("equipped_title", ""))
+	if not is_item_owned(equipped_title):
+		equipped_title = ""
 	profile_avatar_id = str(parsed.get("profile_avatar_id", ""))
 	if not can_use_avatar(profile_avatar_id):
 		profile_avatar_id = ""
@@ -194,6 +198,7 @@ func save_data() -> void:
 		"owned_items": owned_items,
 		"equipped_frame": equipped_frame,
 		"equipped_banner": equipped_banner,
+		"equipped_title": equipped_title,
 		"jokers": jokers,
 		"sound_enabled": sound_enabled,
 		"sound_volume": sound_volume,
@@ -506,6 +511,9 @@ func apply_shop_state(state: Dictionary) -> void:
 	if not equipped_banner.is_empty() and not is_item_owned(equipped_banner):
 		equipped_banner = ""
 		unequipped = true
+	if not equipped_title.is_empty() and not is_item_owned(equipped_title):
+		equipped_title = ""
+		unequipped = true
 	if not profile_avatar_id.is_empty() and not can_use_avatar(profile_avatar_id):
 		profile_avatar_id = ""
 		unequipped = true
@@ -525,7 +533,18 @@ func get_equipped_banner() -> String:
 
 ## What other players see (sent to the server, see NetworkManager).
 func get_cosmetics() -> Dictionary:
-	return {"avatar": profile_avatar_id, "frame": get_equipped_frame(), "banner": get_equipped_banner()}
+	return {
+		"avatar": profile_avatar_id, "frame": get_equipped_frame(),
+		"banner": get_equipped_banner(), "title": equipped_title,
+	}
+
+
+func unequip_title() -> void:
+	if equipped_title.is_empty():
+		return
+	equipped_title = ""
+	save_data()
+	cosmetics_changed.emit()
 
 
 func equip_item(item_id: String) -> void:
@@ -538,6 +557,10 @@ func equip_item(item_id: String) -> void:
 			cosmetics_changed.emit()
 		ShopCatalog.KIND_BANNER:
 			equipped_banner = item_id
+			save_data()
+			cosmetics_changed.emit()
+		ShopCatalog.KIND_TITLE:
+			equipped_title = item_id
 			save_data()
 			cosmetics_changed.emit()
 		ShopCatalog.KIND_AVATAR:

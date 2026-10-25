@@ -764,6 +764,9 @@ func _search_result_row(player: Dictionary) -> Control:
 	name_label.add_theme_font_size_override("font_size", UiScale.font(18))
 	name_label.add_theme_color_override("font_color", UiTokens.PROFILE_TEXT)
 	identity.add_child(name_label)
+	var title := CosmeticsView.title_label(cosmetics, 13)
+	if title != null:
+		identity.add_child(title)
 	var level_label := Label.new()
 	level_label.text = "%s %d · %d 🏆" % [tr("UI_PROFILE_LEVEL_CAPTION"), int(card["level"]), int(card["trophies"])]
 	level_label.add_theme_font_size_override("font_size", UiScale.font(13))

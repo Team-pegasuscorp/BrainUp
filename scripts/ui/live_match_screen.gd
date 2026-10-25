@@ -851,6 +851,9 @@ func _header_side(display_name: String, cosmetics: Dictionary, mirrored: bool) -
 	name_label.add_theme_font_size_override("font_size", UiScale.font(17))
 	name_label.add_theme_color_override("font_color", Color.WHITE)
 	info.add_child(name_label)
+	var title := CosmeticsView.title_label(cosmetics, 12, align, true)
+	if title != null:
+		info.add_child(title)
 	var score := Label.new()
 	score.horizontal_alignment = align
 	score.add_theme_font_size_override("font_size", UiScale.font(26))
