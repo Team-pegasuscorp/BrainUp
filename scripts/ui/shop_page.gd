@@ -758,6 +758,9 @@ func _build_store() -> void:
 		_content.add_child(_make_ad_offer())
 	var featured: Array[Dictionary] = []
 	var others: Array[Dictionary] = []
+	if not SaveManager.shop_rotation.is_empty():
+		_build_rotation()
+		return
 	for item in ShopCatalog.store_items():
 		## Once the server answered, list only what it sells (and what the player owns).
 		var item_id := str(item["id"])
@@ -799,6 +802,61 @@ func _build_store() -> void:
 			grid.add_child(_make_store_card(item, Vector2(w, 300), 132))
 		_content.add_child(grid)
 	_build_joker_offers()
+
+
+## Today's selection, as the server dealt it (docs/ECONOMIE.md §2.3).
+func _build_rotation() -> void:
+	var featured := _rotation_items("featured")
+	var others := _rotation_items("items")
+	var head := HBoxContainer.new()
+	head.add_child(_section_label("UI_SHOP_FEATURED"))
+	var spacer := Control.new()
+	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	head.add_child(spacer)
+	var countdown := Label.new()
+	countdown.text = _rotation_countdown()
+	countdown.add_theme_font_size_override("font_size", UiScale.font(15))
+	countdown.add_theme_color_override("font_color", ACCENT)
+	head.add_child(countdown)
+	_content.add_child(head)
+	if not featured.is_empty():
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 12)
+		var w := (PAGE_WIDTH - 12.0) * 0.5
+		for item in featured:
+			row.add_child(_make_store_card(item, Vector2(w, 430), 210))
+		_content.add_child(row)
+	if not others.is_empty():
+		_content.add_child(_section_label("UI_SHOP_ITEMS"))
+		var grid := GridContainer.new()
+		grid.columns = 2
+		grid.add_theme_constant_override("h_separation", 12)
+		grid.add_theme_constant_override("v_separation", 12)
+		var w := (PAGE_WIDTH - 12.0) * 0.5
+		for item in others:
+			grid.add_child(_make_store_card(item, Vector2(w, 300), 132))
+		_content.add_child(grid)
+	_build_joker_offers()
+
+
+func _rotation_items(key: String) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for raw_id in SaveManager.shop_rotation.get(key, []):
+		var item := ShopCatalog.get_item(str(raw_id))
+		if not item.is_empty():
+			out.append(item)
+	return out
+
+
+## "New in 5 h 12" until the server's next selection (00:00 UTC).
+func _rotation_countdown() -> String:
+	var ends := Time.get_unix_time_from_datetime_string(str(SaveManager.shop_rotation.get("ends_at", "")).substr(0, 19))
+	var left := int(ends - Time.get_unix_time_from_system())
+	if ends <= 0 or left <= 0:
+		return ""
+	var hours := left / 3600
+	var minutes := (left % 3600) / 60
+	return tr("UI_SHOP_ROTATION_IN").format({"time": ("%d h %02d" % [hours, minutes]) if hours > 0 else ("%d min" % maxi(minutes, 1))})
 
 
 ## "Free Neurones": a rewarded ad the player chooses to watch, a few times a day.
@@ -1447,7 +1505,9 @@ func _title_preview(item: Dictionary, side: float) -> Control:
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	label.add_theme_font_size_override("font_size", UiScale.font(clampi(int(side * 0.14), 11, 17)))
-	label.add_theme_color_override("font_color", tint.lightened(0.55))
+	label.add_theme_color_override("font_color", tint.lightened(0.8))
+	label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.35))
+	label.add_theme_constant_override("outline_size", 3)
 	plaque.add_child(label)
 	return plaque
 

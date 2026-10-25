@@ -76,6 +76,9 @@ var owned_items: Array = []
 ## What the server sells right now: {item_id: price} and {joker_id: price}. Not saved.
 var shop_prices: Dictionary = {}
 var joker_prices: Dictionary = {}
+## Today's shop selection from the server: {day, featured: [ids], items: [ids], ends_at}.
+## Empty when the server sells the whole catalogue (or before its first answer). Not saved.
+var shop_rotation: Dictionary = {}
 ## Rewarded ads the server still pays today, and what one pays. Not saved.
 var ads_left: int = 0
 var ad_reward: int = 0
@@ -496,6 +499,7 @@ func apply_shop_state(state: Dictionary) -> void:
 		shop_prices = state["prices"]
 	if typeof(state.get("joker_prices")) == TYPE_DICTIONARY:
 		joker_prices = state["joker_prices"]
+	shop_rotation = state["rotation"] if typeof(state.get("rotation")) == TYPE_DICTIONARY else {}
 	ads_left = int(state.get("ads_left", ads_left))
 	if typeof(state.get("rules")) == TYPE_DICTIONARY:
 		ad_reward = int(state["rules"].get("ad", ad_reward))

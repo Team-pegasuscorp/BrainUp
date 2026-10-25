@@ -399,6 +399,7 @@ UI_SHOP_STORE,Shop,Boutique
 UI_SHOP_LOCKER,Locker,Casier
 UI_SHOP_FEATURED,Featured,À la une
 UI_SHOP_ITEMS,Items,Articles
+UI_SHOP_ROTATION_IN,New items in {time},Nouveautés dans {time}
 UI_SHOP_BUY,Buy,Acheter
 UI_SHOP_EQUIP,Equip,Équiper
 UI_SHOP_EQUIPPED,Equipped,Équipé
