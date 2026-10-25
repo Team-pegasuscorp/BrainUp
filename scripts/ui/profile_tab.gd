@@ -219,6 +219,7 @@ func _profile_fingerprint(data: Dictionary) -> String:
 		SaveManager.profile_avatar_id,
 		SaveManager.get_equipped_frame(),
 		SaveManager.get_equipped_banner(),
+		SaveManager.equipped_title,
 		str(history.size()),
 		latest,
 	])

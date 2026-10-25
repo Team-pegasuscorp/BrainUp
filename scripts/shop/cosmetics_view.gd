@@ -41,7 +41,7 @@ static func title_label(
 	if text.is_empty():
 		return null
 	var label := Label.new()
-	label.text = "« %s »" % text
+	label.text = "«\u00a0%s\u00a0»" % text
 	label.horizontal_alignment = align
 	label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE

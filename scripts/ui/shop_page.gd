@@ -1427,7 +1427,8 @@ func _item_preview(item: Dictionary, side: float) -> Control:
 func _title_preview(item: Dictionary, side: float) -> Control:
 	var none := str(item.get("id", "")).is_empty()
 	var plaque := PanelContainer.new()
-	plaque.custom_minimum_size = Vector2(side * 1.5, side * 0.62)
+	## Narrower than a banner preview: it must fit a locker tile (4 per row).
+	plaque.custom_minimum_size = Vector2(side * 1.3, side * 0.62)
 	plaque.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var tint := ShopCatalog.rarity_color(item)
 	var style := StyleBoxFlat.new()
@@ -1439,12 +1440,13 @@ func _title_preview(item: Dictionary, side: float) -> Control:
 	style.content_margin_right = 6
 	plaque.add_theme_stylebox_override("panel", style)
 	var label := Label.new()
-	label.text = "—" if none else "« %s »" % ShopCatalog.display_name(item)
+	## No quotes here: the plaque already frames it, and a wrapped "»" ends up alone.
+	label.text = "—" if none else ShopCatalog.display_name(item)
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	label.add_theme_font_size_override("font_size", UiScale.font(clampi(int(side * 0.16), 11, 18)))
+	label.add_theme_font_size_override("font_size", UiScale.font(clampi(int(side * 0.14), 11, 17)))
 	label.add_theme_color_override("font_color", tint.lightened(0.55))
 	plaque.add_child(label)
 	return plaque
