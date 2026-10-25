@@ -12,6 +12,8 @@ class Cosmetics(BaseModel):
     avatar: str = Field("", pattern=COSMETIC_ID)
     frame: str = Field("", pattern=COSMETIC_ID)
     banner: str = Field("", pattern=COSMETIC_ID)
+    ## Text shown under the pseudo ("" = none). Older clients omit it.
+    title: str = Field("", pattern=COSMETIC_ID)
 
 
 class PlayerRegister(BaseModel):

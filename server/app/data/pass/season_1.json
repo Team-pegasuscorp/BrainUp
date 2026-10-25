@@ -1,26 +1,158 @@
 {
- "id": "s1",
+ "id": "givre",
  "name": {
-  "fr": "Saison 1 · Éveil",
-  "en": "Season 1 · Awakening"
+  "fr": "Saison 1 · Givre",
+  "en": "Season 1 · Frost"
  },
- "start": "2026-09-28",
+ "start": "2026-10-25",
  "weeks": 6,
- "tier_xp": 800,
+ "tier_xp": 1000,
  "xp": {
   "duel": 100,
   "duel_win_bonus": 60,
   "daily": 150,
   "quest": 100,
-  "quests_per_day": 3
+  "quests_per_day": 3,
+  "duels_full_per_day": 5,
+  "duel_extra_factor": 0.5
  },
+ "weekly": [
+  [
+   {
+    "id": "givre_w1_1",
+    "type": "duels_played",
+    "target": 5,
+    "xp": 400
+   },
+   {
+    "id": "givre_w1_2",
+    "type": "duels_won",
+    "target": 2,
+    "xp": 500
+   },
+   {
+    "id": "givre_w1_3",
+    "type": "daily_played",
+    "target": 3,
+    "xp": 400
+   }
+  ],
+  [
+   {
+    "id": "givre_w2_1",
+    "type": "mode_played",
+    "target": 3,
+    "xp": 400,
+    "mode": "survival"
+   },
+   {
+    "id": "givre_w2_2",
+    "type": "correct_answers",
+    "target": 40,
+    "xp": 500
+   },
+   {
+    "id": "givre_w2_3",
+    "type": "duels_won",
+    "target": 4,
+    "xp": 600
+   }
+  ],
+  [
+   {
+    "id": "givre_w3_1",
+    "type": "mode_played",
+    "target": 3,
+    "xp": 400,
+    "mode": "time_attack"
+   },
+   {
+    "id": "givre_w3_2",
+    "type": "mode_won",
+    "target": 3,
+    "xp": 500,
+    "mode": "classic"
+   },
+   {
+    "id": "givre_w3_3",
+    "type": "daily_played",
+    "target": 4,
+    "xp": 500
+   }
+  ],
+  [
+   {
+    "id": "givre_w4_1",
+    "type": "duels_played",
+    "target": 10,
+    "xp": 500
+   },
+   {
+    "id": "givre_w4_2",
+    "type": "correct_answers",
+    "target": 70,
+    "xp": 600
+   },
+   {
+    "id": "givre_w4_3",
+    "type": "mode_won",
+    "target": 2,
+    "xp": 600,
+    "mode": "survival"
+   }
+  ],
+  [
+   {
+    "id": "givre_w5_1",
+    "type": "mode_won",
+    "target": 2,
+    "xp": 600,
+    "mode": "time_attack"
+   },
+   {
+    "id": "givre_w5_2",
+    "type": "duels_won",
+    "target": 6,
+    "xp": 700
+   },
+   {
+    "id": "givre_w5_3",
+    "type": "daily_played",
+    "target": 5,
+    "xp": 500
+   }
+  ],
+  [
+   {
+    "id": "givre_w6_1",
+    "type": "duels_played",
+    "target": 15,
+    "xp": 600
+   },
+   {
+    "id": "givre_w6_2",
+    "type": "correct_answers",
+    "target": 100,
+    "xp": 700
+   },
+   {
+    "id": "givre_w6_3",
+    "type": "duels_won",
+    "target": 8,
+    "xp": 800
+   }
+  ]
+ ],
  "tiers": [
   {
    "tier": 1,
-   "free": null,
+   "free": {
+    "type": "item",
+    "id": "title_givre_first_snow"
+   },
    "premium": {
     "type": "item",
-    "id": "banner_s1_circuit"
+    "id": "banner_givre_blizzard"
    }
   },
   {
@@ -31,7 +163,7 @@
    },
    "premium": {
     "type": "coins",
-    "amount": 100
+    "amount": 50
    }
   },
   {
@@ -39,7 +171,7 @@
    "free": null,
    "premium": {
     "type": "coins",
-    "amount": 100
+    "amount": 50
    }
   },
   {
@@ -50,7 +182,7 @@
    },
    "premium": {
     "type": "coins",
-    "amount": 100
+    "amount": 50
    }
   },
   {
@@ -74,7 +206,7 @@
    },
    "premium": {
     "type": "coins",
-    "amount": 100
+    "amount": 50
    }
   },
   {
@@ -82,7 +214,7 @@
    "free": null,
    "premium": {
     "type": "coins",
-    "amount": 100
+    "amount": 50
    }
   },
   {
@@ -93,34 +225,36 @@
    },
    "premium": {
     "type": "item",
-    "id": "frame_s1_ember"
+    "id": "frame_givre_icicle"
    }
   },
   {
    "tier": 9,
    "free": null,
    "premium": {
-    "type": "coins",
-    "amount": 100
+    "type": "joker",
+    "id": "joker_5050",
+    "amount": 1
    }
   },
   {
    "tier": 10,
    "free": {
     "type": "item",
-    "id": "banner_s1_dawn"
+    "id": "frame_givre_snowfall"
    },
    "premium": {
     "type": "coins",
-    "amount": 100
+    "amount": 50
    }
   },
   {
    "tier": 11,
    "free": null,
    "premium": {
-    "type": "coins",
-    "amount": 100
+    "type": "joker",
+    "id": "joker_5050",
+    "amount": 1
    }
   },
   {
@@ -131,7 +265,7 @@
    },
    "premium": {
     "type": "item",
-    "id": "avatar_s1_1"
+    "id": "title_givre_frost_mind"
    }
   },
   {
@@ -139,7 +273,7 @@
    "free": null,
    "premium": {
     "type": "coins",
-    "amount": 100
+    "amount": 50
    }
   },
   {
@@ -150,7 +284,7 @@
    },
    "premium": {
     "type": "coins",
-    "amount": 100
+    "amount": 50
    }
   },
   {
@@ -161,8 +295,9 @@
     "amount": 1
    },
    "premium": {
-    "type": "coins",
-    "amount": 100
+    "type": "joker",
+    "id": "joker_time",
+    "amount": 1
    }
   },
   {
@@ -173,7 +308,7 @@
    },
    "premium": {
     "type": "item",
-    "id": "banner_s1_ember"
+    "id": "banner_givre_glacier"
    }
   },
   {
@@ -181,7 +316,7 @@
    "free": null,
    "premium": {
     "type": "coins",
-    "amount": 100
+    "amount": 50
    }
   },
   {
@@ -191,8 +326,8 @@
     "amount": 50
    },
    "premium": {
-    "type": "coins",
-    "amount": 100
+    "type": "item",
+    "id": "avatar_givre_1"
    }
   },
   {
@@ -200,14 +335,14 @@
    "free": null,
    "premium": {
     "type": "coins",
-    "amount": 100
+    "amount": 50
    }
   },
   {
    "tier": 20,
    "free": {
     "type": "item",
-    "id": "frame_s1_mint"
+    "id": "banner_givre_snow"
    },
    "premium": {
     "type": "joker",
@@ -220,7 +355,7 @@
    "free": null,
    "premium": {
     "type": "coins",
-    "amount": 100
+    "amount": 50
    }
   },
   {
@@ -231,7 +366,7 @@
    },
    "premium": {
     "type": "item",
-    "id": "frame_s1_neonwave"
+    "id": "title_givre_snow_scholar"
    }
   },
   {
@@ -239,7 +374,7 @@
    "free": null,
    "premium": {
     "type": "coins",
-    "amount": 100
+    "amount": 50
    }
   },
   {
@@ -249,8 +384,9 @@
     "amount": 50
    },
    "premium": {
-    "type": "coins",
-    "amount": 100
+    "type": "joker",
+    "id": "joker_time",
+    "amount": 2
    }
   },
   {
@@ -261,7 +397,7 @@
    },
    "premium": {
     "type": "coins",
-    "amount": 100
+    "amount": 50
    }
   },
   {
@@ -271,8 +407,8 @@
     "amount": 50
    },
    "premium": {
-    "type": "coins",
-    "amount": 300
+    "type": "item",
+    "id": "frame_givre_polar"
    }
   },
   {
@@ -280,7 +416,7 @@
    "free": null,
    "premium": {
     "type": "coins",
-    "amount": 100
+    "amount": 50
    }
   },
   {
@@ -290,8 +426,8 @@
     "amount": 50
    },
    "premium": {
-    "type": "coins",
-    "amount": 100
+    "type": "item",
+    "id": "avatar_givre_2"
    }
   },
   {
@@ -299,7 +435,7 @@
    "free": null,
    "premium": {
     "type": "coins",
-    "amount": 100
+    "amount": 50
    }
   },
   {
@@ -311,7 +447,7 @@
    },
    "premium": {
     "type": "item",
-    "id": "avatar_s1_2"
+    "id": "title_givre_ice_cold"
    }
   },
   {
@@ -319,7 +455,7 @@
    "free": null,
    "premium": {
     "type": "coins",
-    "amount": 100
+    "amount": 50
    }
   },
   {
@@ -329,8 +465,9 @@
     "amount": 50
    },
    "premium": {
-    "type": "coins",
-    "amount": 100
+    "type": "joker",
+    "id": "joker_time",
+    "amount": 2
    }
   },
   {
@@ -338,7 +475,7 @@
    "free": null,
    "premium": {
     "type": "coins",
-    "amount": 100
+    "amount": 50
    }
   },
   {
@@ -349,15 +486,18 @@
    },
    "premium": {
     "type": "item",
-    "id": "banner_s1_aurora"
+    "id": "title_givre_polar_legend"
    }
   },
   {
    "tier": 35,
-   "free": null,
+   "free": {
+    "type": "item",
+    "id": "title_givre_winter_quizzer"
+   },
    "premium": {
     "type": "coins",
-    "amount": 100
+    "amount": 50
    }
   },
   {
@@ -367,8 +507,8 @@
     "amount": 50
    },
    "premium": {
-    "type": "coins",
-    "amount": 100
+    "type": "item",
+    "id": "banner_givre_northstar"
    }
   },
   {
@@ -376,7 +516,7 @@
    "free": null,
    "premium": {
     "type": "coins",
-    "amount": 100
+    "amount": 50
    }
   },
   {
@@ -387,7 +527,7 @@
    },
    "premium": {
     "type": "item",
-    "id": "frame_s1_crown"
+    "id": "frame_givre_crystal"
    }
   },
   {
@@ -395,7 +535,7 @@
    "free": null,
    "premium": {
     "type": "coins",
-    "amount": 100
+    "amount": 50
    }
   },
   {
@@ -406,135 +546,8 @@
    },
    "premium": {
     "type": "item",
-    "id": "avatar_s1_3"
+    "id": "avatar_givre_3"
    }
   }
- ],
- "weekly": [
-  [
-   {
-    "id": "w1_1",
-    "type": "duels_played",
-    "target": 5,
-    "xp": 400
-   },
-   {
-    "id": "w1_2",
-    "type": "duels_won",
-    "target": 2,
-    "xp": 500
-   },
-   {
-    "id": "w1_3",
-    "type": "daily_played",
-    "target": 3,
-    "xp": 400
-   }
-  ],
-  [
-   {
-    "id": "w2_1",
-    "type": "mode_played",
-    "target": 3,
-    "xp": 400,
-    "mode": "survival"
-   },
-   {
-    "id": "w2_2",
-    "type": "correct_answers",
-    "target": 40,
-    "xp": 500
-   },
-   {
-    "id": "w2_3",
-    "type": "duels_won",
-    "target": 4,
-    "xp": 600
-   }
-  ],
-  [
-   {
-    "id": "w3_1",
-    "type": "mode_played",
-    "target": 3,
-    "xp": 400,
-    "mode": "time_attack"
-   },
-   {
-    "id": "w3_2",
-    "type": "mode_won",
-    "target": 3,
-    "xp": 500,
-    "mode": "classic"
-   },
-   {
-    "id": "w3_3",
-    "type": "daily_played",
-    "target": 4,
-    "xp": 500
-   }
-  ],
-  [
-   {
-    "id": "w4_1",
-    "type": "duels_played",
-    "target": 10,
-    "xp": 500
-   },
-   {
-    "id": "w4_2",
-    "type": "correct_answers",
-    "target": 70,
-    "xp": 600
-   },
-   {
-    "id": "w4_3",
-    "type": "mode_won",
-    "target": 2,
-    "xp": 600,
-    "mode": "survival"
-   }
-  ],
-  [
-   {
-    "id": "w5_1",
-    "type": "mode_won",
-    "target": 2,
-    "xp": 600,
-    "mode": "time_attack"
-   },
-   {
-    "id": "w5_2",
-    "type": "duels_won",
-    "target": 6,
-    "xp": 700
-   },
-   {
-    "id": "w5_3",
-    "type": "daily_played",
-    "target": 5,
-    "xp": 500
-   }
-  ],
-  [
-   {
-    "id": "w6_1",
-    "type": "duels_played",
-    "target": 15,
-    "xp": 600
-   },
-   {
-    "id": "w6_2",
-    "type": "correct_answers",
-    "target": 100,
-    "xp": 700
-   },
-   {
-    "id": "w6_3",
-    "type": "duels_won",
-    "target": 8,
-    "xp": 800
-   }
-  ]
  ]
 }

@@ -114,10 +114,25 @@ def record_duel(conn: Connection, player_id: str, mode: str, won: bool, correct:
     row = _row(conn, player_id, season)
     rules = season["xp"]
     gained = int(rules["duel"]) + (int(rules["duel_win_bonus"]) if won else 0)
+    ## From season 2: full XP for the first duels of the (UTC) day, then a fraction, so
+    ## grinding all day does not finish the pass in two weeks. Weekly challenges stay whole.
+    full_per_day = int(rules.get("duels_full_per_day", 0))
+    if full_per_day and duels_today(conn, player_id) >= full_per_day:
+        gained = int(gained * float(rules.get("duel_extra_factor", 0.5)))
     gained += _advance_weekly(season, row, {"duel": True, "won": won, "mode": mode, "correct": correct})
     row["xp"] += gained
     _save(conn, player_id, season, row)
     return gained
+
+
+def duels_today(conn: Connection, player_id: str) -> int:
+    """Ranked duels already paid today (UTC). The shop credits each duel once in coin_ledger,
+    right after record_duel, so the current duel is not counted yet."""
+    midnight = datetime.combine(today(), datetime.min.time(), tzinfo=timezone.utc)
+    return int(conn.execute(
+        text("SELECT COUNT(*) FROM coin_ledger WHERE player_id = :p AND reason = 'duel' AND created_at >= :t"),
+        {"p": player_id, "t": midnight},
+    ).scalar_one())
 
 
 def record_daily(conn: Connection, player_id: str) -> int:

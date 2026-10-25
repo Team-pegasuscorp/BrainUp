@@ -1,0 +1,540 @@
+{
+ "id": "s1",
+ "name": {
+  "fr": "Saison 1 · Éveil",
+  "en": "Season 1 · Awakening"
+ },
+ "start": "2026-09-28",
+ "weeks": 6,
+ "tier_xp": 800,
+ "xp": {
+  "duel": 100,
+  "duel_win_bonus": 60,
+  "daily": 150,
+  "quest": 100,
+  "quests_per_day": 3
+ },
+ "tiers": [
+  {
+   "tier": 1,
+   "free": null,
+   "premium": {
+    "type": "item",
+    "id": "banner_s1_circuit"
+   }
+  },
+  {
+   "tier": 2,
+   "free": {
+    "type": "coins",
+    "amount": 50
+   },
+   "premium": {
+    "type": "coins",
+    "amount": 100
+   }
+  },
+  {
+   "tier": 3,
+   "free": null,
+   "premium": {
+    "type": "coins",
+    "amount": 100
+   }
+  },
+  {
+   "tier": 4,
+   "free": {
+    "type": "coins",
+    "amount": 50
+   },
+   "premium": {
+    "type": "coins",
+    "amount": 100
+   }
+  },
+  {
+   "tier": 5,
+   "free": {
+    "type": "joker",
+    "id": "joker_5050",
+    "amount": 1
+   },
+   "premium": {
+    "type": "joker",
+    "id": "joker_time",
+    "amount": 2
+   }
+  },
+  {
+   "tier": 6,
+   "free": {
+    "type": "coins",
+    "amount": 50
+   },
+   "premium": {
+    "type": "coins",
+    "amount": 100
+   }
+  },
+  {
+   "tier": 7,
+   "free": null,
+   "premium": {
+    "type": "coins",
+    "amount": 100
+   }
+  },
+  {
+   "tier": 8,
+   "free": {
+    "type": "coins",
+    "amount": 50
+   },
+   "premium": {
+    "type": "item",
+    "id": "frame_s1_ember"
+   }
+  },
+  {
+   "tier": 9,
+   "free": null,
+   "premium": {
+    "type": "coins",
+    "amount": 100
+   }
+  },
+  {
+   "tier": 10,
+   "free": {
+    "type": "item",
+    "id": "banner_s1_dawn"
+   },
+   "premium": {
+    "type": "coins",
+    "amount": 100
+   }
+  },
+  {
+   "tier": 11,
+   "free": null,
+   "premium": {
+    "type": "coins",
+    "amount": 100
+   }
+  },
+  {
+   "tier": 12,
+   "free": {
+    "type": "coins",
+    "amount": 50
+   },
+   "premium": {
+    "type": "item",
+    "id": "avatar_s1_1"
+   }
+  },
+  {
+   "tier": 13,
+   "free": null,
+   "premium": {
+    "type": "coins",
+    "amount": 100
+   }
+  },
+  {
+   "tier": 14,
+   "free": {
+    "type": "coins",
+    "amount": 50
+   },
+   "premium": {
+    "type": "coins",
+    "amount": 100
+   }
+  },
+  {
+   "tier": 15,
+   "free": {
+    "type": "joker",
+    "id": "joker_time",
+    "amount": 1
+   },
+   "premium": {
+    "type": "coins",
+    "amount": 100
+   }
+  },
+  {
+   "tier": 16,
+   "free": {
+    "type": "coins",
+    "amount": 50
+   },
+   "premium": {
+    "type": "item",
+    "id": "banner_s1_ember"
+   }
+  },
+  {
+   "tier": 17,
+   "free": null,
+   "premium": {
+    "type": "coins",
+    "amount": 100
+   }
+  },
+  {
+   "tier": 18,
+   "free": {
+    "type": "coins",
+    "amount": 50
+   },
+   "premium": {
+    "type": "coins",
+    "amount": 100
+   }
+  },
+  {
+   "tier": 19,
+   "free": null,
+   "premium": {
+    "type": "coins",
+    "amount": 100
+   }
+  },
+  {
+   "tier": 20,
+   "free": {
+    "type": "item",
+    "id": "frame_s1_mint"
+   },
+   "premium": {
+    "type": "joker",
+    "id": "joker_5050",
+    "amount": 3
+   }
+  },
+  {
+   "tier": 21,
+   "free": null,
+   "premium": {
+    "type": "coins",
+    "amount": 100
+   }
+  },
+  {
+   "tier": 22,
+   "free": {
+    "type": "coins",
+    "amount": 50
+   },
+   "premium": {
+    "type": "item",
+    "id": "frame_s1_neonwave"
+   }
+  },
+  {
+   "tier": 23,
+   "free": null,
+   "premium": {
+    "type": "coins",
+    "amount": 100
+   }
+  },
+  {
+   "tier": 24,
+   "free": {
+    "type": "coins",
+    "amount": 50
+   },
+   "premium": {
+    "type": "coins",
+    "amount": 100
+   }
+  },
+  {
+   "tier": 25,
+   "free": {
+    "type": "coins",
+    "amount": 150
+   },
+   "premium": {
+    "type": "coins",
+    "amount": 100
+   }
+  },
+  {
+   "tier": 26,
+   "free": {
+    "type": "coins",
+    "amount": 50
+   },
+   "premium": {
+    "type": "coins",
+    "amount": 300
+   }
+  },
+  {
+   "tier": 27,
+   "free": null,
+   "premium": {
+    "type": "coins",
+    "amount": 100
+   }
+  },
+  {
+   "tier": 28,
+   "free": {
+    "type": "coins",
+    "amount": 50
+   },
+   "premium": {
+    "type": "coins",
+    "amount": 100
+   }
+  },
+  {
+   "tier": 29,
+   "free": null,
+   "premium": {
+    "type": "coins",
+    "amount": 100
+   }
+  },
+  {
+   "tier": 30,
+   "free": {
+    "type": "joker",
+    "id": "joker_5050",
+    "amount": 2
+   },
+   "premium": {
+    "type": "item",
+    "id": "avatar_s1_2"
+   }
+  },
+  {
+   "tier": 31,
+   "free": null,
+   "premium": {
+    "type": "coins",
+    "amount": 100
+   }
+  },
+  {
+   "tier": 32,
+   "free": {
+    "type": "coins",
+    "amount": 50
+   },
+   "premium": {
+    "type": "coins",
+    "amount": 100
+   }
+  },
+  {
+   "tier": 33,
+   "free": null,
+   "premium": {
+    "type": "coins",
+    "amount": 100
+   }
+  },
+  {
+   "tier": 34,
+   "free": {
+    "type": "coins",
+    "amount": 50
+   },
+   "premium": {
+    "type": "item",
+    "id": "banner_s1_aurora"
+   }
+  },
+  {
+   "tier": 35,
+   "free": null,
+   "premium": {
+    "type": "coins",
+    "amount": 100
+   }
+  },
+  {
+   "tier": 36,
+   "free": {
+    "type": "coins",
+    "amount": 50
+   },
+   "premium": {
+    "type": "coins",
+    "amount": 100
+   }
+  },
+  {
+   "tier": 37,
+   "free": null,
+   "premium": {
+    "type": "coins",
+    "amount": 100
+   }
+  },
+  {
+   "tier": 38,
+   "free": {
+    "type": "coins",
+    "amount": 50
+   },
+   "premium": {
+    "type": "item",
+    "id": "frame_s1_crown"
+   }
+  },
+  {
+   "tier": 39,
+   "free": null,
+   "premium": {
+    "type": "coins",
+    "amount": 100
+   }
+  },
+  {
+   "tier": 40,
+   "free": {
+    "type": "coins",
+    "amount": 300
+   },
+   "premium": {
+    "type": "item",
+    "id": "avatar_s1_3"
+   }
+  }
+ ],
+ "weekly": [
+  [
+   {
+    "id": "w1_1",
+    "type": "duels_played",
+    "target": 5,
+    "xp": 400
+   },
+   {
+    "id": "w1_2",
+    "type": "duels_won",
+    "target": 2,
+    "xp": 500
+   },
+   {
+    "id": "w1_3",
+    "type": "daily_played",
+    "target": 3,
+    "xp": 400
+   }
+  ],
+  [
+   {
+    "id": "w2_1",
+    "type": "mode_played",
+    "target": 3,
+    "xp": 400,
+    "mode": "survival"
+   },
+   {
+    "id": "w2_2",
+    "type": "correct_answers",
+    "target": 40,
+    "xp": 500
+   },
+   {
+    "id": "w2_3",
+    "type": "duels_won",
+    "target": 4,
+    "xp": 600
+   }
+  ],
+  [
+   {
+    "id": "w3_1",
+    "type": "mode_played",
+    "target": 3,
+    "xp": 400,
+    "mode": "time_attack"
+   },
+   {
+    "id": "w3_2",
+    "type": "mode_won",
+    "target": 3,
+    "xp": 500,
+    "mode": "classic"
+   },
+   {
+    "id": "w3_3",
+    "type": "daily_played",
+    "target": 4,
+    "xp": 500
+   }
+  ],
+  [
+   {
+    "id": "w4_1",
+    "type": "duels_played",
+    "target": 10,
+    "xp": 500
+   },
+   {
+    "id": "w4_2",
+    "type": "correct_answers",
+    "target": 70,
+    "xp": 600
+   },
+   {
+    "id": "w4_3",
+    "type": "mode_won",
+    "target": 2,
+    "xp": 600,
+    "mode": "survival"
+   }
+  ],
+  [
+   {
+    "id": "w5_1",
+    "type": "mode_won",
+    "target": 2,
+    "xp": 600,
+    "mode": "time_attack"
+   },
+   {
+    "id": "w5_2",
+    "type": "duels_won",
+    "target": 6,
+    "xp": 700
+   },
+   {
+    "id": "w5_3",
+    "type": "daily_played",
+    "target": 5,
+    "xp": 500
+   }
+  ],
+  [
+   {
+    "id": "w6_1",
+    "type": "duels_played",
+    "target": 15,
+    "xp": 600
+   },
+   {
+    "id": "w6_2",
+    "type": "correct_answers",
+    "target": 100,
+    "xp": 700
+   },
+   {
+    "id": "w6_3",
+    "type": "duels_won",
+    "target": 8,
+    "xp": 800
+   }
+  ]
+ ]
+}

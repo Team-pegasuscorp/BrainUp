@@ -79,7 +79,7 @@ async def main() -> None:
 
     status, body = call("POST", "/pass/claim", {"device_id": device, "tier": 10, "track": "free"})
     check("a tier not reached cannot be claimed", status == 409 and body["detail"] == "not_reached", body)
-    psql(f"UPDATE pass_progress SET xp = 1700 WHERE player_id = '{player['id']}'")
+    psql(f"UPDATE pass_progress SET xp = 2500 WHERE player_id = '{player['id']}'")
     status, body = call("POST", "/pass/claim", {"device_id": device, "tier": 2, "track": "free"})
     check("a reached tier gives its reward", status == 200 and body["reward"]["type"] == "coins", body)
     status, body = call("POST", "/pass/claim", {"device_id": device, "tier": 2, "track": "free"})

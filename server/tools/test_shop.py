@@ -133,7 +133,7 @@ async def main() -> None:
     _, worn = call("POST", "/players", {"device_id": device, "display_name": "ShopTest",
                                         "cosmetics": {"avatar": "lucas", "frame": "frame_ocean", "banner": "banner_gold"}})
     check("owned and starter items are kept, unowned ones reset",
-          worn["cosmetics"] == {"avatar": "lucas", "frame": "frame_ocean", "banner": ""}, worn["cosmetics"])
+          worn["cosmetics"] == {"avatar": "lucas", "frame": "frame_ocean", "banner": "", "title": ""}, worn["cosmetics"])
 
     gains = [call("POST", "/pass/quest", {"device_id": device, "quest_id": f"q{i}"})[1].get("coins_gained") for i in range(4)]
     check("three quests pay coins per day, not four", gains == [20, 20, 20, 0], gains)
@@ -145,7 +145,7 @@ async def main() -> None:
     check("daily challenge pays once", daily.get("coins_gained") == 30 and again.get("coins_gained") == 0,
           f"{daily.get('coins_gained')} / {again.get('coins_gained')}")
 
-    psql(f"UPDATE pass_progress SET xp = 1700 WHERE player_id = '{pid}'")
+    psql(f"UPDATE pass_progress SET xp = 2500 WHERE player_id = '{pid}'")
     status, body = call("POST", "/pass/claim", {"device_id": device, "tier": 2, "track": "free"})
     amount = body.get("reward", {}).get("amount")
     check("a coin tier of the pass credits the wallet", status == 200 and body.get("coins_gained") == amount, body)

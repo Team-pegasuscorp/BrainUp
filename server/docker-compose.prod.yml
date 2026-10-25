@@ -35,6 +35,8 @@ services:
       GOOGLE_AUTH_MOCK_SUB: ""
       ## Per-player / per-IP limits (app/rate_limit.py). 0 only to debug.
       RATE_LIMIT_ENABLED: ${RATE_LIMIT_ENABLED:-1}
+      ## Daily shop selection (app/shop.py rotation). 0 sells the whole catalogue.
+      SHOP_ROTATION: ${SHOP_ROTATION:-1}
     depends_on:
       postgres:
         condition: service_healthy

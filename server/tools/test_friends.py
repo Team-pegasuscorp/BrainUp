@@ -48,9 +48,9 @@ def psql(sql: str) -> None:
 
 
 def give_jokers(player_id: str) -> None:
-    """Pretend tier 5 of season 1 was claimed on both tracks: 1x 50/50 + 2x time."""
+    """Pretend tier 5 of the launch season (givre) was claimed on both tracks: 1x 50/50 + 2x time."""
     psql(f"""INSERT INTO pass_progress (player_id, season_id, xp, premium, claimed)
-             VALUES ('{player_id}', 's1', 4000, true, '{{"free": [5], "premium": [5]}}')
+             VALUES ('{player_id}', 'givre', 4000, true, '{{"free": [5], "premium": [5]}}')
              ON CONFLICT (player_id, season_id) DO UPDATE SET claimed = EXCLUDED.claimed;""")
 
 

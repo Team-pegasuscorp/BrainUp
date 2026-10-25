@@ -4,9 +4,11 @@
 ## Prices come from data/shop/catalog.json, a manual copy of the game's catalogue: re-copy it
 ## when items or prices change in the game repo (like data/questions).
 import json
+import math
 import os
+import random
 import uuid
-from datetime import date
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 from sqlalchemy import text
@@ -34,6 +36,13 @@ LEAGUES = (
     ("diamond", 2800, 500),
 )
 JOKER_PRICES = {"joker_5050": 150, "joker_time": 150}
+## Daily selection (docs/ECONOMIE.md §2.3): the same for everyone, new at 00:00 UTC.
+## Only these items can be bought that day; jokers are always on sale.
+## SHOP_ROTATION=0 sells the whole catalogue (local stack, so tools/ suites can buy fixed ids).
+ROTATION = os.environ.get("SHOP_ROTATION", "1") != "0"
+ROTATION_SLOTS = (("common", 2), ("rare", 2), ("epic", 1), ("legendary", 1))
+FEATURED_RARITIES = ("legendary", "epic")
+ROTATION_EPOCH = date(2026, 1, 1)
 ## Rewarded ads (the player chooses to watch). The phone reports the reward: until AdMob
 ## server-side verification is wired (needs a public URL), the daily cap bounds any abuse.
 AD_COINS = 15
@@ -58,6 +67,35 @@ CATALOG = _load_catalog()
 def _for_sale(item: dict) -> bool:
     return (int(item.get("price", 0)) > 0 and item.get("source", "shop") == "shop"
             and (DEMO_ITEMS or not item.get("demo")))
+
+
+def rotation(day: date | None = None) -> dict:
+    """Today's selection. Each rarity pool is shuffled once per cycle and dealt a few
+    items a day, so every item shows up once per cycle (pool size / slots days)."""
+    day = day or battle_pass.today()
+    index = (day - ROTATION_EPOCH).days
+    picks: dict[str, list[str]] = {}
+    for rarity, slots in ROTATION_SLOTS:
+        pool = sorted(i for i, item in CATALOG.items() if _for_sale(item) and item.get("rarity") == rarity)
+        if not pool:
+            picks[rarity] = []
+            continue
+        cycle_days = max(1, math.ceil(len(pool) / slots))
+        order = pool[:]
+        random.Random(f"shop:{rarity}:{index // cycle_days}").shuffle(order)
+        start = (index % cycle_days) * slots
+        picks[rarity] = [order[(start + k) % len(order)] for k in range(min(slots, len(order)))]
+    featured = [i for rarity in FEATURED_RARITIES for i in picks.get(rarity, [])]
+    items = [i for rarity, _ in ROTATION_SLOTS if rarity not in FEATURED_RARITIES for i in picks[rarity]]
+    ends = datetime.combine(day + timedelta(days=1), datetime.min.time(), tzinfo=timezone.utc)
+    return {"day": day.isoformat(), "featured": featured, "items": items, "ends_at": ends.isoformat()}
+
+
+def on_sale_today(item_id: str) -> bool:
+    if not ROTATION:
+        return True
+    today = rotation()
+    return item_id in today["featured"] or item_id in today["items"]
 
 
 def credit(conn: Connection, player_id: str, amount: int, reason: str, ref: str) -> int:
@@ -106,6 +144,8 @@ def buy_item(conn: Connection, player_id: str, item_id: str) -> None:
         raise ShopError("unknown_item", 404)
     if not _for_sale(item):
         raise ShopError("not_for_sale")
+    if not on_sale_today(item_id):
+        raise ShopError("not_in_rotation")
     _lock_player(conn, player_id)
     if item_id in owned_items(conn, player_id):
         raise ShopError("already_owned")
@@ -211,11 +251,16 @@ def state(conn: Connection, player_id: str) -> dict:
     trophies, seeded = conn.execute(
         text("SELECT trophies, trophies_seeded FROM players WHERE id = :p"), {"p": player_id}
     ).one()
+    selection = rotation() if ROTATION else None
+    on_sale = set(selection["featured"] + selection["items"]) if selection else None
     return {
         "coins": balance(conn, player_id),
         "trophies": trophies if seeded else None,
         "owned": sorted(owned_items(conn, player_id)),
-        "prices": {item_id: int(item["price"]) for item_id, item in CATALOG.items() if _for_sale(item)},
+        ## Older clients list what is in `prices`: limiting it to the selection is enough for them.
+        "prices": {item_id: int(item["price"]) for item_id, item in CATALOG.items()
+                   if _for_sale(item) and (on_sale is None or item_id in on_sale)},
+        "rotation": selection,
         "jokers": battle_pass.jokers_available(conn, player_id),
         "joker_prices": JOKER_PRICES,
         "ads_left": ads_left(conn, player_id),

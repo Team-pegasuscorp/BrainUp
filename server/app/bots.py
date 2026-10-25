@@ -29,6 +29,9 @@ STARTER_AVATARS = (
 ## "" (default) is listed several times: most players keep the free look.
 BOT_FRAMES = ("", "", "", "frame_ocean", "frame_forest", "frame_sunset", "frame_frost", "frame_prism", "frame_royal")
 BOT_BANNERS = ("", "", "", "banner_ocean", "banner_forest", "banner_sunset", "banner_candy", "banner_galaxy", "banner_gold")
+## Shop titles only (season titles would give away a pass exclusive to a fake player).
+BOT_TITLES = ("", "", "", "", "title_curious", "title_bookworm", "title_golden_brain", "title_genius",
+              "title_living_encyclopedia")
 
 
 def cosmetics_for(seed: str) -> dict:
@@ -38,6 +41,7 @@ def cosmetics_for(seed: str) -> dict:
         "avatar": rng.choice(STARTER_AVATARS),
         "frame": rng.choice(BOT_FRAMES),
         "banner": rng.choice(BOT_BANNERS),
+        "title": rng.choice(BOT_TITLES),
     }
 
 
