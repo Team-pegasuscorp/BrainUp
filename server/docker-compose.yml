@@ -26,6 +26,13 @@ services:
       PASS_DEV_UNLOCK: ${PASS_DEV_UNLOCK:-0}
       ## 1 = the shop also sells the placeholder "demo" avatars (development only).
       SHOP_DEMO_ITEMS: ${SHOP_DEMO_ITEMS:-0}
+      ## Google Play Games server auth (OAuth *web* client). Empty = POST /players/play_games
+      ## answers 503 until the Play Console credentials are configured.
+      GOOGLE_PLAY_WEB_CLIENT_ID: ${GOOGLE_PLAY_WEB_CLIENT_ID:-}
+      GOOGLE_PLAY_WEB_CLIENT_SECRET: ${GOOGLE_PLAY_WEB_CLIENT_SECRET:-}
+      ## Test only: skips the Google exchange and accepts any auth code as this
+      ## Google account id. Never set on a real deployment.
+      GOOGLE_AUTH_MOCK_SUB: ${GOOGLE_AUTH_MOCK_SUB:-}
     ports:
       - "8000:8000"
     depends_on:

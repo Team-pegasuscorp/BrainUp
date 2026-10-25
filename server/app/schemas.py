@@ -29,6 +29,16 @@ class Player(BaseModel):
     display_name: str
     created_at: datetime
     cosmetics: Cosmetics = Cosmetics()
+    ## Set once the account is linked through Play Games ("" / absent = not linked).
+    play_games_player_id: str | None = None
+
+
+class PlayGamesLink(BaseModel):
+    device_id: str | None = Field(default=None, max_length=128)
+    server_auth_code: str | None = Field(default=None, max_length=2048)
+    ## Optional client hints; the server only trusts the verified token (see app/play_games.py).
+    display_name: str | None = Field(default=None, max_length=40)
+    play_games_player_id: str | None = Field(default=None, max_length=128)
 
 
 class MatchSubmit(BaseModel):

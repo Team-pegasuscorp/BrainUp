@@ -11,6 +11,7 @@ import battle_pass
 import bots
 import friends
 import leaderboard_bots
+import play_games
 import shop
 from db import engine
 from live_match import handle_live_socket
@@ -33,6 +34,7 @@ from schemas import (
     PassClaim,
     PassPremium,
     PassQuest,
+    PlayGamesLink,
     Player,
     AdReward,
     JokerUse,
@@ -108,6 +110,112 @@ def register_player(payload: PlayerRegister):
                 "level": payload.level,
             },
         ).mappings().one()
+    return row
+
+
+## Tables/columns referencing players(id); on a merge, rows owned by the dropped
+## guest are re-attributed to the kept account, then the guest row is deleted.
+_PLAYER_REFERENCES = [
+    ("challenges", "challenger_id"),
+    ("challenges", "opponent_id"),
+    ("coin_ledger", "player_id"),
+    ("daily_results", "player_id"),
+    ("friend_challenges", "from_id"),
+    ("friend_challenges", "to_id"),
+    ("matches", "player_id"),
+    ("pass_progress", "player_id"),
+    ("player_items", "player_id"),
+]
+
+
+def _merge_player(conn, keep_id, drop_id) -> None:
+    for table, column in _PLAYER_REFERENCES:
+        conn.execute(
+            text(f"UPDATE {table} SET {column} = :keep WHERE {column} = :drop"),
+            {"keep": keep_id, "drop": drop_id})
+    ## Pairs are unique: rows that would duplicate an existing pair of the kept
+    ## account are dropped instead of transferred.
+    conn.execute(text(
+        "DELETE FROM friendships f WHERE f.player_id = :drop AND EXISTS ("
+        "SELECT 1 FROM friendships k WHERE k.player_id = :keep AND k.friend_id = f.friend_id)"
+    ), {"keep": keep_id, "drop": drop_id})
+    conn.execute(text("UPDATE friendships SET player_id = :keep WHERE player_id = :drop"),
+                 {"keep": keep_id, "drop": drop_id})
+    conn.execute(text("UPDATE friendships SET friend_id = :keep WHERE friend_id = :drop"),
+                 {"keep": keep_id, "drop": drop_id})
+    conn.execute(text(
+        "DELETE FROM friend_requests r WHERE r.from_id = :drop AND EXISTS ("
+        "SELECT 1 FROM friend_requests k WHERE k.from_id = :keep AND k.to_id = r.to_id)"
+    ), {"keep": keep_id, "drop": drop_id})
+    conn.execute(text("UPDATE friend_requests SET from_id = :keep WHERE from_id = :drop"),
+                 {"keep": keep_id, "drop": drop_id})
+    conn.execute(text("UPDATE friend_requests SET to_id = :keep WHERE to_id = :drop"),
+                 {"keep": keep_id, "drop": drop_id})
+    conn.execute(text("DELETE FROM players WHERE id = :drop"), {"drop": drop_id})
+
+
+@app.post("/players/play_games", response_model=Player)
+def link_play_games(payload: PlayGamesLink):
+    ## The server auth code is verified against Google before anything is stored:
+    ## a forged or replayed code never reaches the database.
+    if not payload.device_id or not payload.server_auth_code:
+        raise HTTPException(status_code=400, detail="device_id and server_auth_code are required")
+    try:
+        verified = play_games.verify_server_auth_code(payload.server_auth_code)
+    except play_games.AuthNotConfiguredError as error:
+        raise HTTPException(status_code=503, detail=str(error))
+    except play_games.AuthCodeError as error:
+        raise HTTPException(status_code=401, detail=str(error))
+    google_sub = verified["google_sub"]
+    try:
+        with engine.begin() as conn:
+            account = conn.execute(
+                text("SELECT id FROM players WHERE play_games_player_id = :g"),
+                {"g": google_sub}).first()
+            local = conn.execute(
+                text("SELECT id FROM players WHERE device_id = :d"),
+                {"d": payload.device_id}).first()
+            if account and local and account[0] != local[0]:
+                ## The Google account is already linked (older device) and this
+                ## device has its own guest: merge the guest into the account.
+                _merge_player(conn, str(account[0]), str(local[0]))
+                local = None
+            if account:
+                row = conn.execute(text(
+                    """
+                    UPDATE players
+                    SET device_id = :device_id,
+                        display_name = COALESCE(:display_name, display_name),
+                        last_seen_at = now()
+                    WHERE id = :id
+                    RETURNING id, device_id, display_name, created_at, cosmetics, play_games_player_id
+                    """
+                ), {"device_id": payload.device_id, "display_name": payload.display_name,
+                    "id": account[0]}).mappings().one()
+            elif local:
+                ## Guest -> Google migration: same row, same progress.
+                row = conn.execute(text(
+                    """
+                    UPDATE players
+                    SET play_games_player_id = :g,
+                        display_name = COALESCE(:display_name, display_name),
+                        last_seen_at = now()
+                    WHERE id = :id
+                    RETURNING id, device_id, display_name, created_at, cosmetics, play_games_player_id
+                    """
+                ), {"g": google_sub, "display_name": payload.display_name,
+                    "id": local[0]}).mappings().one()
+            else:
+                row = conn.execute(text(
+                    """
+                    INSERT INTO players (device_id, display_name, play_games_player_id, cosmetics, level)
+                    VALUES (:device_id, COALESCE(:display_name, 'Player'), :g, '{}'::jsonb, 1)
+                    RETURNING id, device_id, display_name, created_at, cosmetics, play_games_player_id
+                    """
+                ), {"device_id": payload.device_id, "display_name": payload.display_name,
+                    "g": google_sub}).mappings().one()
+    except IntegrityError:
+        raise HTTPException(status_code=409, detail="device_id already linked to another account")
     return row
 
 
