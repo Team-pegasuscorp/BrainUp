@@ -40,6 +40,10 @@ var _detail_panel: PanelContainer
 var _detail_item: Dictionary = {}
 ## A purchase is on its way to the server: ignore further taps until it answers.
 var _buying: bool = false
+var _sheet_tween: Tween
+var _detail_tween: Tween
+var _closing: bool = false
+var _rebuild_scheduled: bool = false
 
 
 func _ready() -> void:
@@ -84,50 +88,105 @@ func _ready() -> void:
 
 	SafeArea.changed.connect(_apply_safe_area)
 	_apply_safe_area()
-	LocaleManager.locale_changed.connect(func(_locale: String) -> void: _rebuild())
+	LocaleManager.locale_changed.connect(func(_locale: String) -> void: _schedule_rebuild())
 	NetworkManager.pass_received.connect(func(_state: Dictionary) -> void:
 		if visible and _tab == TAB_PASS:
-			_rebuild()
+			_schedule_rebuild()
 	)
 	AdsManager.availability_changed.connect(func(_ready: bool) -> void:
 		if visible and _tab == TAB_STORE:
-			_rebuild()
+			_schedule_rebuild()
 	)
 	AdsManager.reward_finished.connect(func(coins: int) -> void:
 		AudioManager.play("correct" if coins > 0 else "wrong")
 		if visible:
-			_rebuild()
+			_schedule_rebuild()
 	)
 	SaveManager.shop_changed.connect(func() -> void:
 		if visible:
-			_rebuild()
+			_schedule_rebuild()
 			if _detail_panel.visible:
-				_fill_detail()
+				call_deferred("_fill_detail")
 	)
 	NetworkManager.pass_reward_claimed.connect(func(_result: Dictionary) -> void: AudioManager.play("correct"))
 	NetworkManager.pass_claim_failed.connect(func(_reason: String) -> void: AudioManager.play("wrong"))
 
 
 func open(tab: String = TAB_STORE) -> void:
+	_closing = false
 	_tab = tab
 	NetworkManager.fetch_pass()
 	NetworkManager.fetch_shop()
-	_close_detail()
-	_rebuild()
+	_close_detail_instant()
 	visible = true
 	move_to_front()
+	_rebuild()
+	_present_sheet(true)
 	_close_button.grab_focus()
 
 
 ## ✕ / Back closes the purchase popup first, then the page.
 func close() -> void:
 	if _detail_panel.visible:
-		_close_detail()
+		_present_detail(false)
 		return
-	if not visible:
+	if not visible or _closing:
 		return
-	visible = false
-	closed.emit()
+	_closing = true
+	_present_sheet(false, func() -> void:
+		_closing = false
+		closed.emit()
+	)
+
+
+func _schedule_rebuild() -> void:
+	if _rebuild_scheduled:
+		return
+	_rebuild_scheduled = true
+	call_deferred("_run_scheduled_rebuild")
+
+
+func _run_scheduled_rebuild() -> void:
+	_rebuild_scheduled = false
+	if visible:
+		_rebuild()
+
+
+func _present_sheet(enter: bool, on_finished: Callable = Callable()) -> void:
+	if _sheet_tween != null and _sheet_tween.is_valid():
+		_sheet_tween.kill()
+	var dur := UiTokens.TAB_SWIPE_DURATION
+	if enter:
+		_margin.modulate.a = 0.0
+	_sheet_tween = create_tween()
+	_sheet_tween.set_trans(Tween.TRANS_QUINT)
+	_sheet_tween.set_ease(Tween.EASE_OUT if enter else Tween.EASE_IN)
+	_sheet_tween.tween_property(_margin, "modulate:a", 1.0 if enter else 0.0, dur)
+	_sheet_tween.finished.connect(func() -> void:
+		if not enter:
+			visible = false
+			_margin.modulate.a = 1.0
+		if on_finished.is_valid():
+			on_finished.call()
+	, CONNECT_ONE_SHOT)
+
+
+func _present_detail(enter: bool) -> void:
+	if _detail_tween != null and _detail_tween.is_valid():
+		_detail_tween.kill()
+	_detail_panel.pivot_offset = Vector2(_detail_panel.size.x * 0.5, _detail_panel.size.y * 0.5)
+	var dur := UiTokens.TAB_SWIPE_DURATION * 0.85
+	if enter:
+		_detail_backdrop.modulate.a = 0.0
+		_detail_panel.scale = Vector2(0.94, 0.94)
+	_detail_tween = create_tween()
+	_detail_tween.set_parallel(true)
+	_detail_tween.set_trans(Tween.TRANS_QUINT)
+	_detail_tween.set_ease(Tween.EASE_OUT if enter else Tween.EASE_IN)
+	_detail_tween.tween_property(_detail_backdrop, "modulate:a", 1.0 if enter else 0.0, dur)
+	_detail_tween.tween_property(_detail_panel, "scale", Vector2.ONE if enter else Vector2(0.94, 0.94), dur)
+	if not enter:
+		_detail_tween.finished.connect(_close_detail_instant, CONNECT_ONE_SHOT)
 
 
 func _apply_safe_area() -> void:
@@ -221,15 +280,16 @@ func _on_tab_pressed(tab: String) -> void:
 		return
 	_tab = tab
 	AudioManager.play("click")
-	_rebuild()
 	_scroll.scroll_vertical = 0
+	_coin_label.text = _format_amount(SaveManager.coins)
+	_style_tabs()
+	_schedule_rebuild()
 
 
 func _rebuild() -> void:
 	_coin_label.text = _format_amount(SaveManager.coins)
 	_style_tabs()
-	for child in _content.get_children():
-		child.queue_free()
+	_clear_content()
 	match _tab:
 		TAB_LOCKER:
 			_build_locker()
@@ -242,6 +302,15 @@ func _rebuild() -> void:
 	bottom_gap.custom_minimum_size.y = 40
 	_content.add_child(bottom_gap)
 	ScrollTouch.let_drags_through(_content)
+
+
+func _clear_content() -> void:
+	var stale: Array[Node] = []
+	for child in _content.get_children():
+		stale.append(child)
+	for child in stale:
+		_content.remove_child(child)
+		child.free()
 
 
 # --- Passe de combat ------------------------------------------------------------
@@ -1185,6 +1254,7 @@ func _open_detail(item: Dictionary) -> void:
 	_detail_panel.visible = true
 	_detail_backdrop.move_to_front()
 	_detail_panel.move_to_front()
+	call_deferred("_present_detail", true)
 
 
 func _fill_detail() -> void:
@@ -1275,8 +1345,18 @@ func _on_detail_equip() -> void:
 
 
 func _close_detail() -> void:
+	if not _detail_panel.visible:
+		return
+	_present_detail(false)
+
+
+func _close_detail_instant() -> void:
+	if _detail_tween != null and _detail_tween.is_valid():
+		_detail_tween.kill()
 	_detail_backdrop.visible = false
+	_detail_backdrop.modulate.a = 1.0
 	_detail_panel.visible = false
+	_detail_panel.scale = Vector2.ONE
 	_detail_item = {}
 
 

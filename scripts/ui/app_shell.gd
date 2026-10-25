@@ -105,7 +105,16 @@ func _ready() -> void:
 	_sync_shell_background(initial_page)
 	_notify_tab_shown(initial_page)
 	call_deferred("_maybe_show_auth_gate_on_launch")
+	call_deferred("_sync_named_profile_to_server")
 	## News: re-enable with NewsPopupPolicy.ENABLED and call _maybe_show_news_on_launch.
+
+
+func _sync_named_profile_to_server() -> void:
+	if SaveManager.player_name.strip_edges().is_empty():
+		return
+	if SaveManager.player_name == UiTokens.DEFAULT_PLAYER_NAME:
+		return
+	NetworkManager.sync_player_profile()
 
 
 func _apply_page_backgrounds() -> void:
@@ -788,6 +797,7 @@ func _close_auth_gate() -> void:
 func _finish_auth_gate() -> void:
 	AudioManager.play("click")
 	_close_auth_gate()
+	NetworkManager.sync_player_profile()
 	_notify_tab_shown(tab_swipe.get_tab())
 
 
@@ -882,15 +892,32 @@ func _on_tab_changed(page_index: int) -> void:
 	## The page itself refreshes on tab_settled, once the slide is over.
 
 
+var _last_settled_tab: int = -1
+
+
 func _notify_tab_shown(page_index: int) -> void:
 	var pages: Control = tab_swipe.pages_row
 	if page_index < 0 or page_index >= pages.get_child_count():
 		return
+	if _last_settled_tab >= 0 and _last_settled_tab != page_index and _last_settled_tab < pages.get_child_count():
+		var prev := pages.get_child(_last_settled_tab)
+		if prev.has_method("on_tab_hidden"):
+			prev.call("on_tab_hidden")
+	_last_settled_tab = page_index
+	for i in range(pages.get_child_count()):
+		var tab_page := pages.get_child(i)
+		if tab_page is CanvasItem:
+			(tab_page as CanvasItem).visible = true
+		if tab_page is Node:
+			(tab_page as Node).process_mode = (
+				Node.PROCESS_MODE_INHERIT if i == page_index else Node.PROCESS_MODE_DISABLED
+			)
 	var page := pages.get_child(page_index)
 	## All tabs share the Quiz navy canvas — no per-tab header wash.
 	top_app_bar.clear_margin_wash()
+	## Let the slide finish painting before heavy tab rebuilds (Social, Classement…).
 	if page.has_method("on_tab_shown"):
-		page.call("on_tab_shown")
+		page.call_deferred("on_tab_shown")
 
 
 func _on_settings_pressed() -> void:

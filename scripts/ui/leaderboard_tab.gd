@@ -5,6 +5,7 @@ const UiTokens = preload("res://scripts/config/ui_tokens.gd")
 const UiStyle = preload("res://scripts/config/ui_style.gd")
 const GameAssets = preload("res://scripts/config/game_assets.gd")
 const LeaderboardSnapshot = preload("res://scripts/profile/leaderboard_snapshot.gd")
+const LiveData = preload("res://scripts/config/live_data.gd")
 const PressScaleUtil = preload("res://scripts/ui/press_scale.gd")
 const UiFonts = preload("res://scripts/config/ui_fonts.gd")
 
@@ -25,9 +26,22 @@ func _ready() -> void:
 	LocaleManager.locale_changed.connect(_on_locale_changed)
 	NetworkManager.leaderboard_received.connect(_on_leaderboard_received)
 	NetworkManager.leaderboard_failed.connect(_on_leaderboard_failed)
+	NetworkManager.social_received.connect(_on_social_received)
+	NetworkManager.player_ready.connect(_on_player_ready)
 
 
 func on_tab_shown() -> void:
+	_online_entries_by_category.clear()
+	NetworkManager.ensure_player_registered()
+	NetworkManager.poll_social_now()
+	NetworkManager.fetch_leaderboard(_selected_filter)
+	_apply()
+
+
+func _on_player_ready(_player_id: String) -> void:
+	_online_entries_by_category.clear()
+	NetworkManager.poll_social_now()
+	NetworkManager.fetch_leaderboard(_selected_filter)
 	_apply()
 
 
@@ -46,7 +60,7 @@ func _rebuild() -> void:
 		scope_child.free()
 
 	var global_snap := _global_snapshot()
-	var friends_snap := LeaderboardSnapshot.build_friends(LocaleManager.get_content_locale())
+	var friends_snap := _friends_snapshot()
 
 	scope_host.add_child(_scope_toggle())
 	_tint_page_for_scope()
@@ -75,13 +89,16 @@ func _rebuild() -> void:
 
 func _global_snapshot() -> Dictionary:
 	var local_snap := LeaderboardSnapshot.build(_selected_filter, LocaleManager.get_content_locale())
-	## Never let a short online payload replace the padded demo board.
 	if bool(local_snap.get("is_demo", false)):
 		return local_snap
 	var online_entries: Variant = _online_entries_by_category.get(_selected_filter)
 	if online_entries != null:
 		return _snapshot_from_online(online_entries)
 	return local_snap
+
+
+func _friends_snapshot() -> Dictionary:
+	return LeaderboardSnapshot.build_friends(LocaleManager.get_content_locale())
 
 
 func _scope_accent() -> Color:
@@ -676,11 +693,7 @@ func _on_scope_pressed(scope_id: String) -> void:
 
 
 func _on_leaderboard_received(category: String, entries: Array) -> void:
-	_online_entries_by_category[category] = entries
-	## Ignore online updates while the padded demo board is active.
-	var local_snap := LeaderboardSnapshot.build(_selected_filter, LocaleManager.get_content_locale())
-	if bool(local_snap.get("is_demo", false)):
-		return
+	_online_entries_by_category[category] = _filter_online_entries(entries)
 	if category == _selected_filter and _scope == "general":
 		_rebuild()
 
@@ -689,9 +702,25 @@ func _on_leaderboard_failed(_category: String) -> void:
 	pass
 
 
+func _on_social_received(_data: Dictionary) -> void:
+	if _scope == "friends":
+		_rebuild()
+
+
+func _filter_online_entries(entries: Array) -> Array:
+	var out: Array = []
+	for raw in entries:
+		if typeof(raw) != TYPE_DICTIONARY:
+			continue
+		if LiveData.is_blocked_name(str(raw.get("display_name", ""))):
+			continue
+		out.append(raw)
+	return out
+
+
 func _snapshot_from_online(entries: Array) -> Dictionary:
 	var built: Array[Dictionary] = []
-	for raw in entries:
+	for raw in _filter_online_entries(entries):
 		if typeof(raw) != TYPE_DICTIONARY:
 			continue
 		var is_player := not NetworkManager.player_id.is_empty() \
@@ -707,7 +736,23 @@ func _snapshot_from_online(entries: Array) -> Dictionary:
 			"country": "FR",
 			"cosmetics": raw.get("cosmetics", {}),
 		})
+	_ensure_self_on_board(built)
 	return LeaderboardSnapshot._pack_board(built, _selected_filter)
+
+
+func _ensure_self_on_board(built: Array[Dictionary]) -> void:
+	if NetworkManager.player_id.is_empty():
+		return
+	for entry in built:
+		if str(entry.get("id", "")) == NetworkManager.player_id:
+			entry["is_player"] = true
+			return
+	var self_row := LeaderboardSnapshot.self_leaderboard_row(
+		_selected_filter, LocaleManager.get_content_locale()
+	)
+	self_row["id"] = NetworkManager.player_id
+	self_row["is_player"] = true
+	built.append(self_row)
 
 
 func _on_locale_changed(_locale: String) -> void:

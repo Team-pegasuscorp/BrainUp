@@ -4,7 +4,7 @@ from datetime import date, datetime, timezone
 from uuid import UUID
 
 from fastapi import FastAPI, HTTPException, Query, WebSocket
-from sqlalchemy import text
+from sqlalchemy import bindparam, text
 from sqlalchemy.exc import IntegrityError
 
 import battle_pass
@@ -16,6 +16,38 @@ import shop
 from db import engine
 from live_match import handle_live_socket
 from scoring import calculate_points
+
+## Public boards: drop CI / load-test rows and accounts that never really played.
+_LEADERBOARD_TEST_NAMES = (
+    "player",  ## default guest placeholder — not shown on the public board
+    "bot",
+    "drafta",
+    "draftb",
+    "shoptest",
+    "passtest",
+    "alpha",
+    "beta",
+    "ta",
+    "classic",
+    "survival",
+    "time_attack",
+)
+_LEADERBOARD_PLAYER_SQL = """
+  AND device_id NOT LIKE 'test-%'
+  AND lower(display_name) NOT IN :test_names
+  AND (
+    play_games_player_id IS NOT NULL
+    OR EXISTS (SELECT 1 FROM matches m WHERE m.player_id = players.id)
+  )
+"""
+_LEADERBOARD_PLAYER_JOIN_SQL = """
+  AND p.device_id NOT LIKE 'test-%'
+  AND lower(p.display_name) NOT IN :test_names
+  AND (
+    p.play_games_player_id IS NOT NULL
+    OR EXISTS (SELECT 1 FROM matches m2 WHERE m2.player_id = p.id)
+  )
+"""
 from schemas import (
     Challenge,
     ChallengeCreate,
@@ -97,7 +129,11 @@ def register_player(payload: PlayerRegister):
                 VALUES (:device_id, :display_name, COALESCE(CAST(:cosmetics AS jsonb), '{}'::jsonb),
                     COALESCE(:level, 1))
                 ON CONFLICT (device_id)
-                DO UPDATE SET display_name = EXCLUDED.display_name,
+                DO UPDATE SET
+                    display_name = CASE
+                        WHEN lower(trim(EXCLUDED.display_name)) IN ('player', '') THEN players.display_name
+                        ELSE EXCLUDED.display_name
+                    END,
                     cosmetics = COALESCE(CAST(:cosmetics AS jsonb), players.cosmetics),
                     level = COALESCE(:level, players.level), last_seen_at = now()
                 RETURNING id, device_id, display_name, created_at, cosmetics
@@ -242,43 +278,59 @@ def submit_match(payload: MatchSubmit):
 
 
 @app.get("/leaderboard", response_model=list[LeaderboardEntry])
-def leaderboard(category: str = "all", limit: int = Query(50, ge=1, le=100)):
+def leaderboard(
+    category: str = "all",
+    limit: int = Query(50, ge=1, le=100),
+    include_bots: bool = True,
+):
     if category == "all":
-        return _trophy_leaderboard(limit)
-    where_clause = "WHERE m.category = :category"
+        return _trophy_leaderboard(limit, include_bots=include_bots)
     query = f"""
         SELECT p.id AS player_id, p.display_name, p.cosmetics, MAX(m.score) AS score
         FROM matches m
         JOIN players p ON p.id = m.player_id
-        {where_clause}
+        WHERE m.category = :category
+        {_LEADERBOARD_PLAYER_JOIN_SQL}
         GROUP BY p.id, p.display_name, p.cosmetics
         ORDER BY score DESC, p.display_name ASC
         LIMIT :limit
     """
     with engine.connect() as conn:
-        rows = conn.execute(text(query), {"limit": limit, "category": category}).mappings().all()
+        rows = conn.execute(
+            text(query).bindparams(bindparam("test_names", expanding=True)),
+            {"limit": limit, "category": category, "test_names": list(_LEADERBOARD_TEST_NAMES)},
+        ).mappings().all()
     return [{"rank": index + 1, **row} for index, row in enumerate(rows)]
 
 
-def _trophy_leaderboard(limit: int) -> list[dict]:
-    """Main board: ranked by the server's trophies (see trophies.py), padded with hidden
+def _trophy_leaderboard(limit: int, *, include_bots: bool = True) -> list[dict]:
+    """Main board: ranked by the server's trophies (see trophies.py), optionally padded with
     filler bots. `score` carries the trophies, which the client shows with 🏆."""
-    with engine.begin() as conn:
-        leaderboard_bots.ensure(conn)
-        rows = conn.execute(
-            text(
-                """
-                SELECT player_id, display_name, score, cosmetics, is_bot FROM (
-                    SELECT id AS player_id, display_name, trophies AS score, cosmetics, false AS is_bot
-                    FROM players WHERE trophies_seeded OR trophies > 0
+    bot_union = ""
+    if include_bots:
+        bot_union = """
                     UNION ALL
                     SELECT id, display_name, trophies, NULL::jsonb, true FROM leaderboard_bots
+        """
+    with engine.begin() as conn:
+        if include_bots:
+            leaderboard_bots.ensure(conn)
+        trophy_sql = text(
+            f"""
+                SELECT player_id, display_name, score, cosmetics, is_bot FROM (
+                    SELECT id AS player_id, display_name, trophies AS score, cosmetics, false AS is_bot
+                    FROM players
+                    WHERE (trophies_seeded OR trophies > 0)
+                    {_LEADERBOARD_PLAYER_SQL}
+                    {bot_union}
                 ) board
                 ORDER BY score DESC, display_name ASC
                 LIMIT :limit
                 """
-            ),
-            {"limit": limit},
+        ).bindparams(bindparam("test_names", expanding=True))
+        rows = conn.execute(
+            trophy_sql,
+            {"limit": limit, "test_names": list(_LEADERBOARD_TEST_NAMES)},
         ).mappings().all()
     board = []
     for index, row in enumerate(rows):

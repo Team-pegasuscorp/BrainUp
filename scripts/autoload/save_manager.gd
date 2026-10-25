@@ -901,6 +901,13 @@ func get_leaderboard_score(category_filter: String) -> int:
 	return int(get_category_stats(category_filter).get("best_score", 0))
 
 
+func clear_leaderboard_rivals_for_live() -> void:
+	if leaderboard_rivals.is_empty():
+		return
+	leaderboard_rivals.clear()
+	save_data()
+
+
 func ensure_leaderboard_rivals() -> void:
 	if not leaderboard_rivals.is_empty():
 		return

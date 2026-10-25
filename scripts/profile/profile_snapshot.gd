@@ -9,6 +9,7 @@ const UiTokens = preload("res://scripts/config/ui_tokens.gd")
 const CountryFlags = preload("res://scripts/profile/country_flags.gd")
 const TrophyLeagues = preload("res://scripts/profile/trophy_leagues.gd")
 
+const LiveData = preload("res://scripts/config/live_data.gd")
 const USE_DEMO_WHEN_EMPTY: bool = true
 ## Demo data only when the save is empty; never override a real profile.
 const FORCE_DEMO_PROFILE: bool = false
@@ -18,7 +19,9 @@ const HISTORY_OPPONENTS: Array[String] = ["Lucas", "Emma", "Noah", "Léa", "Hugo
 
 static func build_full(locale: String) -> Dictionary:
 	var data := _from_save(locale)
-	if FORCE_DEMO_PROFILE or (USE_DEMO_WHEN_EMPTY and int(data.get("games_played", 0)) == 0):
+	if LiveData.show_ui_placeholders() and (
+		FORCE_DEMO_PROFILE or (USE_DEMO_WHEN_EMPTY and int(data.get("games_played", 0)) == 0)
+	):
 		data = _merge_demo(data, locale)
 	data["achievements"] = _build_achievements(data)
 	data["ranking"] = _build_ranking(data, locale)

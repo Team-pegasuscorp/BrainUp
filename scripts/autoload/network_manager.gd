@@ -62,6 +62,7 @@ const LiveMatchmakingScript = preload("res://scripts/profile/live_matchmaking.gd
 const ScenePaths = preload("res://scripts/config/scene_paths.gd")
 
 var player_id: String = ""
+var _registering_player: bool = false
 
 var _players_request: HTTPRequest
 var _play_games_request: HTTPRequest
@@ -290,11 +291,34 @@ func _ready() -> void:
 	_shop_request = _make_request_node()
 	SaveManager.cosmetics_changed.connect(_sync_cosmetics)
 	_load_quest_outbox()
-	_register_player()
+	call_deferred("ensure_player_registered")
+
+
+## Retries POST /players when the first attempt failed (offline at boot, etc.).
+func ensure_player_registered() -> void:
+	if _registering_player:
+		return
+	_registering_player = true
+	await _register_player()
+	_registering_player = false
+
+
+## Push the current local pseudo / look after guest sign-in or profile edits.
+func sync_player_profile() -> void:
+	if _registering_player:
+		return
+	_registering_player = true
+	await _register_player()
+	_registering_player = false
 
 
 func fetch_leaderboard(category: String) -> void:
-	var url := "%s/leaderboard?category=%s" % [BASE_URL, category.uri_encode()]
+	## Général (category=all): server pads with leaderboard_bots (realistic nicknames).
+	## Test rows in `players` stay filtered server-side; other categories = scores only.
+	var with_bots := "true" if category == "all" else "false"
+	var url := "%s/leaderboard?category=%s&include_bots=%s" % [
+		BASE_URL, category.uri_encode(), with_bots,
+	]
 	if _leaderboard_request.request(url) != OK:
 		leaderboard_failed.emit(category)
 		return
@@ -652,8 +676,10 @@ func _register_player() -> void:
 
 	player_id = str(parsed.get("id", ""))
 	if not player_id.is_empty():
+		SaveManager.clear_leaderboard_rivals_for_live()
 		player_ready.emit(player_id)
 		fetch_shop()
+		fetch_social()
 
 
 ## Link this device to a verified Play Games account (server checks server_auth_code).

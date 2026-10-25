@@ -357,7 +357,7 @@ func _move_active_pill(animate: bool) -> void:
 		_pill_tween.kill()
 	_pill_tween = create_tween()
 	_pill_tween.set_parallel(true)
-	_pill_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	_pill_tween.set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_IN_OUT)
 	_pill_tween.tween_property(active_pill, "position", target_pos, UiTokens.BOTTOM_NAV_PILL_DURATION)
 	_pill_tween.tween_property(active_pill, "size", target_size, UiTokens.BOTTOM_NAV_PILL_DURATION)
 

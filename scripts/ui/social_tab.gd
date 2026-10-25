@@ -7,13 +7,14 @@ const QuestionLoaderScript = preload("res://scripts/quiz/question_loader.gd")
 const ScenePaths = preload("res://scripts/config/scene_paths.gd")
 const PressScaleUtil = preload("res://scripts/ui/press_scale.gd")
 const GameAssets = preload("res://scripts/config/game_assets.gd")
+const LiveData = preload("res://scripts/config/live_data.gd")
 
 ## Async create/join challenge tiles — kept in code, hidden from the Social page for now.
 ## Flip to `true` to restore `_create_section` / `_join_section` / `_challenge_card`.
 const SHOW_ASYNC_CHALLENGE_TILES := false
 ## Until the server answers (offline, no backend), show the demo friends / requests so
 ## the tab can still be designed. Real data replaces them on the first /social reply.
-const SHOW_DEMO_WHEN_OFFLINE := true
+const SHOW_DEMO_WHEN_OFFLINE := false
 
 @onready var content: VBoxContainer = %Content
 @onready var message_label: Label = %MessageLabel
@@ -46,6 +47,10 @@ var _social_live: bool = false
 var _real_friends: Array = []
 ## Last data drawn, to redraw only when a poll brings something new.
 var _social_signature: String = ""
+## While this tab is on screen, poll faster than the global 15 s tick.
+const _ACTIVE_POLL_SEC := 5.0
+var _social_tab_active: bool = false
+var _social_poll_left: float = 0.0
 var _search_query: String = ""
 var _search_results: Array = []
 ## Invite being accepted (waiting for the server's go before opening the duel).
@@ -53,7 +58,7 @@ var _accepting_challenge: Dictionary = {}
 
 
 func _ready() -> void:
-	if SHOW_DEMO_WHEN_OFFLINE:
+	if _should_show_social_demo():
 		_friend_requests = _demo_friend_requests()
 		_challenge_requests = _demo_challenge_requests()
 	_prune_expired_challenge_requests()
@@ -73,8 +78,15 @@ func _ready() -> void:
 	NetworkManager.friend_challenge_sent.connect(_on_friend_challenge_sent)
 	NetworkManager.friend_challenge_failed.connect(_on_friend_challenge_failed)
 	NetworkManager.friend_challenge_accepted.connect(_on_my_challenge_accepted)
+	NetworkManager.player_ready.connect(_on_player_ready)
 	if not NetworkManager.social_state.is_empty():
 		_on_social_received(NetworkManager.social_state)
+
+
+func _on_player_ready(_player_id: String) -> void:
+	NetworkManager.poll_social_now()
+	if _social_tab_active:
+		_apply()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -102,8 +114,24 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func on_tab_shown() -> void:
+	_social_tab_active = true
+	_social_poll_left = 0.0
+	NetworkManager.ensure_player_registered()
 	NetworkManager.poll_social_now()
 	_apply()
+
+
+func on_tab_hidden() -> void:
+	_social_tab_active = false
+
+
+func _process(delta: float) -> void:
+	if not _social_tab_active:
+		return
+	_social_poll_left -= delta
+	if _social_poll_left <= 0.0:
+		_social_poll_left = _ACTIVE_POLL_SEC
+		NetworkManager.poll_social_now()
 
 
 # --- Server data ----------------------------------------------------------------
@@ -149,17 +177,21 @@ func _on_social_received(data: Dictionary) -> void:
 	var signature := JSON.stringify([_real_friends, _friend_requests, _challenge_requests])
 	if signature == _social_signature:
 		return
-	## Never redraw under an open sheet: the next poll will.
-	if not _selected_friend.is_empty() or (_challenge_mode_picker != null and _challenge_mode_picker.visible):
-		return
 	_social_signature = signature
-	_rebuild_content()
 	if _friends_page != null and _friends_page.visible:
 		_populate_friends_page()
 	if _friend_requests_page != null and _friend_requests_page.visible:
 		_populate_friend_requests_page()
 	if _challenge_requests_page != null and _challenge_requests_page.visible:
 		_populate_challenge_requests_page()
+	## Never rebuild the main scroll under an open sheet (sub-pages refreshed above).
+	if not _selected_friend.is_empty():
+		return
+	if _challenge_mode_picker != null and _challenge_mode_picker.visible:
+		return
+	if _friend_detail_panel != null and _friend_detail_panel.visible:
+		return
+	_rebuild_content()
 
 
 ## Server player summary -> the dictionary the Social widgets read.
@@ -2354,15 +2386,24 @@ func _friend_h2h_label(friend: Dictionary) -> String:
 	return "%d-%d" % [int(row.get("wins", 0)), int(row.get("losses", 0))]
 
 
+func _should_show_social_demo() -> bool:
+	if not SHOW_DEMO_WHEN_OFFLINE:
+		return false
+	if _social_live:
+		return false
+	if not NetworkManager.player_id.is_empty():
+		return false
+	return true
+
+
 func _get_friends() -> Array:
-	## Server friends once the first /social reply arrived; otherwise demo profiles for UI work.
-	if _social_live or not SHOW_DEMO_WHEN_OFFLINE:
-		return _real_friends
-	if SaveManager.has_method("get_friends"):
-		var stored: Variant = SaveManager.call("get_friends")
-		if stored is Array and not stored.is_empty():
-			return stored
-	return _demo_friends()
+	if LiveData.show_ui_placeholders() and _should_show_social_demo():
+		if SaveManager.has_method("get_friends"):
+			var stored: Variant = SaveManager.call("get_friends")
+			if stored is Array and not stored.is_empty():
+				return stored
+		return _demo_friends()
+	return _real_friends
 
 
 func _demo_friends() -> Array:

@@ -1,15 +1,18 @@
 extends Control
 class_name TabSwipeContainer
 
+const UiTokens = preload("res://scripts/config/ui_tokens.gd")
+
 ## Horizontal pager with touch swipe and animated tab transitions.
 
 signal tab_changed(index: int)
+signal tab_slide_started(from_index: int, to_index: int)
 ## The page has finished sliding in: the moment for heavy refreshes, so they never
 ## run during the slide (tab_changed fires at its start, for the nav highlight).
 signal tab_settled(index: int)
 
 @export var swipe_threshold: float = 80.0
-@export var animation_duration: float = 0.28
+@export var animation_duration: float = UiTokens.TAB_SWIPE_DURATION
 @export var drag_lock_threshold: float = 14.0
 
 @onready var pages_row: Control = %PagesRow
@@ -27,6 +30,7 @@ var _tween: Tween
 var _animating: bool = false
 var _input_enabled: bool = true
 var _settle_pending: bool = false
+var _slide_from_tab: int = 0
 
 
 func _ready() -> void:
@@ -47,8 +51,11 @@ func set_tab(index: int, animate: bool = true) -> void:
 	if next_tab == current_tab and not _dragging and not _animating:
 		return
 
+	_slide_from_tab = current_tab
 	current_tab = next_tab
 	_settle_pending = animate and _page_width > 0.0
+	if animate and _slide_from_tab != current_tab:
+		tab_slide_started.emit(_slide_from_tab, current_tab)
 	_snap_to_tab(current_tab, animate)
 	tab_changed.emit(current_tab)
 	if not _settle_pending:
@@ -95,10 +102,10 @@ func _snap_to_tab(index: int, animate: bool) -> void:
 		_tween.kill()
 	_animating = true
 	_tween = create_tween()
-	_tween.set_trans(Tween.TRANS_CUBIC)
-	_tween.set_ease(Tween.EASE_OUT)
+	_tween.set_trans(Tween.TRANS_QUINT)
+	_tween.set_ease(Tween.EASE_IN_OUT)
 	_tween.tween_property(pages_row, "position:x", target_x, animation_duration)
-	_tween.finished.connect(_on_tween_finished)
+	_tween.finished.connect(_on_tween_finished, CONNECT_ONE_SHOT)
 
 
 func _on_tween_finished() -> void:
@@ -107,6 +114,17 @@ func _on_tween_finished() -> void:
 	if _settle_pending:
 		_settle_pending = false
 		tab_settled.emit(current_tab)
+
+
+func is_animating() -> bool:
+	return _animating or _dragging
+
+
+func _page_at(index: int) -> Control:
+	if index < 0 or index >= tab_count:
+		return null
+	var child := pages_row.get_child(index)
+	return child as Control if child is Control else null
 
 
 func _gui_input(event: InputEvent) -> void:

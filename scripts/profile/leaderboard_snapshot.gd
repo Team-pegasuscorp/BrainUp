@@ -3,6 +3,7 @@ extends RefCounted
 
 const PlayerRanks = preload("res://scripts/profile/player_ranks.gd")
 const QuestionLoaderScript = preload("res://scripts/quiz/question_loader.gd")
+const LiveData = preload("res://scripts/config/live_data.gd")
 
 ## Demo names must match assets/avatars/demo/*.png slugs where possible.
 const DEMO_GLOBAL_NAMES: Array[String] = [
@@ -12,8 +13,8 @@ const DEMO_FRIEND_NAMES: Array[String] = [
 	"Lucas", "Emma", "Theo", "Hugo", "Noah", "Léa", "Chloé", "Adam", "Sarah", "Maya", "Yanis",
 ]
 const DEMO_FRIENDS_MIN := 12
-const USE_DEMO_WHEN_EMPTY: bool = true
-## Real leaderboard (server when online); demo only when the save is empty.
+## Offline-only mock board; never used once the account is registered on the server.
+const USE_DEMO_WHEN_EMPTY: bool = false
 const FORCE_DEMO_BOARD: bool = false
 
 ## After the podium: show ranks 4..6, then optionally a gap + context around the player.
@@ -30,10 +31,9 @@ static func build(category_filter: String, locale: String) -> Dictionary:
 	var filter := _normalize_filter(category_filter)
 	var entries: Array[Dictionary] = []
 
-	if FORCE_DEMO_BOARD or (USE_DEMO_WHEN_EMPTY and _total_games_played() == 0):
+	if _use_local_demo():
 		entries = _demo_entries(filter, locale, DEMO_GLOBAL_NAMES, true, true)
 	else:
-		SaveManager.ensure_leaderboard_rivals()
 		entries = _live_entries(filter, locale)
 
 	return _pack_board(entries, filter)
@@ -41,20 +41,19 @@ static func build(category_filter: String, locale: String) -> Dictionary:
 
 static func build_friends(locale: String) -> Dictionary:
 	var entries: Array[Dictionary] = []
-	if FORCE_DEMO_BOARD or (USE_DEMO_WHEN_EMPTY and _total_games_played() == 0):
+	if _use_local_demo():
 		entries = _demo_entries("all", locale, DEMO_FRIEND_NAMES, true, false)
 	else:
-		## Friends board reuses rival subset until online friends API exists.
-		SaveManager.ensure_leaderboard_rivals()
-		entries.append(_player_entry("all", locale))
-		var rivals: Array = SaveManager.leaderboard_rivals
-		var need := maxi(DEMO_FRIENDS_MIN - 1, 0)
-		var limit := mini(rivals.size(), need)
-		for i in range(limit):
-			if typeof(rivals[i]) != TYPE_DICTIONARY:
-				continue
-			entries.append(_rival_entry(rivals[i], "all", locale))
+		entries = _friends_entries_from_social(NetworkManager.social_state.get("friends", []), locale)
 	return _pack_board(entries, "friends")
+
+
+static func _use_local_demo() -> bool:
+	if not LiveData.show_ui_placeholders():
+		return false
+	if FORCE_DEMO_BOARD:
+		return true
+	return USE_DEMO_WHEN_EMPTY and _total_games_played() == 0 and NetworkManager.player_id.is_empty()
 
 
 static func available_filters(locale: String) -> Array[Dictionary]:
@@ -97,7 +96,7 @@ static func _pack_board(entries: Array[Dictionary], filter: String) -> Dictionar
 		"rest": _windowed_rest(entries, player_rank),
 		"player_rank": player_rank,
 		"total_count": entries.size(),
-		"is_demo": FORCE_DEMO_BOARD or (USE_DEMO_WHEN_EMPTY and _total_games_played() == 0),
+		"is_demo": _use_local_demo(),
 		"filter": filter,
 	}
 
@@ -161,11 +160,58 @@ static func _normalize_filter(category_filter: String) -> String:
 static func _live_entries(filter: String, locale: String) -> Array[Dictionary]:
 	var entries: Array[Dictionary] = []
 	entries.append(_player_entry(filter, locale))
+	if not _use_local_demo():
+		return entries
+	SaveManager.ensure_leaderboard_rivals()
 	for rival in SaveManager.leaderboard_rivals:
 		if typeof(rival) != TYPE_DICTIONARY:
 			continue
 		entries.append(_rival_entry(rival, filter, locale))
 	return entries
+
+
+static func _friends_entries_from_social(friends_raw: Array, locale: String) -> Array[Dictionary]:
+	var entries: Array[Dictionary] = []
+	entries.append(_player_trophy_entry(locale))
+	for raw in friends_raw:
+		if typeof(raw) != TYPE_DICTIONARY:
+			continue
+		var level := maxi(int(raw.get("level", 1)), 1)
+		entries.append({
+			"id": str(raw.get("id", "")),
+			"name": str(raw.get("display_name", raw.get("name", "?"))),
+			"score": int(raw.get("trophies", 0)),
+			"level": level,
+			"rank_title_key": PlayerRanks.title_for_level(level),
+			"is_player": false,
+			"category_id": "friends",
+			"category_name": _category_label("friends", locale),
+			"country": "FR",
+			"cosmetics": raw.get("cosmetics", {}),
+		})
+	return entries
+
+
+## Row for the local account when the public API hides placeholder names.
+static func self_leaderboard_row(filter: String, locale: String) -> Dictionary:
+	if filter == "all" or filter == "friends":
+		return _player_trophy_entry(locale)
+	return _player_entry(filter, locale)
+
+
+static func _player_trophy_entry(locale: String) -> Dictionary:
+	var level := SaveManager.level
+	return {
+		"id": "player",
+		"name": SaveManager.player_name,
+		"score": SaveManager.trophies,
+		"level": level,
+		"rank_title_key": PlayerRanks.title_for_level(level),
+		"is_player": true,
+		"category_id": "friends",
+		"category_name": _category_label("friends", locale),
+		"country": "FR",
+	}
 
 
 static func _player_entry(filter: String, locale: String) -> Dictionary:
