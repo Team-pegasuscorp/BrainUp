@@ -54,4 +54,4 @@ Les objets du passe sont dans `data/shop/catalog.json` avec `"source": "pass"` :
 - Utiliser les jokers (50/50, +5 s) : prévus pour le défi du jour et les parties non classées, jamais en duel classé.
   Fait pour les duels entre amis (classé coupé le 2026-10-19) et le défi du jour (2026-10-19, `POST /jokers/use`).
 - Images des 3 avatars exclusifs (générées sur RunPod) : pour l'instant des images provisoires (`"art_todo": true`).
-- Saison 2 : nouveau fichier `season_2.json` qui démarre à la fin de la saison 1.
+- Saison suivante : nouveau fichier `season_2.json` qui démarre à la fin de la saison 1. Depuis le 2026-10-25, la saison 1 de la sortie est « Givre » (id `givre`) ; « Éveil » attend dans `data/pass/drafts/` (voir docs/ECONOMIE.md).

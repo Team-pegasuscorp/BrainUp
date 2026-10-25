@@ -26,15 +26,16 @@ Problèmes :
 
 ## 2. Décisions (2026-10-25)
 
-### 2.1 Rythme du passe — dès la saison 2
+### 2.1 Rythme du passe — Saison 1 de la sortie
 - Palier : **800 → 1 000 XP**.
 - Duels : XP pleine pour les **5 premiers duels du jour**, **moitié** au-delà
   (défi du jour, quêtes et défis hebdo inchangés).
 - Résultat simulé : régulier fini **vers le jour 35** (semaine 5), accro vers le
   jour 24, occasionnel au palier 17.
-- La saison 1 reste telle quelle : changer `tier_xp` en cours de saison ferait
-  reculer le palier affiché des joueurs. **Elle finit le 2026-11-09 : la saison 2
-  doit exister avant.**
+- Mise à jour du 2026-10-25 : l'app ne sort pas avant le 2026-11-09, donc pas de
+  saison 2 maintenant. La saison **« Givre » devient la Saison 1 de la sortie**
+  (`data/pass/season_1.json`, id `givre`) ; l'ancienne saison « Éveil » est rangée
+  dans `data/pass/drafts/eveil.json` (non chargée) pour une saison future.
 
 ### 2.2 Passe premium (euros) : le contenu avant la monnaie
 - Neurones de la piste premium : **3 100 → ~1 000** (10 paliers de 100).
@@ -60,7 +61,14 @@ Problèmes :
 - Ensuite, à discuter : **emotes en duel** (protocole live + interface), **effets
   de victoire**.
 
-### 2.5 Achats en euros (avec Google Play Billing, après les comptes)
+### 2.5 Saison 1 « Givre » (sortie)
+- 40 paliers de 1 000 XP, 6 semaines. Piste premium : 13 objets exclusifs
+  (4 cadres, 4 bannières, 4 titres, **3 avatars** : Lynx des neiges et Manchot
+  des glaces épiques, Ours des neiges légendaire), 1 000 Neurones, 7 paliers de
+  jokers. Piste gratuite : 1 250 Neurones, jokers, 2 objets, 2 titres.
+- Pendant les tests, la saison démarre le 2026-10-25.
+
+### 2.6 Achats en euros (avec Google Play Billing, après les comptes)
 - **Passe premium** (proposition : 3,99 €).
 - **Packs de Neurones** (proposition : 500 = 0,99 € · 1 200 = 1,99 € ·
   3 500 = 4,99 €). Prix bas, public ado.
@@ -71,9 +79,18 @@ Problèmes :
 
 | Lot | Contenu | Qui |
 |---|---|---|
-| E1 | Saison 2 (`season_2.json`, palier 1 000 XP, piste premium refaite) + XP de duel dégressive | serveur |
-| E2 | Type d'objet « titre » (fait : 6 titres en boutique 300-1 500, 6 de saison 2, Casier « Titre », affiché sous le pseudo à l'Accueil, au Profil, au Classement, dans Social et en duel) ; catalogue agrandi avec E3 | serveur + jeu |
+| E1 | Saison de sortie « Givre » (`season_1.json`, palier 1 000 XP, piste premium refaite) + XP de duel dégressive (fait) | serveur |
+| E2 | Type d'objet « titre » (fait : 6 titres en boutique 300-1 500, 6 de la saison Givre, Casier « Titre », affiché sous le pseudo à l'Accueil, au Profil, au Classement, dans Social et en duel) ; catalogue agrandi avec E3 | serveur + jeu |
 | E3 | Boutique tournante (fait : 6 objets/jour, même sélection pour tous, nouvelle à 00:00 UTC, achat refusé hors sélection `not_in_rotation`, « Nouveautés dans … » ; catalogue 38 objets en vente = 12 communs, 12 rares, 8 épiques, 6 légendaires ; chaque objet revient une fois par cycle de 6 à 8 jours ; `SHOP_ROTATION=0` en local) | serveur + jeu |
 | E4 | Achats en euros (premium, packs, récompense sans pub) | après Play Billing |
 
-E1 est urgent (fin de saison 1 le 2026-11-09).
+## 4. Le jour du lancement
+
+1. **Avatars Givre** générés (pipeline RunPod des mascottes) : `avatar_givre_1..3`
+   ont encore `art_todo` (cercle vide en jeu).
+2. **Date de la saison** : `start` de `data/pass/season_1.json` = jour de la sortie.
+3. **Remise à zéro des comptes de test** (décidé le 2026-10-25) : comptes et
+   pseudos gardés ; progression du passe, Neurones et objets effacés :
+   `DELETE FROM pass_progress; DELETE FROM coin_ledger; DELETE FROM player_items;`
+   (sauvegarde `deploy/backup.sh` juste avant). Trophées : à décider.
+4. Prix des achats en euros (E4) et vraie clé de signature.
