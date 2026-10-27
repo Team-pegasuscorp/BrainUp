@@ -305,12 +305,13 @@ func _rebuild() -> void:
 
 
 func _clear_content() -> void:
+	## queue_free (not free): pass-track scroll may still have a ready callback pending.
 	var stale: Array[Node] = []
 	for child in _content.get_children():
 		stale.append(child)
 	for child in stale:
 		_content.remove_child(child)
-		child.free()
+		child.queue_free()
 
 
 # --- Passe de combat ------------------------------------------------------------
@@ -328,8 +329,11 @@ func _build_pass() -> void:
 	_content.add_child(_section_label("UI_PASS_REWARDS"))
 	_content.add_child(_pass_track(state))
 	_content.add_child(_section_label_text(tr("UI_PASS_WEEKLY").format({"week": int(state.get("week", 1))})))
-	for challenge in state.get("weekly", []):
-		_content.add_child(_pass_challenge_row(challenge))
+	var weekly: Variant = state.get("weekly", [])
+	if typeof(weekly) == TYPE_ARRAY:
+		for challenge in weekly:
+			if typeof(challenge) == TYPE_DICTIONARY:
+				_content.add_child(_pass_challenge_row(challenge))
 	_content.add_child(_pass_xp_legend(state))
 
 
@@ -348,10 +352,12 @@ func _pass_message(key: String) -> Control:
 ## Season name, days left, current tier, XP inside the tier and the premium state.
 func _pass_header(state: Dictionary) -> Control:
 	var tier := int(state.get("tier", 0))
-	var tier_xp := int(state.get("tier_xp", 800))
+	var tier_xp := maxi(int(state.get("tier_xp", 800)), 1)
 	var xp := int(state.get("xp", 0))
-	var max_tier := (state.get("tiers", []) as Array).size()
+	var tiers_raw: Variant = state.get("tiers", [])
+	var max_tier: int = (tiers_raw as Array).size() if typeof(tiers_raw) == TYPE_ARRAY else 0
 	var premium := bool(state.get("premium", false))
+	var xp_in_tier := xp % tier_xp
 
 	var card := PanelContainer.new()
 	var style := UiStyle.filled(Color(0.16, 0.10, 0.30, 1), 24)
@@ -393,9 +399,11 @@ func _pass_header(state: Dictionary) -> Control:
 	info.alignment = BoxContainer.ALIGNMENT_CENTER
 	info.add_theme_constant_override("separation", 4)
 	top.add_child(info)
-	var names: Dictionary = state.get("name", {})
+	var names_raw: Variant = state.get("name", {})
+	var names: Dictionary = names_raw if typeof(names_raw) == TYPE_DICTIONARY else {}
 	var title := Label.new()
-	title.text = str(names.get(str(LocaleManager.current_locale).substr(0, 2), names.get("en", "")))
+	var locale_key := str(LocaleManager.current_locale).substr(0, 2)
+	title.text = str(names.get(locale_key, names.get("en", "")))
 	title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	title.add_theme_font_size_override("font_size", UiScale.font(24))
 	title.add_theme_color_override("font_color", Color.WHITE)
@@ -410,13 +418,13 @@ func _pass_header(state: Dictionary) -> Control:
 	bar.show_percentage = false
 	bar.custom_minimum_size.y = 16
 	bar.max_value = float(tier_xp)
-	bar.value = float(tier_xp) if tier >= max_tier else float(xp % tier_xp)
+	bar.value = float(tier_xp) if tier >= max_tier else float(xp_in_tier)
 	bar.add_theme_stylebox_override("background", UiStyle.progress_bg())
 	bar.add_theme_stylebox_override("fill", UiStyle.progress_fill(PASS_GOLD))
 	column.add_child(bar)
 	var xp_line := Label.new()
 	xp_line.text = tr("UI_PASS_MAXED") if tier >= max_tier else tr("UI_PASS_XP_TO_NEXT").format({
-		"xp": xp % tier_xp, "need": tier_xp, "next": tier + 1,
+		"xp": xp_in_tier, "need": tier_xp, "next": tier + 1,
 	})
 	xp_line.add_theme_font_size_override("font_size", UiScale.font(15))
 	xp_line.add_theme_color_override("font_color", Color(1, 1, 1, 0.8))
@@ -481,9 +489,15 @@ func _pass_track(state: Dictionary) -> Control:
 
 	var tier := int(state.get("tier", 0))
 	var premium := bool(state.get("premium", false))
-	var claimed: Dictionary = state.get("claimed", {})
+	var claimed_raw: Variant = state.get("claimed", {})
+	var claimed: Dictionary = claimed_raw if typeof(claimed_raw) == TYPE_DICTIONARY else {}
 	row.add_child(_pass_track_labels())
-	for entry in state.get("tiers", []):
+	var tiers: Variant = state.get("tiers", [])
+	if typeof(tiers) != TYPE_ARRAY:
+		tiers = []
+	for entry in tiers:
+		if typeof(entry) != TYPE_DICTIONARY:
+			continue
 		var number := int(entry.get("tier", 0))
 		var column := VBoxContainer.new()
 		column.custom_minimum_size.x = PASS_COLUMN_WIDTH
@@ -496,10 +510,14 @@ func _pass_track(state: Dictionary) -> Control:
 		head.add_theme_font_size_override("font_size", UiScale.font(18))
 		head.add_theme_color_override("font_color", PASS_GOLD if reached else Color(1, 1, 1, 0.45))
 		column.add_child(head)
+		var claimed_premium: Variant = claimed.get("premium", [])
+		var claimed_free: Variant = claimed.get("free", [])
+		var premium_done: Array = claimed_premium if typeof(claimed_premium) == TYPE_ARRAY else []
+		var free_done: Array = claimed_free if typeof(claimed_free) == TYPE_ARRAY else []
 		column.add_child(_pass_reward_tile(entry.get("premium"), number, "premium",
-			reached and premium, (claimed.get("premium", []) as Array).has(float(number)) or (claimed.get("premium", []) as Array).has(number), not premium))
+			reached and premium, premium_done.has(float(number)) or premium_done.has(number), not premium))
 		column.add_child(_pass_reward_tile(entry.get("free"), number, "free",
-			reached, (claimed.get("free", []) as Array).has(float(number)) or (claimed.get("free", []) as Array).has(number), false))
+			reached, free_done.has(float(number)) or free_done.has(number), false))
 
 	## Start on the first reward waiting to be claimed, else on the current tier.
 	var focus_tier := tier
@@ -508,10 +526,18 @@ func _pass_track(state: Dictionary) -> Control:
 		focus_tier = int(claimables[0][0])
 	## The label column (92 + 10) comes before tier 1.
 	var target_x := maxf(float(focus_tier - 1) * (PASS_COLUMN_WIDTH + 10.0) + 102.0 - 40.0, 0.0)
+	## instance_id survives rebuild races better than a captured node ref + is_instance_valid.
+	var scroll_id := scroll.get_instance_id()
 	scroll.ready.connect(func() -> void:
-		await get_tree().process_frame
-		scroll.scroll_horizontal = int(target_x)
-	)
+		var tree := Engine.get_main_loop() as SceneTree
+		if tree == null:
+			return
+		await tree.process_frame
+		var alive := instance_from_id(scroll_id) as ScrollContainer
+		if alive == null:
+			return
+		alive.scroll_horizontal = int(target_x)
+	, CONNECT_ONE_SHOT)
 	return scroll
 
 
@@ -660,15 +686,22 @@ func _pass_claimables(state: Dictionary) -> Array:
 	var out := []
 	var tier := int(state.get("tier", 0))
 	var premium := bool(state.get("premium", false))
-	var claimed: Dictionary = state.get("claimed", {})
-	for entry in state.get("tiers", []):
+	var claimed_raw: Variant = state.get("claimed", {})
+	var claimed: Dictionary = claimed_raw if typeof(claimed_raw) == TYPE_DICTIONARY else {}
+	var tiers: Variant = state.get("tiers", [])
+	if typeof(tiers) != TYPE_ARRAY:
+		return out
+	for entry in tiers:
+		if typeof(entry) != TYPE_DICTIONARY:
+			continue
 		var number := int(entry.get("tier", 0))
 		if number > tier:
 			break
 		for track in ["free", "premium"]:
 			if typeof(entry.get(track)) != TYPE_DICTIONARY or (track == "premium" and not premium):
 				continue
-			var done: Array = claimed.get(track, [])
+			var done_raw: Variant = claimed.get(track, [])
+			var done: Array = done_raw if typeof(done_raw) == TYPE_ARRAY else []
 			if not (done.has(number) or done.has(float(number))):
 				out.append([number, track])
 	return out
@@ -730,7 +763,8 @@ func _challenge_text(challenge: Dictionary) -> String:
 
 
 func _pass_xp_legend(state: Dictionary) -> Control:
-	var rules: Dictionary = state.get("xp_rules", {})
+	var rules_raw: Variant = state.get("xp_rules", {})
+	var rules: Dictionary = rules_raw if typeof(rules_raw) == TYPE_DICTIONARY else {}
 	var label := Label.new()
 	label.text = tr("UI_PASS_XP_LEGEND").format({
 		"duel": int(rules.get("duel", 0)), "win": int(rules.get("duel_win_bonus", 0)),

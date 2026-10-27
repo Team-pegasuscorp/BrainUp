@@ -1015,7 +1015,7 @@ func _build_draft(choices: Array) -> void:
 		tile.clip_contents = true
 		tile.set_meta("accent", accent)
 		tile.pressed.connect(_on_draft_vote.bind(category_id))
-		var chrome := _draft_aurore_chrome(accent, false)
+		var chrome := _draft_aurore_chrome()
 		for state in ["normal", "hover", "pressed", "focus", "disabled"]:
 			tile.add_theme_stylebox_override(state, chrome)
 		var bg := AuroreTile.new()
@@ -1061,6 +1061,13 @@ func _build_draft(choices: Array) -> void:
 		votes.add_theme_font_size_override("font_size", UiScale.font(16))
 		votes.add_theme_color_override("font_color", Color(1, 1, 1, 0.9))
 		column.add_child(votes)
+		## Ring drawn above the aurore wash so the roulette contour stays readable.
+		var ring := Panel.new()
+		ring.name = "HighlightRing"
+		ring.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		ring.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		ring.add_theme_stylebox_override("panel", _draft_highlight_ring(false))
+		tile.add_child(ring)
 		_body.add_child(tile)
 		_draft_tiles[category_id] = tile
 	_feedback_label = _subtitle("")
@@ -1068,13 +1075,21 @@ func _build_draft(choices: Array) -> void:
 	_style_draft_tiles("", "", "")
 
 
-## Transparent chrome so AuroreTile shows through; white ring when highlighted.
-func _draft_aurore_chrome(accent: Color, lit: bool) -> StyleBoxFlat:
+## Transparent chrome so AuroreTile shows through.
+func _draft_aurore_chrome() -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0, 0, 0, 0)
+	style.set_corner_radius_all(20)
+	return style
+
+
+## White contour for the roulette — applied on HighlightRing above the aurore.
+func _draft_highlight_ring(lit: bool) -> StyleBoxFlat:
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color(0, 0, 0, 0)
 	style.set_corner_radius_all(20)
 	if lit:
-		style.set_border_width_all(4)
+		style.set_border_width_all(7)
 		style.border_color = Color.WHITE
 	else:
 		style.set_border_width_all(0)
@@ -1085,11 +1100,12 @@ func _style_draft_tiles(highlight: String, mine: String, theirs: String) -> void
 	for key in _draft_tiles:
 		var category_id := str(key)
 		var tile: Button = _draft_tiles[key]
-		var accent: Color = tile.get_meta("accent") if tile.has_meta("accent") else UiTokens.accent_for_category(category_id)
 		var lit := category_id == highlight
-		var style := _draft_aurore_chrome(accent, lit)
-		for state in ["normal", "hover", "pressed", "focus", "disabled"]:
-			tile.add_theme_stylebox_override(state, style)
+		var ring := tile.get_node_or_null("HighlightRing") as Panel
+		if ring != null:
+			ring.add_theme_stylebox_override("panel", _draft_highlight_ring(lit))
+			ring.visible = true
+			ring.move_to_front()
 		var bg := tile.get_node_or_null("AuroreFill") as AuroreTile
 		if bg != null:
 			## Roulette / pick: keep the lit tile bright, soften the others.
@@ -1662,14 +1678,21 @@ func _play_face_off() -> Control:
 	_my_status_label = null
 	_opponent_status_label = null
 	col.add_child(row)
-	## Status line under the tiles — keeps draft/play card sizes identical.
+	## Fixed-height status slot under the tiles so “prêt / a répondu” never reflows the page.
+	var badge_slot := Control.new()
+	badge_slot.custom_minimum_size.y = UiScale.font(22)
+	badge_slot.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	badge_slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	col.add_child(badge_slot)
 	_opponent_badge = Label.new()
+	_opponent_badge.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_opponent_badge.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_opponent_badge.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_opponent_badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_opponent_badge.visible = false
 	_opponent_badge.add_theme_font_size_override("font_size", UiScale.font(13))
 	_opponent_badge.add_theme_color_override("font_color", UiTokens.PODIUM_GOLD)
-	col.add_child(_opponent_badge)
+	_opponent_badge.modulate.a = 0.0
+	badge_slot.add_child(_opponent_badge)
 	return col
 
 
@@ -1819,7 +1842,8 @@ func _set_badge(target: Variant, text: String) -> void:
 		return
 	var label := target as Label
 	label.text = text
-	label.visible = not text.is_empty()
+	## Keep the reserved slot; only fade the copy so layout never jumps.
+	label.modulate.a = 0.0 if text.is_empty() else 1.0
 	if not text.is_empty():
 		_pulse(label, 1.3)
 

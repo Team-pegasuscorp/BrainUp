@@ -43,6 +43,8 @@ var _mode_hint: Label
 var _mode_section_label: Label
 var _mode_row: HBoxContainer
 var _duel_tiles: VBoxContainer
+## Pass fetch finished while the shop was open — rebuild the strip after close.
+var _pass_strip_dirty: bool = false
 
 ## Mode chips: [mode, label key, hint key, icon].
 const MODES := [
@@ -583,10 +585,9 @@ func _pass_strip() -> Control:
 	for button_state in ["normal", "hover", "pressed", "focus"]:
 		button.add_theme_stylebox_override(button_state, style)
 	_wire_aurore_fill(button, gold)
+	## Defer so PressScaleUtil can finish its tween before any tile rebuild.
 	button.pressed.connect(func() -> void:
-		var shell := get_tree().current_scene
-		if shell != null and shell.has_method("open_shop_tab"):
-			shell.call("open_shop_tab", "pass")
+		call_deferred("_open_pass_shop")
 	)
 	PressScaleUtil.wire(button, self)
 	var pad := MarginContainer.new()
@@ -622,7 +623,7 @@ func _pass_strip() -> Control:
 	column.add_child(title)
 
 	if active:
-		var tier_xp := int(state.get("tier_xp", 800))
+		var tier_xp := maxi(int(state.get("tier_xp", 800)), 1)
 		var bar := ProgressBar.new()
 		bar.show_percentage = false
 		bar.custom_minimum_size.y = 6
@@ -635,9 +636,56 @@ func _pass_strip() -> Control:
 	return button
 
 
+func _open_pass_shop() -> void:
+	var shell := _find_app_shell()
+	if shell != null and shell.has_method("open_shop_tab"):
+		shell.call("open_shop_tab", "pass")
+
+
+func _find_app_shell() -> Node:
+	var node: Node = self
+	while node != null:
+		if node.has_method("open_shop_tab"):
+			return node
+		node = node.get_parent()
+	return get_tree().current_scene if get_tree() != null else null
+
+
 func _on_pass_state(_state: Dictionary) -> void:
-	if _duel_only and is_inside_tree():
-		_build_duel_tiles()
+	## Never free the pass tile under a press / while the shop covers Quiz.
+	if not _duel_only or not is_inside_tree():
+		return
+	if _is_shop_open():
+		_pass_strip_dirty = true
+		return
+	call_deferred("_refresh_duel_tiles_after_pass")
+
+
+func _refresh_duel_tiles_after_pass() -> void:
+	if not is_inside_tree() or not _duel_only:
+		return
+	## Let PressScale finish before queue_free of the pass Button.
+	await get_tree().create_timer(0.25).timeout
+	if not is_inside_tree() or not _duel_only:
+		return
+	if _is_shop_open():
+		_pass_strip_dirty = true
+		return
+	_pass_strip_dirty = false
+	_build_duel_tiles()
+
+
+## Called from AppShell when the shop sheet closes.
+func refresh_pass_strip_if_dirty() -> void:
+	if not _pass_strip_dirty or not _duel_only or not is_inside_tree():
+		return
+	_pass_strip_dirty = false
+	_build_duel_tiles()
+
+
+func _is_shop_open() -> bool:
+	var shell := _find_app_shell()
+	return shell != null and shell.has_method("is_shop_open") and bool(shell.call("is_shop_open"))
 
 
 ## Compact aurore row for one duel mode — same rhythm as home content tiles.

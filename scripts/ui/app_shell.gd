@@ -719,10 +719,27 @@ func open_shop_tab(tab: String) -> void:
 	_shop_page.open(tab)
 
 
+func is_shop_open() -> bool:
+	return _shop_page != null and is_instance_valid(_shop_page) and _shop_page.visible
+
+
 ## Avatar / frame may have changed in the locker: redraw the visible tab.
 func _on_shop_closed() -> void:
 	tab_swipe.set_input_enabled(true)
 	_notify_tab_shown(tab_swipe.get_tab())
+	_refresh_quiz_pass_strip_if_dirty()
+
+
+## Quiz defers pass-strip rebuild while the shop is open; catch up after close.
+func _refresh_quiz_pass_strip_if_dirty() -> void:
+	var pages: Control = tab_swipe.pages_row
+	var page_index := ScenePaths.page_index_for_tab(ScenePaths.Tab.QUIZ)
+	if page_index < 0 or page_index >= pages.get_child_count():
+		return
+	var quiz_page := pages.get_child(page_index)
+	var select := quiz_page.get_node_or_null("%CategorySelect")
+	if select != null and select.has_method("refresh_pass_strip_if_dirty"):
+		select.call("refresh_pass_strip_if_dirty")
 
 
 ## Kept for later: set NewsPopupPolicy.ENABLED and call from _ready instead of auth.
