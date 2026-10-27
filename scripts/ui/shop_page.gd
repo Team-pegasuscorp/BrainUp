@@ -1214,6 +1214,7 @@ func _make_locker_tile(entry: Dictionary, tile_size: Vector2) -> Control:
 	var equipped := _is_equipped(entry)
 	var tile := Button.new()
 	tile.custom_minimum_size = tile_size
+	tile.clip_contents = true
 	tile.focus_mode = Control.FOCUS_NONE
 	var style := UiStyle.profile_surface(ShopCatalog.rarity_color(entry), equipped, 6)
 	style.set_border_width_all(3 if equipped else 1)
@@ -1232,13 +1233,20 @@ func _make_locker_tile(entry: Dictionary, tile_size: Vector2) -> Control:
 	var art := CenterContainer.new()
 	art.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	column.add_child(art)
-	art.add_child(_item_preview(entry, 104))
+	## Banners are wide: scale preview to the tile inner width so they don't spill.
+	var preview_side := 104.0
+	if str(entry.get("kind", "")) == ShopCatalog.KIND_BANNER:
+		preview_side = minf(104.0, (tile_size.x - 16.0) / 1.2)
+	art.add_child(_item_preview(entry, preview_side))
 	var label := Label.new()
 	label.text = tr("UI_SHOP_EQUIPPED") if equipped else _entry_name(entry)
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	label.add_theme_font_size_override("font_size", UiScale.font(12))
-	label.add_theme_color_override("font_color", ACCENT if equipped else Color(1, 1, 1, 0.85))
+	var label_color := ACCENT if equipped else Color(1, 1, 1, 0.85)
+	if not equipped and str(entry.get("kind", "")) == ShopCatalog.KIND_TITLE:
+		label_color = ShopCatalog.rarity_color(entry)
+	label.add_theme_color_override("font_color", label_color)
 	column.add_child(label)
 	return tile
 
@@ -1508,7 +1516,7 @@ func _title_preview(item: Dictionary, side: float) -> Control:
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	label.add_theme_font_size_override("font_size", UiScale.font(clampi(int(side * 0.14), 11, 17)))
-	label.add_theme_color_override("font_color", tint.lightened(0.8))
+	label.add_theme_color_override("font_color", tint if none else tint.lightened(0.15))
 	label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.35))
 	label.add_theme_constant_override("outline_size", 3)
 	plaque.add_child(label)
@@ -1516,13 +1524,20 @@ func _title_preview(item: Dictionary, side: float) -> Control:
 
 
 ## A banner with the player's small framed avatar on it (wider than tall).
+## Width ≤ side×1.2 so locker tiles (4-col) keep the art inside the frame.
 func _banner_preview(banner_id: String, side: float) -> Control:
-	var view := CosmeticsView.banner(banner_id, Vector2(side * 1.5, side), int(clampf(side * 0.14, 8.0, 20.0)))
+	var banner_size := Vector2(side * 1.2, side * 0.7)
+	var view := CosmeticsView.banner(
+		banner_id,
+		banner_size,
+		int(clampf(side * 0.12, 8.0, 18.0))
+	)
+	view.clip_contents = true
 	var center := CenterContainer.new()
 	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	center.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	view.add_child(center)
-	center.add_child(_player_avatar(side * 0.62, SaveManager.get_equipped_frame(), true))
+	center.add_child(_player_avatar(banner_size.y * 0.72, SaveManager.get_equipped_frame(), true))
 	return view
 
 

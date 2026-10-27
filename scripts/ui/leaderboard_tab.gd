@@ -467,10 +467,11 @@ func _podium_identity(
 		"font_size",
 		UiScale.font(UiTokens.pseudo_font_size(str(entry.get("name", ""))))
 	)
-	name_label.add_theme_color_override(
-		"font_color",
-		_scope_accent() if bool(entry.get("is_player", false)) else UiTokens.PROFILE_TEXT
-	)
+	## Friends board: all pseudos stay white (incl. self). Général still accents “you”.
+	var name_color := UiTokens.PROFILE_TEXT
+	if bool(entry.get("is_player", false)) and _scope != "friends":
+		name_color = _scope_accent()
+	name_label.add_theme_color_override("font_color", name_color)
 	vbox.add_child(name_label)
 	var title := CosmeticsView.title_label(entry.get("cosmetics", {}), 13, HORIZONTAL_ALIGNMENT_CENTER, true)
 	if title != null:

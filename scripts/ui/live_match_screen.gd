@@ -14,6 +14,20 @@ const ProfileSnapshot = preload("res://scripts/profile/profile_snapshot.gd")
 
 const PAGE_WIDTH := 680.0
 const ROULETTE_SECONDS := 2.2
+## Pause on the “opponent found” VS screen before the category draft.
+const MATCHED_SECONDS := 5.0
+## Fade between search and the match-found VS beat.
+const PAGE_FADE_OUT := 0.2
+const PAGE_FADE_IN := 0.3
+## Hold on the drafted category after the roulette lands, before questions.
+const DRAFT_RESULT_HOLD := 2.5
+## Browse every duel screen with mock data (no server / no real match). Flip off for shipping.
+const DEBUG_PREVIEW_FLOW := false
+## Play preview: each tap on Play cycles category tint + mode aurora.
+const DEBUG_PREVIEW_CATEGORIES: Array[String] = [
+	"sport", "cinema", "history", "music", "geography", "science", "general", "television",
+]
+const DEBUG_PREVIEW_MODES: Array[String] = ["classic", "survival", "time_attack"]
 ## Server's pause showing the colours before the reading phase (REVEAL_PAUSE_SECONDS).
 const REVEAL_PAUSE := 1.5
 const EXPLANATION_DELAY := 1.1
@@ -21,7 +35,7 @@ const EXPLANATION_DELAY := 1.1
 const ANSWER_GRACE_SECONDS := 2.0
 const JOKER_IDS: Array[String] = ["joker_5050", "joker_time"]
 
-enum State { SEARCHING, DRAFT, PLAYING, WAITING, OVER, ERROR }
+enum State { SEARCHING, MATCHED, DRAFT, PLAYING, WAITING, OVER, ERROR }
 
 var _state: State = State.SEARCHING
 var _mode: String = "classic"
@@ -43,6 +57,15 @@ var _opponent_clock: float = 0.0
 var _draft_left: float = 0.0
 var _draft_vote: String = ""
 var _draft_tiles: Dictionary = {}
+var _pending_draft_choices: Array = []
+var _matched_left: float = 0.0
+var _draft_reveal_holding: bool = false
+## True from draft_result until the post-roulette hold ends (queues an early first question).
+var _awaiting_draft_hold: bool = false
+var _pending_question: Dictionary = {}
+var _page_fade: Tween
+var _preview_category_i: int = 0
+var _preview_mode_i: int = 0
 var _question: Dictionary = {}
 var _question_left: float = 0.0
 var _question_limit: float = 10.0
@@ -75,11 +98,16 @@ var _question_caption: Label
 var _question_label: Label
 var _question_hint: Label
 var _tile_badges: Array[PanelContainer] = []
+var _tile_badge_discs: Array[PanelContainer] = []
 var _tile_letters: Array[Label] = []
 var _tile_texts: Array[Label] = []
 var _tile_markers: Array[HBoxContainer] = []
 var _tap_catcher: Control
 var _search_backdrop: Control
+var _page_bg: ColorRect
+var _mode_bg_material: ShaderMaterial
+var _brand_bg_material: Material
+var _preview_bar: Control
 var _opponent_badge: Label
 var _reading: bool = false
 var _read_left: float = 0.0
@@ -97,16 +125,18 @@ func _ready() -> void:
 	for category in QuestionLoaderScript.get_categories(LocaleManager.get_content_locale()):
 		_category_names[str(category.get("id", ""))] = str(category.get("name", ""))
 
-	var bg := ColorRect.new()
-	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	bg.color = Color.WHITE
-	var mat := ShaderMaterial.new()
-	mat.shader = load("res://shaders/tab_page_bg.gdshader") as Shader
-	mat.set_shader_parameter("accent", _accent)
-	mat.set_shader_parameter("deep", UiTokens.BG_CREAM)
-	bg.material = mat
-	add_child(bg)
+	_brand_bg_material = load("res://themes/quizup_bg_material.tres") as Material
+	_mode_bg_material = ShaderMaterial.new()
+	_mode_bg_material.shader = load("res://shaders/tab_page_bg.gdshader") as Shader
+	_mode_bg_material.set_shader_parameter("accent", _accent)
+	_mode_bg_material.set_shader_parameter("deep", UiTokens.BG_CREAM)
+
+	_page_bg = ColorRect.new()
+	_page_bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_page_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_page_bg.color = UiTokens.BG_CREAM
+	_set_page_bg_mode()
+	add_child(_page_bg)
 
 	_margin = MarginContainer.new()
 	_margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -130,14 +160,178 @@ func _ready() -> void:
 	NetworkManager.live_error.connect(_on_error)
 	NetworkManager.live_joker_result.connect(_on_joker_result)
 	NetworkManager.live_opponent_joker.connect(_on_opponent_joker)
-	_start_search()
+	if DEBUG_PREVIEW_FLOW:
+		_debug_seed_preview_data()
+		_debug_install_preview_bar()
+		_debug_show_screen("search")
+	else:
+		_start_search()
+
+
+func _set_page_bg_brand() -> void:
+	if _page_bg == null:
+		return
+	_page_bg.color = UiTokens.BG_CREAM
+	_page_bg.material = _brand_bg_material
+
+
+func _set_page_bg_mode() -> void:
+	if _page_bg == null:
+		return
+	_page_bg.color = Color.WHITE
+	_page_bg.material = _mode_bg_material
+
+
+func _debug_seed_preview_data() -> void:
+	_opponent_name = "Alex"
+	_opponent_cosmetics = ShopCatalog.demo_cosmetics_for("Alex")
+	_opponent_trophies = 1248
+	_pending_draft_choices = ["sport", "cinema", "history"]
+	_draft_left = 8.0
+	_draft_vote = ""
+	_category = "sport"
+	_my_score = 420
+	_opponent_score = 380
+	_my_lives = 2
+	_opponent_lives = 1
+	_my_clock = 42.0
+	_opponent_clock = 38.0
+	_found = {
+		"draft": {"choices": _pending_draft_choices, "time_limit": 8.0},
+		"lives": 3,
+		"clock": 60.0,
+	}
+	_found["total_questions"] = 7
+	_question = {
+		"index": 2,
+		"text": "Quelle est la capitale de la France ?",
+		"choices": ["Lyon", "Paris", "Marseille", "Lille"],
+		"time_limit": 10.0,
+	}
+	_question_limit = 10.0
+	_question_left = 7.5
+	_revealed = false
+	_answered_index = -1
+	_over = {
+		"won": true,
+		"draw": false,
+		"friendly": false,
+		"my_score": 420,
+		"opponent_score": 380,
+		"trophy_delta": 18,
+		"xp": 45,
+	}
+	_xp_gained = 45
+	_error_key = "UI_DUEL_ERROR_OFFLINE"
+
+
+func _debug_install_preview_bar() -> void:
+	if _preview_bar != null and is_instance_valid(_preview_bar):
+		return
+	_preview_bar = HBoxContainer.new()
+	_preview_bar.name = "DebugPreviewBar"
+	_preview_bar.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
+	_preview_bar.offset_top = -72
+	_preview_bar.offset_bottom = -8
+	_preview_bar.offset_left = 12
+	_preview_bar.offset_right = -12
+	_preview_bar.add_theme_constant_override("separation", 6)
+	_preview_bar.mouse_filter = Control.MOUSE_FILTER_STOP
+	add_child(_preview_bar)
+	_preview_bar.move_to_front()
+	var screens := [
+		["search", "Search"],
+		["matched", "Found"],
+		["draft", "Draft"],
+		["play", "Play"],
+		["over", "Over"],
+		["error", "Error"],
+	]
+	for entry in screens:
+		var btn := Button.new()
+		btn.text = str(entry[1])
+		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		btn.focus_mode = Control.FOCUS_NONE
+		btn.custom_minimum_size.y = 56
+		btn.add_theme_font_size_override("font_size", UiScale.font(14))
+		for state in ["normal", "hover", "pressed", "focus"]:
+			btn.add_theme_stylebox_override(state, UiStyle.filled(Color(0.08, 0.1, 0.2, 0.92), 14))
+		for key in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color"]:
+			btn.add_theme_color_override(key, Color.WHITE)
+		btn.pressed.connect(_debug_show_screen.bind(str(entry[0])))
+		_preview_bar.add_child(btn)
+
+
+func _debug_show_screen(screen_id: String) -> void:
+	## Freeze auto-transitions while browsing layouts.
+	_matched_left = 9999.0
+	_draft_vote = ""
+	_draft_reveal_holding = false
+	_awaiting_draft_hold = false
+	_pending_question = {}
+	var rebuild := func() -> void:
+		match screen_id:
+			"search":
+				_state = State.SEARCHING
+				_set_page_bg_mode()
+				_build_search()
+			"matched":
+				_state = State.MATCHED
+				_build_matched()
+			"draft":
+				_state = State.DRAFT
+				_draft_left = 8.0
+				_build_draft(_pending_draft_choices)
+			"play":
+				_state = State.PLAYING
+				_category = DEBUG_PREVIEW_CATEGORIES[_preview_category_i % DEBUG_PREVIEW_CATEGORIES.size()]
+				_preview_category_i += 1
+				_mode = DEBUG_PREVIEW_MODES[_preview_mode_i % DEBUG_PREVIEW_MODES.size()]
+				_preview_mode_i += 1
+				match _mode:
+					"survival":
+						_accent = UiTokens.MODE_ACCENTS[GameManager.Mode.SURVIVAL]
+					"time_attack":
+						_accent = UiTokens.MODE_ACCENTS[GameManager.Mode.TIME_ATTACK]
+					_:
+						_accent = UiTokens.MODE_ACCENTS[GameManager.Mode.CLASSIC]
+				_build_playing()
+				_show_question()
+			"over":
+				_state = State.OVER
+				_build_over()
+			"error":
+				_state = State.ERROR
+				_build_error()
+		if _preview_bar != null and is_instance_valid(_preview_bar):
+			_preview_bar.move_to_front()
+	## Soft fade when flipping preview pages (same feel as search → found).
+	if _body.get_child_count() > 0:
+		_fade_rebuild(rebuild)
+	else:
+		rebuild.call()
+
+
+func _fade_rebuild(rebuild: Callable) -> void:
+	if _page_fade != null and is_instance_valid(_page_fade):
+		_page_fade.kill()
+	_page_fade = create_tween()
+	_page_fade.tween_property(_margin, "modulate:a", 0.0, PAGE_FADE_OUT)
+	_page_fade.tween_callback(func() -> void:
+		rebuild.call()
+		_margin.modulate.a = 0.0
+	)
+	_page_fade.tween_property(_margin, "modulate:a", 1.0, PAGE_FADE_IN)
 
 
 func _apply_safe_area() -> void:
 	_margin.add_theme_constant_override("margin_left", 20)
 	_margin.add_theme_constant_override("margin_right", 20)
 	_margin.add_theme_constant_override("margin_top", 20 + int(SafeArea.top))
-	_margin.add_theme_constant_override("margin_bottom", 20 + int(SafeArea.bottom))
+	var bottom := 20 + int(SafeArea.bottom)
+	if DEBUG_PREVIEW_FLOW:
+		bottom += 72
+	_margin.add_theme_constant_override("margin_bottom", bottom)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -148,11 +342,22 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _process(delta: float) -> void:
 	match _state:
+		State.MATCHED:
+			if DEBUG_PREVIEW_FLOW:
+				pass
+			elif _matched_left > 0.0:
+				_matched_left = maxf(_matched_left - delta, 0.0)
+				if _matched_left <= 0.0:
+					_enter_draft()
 		State.DRAFT:
-			if _draft_left > 0.0:
+			if DEBUG_PREVIEW_FLOW:
+				pass
+			elif _draft_left > 0.0 and _draft_vote.is_empty():
 				_draft_left = maxf(_draft_left - delta, 0.0)
 				_set_timer_ratio(_draft_left / float((_found.get("draft", {}) as Dictionary).get("time_limit", 8.0)))
 		State.PLAYING:
+			if DEBUG_PREVIEW_FLOW:
+				return
 			if _reading and _read_left > 0.0:
 				_read_left = maxf(_read_left - delta, 0.0)
 				_set_timer_ratio(_read_left / _read_total)
@@ -178,12 +383,14 @@ func _start_search() -> void:
 	_category = ""
 	_my_score = 0
 	_opponent_score = 0
-	if _friend_challenge_id.is_empty():
-		NetworkManager.start_live_matchmaking("", _mode)
-	else:
-		NetworkManager.start_friend_match(_friend_challenge_id)
+	_set_page_bg_mode()
+	if not DEBUG_PREVIEW_FLOW:
+		if _friend_challenge_id.is_empty():
+			NetworkManager.start_live_matchmaking("", _mode)
+		else:
+			NetworkManager.start_friend_match(_friend_challenge_id)
 	_build_search()
-	if not _friend_challenge_id.is_empty():
+	if not _friend_challenge_id.is_empty() and not DEBUG_PREVIEW_FLOW:
 		_feedback_text(tr("UI_DUEL_WAITING_FRIEND").format({"name": _friend_name}))
 
 
@@ -213,10 +420,25 @@ func _on_match_found(data: Dictionary) -> void:
 	AudioManager.play("correct")
 	var draft: Variant = data.get("draft")
 	if typeof(draft) == TYPE_DICTIONARY and not (draft.get("choices", []) as Array).is_empty():
-		_state = State.DRAFT
+		_pending_draft_choices = draft.get("choices", [])
 		_draft_vote = ""
-		_draft_left = float(draft.get("time_limit", 8.0))
-		_build_draft(draft.get("choices", []))
+		## Chrono starts only once the draft page is shown — not during the VS beat.
+		_draft_left = 0.0
+		_draft_reveal_holding = false
+		_awaiting_draft_hold = false
+		_pending_question = {}
+		_state = State.MATCHED
+		_matched_left = MATCHED_SECONDS
+		_fade_rebuild(_build_matched)
+
+
+func _enter_draft() -> void:
+	if _state != State.MATCHED:
+		return
+	_state = State.DRAFT
+	var draft: Dictionary = _found.get("draft", {}) as Dictionary
+	_draft_left = float(draft.get("time_limit", 8.0))
+	_build_draft(_pending_draft_choices)
 
 
 func _on_draft_vote(category_id: String) -> void:
@@ -224,7 +446,8 @@ func _on_draft_vote(category_id: String) -> void:
 		return
 	_draft_vote = category_id
 	AudioManager.play("click")
-	NetworkManager.send_draft_vote(category_id)
+	if not DEBUG_PREVIEW_FLOW:
+		NetworkManager.send_draft_vote(category_id)
 	_style_draft_tiles(category_id, "", "")
 	_feedback("UI_DUEL_DRAFT_WAITING")
 
@@ -233,6 +456,7 @@ func _on_draft_vote(category_id: String) -> void:
 func _on_draft_result(data: Dictionary) -> void:
 	_category = str(data.get("category", ""))
 	_draft_left = 0.0
+	_awaiting_draft_hold = true
 	var mine := str(data.get("your_vote", ""))
 	var theirs := str(data.get("opponent_vote", ""))
 	var pool: Array[String] = []
@@ -256,7 +480,22 @@ func _on_draft_result(data: Dictionary) -> void:
 		_style_draft_tiles(_category, mine, theirs)
 		AudioManager.play("correct")
 		_feedback_text(tr("UI_DUEL_DRAFT_RESULT").format({"category": _category_name(_category)}))
+		_hold_draft_result()
 	)
+
+
+## Let the landed category sit a beat before the first question replaces the draft.
+func _hold_draft_result() -> void:
+	_draft_reveal_holding = true
+	await get_tree().create_timer(DRAFT_RESULT_HOLD).timeout
+	if not is_inside_tree():
+		return
+	_draft_reveal_holding = false
+	_awaiting_draft_hold = false
+	if not _pending_question.is_empty():
+		var queued: Dictionary = _pending_question
+		_pending_question = {}
+		_begin_playing(queued)
 
 
 func _on_match_start(data: Dictionary) -> void:
@@ -264,6 +503,14 @@ func _on_match_start(data: Dictionary) -> void:
 
 
 func _on_question(data: Dictionary) -> void:
+	## Stay on the draft reveal until the hold finishes.
+	if _awaiting_draft_hold or _draft_reveal_holding:
+		_pending_question = data
+		return
+	_begin_playing(data)
+
+
+func _begin_playing(data: Dictionary) -> void:
 	_question = data
 	_revealed = false
 	_answered_index = -1
@@ -374,7 +621,7 @@ func _show_explanation(text: String, seconds: float) -> void:
 		_question_hint.text = tr("UI_DUEL_TAP_READY")
 	)
 	fade.tween_property(_question_label, "modulate:a", 1.0, 0.2)
-	_timer_fill.add_theme_stylebox_override("panel", UiStyle.filled(UiTokens.PODIUM_GOLD, 7))
+	_timer_fill.add_theme_stylebox_override("panel", _timer_fill_style(UiTokens.PODIUM_GOLD))
 	_tap_catcher.visible = true
 
 
@@ -472,6 +719,7 @@ func _clear() -> void:
 	_reading = false
 	_answer_buttons.clear()
 	_tile_badges.clear()
+	_tile_badge_discs.clear()
 	_tile_letters.clear()
 	_tile_texts.clear()
 	_tile_markers.clear()
@@ -479,6 +727,11 @@ func _clear() -> void:
 	_joker_buttons.clear()
 	_timer_fill = null
 	_feedback_label = null
+	_my_score_label = null
+	_opponent_score_label = null
+	_my_status_label = null
+	_opponent_status_label = null
+	_opponent_badge = null
 
 
 func _build_search() -> void:
@@ -500,82 +753,279 @@ func _build_search() -> void:
 	## Sit above the page shader, under the content margin.
 	move_child(_search_backdrop, 1)
 
-	_body.alignment = BoxContainer.ALIGNMENT_BEGIN
-	_body.add_theme_constant_override("separation", 14)
+	_body.alignment = BoxContainer.ALIGNMENT_CENTER
+	_body.add_theme_constant_override("separation", 18)
 
-	## Stage fills the height; avatar bottom sits above mid, copy + mode underneath.
-	const AVATAR_SIDE := 280.0
-	var stage := Control.new()
-	stage.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	stage.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	stage.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_body.add_child(stage)
+	## “Searching” at top; avatar → pseudo → trophies raised; mode tile lower.
+	const AVATAR_SIDE := 360.0
+	var column := VBoxContainer.new()
+	column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	column.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	column.alignment = BoxContainer.ALIGNMENT_BEGIN
+	column.add_theme_constant_override("separation", 12)
+	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_body.add_child(column)
 
-	var avatar := CosmeticsView.avatar(SaveManager.get_cosmetics(), AVATAR_SIDE)
-	avatar.anchor_left = 0.5
-	avatar.anchor_right = 0.5
-	avatar.anchor_top = 0.5
-	avatar.anchor_bottom = 0.5
-	avatar.offset_left = -AVATAR_SIDE * 0.5
-	avatar.offset_right = AVATAR_SIDE * 0.5
-	avatar.offset_top = -AVATAR_SIDE - 200.0
-	avatar.offset_bottom = -200.0
-	stage.add_child(avatar)
-
-	var identity := VBoxContainer.new()
-	identity.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	identity.add_theme_constant_override("separation", 10)
-	identity.anchor_left = 0.0
-	identity.anchor_right = 1.0
-	identity.anchor_top = 0.5
-	identity.anchor_bottom = 0.5
-	identity.offset_top = 14.0 - 200.0
-	identity.grow_horizontal = Control.GROW_DIRECTION_BOTH
-	stage.add_child(identity)
-
-	var name_label := _title(SaveManager.player_name, 28)
-	name_label.add_theme_font_size_override(
-		"font_size", UiScale.font(UiTokens.pseudo_font_size(SaveManager.player_name, 28))
-	)
-	name_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.55))
-	name_label.add_theme_constant_override("outline_size", 5)
-	identity.add_child(name_label)
-
-	var trophies := _title("🏆 %d" % _account_trophies(), 24)
-	trophies.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.55))
-	trophies.add_theme_constant_override("outline_size", 4)
-	identity.add_child(trophies)
-
-	var title := _title(tr("UI_DUEL_SEARCHING").to_upper(), 40)
+	var title_wrap := MarginContainer.new()
+	title_wrap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	title_wrap.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	title_wrap.add_theme_constant_override("margin_top", 20)
+	column.add_child(title_wrap)
+	var title := _title(tr("UI_DUEL_SEARCHING").to_upper(), 46)
 	title.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.55))
 	title.add_theme_constant_override("outline_size", 6)
-	identity.add_child(title)
+	title_wrap.add_child(title)
 
-	var mode_wrap := CenterContainer.new()
-	mode_wrap.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	identity.add_child(mode_wrap)
-	mode_wrap.add_child(_mode_aurore_tile(_mode))
+	var identity := VBoxContainer.new()
+	identity.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	identity.alignment = BoxContainer.ALIGNMENT_BEGIN
+	identity.add_theme_constant_override("separation", 12)
+	identity.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	## Avatar / pseudo / trophies — spacing under the title.
+	var identity_shift := MarginContainer.new()
+	identity_shift.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	identity_shift.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	identity_shift.add_theme_constant_override("margin_top", 22)
+	identity_shift.add_child(identity)
+	column.add_child(identity_shift)
 
-	var cancel := _button(tr("UI_DUEL_CANCEL"), Color(1, 1, 1, 0.18), Color.WHITE)
+	var avatar_wrap := CenterContainer.new()
+	avatar_wrap.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	avatar_wrap.add_child(CosmeticsView.avatar(SaveManager.get_cosmetics(), AVATAR_SIDE))
+	identity.add_child(avatar_wrap)
+
+	## Pseudo + trophies sit 15 px lower under the avatar.
+	var under_avatar := MarginContainer.new()
+	under_avatar.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	under_avatar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	under_avatar.add_theme_constant_override("margin_top", 15)
+	identity.add_child(under_avatar)
+	var under_col := VBoxContainer.new()
+	under_col.add_theme_constant_override("separation", 12)
+	under_col.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	under_avatar.add_child(under_col)
+
+	var name_label := _title(SaveManager.player_name, UiTokens.PSEUDO_FONT_SIZE_HERO)
+	name_label.add_theme_font_size_override(
+		"font_size",
+		UiScale.font(UiTokens.pseudo_font_size(
+			SaveManager.player_name,
+			UiTokens.PSEUDO_FONT_SIZE_HERO + 6
+		))
+	)
+	name_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.55))
+	name_label.add_theme_constant_override("outline_size", 6)
+	under_col.add_child(name_label)
+
+	var worn_title := CosmeticsView.title_label(
+		SaveManager.get_cosmetics(), 24, HORIZONTAL_ALIGNMENT_CENTER, true
+	)
+	if worn_title != null:
+		worn_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		under_col.add_child(worn_title)
+
+	## Keep room for a shop title line between pseudo and trophies.
+	var trophy_shift := MarginContainer.new()
+	trophy_shift.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	trophy_shift.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	trophy_shift.add_theme_constant_override("margin_top", 22)
+	trophy_shift.add_child(_search_trophy_block())
+	under_col.add_child(trophy_shift)
+
+	var spacer := Control.new()
+	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	spacer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	column.add_child(spacer)
+
+	var mode_shift := MarginContainer.new()
+	mode_shift.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	mode_shift.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	mode_shift.add_theme_constant_override("margin_top", -130)
+	mode_shift.add_theme_constant_override("margin_bottom", 130)
+	mode_shift.add_child(_mode_aurore_tile(_mode))
+	column.add_child(mode_shift)
+
+	var cancel := _search_cancel_tile()
 	cancel.pressed.connect(_leave)
 	_body.add_child(cancel)
 
 
+## VS beat between matchmaking and the category vote — brand navy, stacked heroes.
+func _build_matched() -> void:
+	_clear()
+	_set_page_bg_brand()
+	_body.alignment = BoxContainer.ALIGNMENT_BEGIN
+	_body.add_theme_constant_override("separation", 12)
+
+	## Same header level / size as “Recherche d'un adversaire”.
+	var column := VBoxContainer.new()
+	column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	column.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	column.alignment = BoxContainer.ALIGNMENT_BEGIN
+	column.add_theme_constant_override("separation", 16)
+	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_body.add_child(column)
+
+	var title_wrap := MarginContainer.new()
+	title_wrap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	title_wrap.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	title_wrap.add_theme_constant_override("margin_top", 20)
+	column.add_child(title_wrap)
+	var title := _title(tr("UI_DUEL_MATCH_FOUND").to_upper(), 46)
+	title.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.55))
+	title.add_theme_constant_override("outline_size", 6)
+	title_wrap.add_child(title)
+
+	## Heroes fill every leftover pixel under the title (page margins already on `_margin`).
+	column.add_child(_matched_hero_stack())
+
+
+## Full-width hero cards stacked with a tight VS strip between them.
+func _matched_hero_stack() -> Control:
+	var stack := VBoxContainer.new()
+	stack.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	stack.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	stack.add_theme_constant_override("separation", 0)
+	stack.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+	stack.add_child(_matched_hero_card(
+		SaveManager.player_name,
+		SaveManager.get_cosmetics(),
+		"🏆 %d" % _account_trophies(),
+		_accent
+	))
+
+	var vs := Label.new()
+	vs.text = "VS"
+	vs.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vs.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	vs.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	vs.add_theme_font_size_override("font_size", UiScale.font(32))
+	vs.add_theme_color_override("font_color", UiTokens.PODIUM_GOLD)
+	vs.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.55))
+	vs.add_theme_constant_override("outline_size", 4)
+	stack.add_child(vs)
+
+	stack.add_child(_matched_hero_card(
+		_opponent_name,
+		_opponent_cosmetics,
+		"🏆 %d" % _opponent_trophies
+	))
+	return stack
+
+
+## Large banner hero — expands to share remaining height with its twin.
+func _matched_hero_card(
+	display_name: String,
+	cosmetics: Dictionary,
+	value_text: String,
+	highlight: Color = Color(0, 0, 0, 0)
+) -> Control:
+	const AVATAR := 180.0
+	var card := PanelContainer.new()
+	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	card.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	card.size_flags_stretch_ratio = 1.0
+	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var border := StyleBoxFlat.new()
+	border.bg_color = Color(0, 0, 0, 0)
+	border.set_corner_radius_all(22)
+	if highlight.a > 0.02:
+		border.set_border_width_all(3)
+		border.border_color = highlight
+	card.add_theme_stylebox_override("panel", border)
+
+	var back := CosmeticsView.banner(str(cosmetics.get("banner", "")), Vector2.ZERO, 22)
+	back.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	back.modulate = Color(0.82, 0.82, 0.86)
+	card.add_child(back)
+
+	var margin := MarginContainer.new()
+	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	for side in ["left", "right", "top", "bottom"]:
+		margin.add_theme_constant_override("margin_" + side, 18)
+	card.add_child(margin)
+
+	var column := VBoxContainer.new()
+	column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	column.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	column.alignment = BoxContainer.ALIGNMENT_CENTER
+	column.add_theme_constant_override("separation", 10)
+	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	margin.add_child(column)
+
+	var avatar_box := CenterContainer.new()
+	avatar_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	column.add_child(avatar_box)
+	avatar_box.add_child(CosmeticsView.avatar(cosmetics, AVATAR))
+
+	var name_label := Label.new()
+	name_label.text = display_name
+	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	name_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	name_label.add_theme_font_size_override(
+		"font_size",
+		UiScale.font(UiTokens.pseudo_font_size(display_name, UiTokens.PSEUDO_FONT_SIZE_HERO))
+	)
+	name_label.add_theme_color_override("font_color", Color.WHITE)
+	name_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.55))
+	name_label.add_theme_constant_override("outline_size", 5)
+	column.add_child(name_label)
+
+	var worn := CosmeticsView.title_label(cosmetics, 20, HORIZONTAL_ALIGNMENT_CENTER, true)
+	if worn != null:
+		column.add_child(worn)
+
+	if not value_text.is_empty():
+		var value := Label.new()
+		value.text = value_text
+		value.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		value.add_theme_font_size_override("font_size", UiScale.font(30))
+		value.add_theme_color_override("font_color", Color.WHITE)
+		value.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.55))
+		value.add_theme_constant_override("outline_size", 4)
+		column.add_child(value)
+	return card
+
+
 func _build_draft(choices: Array) -> void:
 	_clear()
+	## Same brand navy canvas as the matched / search-adjacent screens.
+	_set_page_bg_brand()
 	_body.alignment = BoxContainer.ALIGNMENT_BEGIN
 	_body.add_child(_face_off("🏆 %d" % _account_trophies(), "🏆 %d" % _opponent_trophies))
 	_body.add_child(_title(tr("UI_DUEL_DRAFT_TITLE"), 26))
-	_body.add_child(_subtitle(tr("UI_DUEL_DRAFT_HINT")))
 	_body.add_child(_timer_bar())
-	## The three choices stack as wide tiles that share the rest of the screen height.
+	_set_timer_ratio(1.0)
+	## Unique aurora per offered category (same approach as category select).
+	var accents: Array = []
 	for raw in choices:
-		var category_id := str(raw)
+		accents.append(UiTokens.accent_for_category(str(raw)))
+	var themes := AuroreTile.themes_closest_unique(accents)
+	## The three choices stack as wide tiles that share the rest of the screen height.
+	for i in range(choices.size()):
+		var category_id := str(choices[i])
+		var accent: Color = accents[i]
+		var theme := str(themes[i]) if i < themes.size() else AuroreTile.theme_closest_to(accent)
 		var tile := Button.new()
 		tile.custom_minimum_size.y = 150
 		tile.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		tile.focus_mode = Control.FOCUS_NONE
+		tile.clip_contents = true
+		tile.set_meta("accent", accent)
 		tile.pressed.connect(_on_draft_vote.bind(category_id))
+		var chrome := _draft_aurore_chrome(accent, false)
+		for state in ["normal", "hover", "pressed", "focus", "disabled"]:
+			tile.add_theme_stylebox_override(state, chrome)
+		var bg := AuroreTile.new()
+		bg.name = "AuroreFill"
+		bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		bg.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		bg.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		bg.aurore_theme = theme
+		tile.add_child(bg)
 		var pad := MarginContainer.new()
 		pad.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		pad.add_theme_constant_override("margin_left", 24)
@@ -618,19 +1068,35 @@ func _build_draft(choices: Array) -> void:
 	_style_draft_tiles("", "", "")
 
 
+## Transparent chrome so AuroreTile shows through; white ring when highlighted.
+func _draft_aurore_chrome(accent: Color, lit: bool) -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0, 0, 0, 0)
+	style.set_corner_radius_all(20)
+	if lit:
+		style.set_border_width_all(4)
+		style.border_color = Color.WHITE
+	else:
+		style.set_border_width_all(0)
+	return style
+
+
 func _style_draft_tiles(highlight: String, mine: String, theirs: String) -> void:
 	for key in _draft_tiles:
 		var category_id := str(key)
 		var tile: Button = _draft_tiles[key]
-		var accent := UiTokens.accent_for_category(category_id)
+		var accent: Color = tile.get_meta("accent") if tile.has_meta("accent") else UiTokens.accent_for_category(category_id)
 		var lit := category_id == highlight
-		var style := UiStyle.filled(accent.darkened(0.15) if lit else Color(accent.r, accent.g, accent.b, 0.22), 20)
-		style.set_border_width_all(4 if lit else 2)
-		style.border_color = Color.WHITE if lit else Color(accent.r, accent.g, accent.b, 0.6)
-		style.shadow_color = Color(accent.r, accent.g, accent.b, 0.5 if lit else 0.1)
-		style.shadow_size = 16 if lit else 4
+		var style := _draft_aurore_chrome(accent, lit)
 		for state in ["normal", "hover", "pressed", "focus", "disabled"]:
 			tile.add_theme_stylebox_override(state, style)
+		var bg := tile.get_node_or_null("AuroreFill") as AuroreTile
+		if bg != null:
+			## Roulette / pick: keep the lit tile bright, soften the others.
+			if highlight.is_empty():
+				bg.modulate = Color.WHITE
+			else:
+				bg.modulate = Color.WHITE if lit else Color(1, 1, 1, 0.55)
 		tile.disabled = not _draft_vote.is_empty() or _draft_left <= 0.0
 		var votes := tile.find_child("Votes", true, false) as Label
 		if votes != null:
@@ -646,22 +1112,40 @@ func _style_draft_tiles(highlight: String, mine: String, theirs: String) -> void
 
 func _build_playing() -> void:
 	_clear()
+	_set_page_bg_brand()
 	_body.alignment = BoxContainer.ALIGNMENT_BEGIN
 	_body.add_theme_constant_override("separation", 14)
-	_body.add_child(_duel_header())
-	_body.add_child(_subtitle("%s · %s" % [_category_name(_category), _mode_name()]))
+	_body.add_child(_play_face_off())
 	_body.add_child(_timer_bar())
 
 	_question_card = PanelContainer.new()
-	_question_card.add_theme_stylebox_override("panel", UiStyle.profile_surface(_accent, true, 20))
+	_question_card.clip_contents = true
+	var question_chrome := StyleBoxFlat.new()
+	question_chrome.bg_color = Color(0, 0, 0, 0)
+	question_chrome.set_corner_radius_all(20)
+	_question_card.add_theme_stylebox_override("panel", question_chrome)
 	_question_card.custom_minimum_size.y = 280
 	## Card and answer tiles grow to fill the screen height (no empty band at the bottom).
 	_question_card.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_question_card.size_flags_stretch_ratio = 1.6
 	_body.add_child(_question_card)
+	## Mode aurora wash (ocean / lave / jaune) behind the question copy.
+	var question_bg := AuroreTile.new()
+	question_bg.name = "AuroreFill"
+	question_bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	question_bg.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	question_bg.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	question_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	question_bg.aurore_theme = _mode_aurore_theme(_mode)
+	_question_card.add_child(question_bg)
+	var question_pad := MarginContainer.new()
+	question_pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	for side in ["left", "right", "top", "bottom"]:
+		question_pad.add_theme_constant_override("margin_" + side, 16)
+	_question_card.add_child(question_pad)
 	var column := VBoxContainer.new()
 	column.add_theme_constant_override("separation", 8)
-	_question_card.add_child(column)
+	question_pad.add_child(column)
 	_question_caption = Label.new()
 	_question_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_question_caption.add_theme_font_size_override("font_size", UiScale.font(14))
@@ -716,17 +1200,30 @@ func _make_answer_tile(index: int) -> Button:
 	row.add_theme_constant_override("separation", 14)
 	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	pad.add_child(row)
+	## Nested discs (ring + white core) read sharper than a StyleBox border circle.
+	const BADGE := 48.0
+	const RING := 4
 	var badge := PanelContainer.new()
-	badge.custom_minimum_size = Vector2(46, 46)
+	badge.custom_minimum_size = Vector2(BADGE, BADGE)
 	badge.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	row.add_child(badge)
+	var ring_pad := MarginContainer.new()
+	ring_pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	for side in ["left", "right", "top", "bottom"]:
+		ring_pad.add_theme_constant_override("margin_" + side, RING)
+	badge.add_child(ring_pad)
+	var disc := PanelContainer.new()
+	disc.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	disc.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	disc.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	ring_pad.add_child(disc)
 	var letter := Label.new()
 	letter.text = ["A", "B", "C", "D"][index]
 	letter.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	letter.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	letter.add_theme_font_size_override("font_size", UiScale.font(18))
-	badge.add_child(letter)
+	disc.add_child(letter)
 	var text := Label.new()
 	text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	text.size_flags_vertical = Control.SIZE_SHRINK_CENTER
@@ -739,6 +1236,7 @@ func _make_answer_tile(index: int) -> Button:
 	markers.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	row.add_child(markers)
 	_tile_badges.append(badge)
+	_tile_badge_discs.append(disc)
 	_tile_letters.append(letter)
 	_tile_texts.append(text)
 	_tile_markers.append(markers)
@@ -775,7 +1273,7 @@ func _show_question() -> void:
 		_feedback_label.text = ""
 	_set_badge(_opponent_badge, "")
 	if _timer_fill != null:
-		_timer_fill.add_theme_stylebox_override("panel", UiStyle.filled(_accent, 7))
+		_timer_fill.add_theme_stylebox_override("panel", _timer_fill_style(_accent))
 	_set_timer_ratio(_question_left / maxf(_question_limit, 0.01))
 	_animate_question_in()
 
@@ -890,15 +1388,20 @@ func _header_side(display_name: String, cosmetics: Dictionary, mirrored: bool) -
 func _refresh_header() -> void:
 	if _my_score_label == null or not is_instance_valid(_my_score_label):
 		return
-	_my_score_label.text = str(_my_score)
-	_opponent_score_label.text = str(_opponent_score)
 	match _mode:
 		"survival":
-			_my_status_label.text = _hearts(_my_lives)
-			_opponent_status_label.text = _hearts(_opponent_lives)
+			_my_score_label.text = "%d · %s" % [_my_score, _hearts(_my_lives)]
+			_opponent_score_label.text = "%d · %s" % [_opponent_score, _hearts(_opponent_lives)]
+			var emoji_font := UiFonts.emoji_font()
+			if emoji_font != null:
+				_my_score_label.add_theme_font_override("font", emoji_font)
+				_opponent_score_label.add_theme_font_override("font", emoji_font)
 		"time_attack":
-			_my_status_label.text = "%d s" % ceili(_my_clock)
-			_opponent_status_label.text = "%d s" % ceili(_opponent_clock)
+			_my_score_label.text = "%d · %d s" % [_my_score, ceili(_my_clock)]
+			_opponent_score_label.text = "%d · %d s" % [_opponent_score, ceili(_opponent_clock)]
+		_:
+			_my_score_label.text = str(_my_score)
+			_opponent_score_label.text = str(_opponent_score)
 
 
 func _hearts(lives: int) -> String:
@@ -908,6 +1411,7 @@ func _hearts(lives: int) -> String:
 
 func _build_over() -> void:
 	_clear()
+	_set_page_bg_mode()
 	_body.alignment = BoxContainer.ALIGNMENT_BEGIN
 	var won := bool(_over.get("won", false))
 	var draw := bool(_over.get("draw", false))
@@ -1029,6 +1533,7 @@ func _spacer() -> Control:
 
 func _build_error() -> void:
 	_clear()
+	_set_page_bg_mode()
 	_body.alignment = BoxContainer.ALIGNMENT_CENTER
 	_body.add_child(_title(tr(_error_key).format({"name": _friend_name}), 24))
 	if _friend_challenge_id.is_empty():
@@ -1143,16 +1648,49 @@ func _face_off(my_value: String, opponent_value: String, highlight: Color = Colo
 	)
 
 
+## Same face-off tiles as draft (fixed size); scores replace trophies.
+func _play_face_off() -> Control:
+	var col := VBoxContainer.new()
+	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	col.add_theme_constant_override("separation", 4)
+	col.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var row := _face_off(str(_my_score), str(_opponent_score), _accent)
+	var mine := row.get_child(0) as Control
+	var theirs := row.get_child(2) as Control
+	_my_score_label = mine.get_meta("value") as Label if mine.has_meta("value") else null
+	_opponent_score_label = theirs.get_meta("value") as Label if theirs.has_meta("value") else null
+	_my_status_label = null
+	_opponent_status_label = null
+	col.add_child(row)
+	## Status line under the tiles — keeps draft/play card sizes identical.
+	_opponent_badge = Label.new()
+	_opponent_badge.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_opponent_badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_opponent_badge.visible = false
+	_opponent_badge.add_theme_font_size_override("font_size", UiScale.font(13))
+	_opponent_badge.add_theme_color_override("font_color", UiTokens.PODIUM_GOLD)
+	col.add_child(_opponent_badge)
+	return col
+
+
 func _timer_bar() -> Control:
 	_timer_track = Panel.new()
 	_timer_track.custom_minimum_size.y = 14
-	_timer_track.add_theme_stylebox_override("panel", UiStyle.filled(Color(1, 1, 1, 0.14), 7))
+	_timer_track.add_theme_stylebox_override("panel", _timer_fill_style(Color(1, 1, 1, 0.14)))
 	_timer_fill = Panel.new()
-	_timer_fill.add_theme_stylebox_override("panel", UiStyle.filled(_accent, 7))
+	_timer_fill.add_theme_stylebox_override("panel", _timer_fill_style(_accent))
 	_timer_fill.set_anchors_preset(Control.PRESET_LEFT_WIDE)
 	_timer_track.add_child(_timer_fill)
 	_set_timer_ratio(1.0)
 	return _timer_track
+
+
+## Flat bar chip — no UiStyle.filled coloured glow.
+func _timer_fill_style(color: Color) -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = color
+	style.set_corner_radius_all(7)
+	return style
 
 
 func _set_timer_ratio(ratio: float) -> void:
@@ -1164,34 +1702,37 @@ func _set_timer_ratio(ratio: float) -> void:
 
 func _style_answer(index: int, look: String) -> void:
 	var tile := _answer_buttons[index]
+	## White answer tiles; mode tint on the letter chip / hover ring / pick.
 	var fill := Color(1, 1, 1, 0.96)
 	var ink := UiTokens.INK
-	var badge_fill := Color(_accent.r, _accent.g, _accent.b, 0.18)
-	var badge_ink := _accent.darkened(0.25)
+	var badge_fill := Color.WHITE
+	var badge_ink := _accent.darkened(0.12)
 	var border := Color(0, 0, 0, 0)
 	tile.modulate.a = 1.0
 	match look:
 		"picked":
 			fill = _accent
-			badge_fill = Color(1, 1, 1, 0.3)
-			badge_ink = UiTokens.INK
+			ink = Color.WHITE
+			badge_fill = Color.WHITE
+			badge_ink = _accent.darkened(0.2)
 		"correct":
 			fill = UiTokens.FEEDBACK_CORRECT
 			ink = Color.WHITE
-			badge_fill = Color(1, 1, 1, 0.25)
-			badge_ink = Color.WHITE
+			badge_fill = Color.WHITE
+			badge_ink = UiTokens.FEEDBACK_CORRECT.darkened(0.25)
 			border = Color(1, 1, 1, 0.9)
 		"wrong":
 			fill = UiTokens.FEEDBACK_WRONG
 			ink = Color.WHITE
-			badge_fill = Color(1, 1, 1, 0.25)
-			badge_ink = Color.WHITE
+			badge_fill = Color.WHITE
+			badge_ink = UiTokens.FEEDBACK_WRONG.darkened(0.2)
 		"dim":
 			tile.modulate.a = 0.45
 	var style := UiStyle.filled(fill, 20)
-	style.shadow_color = Color(0, 0, 0, 0.18)
-	style.shadow_size = 6
-	style.shadow_offset = Vector2(0, 3)
+	## Soft drop only — no coloured glow around the tiles.
+	style.shadow_color = Color(0, 0, 0, 0.2)
+	style.shadow_size = 4
+	style.shadow_offset = Vector2(0, 2)
 	if border.a > 0.0:
 		style.set_border_width_all(3)
 		style.border_color = border
@@ -1205,7 +1746,28 @@ func _style_answer(index: int, look: String) -> void:
 	tile.add_theme_stylebox_override("pressed", hover)
 	_tile_texts[index].add_theme_color_override("font_color", ink)
 	_tile_letters[index].add_theme_color_override("font_color", badge_ink)
-	_tile_badges[index].add_theme_stylebox_override("panel", UiStyle.filled(badge_fill, 23))
+	## Outer disc = mode ring; inner disc = white core (no soft StyleBox border).
+	var ring_color := _accent
+	if look == "correct":
+		ring_color = UiTokens.FEEDBACK_CORRECT
+	elif look == "wrong":
+		ring_color = UiTokens.FEEDBACK_WRONG
+	elif look == "picked":
+		ring_color = _accent
+	_tile_badges[index].add_theme_stylebox_override("panel", _circle_style(ring_color, 24))
+	_tile_badge_discs[index].add_theme_stylebox_override("panel", _circle_style(badge_fill, 20))
+
+
+## Sharp anti-aliased disc — no shadow / border glow.
+func _circle_style(color: Color, radius: int) -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = color
+	style.set_corner_radius_all(radius)
+	style.set_border_width_all(0)
+	style.shadow_size = 0
+	style.anti_aliasing = true
+	style.anti_aliasing_size = 1.0
+	return style
 
 
 ## Small framed avatar that lands on the tile a player picked.
@@ -1221,6 +1783,11 @@ func _drop_marker(index: int, cosmetics: Dictionary, delay: float) -> void:
 
 func _count_up(label: Label, from: int, to: int) -> void:
 	if label == null or from == to:
+		return
+	## Survival / time attack keep lives or clock on the same line — just pulse.
+	if _mode != "classic":
+		_refresh_header()
+		_pulse(label, 1.25)
 		return
 	var tween := _track(create_tween())
 	tween.tween_method(func(value: float) -> void: label.text = str(int(value)), float(from), float(to), 0.5)
@@ -1252,6 +1819,7 @@ func _set_badge(target: Variant, text: String) -> void:
 		return
 	var label := target as Label
 	label.text = text
+	label.visible = not text.is_empty()
 	if not text.is_empty():
 		_pulse(label, 1.3)
 
@@ -1310,6 +1878,43 @@ func _button(text: String, fill: Color, ink: Color) -> Button:
 	return button
 
 
+## Cancel tile — fruits aurora (red/magenta), not a duel-mode wash (ocean/lave/jaune).
+func _search_cancel_tile() -> Button:
+	var button := Button.new()
+	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	button.custom_minimum_size.y = 78
+	button.focus_mode = Control.FOCUS_NONE
+	button.text = ""
+	var chrome := StyleBoxFlat.new()
+	chrome.bg_color = Color(0, 0, 0, 0)
+	chrome.set_corner_radius_all(22)
+	chrome.content_margin_left = 0
+	chrome.content_margin_right = 0
+	chrome.content_margin_top = 0
+	chrome.content_margin_bottom = 0
+	for state in ["normal", "hover", "pressed", "focus"]:
+		button.add_theme_stylebox_override(state, chrome)
+
+	var bg := AuroreTile.new()
+	bg.name = "AuroreFill"
+	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	bg.aurore_theme = "fruits"
+	button.add_child(bg)
+
+	var label := Label.new()
+	label.text = tr("UI_DUEL_CANCEL")
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	label.add_theme_font_size_override("font_size", UiScale.font(22))
+	label.add_theme_color_override("font_color", Color.WHITE)
+	button.add_child(label)
+	PressScaleUtil.wire(button, self)
+	return button
+
+
 func _mode_name() -> String:
 	match _mode:
 		"survival":
@@ -1326,26 +1931,82 @@ func _account_trophies() -> int:
 	return int(ranking.get("points", SaveManager.trophies))
 
 
-## Mode indicator — same aurora wash as Quiz mode tiles (ocean / lave / jaune).
+## Trophy chip under the avatar — larger than the old plain label.
+func _search_trophy_block() -> Control:
+	var wrap := CenterContainer.new()
+	wrap.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var panel := PanelContainer.new()
+	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0, 0, 0, 0.38)
+	style.set_corner_radius_all(28)
+	style.content_margin_left = 28
+	style.content_margin_right = 28
+	style.content_margin_top = 14
+	style.content_margin_bottom = 14
+	style.set_border_width_all(2)
+	style.border_color = Color(1, 1, 1, 0.22)
+	panel.add_theme_stylebox_override("panel", style)
+	wrap.add_child(panel)
+
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 10)
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	panel.add_child(row)
+
+	var emoji := Label.new()
+	emoji.text = "🏆"
+	emoji.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	emoji.add_theme_font_size_override("font_size", UiScale.font(36))
+	var emoji_font := UiFonts.emoji_font()
+	if emoji_font != null:
+		emoji.add_theme_font_override("font", emoji_font)
+	row.add_child(emoji)
+
+	var value := Label.new()
+	value.text = str(_account_trophies())
+	value.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	value.add_theme_font_size_override("font_size", UiScale.font(36))
+	value.add_theme_color_override("font_color", Color.WHITE)
+	value.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.55))
+	value.add_theme_constant_override("outline_size", 4)
+	row.add_child(value)
+	return wrap
+
+
+func _mode_aurore_theme(mode: String) -> String:
+	match mode:
+		"survival":
+			return "lave"
+		"time_attack":
+			return "jaune"
+		_:
+			return "ocean"
+
+
+## Mode indicator — same size / layout as Quiz `_mode_tile` (ocean / lave / jaune).
 func _mode_aurore_tile(mode: String) -> Control:
 	var key := "UI_MODE_CLASSIC"
+	var hint_key := "UI_DUEL_TILE_CLASSIC_HINT"
 	var icon := "🎯"
-	var theme := "ocean"
 	match mode:
 		"survival":
 			key = "UI_MODE_SURVIVAL"
+			hint_key = "UI_DUEL_TILE_SURVIVAL_HINT"
 			icon = "❤️"
-			theme = "lave"
 		"time_attack":
 			key = "UI_MODE_TIME_ATTACK"
+			hint_key = "UI_DUEL_TILE_TIME_ATTACK_HINT"
 			icon = "⏱️"
-			theme = "jaune"
+
 	var tile := PanelContainer.new()
-	tile.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	tile.custom_minimum_size = Vector2(220, 56)
+	tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	tile.custom_minimum_size.y = 156
+	tile.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var chrome := StyleBoxFlat.new()
 	chrome.bg_color = Color(0, 0, 0, 0)
-	chrome.set_corner_radius_all(18)
+	chrome.set_corner_radius_all(22)
 	chrome.content_margin_left = 0
 	chrome.content_margin_right = 0
 	chrome.content_margin_top = 0
@@ -1358,36 +2019,70 @@ func _mode_aurore_tile(mode: String) -> Control:
 	bg.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	bg.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	bg.aurore_theme = theme
+	bg.aurore_theme = _mode_aurore_theme(mode)
 	tile.add_child(bg)
 
 	var pad := MarginContainer.new()
 	pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	pad.add_theme_constant_override("margin_left", 16)
 	pad.add_theme_constant_override("margin_right", 18)
-	pad.add_theme_constant_override("margin_top", 10)
-	pad.add_theme_constant_override("margin_bottom", 10)
+	pad.add_theme_constant_override("margin_top", 16)
+	pad.add_theme_constant_override("margin_bottom", 16)
 	tile.add_child(pad)
 
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 10)
+	row.add_theme_constant_override("separation", 16)
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
 	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	pad.add_child(row)
 
-	var icon_label := Label.new()
-	icon_label.text = icon
-	icon_label.add_theme_font_size_override("font_size", UiScale.font(24))
+	const ICON := 88.0
+	var icon_slot := Control.new()
+	icon_slot.custom_minimum_size = Vector2(ICON, ICON)
+	icon_slot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	icon_slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_child(icon_slot)
+	var icon_bg := Panel.new()
+	icon_bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	icon_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var icon_style := StyleBoxFlat.new()
+	icon_style.bg_color = Color(1, 1, 1, 0.18)
+	icon_style.set_corner_radius_all(int(ICON * 0.5))
+	icon_bg.add_theme_stylebox_override("panel", icon_style)
+	icon_slot.add_child(icon_bg)
+	var emoji := Label.new()
+	emoji.text = icon
+	emoji.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	emoji.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	emoji.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	emoji.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	emoji.add_theme_font_size_override("font_size", UiScale.font(38))
 	var emoji_font := UiFonts.emoji_font()
 	if emoji_font != null:
-		icon_label.add_theme_font_override("font", emoji_font)
-	row.add_child(icon_label)
+		emoji.add_theme_font_override("font", emoji_font)
+	icon_slot.add_child(emoji)
 
-	var label := Label.new()
-	label.text = tr(key).to_upper()
-	label.add_theme_font_size_override("font_size", UiScale.font(20))
-	label.add_theme_color_override("font_color", Color.WHITE)
-	row.add_child(label)
+	var texts := VBoxContainer.new()
+	texts.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	texts.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	texts.add_theme_constant_override("separation", 6)
+	texts.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_child(texts)
+
+	var name_label := Label.new()
+	name_label.text = tr(key).to_upper()
+	name_label.clip_text = true
+	name_label.add_theme_font_size_override("font_size", UiScale.font(28))
+	name_label.add_theme_color_override("font_color", Color.WHITE)
+	texts.add_child(name_label)
+
+	var hint := Label.new()
+	hint.text = tr(hint_key)
+	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	hint.max_lines_visible = 2
+	hint.add_theme_font_size_override("font_size", UiScale.font(17))
+	hint.add_theme_color_override("font_color", Color(1, 1, 1, 0.78))
+	texts.add_child(hint)
 	return tile
 
 

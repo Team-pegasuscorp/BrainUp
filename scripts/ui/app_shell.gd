@@ -948,8 +948,10 @@ func _refresh_sign_out_button() -> void:
 func _on_sign_out_pressed() -> void:
 	AudioManager.play("click")
 	SaveManager.sign_out()
+	NetworkManager.sign_out_local()
 	_close_settings()
 	_open_auth_gate()
+	_notify_tab_shown(tab_swipe.get_tab())
 
 
 func _close_settings() -> void:

@@ -37,7 +37,6 @@ var _xp_card: PanelContainer
 var _achievements_card: PanelContainer
 var _streak_label: Label
 var _day_streak_label: Label
-var _daily_rank_label: Label
 var _flash: ColorRect
 var _intro: Tween
 var _intro_done: bool = false
@@ -161,18 +160,6 @@ func _sfx(sound: String, pitch: float = 1.0) -> void:
 		AudioManager.play(sound, pitch)
 
 
-## Rank arrives from the server; it may land after the screen is already up.
-func _show_daily_rank(data: Dictionary) -> void:
-	if _daily_rank_label == null:
-		return
-	_daily_rank_label.text = "🏆 " + tr("UI_DAILY_RANK").format({"rank": int(data.get("rank", 0))})
-	_daily_rank_label.visible = true
-	_daily_rank_label.pivot_offset = _daily_rank_label.size * 0.5
-	var pop := create_tween()
-	pop.tween_property(_daily_rank_label, "scale", Vector2(1.25, 1.25), 0.12)
-	pop.tween_property(_daily_rank_label, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-
-
 ## Survival / time attack have no victory: beating the record plays the victory.
 func _is_win() -> bool:
 	if _is_mode_round():
@@ -249,17 +236,6 @@ func _build_outcome_sections() -> void:
 	_day_streak_label.add_theme_color_override("font_color", Color(1.0, 0.62, 0.20))
 	_day_streak_label.visible = bool(day_streak.get("extended", false)) and int(day_streak.get("streak", 0)) >= 2
 	_insert_before_stats(_day_streak_label)
-
-	if bool(summary.get("is_daily", false)):
-		_daily_rank_label = Label.new()
-		_daily_rank_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		_daily_rank_label.add_theme_font_size_override("font_size", UiScale.font(22))
-		_daily_rank_label.add_theme_color_override("font_color", UiTokens.ACCENT_LEADERBOARD)
-		_daily_rank_label.visible = false
-		_insert_before_stats(_daily_rank_label)
-		NetworkManager.daily_result_submitted.connect(_show_daily_rank)
-		if not NetworkManager.last_daily_result.is_empty():
-			_show_daily_rank(NetworkManager.last_daily_result)
 
 	## Full-screen colour flash (green burst on win, red on defeat); never eats input.
 	_flash = ColorRect.new()

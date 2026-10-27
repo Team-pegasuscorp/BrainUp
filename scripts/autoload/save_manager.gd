@@ -246,13 +246,18 @@ func set_auth_mode(mode: String) -> void:
 	save_data()
 
 
-## Clear account choice so the auth gate can be shown again. Keeps progress / pseudo.
+## Clear account choice so the auth gate can be shown again.
+## Drops the linked identity (Google / email / guest label) and resets the pseudo
+## so the next guest/Google choice does not look like the previous account.
+## Local progress (XP, history, …) is kept on device; NetworkManager rotates device_id.
 func sign_out() -> void:
 	auth_mode = ""
 	play_games_player_id = ""
 	email = ""
 	email_verified = false
+	player_name = UiTokens.DEFAULT_PLAYER_NAME
 	save_data()
+
 
 
 ## Persist a successful Play Games sign-in (local first; network link is separate).

@@ -29,7 +29,7 @@ LocaleManager="*res://scripts/autoload/locale_manager.gd"
 GameManager="*res://scripts/autoload/game_manager.gd"
 NetworkManager="*res://scripts/autoload/network_manager.gd"
 AdsManager="*res://scripts/autoload/ads_manager.gd"
-GodotPlayGameServices="*res://addons/GodotPlayGameServices/scripts/autoloads/godot_play_game_services.gd"
+GodotPlayGameServices="*uid://m6mn1b04n8fy"
 PlayGamesAuth="*res://scripts/autoload/play_games_auth.gd"
 
 [display]

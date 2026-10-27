@@ -22,8 +22,11 @@ QUESTIONS_PER_MATCH = 7
 MODES = ("classic", "survival", "time_attack")
 ## Pre-match draft: categories offered, voting time, pause on the result (client roulette).
 DRAFT_CHOICES = 3
+## Client VS beat after pairing — voting clock must not start before the draft UI.
+MATCHED_BEAT_SECONDS = 5.0
 DRAFT_SECONDS = 8.0
-DRAFT_REVEAL_SECONDS = 3.0
+## Roulette (~2.2 s) + hold on the landed category before questions.
+DRAFT_REVEAL_SECONDS = 5.0
 SURVIVAL_LIVES = 3
 ## Hard stop so two perfect players cannot play forever; points decide then.
 SURVIVAL_MAX_QUESTIONS = 40
@@ -155,6 +158,7 @@ class LiveMatch:
     async def _run(self) -> None:
         await self._broadcast_pairing()
         if not self.category:
+            await asyncio.sleep(MATCHED_BEAT_SECONDS)
             self.category = await self._run_draft()
 
         a = self.order[0]

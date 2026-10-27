@@ -430,6 +430,8 @@ UI_DUEL_TIME_ATTACK_HINT,"Ranked duel: 60 s each, as many points as you can. A m
 UI_DUEL_SEARCHING,Looking for an opponent,Recherche d'un adversaire
 UI_DUEL_SEARCH_RANGE,Range,Écart
 UI_DUEL_CANCEL,Cancel,Annuler
+UI_DUEL_MATCH_FOUND,Opponent found!,Adversaire trouvé !
+UI_DUEL_MATCH_FOUND_SUB,Get ready to vote…,Prépare-toi à voter…
 UI_DUEL_DRAFT_TITLE,Vote for the category,Vote pour la catégorie
 UI_DUEL_DRAFT_HINT,"Same pick: it's played. Different picks: the wheel decides.","Même choix : on la joue. Choix différents : la roue décide."
 UI_DUEL_DRAFT_WAITING,Waiting for your opponent…,En attente de l'adversaire…

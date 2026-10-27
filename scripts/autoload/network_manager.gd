@@ -312,6 +312,20 @@ func sync_player_profile() -> void:
 	_registering_player = false
 
 
+## Local sign-out: drop the server player handle and mint a new device_id so the
+## next register is a fresh guest line (old Play Games link stays on the previous id).
+func sign_out_local() -> void:
+	player_id = ""
+	social_state = {}
+	pass_state = {}
+	_accepted_seen.clear()
+	_busy = false
+	if FileAccess.file_exists(DEVICE_ID_PATH):
+		DirAccess.remove_absolute(DEVICE_ID_PATH)
+	_load_or_create_device_id()
+
+
+
 func fetch_leaderboard(category: String) -> void:
 	## Général (category=all): server pads with leaderboard_bots (realistic nicknames).
 	## Test rows in `players` stay filtered server-side; other categories = scores only.

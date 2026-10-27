@@ -1273,8 +1273,9 @@ func _ensure_friend_requests_page() -> void:
 
 	var bg := ColorRect.new()
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	bg.color = Color.WHITE
-	bg.material = UiTokens.page_bg_material_for_tab(ScenePaths.Tab.SOCIAL)
+	## Same Quiz navy as app_shell (not the old per-tab social wash).
+	bg.color = UiTokens.BG_CREAM
+	bg.material = load("res://themes/quizup_bg_material.tres") as Material
 	bg.mouse_filter = Control.MOUSE_FILTER_STOP
 	_friend_requests_page.add_child(bg)
 
@@ -1374,8 +1375,9 @@ func _ensure_challenge_requests_page() -> void:
 
 	var bg := ColorRect.new()
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	bg.color = Color.WHITE
-	bg.material = UiTokens.page_bg_material_for_tab(ScenePaths.Tab.SOCIAL)
+	## Same Quiz navy as app_shell (not the old per-tab social wash).
+	bg.color = UiTokens.BG_CREAM
+	bg.material = load("res://themes/quizup_bg_material.tres") as Material
 	bg.mouse_filter = Control.MOUSE_FILTER_STOP
 	_challenge_requests_page.add_child(bg)
 
@@ -1663,8 +1665,9 @@ func _ensure_friends_page() -> void:
 
 	var bg := ColorRect.new()
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	bg.color = Color.WHITE
-	bg.material = UiTokens.page_bg_material_for_tab(ScenePaths.Tab.SOCIAL)
+	## Same Quiz navy as app_shell (not the old per-tab social wash).
+	bg.color = UiTokens.BG_CREAM
+	bg.material = load("res://themes/quizup_bg_material.tres") as Material
 	bg.mouse_filter = Control.MOUSE_FILTER_STOP
 	_friends_page.add_child(bg)
 

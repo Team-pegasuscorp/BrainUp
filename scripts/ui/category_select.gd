@@ -791,8 +791,14 @@ func _setup_daily_card() -> void:
 	NetworkManager.daily_leaderboard_received.connect(_on_daily_board_received)
 	NetworkManager.daily_leaderboard_failed.connect(_on_daily_board_failed)
 	NetworkManager.daily_result_submitted.connect(func(_data: Dictionary) -> void: NetworkManager.fetch_daily_leaderboard())
+	## Already played today: show the done state immediately (no loading flash).
+	var offline := DailyChallenge.offline_today()
+	if not DailyChallenge.result_for(str(offline.get("date", ""))).is_empty():
+		_daily = offline
+		_daily_fetching = false
+	else:
+		_daily_fetching = true
 	_render_daily()
-	_daily_fetching = true
 	NetworkManager.fetch_daily_challenge()
 
 
@@ -857,7 +863,13 @@ func _render_daily() -> void:
 
 	var category_id := str(_daily.get("category_id", ""))
 	var date := str(_daily.get("date", ""))
+	if date.is_empty():
+		date = str(DailyChallenge.offline_today().get("date", ""))
 	var result := DailyChallenge.result_for(date) if not date.is_empty() else {}
+	var done := not result.is_empty()
+	## Done locally: use offline rotation if the server payload isn't here yet.
+	if done and category_id.is_empty():
+		category_id = str(DailyChallenge.offline_today().get("category_id", ""))
 	var known := false
 	var category_name := ""
 	for category in categories:
@@ -865,8 +877,8 @@ func _render_daily() -> void:
 			known = true
 			category_name = str(category.get("name", category_id))
 
-	var waiting := _daily_fetching or not known
-	var done := not result.is_empty()
+	## Once played, never show the loading state — even while a refresh is in flight.
+	var waiting := not done and (_daily_fetching or not known)
 	var accent := UiTokens.PODIUM_GOLD
 	if waiting:
 		accent = AuroreTile.primary_color("foret")
@@ -916,11 +928,6 @@ func _render_daily() -> void:
 
 	var tag := Label.new()
 	tag.text = "+%d XP" % DailyChallenge.BONUS_XP
-	if done and _daily_board.get("player_rank") != null:
-		tag.text = tr("UI_DAILY_RANK_TOTAL").format({
-			"rank": int(_daily_board["player_rank"]),
-			"total": int(_daily_board.get("total_players", 0)),
-		})
 	tag.add_theme_font_size_override("font_size", UiScale.font(18))
 	tag.add_theme_color_override("font_color", Color(1, 1, 1, 0.88))
 	labels.add_child(tag)
