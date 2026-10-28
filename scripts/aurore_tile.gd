@@ -51,10 +51,27 @@ const LEAGUE_THEMES := {
 	"diamond": "lagon",
 }
 
+## Fixed aurora per quiz category (never closest-match — keeps tiles coherent).
+const CATEGORY_THEMES := {
+	"sport": "menthe",
+	"cinema": "sakura",
+	"history": "citron",
+	"music": "ocean",
+	"geography": "foret",
+	"science": "lagon",
+	"general": "violet",
+	"television": "sunset",
+}
+
 
 static func theme_for_league(league_id: String) -> String:
 	var key := league_id.strip_edges().to_lower()
 	return str(LEAGUE_THEMES.get(key, "sunset"))
+
+
+static func theme_for_category(category_id: String) -> String:
+	var key := category_id.strip_edges().to_lower()
+	return str(CATEGORY_THEMES.get(key, "violet"))
 
 
 ## Pick the palette whose blob/base colours sit closest to `accent`.

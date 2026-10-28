@@ -914,9 +914,11 @@ func _render_daily() -> void:
 	if date.is_empty():
 		date = str(DailyChallenge.offline_today().get("date", ""))
 	var result := DailyChallenge.result_for(date) if not date.is_empty() else {}
-	var done := not result.is_empty()
+	var played := not result.is_empty()
+	## DEBUG_ALLOW_REPLAY keeps the tile tappable while polishing the daily UX.
+	var done := played and not DailyChallenge.DEBUG_ALLOW_REPLAY
 	## Done locally: use offline rotation if the server payload isn't here yet.
-	if done and category_id.is_empty():
+	if played and category_id.is_empty():
 		category_id = str(DailyChallenge.offline_today().get("category_id", ""))
 	var known := false
 	var category_name := ""
@@ -926,7 +928,7 @@ func _render_daily() -> void:
 			category_name = str(category.get("name", category_id))
 
 	## Once played, never show the loading state — even while a refresh is in flight.
-	var waiting := not done and (_daily_fetching or not known)
+	var waiting := not played and (_daily_fetching or not known)
 	var accent := UiTokens.PODIUM_GOLD
 	if waiting:
 		accent = AuroreTile.primary_color("foret")
@@ -942,7 +944,8 @@ func _render_daily() -> void:
 	var style := _aurore_chrome_style(accent)
 	for state in ["normal", "hover", "pressed", "focus", "disabled"]:
 		tile.add_theme_stylebox_override(state, style)
-	_wire_aurore_fill(tile, accent, "foret" if waiting else "")
+	var daily_theme := "foret" if waiting else AuroreTile.theme_for_category(category_id)
+	_wire_aurore_fill(tile, accent, daily_theme)
 	if not waiting and not done:
 		tile.pressed.connect(_on_daily_play_pressed)
 		PressScaleUtil.wire(tile, self)
@@ -1111,7 +1114,9 @@ func _make_board_row(entry: Dictionary) -> Control:
 
 func _on_daily_play_pressed() -> void:
 	var date := str(_daily.get("date", ""))
-	if date.is_empty() or not DailyChallenge.result_for(date).is_empty():
+	if date.is_empty():
+		return
+	if not DailyChallenge.result_for(date).is_empty() and not DailyChallenge.DEBUG_ALLOW_REPLAY:
 		return
 	AudioManager.play("click")
 	## The date doubles as the ordering seed (the server's seed is that same date).
@@ -1133,7 +1138,7 @@ func _make_category_tile(index: int, category: Dictionary) -> Button:
 	var chrome := _aurore_chrome_style(accent, false)
 	for state in ["normal", "hover", "pressed", "focus"]:
 		button.add_theme_stylebox_override(state, chrome)
-	_wire_aurore_fill(button, accent)
+	_wire_aurore_fill(button, accent, AuroreTile.theme_for_category(category_id))
 
 	var margin := MarginContainer.new()
 	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)

@@ -75,12 +75,14 @@ static func _title_placeholder(font_px: int) -> Label:
 
 
 static func player_card(
-	display_name: String, cosmetics: Dictionary, value_text: String, width: float, highlight: Color = Color(0, 0, 0, 0)
+	display_name: String, cosmetics: Dictionary, value_text: String, width: float,
+	highlight: Color = Color(0, 0, 0, 0), height: float = FACE_OFF_CARD_HEIGHT, stretch: float = 1.0
 ) -> Control:
 	var card := PanelContainer.new()
-	card.custom_minimum_size = Vector2(width, FACE_OFF_CARD_HEIGHT)
+	card.custom_minimum_size = Vector2(width, height)
 	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	card.size_flags_stretch_ratio = 1.0
+	card.size_flags_stretch_ratio = stretch
+	card.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	card.clip_contents = true
 	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var border := StyleBoxFlat.new()
@@ -116,56 +118,110 @@ static func player_card(
 	var avatar_box := CenterContainer.new()
 	avatar_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	column.add_child(avatar_box)
-	avatar_box.add_child(avatar(cosmetics, clampf(width * 0.36, 56.0, 96.0)))
+	var avatar_side := clampf(mini(width, height) * 0.36, 52.0, 110.0)
+	avatar_box.add_child(avatar(cosmetics, avatar_side))
 
+	var name_base := 22 if height > FACE_OFF_CARD_HEIGHT else (18 if height < FACE_OFF_CARD_HEIGHT else 20)
 	var name_label := Label.new()
 	name_label.text = display_name
 	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	name_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	name_label.add_theme_font_size_override(
 		"font_size",
-		UiScale.font(UiTokens.pseudo_font_size(display_name, 20))
+		UiScale.font(UiTokens.pseudo_font_size(display_name, name_base))
 	)
 	name_label.add_theme_color_override("font_color", Color.WHITE)
 	name_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.55))
 	name_label.add_theme_constant_override("outline_size", 4)
 	column.add_child(name_label)
-	var title := title_label(cosmetics, FACE_OFF_TITLE_FONT, HORIZONTAL_ALIGNMENT_CENTER, true)
-	column.add_child(title if title != null else _title_placeholder(FACE_OFF_TITLE_FONT))
+	var title_px := FACE_OFF_TITLE_FONT + (2 if height > FACE_OFF_CARD_HEIGHT else 0)
+	var title := title_label(cosmetics, title_px, HORIZONTAL_ALIGNMENT_CENTER, true)
+	column.add_child(title if title != null else _title_placeholder(title_px))
 
-	var value := Label.new()
-	value.name = "Value"
-	value.text = value_text if not value_text.is_empty() else " "
-	value.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	value.add_theme_font_size_override("font_size", UiScale.font(FACE_OFF_VALUE_FONT))
-	value.add_theme_color_override("font_color", Color.WHITE)
-	value.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.55))
-	value.add_theme_constant_override("outline_size", 4)
-	column.add_child(value)
+	var value_px := FACE_OFF_VALUE_FONT + (4 if height > FACE_OFF_CARD_HEIGHT else (-2 if height < FACE_OFF_CARD_HEIGHT else 0))
+	var chip := value_chip(value_text if not value_text.is_empty() else " ", value_px)
+	column.add_child(chip)
+	var value := chip.get_node("Value") as Label
 	card.set_meta("value", value)
+	card.set_meta("value_chip", chip)
 	return card
 
 
+## Dark pill for trophies / scores so they read clearly on banner art.
+static func value_chip(value_text: String, font_px: int = FACE_OFF_VALUE_FONT) -> PanelContainer:
+	var chip := PanelContainer.new()
+	chip.name = "ValueChip"
+	chip.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	chip.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var chip_style := StyleBoxFlat.new()
+	chip_style.bg_color = Color(0, 0, 0, 0.55)
+	chip_style.set_corner_radius_all(16)
+	chip_style.content_margin_left = 16
+	chip_style.content_margin_right = 16
+	chip_style.content_margin_top = 8
+	chip_style.content_margin_bottom = 8
+	chip_style.set_border_width_all(1)
+	chip_style.border_color = Color(1, 1, 1, 0.22)
+	chip.add_theme_stylebox_override("panel", chip_style)
+
+	var value := Label.new()
+	value.name = "Value"
+	value.text = value_text
+	value.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	value.add_theme_font_size_override("font_size", UiScale.font(font_px))
+	value.add_theme_color_override("font_color", Color.WHITE)
+	value.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.55))
+	value.add_theme_constant_override("outline_size", 4)
+	chip.add_child(value)
+	return chip
+
+
 ## Two player cards side by side with "VS" between them.
+## `winner`: "left" | "right" | "" — winner card grows, loser shrinks.
 static func face_off(
 	left_name: String, left_cosmetics: Dictionary, left_value: String,
 	right_name: String, right_cosmetics: Dictionary, right_value: String,
-	total_width: float, left_highlight: Color = Color(0, 0, 0, 0)
+	total_width: float, left_highlight: Color = Color(0, 0, 0, 0),
+	right_highlight: Color = Color(0, 0, 0, 0), winner: String = ""
 ) -> Control:
+	const WIN_H := FACE_OFF_CARD_HEIGHT * 1.22
+	const LOSE_H := FACE_OFF_CARD_HEIGHT * 0.86
+	const WIN_STRETCH := 1.28
+	const LOSE_STRETCH := 0.82
+	var left_h := FACE_OFF_CARD_HEIGHT
+	var right_h := FACE_OFF_CARD_HEIGHT
+	var left_stretch := 1.0
+	var right_stretch := 1.0
+	if winner == "left":
+		left_h = WIN_H
+		right_h = LOSE_H
+		left_stretch = WIN_STRETCH
+		right_stretch = LOSE_STRETCH
+	elif winner == "right":
+		left_h = LOSE_H
+		right_h = WIN_H
+		left_stretch = LOSE_STRETCH
+		right_stretch = WIN_STRETCH
+	var row_h := maxf(left_h, right_h)
 	var row := HBoxContainer.new()
-	row.custom_minimum_size.y = FACE_OFF_CARD_HEIGHT
+	row.custom_minimum_size.y = row_h
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
 	row.add_theme_constant_override("separation", 8)
 	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var card_width := (total_width - 56.0) * 0.5
-	row.add_child(player_card(left_name, left_cosmetics, left_value, card_width, left_highlight))
+	row.add_child(player_card(
+		left_name, left_cosmetics, left_value, card_width, left_highlight, left_h, left_stretch
+	))
 	var vs := Label.new()
 	vs.text = "VS"
-	vs.custom_minimum_size = Vector2(40, FACE_OFF_CARD_HEIGHT)
+	vs.custom_minimum_size = Vector2(40, row_h)
 	vs.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vs.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	vs.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	vs.add_theme_font_size_override("font_size", UiScale.font(22))
 	vs.add_theme_color_override("font_color", UiTokens.PODIUM_GOLD)
 	row.add_child(vs)
-	row.add_child(player_card(right_name, right_cosmetics, right_value, card_width))
+	row.add_child(player_card(
+		right_name, right_cosmetics, right_value, card_width, right_highlight, right_h, right_stretch
+	))
 	return row

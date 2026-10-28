@@ -106,6 +106,7 @@ var _tap_catcher: Control
 var _search_backdrop: Control
 var _page_bg: ColorRect
 var _mode_bg_material: ShaderMaterial
+var _error_bg_material: ShaderMaterial
 var _brand_bg_material: Material
 var _preview_bar: Control
 var _opponent_badge: Label
@@ -126,10 +127,16 @@ func _ready() -> void:
 		_category_names[str(category.get("id", ""))] = str(category.get("name", ""))
 
 	_brand_bg_material = load("res://themes/quizup_bg_material.tres") as Material
+	var page_bg_shader := load("res://shaders/tab_page_bg.gdshader") as Shader
 	_mode_bg_material = ShaderMaterial.new()
-	_mode_bg_material.shader = load("res://shaders/tab_page_bg.gdshader") as Shader
+	_mode_bg_material.shader = page_bg_shader
 	_mode_bg_material.set_shader_parameter("accent", _accent)
 	_mode_bg_material.set_shader_parameter("deep", UiTokens.BG_CREAM)
+	_error_bg_material = ShaderMaterial.new()
+	_error_bg_material.shader = page_bg_shader
+	## Near-black wash for the error page (no red fill).
+	_error_bg_material.set_shader_parameter("accent", Color(0.14, 0.14, 0.16, 1))
+	_error_bg_material.set_shader_parameter("deep", Color(0.04, 0.04, 0.05, 1))
 
 	_page_bg = ColorRect.new()
 	_page_bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -179,7 +186,15 @@ func _set_page_bg_mode() -> void:
 	if _page_bg == null:
 		return
 	_page_bg.color = Color.WHITE
+	_mode_bg_material.set_shader_parameter("accent", _accent)
 	_page_bg.material = _mode_bg_material
+
+
+func _set_page_bg_error() -> void:
+	if _page_bg == null:
+		return
+	_page_bg.color = Color(0.04, 0.04, 0.05, 1)
+	_page_bg.material = _error_bg_material
 
 
 func _debug_seed_preview_data() -> void:
@@ -840,8 +855,9 @@ func _build_search() -> void:
 	var mode_shift := MarginContainer.new()
 	mode_shift.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	mode_shift.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	mode_shift.add_theme_constant_override("margin_top", -130)
-	mode_shift.add_theme_constant_override("margin_bottom", 130)
+	## Stay clear of the trophy block; keep a bit of air above Annuler.
+	mode_shift.add_theme_constant_override("margin_top", 0)
+	mode_shift.add_theme_constant_override("margin_bottom", 24)
 	mode_shift.add_child(_mode_aurore_tile(_mode))
 	column.add_child(mode_shift)
 
@@ -978,14 +994,7 @@ func _matched_hero_card(
 		column.add_child(worn)
 
 	if not value_text.is_empty():
-		var value := Label.new()
-		value.text = value_text
-		value.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		value.add_theme_font_size_override("font_size", UiScale.font(30))
-		value.add_theme_color_override("font_color", Color.WHITE)
-		value.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.55))
-		value.add_theme_constant_override("outline_size", 4)
-		column.add_child(value)
+		column.add_child(CosmeticsView.value_chip(value_text, 30))
 	return card
 
 
@@ -998,16 +1007,12 @@ func _build_draft(choices: Array) -> void:
 	_body.add_child(_title(tr("UI_DUEL_DRAFT_TITLE"), 26))
 	_body.add_child(_timer_bar())
 	_set_timer_ratio(1.0)
-	## Unique aurora per offered category (same approach as category select).
-	var accents: Array = []
-	for raw in choices:
-		accents.append(UiTokens.accent_for_category(str(raw)))
-	var themes := AuroreTile.themes_closest_unique(accents)
+	## Fixed aurora per category (same map as quiz / category select).
 	## The three choices stack as wide tiles that share the rest of the screen height.
 	for i in range(choices.size()):
 		var category_id := str(choices[i])
-		var accent: Color = accents[i]
-		var theme := str(themes[i]) if i < themes.size() else AuroreTile.theme_closest_to(accent)
+		var theme := AuroreTile.theme_for_category(category_id)
+		var accent := AuroreTile.primary_color(theme)
 		var tile := Button.new()
 		tile.custom_minimum_size.y = 150
 		tile.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -1406,15 +1411,27 @@ func _refresh_header() -> void:
 		return
 	match _mode:
 		"survival":
-			_my_score_label.text = "%d · %s" % [_my_score, _hearts(_my_lives)]
-			_opponent_score_label.text = "%d · %s" % [_opponent_score, _hearts(_opponent_lives)]
-			var emoji_font := UiFonts.emoji_font()
-			if emoji_font != null:
-				_my_score_label.add_theme_font_override("font", emoji_font)
-				_opponent_score_label.add_theme_font_override("font", emoji_font)
+			_my_score_label.text = str(_my_score)
+			_opponent_score_label.text = str(_opponent_score)
+			_my_score_label.add_theme_color_override("font_color", Color.WHITE)
+			_opponent_score_label.add_theme_color_override("font_color", Color.WHITE)
+			if _my_status_label != null and is_instance_valid(_my_status_label):
+				_my_status_label.text = "· %s" % _hearts(_my_lives)
+				_my_status_label.add_theme_color_override("font_color", Color.WHITE)
+			if _opponent_status_label != null and is_instance_valid(_opponent_status_label):
+				_opponent_status_label.text = "· %s" % _hearts(_opponent_lives)
+				_opponent_status_label.add_theme_color_override("font_color", Color.WHITE)
 		"time_attack":
-			_my_score_label.text = "%d · %d s" % [_my_score, ceili(_my_clock)]
-			_opponent_score_label.text = "%d · %d s" % [_opponent_score, ceili(_opponent_clock)]
+			_my_score_label.text = str(_my_score)
+			_opponent_score_label.text = str(_opponent_score)
+			_my_score_label.add_theme_color_override("font_color", Color.WHITE)
+			_opponent_score_label.add_theme_color_override("font_color", Color.WHITE)
+			if _my_status_label != null and is_instance_valid(_my_status_label):
+				_my_status_label.text = "· %d s" % ceili(_my_clock)
+				_my_status_label.add_theme_color_override("font_color", Color.WHITE)
+			if _opponent_status_label != null and is_instance_valid(_opponent_status_label):
+				_opponent_status_label.text = "· %d s" % ceili(_opponent_clock)
+				_opponent_status_label.add_theme_color_override("font_color", Color.WHITE)
 		_:
 			_my_score_label.text = str(_my_score)
 			_opponent_score_label.text = str(_opponent_score)
@@ -1422,28 +1439,68 @@ func _refresh_header() -> void:
 
 func _hearts(lives: int) -> String:
 	var total := int(_found.get("lives", 3))
-	return "❤️".repeat(maxi(lives, 0)) + "🖤".repeat(maxi(total - maxi(lives, 0), 0))
+	## White empty hearts (not grey/black) so the survival score line stays bright.
+	return "❤️".repeat(maxi(lives, 0)) + "🤍".repeat(maxi(total - maxi(lives, 0), 0))
 
 
 func _build_over() -> void:
 	_clear()
-	_set_page_bg_mode()
+	## Same brand navy as Search / Found / Draft / Play.
+	_set_page_bg_brand()
 	_body.alignment = BoxContainer.ALIGNMENT_BEGIN
+	_body.add_theme_constant_override("separation", 28)
 	var won := bool(_over.get("won", false))
 	var draw := bool(_over.get("draw", false))
 	var friendly := bool(_over.get("friendly", false))
-	var mood := UiTokens.PODIUM_GOLD if won else (Color(0.75, 0.82, 1.0, 1) if draw else Color(1.0, 0.5, 0.5, 1))
+	## Victoire = vert, Défaite = rouge (égalité reste bleutée).
+	var mood := (
+		UiTokens.FEEDBACK_CORRECT if won
+		else (Color(0.75, 0.82, 1.0, 1) if draw else UiTokens.FEEDBACK_WRONG)
+	)
 
-	_body.add_child(_spacer())
+	var column := VBoxContainer.new()
+	column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	column.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	column.alignment = BoxContainer.ALIGNMENT_BEGIN
+	column.add_theme_constant_override("separation", 28)
+	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_body.add_child(column)
+
+	## Same header band as Search / Found (margin 20, size 46).
+	var title_wrap := MarginContainer.new()
+	title_wrap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	title_wrap.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	title_wrap.add_theme_constant_override("margin_top", 20)
+	title_wrap.add_theme_constant_override("margin_bottom", 8)
+	column.add_child(title_wrap)
 	var key := "UI_DUEL_DRAW" if draw else ("UI_DUEL_WIN" if won else "UI_DUEL_LOSS")
-	var title := _title(tr(key), 58)
+	var title := _title(tr(key).to_upper(), 46)
 	title.add_theme_color_override("font_color", mood)
-	title.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.35))
-	title.add_theme_constant_override("outline_size", 8)
-	_body.add_child(title)
-	_body.add_child(_subtitle("%s · %s" % [_category_name(_category), _mode_name()]))
-	var face := _face_off(str(_my_score), str(_opponent_score), UiTokens.PODIUM_GOLD if won else Color(0, 0, 0, 0))
-	_body.add_child(face)
+	title.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.55))
+	title.add_theme_constant_override("outline_size", 6)
+	title_wrap.add_child(title)
+
+	## Winner tile grows; loser shrinks (draw keeps equal size). Green ring, not gold.
+	var winner_side := ""
+	var my_highlight := Color(0, 0, 0, 0)
+	var their_highlight := Color(0, 0, 0, 0)
+	if not draw:
+		if won:
+			winner_side = "left"
+			my_highlight = UiTokens.FEEDBACK_CORRECT
+		else:
+			winner_side = "right"
+			their_highlight = UiTokens.FEEDBACK_CORRECT
+	var face := CosmeticsView.face_off(
+		SaveManager.player_name, SaveManager.get_cosmetics(), str(_my_score),
+		_opponent_name, _opponent_cosmetics, str(_opponent_score),
+		PAGE_WIDTH, my_highlight, their_highlight, winner_side
+	)
+	column.add_child(face)
+
+	## Mode + category summary under the player tiles (Search size).
+	column.add_child(_mode_aurore_tile(_mode))
+	column.add_child(_category_summary_tile(_category, 156.0))
 
 	## Rewards card: one row per gain, revealed one after the other.
 	var card := PanelContainer.new()
@@ -1453,7 +1510,7 @@ func _build_over() -> void:
 	card_style.content_margin_top = 16
 	card_style.content_margin_bottom = 16
 	card.add_theme_stylebox_override("panel", card_style)
-	_body.add_child(card)
+	column.add_child(card)
 	var rows := VBoxContainer.new()
 	rows.add_theme_constant_override("separation", 12)
 	card.add_child(rows)
@@ -1484,8 +1541,13 @@ func _build_over() -> void:
 		rows.add_child(_reward_row("🎟", tr("UI_DUEL_REWARD_PASS"), "+%d" % pass_xp, Color(1.0, 0.78, 0.2, 1), ""))
 		NetworkManager.fetch_pass()
 
-	_body.add_child(_spacer())
-	var back := _button(tr("UI_BACK"), Color(1, 1, 1, 0.14), Color.WHITE)
+	var spacer := Control.new()
+	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	spacer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	column.add_child(spacer)
+
+	## Same fruits-aurora tile as Search « Annuler », label Retour.
+	var back := _search_cancel_tile("UI_BACK")
 	back.pressed.connect(_leave)
 	_body.add_child(back)
 
@@ -1549,14 +1611,37 @@ func _spacer() -> Control:
 
 func _build_error() -> void:
 	_clear()
-	_set_page_bg_mode()
-	_body.alignment = BoxContainer.ALIGNMENT_CENTER
-	_body.add_child(_title(tr(_error_key).format({"name": _friend_name}), 24))
-	if _friend_challenge_id.is_empty():
-		var again := _button(tr("UI_DUEL_PLAY_AGAIN"), _accent, UiTokens.INK)
-		again.pressed.connect(_start_search)
-		_body.add_child(again)
-	var back := _button(tr("UI_BACK"), Color(1, 1, 1, 0.14), Color.WHITE)
+	_set_page_bg_error()
+	_body.alignment = BoxContainer.ALIGNMENT_BEGIN
+	_body.add_theme_constant_override("separation", 16)
+
+	var column := VBoxContainer.new()
+	column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	column.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	column.alignment = BoxContainer.ALIGNMENT_CENTER
+	column.add_theme_constant_override("separation", 20)
+	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_body.add_child(column)
+
+	## Vertically centre the message above the Retour tile.
+	var top_spacer := Control.new()
+	top_spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	top_spacer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	column.add_child(top_spacer)
+
+	var title := _title(tr(_error_key).format({"name": _friend_name}), 28)
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	title.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.55))
+	title.add_theme_constant_override("outline_size", 6)
+	column.add_child(title)
+
+	var bottom_spacer := Control.new()
+	bottom_spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	bottom_spacer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	column.add_child(bottom_spacer)
+
+	var back := _search_cancel_tile("UI_BACK")
 	back.pressed.connect(_leave)
 	_body.add_child(back)
 
@@ -1660,8 +1745,52 @@ func _face_off(my_value: String, opponent_value: String, highlight: Color = Colo
 	return CosmeticsView.face_off(
 		SaveManager.player_name, SaveManager.get_cosmetics(), my_value,
 		_opponent_name, _opponent_cosmetics, opponent_value,
-		PAGE_WIDTH, highlight
+		PAGE_WIDTH, highlight, Color(0, 0, 0, 0), ""
 	)
+
+
+## Turn CosmeticsView's score Label (inside the value chip) into [score | extra]
+## so digits stay white on the UI font while hearts can use the emoji font.
+func _split_play_score_slot(card: Control) -> Dictionary:
+	var value := card.get_meta("value") as Label if card.has_meta("value") else null
+	if value == null or not is_instance_valid(value):
+		return {"score": null, "extra": null}
+	var parent := value.get_parent()
+	if parent == null:
+		return {"score": value, "extra": null}
+	var idx := value.get_index()
+	var font_px := value.get_theme_font_size("font_size")
+	parent.remove_child(value)
+	value.queue_free()
+
+	var row := HBoxContainer.new()
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.add_theme_constant_override("separation", 6)
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	parent.add_child(row)
+	parent.move_child(row, idx)
+
+	var score := Label.new()
+	score.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	score.add_theme_font_size_override("font_size", font_px)
+	score.add_theme_color_override("font_color", Color.WHITE)
+	score.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.55))
+	score.add_theme_constant_override("outline_size", 4)
+	row.add_child(score)
+
+	var extra := Label.new()
+	extra.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	extra.add_theme_font_size_override("font_size", font_px)
+	extra.add_theme_color_override("font_color", Color.WHITE)
+	extra.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.55))
+	extra.add_theme_constant_override("outline_size", 4)
+	var emoji_font := UiFonts.emoji_font()
+	if emoji_font != null and _mode == "survival":
+		extra.add_theme_font_override("font", emoji_font)
+	row.add_child(extra)
+
+	card.set_meta("value", score)
+	return {"score": score, "extra": extra}
 
 
 ## Same face-off tiles as draft (fixed size); scores replace trophies.
@@ -1673,10 +1802,19 @@ func _play_face_off() -> Control:
 	var row := _face_off(str(_my_score), str(_opponent_score), _accent)
 	var mine := row.get_child(0) as Control
 	var theirs := row.get_child(2) as Control
-	_my_score_label = mine.get_meta("value") as Label if mine.has_meta("value") else null
-	_opponent_score_label = theirs.get_meta("value") as Label if theirs.has_meta("value") else null
-	_my_status_label = null
-	_opponent_status_label = null
+	## Survival / time attack: digits stay on the UI font (white); extras use emoji font.
+	if _mode == "survival" or _mode == "time_attack":
+		var my_slot := _split_play_score_slot(mine)
+		var their_slot := _split_play_score_slot(theirs)
+		_my_score_label = my_slot["score"]
+		_my_status_label = my_slot["extra"]
+		_opponent_score_label = their_slot["score"]
+		_opponent_status_label = their_slot["extra"]
+	else:
+		_my_score_label = mine.get_meta("value") as Label if mine.has_meta("value") else null
+		_opponent_score_label = theirs.get_meta("value") as Label if theirs.has_meta("value") else null
+		_my_status_label = null
+		_opponent_status_label = null
 	col.add_child(row)
 	## Fixed-height status slot under the tiles so “prêt / a répondu” never reflows the page.
 	var badge_slot := Control.new()
@@ -1902,8 +2040,8 @@ func _button(text: String, fill: Color, ink: Color) -> Button:
 	return button
 
 
-## Cancel tile — fruits aurora (red/magenta), not a duel-mode wash (ocean/lave/jaune).
-func _search_cancel_tile() -> Button:
+## Cancel / back tile — same mode aurora as the mode tile (ocean / lave / jaune).
+func _search_cancel_tile(label_key: String = "UI_DUEL_CANCEL") -> Button:
 	var button := Button.new()
 	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	button.custom_minimum_size.y = 78
@@ -1923,11 +2061,11 @@ func _search_cancel_tile() -> Button:
 	bg.name = "AuroreFill"
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	bg.aurore_theme = "fruits"
+	bg.aurore_theme = _mode_aurore_theme(_mode)
 	button.add_child(bg)
 
 	var label := Label.new()
-	label.text = tr("UI_DUEL_CANCEL")
+	label.text = tr(label_key)
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -2010,7 +2148,7 @@ func _mode_aurore_theme(mode: String) -> String:
 
 
 ## Mode indicator — same size / layout as Quiz `_mode_tile` (ocean / lave / jaune).
-func _mode_aurore_tile(mode: String) -> Control:
+func _mode_aurore_tile(mode: String, height: float = 156.0) -> Control:
 	var key := "UI_MODE_CLASSIC"
 	var hint_key := "UI_DUEL_TILE_CLASSIC_HINT"
 	var icon := "🎯"
@@ -2024,9 +2162,10 @@ func _mode_aurore_tile(mode: String) -> Control:
 			hint_key = "UI_DUEL_TILE_TIME_ATTACK_HINT"
 			icon = "⏱️"
 
+	var compact := height < 140.0
 	var tile := PanelContainer.new()
 	tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	tile.custom_minimum_size.y = 156
+	tile.custom_minimum_size.y = height
 	tile.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var chrome := StyleBoxFlat.new()
 	chrome.bg_color = Color(0, 0, 0, 0)
@@ -2050,8 +2189,8 @@ func _mode_aurore_tile(mode: String) -> Control:
 	pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	pad.add_theme_constant_override("margin_left", 16)
 	pad.add_theme_constant_override("margin_right", 18)
-	pad.add_theme_constant_override("margin_top", 16)
-	pad.add_theme_constant_override("margin_bottom", 16)
+	pad.add_theme_constant_override("margin_top", 12 if compact else 16)
+	pad.add_theme_constant_override("margin_bottom", 12 if compact else 16)
 	tile.add_child(pad)
 
 	var row := HBoxContainer.new()
@@ -2060,9 +2199,9 @@ func _mode_aurore_tile(mode: String) -> Control:
 	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	pad.add_child(row)
 
-	const ICON := 88.0
+	var icon_side := 64.0 if compact else 88.0
 	var icon_slot := Control.new()
-	icon_slot.custom_minimum_size = Vector2(ICON, ICON)
+	icon_slot.custom_minimum_size = Vector2(icon_side, icon_side)
 	icon_slot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	icon_slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	row.add_child(icon_slot)
@@ -2071,7 +2210,7 @@ func _mode_aurore_tile(mode: String) -> Control:
 	icon_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var icon_style := StyleBoxFlat.new()
 	icon_style.bg_color = Color(1, 1, 1, 0.18)
-	icon_style.set_corner_radius_all(int(ICON * 0.5))
+	icon_style.set_corner_radius_all(int(icon_side * 0.5))
 	icon_bg.add_theme_stylebox_override("panel", icon_style)
 	icon_slot.add_child(icon_bg)
 	var emoji := Label.new()
@@ -2080,7 +2219,7 @@ func _mode_aurore_tile(mode: String) -> Control:
 	emoji.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	emoji.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	emoji.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	emoji.add_theme_font_size_override("font_size", UiScale.font(38))
+	emoji.add_theme_font_size_override("font_size", UiScale.font(30 if compact else 38))
 	var emoji_font := UiFonts.emoji_font()
 	if emoji_font != null:
 		emoji.add_theme_font_override("font", emoji_font)
@@ -2089,24 +2228,79 @@ func _mode_aurore_tile(mode: String) -> Control:
 	var texts := VBoxContainer.new()
 	texts.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	texts.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	texts.add_theme_constant_override("separation", 6)
+	texts.add_theme_constant_override("separation", 4 if compact else 6)
 	texts.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	row.add_child(texts)
 
 	var name_label := Label.new()
 	name_label.text = tr(key).to_upper()
 	name_label.clip_text = true
-	name_label.add_theme_font_size_override("font_size", UiScale.font(28))
+	name_label.add_theme_font_size_override("font_size", UiScale.font(24 if compact else 28))
 	name_label.add_theme_color_override("font_color", Color.WHITE)
 	texts.add_child(name_label)
 
 	var hint := Label.new()
 	hint.text = tr(hint_key)
 	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	hint.max_lines_visible = 2
-	hint.add_theme_font_size_override("font_size", UiScale.font(17))
+	hint.max_lines_visible = 1 if compact else 2
+	hint.add_theme_font_size_override("font_size", UiScale.font(15 if compact else 17))
 	hint.add_theme_color_override("font_color", Color(1, 1, 1, 0.78))
 	texts.add_child(hint)
+	return tile
+
+
+## Category tile matching Search mode-tile size (draft-style aurore + icon).
+func _category_summary_tile(category_id: String, height: float = 156.0) -> Control:
+	var theme := AuroreTile.theme_for_category(category_id)
+	var accent := AuroreTile.primary_color(theme)
+	var compact := height < 140.0
+	var tile := PanelContainer.new()
+	tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	tile.custom_minimum_size.y = height
+	tile.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var chrome := StyleBoxFlat.new()
+	chrome.bg_color = Color(0, 0, 0, 0)
+	chrome.set_corner_radius_all(22)
+	tile.add_theme_stylebox_override("panel", chrome)
+
+	var bg := AuroreTile.new()
+	bg.name = "AuroreFill"
+	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	bg.aurore_theme = theme
+	tile.add_child(bg)
+
+	var pad := MarginContainer.new()
+	pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pad.add_theme_constant_override("margin_left", 16)
+	pad.add_theme_constant_override("margin_right", 18)
+	pad.add_theme_constant_override("margin_top", 12 if compact else 16)
+	pad.add_theme_constant_override("margin_bottom", 12 if compact else 16)
+	tile.add_child(pad)
+
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 16)
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pad.add_child(row)
+
+	var icon_side := 64.0 if compact else 88.0
+	var icon := TextureRect.new()
+	icon.custom_minimum_size = Vector2(icon_side, icon_side)
+	icon.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	icon.texture = GameAssets.category_texture(category_id)
+	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_child(icon)
+
+	var name_label := Label.new()
+	name_label.text = _category_name(category_id)
+	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	name_label.clip_text = true
+	name_label.add_theme_font_size_override("font_size", UiScale.font(24 if compact else 28))
+	name_label.add_theme_color_override("font_color", Color.WHITE)
+	row.add_child(name_label)
 	return tile
 
 

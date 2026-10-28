@@ -3,6 +3,9 @@ extends RefCounted
 ## The server decides the category and seed; this mirrors its rotation only as an
 ## offline fallback so the mode still works without a connection.
 
+## Temp: ignore today's local result so the Quiz tile stays playable while polishing UX.
+const DEBUG_ALLOW_REPLAY := true
+
 ## Same lists and start day as brainup-backend app/main.py (DAILY_CATEGORIES): change both together.
 const ROTATION: Array[String] = ["sport", "cinema", "history", "geography", "science", "music", "television", "general"]
 ## 2026-10-07 in days since 1970-01-01: the 8-category rotation starts that day.
@@ -42,3 +45,4 @@ static func seconds_until_reset() -> int:
 	var now := Time.get_time_dict_from_system(true)
 	var elapsed := int(now["hour"]) * 3600 + int(now["minute"]) * 60 + int(now["second"])
 	return maxi(86400 - elapsed, 0)
+

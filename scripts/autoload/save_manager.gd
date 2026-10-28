@@ -856,7 +856,8 @@ func get_achievement_stats() -> Dictionary:
 ## Stores today's shared-challenge result. Only the first play of a day counts;
 ## returns the bonus XP granted (0 on a repeat).
 func record_daily_challenge(date: String, score: int, correct_count: int, total_count: int, max_combo: int = 0) -> int:
-	if str(daily_challenge_result.get("date", "")) == date:
+	var already := str(daily_challenge_result.get("date", "")) == date
+	if already and not DailyChallengeScript.DEBUG_ALLOW_REPLAY:
 		return 0
 	daily_challenge_result = {
 		"date": date,
@@ -865,6 +866,10 @@ func record_daily_challenge(date: String, score: int, correct_count: int, total_
 		"total_count": total_count,
 		"max_combo": max_combo,
 	}
+	## Don't farm the bonus XP while replaying in debug.
+	if already:
+		save_data()
+		return 0
 	add_xp(DailyChallengeScript.BONUS_XP)
 	save_data()
 	return DailyChallengeScript.BONUS_XP

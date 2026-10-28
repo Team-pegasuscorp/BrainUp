@@ -55,7 +55,7 @@ var accepting_input: bool = true
 var _feedback_tweens: Array[Tween] = []
 var _last_tick_second: int = 99
 var _accent: Color = UiTokens.ACCENT_QUIZ
-var _timer_label: Label
+var _aurore_theme: String = "ocean"
 var _timer_state: int = -1
 var _explain_caption: Label
 var _tap_hint: Label
@@ -89,7 +89,10 @@ func _ready() -> void:
 		_lives_label.add_theme_font_size_override("font_size", UiScale.font(22))
 		header_row.add_child(_lives_label)
 		header_row.move_child(_lives_label, 0)
-	_accent = UiTokens.accent_for_category(GameManager.category_id)
+	## One fixed aurora per category; chrome (bg / timer / answers) follows its primary.
+	_aurore_theme = AuroreTile.theme_for_category(GameManager.category_id)
+	_accent = AuroreTile.primary_color(_aurore_theme)
+	_apply_category_page_bg()
 	_build_category_header()
 
 	answers_grid.columns = 1
@@ -106,9 +109,10 @@ func _ready() -> void:
 
 	timer_bar.custom_minimum_size = Vector2(0, 18)
 	timer_bar.add_theme_stylebox_override("background", UiStyle.progress_bg())
-	combo_label.add_theme_color_override("font_color", UiTokens.ACCENT_QUIZ)
-	for label in [progress_label]:
-		label.add_theme_font_size_override("font_size", UiScale.font(18))
+	_apply_timer_color(_accent)
+	progress_label.add_theme_color_override("font_color", Color.WHITE)
+	combo_label.add_theme_color_override("font_color", Color.WHITE)
+	progress_label.add_theme_font_size_override("font_size", UiScale.font(18))
 	for label in [score_label, combo_label]:
 		label.add_theme_font_size_override("font_size", UiScale.font(22))
 
@@ -124,33 +128,68 @@ func _ready() -> void:
 	_show_current_question()
 
 
-## Category icon + name on the left, big countdown on the right.
-func _build_category_header() -> void:
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 12)
-	row.alignment = BoxContainer.ALIGNMENT_CENTER
+## Page wash = the category aurora primary (same family as the header tile).
+func _apply_category_page_bg() -> void:
+	var bg := get_node_or_null("Background") as ColorRect
+	if bg == null:
+		return
+	var mat := ShaderMaterial.new()
+	mat.shader = load("res://shaders/tab_page_bg.gdshader") as Shader
+	mat.set_shader_parameter("accent", _accent)
+	mat.set_shader_parameter("deep", UiTokens.BG_CREAM)
+	bg.material = mat
+	bg.color = Color.WHITE
 
+
+## Full-width aurore category tile (no digit countdown — the bar carries the timer).
+func _build_category_header() -> void:
 	var category_id := GameManager.category_id
-	row.add_child(GameAssets.make_circular_icon_display(GameAssets.category_texture(category_id), "🧠", 56.0))
+
+	var tile := PanelContainer.new()
+	tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	tile.custom_minimum_size.y = 156
+	tile.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var chrome := StyleBoxFlat.new()
+	chrome.bg_color = Color(0, 0, 0, 0)
+	chrome.set_corner_radius_all(22)
+	tile.add_theme_stylebox_override("panel", chrome)
+
+	var bg := AuroreTile.new()
+	bg.name = "AuroreFill"
+	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	bg.aurore_theme = _aurore_theme
+	tile.add_child(bg)
+
+	var pad := MarginContainer.new()
+	pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pad.add_theme_constant_override("margin_left", 16)
+	pad.add_theme_constant_override("margin_right", 18)
+	pad.add_theme_constant_override("margin_top", 16)
+	pad.add_theme_constant_override("margin_bottom", 16)
+	tile.add_child(pad)
+
+	var inner := HBoxContainer.new()
+	inner.add_theme_constant_override("separation", 16)
+	inner.alignment = BoxContainer.ALIGNMENT_CENTER
+	inner.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pad.add_child(inner)
+	inner.add_child(GameAssets.make_circular_icon_display(
+		GameAssets.category_texture(category_id), "🧠", 88.0
+	))
 
 	var name_label := Label.new()
 	name_label.text = _category_name(category_id)
 	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	name_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	name_label.add_theme_font_size_override("font_size", UiScale.font(26))
-	name_label.add_theme_color_override("font_color", Color(1, 1, 1, 0.95))
-	row.add_child(name_label)
-
-	_timer_label = Label.new()
-	_timer_label.custom_minimum_size = Vector2(64, 0)
-	_timer_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	_timer_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	_timer_label.add_theme_font_size_override("font_size", UiScale.font(44))
-	row.add_child(_timer_label)
+	name_label.clip_text = true
+	name_label.add_theme_font_size_override("font_size", UiScale.font(28))
+	name_label.add_theme_color_override("font_color", Color.WHITE)
+	inner.add_child(name_label)
 
 	var column := header_row.get_parent()
-	column.add_child(row)
-	column.move_child(row, 0)
+	column.add_child(tile)
+	column.move_child(tile, 0)
 
 
 ## Caption, hint and a full-screen tap catcher, only visible while an explanation is read.
@@ -194,8 +233,6 @@ func _category_name(category_id: String) -> String:
 
 
 func _process(delta: float) -> void:
-	if _timer_label == null:
-		return
 	if _time_attack:
 		_process_clock(delta)
 		return
@@ -211,7 +248,7 @@ func _process(delta: float) -> void:
 	if whole_seconds <= 3 and whole_seconds > 0 and whole_seconds != _last_tick_second:
 		_last_tick_second = whole_seconds
 		AudioManager.play("tick", 1.0 + float(3 - whole_seconds) * 0.15)
-		_pulse(_timer_label, 1.3)
+		_pulse(timer_bar, 1.08)
 
 	if time_remaining <= 0.0:
 		_submit_answer(-1)
@@ -228,7 +265,7 @@ func _process_clock(delta: float) -> void:
 	if whole_seconds <= 5 and whole_seconds > 0 and whole_seconds != _last_tick_second:
 		_last_tick_second = whole_seconds
 		AudioManager.play("tick", 1.0 + float(5 - whole_seconds) * 0.1)
-		_pulse(_timer_label, 1.3)
+		_pulse(timer_bar, 1.08)
 	if _clock <= 0.0:
 		_clock_over = true
 		accepting_input = false
@@ -237,7 +274,7 @@ func _process_clock(delta: float) -> void:
 		_finish_quiz()
 
 
-## Bar and number turn amber then red as time runs out.
+## Bar and number use the category accent, then amber / red as time runs out.
 func _update_timer_visuals() -> void:
 	var shown := _clock if _time_attack else time_remaining
 	var danger := CLOCK_DANGER_SECONDS if _time_attack else TIMER_DANGER_SECONDS
@@ -249,10 +286,11 @@ func _update_timer_visuals() -> void:
 		state = 1
 	if state != _timer_state:
 		_timer_state = state
-		var color := [_accent, UiTokens.FEEDBACK_TIMEOUT, UiTokens.FEEDBACK_WRONG][state] as Color
-		timer_bar.add_theme_stylebox_override("fill", UiStyle.progress_fill(color))
-		_timer_label.add_theme_color_override("font_color", color)
-	_timer_label.text = str(maxi(ceili(shown), 0))
+		_apply_timer_color([_accent, UiTokens.FEEDBACK_TIMEOUT, UiTokens.FEEDBACK_WRONG][state] as Color)
+
+
+func _apply_timer_color(color: Color) -> void:
+	timer_bar.add_theme_stylebox_override("fill", UiStyle.progress_fill(color))
 
 
 ## "Question 3 / 7"; survival also refreshes the hearts left.
@@ -401,7 +439,7 @@ func _submit_answer(selected_index: int) -> void:
 		if not result.get("is_correct", false):
 			_clock -= GameManager.TIME_ATTACK_WRONG_PENALTY
 			feedback_label.text = "%s  −%d s" % [tr("UI_WRONG"), int(GameManager.TIME_ATTACK_WRONG_PENALTY)]
-			_shake(_timer_label)
+			_shake(timer_bar)
 		await get_tree().create_timer(TIME_ATTACK_FEEDBACK).timeout
 		## The clock may have run out meanwhile and already ended the round.
 		if not is_inside_tree() or _clock_over:
@@ -459,8 +497,7 @@ func _read_explanation(text: String) -> void:
 	_feedback_tweens.append(fade_in)
 	fade_in.tween_property(question_label, "modulate:a", 1.0, 0.2)
 
-	timer_bar.add_theme_stylebox_override("fill", UiStyle.progress_fill(_accent))
-	_timer_label.text = ""
+	_apply_timer_color(_accent)
 	var duration := clampf(READ_BASE_SECONDS + float(text.length()) * READ_SECONDS_PER_CHAR, READ_MIN_SECONDS, READ_MAX_SECONDS)
 	var elapsed := 0.0
 	_skip_requested = false
@@ -476,8 +513,8 @@ func _read_explanation(text: String) -> void:
 
 func _show_feedback(result: Dictionary, selected_index: int, correct_index: int) -> void:
 	if result.get("is_timeout", false):
-		feedback_label.text = tr("UI_TIME_UP")
-		feedback_label.modulate = UiTokens.FEEDBACK_TIMEOUT
+		## No "Temps écoulé" copy — the bar already empties; keep the line clear.
+		feedback_label.text = ""
 		AudioManager.play("timeout")
 	elif result.get("is_correct", false):
 		feedback_label.text = "%s +%d" % [tr("UI_CORRECT"), result.get("points", 0)]
@@ -513,11 +550,20 @@ func _show_feedback(result: Dictionary, selected_index: int, correct_index: int)
 
 ## Every state shares one box so a disabled button never falls back to the theme.
 func _style_answer_default(button: Button) -> void:
-	var idle := _answer_box(Color.WHITE, Color(0, 0, 0, 0))
-	var active := _answer_box(Color.WHITE, _accent)
+	## Quiet category rim at rest; stronger fill + ring on hover / press.
+	var idle := _answer_box(Color.WHITE, Color(_accent.r, _accent.g, _accent.b, 0.45))
+	idle.set_border_width_all(2)
+	var active_fill := Color(
+		lerpf(1.0, _accent.r, 0.22),
+		lerpf(1.0, _accent.g, 0.22),
+		lerpf(1.0, _accent.b, 0.22),
+		1.0
+	)
+	var active := _answer_box(active_fill, _accent)
+	active.set_border_width_all(4)
 	button.add_theme_stylebox_override("normal", idle)
 	button.add_theme_stylebox_override("disabled", idle)
-	button.add_theme_stylebox_override("focus", idle)
+	button.add_theme_stylebox_override("focus", active)
 	button.add_theme_stylebox_override("hover", active)
 	button.add_theme_stylebox_override("pressed", active)
 	_set_answer_text_color(button, UiTokens.INK)
@@ -531,10 +577,16 @@ func _paint_answer(button: Button, color: Color) -> void:
 
 
 func _answer_box(fill: Color, border: Color) -> StyleBoxFlat:
-	var box := UiStyle.card(_accent, ANSWER_RADIUS)
+	var box := StyleBoxFlat.new()
 	box.bg_color = fill
+	box.set_corner_radius_all(ANSWER_RADIUS)
 	box.content_margin_left = 22
 	box.content_margin_right = 22
+	box.content_margin_top = 14
+	box.content_margin_bottom = 14
+	box.shadow_color = Color(_accent.r, _accent.g, _accent.b, 0.14)
+	box.shadow_size = 10
+	box.shadow_offset = Vector2(0, 3)
 	if border.a > 0.0:
 		box.set_border_width_all(3)
 		box.border_color = border
@@ -573,8 +625,6 @@ func _reset_answer_visuals() -> void:
 			button.scale = Vector2.ONE
 			button.rotation = 0.0
 			_style_answer_default(button)
-	if _timer_label != null:
-		_timer_label.scale = Vector2.ONE
 	score_label.scale = Vector2.ONE
 
 
@@ -651,7 +701,7 @@ func _on_joker_pressed(joker_id: String) -> void:
 		## Moving the start keeps the score fair: the extra seconds do not count as slowness.
 		time_remaining += JOKER_TIME_BONUS
 		question_start_time += JOKER_TIME_BONUS
-		_pulse(_timer_label, 1.3)
+		_pulse(timer_bar, 1.08)
 	_refresh_jokers()
 
 

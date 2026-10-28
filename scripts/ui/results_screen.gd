@@ -5,7 +5,7 @@ const UiStyle = preload("res://scripts/config/ui_style.gd")
 const PressScaleUtil = preload("res://scripts/ui/press_scale.gd")
 const ScenePaths = preload("res://scripts/config/scene_paths.gd")
 const AchievementsCatalog = preload("res://scripts/profile/achievements_catalog.gd")
-
+const QuestionLoaderScript = preload("res://scripts/quiz/question_loader.gd")
 @onready var score_caption_label: Label = %ScoreCaption
 @onready var correct_caption_label: Label = %CorrectCaption
 @onready var combo_caption_label: Label = %ComboCaption
@@ -42,10 +42,14 @@ var _intro: Tween
 var _intro_done: bool = false
 var _skipping: bool = false
 var _share_button: Button
+var _category_tile: Control
+var _return_label: Label
+var _is_daily: bool = false
 
 
 func _ready() -> void:
 	summary = GameManager.last_summary
+	_is_daily = bool(summary.get("is_daily", false))
 	stats_panel.add_theme_stylebox_override("panel", UiStyle.card(UiTokens.ACCENT_QUIZ))
 	title_label.add_theme_color_override("font_color", UiTokens.INK)
 	correct_value_label.add_theme_color_override("font_color", UiTokens.FEEDBACK_CORRECT)
@@ -55,13 +59,16 @@ func _ready() -> void:
 	_wrap_cards_in_scroll()
 	_enlarge_layout()
 	_build_outcome_sections()
-	_build_share_button()
+	if not _is_daily:
+		_build_share_button()
+		_style_menu_button()
+	else:
+		_style_daily_return_button()
 	_apply_translations()
 	_play_intro()
 	menu_button.pressed.connect(_on_menu_pressed)
 	LocaleManager.locale_changed.connect(_on_locale_changed)
 	PressScaleUtil.wire(menu_button, self)
-	_style_menu_button()
 
 
 ## Secondary CTA on the dark results wash: theme Button hover is translucent cyan
@@ -79,6 +86,45 @@ func _style_menu_button() -> void:
 	menu_button.add_theme_color_override("font_pressed_color", Color(1, 1, 1, 0.92))
 	menu_button.add_theme_color_override("font_focus_color", Color(1, 1, 1, 1))
 	menu_button.add_theme_font_size_override("font_size", UiScale.font(20))
+
+
+## Daily: full-width Retour tile in the day's category aurora (replaces Main menu + Share).
+func _style_daily_return_button() -> void:
+	var category_id := str(summary.get("category_id", ""))
+	var theme := AuroreTile.theme_for_category(category_id)
+	menu_button.text = ""
+	menu_button.custom_minimum_size.y = 72
+	menu_button.focus_mode = Control.FOCUS_NONE
+	var chrome := StyleBoxFlat.new()
+	chrome.bg_color = Color(0, 0, 0, 0)
+	chrome.set_corner_radius_all(20)
+	for state in ["normal", "hover", "pressed", "focus"]:
+		menu_button.add_theme_stylebox_override(state, chrome)
+	var bg := menu_button.get_node_or_null("AuroreFill") as AuroreTile
+	if bg == null:
+		bg = AuroreTile.new()
+		bg.name = "AuroreFill"
+		bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		menu_button.add_child(bg)
+		menu_button.move_child(bg, 0)
+	bg.aurore_theme = theme
+	var center := menu_button.get_node_or_null("ReturnCenter") as CenterContainer
+	if center == null:
+		center = CenterContainer.new()
+		center.name = "ReturnCenter"
+		center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		center.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		menu_button.add_child(center)
+		_return_label = Label.new()
+		_return_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		_return_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		_return_label.add_theme_color_override("font_color", Color.WHITE)
+		_return_label.add_theme_font_size_override("font_size", UiScale.font(22))
+		_return_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		center.add_child(_return_label)
+	elif _return_label == null:
+		_return_label = center.get_child(0) as Label
 
 
 func _menu_button_style(bg: Color, border: Color) -> StyleBoxFlat:
@@ -109,8 +155,13 @@ func _apply_translations() -> void:
 	average_value_label.text = tr("UI_SECONDS").format({
 		"value": "%.1f" % summary.get("average_time", 0.0),
 	})
-	menu_button.text = tr("UI_MAIN_MENU")
-	_share_button.text = tr("UI_SHARE_SCORE")
+	if _is_daily:
+		if _return_label != null:
+			_return_label.text = tr("UI_BACK")
+	else:
+		menu_button.text = tr("UI_MAIN_MENU")
+	if _share_button != null:
+		_share_button.text = tr("UI_SHARE_SCORE")
 
 
 ## "Share" sits next to "Main menu" so the pinned buttons keep their height.
@@ -131,6 +182,8 @@ func _build_share_button() -> void:
 
 
 func _on_share_pressed() -> void:
+	if _share_button == null:
+		return
 	_share_button.disabled = true
 	var image: Image = await ShareCard.render(self, summary)
 	var result := ShareUtil.share(image, ShareCard.message(summary))
@@ -147,7 +200,64 @@ func _on_share_pressed() -> void:
 
 
 func _on_menu_pressed() -> void:
-	ScenePaths.go_to_shell(get_tree(), ScenePaths.Tab.HOME)
+	## Daily Retour → Quiz tab (défis); otherwise Home.
+	ScenePaths.go_to_shell(get_tree(), ScenePaths.Tab.QUIZ if _is_daily else ScenePaths.Tab.HOME)
+
+
+func _category_display_name(category_id: String) -> String:
+	for category in QuestionLoaderScript.get_categories(LocaleManager.get_content_locale()):
+		if str(category.get("id", "")) == category_id:
+			return str(category.get("name", category_id))
+	return category_id
+
+
+## Full-width category aurora tile (same rhythm as daily / quiz header).
+func _build_category_aurore_tile(category_id: String) -> Control:
+	var theme := AuroreTile.theme_for_category(category_id)
+	var tile := PanelContainer.new()
+	tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	tile.custom_minimum_size.y = 156
+	tile.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var chrome := StyleBoxFlat.new()
+	chrome.bg_color = Color(0, 0, 0, 0)
+	chrome.set_corner_radius_all(22)
+	tile.add_theme_stylebox_override("panel", chrome)
+
+	var bg := AuroreTile.new()
+	bg.name = "AuroreFill"
+	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	bg.aurore_theme = theme
+	tile.add_child(bg)
+
+	var pad := MarginContainer.new()
+	pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pad.add_theme_constant_override("margin_left", 16)
+	pad.add_theme_constant_override("margin_right", 18)
+	pad.add_theme_constant_override("margin_top", 16)
+	pad.add_theme_constant_override("margin_bottom", 16)
+	tile.add_child(pad)
+
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 16)
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pad.add_child(row)
+
+	row.add_child(GameAssets.make_circular_icon_display(
+		GameAssets.category_texture(category_id), "🧠", 88.0
+	))
+
+	var name_label := Label.new()
+	name_label.name = "CategoryName"
+	name_label.text = _category_display_name(category_id)
+	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	name_label.clip_text = true
+	name_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	name_label.add_theme_font_size_override("font_size", UiScale.font(28))
+	name_label.add_theme_color_override("font_color", Color.WHITE)
+	row.add_child(name_label)
+	return tile
 
 
 func _on_locale_changed(_locale: String) -> void:
@@ -214,6 +324,9 @@ func _enlarge_layout() -> void:
 ## Subtitle, XP card and new-achievements card, inserted above the stats panel.
 func _build_outcome_sections() -> void:
 	title_label.add_theme_color_override("font_color", _outcome_color())
+	if _is_daily:
+		_category_tile = _build_category_aurore_tile(str(summary.get("category_id", "")))
+		_insert_before_stats(_category_tile)
 	_subtitle_label = Label.new()
 	_subtitle_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_subtitle_label.add_theme_font_size_override("font_size", UiScale.font(20))
@@ -379,8 +492,10 @@ func _apply_outcome_texts() -> void:
 			_subtitle_label.text = tr("UI_RESULTS_FIRST_RECORD").format({"mode": mode_name})
 		else:
 			_subtitle_label.text = tr("UI_RESULTS_RECORD_TO_BEAT").format({"previous": int(record.get("previous_score", 0))})
-	if bool(summary.get("is_daily", false)):
-		_subtitle_label.text = "%s · %s" % [tr("UI_DAILY_CHALLENGE_TITLE"), _subtitle_label.text]
+	if _is_daily and _category_tile != null:
+		var name_label := _category_tile.find_child("CategoryName", true, false) as Label
+		if name_label != null:
+			name_label.text = _category_display_name(str(summary.get("category_id", "")))
 	_streak_label.text = tr("UI_RESULTS_STREAK").format({"count": SaveManager.current_win_streak})
 	var day_streak: Dictionary = summary.get("day_streak", {})
 	var day_key := "UI_RESULTS_DAY_MILESTONE" if int(day_streak.get("milestone", 0)) > 0 else "UI_RESULTS_DAY_STREAK"
